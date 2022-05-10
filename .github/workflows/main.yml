@@ -28,8 +28,6 @@ jobs:
         #Generates the hashes for the comparison between the origin branch and the upstream development branch
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v2
-        with:
-          main-branch-name: 'main'
 
         #Installs node.js
       - name: Use Node.js 16
