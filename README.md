@@ -1,5 +1,5 @@
 [![codecov](https://codecov.io/gh/COS301-SE-2022/Conversation-Catcher/branch/main/graph/badge.svg?token=9CX9JOGWQD)](https://codecov.io/gh/COS301-SE-2022/Conversation-Catcher)
-https://img.shields.io/github/issues/COS301-SE-2022/Conversation-Catcher?color=%231111111
+![GitHub issues](https://img.shields.io/github/issues/COS301-SE-2022/Conversation-Catcher?color=%231111111)
 
 Multiprocessing moguls - Conversation Catcher - The conversation catcher is used to record a conversation and convert it into structured text that can be analysed to extract the main and important ideas of the conversation. <br>
 Multiprocessing moguls - Demo 1 - link<br>
