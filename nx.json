@@ -1,0 +1,39 @@
+{
+  "npmScope": "conversation-catcher",
+  "affected": {
+    "defaultBase": "main"
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/react-native"
+  },
+  "implicitDependencies": {
+    "package.json": {
+      "dependencies": "*",
+      "devDependencies": "*"
+    },
+    ".eslintrc.json": "*"
+  },
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "@nrwl/nx-cloud",
+      "options": {
+        "cacheableOperations": [
+          "build",
+          "lint",
+          "test",
+          "e2e"
+        ],
+        "accessToken": "Yzk2MDM1MzUtYTlmYy00YTYxLThjYWMtMDc0YzNiOGNkYTVlfHJlYWQtd3JpdGU="
+      }
+    }
+  },
+  "targetDependencies": {
+    "build": [
+      {
+        "target": "build",
+        "projects": "dependencies"
+      }
+    ]
+  },
+  "defaultProject": "client"
+}
