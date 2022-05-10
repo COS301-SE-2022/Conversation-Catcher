@@ -26,7 +26,7 @@ jobs:
     steps:
       #Checks that a project is selected
       - name: Has project check
-        if: github.event.pull_request.projects == null
+        if: github.event.pull_request.projects[0] == null
         run: |
           echo "you have not selected a project",
           echo github.event.pull_request.projects,
@@ -38,10 +38,9 @@ jobs:
     steps:         
       #Checks that labels are used
       - name: Has labels check
-        if: github.event.pull_request.labels == null
+        if: github.event.pull_request.labels[0] == null
         run: |
           echo "you have not selected any labels",
-          echo github.event.pull_request.labels,
           exit 1
   review-check:
     #Checks that labels, a milestone and a project is present
@@ -49,7 +48,7 @@ jobs:
     steps:   
       #Checks that reviewer is assigned
       - name: Has reviewer check
-        if: github.event.pull_request.reviewers == null
+        if: github.event.pull_request.reviewers[0] == null
         run: |
           echo "you need at least one reviewer",
           echo github.event.pull_request.reviewers,
