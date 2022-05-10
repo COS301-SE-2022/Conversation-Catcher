@@ -61,6 +61,6 @@ jobs:
           nx affected --target=e2e --no-cache --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
 
       - name: Upload coverage to Codecov
-          uses: codecov/codecov-action@v2
-          with:
-            token: ${{ secrets.CODECOV_TOKEN }}
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
