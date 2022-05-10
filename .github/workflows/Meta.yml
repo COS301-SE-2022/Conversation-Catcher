@@ -1,0 +1,27 @@
+name: Meta
+
+# Controls when the workflow will run
+on:
+  pull_request:
+    types: [ opened, reopened, labeled ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:          
+  Meta-check:
+    #Checks that labels, a milestone and a project is present
+    runs-on: ubuntu-latest
+    steps:
+      #checks that milestone has been used
+      - name: Has milestone check
+        if: github.event.pull_request.milestone == null
+        run: |
+          echo "you have not selected a milestone",
+          exit 1 
+      - name: Has labels check
+        if: github.event.pull_request.labels[0] == null
+        run: |
+          echo "you have not selected any labels",
+          exit 1
