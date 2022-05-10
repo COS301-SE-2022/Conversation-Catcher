@@ -1,6 +1,14 @@
 {
   "version": 2,
   "projects": {
+    "api": "apps/api",
+    "api-shell": "libs/api/shell",
+    "api-speech-to-text-api": "libs/api/speech-to-text/api",
+    "api-speech-to-text-repository": "libs/api/speech-to-text/repository",
+    "api-speech-to-text-service": "libs/api/speech-to-text/service",
+    "api-summarise-text-api": "libs/api/summarise-text/api",
+    "api-summarise-text-repository": "libs/api/summarise-text/repository",
+    "api-summarise-text-service": "libs/api/summarise-text/service",
     "client": "apps/client",
     "client-e2e": "apps/client-e2e"
   }
