@@ -10,7 +10,7 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:          
-  milestone-check:
+  Meta-check:
     #Checks that labels, a milestone and a project is present
     runs-on: ubuntu-latest
     steps:
@@ -19,37 +19,9 @@ jobs:
         if: github.event.pull_request.milestone == null
         run: |
           echo "you have not selected a milestone",
-          exit 1
-  project-check:
-    #Checks that labels, a milestone and a project is present
-    runs-on: ubuntu-latest
-    steps:
-      #Checks that a project is selected
-      - name: Has project check
-        if: github.event.pull_request.projects[0] == null
-        run: |
-          echo "you have not selected a project",
-          echo github.event.pull_request.projects,
-          exit 1
-         
-  label-check:
-    #Checks that labels, a milestone and a project is present
-    runs-on: ubuntu-latest
-    steps:         
-      #Checks that labels are used
+          exit 1 
       - name: Has labels check
         if: github.event.pull_request.labels[0] == null
         run: |
           echo "you have not selected any labels",
-          exit 1
-  review-check:
-    #Checks that labels, a milestone and a project is present
-    runs-on: ubuntu-latest
-    steps:   
-      #Checks that reviewer is assigned
-      - name: Has reviewer check
-        if: github.event.pull_request.reviewers[0] == null
-        run: |
-          echo "you need at least one reviewer",
-          echo github.event.pull_request.reviewers,
           exit 1
