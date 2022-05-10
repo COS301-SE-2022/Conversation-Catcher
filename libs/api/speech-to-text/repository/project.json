@@ -1,0 +1,22 @@
+{
+  "sourceRoot": "libs/api/speech-to-text/repository/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/api/speech-to-text/repository/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/api/speech-to-text/repository"],
+      "options": {
+        "jestConfig": "libs/api/speech-to-text/repository/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

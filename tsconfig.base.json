@@ -14,7 +14,27 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@conversation-catcher/api/speech-to-text/api": [
+        "libs/api/speech-to-text/api/src/index.ts"
+      ],
+      "@conversation-catcher/api/speech-to-text/repository": [
+        "libs/api/speech-to-text/repository/src/index.ts"
+      ],
+      "@conversation-catcher/api/speech-to-text/service": [
+        "libs/api/speech-to-text/service/src/index.ts"
+      ],
+      "@conversation-catcher/api/summarise-text/api": [
+        "libs/api/summarise-text/api/src/index.ts"
+      ],
+      "@conversation-catcher/api/summarise-text/repository": [
+        "libs/api/summarise-text/repository/src/index.ts"
+      ],
+      "@conversation-catcher/api/summarise-text/service": [
+        "libs/api/summarise-text/service/src/index.ts"
+      ],
+      "@conversation-catcher/shell": ["libs/api/shell/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

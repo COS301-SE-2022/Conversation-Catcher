@@ -11,7 +11,8 @@
     "serve": {
       "executor": "@nrwl/workspace:run-commands",
       "options": {
-        "command": "nx start client"
+        "command": "nx start client",
+        "proxyConfig": "apps/client/proxy.conf.json"
       }
     },
     "run-ios": {
