@@ -40,6 +40,10 @@ jobs:
         with:
           node-version: '16'
 
+      #installs yarn
+      - name: Install nx
+        run: npm install nx -g
+        
         #installs yarn
       - name: Install yarn
         run: npm install yarn -g
