@@ -253,5 +253,116 @@ const styles = StyleSheet.create({
     flexGrow: 0,
     flexShrink: 1,
     flexBasis: 253
-  }
+  },
+  pdfTileInfo_item2: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 33
+  },
+  viewAllButtonFrame: {
+    width: '100%',
+    flexGrow: 1,
+    borderRadius: 8
+  },
+  viewAllButton: {
+    width: '100%',
+    flexGrow: 1,
+    backgroundColor: '#3f89beff',
+    borderRadius: 8,
+    borderStyle: 'solid',
+    borderColor: '#3f89beff',
+    borderWidth: 1,
+    elevation: 2,
+    shadowColor: '#000000',
+    shadowRadius: 2.621621621621622,
+    shadowOpacity: 0.2173913043478261,
+    shadowOffset: {
+      width: 0,
+      height: 1
+    }
+  },
+  viewAllButtonLabel: {
+    color: '#ffffffff',
+    textAlign: 'left',
+    letterSpacing: 0,
+    lineHeight: 24,
+    fontSize: 20,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Jaldi */,
+    paddingHorizontal: 0,
+    paddingVertical: 0
+  },
+  viewAllButtonLabel_box: {
+    flexGrow: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start'
+  },
+  homeDiv: {
+    backgroundColor: '#d0d5ddff',
+    borderRadius: 0.5,
+    overflow: 'hidden' /* for borderRadius */,
+    elevation: 2,
+    shadowColor: '#000000',
+    shadowRadius: 2.621621621621622,
+    shadowOpacity: 0.2173913043478261,
+    shadowOffset: {
+      width: 0,
+      height: 1
+    }
+  },
+  homeDiv_layout: {
+    marginTop: 26,
+    height: 1,
+    marginBottom: 0,
+    marginLeft: 4,
+    flexGrow: 1,
+    marginRight: 4
+  },
+  settingsButton: {
+    width: '100%',
+    flexGrow: 1,
+    borderRadius: 8
+  },
+  settingsSpacing: {
+    flexGrow: 1,
+    backgroundColor: '#9bcbedff',
+    borderRadius: 8,
+    overflow: 'hidden',
+    borderStyle: 'solid',
+    borderColor: '#9bcbedff',
+    borderWidth: 1,
+    elevation: 2,
+    shadowColor: '#000000',
+    shadowRadius: 2.621621621621622,
+    shadowOpacity: 0.2173913043478261,
+    shadowOffset: {
+      width: 0,
+      height: 1
+    },
+    flexDirection: 'row'
+  },
+  settingsSpacing_item: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 39
+  },
+  settingsIcon: {
+    resizeMode: 'contain'
+  },
+  settingsIcon_layout: {
+    marginTop: 10,
+    height: 24,
+    marginBottom: 10,
+    marginLeft: 10,
+    width: 29,
+    minWidth: 29,
+    marginRight: 0
+  },
+  settingsSpacing_space: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 84
+  },
 });
