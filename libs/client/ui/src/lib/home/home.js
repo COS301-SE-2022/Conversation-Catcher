@@ -1,13 +1,268 @@
 import React from 'react';
 import { View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity, Alert } from 'react-native';
+
 export function Home(props) {
   return (
-    <View>
-      <Text>Welcome to home!</Text>
+    <View style={[styles.home, styles.home_layout]}>
+      <View style={[styles.homeFlex, styles.homeFlex_layout]}>
+        <View style={styles.homeFlex_item}>
+          <View x="0px 360fr 4px" y="0px minmax(0px, max-content) 0px" style={styles.pdfContents}>
+            <View style={styles.pdfContents_item}>
+              <View x="3.61% 27.5% 68.89%" y="0px minmax(0px, max-content) 0px" style={styles.big_title_box}>
+                <Text style={styles.big_title} ellipsizeMode={'clip'}>
+                  {'Recents'}
+                </Text>
+              </View>
+            </View>
+            <View style={styles.pdfContents_item}>
+              <View x="4px 356fr 0px" y="24px minmax(0px, max-content) 0px" style={styles.recentPdfTiles}>
+                <View style={styles.recentPdfTiles_item}>
+                  <button type="button" id="btn"
+                    x="0px 356fr 0px"
+                    y="0px minmax(0px, max-content) 0px"
+                    style={styles.pdfTile}
+                    onPress={() => Alert.alert('click')}>
+                    <View style={styles.pdfTile_item}>
+                      <ImageBackground
+                        style={[styles.pdfThumbnail, styles.pdfThumbnail_layout]}
+                        source={require('../assets/23a067db3896c1ac956e0e22fe9c7588.png')}
+                      />
+                    </View>
+                    <View style={styles.pdfTile_space} />
+                    <View style={styles.pdfTile_item1}>
+                      <View x="0px 253fr 0px" y="0px minmax(0px, max-content) 0px" style={styles.pdfTileInfo}>
+                        <View style={styles.pdfTileInfo_item}>
+                          <View x="1px 219fr 0px" y="0px minmax(0px, max-content) 0px" style={styles.pdfTileText}>
+                            <View style={styles.pdfTileText_item}>
+                              <View
+                                x="0px 218fr 1px"
+                                y="29px minmax(0px, max-content) 0px"
+                                style={styles.pdfName_box}>
+                                <Text style={styles.pdfName} ellipsizeMode={'clip'}>
+                                  {'Bug introduction: a modification of code'}
+                                </Text>
+                              </View>
+                            </View>
+                            <View style={styles.pdfTileText_item}>
+                              <View
+                                x="1px 217fr 1px"
+                                y="9px minmax(0px, max-content) 29px"
+                                style={styles.pdfDate_box}>
+                                <Text style={styles.pdfDate} ellipsizeMode={'clip'}>
+                                  {'1 May 2022, 9:37'}
+                                </Text>
+                              </View>
+                            </View>
+                          </View>
+                        </View>
+                        <View style={styles.pdfTileInfo_item1}>
+                          <button 
+                            x="0px 33fr 0px"
+                            y="0px minmax(0px, max-content) 89px"
+                            style={styles.downloadState}
+                            onPress={() => Alert.alert('click')}>
+                            <ImageBackground
+                              style={[styles.downloadIcon, styles.downloadIcon_layout]}
+                              source={require('../assets/6784b72f243ed3938b4effbf0ffc0c7a.png')}
+                            />
+                          </button>
+                        </View>
+                      </View>
+                    </View>
+                  </button>
+                </View>
+                <View style={styles.recentPdfTiles_item}>
+                  <button
+                    x="0px 356fr 0px"
+                    y="18px minmax(0px, max-content) 0px"
+                    style={styles.pdfTile}
+                    onPress={() => Alert.alert('click')}>
+                    <View style={styles.pdfTile_item}>
+                      <ImageBackground
+                        style={[styles.pdfThumbnail, styles.pdfThumbnail_layout1]}
+                        source={require('../assets/2b2d102eac55f56c11649d75b48bf464.png')}
+                      />
+                    </View>
+                    <View style={styles.pdfTile_space} />
+                    <View style={styles.pdfTile_item2}>
+                      <View x="0px 253fr 0px" y="0px minmax(0px, max-content) 1px" style={styles.block8}>
+                        <View style={styles.block8_item}>
+                          <View style={[styles.block9, styles.block9_layout]}>
+                            <View style={[styles.pdfName_box1, styles.pdfName_box1_layout]}>
+                              <Text style={styles.pdfName} ellipsizeMode={'clip'}>
+                                {'Human-computer interaction'}
+                              </Text>
+                            </View>
+                            <View style={[styles.pdfDate_box1, styles.pdfDate_box1_layout]}>
+                              <Text style={styles.pdfDate} ellipsizeMode={'clip'}>
+                                {'21 Apr 2022, 14:18'}
+                              </Text>
+                            </View>
+                          </View>
+                        </View>
+                        <View style={styles.block8_item1}>
+                          <ImageBackground
+                            x="0px 31px 5px"
+                            y="0px 34px 93px"
+                            style={styles.image2}
+                            onPress={() => Alert.alert('click')}
+                            source={require('../assets/4517a97e95ebe8ad3751a63a5759b6d2.png')}
+                            container={TouchableOpacity}
+                          />
+                        </View>
+                      </View>
+                    </View>
+                  </button>
+                </View>
+                <View style={styles.recentPdfTiles_item}>
+                  <button
+                    x="0px 356fr 0px"
+                    y="18px minmax(0px, max-content) 0px"
+                    style={styles.pdfTile}
+                    onPress={() => Alert.alert('click')}>
+                    <View style={styles.pdfTile_item}>
+                      <ImageBackground
+                        style={[styles.pdfThumbnail, styles.pdfThumbnail_layout]}
+                        source={require('../assets/634a9d41d1a919acda75dccb24941e81.png')}
+                      />
+                    </View>
+                    <View style={styles.pdfTile_space} />
+                    <View style={styles.pdfTile_item3}>
+                      <View x="0px 253fr 0px" y="0px minmax(0px, max-content) 0px" style={styles.pdfTileInfo}>
+                        <View style={styles.pdfTileInfo_item}>
+                          <View x="1px 219fr 0px" y="0px minmax(0px, max-content) 0px" style={styles.pdfTileText}>
+                            <View style={styles.pdfTileText_item}>
+                              <View
+                                x="0px 218fr 1px"
+                                y="29px minmax(0px, max-content) 0px"
+                                style={styles.pdfName_box}>
+                                <Text style={styles.pdfName} ellipsizeMode={'clip'}>
+                                  {'The tropical plants of the Philippines'}
+                                </Text>
+                              </View>
+                            </View>
+                            <View style={styles.pdfTileText_item}>
+                              <View
+                                x="1px 217fr 1px"
+                                y="9px minmax(0px, max-content) 29px"
+                                style={styles.pdfDate_box}>
+                                <Text style={styles.pdfDate} ellipsizeMode={'clip'}>
+                                  {'13 Apr 2022, 11:53'}
+                                </Text>
+                              </View>
+                            </View>
+                          </View>
+                        </View>
+                        <View style={styles.pdfTileInfo_item2}>
+                          <button
+                            x="0px 33fr 0px"
+                            y="0px minmax(0px, max-content) 89px"
+                            style={styles.downloadState}
+                            onPress={() => Alert.alert('click')}>
+                            <ImageBackground
+                              style={[styles.downloadIcon, styles.downloadIcon_layout]}
+                              source={require('../assets/6784b72f243ed3938b4effbf0ffc0c7a.png')}
+                            />
+                          </button>
+                        </View>
+                      </View>
+                    </View>
+                  </button>
+                </View>
+              </View>
+            </View>
+            <View style={styles.pdfContents_item}>
+              <View x="4px 356fr 0px" y="27px minmax(0px, max-content) 0px" style={styles.viewAllButtonFrame}>
+                <button
+                  x="23px 310fr 23px"
+                  y="0px minmax(0px, max-content) 0px"
+                  style={styles.viewAllButton}
+                  onPress={() => Alert.alert('click')}>
+                  <View
+                    x="103px minmax(0px, max-content) 98fr"
+                    y="10px minmax(0px, max-content) 10fr"
+                    style={styles.viewAllButtonLabel_box}>
+                    <Text style={styles.viewAllButtonLabel} ellipsizeMode={'clip'}>
+                      {'View all PDFs'}
+                    </Text>
+                  </View>
+                </button>
+              </View>
+            </View>
+          </View>
+        </View>
+        <View style={styles.homeFlex_item}>
+          <View style={[styles.homeDiv, styles.homeDiv_layout]} />
+        </View>
+        <View style={styles.homeFlex_item}>
+          <button
+            x="27px 310fr 27px"
+            y="25px minmax(0px, max-content) 0px"
+            style={styles.settingsButton}
+            onPress={() => Alert.alert('click')}>
+            <button
+              x="0px 310fr 0px"
+              y="0px minmax(0px, max-content) 0px"
+              style={styles.settingsSpacing}
+              onPress={() => Alert.alert('click')}>
+              <View style={styles.settingsSpacing_item}>
+                <ImageBackground
+                  style={[styles.settingsIcon, styles.settingsIcon_layout]}
+                  source={require('../assets/7ad1b7976053414cc835006cba34b16d.png')}
+                />
+              </View>
+              <View style={styles.settingsSpacing_space} />
+              <View style={styles.settingsSpacing_item1}>
+                <View x="0px 66fr 121px" y="10px minmax(0px, max-content) 10px" style={styles.settingsText_box}>
+                  <Text style={styles.settingsText} ellipsizeMode={'clip'}>
+                    {'Settings'}
+                  </Text>
+                </View>
+              </View>
+            </button>
+          </button>
+        </View>
+        <View style={styles.homeFlex_item}>
+          <View x="28.3% 43.96% 27.75%" y="38px minmax(0px, max-content) 11px" style={styles.audioButtonGroup}>
+            <View style={styles.audioButtonGroup_item}>
+              <button
+                x="0px 80fr 0px"
+                y="0px minmax(0px, max-content) 0px"
+                style={styles.recordAudioButton}
+                onPress={() => Alert.alert('click')}>
+                <ImageBackground
+                  style={[styles.recordAudioIcon, styles.recordAudioIcon_layout]}
+                  source={require('../assets/6224a20de8d1d66e441de471733c2168.png')}
+                />
+              </button>
+            </View>
+            <View style={styles.audioButtonGroup_item}>
+              <button
+                x="0px 80fr 0px"
+                y="0px minmax(0px, max-content) 0px"
+                style={styles.uploadAudioButton}
+                onPress={() => Alert.alert('click')}>
+                <ImageBackground
+                  style={[styles.audioButtonGroupDiv, styles.audioButtonGroupDiv_layout]}
+                  source={require('../assets/0b67feb53a71fc494ea1192023ca3fe0.png')}
+                />
+                <ImageBackground
+                  style={[styles.uploadAudioIcon, styles.uploadAudioIcon_layout]}
+                  source={require('../assets/f096234e78f59a804b946264f7026e00.png')}
+                />
+              </button>
+            </View>
+          </View>
+        </View>
+      </View>
     </View>
   );
 }
 export default Home;
+
+Home.inStorybook = true;
+Home.fitScreen = false;
+Home.scrollHeight = 844;
 
 const styles = StyleSheet.create({
   home: {
