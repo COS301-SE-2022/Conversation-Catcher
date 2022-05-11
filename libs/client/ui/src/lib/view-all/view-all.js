@@ -81,7 +81,57 @@ export function ViewAll(props) {
                 <Px.View x="0px 41px 112fr" y="0px minmax(0px, max-content) 13px" style={styles.block13}>
                   <Px.View x="0px 41fr 0px" y="0px minmax(0px, max-content) 0px" style={styles.group}>
                     <View style={[styles.pdfFrame, styles.pdfFrame_layout]}>
-
+                      
+                      <View style={styles.pdfFrame_item}>
+                        <Px.View x="0px 356fr 0px" y="18px minmax(0px, max-content) 0px" style={styles.pdfTile}>
+                          <View style={styles.pdfTile_item}>
+                            <ImageBackground
+                              style={[styles.image, styles.image_layout]}
+                              source={require('../assets/822a4ffacfed7a8c6c870fe46d9baffd.png')}
+                            />
+                          </View>
+                          <View style={styles.pdfTile_space} />
+                          <View style={styles.pdfTile_item3}>
+                            <Px.View x="0px 253fr 0px" y="0px minmax(0px, max-content) 0px" style={styles.block3}>
+                              <View style={styles.block3_item}>
+                                <Px.View
+                                  x="1px 219fr 0px"
+                                  y="0px minmax(0px, max-content) 0px"
+                                  style={styles.pdfTileText}>
+                                  <View style={styles.pdfTileText_item}>
+                                    <Px.View
+                                      x="0px 212fr 7px"
+                                      y="39px minmax(0px, max-content) 0px"
+                                      style={styles.pdfName_box}>
+                                      <Text style={styles.pdfName} ellipsizeMode={'clip'}>
+                                        {'I am a very sable candidate'}
+                                      </Text>
+                                    </Px.View>
+                                  </View>
+                                  <View style={styles.pdfTileText_item}>
+                                    <Px.View
+                                      x="1px 217fr 1px"
+                                      y="9px minmax(0px, max-content) 39px"
+                                      style={styles.text_body_box2}>
+                                      <Text style={styles.text_body} ellipsizeMode={'clip'}>
+                                        {'29 March 2022, 14:57'}
+                                      </Text>
+                                    </Px.View>
+                                  </View>
+                                </Px.View>
+                              </View>
+                              <View style={styles.block3_item2}>
+                                <Px.View x="0px 33fr 0px" y="0px minmax(0px, max-content) 89px" style={styles.block5}>
+                                  <ImageBackground
+                                    style={[styles.downloadIcon, styles.downloadIcon_layout]}
+                                    source={require('../assets/6784b72f243ed3938b4effbf0ffc0c7a.png')}
+                                  />
+                                </Px.View>
+                              </View>
+                            </Px.View>
+                          </View>
+                        </Px.View>
+                      </View>
                       <View style={styles.pdfFrame_space} />
                       <View style={styles.pdfFrame_space} />
                       <View style={styles.pdfFrame_space} />
