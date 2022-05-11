@@ -62,10 +62,10 @@ jobs:
         # Runs a set of commands using the runners shell
       - name: Run affected tests
         run: |
-          nx affected --target=test --no-cache --base=[SHA1] --head=[SHA2],
-          nx affected --target=lint --no-cache --base=[SHA1] --head=[SHA2],
-          nx affected --target=build --no-cache --base=[SHA1] --head=[SHA2],
-          nx affected --target=e2e --no-cache --base=[SHA1] --head=[SHA2]
+          nx affected --target=test --no-cache,
+          nx affected --target=lint --no-cache,
+          nx affected --target=build --no-cache,
+          nx affected --target=e2e --no-cache
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2
