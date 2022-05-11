@@ -78,7 +78,17 @@ export function ViewAll(props) {
             <View style={styles.bottomFlex_space1} />
             <View style={styles.bottomFlex_item2}>
               <Px.View x="0px 153fr 0px" y="8px minmax(0px, max-content) 0px" style={styles.block12}>
-                
+                <Px.View x="0px 41px 112fr" y="0px minmax(0px, max-content) 13px" style={styles.block13}>
+                  <Px.View x="0px 41fr 0px" y="0px minmax(0px, max-content) 0px" style={styles.group}>
+                    <View style={[styles.pdfFrame, styles.pdfFrame_layout]}>
+
+                      <View style={styles.pdfFrame_space} />
+                      <View style={styles.pdfFrame_space} />
+                      <View style={styles.pdfFrame_space} />
+                      <View style={styles.pdfFrame_space} />
+                    </View>
+                  </Px.View>
+                </Px.View>
               </Px.View>
             </View>
           </Px.View>
