@@ -71,7 +71,18 @@ export function ViewAll(props) {
               </View>
             </View>
             <View style={styles.orderByDropDown_space} />
-            
+            <View style={styles.orderByDropDown_item1}>
+              <Px.Pressable
+                x="0px 20fr 14px"
+                y="12px minmax(0px, max-content) 12px"
+                style={styles.orderByButton}
+                onPress={() => Alert.alert('click')}>
+                <ImageBackground
+                  style={[styles.orderByIcon, styles.orderByIcon_layout]}
+                  source={require('../assets/cc91d6ae1ee6693ad1312f5f6a5ca71d.png')}
+                />
+              </Px.Pressable>
+            </View>
           </Px.Pressable>
 
         </Px.View>
