@@ -81,8 +81,64 @@ export function ViewAll(props) {
                 <Px.View x="0px 41px 112fr" y="0px minmax(0px, max-content) 13px" style={styles.block13}>
                   <Px.View x="0px 41fr 0px" y="0px minmax(0px, max-content) 0px" style={styles.group}>
                     <View style={[styles.pdfFrame, styles.pdfFrame_layout]}>
-                      
-                      
+                      <View style={styles.pdfFrame_item}>
+                        <Px.Pressable
+                          x="0px 356fr 0px"
+                          y="0px minmax(0px, max-content) 0px"
+                          style={styles.pdfTile}
+                          onPress={() => Alert.alert('click')}>
+                          <View style={styles.pdfTile_item}>
+                            <ImageBackground
+                              style={[styles.pdfThumbnail, styles.pdfThumbnail_layout]}
+                              source={require('../assets/23a067db3896c1ac956e0e22fe9c7588.png')}
+                            />
+                          </View>
+                          <View style={styles.pdfTile_space} />
+                          <View style={styles.pdfTile_item1}>
+                            <Px.View x="0px 253fr 0px" y="0px minmax(0px, max-content) 0px" style={styles.pdfTileInfo}>
+                              <View style={styles.pdfTileInfo_item}>
+                                <Px.View
+                                  x="1px 219fr 0px"
+                                  y="0px minmax(0px, max-content) 0px"
+                                  style={styles.pdfTileText}>
+                                  <View style={styles.pdfTileText_item}>
+                                    <Px.View
+                                      x="0px 218fr 1px"
+                                      y="29px minmax(0px, max-content) 0px"
+                                      style={styles.pdfName_box}>
+                                      <Text style={styles.pdfName} ellipsizeMode={'clip'}>
+                                        {'Bug introduction: a modification of code'}
+                                      </Text>
+                                    </Px.View>
+                                  </View>
+                                  <View style={styles.pdfTileText_item}>
+                                    <Px.View
+                                      x="1px 217fr 1px"
+                                      y="9px minmax(0px, max-content) 29px"
+                                      style={styles.pdfDate_box}>
+                                      <Text style={styles.pdfDate} ellipsizeMode={'clip'}>
+                                        {'1 May 2022, 9:37'}
+                                      </Text>
+                                    </Px.View>
+                                  </View>
+                                </Px.View>
+                              </View>
+                              <View style={styles.pdfTileInfo_item1}>
+                                <Px.Pressable
+                                  x="0px 33fr 0px"
+                                  y="0px minmax(0px, max-content) 89px"
+                                  style={styles.downloadState}
+                                  onPress={() => Alert.alert('click')}>
+                                  <ImageBackground
+                                    style={[styles.downloadIcon, styles.downloadIcon_layout]}
+                                    source={require('../assets/6784b72f243ed3938b4effbf0ffc0c7a.png')}
+                                  />
+                                </Px.Pressable>
+                              </View>
+                            </Px.View>
+                          </View>
+                        </Px.Pressable>
+                      </View>
                       <View style={styles.pdfFrame_item}>
                         <Px.Pressable
                           x="0px 356fr 0px"
