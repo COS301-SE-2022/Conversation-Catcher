@@ -2,8 +2,8 @@
   "version": 2,
   "projects": {
     "api": "apps/api",
-    "api-database-manager-api-interface": "libs/api/database-manager/api/interface",
     "api-database-manager-api-feature": "libs/api/database-manager/api/feature",
+    "api-database-manager-api-interface": "libs/api/database-manager/api/interface",
     "api-shell": "libs/api/shell",
     "api-speech-to-text-api": "libs/api/speech-to-text/api",
     "api-speech-to-text-repository": "libs/api/speech-to-text/repository",
