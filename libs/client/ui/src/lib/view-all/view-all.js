@@ -83,6 +83,41 @@ export function ViewAll(props) {
                     <View style={[styles.pdfFrame, styles.pdfFrame_layout]}>
                       
                       <View style={styles.pdfFrame_item}>
+                        <Px.View x="0px 356fr 0px" y="18px minmax(0px, max-content) 0px" style={styles.block9}>
+                          <View style={styles.block9_item}>
+                            <ImageBackground
+                              style={[styles.image, styles.image_layout]}
+                              source={require('../assets/eb280550057d075f24cdd330438abed1.png')}
+                            />
+                          </View>
+                          <View style={styles.block9_space} />
+                          <View style={styles.block9_item1}>
+                            <Px.View x="0px 253fr 0px" y="0px minmax(0px, max-content) 0px" style={styles.block7}>
+                              <View style={styles.block7_item}>
+                                <View style={[styles.block8, styles.block8_layout]}>
+                                  <View style={[styles.pdfName_box2, styles.pdfName_box2_layout]}>
+                                    <Text style={styles.pdfName} ellipsizeMode={'clip'}>
+                                      {'Devin Brittain The snacks of the popcorn'}
+                                    </Text>
+                                  </View>
+                                  <View style={[styles.text_body_box, styles.text_body_box_layout1]}>
+                                    <Text style={styles.text_body} ellipsizeMode={'clip'}>
+                                      {'4 Apr 2022, 13:03'}
+                                    </Text>
+                                  </View>
+                                </View>
+                              </View>
+                              <View style={styles.block7_item2}>
+                                <ImageBackground
+                                  style={[styles.image2, styles.image2_layout]}
+                                  source={require('../assets/4517a97e95ebe8ad3751a63a5759b6d2.png')}
+                                />
+                              </View>
+                            </Px.View>
+                          </View>
+                        </Px.View>
+                      </View>
+                      <View style={styles.pdfFrame_item}>
                         <Px.View x="0px 356fr 0px" y="18px minmax(0px, max-content) 0px" style={styles.pdfTile}>
                           <View style={styles.pdfTile_item}>
                             <ImageBackground
