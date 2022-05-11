@@ -53,7 +53,18 @@ export function ViewAll(props) {
             </Text>
           </Px.View>
 
-
+          <Px.View x="14px 362fr 14px" y="0px minmax(0px, max-content) 0px" style={styles.bottomFlex}>
+            <View style={styles.bottomFlex_item}>
+              <Px.ImageBackground
+                x="33px 9px 0px"
+                y="22px 18px 21px"
+                style={styles.backIcon}
+                onPress={() => Alert.alert('click')}
+                source={require('../assets/f762e82c40c63fd888499d8d139bcf08.png')}
+                container={TouchableOpacity}
+              />
+            </View>
+          </Px.View>
 
           <Px.Pressable
             x="69.23% 23.08% 7.69%"
