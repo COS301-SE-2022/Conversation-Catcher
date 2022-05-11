@@ -102,5 +102,156 @@ const styles = StyleSheet.create({
     width: 90,
     minWidth: 90,
     marginRight: 0
+  },
+  pdfTile_space: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 13
+  },
+  pdfTile_item1: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 253
+  },
+  pdfTileInfo: {
+    flexGrow: 1,
+    flexDirection: 'row'
+  },
+  pdfTileInfo_item: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 220
+  },
+  pdfTileText: {
+    flexGrow: 1
+  },
+  pdfTileText_item: {
+    flexGrow: 0,
+    flexShrink: 1
+  },
+  pdfName: {
+    color: '#344053ff',
+    textAlign: 'left',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 16,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+    paddingHorizontal: 0,
+    paddingVertical: 0
+  },
+  pdfName_box: {
+    flexGrow: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start'
+  },
+  pdfDate: {
+    color: '#667084ff',
+    textAlign: 'left',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 14,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+    paddingHorizontal: 0,
+    paddingVertical: 0
+  },
+  pdfDate_box: {
+    flexGrow: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'flex-start'
+  },
+  pdfTileInfo_item1: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 33
+  },
+  downloadState: {
+    width: '100%',
+    flexGrow: 1
+  },
+  downloadIcon: {
+    resizeMode: 'contain'
+  },
+  downloadIcon_layout: {
+    marginTop: 10,
+    height: 18,
+    marginBottom: 10,
+    marginLeft: 4,
+    width: 18,
+    minWidth: 18,
+    marginRight: 11
+  },
+  pdfThumbnail_layout1: {
+    marginTop: 0,
+    height: 128,
+    marginBottom: 0,
+    marginLeft: 0,
+    width: 90,
+    minWidth: 90,
+    marginRight: 0
+  },
+  pdfTile_item2: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 253
+  },
+  block8: {
+    flexGrow: 1,
+    flexDirection: 'row'
+  },
+  block8_item: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 217
+  },
+  block9: {},
+  block9_layout: {
+    marginTop: 0,
+    height: 127,
+    marginBottom: 0,
+    marginLeft: 5,
+    flexGrow: 1,
+    marginRight: 0
+  },
+  pdfName_box1_layout: {
+    position: 'absolute',
+    top: 39,
+    width: 223,
+    right: -8
+  },
+  pdfName_box1: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start'
+  },
+  pdfDate_box1_layout: {
+    position: 'absolute',
+    top: 78,
+    height: 20,
+    left: -2,
+    width: 127
+  },
+  pdfDate_box1: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'flex-start'
+  },
+  block8_item1: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 36
+  },
+  image2: {
+    resizeMode: 'contain'
+  },
+  pdfTile_item3: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 253
   }
 });
