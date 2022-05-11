@@ -26,6 +26,10 @@
       ],
       "@conversation-catcher/api/pdf-manager/service": [
         "libs/api/pdf-manager/service/src/index.ts"
+      "@conversation-catcher/api/database-manager/api/interface": [
+        "libs/api/database-manager/api/interface/src/index.ts"],
+      "@conversation-catcher/api/database-manager/api/feature": [
+        "libs/api/database-manager/api/feature/src/index.ts"
       ],
       "@conversation-catcher/api/speech-to-text/api": [
         "libs/api/speech-to-text/api/src/index.ts"
@@ -45,6 +49,7 @@
       "@conversation-catcher/api/summarise-text/service": [
         "libs/api/summarise-text/service/src/index.ts"
       ],
+      "@conversation-catcher/client/ui": ["libs/client/ui/src/index.ts"],
       "@conversation-catcher/shell": ["libs/api/shell/src/index.ts"]
     }
   },
