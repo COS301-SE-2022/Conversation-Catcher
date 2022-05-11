@@ -1,0 +1,22 @@
+{
+  "sourceRoot": "libs/api/pdf-manager/api/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/api/pdf-manager/api/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/api/pdf-manager/api"],
+      "options": {
+        "jestConfig": "libs/api/pdf-manager/api/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
