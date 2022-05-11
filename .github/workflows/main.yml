@@ -22,8 +22,11 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+      #Checking out to the main branch
+      - name: Checkout main
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
         #Generates the hashes for the comparison between the origin branch and the upstream development branch
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
@@ -37,6 +40,10 @@ jobs:
         with:
           node-version: '16'
 
+      #installs yarn
+      - name: Install nx
+        run: npm install nx -g
+        
         #installs yarn
       - name: Install yarn
         run: npm install yarn -g
@@ -55,12 +62,12 @@ jobs:
         # Runs a set of commands using the runners shell
       - name: Run affected tests
         run: |
-          nx affected --target=test --no-cache --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }},
-          nx affected --target=lint --no-cache --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }},
-          nx affected --target=build --no-cache --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }},
-          nx affected --target=e2e --no-cache --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
+          nx affected --target=test,
+          nx affected --target=lint,
+          nx affected --target=build,
+          nx affected --target=e2e
 
       - name: Upload coverage to Codecov
-          uses: codecov/codecov-action@v2
-          with:
-            token: ${{ secrets.CODECOV_TOKEN }}
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
