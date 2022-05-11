@@ -411,18 +411,6 @@ const styles = StyleSheet.create({
     width: 223,
     right: -8
   },
-  pdfName: {
-    color: '#344053ff',
-    textAlign: 'left',
-    letterSpacing: 0,
-    lineHeight: 20,
-    fontSize: 16,
-    fontWeight: '400',
-    fontStyle: 'normal',
-    fontFamily: 'System' /* Inter */,
-    paddingHorizontal: 0,
-    paddingVertical: 0
-  },
   pdfName_box1: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -487,30 +475,6 @@ const styles = StyleSheet.create({
     flexShrink: 1,
     flexBasis: 220
   },
-  pdfName: {
-    color: '#344053ff',
-    textAlign: 'left',
-    letterSpacing: 0,
-    lineHeight: 20,
-    fontSize: 16,
-    fontWeight: '400',
-    fontStyle: 'normal',
-    fontFamily: 'System' /* Inter */,
-    paddingHorizontal: 0,
-    paddingVertical: 0
-  },
-  text_body: {
-    color: '#667084ff',
-    textAlign: 'left',
-    letterSpacing: 0,
-    lineHeight: 20,
-    fontSize: 14,
-    fontWeight: '400',
-    fontStyle: 'normal',
-    fontFamily: 'System' /* Inter */,
-    paddingHorizontal: 0,
-    paddingVertical: 0
-  },
   text_body_box1: {
     flexGrow: 1,
     flexDirection: 'row',
@@ -563,18 +527,6 @@ const styles = StyleSheet.create({
     width: 218,
     right: -3
   },
-  pdfName: {
-    color: '#344053ff',
-    textAlign: 'left',
-    letterSpacing: 0,
-    lineHeight: 20,
-    fontSize: 16,
-    fontWeight: '400',
-    fontStyle: 'normal',
-    fontFamily: 'System' /* Inter */,
-    paddingHorizontal: 0,
-    paddingVertical: 0
-  },
   pdfName_box2: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -586,18 +538,6 @@ const styles = StyleSheet.create({
     height: 20,
     left: -2,
     width: 123
-  },
-  text_body: {
-    color: '#667084ff',
-    textAlign: 'left',
-    letterSpacing: 0,
-    lineHeight: 20,
-    fontSize: 14,
-    fontWeight: '400',
-    fontStyle: 'normal',
-    fontFamily: 'System' /* Inter */,
-    paddingHorizontal: 0,
-    paddingVertical: 0
   },
   block7_item2: {
     flexGrow: 0,
@@ -617,30 +557,6 @@ const styles = StyleSheet.create({
     flexGrow: 0,
     flexShrink: 1,
     flexBasis: 253
-  },
-  pdfName: {
-    color: '#344053ff',
-    textAlign: 'left',
-    letterSpacing: 0,
-    lineHeight: 20,
-    fontSize: 16,
-    fontWeight: '400',
-    fontStyle: 'normal',
-    fontFamily: 'System' /* Inter */,
-    paddingHorizontal: 0,
-    paddingVertical: 0
-  },
-  text_body: {
-    color: '#667084ff',
-    textAlign: 'left',
-    letterSpacing: 0,
-    lineHeight: 20,
-    fontSize: 14,
-    fontWeight: '400',
-    fontStyle: 'normal',
-    fontFamily: 'System' /* Inter */,
-    paddingHorizontal: 0,
-    paddingVertical: 0
   },
   text_body_box2: {
     flexGrow: 1,
