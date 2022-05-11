@@ -343,5 +343,398 @@ const styles = StyleSheet.create({
     minWidth: 18,
     marginRight: 11
   },
-  
+  block6: {
+    flexGrow: 1,
+    borderRadius: 5,
+    borderStyle: 'solid',
+    borderColor: '#d0d5ddff',
+    borderWidth: 1,
+    elevation: 2,
+    shadowColor: '#000000',
+    shadowRadius: 2.621621621621622,
+    shadowOpacity: 0.2173913043478261,
+    shadowOffset: {
+      width: 0,
+      height: 1
+    },
+    flexDirection: 'row'
+  },
+  block6_item: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 90
+  },
+  image1: {
+    resizeMode: 'contain',
+    borderRadius: 5
+  },
+  image1_layout: {
+    marginTop: 0,
+    height: 128,
+    marginBottom: 0,
+    marginLeft: 0,
+    width: 90,
+    minWidth: 90,
+    marginRight: 0
+  },
+  block6_space: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 13
+  },
+  block6_item1: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 253
+  },
+  block7: {
+    flexGrow: 1,
+    flexDirection: 'row'
+  },
+  block7_item: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 217
+  },
+  block8: {},
+  block8_layout: {
+    marginTop: 0,
+    height: 127,
+    marginBottom: 0,
+    marginLeft: 5,
+    flexGrow: 1,
+    marginRight: 0
+  },
+  pdfName_box1_layout: {
+    position: 'absolute',
+    top: 39,
+    width: 223,
+    right: -8
+  },
+  pdfName: {
+    color: '#344053ff',
+    textAlign: 'left',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 16,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+    paddingHorizontal: 0,
+    paddingVertical: 0
+  },
+  pdfName_box1: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start'
+  },
+  text_body_box_layout: {
+    position: 'absolute',
+    top: 78,
+    height: 20,
+    left: -2,
+    width: 127
+  },
+  text_body: {
+    color: '#667084ff',
+    textAlign: 'left',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 14,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+    paddingHorizontal: 0,
+    paddingVertical: 0
+  },
+  text_body_box: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'flex-start'
+  },
+  block7_item1: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 36
+  },
+  image2: {
+    resizeMode: 'contain'
+  },
+  image: {
+    resizeMode: 'contain',
+    borderRadius: 5
+  },
+  image_layout: {
+    marginTop: 0,
+    height: 127,
+    marginBottom: 0,
+    marginLeft: 0,
+    width: 90,
+    minWidth: 90,
+    marginRight: 0
+  },
+  pdfTile_item2: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 253
+  },
+  block3: {
+    flexGrow: 1,
+    flexDirection: 'row'
+  },
+  block3_item: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 220
+  },
+  pdfName: {
+    color: '#344053ff',
+    textAlign: 'left',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 16,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+    paddingHorizontal: 0,
+    paddingVertical: 0
+  },
+  text_body: {
+    color: '#667084ff',
+    textAlign: 'left',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 14,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+    paddingHorizontal: 0,
+    paddingVertical: 0
+  },
+  text_body_box1: {
+    flexGrow: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'flex-start'
+  },
+  block3_item1: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 33
+  },
+  block5: {
+    width: '100%',
+    flexGrow: 1
+  },
+  block9: {
+    flexGrow: 1,
+    borderRadius: 5,
+    borderStyle: 'solid',
+    borderColor: '#d0d5ddff',
+    borderWidth: 1,
+    elevation: 2,
+    shadowColor: '#000000',
+    shadowRadius: 2.621621621621622,
+    shadowOpacity: 0.2173913043478261,
+    shadowOffset: {
+      width: 0,
+      height: 1
+    },
+    flexDirection: 'row'
+  },
+  block9_item: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 90
+  },
+  block9_space: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 13
+  },
+  block9_item1: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 253
+  },
+  pdfName_box2_layout: {
+    position: 'absolute',
+    top: 29,
+    width: 218,
+    right: -3
+  },
+  pdfName: {
+    color: '#344053ff',
+    textAlign: 'left',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 16,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+    paddingHorizontal: 0,
+    paddingVertical: 0
+  },
+  pdfName_box2: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start'
+  },
+  text_body_box_layout1: {
+    position: 'absolute',
+    top: 78,
+    height: 20,
+    left: -2,
+    width: 123
+  },
+  text_body: {
+    color: '#667084ff',
+    textAlign: 'left',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 14,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+    paddingHorizontal: 0,
+    paddingVertical: 0
+  },
+  block7_item2: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 36
+  },
+  image2_layout: {
+    marginTop: 0,
+    height: 34,
+    marginBottom: 93,
+    marginLeft: 0,
+    width: 31,
+    minWidth: 31,
+    marginRight: 5
+  },
+  pdfTile_item3: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 253
+  },
+  pdfName: {
+    color: '#344053ff',
+    textAlign: 'left',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 16,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+    paddingHorizontal: 0,
+    paddingVertical: 0
+  },
+  text_body: {
+    color: '#667084ff',
+    textAlign: 'left',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 14,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+    paddingHorizontal: 0,
+    paddingVertical: 0
+  },
+  text_body_box2: {
+    flexGrow: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'flex-start'
+  },
+  block3_item2: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 33
+  },
+  pdfFrame_space: {
+    flexGrow: 0,
+    flexShrink: 1
+  },
+  orderByDropDown: {
+    flexGrow: 1,
+    backgroundColor: '#ffffffff',
+    borderRadius: 8,
+    borderStyle: 'solid',
+    borderColor: '#d0d5ddff',
+    borderWidth: 1,
+    elevation: 2,
+    shadowColor: '#000000',
+    shadowRadius: 2.621621621621622,
+    shadowOpacity: 0.2173913043478261,
+    shadowOffset: {
+      width: 0,
+      height: 1
+    },
+    flexDirection: 'row'
+  },
+  orderByDropDown_item: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 48
+  },
+  orderByDropDownTextBox: {},
+  orderByDropDownTextBox_layout: {
+    marginTop: 10,
+    height: 24,
+    marginBottom: 10,
+    marginLeft: 14,
+    flexGrow: 1,
+    marginRight: 0
+  },
+  orderByDropDownText_box_layout: {
+    position: 'absolute',
+    top: 0,
+    width: 40,
+    right: -6
+  },
+  orderByDropDownText: {
+    color: '#667084ff',
+    textAlign: 'left',
+    letterSpacing: 0,
+    lineHeight: 24,
+    fontSize: 16,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+    paddingHorizontal: 0,
+    paddingVertical: 0
+  },
+  orderByDropDownText_box: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start'
+  },
+  orderByDropDown_space: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 8
+  },
+  orderByDropDown_item1: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 34
+  },
+  orderByButton: {
+    width: '100%',
+    flexGrow: 1
+  },
+  orderByIcon: {
+    resizeMode: 'contain'
+  },
+  orderByIcon_layout: {
+    marginTop: 8,
+    height: 5,
+    marginBottom: 7,
+    marginLeft: 5,
+    width: 10,
+    minWidth: 10,
+    marginRight: 5
+  }
 });
