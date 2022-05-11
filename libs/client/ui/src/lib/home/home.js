@@ -365,4 +365,105 @@ const styles = StyleSheet.create({
     flexShrink: 1,
     flexBasis: 84
   },
+  settingsSpacing_item1: {
+    flexGrow: 0,
+    flexShrink: 0,
+    minWidth: 0
+  },
+  settingsText: {
+    color: '#344053ff',
+    textAlign: 'center',
+    letterSpacing: 0,
+    lineHeight: 24,
+    fontSize: 20,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Jaldi */,
+    paddingHorizontal: 0,
+    paddingVertical: 0
+  },
+  settingsText_box: {
+    flexGrow: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'center'
+  },
+  audioButtonGroup: {
+    flexGrow: 1,
+    borderRadius: 8,
+    flexDirection: 'row'
+  },
+  audioButtonGroup_item: {
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: 80
+  },
+  recordAudioButton: {
+    width: '100%',
+    flexGrow: 1,
+    backgroundColor: '#d0d5ddff',
+    borderTopLeftRadius: 8,
+    borderBottomLeftRadius: 8,
+    overflow: 'hidden',
+    elevation: 1,
+    shadowColor: '#000000',
+    shadowRadius: 1.810810810810811,
+    shadowOpacity: 0.2,
+    shadowOffset: {
+      width: 0,
+      height: 1
+    }
+  },
+  recordAudioIcon: {
+    resizeMode: 'contain'
+  },
+  recordAudioIcon_layout: {
+    marginTop: 20,
+    height: 40,
+    marginBottom: 20,
+    marginLeft: 27,
+    width: 26,
+    minWidth: 26,
+    marginRight: 27
+  },
+  uploadAudioButton: {
+    width: '100%',
+    flexGrow: 1,
+    backgroundColor: '#d0d5ddff',
+    borderTopRightRadius: 8,
+    borderBottomRightRadius: 8,
+    overflow: 'hidden',
+    elevation: 1,
+    shadowColor: '#000000',
+    shadowRadius: 1.810810810810811,
+    shadowOpacity: 0.2,
+    shadowOffset: {
+      width: 0,
+      height: 1
+    }
+  },
+  audioButtonGroupDiv: {
+    resizeMode: 'contain',
+    borderStyle: 'solid',
+    borderColor: '#667085ff'
+  },
+  audioButtonGroupDiv_layout: {
+    position: 'absolute',
+    top: -10,
+    height: 100,
+    left: -10,
+    width: 21
+  },
+  uploadAudioIcon: {
+    resizeMode: 'contain'
+  },
+  uploadAudioIcon_layout: {
+    marginTop: 22,
+    height: 36,
+    marginBottom: 22,
+    marginLeft: 22,
+    width: 36,
+    minWidth: 36,
+    marginRight: 22
+  }
 });
