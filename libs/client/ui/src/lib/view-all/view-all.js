@@ -4,7 +4,43 @@ import { View, StyleSheet, Text, Image, ImageBackground, Pressable, TouchableOpa
 export function ViewAll(props) {
   return (
     <View style={[styles.viewAllPage, styles.viewAllPage_layout]}>
-      
+      <View style={styles.viewAllPage_item}>
+        <View x="0px 390fr 0px" y="0px minmax(0px, max-content) 0px" style={styles.viewAllTopBar}>
+          <View x="17px 356fr 17px" y="20px minmax(0px, max-content) 20px" style={styles.topFlex}>
+            <View style={styles.topFlex_item}>
+              <View x="7.3% 18.26% 74.44%" y="18px minmax(0px, max-content) 0px" style={styles.viewAllTitle_box}>
+                <Text style={styles.viewAllTitle} ellipsizeMode={'clip'}>
+                  {'PDFs'}
+                </Text>
+              </View>
+            </View>
+            <View style={styles.topFlex_item}>
+              <View x="0px 356fr 0px" y="11px minmax(0px, max-content) 0px" style={styles.searchBar}>
+                <View x="0px 356fr 0px" y="0px minmax(0px, max-content) 0px" style={styles.block19}>
+                  <Pressable style={[styles.block20, styles.block20_layout]} onPress={() => Alert.alert('click')}>
+                    <View x="14px 328fr 14px" y="10px minmax(0px, max-content) 10px" style={styles.searchContents}>
+                      <View style={styles.searchContents_item}>
+                        <ImageBackground
+                          style={[styles.searchIcon, styles.searchIcon_layout]}
+                          source={require('../assets/cf60ecb68aa83021ee8ce615fa41038e.png')}
+                        />
+                      </View>
+                      <View style={styles.searchContents_space} />
+                      <View style={styles.searchContents_item1}>
+                        <Px.View x="0px 57fr 243px" y="0px minmax(0px, max-content) 0px" style={styles.searchInput_box}>
+                          <Text style={styles.searchInput} ellipsizeMode={'clip'}>
+                            {'Search'}
+                          </Text>
+                        </Px.View>
+                      </View>
+                    </View>
+                  </Pressable>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
     </View>
   );
 }
