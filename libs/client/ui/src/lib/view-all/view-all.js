@@ -27,11 +27,11 @@ export function ViewAll(props) {
                       </View>
                       <View style={styles.searchContents_space} />
                       <View style={styles.searchContents_item1}>
-                        <Px.View x="0px 57fr 243px" y="0px minmax(0px, max-content) 0px" style={styles.searchInput_box}>
+                        <View x="0px 57fr 243px" y="0px minmax(0px, max-content) 0px" style={styles.searchInput_box}>
                           <Text style={styles.searchInput} ellipsizeMode={'clip'}>
                             {'Search'}
                           </Text>
-                        </Px.View>
+                        </View>
                       </View>
                     </View>
                   </Pressable>
@@ -42,8 +42,8 @@ export function ViewAll(props) {
         </View>
       </View>
       <View style={styles.viewAllPage_item}>
-        <Px.View x="0px 390fr 0px" y="640px minmax(0px, max-content) 0px" style={styles.viewAllBottomBar}>
-          <Px.View
+        <View x="0px 390fr 0px" y="640px minmax(0px, max-content) 0px" style={styles.viewAllBottomBar}>
+          <View
             x="57.18% 10.51% 32.31%"
             y="8px minmax(0px, max-content) 13px"
             absolute
@@ -51,11 +51,11 @@ export function ViewAll(props) {
             <Text style={styles.orderByLabel} ellipsizeMode={'clip'}>
               {'Order by'}
             </Text>
-          </Px.View>
+          </View>
 
-          <Px.View x="14px 362fr 14px" y="0px minmax(0px, max-content) 0px" style={styles.bottomFlex}>
+          <View x="14px 362fr 14px" y="0px minmax(0px, max-content) 0px" style={styles.bottomFlex}>
             <View style={styles.bottomFlex_item}>
-              <Px.ImageBackground
+              <ImageBackground
                 x="33px 9px 0px"
                 y="22px 18px 21px"
                 style={styles.backIcon}
@@ -66,7 +66,7 @@ export function ViewAll(props) {
             </View>
             <View style={styles.bottomFlex_space} />
             <View style={styles.bottomFlex_item1}>
-              <Px.ImageBackground
+              <ImageBackground
                 x="0px 24px 0px"
                 y="29px 3px 29px"
                 style={styles.moreOptionsIcon}
@@ -77,12 +77,12 @@ export function ViewAll(props) {
             </View>
             <View style={styles.bottomFlex_space1} />
             <View style={styles.bottomFlex_item2}>
-              <Px.View x="0px 153fr 0px" y="8px minmax(0px, max-content) 0px" style={styles.block12}>
-                <Px.View x="0px 41px 112fr" y="0px minmax(0px, max-content) 13px" style={styles.block13}>
-                  <Px.View x="0px 41fr 0px" y="0px minmax(0px, max-content) 0px" style={styles.group}>
+              <View x="0px 153fr 0px" y="8px minmax(0px, max-content) 0px" style={styles.block12}>
+                <View x="0px 41px 112fr" y="0px minmax(0px, max-content) 13px" style={styles.block13}>
+                  <View x="0px 41fr 0px" y="0px minmax(0px, max-content) 0px" style={styles.group}>
                     <View style={[styles.pdfFrame, styles.pdfFrame_layout]}>
                       <View style={styles.pdfFrame_item}>
-                        <Px.Pressable
+                        <Pressable
                           x="0px 356fr 0px"
                           y="0px minmax(0px, max-content) 0px"
                           style={styles.pdfTile}
@@ -95,36 +95,36 @@ export function ViewAll(props) {
                           </View>
                           <View style={styles.pdfTile_space} />
                           <View style={styles.pdfTile_item1}>
-                            <Px.View x="0px 253fr 0px" y="0px minmax(0px, max-content) 0px" style={styles.pdfTileInfo}>
+                            <View x="0px 253fr 0px" y="0px minmax(0px, max-content) 0px" style={styles.pdfTileInfo}>
                               <View style={styles.pdfTileInfo_item}>
-                                <Px.View
+                                <View
                                   x="1px 219fr 0px"
                                   y="0px minmax(0px, max-content) 0px"
                                   style={styles.pdfTileText}>
                                   <View style={styles.pdfTileText_item}>
-                                    <Px.View
+                                    <View
                                       x="0px 218fr 1px"
                                       y="29px minmax(0px, max-content) 0px"
                                       style={styles.pdfName_box}>
                                       <Text style={styles.pdfName} ellipsizeMode={'clip'}>
                                         {'Bug introduction: a modification of code'}
                                       </Text>
-                                    </Px.View>
+                                    </View>
                                   </View>
                                   <View style={styles.pdfTileText_item}>
-                                    <Px.View
+                                    <View
                                       x="1px 217fr 1px"
                                       y="9px minmax(0px, max-content) 29px"
                                       style={styles.pdfDate_box}>
                                       <Text style={styles.pdfDate} ellipsizeMode={'clip'}>
                                         {'1 May 2022, 9:37'}
                                       </Text>
-                                    </Px.View>
+                                    </View>
                                   </View>
-                                </Px.View>
+                                </View>
                               </View>
                               <View style={styles.pdfTileInfo_item1}>
-                                <Px.Pressable
+                                <Pressable
                                   x="0px 33fr 0px"
                                   y="0px minmax(0px, max-content) 89px"
                                   style={styles.downloadState}
@@ -133,14 +133,14 @@ export function ViewAll(props) {
                                     style={[styles.downloadIcon, styles.downloadIcon_layout]}
                                     source={require('../assets/6784b72f243ed3938b4effbf0ffc0c7a.png')}
                                   />
-                                </Px.Pressable>
+                                </Pressable>
                               </View>
-                            </Px.View>
+                            </View>
                           </View>
-                        </Px.Pressable>
+                        </Pressable>
                       </View>
                       <View style={styles.pdfFrame_item}>
-                        <Px.Pressable
+                        <Pressable
                           x="0px 356fr 0px"
                           y="18px minmax(0px, max-content) 0px"
                           style={styles.block6}
@@ -153,7 +153,7 @@ export function ViewAll(props) {
                           </View>
                           <View style={styles.block6_space} />
                           <View style={styles.block6_item1}>
-                            <Px.View x="0px 253fr 0px" y="0px minmax(0px, max-content) 1px" style={styles.block7}>
+                            <View x="0px 253fr 0px" y="0px minmax(0px, max-content) 1px" style={styles.block7}>
                               <View style={styles.block7_item}>
                                 <View style={[styles.block8, styles.block8_layout]}>
                                   <View style={[styles.pdfName_box1, styles.pdfName_box1_layout]}>
@@ -169,7 +169,7 @@ export function ViewAll(props) {
                                 </View>
                               </View>
                               <View style={styles.block7_item1}>
-                                <Px.ImageBackground
+                                <ImageBackground
                                   x="0px 31px 5px"
                                   y="0px 34px 93px"
                                   style={styles.image2}
@@ -178,12 +178,12 @@ export function ViewAll(props) {
                                   container={TouchableOpacity}
                                 />
                               </View>
-                            </Px.View>
+                            </View>
                           </View>
-                        </Px.Pressable>
+                        </Pressable>
                       </View>
                       <View style={styles.pdfFrame_item}>
-                        <Px.View x="0px 356fr 0px" y="18px minmax(0px, max-content) 0px" style={styles.pdfTile}>
+                        <View x="0px 356fr 0px" y="18px minmax(0px, max-content) 0px" style={styles.pdfTile}>
                           <View style={styles.pdfTile_item}>
                             <ImageBackground
                               style={[styles.image, styles.image_layout]}
@@ -192,48 +192,48 @@ export function ViewAll(props) {
                           </View>
                           <View style={styles.pdfTile_space} />
                           <View style={styles.pdfTile_item2}>
-                            <Px.View x="0px 253fr 0px" y="0px minmax(0px, max-content) 0px" style={styles.block3}>
+                            <View x="0px 253fr 0px" y="0px minmax(0px, max-content) 0px" style={styles.block3}>
                               <View style={styles.block3_item}>
-                                <Px.View
+                                <View
                                   x="1px 219fr 0px"
                                   y="0px minmax(0px, max-content) 0px"
                                   style={styles.pdfTileText}>
                                   <View style={styles.pdfTileText_item}>
-                                    <Px.View
+                                    <View
                                       x="0px 218fr 1px"
                                       y="29px minmax(0px, max-content) 0px"
                                       style={styles.pdfName_box}>
                                       <Text style={styles.pdfName} ellipsizeMode={'clip'}>
                                         {'The tropical plants of the Philippines'}
                                       </Text>
-                                    </Px.View>
+                                    </View>
                                   </View>
                                   <View style={styles.pdfTileText_item}>
-                                    <Px.View
+                                    <View
                                       x="1px 217fr 1px"
                                       y="9px minmax(0px, max-content) 29px"
                                       style={styles.text_body_box1}>
                                       <Text style={styles.text_body} ellipsizeMode={'clip'}>
                                         {'13 Apr 2022, 11:53'}
                                       </Text>
-                                    </Px.View>
+                                    </View>
                                   </View>
-                                </Px.View>
+                                </View>
                               </View>
                               <View style={styles.block3_item1}>
-                                <Px.View x="0px 33fr 0px" y="0px minmax(0px, max-content) 89px" style={styles.block5}>
+                                <View x="0px 33fr 0px" y="0px minmax(0px, max-content) 89px" style={styles.block5}>
                                   <ImageBackground
                                     style={[styles.downloadIcon, styles.downloadIcon_layout]}
                                     source={require('../assets/6784b72f243ed3938b4effbf0ffc0c7a.png')}
                                   />
-                                </Px.View>
+                                </View>
                               </View>
-                            </Px.View>
+                            </View>
                           </View>
-                        </Px.View>
+                        </View>
                       </View>
                       <View style={styles.pdfFrame_item}>
-                        <Px.View x="0px 356fr 0px" y="18px minmax(0px, max-content) 0px" style={styles.block9}>
+                        <View x="0px 356fr 0px" y="18px minmax(0px, max-content) 0px" style={styles.block9}>
                           <View style={styles.block9_item}>
                             <ImageBackground
                               style={[styles.image, styles.image_layout]}
@@ -242,7 +242,7 @@ export function ViewAll(props) {
                           </View>
                           <View style={styles.block9_space} />
                           <View style={styles.block9_item1}>
-                            <Px.View x="0px 253fr 0px" y="0px minmax(0px, max-content) 0px" style={styles.block7}>
+                            <View x="0px 253fr 0px" y="0px minmax(0px, max-content) 0px" style={styles.block7}>
                               <View style={styles.block7_item}>
                                 <View style={[styles.block8, styles.block8_layout]}>
                                   <View style={[styles.pdfName_box2, styles.pdfName_box2_layout]}>
@@ -263,12 +263,12 @@ export function ViewAll(props) {
                                   source={require('../assets/4517a97e95ebe8ad3751a63a5759b6d2.png')}
                                 />
                               </View>
-                            </Px.View>
+                            </View>
                           </View>
-                        </Px.View>
+                        </View>
                       </View>
                       <View style={styles.pdfFrame_item}>
-                        <Px.View x="0px 356fr 0px" y="18px minmax(0px, max-content) 0px" style={styles.pdfTile}>
+                        <View x="0px 356fr 0px" y="18px minmax(0px, max-content) 0px" style={styles.pdfTile}>
                           <View style={styles.pdfTile_item}>
                             <ImageBackground
                               style={[styles.image, styles.image_layout]}
@@ -277,58 +277,58 @@ export function ViewAll(props) {
                           </View>
                           <View style={styles.pdfTile_space} />
                           <View style={styles.pdfTile_item3}>
-                            <Px.View x="0px 253fr 0px" y="0px minmax(0px, max-content) 0px" style={styles.block3}>
+                            <View x="0px 253fr 0px" y="0px minmax(0px, max-content) 0px" style={styles.block3}>
                               <View style={styles.block3_item}>
-                                <Px.View
+                                <View
                                   x="1px 219fr 0px"
                                   y="0px minmax(0px, max-content) 0px"
                                   style={styles.pdfTileText}>
                                   <View style={styles.pdfTileText_item}>
-                                    <Px.View
+                                    <View
                                       x="0px 212fr 7px"
                                       y="39px minmax(0px, max-content) 0px"
                                       style={styles.pdfName_box}>
                                       <Text style={styles.pdfName} ellipsizeMode={'clip'}>
                                         {'I am a very sable candidate'}
                                       </Text>
-                                    </Px.View>
+                                    </View>
                                   </View>
                                   <View style={styles.pdfTileText_item}>
-                                    <Px.View
+                                    <View
                                       x="1px 217fr 1px"
                                       y="9px minmax(0px, max-content) 39px"
                                       style={styles.text_body_box2}>
                                       <Text style={styles.text_body} ellipsizeMode={'clip'}>
                                         {'29 March 2022, 14:57'}
                                       </Text>
-                                    </Px.View>
+                                    </View>
                                   </View>
-                                </Px.View>
+                                </View>
                               </View>
                               <View style={styles.block3_item2}>
-                                <Px.View x="0px 33fr 0px" y="0px minmax(0px, max-content) 89px" style={styles.block5}>
+                                <View x="0px 33fr 0px" y="0px minmax(0px, max-content) 89px" style={styles.block5}>
                                   <ImageBackground
                                     style={[styles.downloadIcon, styles.downloadIcon_layout]}
                                     source={require('../assets/6784b72f243ed3938b4effbf0ffc0c7a.png')}
                                   />
-                                </Px.View>
+                                </View>
                               </View>
-                            </Px.View>
+                            </View>
                           </View>
-                        </Px.View>
+                        </View>
                       </View>
                       <View style={styles.pdfFrame_space} />
                       <View style={styles.pdfFrame_space} />
                       <View style={styles.pdfFrame_space} />
                       <View style={styles.pdfFrame_space} />
                     </View>
-                  </Px.View>
-                </Px.View>
-              </Px.View>
+                  </View>
+                </View>
+              </View>
             </View>
-          </Px.View>
+          </View>
 
-          <Px.Pressable
+          <Pressable
             x="69.23% 23.08% 7.69%"
             y="8px minmax(0px, max-content) 9px"
             absolute
@@ -345,7 +345,7 @@ export function ViewAll(props) {
             </View>
             <View style={styles.orderByDropDown_space} />
             <View style={styles.orderByDropDown_item1}>
-              <Px.Pressable
+              <Pressable
                 x="0px 20fr 14px"
                 y="12px minmax(0px, max-content) 12px"
                 style={styles.orderByButton}
@@ -354,11 +354,11 @@ export function ViewAll(props) {
                   style={[styles.orderByIcon, styles.orderByIcon_layout]}
                   source={require('../assets/cc91d6ae1ee6693ad1312f5f6a5ca71d.png')}
                 />
-              </Px.Pressable>
+              </Pressable>
             </View>
-          </Px.Pressable>
+          </Pressable>
 
-        </Px.View>
+        </View>
       </View>
     </View>
   );
