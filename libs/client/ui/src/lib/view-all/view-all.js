@@ -84,6 +84,49 @@ export function ViewAll(props) {
                       
                       
                       <View style={styles.pdfFrame_item}>
+                        <Px.Pressable
+                          x="0px 356fr 0px"
+                          y="18px minmax(0px, max-content) 0px"
+                          style={styles.block6}
+                          onPress={() => Alert.alert('click')}>
+                          <View style={styles.block6_item}>
+                            <ImageBackground
+                              style={[styles.image1, styles.image1_layout]}
+                              source={require('../assets/2b2d102eac55f56c11649d75b48bf464.png')}
+                            />
+                          </View>
+                          <View style={styles.block6_space} />
+                          <View style={styles.block6_item1}>
+                            <Px.View x="0px 253fr 0px" y="0px minmax(0px, max-content) 1px" style={styles.block7}>
+                              <View style={styles.block7_item}>
+                                <View style={[styles.block8, styles.block8_layout]}>
+                                  <View style={[styles.pdfName_box1, styles.pdfName_box1_layout]}>
+                                    <Text style={styles.pdfName} ellipsizeMode={'clip'}>
+                                      {'Human-computer interaction'}
+                                    </Text>
+                                  </View>
+                                  <View style={[styles.text_body_box, styles.text_body_box_layout]}>
+                                    <Text style={styles.text_body} ellipsizeMode={'clip'}>
+                                      {'21 Apr 2022, 14:18'}
+                                    </Text>
+                                  </View>
+                                </View>
+                              </View>
+                              <View style={styles.block7_item1}>
+                                <Px.ImageBackground
+                                  x="0px 31px 5px"
+                                  y="0px 34px 93px"
+                                  style={styles.image2}
+                                  onPress={() => Alert.alert('click')}
+                                  source={require('../assets/4517a97e95ebe8ad3751a63a5759b6d2.png')}
+                                  container={TouchableOpacity}
+                                />
+                              </View>
+                            </Px.View>
+                          </View>
+                        </Px.Pressable>
+                      </View>
+                      <View style={styles.pdfFrame_item}>
                         <Px.View x="0px 356fr 0px" y="18px minmax(0px, max-content) 0px" style={styles.pdfTile}>
                           <View style={styles.pdfTile_item}>
                             <ImageBackground
