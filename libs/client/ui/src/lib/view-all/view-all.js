@@ -64,6 +64,18 @@ export function ViewAll(props) {
                 container={TouchableOpacity}
               />
             </View>
+            <View style={styles.bottomFlex_space} />
+            <View style={styles.bottomFlex_item1}>
+              <Px.ImageBackground
+                x="0px 24px 0px"
+                y="29px 3px 29px"
+                style={styles.moreOptionsIcon}
+                onPress={() => Alert.alert('click')}
+                source={require('../assets/bedbbc4af4182ff9461b234dfb880971.png')}
+                container={TouchableOpacity}
+              />
+            </View>
+            
           </Px.View>
 
           <Px.Pressable
