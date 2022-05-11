@@ -75,7 +75,12 @@ export function ViewAll(props) {
                 container={TouchableOpacity}
               />
             </View>
-            
+            <View style={styles.bottomFlex_space1} />
+            <View style={styles.bottomFlex_item2}>
+              <Px.View x="0px 153fr 0px" y="8px minmax(0px, max-content) 0px" style={styles.block12}>
+                
+              </Px.View>
+            </View>
           </Px.View>
 
           <Px.Pressable
