@@ -26,6 +26,7 @@
       ],
       "@conversation-catcher/api/pdf-manager/service": [
         "libs/api/pdf-manager/service/src/index.ts"
+      ],
       "@conversation-catcher/api/database-manager/api/interface": [
         "libs/api/database-manager/api/interface/src/index.ts"
       ],
