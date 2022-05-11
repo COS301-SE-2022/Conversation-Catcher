@@ -2,6 +2,10 @@
   "version": 2,
   "projects": {
     "api": "apps/api",
+    "api-pdf-manager-api-data-access": "libs/api/pdf-manager/api/data-access",
+    "api-pdf-manager-api-feature": "libs/api/pdf-manager/api/feature",
+    "api-pdf-manager-repository": "libs/api/pdf-manager/repository",
+    "api-pdf-manager-service": "libs/api/pdf-manager/service",
     "api-shell": "libs/api/shell",
     "api-speech-to-text-api": "libs/api/speech-to-text/api",
     "api-speech-to-text-repository": "libs/api/speech-to-text/repository",
