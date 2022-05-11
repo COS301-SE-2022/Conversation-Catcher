@@ -36,6 +36,7 @@
       "@conversation-catcher/api/summarise-text/service": [
         "libs/api/summarise-text/service/src/index.ts"
       ],
+      "@conversation-catcher/client/ui": ["libs/client/ui/src/index.ts"],
       "@conversation-catcher/shell": ["libs/api/shell/src/index.ts"]
     }
   },

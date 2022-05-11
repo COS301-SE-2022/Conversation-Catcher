@@ -11,6 +11,7 @@
     "api-summarise-text-repository": "libs/api/summarise-text/repository",
     "api-summarise-text-service": "libs/api/summarise-text/service",
     "client": "apps/client",
-    "client-e2e": "apps/client-e2e"
+    "client-e2e": "apps/client-e2e",
+    "client-ui": "libs/client/ui"
   }
 }
