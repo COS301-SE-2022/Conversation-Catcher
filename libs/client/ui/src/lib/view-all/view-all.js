@@ -4,7 +4,362 @@ import { View, StyleSheet, Text, Image, ImageBackground, Pressable, TouchableOpa
 export function ViewAll(props) {
   return (
     <View style={[styles.viewAllPage, styles.viewAllPage_layout]}>
-      
+      <View style={styles.viewAllPage_item}>
+        <View x="0px 390fr 0px" y="0px minmax(0px, max-content) 0px" style={styles.viewAllTopBar}>
+          <View x="17px 356fr 17px" y="20px minmax(0px, max-content) 20px" style={styles.topFlex}>
+            <View style={styles.topFlex_item}>
+              <View x="7.3% 18.26% 74.44%" y="18px minmax(0px, max-content) 0px" style={styles.viewAllTitle_box}>
+                <Text style={styles.viewAllTitle} ellipsizeMode={'clip'}>
+                  {'PDFs'}
+                </Text>
+              </View>
+            </View>
+            <View style={styles.topFlex_item}>
+              <View x="0px 356fr 0px" y="11px minmax(0px, max-content) 0px" style={styles.searchBar}>
+                <View x="0px 356fr 0px" y="0px minmax(0px, max-content) 0px" style={styles.block19}>
+                  <Pressable style={[styles.block20, styles.block20_layout]} onPress={() => Alert.alert('click')}>
+                    <View x="14px 328fr 14px" y="10px minmax(0px, max-content) 10px" style={styles.searchContents}>
+                      <View style={styles.searchContents_item}>
+                        <ImageBackground
+                          style={[styles.searchIcon, styles.searchIcon_layout]}
+                          source={require('../assets/cf60ecb68aa83021ee8ce615fa41038e.png')}
+                        />
+                      </View>
+                      <View style={styles.searchContents_space} />
+                      <View style={styles.searchContents_item1}>
+                        <View x="0px 57fr 243px" y="0px minmax(0px, max-content) 0px" style={styles.searchInput_box}>
+                          <Text style={styles.searchInput} ellipsizeMode={'clip'}>
+                            {'Search'}
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+                  </Pressable>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+      <View style={styles.viewAllPage_item}>
+        <View x="0px 390fr 0px" y="640px minmax(0px, max-content) 0px" style={styles.viewAllBottomBar}>
+          <View
+            x="57.18% 10.51% 32.31%"
+            y="8px minmax(0px, max-content) 13px"
+            absolute
+            style={styles.orderByLabel_box}>
+            <Text style={styles.orderByLabel} ellipsizeMode={'clip'}>
+              {'Order by'}
+            </Text>
+          </View>
+
+          <View x="14px 362fr 14px" y="0px minmax(0px, max-content) 0px" style={styles.bottomFlex}>
+            <View style={styles.bottomFlex_item}>
+              <ImageBackground
+                x="33px 9px 0px"
+                y="22px 18px 21px"
+                style={styles.backIcon}
+                onPress={() => Alert.alert('click')}
+                source={require('../assets/f762e82c40c63fd888499d8d139bcf08.png')}
+                container={TouchableOpacity}
+              />
+            </View>
+            <View style={styles.bottomFlex_space} />
+            <View style={styles.bottomFlex_item1}>
+              <ImageBackground
+                x="0px 24px 0px"
+                y="29px 3px 29px"
+                style={styles.moreOptionsIcon}
+                onPress={() => Alert.alert('click')}
+                source={require('../assets/bedbbc4af4182ff9461b234dfb880971.png')}
+                container={TouchableOpacity}
+              />
+            </View>
+            <View style={styles.bottomFlex_space1} />
+            <View style={styles.bottomFlex_item2}>
+              <View x="0px 153fr 0px" y="8px minmax(0px, max-content) 0px" style={styles.block12}>
+                <View x="0px 41px 112fr" y="0px minmax(0px, max-content) 13px" style={styles.block13}>
+                  <View x="0px 41fr 0px" y="0px minmax(0px, max-content) 0px" style={styles.group}>
+                    <View style={[styles.pdfFrame, styles.pdfFrame_layout]}>
+                      <View style={styles.pdfFrame_item}>
+                        <Pressable
+                          x="0px 356fr 0px"
+                          y="0px minmax(0px, max-content) 0px"
+                          style={styles.pdfTile}
+                          onPress={() => Alert.alert('click')}>
+                          <View style={styles.pdfTile_item}>
+                            <ImageBackground
+                              style={[styles.pdfThumbnail, styles.pdfThumbnail_layout]}
+                              source={require('../assets/23a067db3896c1ac956e0e22fe9c7588.png')}
+                            />
+                          </View>
+                          <View style={styles.pdfTile_space} />
+                          <View style={styles.pdfTile_item1}>
+                            <View x="0px 253fr 0px" y="0px minmax(0px, max-content) 0px" style={styles.pdfTileInfo}>
+                              <View style={styles.pdfTileInfo_item}>
+                                <View
+                                  x="1px 219fr 0px"
+                                  y="0px minmax(0px, max-content) 0px"
+                                  style={styles.pdfTileText}>
+                                  <View style={styles.pdfTileText_item}>
+                                    <View
+                                      x="0px 218fr 1px"
+                                      y="29px minmax(0px, max-content) 0px"
+                                      style={styles.pdfName_box}>
+                                      <Text style={styles.pdfName} ellipsizeMode={'clip'}>
+                                        {'Bug introduction: a modification of code'}
+                                      </Text>
+                                    </View>
+                                  </View>
+                                  <View style={styles.pdfTileText_item}>
+                                    <View
+                                      x="1px 217fr 1px"
+                                      y="9px minmax(0px, max-content) 29px"
+                                      style={styles.pdfDate_box}>
+                                      <Text style={styles.pdfDate} ellipsizeMode={'clip'}>
+                                        {'1 May 2022, 9:37'}
+                                      </Text>
+                                    </View>
+                                  </View>
+                                </View>
+                              </View>
+                              <View style={styles.pdfTileInfo_item1}>
+                                <Pressable
+                                  x="0px 33fr 0px"
+                                  y="0px minmax(0px, max-content) 89px"
+                                  style={styles.downloadState}
+                                  onPress={() => Alert.alert('click')}>
+                                  <ImageBackground
+                                    style={[styles.downloadIcon, styles.downloadIcon_layout]}
+                                    source={require('../assets/6784b72f243ed3938b4effbf0ffc0c7a.png')}
+                                  />
+                                </Pressable>
+                              </View>
+                            </View>
+                          </View>
+                        </Pressable>
+                      </View>
+                      <View style={styles.pdfFrame_item}>
+                        <Pressable
+                          x="0px 356fr 0px"
+                          y="18px minmax(0px, max-content) 0px"
+                          style={styles.block6}
+                          onPress={() => Alert.alert('click')}>
+                          <View style={styles.block6_item}>
+                            <ImageBackground
+                              style={[styles.image1, styles.image1_layout]}
+                              source={require('../assets/2b2d102eac55f56c11649d75b48bf464.png')}
+                            />
+                          </View>
+                          <View style={styles.block6_space} />
+                          <View style={styles.block6_item1}>
+                            <View x="0px 253fr 0px" y="0px minmax(0px, max-content) 1px" style={styles.block7}>
+                              <View style={styles.block7_item}>
+                                <View style={[styles.block8, styles.block8_layout]}>
+                                  <View style={[styles.pdfName_box1, styles.pdfName_box1_layout]}>
+                                    <Text style={styles.pdfName} ellipsizeMode={'clip'}>
+                                      {'Human-computer interaction'}
+                                    </Text>
+                                  </View>
+                                  <View style={[styles.text_body_box, styles.text_body_box_layout]}>
+                                    <Text style={styles.text_body} ellipsizeMode={'clip'}>
+                                      {'21 Apr 2022, 14:18'}
+                                    </Text>
+                                  </View>
+                                </View>
+                              </View>
+                              <View style={styles.block7_item1}>
+                                <ImageBackground
+                                  x="0px 31px 5px"
+                                  y="0px 34px 93px"
+                                  style={styles.image2}
+                                  onPress={() => Alert.alert('click')}
+                                  source={require('../assets/4517a97e95ebe8ad3751a63a5759b6d2.png')}
+                                  container={TouchableOpacity}
+                                />
+                              </View>
+                            </View>
+                          </View>
+                        </Pressable>
+                      </View>
+                      <View style={styles.pdfFrame_item}>
+                        <View x="0px 356fr 0px" y="18px minmax(0px, max-content) 0px" style={styles.pdfTile}>
+                          <View style={styles.pdfTile_item}>
+                            <ImageBackground
+                              style={[styles.image, styles.image_layout]}
+                              source={require('../assets/634a9d41d1a919acda75dccb24941e81.png')}
+                            />
+                          </View>
+                          <View style={styles.pdfTile_space} />
+                          <View style={styles.pdfTile_item2}>
+                            <View x="0px 253fr 0px" y="0px minmax(0px, max-content) 0px" style={styles.block3}>
+                              <View style={styles.block3_item}>
+                                <View
+                                  x="1px 219fr 0px"
+                                  y="0px minmax(0px, max-content) 0px"
+                                  style={styles.pdfTileText}>
+                                  <View style={styles.pdfTileText_item}>
+                                    <View
+                                      x="0px 218fr 1px"
+                                      y="29px minmax(0px, max-content) 0px"
+                                      style={styles.pdfName_box}>
+                                      <Text style={styles.pdfName} ellipsizeMode={'clip'}>
+                                        {'The tropical plants of the Philippines'}
+                                      </Text>
+                                    </View>
+                                  </View>
+                                  <View style={styles.pdfTileText_item}>
+                                    <View
+                                      x="1px 217fr 1px"
+                                      y="9px minmax(0px, max-content) 29px"
+                                      style={styles.text_body_box1}>
+                                      <Text style={styles.text_body} ellipsizeMode={'clip'}>
+                                        {'13 Apr 2022, 11:53'}
+                                      </Text>
+                                    </View>
+                                  </View>
+                                </View>
+                              </View>
+                              <View style={styles.block3_item1}>
+                                <View x="0px 33fr 0px" y="0px minmax(0px, max-content) 89px" style={styles.block5}>
+                                  <ImageBackground
+                                    style={[styles.downloadIcon, styles.downloadIcon_layout]}
+                                    source={require('../assets/6784b72f243ed3938b4effbf0ffc0c7a.png')}
+                                  />
+                                </View>
+                              </View>
+                            </View>
+                          </View>
+                        </View>
+                      </View>
+                      <View style={styles.pdfFrame_item}>
+                        <View x="0px 356fr 0px" y="18px minmax(0px, max-content) 0px" style={styles.block9}>
+                          <View style={styles.block9_item}>
+                            <ImageBackground
+                              style={[styles.image, styles.image_layout]}
+                              source={require('../assets/eb280550057d075f24cdd330438abed1.png')}
+                            />
+                          </View>
+                          <View style={styles.block9_space} />
+                          <View style={styles.block9_item1}>
+                            <View x="0px 253fr 0px" y="0px minmax(0px, max-content) 0px" style={styles.block7}>
+                              <View style={styles.block7_item}>
+                                <View style={[styles.block8, styles.block8_layout]}>
+                                  <View style={[styles.pdfName_box2, styles.pdfName_box2_layout]}>
+                                    <Text style={styles.pdfName} ellipsizeMode={'clip'}>
+                                      {'Devin Brittain The snacks of the popcorn'}
+                                    </Text>
+                                  </View>
+                                  <View style={[styles.text_body_box, styles.text_body_box_layout1]}>
+                                    <Text style={styles.text_body} ellipsizeMode={'clip'}>
+                                      {'4 Apr 2022, 13:03'}
+                                    </Text>
+                                  </View>
+                                </View>
+                              </View>
+                              <View style={styles.block7_item2}>
+                                <ImageBackground
+                                  style={[styles.image2, styles.image2_layout]}
+                                  source={require('../assets/4517a97e95ebe8ad3751a63a5759b6d2.png')}
+                                />
+                              </View>
+                            </View>
+                          </View>
+                        </View>
+                      </View>
+                      <View style={styles.pdfFrame_item}>
+                        <View x="0px 356fr 0px" y="18px minmax(0px, max-content) 0px" style={styles.pdfTile}>
+                          <View style={styles.pdfTile_item}>
+                            <ImageBackground
+                              style={[styles.image, styles.image_layout]}
+                              source={require('../assets/822a4ffacfed7a8c6c870fe46d9baffd.png')}
+                            />
+                          </View>
+                          <View style={styles.pdfTile_space} />
+                          <View style={styles.pdfTile_item3}>
+                            <View x="0px 253fr 0px" y="0px minmax(0px, max-content) 0px" style={styles.block3}>
+                              <View style={styles.block3_item}>
+                                <View
+                                  x="1px 219fr 0px"
+                                  y="0px minmax(0px, max-content) 0px"
+                                  style={styles.pdfTileText}>
+                                  <View style={styles.pdfTileText_item}>
+                                    <View
+                                      x="0px 212fr 7px"
+                                      y="39px minmax(0px, max-content) 0px"
+                                      style={styles.pdfName_box}>
+                                      <Text style={styles.pdfName} ellipsizeMode={'clip'}>
+                                        {'I am a very sable candidate'}
+                                      </Text>
+                                    </View>
+                                  </View>
+                                  <View style={styles.pdfTileText_item}>
+                                    <View
+                                      x="1px 217fr 1px"
+                                      y="9px minmax(0px, max-content) 39px"
+                                      style={styles.text_body_box2}>
+                                      <Text style={styles.text_body} ellipsizeMode={'clip'}>
+                                        {'29 March 2022, 14:57'}
+                                      </Text>
+                                    </View>
+                                  </View>
+                                </View>
+                              </View>
+                              <View style={styles.block3_item2}>
+                                <View x="0px 33fr 0px" y="0px minmax(0px, max-content) 89px" style={styles.block5}>
+                                  <ImageBackground
+                                    style={[styles.downloadIcon, styles.downloadIcon_layout]}
+                                    source={require('../assets/6784b72f243ed3938b4effbf0ffc0c7a.png')}
+                                  />
+                                </View>
+                              </View>
+                            </View>
+                          </View>
+                        </View>
+                      </View>
+                      <View style={styles.pdfFrame_space} />
+                      <View style={styles.pdfFrame_space} />
+                      <View style={styles.pdfFrame_space} />
+                      <View style={styles.pdfFrame_space} />
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+
+          <Pressable
+            x="69.23% 23.08% 7.69%"
+            y="8px minmax(0px, max-content) 9px"
+            absolute
+            style={styles.orderByDropDown}
+            onPress={() => Alert.alert('click')}>
+            <View style={styles.orderByDropDown_item}>
+              <View style={[styles.orderByDropDownTextBox, styles.orderByDropDownTextBox_layout]}>
+                <View style={[styles.orderByDropDownText_box, styles.orderByDropDownText_box_layout]}>
+                  <Text style={styles.orderByDropDownText} ellipsizeMode={'clip'}>
+                    {'Date'}
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View style={styles.orderByDropDown_space} />
+            <View style={styles.orderByDropDown_item1}>
+              <Pressable
+                x="0px 20fr 14px"
+                y="12px minmax(0px, max-content) 12px"
+                style={styles.orderByButton}
+                onPress={() => Alert.alert('click')}>
+                <ImageBackground
+                  style={[styles.orderByIcon, styles.orderByIcon_layout]}
+                  source={require('../assets/cc91d6ae1ee6693ad1312f5f6a5ca71d.png')}
+                />
+              </Pressable>
+            </View>
+          </Pressable>
+
+        </View>
+      </View>
     </View>
   );
 }
