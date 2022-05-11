@@ -42,9 +42,17 @@ export function ViewAll(props) {
         </View>
       </View>
       <View style={styles.viewAllPage_item}>
-      <Px.View x="0px 390fr 0px" y="640px minmax(0px, max-content) 0px" style={styles.viewAllBottomBar}>
-        
-      </Px.View>
+        <Px.View x="0px 390fr 0px" y="640px minmax(0px, max-content) 0px" style={styles.viewAllBottomBar}>
+          <Px.View
+            x="57.18% 10.51% 32.31%"
+            y="8px minmax(0px, max-content) 13px"
+            absolute
+            style={styles.orderByLabel_box}>
+            <Text style={styles.orderByLabel} ellipsizeMode={'clip'}>
+              {'Order by'}
+            </Text>
+          </Px.View>
+        </Px.View>
       </View>
     </View>
   );
