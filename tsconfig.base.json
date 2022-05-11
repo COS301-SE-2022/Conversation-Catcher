@@ -16,7 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@conversation-catcher/api/database-manager/api/interface": [
-        "libs/api/database-manager/api/interface/src/index.ts"
+        "libs/api/database-manager/api/interface/src/index.ts"],
       "@conversation-catcher/api/database-manager/api/feature": [
         "libs/api/database-manager/api/feature/src/index.ts"
       ],
