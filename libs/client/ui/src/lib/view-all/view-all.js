@@ -61,6 +61,16 @@ export function ViewAll(props) {
             absolute
             style={styles.orderByDropDown}
             onPress={() => Alert.alert('click')}>
+            <View style={styles.orderByDropDown_item}>
+              <View style={[styles.orderByDropDownTextBox, styles.orderByDropDownTextBox_layout]}>
+                <View style={[styles.orderByDropDownText_box, styles.orderByDropDownText_box_layout]}>
+                  <Text style={styles.orderByDropDownText} ellipsizeMode={'clip'}>
+                    {'Date'}
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View style={styles.orderByDropDown_space} />
             
           </Px.Pressable>
 
