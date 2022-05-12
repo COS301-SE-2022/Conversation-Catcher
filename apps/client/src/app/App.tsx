@@ -19,8 +19,6 @@ import ViewAll from '../../../../libs/client/ui/src/lib/view-all/view-all.js';
 const Stack = createNativeStackNavigator();
 
 export const App = () => {
-  const [whatsNextYCoord, setWhatsNextYCoord] = useState<number>(0);
-  const scrollViewRef = useRef<null | ScrollView>(null);
 
   return (
     <NavigationContainer>
