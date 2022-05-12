@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, StyleSheet, Text, ImageBackground } from 'react-native';
-export default function SettingsPage(props) {
+import { View, StyleSheet, Text, ImageBackground, TouchableOpacity} from 'react-native';
+export const SettingsPage = ({ navigation }) => {
   return (
     <View style={[styles.settigs, styles.settigs_layout]}>
       < View x="12.5px 365fr 12.5px" y="60px minmax(0px, max-content) 60px" style={styles.settingsBody}>
@@ -125,12 +125,12 @@ export default function SettingsPage(props) {
             </ View>
           </ View>
         </View>
-        <View style={styles.settingsBody_item}>
+        <TouchableOpacity  style={styles.settingsBody_item} onPress={() => navigation.navigate('Home')}>
           <ImageBackground
             style={[styles.backButton, styles.backButton_layout]}
             source={require('../assets/f762e82c40c63fd888499d8d139bcf08.png')}
           />
-        </View>
+        </TouchableOpacity >
       </ View>
     </View>
   );
