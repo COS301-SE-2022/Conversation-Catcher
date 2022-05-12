@@ -62,10 +62,10 @@ jobs:
         # Runs a set of commands using the runners shell
       - name: Run affected tests
         run: |
-          nx affected --target=test
+          nx affected --target=test --coverage
           nx affected --target=lint
           nx affected --target=build
-          nx affected --target=e2e
+          nx affected --target=e2e --coverage
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2
