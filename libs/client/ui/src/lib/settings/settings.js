@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text, ImageBackground, } from 'react-native';
+import { View, StyleSheet, Text, ImageBackground, TouchableOpacity} from 'react-native';
 export const SettingsPage = ({ navigation }) => {
   return (
     <View style={[styles.settigs, styles.settigs_layout]}>
