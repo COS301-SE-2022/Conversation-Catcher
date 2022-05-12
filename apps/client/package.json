@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@react-native-async-storage/async-storage": "*",
-    "@react-navigation/native": "^6.0.10",
+    "@react-navigation/native": "*",
     "@react-navigation/native-stack": "*",
     "@testing-library/jest-native": "*",
     "@testing-library/react-native": "*",
@@ -12,8 +12,9 @@
     "react-native": "*",
     "react-native-config": "*",
     "react-native-svg": "*",
-    "@react-native-async-storage/async-storage": "*",
-    "@react-navigation/native": "*",
-    "@react-navigation/native-stack": "*"
+    "react-native-gesture-handler": "*",
+    "react-native-reanimated": "*",
+    "react-native-safe-area-context": "*",
+    "react-native-screens": "*"
   }
 }
