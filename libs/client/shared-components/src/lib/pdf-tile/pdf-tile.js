@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
 export function PdfTile(props) {
   return (
@@ -43,7 +43,7 @@ export function PdfTile(props) {
               </View>
             </View>
             <View style={styles.pdfTileInfo_item1}>
-              <button 
+              <button
                 x="0px 33fr 0px"
                 y="0px minmax(0px, max-content) 89px"
                 style={styles.downloadState}

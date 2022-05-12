@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text, Image, ImageBackground, Pressable, TouchableOpacity, Alert } from 'react-native';
+import { View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity, Alert} from 'react-native';
 
 export const ViewAll = ({ navigation }) =>  {
   return (
@@ -17,7 +17,7 @@ export const ViewAll = ({ navigation }) =>  {
             <View style={styles.topFlex_item}>
               <View x="0px 356fr 0px" y="11px minmax(0px, max-content) 0px" style={styles.searchBar}>
                 <View x="0px 356fr 0px" y="0px minmax(0px, max-content) 0px" style={styles.block19}>
-                  <Pressable style={[styles.block20, styles.block20_layout]} onPress={() => Alert.alert('click')}>
+                  <TouchableOpacity style={[styles.block20, styles.block20_layout]} onPress={() => Alert.alert('click')}>
                     <View x="14px 328fr 14px" y="10px minmax(0px, max-content) 10px" style={styles.searchContents}>
                       <View style={styles.searchContents_item}>
                         <ImageBackground
@@ -34,7 +34,7 @@ export const ViewAll = ({ navigation }) =>  {
                         </View>
                       </View>
                     </View>
-                  </Pressable>
+                  </TouchableOpacity>
                 </View>
               </View>
             </View>
@@ -54,7 +54,7 @@ export const ViewAll = ({ navigation }) =>  {
           </View>
 
           <View x="14px 362fr 14px" y="0px minmax(0px, max-content) 0px" style={styles.bottomFlex}>
-            <View style={styles.bottomFlex_item}>
+            <TouchableOpacity style={styles.bottomFlex_item}>
               <ImageBackground
                 x="33px 9px 0px"
                 y="22px 18px 21px"
@@ -64,9 +64,9 @@ export const ViewAll = ({ navigation }) =>  {
                 source={require('../assets/f762e82c40c63fd888499d8d139bcf08.png')}
                 container={TouchableOpacity}
               />
-            </View>
+            </TouchableOpacity>
             <View style={styles.bottomFlex_space} />
-            <View style={styles.bottomFlex_item1}>
+            <TouchableOpacity style={styles.bottomFlex_item1}>
               <ImageBackground
                 x="0px 24px 0px"
                 y="29px 3px 29px"
@@ -75,7 +75,7 @@ export const ViewAll = ({ navigation }) =>  {
                 source={require('../assets/bedbbc4af4182ff9461b234dfb880971.png')}
                 container={TouchableOpacity}
               />
-            </View>
+            </TouchableOpacity>
             <View style={styles.bottomFlex_space1} />
             <View style={styles.bottomFlex_item2}>
               <View x="0px 153fr 0px" y="8px minmax(0px, max-content) 0px" style={styles.block12}>
@@ -83,7 +83,7 @@ export const ViewAll = ({ navigation }) =>  {
                   <View x="0px 41fr 0px" y="0px minmax(0px, max-content) 0px" style={styles.group}>
                     <View style={[styles.pdfFrame, styles.pdfFrame_layout]}>
                       <View style={styles.pdfFrame_item}>
-                        <Pressable
+                        <TouchableOpacity
                           x="0px 356fr 0px"
                           y="0px minmax(0px, max-content) 0px"
                           style={styles.pdfTile}
@@ -125,7 +125,7 @@ export const ViewAll = ({ navigation }) =>  {
                                 </View>
                               </View>
                               <View style={styles.pdfTileInfo_item1}>
-                                <Pressable
+                                <TouchableOpacity
                                   x="0px 33fr 0px"
                                   y="0px minmax(0px, max-content) 89px"
                                   style={styles.downloadState}
@@ -134,14 +134,14 @@ export const ViewAll = ({ navigation }) =>  {
                                     style={[styles.downloadIcon, styles.downloadIcon_layout]}
                                     source={require('../assets/6784b72f243ed3938b4effbf0ffc0c7a.png')}
                                   />
-                                </Pressable>
+                                </TouchableOpacity>
                               </View>
                             </View>
                           </View>
-                        </Pressable>
+                        </TouchableOpacity>
                       </View>
                       <View style={styles.pdfFrame_item}>
-                        <Pressable
+                        <TouchableOpacity
                           x="0px 356fr 0px"
                           y="18px minmax(0px, max-content) 0px"
                           style={styles.block6}
@@ -169,7 +169,7 @@ export const ViewAll = ({ navigation }) =>  {
                                   </View>
                                 </View>
                               </View>
-                              <View style={styles.block7_item1}>
+                              <TouchableOpacity style={styles.block7_item1}>
                                 <ImageBackground
                                   x="0px 31px 5px"
                                   y="0px 34px 93px"
@@ -178,10 +178,10 @@ export const ViewAll = ({ navigation }) =>  {
                                   source={require('../assets/4517a97e95ebe8ad3751a63a5759b6d2.png')}
                                   container={TouchableOpacity}
                                 />
-                              </View>
+                              </TouchableOpacity>
                             </View>
                           </View>
-                        </Pressable>
+                        </TouchableOpacity>
                       </View>
                       <View style={styles.pdfFrame_item}>
                         <View x="0px 356fr 0px" y="18px minmax(0px, max-content) 0px" style={styles.pdfTile}>
@@ -329,7 +329,7 @@ export const ViewAll = ({ navigation }) =>  {
             </View>
           </View>
 
-          <Pressable
+          <TouchableOpacity
             x="69.23% 23.08% 7.69%"
             y="8px minmax(0px, max-content) 9px"
             absolute
@@ -346,18 +346,18 @@ export const ViewAll = ({ navigation }) =>  {
             </View>
             <View style={styles.orderByDropDown_space} />
             <View style={styles.orderByDropDown_item1}>
-              <Pressable
+              <TouchableOpacity
                 x="0px 20fr 14px"
                 y="12px minmax(0px, max-content) 12px"
-                style={styles.orderByButton}
+                style={styles.orderByTouchableOpacity}
                 onPress={() => Alert.alert('click')}>
                 <ImageBackground
                   style={[styles.orderByIcon, styles.orderByIcon_layout]}
                   source={require('../assets/cc91d6ae1ee6693ad1312f5f6a5ca71d.png')}
                 />
-              </Pressable>
+              </TouchableOpacity>
             </View>
-          </Pressable>
+          </TouchableOpacity>
 
         </View>
       </View>
@@ -993,7 +993,7 @@ const styles = StyleSheet.create({
     flexShrink: 1,
     flexBasis: 34
   },
-  orderByButton: {
+  orderByTouchableOpacity: {
     width: '100%',
     flexGrow: 1
   },
