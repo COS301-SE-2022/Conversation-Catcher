@@ -29,7 +29,7 @@ export const App = () => {
           name="Home"
           component={Home}
           options={{ title: 'Welcome' }}/>
-         <Stack.Screen name="Profile" component={ViewAll} />
+         <Stack.Screen name="ViewAll" component={ViewAll} />
       </Stack.Navigator>
     </NavigationContainer>
   )

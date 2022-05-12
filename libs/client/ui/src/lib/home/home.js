@@ -177,7 +177,8 @@ export const Home = ({ navigation }) => {
                   x="23px 310fr 23px"
                   y="0px minmax(0px, max-content) 0px"
                   style={styles.viewAllButton}
-                  onPress={() => Alert.alert('click')}>
+                  onPress={() =>
+                    navigation.navigate('ViewAll')}>
                   <View
                     x="103px minmax(0px, max-content) 98fr"
                     y="10px minmax(0px, max-content) 10fr"

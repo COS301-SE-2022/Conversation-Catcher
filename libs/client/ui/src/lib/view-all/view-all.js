@@ -59,7 +59,8 @@ export const ViewAll = ({ navigation }) =>  {
                 x="33px 9px 0px"
                 y="22px 18px 21px"
                 style={styles.backIcon}
-                onPress={() => Alert.alert('click')}
+                onPress={() =>
+                  navigation.navigate('Home')}
                 source={require('../assets/f762e82c40c63fd888499d8d139bcf08.png')}
                 container={TouchableOpacity}
               />
