@@ -200,8 +200,8 @@ export const Home = ({ navigation }) => {
             x="27px 310fr 27px"
             y="25px minmax(0px, max-content) 0px"
             style={styles.settingsTouchableOpacity}
-            onPress={() => navigation.navigate('Home')}>
-            <view
+            onPress={() => navigation.navigate('Settings')}>
+            <View
               x="0px 310fr 0px"
               y="0px minmax(0px, max-content) 0px"
               style={styles.settingsSpacing}>
@@ -219,7 +219,7 @@ export const Home = ({ navigation }) => {
                   </Text>
                 </View>
               </View>
-            </view>
+            </View>
           </TouchableOpacity>
         </View>
         <View style={styles.homeFlex_item}>
