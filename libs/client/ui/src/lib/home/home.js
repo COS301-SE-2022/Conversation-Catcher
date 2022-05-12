@@ -17,7 +17,7 @@ export const Home = ({ navigation }) => {
             <View style={styles.pdfContents_item}>
               <View x="4px 356fr 0px" y="24px minmax(0px, max-content) 0px" style={styles.recentPdfTiles}>
                 <View style={styles.recentPdfTiles_item}>
-                  <button type="button" id="btn"
+                  <TouchableOpacity type="TouchableOpacity" id="btn"
                     x="0px 356fr 0px"
                     y="0px minmax(0px, max-content) 0px"
                     style={styles.pdfTile}
@@ -56,7 +56,7 @@ export const Home = ({ navigation }) => {
                           </View>
                         </View>
                         <View style={styles.pdfTileInfo_item1}>
-                          <button 
+                          <TouchableOpacity 
                             x="0px 33fr 0px"
                             y="0px minmax(0px, max-content) 89px"
                             style={styles.downloadState}
@@ -65,14 +65,14 @@ export const Home = ({ navigation }) => {
                               style={[styles.downloadIcon, styles.downloadIcon_layout]}
                               source={require('../assets/6784b72f243ed3938b4effbf0ffc0c7a.png')}
                             />
-                          </button>
+                          </TouchableOpacity>
                         </View>
                       </View>
                     </View>
-                  </button>
+                  </TouchableOpacity>
                 </View>
                 <View style={styles.recentPdfTiles_item}>
-                  <button
+                  <TouchableOpacity
                     x="0px 356fr 0px"
                     y="18px minmax(0px, max-content) 0px"
                     style={styles.pdfTile}
@@ -112,10 +112,10 @@ export const Home = ({ navigation }) => {
                         </View>
                       </View>
                     </View>
-                  </button>
+                  </TouchableOpacity>
                 </View>
                 <View style={styles.recentPdfTiles_item}>
-                  <button
+                  <TouchableOpacity
                     x="0px 356fr 0px"
                     y="18px minmax(0px, max-content) 0px"
                     style={styles.pdfTile}
@@ -154,7 +154,7 @@ export const Home = ({ navigation }) => {
                           </View>
                         </View>
                         <View style={styles.pdfTileInfo_item2}>
-                          <button
+                          <TouchableOpacity
                             x="0px 33fr 0px"
                             y="0px minmax(0px, max-content) 89px"
                             style={styles.downloadState}
@@ -163,31 +163,31 @@ export const Home = ({ navigation }) => {
                               style={[styles.downloadIcon, styles.downloadIcon_layout]}
                               source={require('../assets/6784b72f243ed3938b4effbf0ffc0c7a.png')}
                             />
-                          </button>
+                          </TouchableOpacity>
                         </View>
                       </View>
                     </View>
-                  </button>
+                  </TouchableOpacity>
                 </View>
               </View>
             </View>
             <View style={styles.pdfContents_item}>
-              <View x="4px 356fr 0px" y="27px minmax(0px, max-content) 0px" style={styles.viewAllButtonFrame}>
-                <button
+              <View x="4px 356fr 0px" y="27px minmax(0px, max-content) 0px" style={styles.viewAllTouchableOpacityFrame}>
+                <TouchableOpacity
                   x="23px 310fr 23px"
                   y="0px minmax(0px, max-content) 0px"
-                  style={styles.viewAllButton}
+                  style={styles.viewAllTouchableOpacity}
                   onPress={() =>
                     navigation.navigate('ViewAll')}>
                   <View
                     x="103px minmax(0px, max-content) 98fr"
                     y="10px minmax(0px, max-content) 10fr"
-                    style={styles.viewAllButtonLabel_box}>
-                    <Text style={styles.viewAllButtonLabel} ellipsizeMode={'clip'}>
+                    style={styles.viewAllTouchableOpacityLabel_box}>
+                    <Text style={styles.viewAllTouchableOpacityLabel} ellipsizeMode={'clip'}>
                       {'View all PDFs'}
                     </Text>
                   </View>
-                </button>
+                </TouchableOpacity>
               </View>
             </View>
           </View>
@@ -196,12 +196,12 @@ export const Home = ({ navigation }) => {
           <View style={[styles.homeDiv, styles.homeDiv_layout]} />
         </View>
         <View style={styles.homeFlex_item}>
-          <button
+          <TouchableOpacity
             x="27px 310fr 27px"
             y="25px minmax(0px, max-content) 0px"
-            style={styles.settingsButton}
+            style={styles.settingsTouchableOpacity}
             onPress={() => Alert.alert('click')}>
-            <button
+            <TouchableOpacity
               x="0px 310fr 0px"
               y="0px minmax(0px, max-content) 0px"
               style={styles.settingsSpacing}
@@ -220,38 +220,38 @@ export const Home = ({ navigation }) => {
                   </Text>
                 </View>
               </View>
-            </button>
-          </button>
+            </TouchableOpacity>
+          </TouchableOpacity>
         </View>
         <View style={styles.homeFlex_item}>
-          <View x="28.3% 43.96% 27.75%" y="38px minmax(0px, max-content) 11px" style={styles.audioButtonGroup}>
-            <View style={styles.audioButtonGroup_item}>
-              <button
+          <View x="28.3% 43.96% 27.75%" y="38px minmax(0px, max-content) 11px" style={styles.audioTouchableOpacityGroup}>
+            <View style={styles.audioTouchableOpacityGroup_item}>
+              <TouchableOpacity
                 x="0px 80fr 0px"
                 y="0px minmax(0px, max-content) 0px"
-                style={styles.recordAudioButton}
+                style={styles.recordAudioTouchableOpacity}
                 onPress={() => Alert.alert('click')}>
                 <ImageBackground
                   style={[styles.recordAudioIcon, styles.recordAudioIcon_layout]}
                   source={require('../assets/6224a20de8d1d66e441de471733c2168.png')}
                 />
-              </button>
+              </TouchableOpacity>
             </View>
-            <View style={styles.audioButtonGroup_item}>
-              <button
+            <View style={styles.audioTouchableOpacityGroup_item}>
+              <TouchableOpacity
                 x="0px 80fr 0px"
                 y="0px minmax(0px, max-content) 0px"
-                style={styles.uploadAudioButton}
+                style={styles.uploadAudioTouchableOpacity}
                 onPress={() => Alert.alert('click')}>
                 <ImageBackground
-                  style={[styles.audioButtonGroupDiv, styles.audioButtonGroupDiv_layout]}
+                  style={[styles.audioTouchableOpacityGroupDiv, styles.audioTouchableOpacityGroupDiv_layout]}
                   source={require('../assets/0b67feb53a71fc494ea1192023ca3fe0.png')}
                 />
                 <ImageBackground
                   style={[styles.uploadAudioIcon, styles.uploadAudioIcon_layout]}
                   source={require('../assets/f096234e78f59a804b946264f7026e00.png')}
                 />
-              </button>
+              </TouchableOpacity>
             </View>
           </View>
         </View>
@@ -515,12 +515,12 @@ const styles = StyleSheet.create({
     flexShrink: 1,
     flexBasis: 33
   },
-  viewAllButtonFrame: {
+  viewAllTouchableOpacityFrame: {
     width: '100%',
     flexGrow: 1,
     borderRadius: 8
   },
-  viewAllButton: {
+  viewAllTouchableOpacity: {
     width: '100%',
     flexGrow: 1,
     backgroundColor: '#3f89beff',
@@ -537,7 +537,7 @@ const styles = StyleSheet.create({
       height: 1
     }
   },
-  viewAllButtonLabel: {
+  viewAllTouchableOpacityLabel: {
     color: '#ffffffff',
     textAlign: 'left',
     letterSpacing: 0,
@@ -549,7 +549,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0,
     paddingVertical: 0
   },
-  viewAllButtonLabel_box: {
+  viewAllTouchableOpacityLabel_box: {
     flexGrow: 1,
     flexDirection: 'row',
     alignItems: 'flex-start',
@@ -576,7 +576,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     marginRight: 4
   },
-  settingsButton: {
+  settingsTouchableOpacity: {
     width: '100%',
     flexGrow: 1,
     borderRadius: 8
@@ -644,17 +644,17 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'center'
   },
-  audioButtonGroup: {
+  audioTouchableOpacityGroup: {
     flexGrow: 1,
     borderRadius: 8,
     flexDirection: 'row'
   },
-  audioButtonGroup_item: {
+  audioTouchableOpacityGroup_item: {
     flexGrow: 1,
     flexShrink: 1,
     flexBasis: 80
   },
-  recordAudioButton: {
+  recordAudioTouchableOpacity: {
     width: '100%',
     flexGrow: 1,
     backgroundColor: '#d0d5ddff',
@@ -682,7 +682,7 @@ const styles = StyleSheet.create({
     minWidth: 26,
     marginRight: 27
   },
-  uploadAudioButton: {
+  uploadAudioTouchableOpacity: {
     width: '100%',
     flexGrow: 1,
     backgroundColor: '#d0d5ddff',
@@ -698,12 +698,12 @@ const styles = StyleSheet.create({
       height: 1
     }
   },
-  audioButtonGroupDiv: {
+  audioTouchableOpacityGroupDiv: {
     resizeMode: 'contain',
     borderStyle: 'solid',
     borderColor: '#667085ff'
   },
-  audioButtonGroupDiv_layout: {
+  audioTouchableOpacityGroupDiv_layout: {
     position: 'absolute',
     top: -10,
     height: 100,
