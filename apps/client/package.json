@@ -11,13 +11,9 @@
     "react": "*",
     "react-native": "*",
     "react-native-config": "*",
-<<<<<<< HEAD
-    "react-native-svg": "*"
-=======
     "react-native-svg": "*",
     "@react-native-async-storage/async-storage": "*",
     "@react-navigation/native": "*",
     "@react-navigation/native-stack": "*"
->>>>>>> f72db8c62c7a27ed1acf019dae839d5e9d159450
   }
 }
