@@ -5,4 +5,4 @@ import { Module } from '@nestjs/common';
   providers: [],
   exports: [],
 })
-export class ApiPdfManagerServiceModule {}
+export class ApiPdfManagerService {}
