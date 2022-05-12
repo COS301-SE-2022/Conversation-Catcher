@@ -14,8 +14,6 @@ import {
 import Home from '../../../../libs/client/ui/src/lib/home/home.js';
 
 export const App = () => {
-  const [whatsNextYCoord, setWhatsNextYCoord] = useState<number>(0);
-  const scrollViewRef = useRef<null | ScrollView>(null);
 
   return (
     <Home></Home>

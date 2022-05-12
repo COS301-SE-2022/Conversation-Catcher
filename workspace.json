@@ -15,6 +15,7 @@
     "api-summarise-text-service": "libs/api/summarise-text/service",
     "client": "apps/client",
     "client-e2e": "apps/client-e2e",
+    "client-shared-components": "libs/client/shared-components",
     "client-ui": "libs/client/ui"
   }
 }
