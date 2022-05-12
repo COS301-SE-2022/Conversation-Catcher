@@ -1,4 +1,4 @@
-[![codecov](https://codecov.io/gh/COS301-SE-2022/Conversation-Catcher/branch/main/graph/badge.svg?token=9CX9JOGWQD)](https://codecov.io/gh/COS301-SE-2022/Conversation-Catcher)
+[![codecov](https://codecov.io/gh/COS301-SE-2022/Conversation-Catcher/branch/develop/graph/badge.svg?token=9CX9JOGWQD)](https://codecov.io/gh/COS301-SE-2022/Conversation-Catcher)
 ![GitHub issues](https://img.shields.io/github/issues/COS301-SE-2022/Conversation-Catcher?color=%231111111)
 [![CI](https://github.com/COS301-SE-2022/Conversation-Catcher/actions/workflows/main.yml/badge.svg)](https://github.com/COS301-SE-2022/Conversation-Catcher/actions/workflows/main.yml)
 [![Meta](https://github.com/COS301-SE-2022/Conversation-Catcher/actions/workflows/Meta.yml/badge.svg)](https://github.com/COS301-SE-2022/Conversation-Catcher/actions/workflows/Meta.yml)
