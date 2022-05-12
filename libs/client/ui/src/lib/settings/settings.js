@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, StyleSheet, Text, ImageBackground } from 'react-native';
 export default function SettingsPage(props) {
   return (
     <View style={[styles.settigs, styles.settigs_layout]}>
@@ -135,4 +135,204 @@ export default function SettingsPage(props) {
     </View>
   );
 }
-export default Settings;
+
+SettingsPage.inStorybook = true;
+SettingsPage.fitScreen = false;
+SettingsPage.scrollHeight = 844;
+
+const styles = StyleSheet.create({
+  settigs: {
+    backgroundColor: '#ffffffff',
+    overflow: 'hidden'
+  },
+  settigs_layout: {
+    marginTop: 0,
+    marginBottom: 0,
+    minHeight: 844,
+    flexShrink: 0,
+    marginLeft: 0,
+    flexGrow: 1,
+    marginRight: 0
+  },
+  settingsBody: {
+    flexGrow: 1
+  },
+  settingsBody_item: {
+    flexGrow: 0,
+    flexShrink: 1
+  },
+  settingsBody1: {
+    color: '#344053ff',
+    textAlign: 'center',
+    letterSpacing: 0,
+    lineHeight: 30,
+    fontSize: 30,
+    fontWeight: '700',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Jaldi */,
+    paddingHorizontal: 0,
+    paddingVertical: 0
+  },
+  settingsBody_box: {
+    flexGrow: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'center'
+  },
+  settingsButtonGroup: {
+    width: '100%',
+    flexGrow: 1,
+    backgroundColor: '#f5f5f5ff',
+    borderRadius: 7
+  },
+  settingsButtonContentGroup: {
+    flexGrow: 1
+  },
+  settingsButtonContentGroup_item: {
+    flexGrow: 0,
+    flexShrink: 1
+  },
+  flex2: {
+    flexGrow: 1
+  },
+  flex2_item: {
+    flexGrow: 0,
+    flexShrink: 1
+  },
+  flex3: {
+    flexGrow: 1
+  },
+  flex3_item: {
+    flexGrow: 0,
+    flexShrink: 1
+  },
+  group: {
+    width: '100%',
+    flexGrow: 1
+  },
+  settingsButton: {
+    flexGrow: 1
+  },
+  settingsButton_item: {
+    flexGrow: 0,
+    flexShrink: 1
+  },
+  settingsButtonContent: {},
+  settingsButtonContent_layout: {
+    marginTop: 2,
+    height: 29,
+    marginBottom: 0,
+    marginLeft: 0,
+    flexGrow: 1,
+    marginRight: 0
+  },
+  settingsButtonIcon: {
+    resizeMode: 'contain'
+  },
+  settingsButtonIcon_layout: {
+    position: 'absolute',
+    height: 24,
+    bottom: -5,
+    left: 0,
+    width: 24
+  },
+  settingsButtonText_box_layout: {
+    position: 'absolute',
+    bottom: -3,
+    left: 48,
+    width: 116
+  },
+  settingsButtonText: {
+    color: '#344053ff',
+    textAlign: 'center',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 18,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+    paddingHorizontal: 0,
+    paddingVertical: 0
+  },
+  settingsButtonText_box: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'center'
+  },
+  settingsButtonDivider: {
+    backgroundColor: '#d0d5ddff'
+  },
+  settingsButtonDivider_layout: {
+    marginTop: 19,
+    height: 1,
+    marginBottom: 1,
+    marginLeft: 0,
+    flexGrow: 1,
+    marginRight: 0
+  },
+  settingsButtonText_box_layout1: {
+    position: 'absolute',
+    bottom: -3,
+    left: 50,
+    width: 150
+  },
+
+  settingsButtonText_box_layout2: {
+    position: 'absolute',
+    bottom: -3,
+    left: 49,
+    width: 122
+  },
+
+  settingsButton1: {
+    width: '100%',
+    flexGrow: 1
+  },
+  settingsButtonText1: {
+    flexGrow: 1,
+    flexDirection: 'row'
+  },
+  settingsButtonText_item: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 24
+  },
+  settingsButtonIcon_layout1: {
+    marginTop: 1,
+    height: 24,
+    marginBottom: 0,
+    marginLeft: 0,
+    width: 24,
+    minWidth: 24,
+    marginRight: 0
+  },
+  settingsButtonText_space: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 24
+  },
+  settingsButtonText_item1: {
+    flexGrow: 0,
+    flexShrink: 0,
+    minWidth: 0
+  },
+
+  settingsButtonText_box1: {
+    flexGrow: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'center'
+  },
+  backButton: {
+    resizeMode: 'contain'
+  },
+  backButton_layout: {
+    marginTop: 396,
+    height: 18,
+    marginBottom: 0,
+    width: 9,
+    minWidth: 9,
+    marginLeft: 'auto',
+    marginRight: 'auto'
+  }
+});
