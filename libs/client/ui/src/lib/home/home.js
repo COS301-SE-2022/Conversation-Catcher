@@ -200,12 +200,11 @@ export const Home = ({ navigation }) => {
             x="27px 310fr 27px"
             y="25px minmax(0px, max-content) 0px"
             style={styles.settingsTouchableOpacity}
-            onPress={() => Alert.alert('click')}>
-            <TouchableOpacity
+            onPress={() => navigation.navigate('Home')}>
+            <view
               x="0px 310fr 0px"
               y="0px minmax(0px, max-content) 0px"
-              style={styles.settingsSpacing}
-              onPress={() => Alert.alert('click')}>
+              style={styles.settingsSpacing}>
               <View style={styles.settingsSpacing_item}>
                 <ImageBackground
                   style={[styles.settingsIcon, styles.settingsIcon_layout]}
@@ -220,7 +219,7 @@ export const Home = ({ navigation }) => {
                   </Text>
                 </View>
               </View>
-            </TouchableOpacity>
+            </view>
           </TouchableOpacity>
         </View>
         <View style={styles.homeFlex_item}>
