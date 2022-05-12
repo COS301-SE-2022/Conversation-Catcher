@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity, Alert } from 'react-native';
 
-export function Home(props) {
+export const Home = ({ navigation }) => {
   return (
     <View style={[styles.home, styles.home_layout]}>
       <View style={[styles.homeFlex, styles.homeFlex_layout]}>

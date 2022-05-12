@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Text, Image, ImageBackground, Pressable, TouchableOpacity, Alert } from 'react-native';
 
-export function ViewAll(props) {
+export const ViewAll = ({ navigation }) =>  {
   return (
     <View style={[styles.viewAllPage, styles.viewAllPage_layout]}>
       <View style={styles.viewAllPage_item}>
