@@ -28,7 +28,7 @@ export function Home(props) {
                         source={require('../assets/23a067db3896c1ac956e0e22fe9c7588.png')}
                       />
                     </View>
-                    <View style={styles.pdfTile_space} />
+                    <View style={styles.pdfTile_space}/>
                     <View style={styles.pdfTile_item1}>
                       <View x="0px 253fr 0px" y="0px minmax(0px, max-content) 0px" style={styles.pdfTileInfo}>
                         <View style={styles.pdfTileInfo_item}>
