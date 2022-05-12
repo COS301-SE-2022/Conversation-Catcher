@@ -125,7 +125,8 @@ export const SettingsPage = ({ navigation }) => {
             </ View>
           </ View>
         </View>
-        <TouchableOpacity  style={styles.settingsBody_item} onPress={() => navigation.navigate('Home')}>
+        <TouchableOpacity  style={styles.settingsBody_item} 
+        onPress={() => navigation.navigate('Home')}>
           <ImageBackground
             style={[styles.backButton, styles.backButton_layout]}
             source={require('../assets/f762e82c40c63fd888499d8d139bcf08.png')}
@@ -135,6 +136,8 @@ export const SettingsPage = ({ navigation }) => {
     </View>
   );
 }
+
+export default SettingsPage;
 
 SettingsPage.inStorybook = true;
 SettingsPage.fitScreen = false;
