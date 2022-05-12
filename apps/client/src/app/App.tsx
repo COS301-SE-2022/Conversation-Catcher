@@ -26,8 +26,7 @@ export const App = () => {
       <Stack.Navigator>
         <Stack.Screen
           name="Home"
-          component={Home}
-          options={{ title: 'Welcome' }}/>
+          component={Home}/>
          <Stack.Screen name="ViewAll" component={ViewAll} />
          <Stack.Screen name="Settings" component={Settings} />
       </Stack.Navigator>
