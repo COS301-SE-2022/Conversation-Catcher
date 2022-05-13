@@ -66,11 +66,12 @@ export const SettingsPage = ({ navigation }) => {
                             </View>
                           </ View>
 
-                          < View
+                          < TouchableOpacity
                             x="0px 288fr 2px"
                             y="102px minmax(0px, max-content) 51px"
                             absolute
-                            style={styles.settingsButton}>
+                            style={styles.settingsButton}
+                            onPress={() => navigation.navigate('Colour')}>
                             <View style={styles.settingsButton_item}>
                               <View style={[styles.settingsButtonContent, styles.settingsButtonContent_layout]}>
                                 <ImageBackground
@@ -87,7 +88,7 @@ export const SettingsPage = ({ navigation }) => {
                             <View style={styles.settingsButton_item}>
                               <View style={[styles.settingsButtonDivider, styles.settingsButtonDivider_layout]} />
                             </View>
-                          </ View>
+                          </ TouchableOpacity>
 
                           < View
                             x="0px 290fr 0px"
