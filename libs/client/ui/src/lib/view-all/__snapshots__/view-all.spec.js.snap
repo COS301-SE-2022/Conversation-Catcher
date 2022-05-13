@@ -198,7 +198,7 @@ exports[`ViewAll snapshot 1`] = `
                       <Image
                         source={
                           Object {
-                            "testUri": "../../../libs/client/ui/src/lib/assets/cf60ecb68aa83021ee8ce615fa41038e.png",
+                            "testUri": "../../../libs/client/ui/src/lib/assets/search.png",
                           }
                         }
                         style={
@@ -380,7 +380,7 @@ exports[`ViewAll snapshot 1`] = `
               onPress={[Function]}
               source={
                 Object {
-                  "testUri": "../../../libs/client/ui/src/lib/assets/f762e82c40c63fd888499d8d139bcf08.png",
+                  "testUri": "../../../libs/client/ui/src/lib/assets/back-arrow.png",
                 }
               }
               style={
@@ -451,7 +451,7 @@ exports[`ViewAll snapshot 1`] = `
               onPress={[Function]}
               source={
                 Object {
-                  "testUri": "../../../libs/client/ui/src/lib/assets/bedbbc4af4182ff9461b234dfb880971.png",
+                  "testUri": "../../../libs/client/ui/src/lib/assets/dots.png",
                 }
               }
               style={
@@ -608,7 +608,7 @@ exports[`ViewAll snapshot 1`] = `
                           <Image
                             source={
                               Object {
-                                "testUri": "../../../libs/client/ui/src/lib/assets/23a067db3896c1ac956e0e22fe9c7588.png",
+                                "testUri": "../../../libs/client/ui/src/lib/assets/pdf-bug-intro.png",
                               }
                             }
                             style={
@@ -810,7 +810,7 @@ exports[`ViewAll snapshot 1`] = `
                                 <Image
                                   source={
                                     Object {
-                                      "testUri": "../../../libs/client/ui/src/lib/assets/6784b72f243ed3938b4effbf0ffc0c7a.png",
+                                      "testUri": "../../../libs/client/ui/src/lib/assets/save.png",
                                     }
                                   }
                                   style={
@@ -908,7 +908,7 @@ exports[`ViewAll snapshot 1`] = `
                           <Image
                             source={
                               Object {
-                                "testUri": "../../../libs/client/ui/src/lib/assets/2b2d102eac55f56c11649d75b48bf464.png",
+                                "testUri": "../../../libs/client/ui/src/lib/assets/pdf-human-computer.png",
                               }
                             }
                             style={
@@ -1097,7 +1097,7 @@ exports[`ViewAll snapshot 1`] = `
                                 onPress={[Function]}
                                 source={
                                   Object {
-                                    "testUri": "../../../libs/client/ui/src/lib/assets/4517a97e95ebe8ad3751a63a5759b6d2.png",
+                                    "testUri": "../../../libs/client/ui/src/lib/assets/cloud.png",
                                   }
                                 }
                                 style={
@@ -1187,7 +1187,7 @@ exports[`ViewAll snapshot 1`] = `
                           <Image
                             source={
                               Object {
-                                "testUri": "../../../libs/client/ui/src/lib/assets/634a9d41d1a919acda75dccb24941e81.png",
+                                "testUri": "../../../libs/client/ui/src/lib/assets/pdf-tropical-plants.png",
                               }
                             }
                             style={
@@ -1380,7 +1380,7 @@ exports[`ViewAll snapshot 1`] = `
                                 <Image
                                   source={
                                     Object {
-                                      "testUri": "../../../libs/client/ui/src/lib/assets/6784b72f243ed3938b4effbf0ffc0c7a.png",
+                                      "testUri": "../../../libs/client/ui/src/lib/assets/save.png",
                                     }
                                   }
                                   style={
@@ -1469,7 +1469,7 @@ exports[`ViewAll snapshot 1`] = `
                           <Image
                             source={
                               Object {
-                                "testUri": "../../../libs/client/ui/src/lib/assets/eb280550057d075f24cdd330438abed1.png",
+                                "testUri": "../../../libs/client/ui/src/lib/assets/pdf-popcorn.png",
                               }
                             }
                             style={
@@ -1651,7 +1651,7 @@ exports[`ViewAll snapshot 1`] = `
                               <Image
                                 source={
                                   Object {
-                                    "testUri": "../../../libs/client/ui/src/lib/assets/4517a97e95ebe8ad3751a63a5759b6d2.png",
+                                    "testUri": "../../../libs/client/ui/src/lib/assets/cloud.png",
                                   }
                                 }
                                 style={
@@ -1739,7 +1739,7 @@ exports[`ViewAll snapshot 1`] = `
                           <Image
                             source={
                               Object {
-                                "testUri": "../../../libs/client/ui/src/lib/assets/822a4ffacfed7a8c6c870fe46d9baffd.png",
+                                "testUri": "../../../libs/client/ui/src/lib/assets/pdf-sable-candidate.png",
                               }
                             }
                             style={
@@ -1932,7 +1932,7 @@ exports[`ViewAll snapshot 1`] = `
                                 <Image
                                   source={
                                     Object {
-                                      "testUri": "../../../libs/client/ui/src/lib/assets/6784b72f243ed3938b4effbf0ffc0c7a.png",
+                                      "testUri": "../../../libs/client/ui/src/lib/assets/save.png",
                                     }
                                   }
                                   style={
@@ -2151,7 +2151,7 @@ exports[`ViewAll snapshot 1`] = `
               <Image
                 source={
                   Object {
-                    "testUri": "../../../libs/client/ui/src/lib/assets/cc91d6ae1ee6693ad1312f5f6a5ca71d.png",
+                    "testUri": "../../../libs/client/ui/src/lib/assets/down-arrow.png",
                   }
                 }
                 style={
