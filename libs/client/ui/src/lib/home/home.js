@@ -25,7 +25,7 @@ export const Home = ({ navigation }) => {
                     <View style={styles.pdfTile_item}>
                       <ImageBackground
                         style={[styles.pdfThumbnail, styles.pdfThumbnail_layout]}
-                        source={require('../assets/23a067db3896c1ac956e0e22fe9c7588.png')}
+                        source={require('../assets/pdf-bug-intro.png')}
                       />
                     </View>
                     <View style={styles.pdfTile_space}/>
@@ -63,7 +63,7 @@ export const Home = ({ navigation }) => {
                             onPress={() => Alert.alert('click')}>
                             <ImageBackground
                               style={[styles.downloadIcon, styles.downloadIcon_layout]}
-                              source={require('../assets/6784b72f243ed3938b4effbf0ffc0c7a.png')}
+                              source={require('../assets/save.png')}
                             />
                           </TouchableOpacity>
                         </View>
@@ -80,7 +80,7 @@ export const Home = ({ navigation }) => {
                     <View style={styles.pdfTile_item}>
                       <ImageBackground
                         style={[styles.pdfThumbnail, styles.pdfThumbnail_layout1]}
-                        source={require('../assets/2b2d102eac55f56c11649d75b48bf464.png')}
+                        source={require('../assets/pdf-human-computer.png')}
                       />
                     </View>
                     <View style={styles.pdfTile_space} />
@@ -106,7 +106,7 @@ export const Home = ({ navigation }) => {
                             y="0px 34px 93px"
                             style={styles.image2}
                             onPress={() => Alert.alert('click')}
-                            source={require('../assets/4517a97e95ebe8ad3751a63a5759b6d2.png')}
+                            source={require('../assets/cloud.png')}
                             container={TouchableOpacity}
                           />
                         </View>
@@ -123,7 +123,7 @@ export const Home = ({ navigation }) => {
                     <View style={styles.pdfTile_item}>
                       <ImageBackground
                         style={[styles.pdfThumbnail, styles.pdfThumbnail_layout]}
-                        source={require('../assets/634a9d41d1a919acda75dccb24941e81.png')}
+                        source={require('../assets/pdf-tropical-plants.png')}
                       />
                     </View>
                     <View style={styles.pdfTile_space} />
@@ -161,7 +161,7 @@ export const Home = ({ navigation }) => {
                             onPress={() => Alert.alert('click')}>
                             <ImageBackground
                               style={[styles.downloadIcon, styles.downloadIcon_layout]}
-                              source={require('../assets/6784b72f243ed3938b4effbf0ffc0c7a.png')}
+                              source={require('../assets/save.png')}
                             />
                           </TouchableOpacity>
                         </View>
@@ -208,7 +208,7 @@ export const Home = ({ navigation }) => {
               <View style={styles.settingsSpacing_item}>
                 <ImageBackground
                   style={[styles.settingsIcon, styles.settingsIcon_layout]}
-                  source={require('../assets/7ad1b7976053414cc835006cba34b16d.png')}
+                  source={require('../assets/settings.png')}
                 />
               </View>
               <View style={styles.settingsSpacing_space} />
@@ -232,7 +232,7 @@ export const Home = ({ navigation }) => {
                 onPress={() => Alert.alert('click')}>
                 <ImageBackground
                   style={[styles.recordAudioIcon, styles.recordAudioIcon_layout]}
-                  source={require('../assets/6224a20de8d1d66e441de471733c2168.png')}
+                  source={require('../assets/mic.png')}
                 />
               </TouchableOpacity>
             </View>
@@ -244,11 +244,11 @@ export const Home = ({ navigation }) => {
                 onPress={() => Alert.alert('click')}>
                 <ImageBackground
                   style={[styles.audioTouchableOpacityGroupDiv, styles.audioTouchableOpacityGroupDiv_layout]}
-                  source={require('../assets/0b67feb53a71fc494ea1192023ca3fe0.png')}
+                  source={require('../assets/verticalLine.png')}
                 />
                 <ImageBackground
                   style={[styles.uploadAudioIcon, styles.uploadAudioIcon_layout]}
-                  source={require('../assets/f096234e78f59a804b946264f7026e00.png')}
+                  source={require('../assets/upload.png')}
                 />
               </TouchableOpacity>
             </View>
@@ -328,7 +328,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     borderRadius: 5,
     borderStyle: 'solid',
-    borderColor: '#d0d5ddff',
+    borderColor: "#3F89BE",
     borderWidth: 1,
     elevation: 2,
     shadowColor: '#000000',
@@ -522,7 +522,7 @@ const styles = StyleSheet.create({
   viewAllTouchableOpacity: {
     width: '100%',
     flexGrow: 1,
-    backgroundColor: '#3f89beff',
+    backgroundColor: "#3F89BE",
     borderRadius: 8,
     borderStyle: 'solid',
     borderColor: '#3f89beff',

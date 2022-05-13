@@ -22,7 +22,7 @@ export const ViewAll = ({ navigation }) =>  {
                       <View style={styles.searchContents_item}>
                         <ImageBackground
                           style={[styles.searchIcon, styles.searchIcon_layout]}
-                          source={require('../assets/cf60ecb68aa83021ee8ce615fa41038e.png')}
+                          source={require('../assets/search.png')}
                         />
                       </View>
                       <View style={styles.searchContents_space} />
@@ -61,7 +61,7 @@ export const ViewAll = ({ navigation }) =>  {
                 style={styles.backIcon}
                 onPress={() =>
                   navigation.navigate('Home')}
-                source={require('../assets/f762e82c40c63fd888499d8d139bcf08.png')}
+                source={require('../assets/back-arrow.png')}
                 container={TouchableOpacity}
               />
             </TouchableOpacity>
@@ -72,7 +72,7 @@ export const ViewAll = ({ navigation }) =>  {
                 y="29px 3px 29px"
                 style={styles.moreOptionsIcon}
                 onPress={() => Alert.alert('click')}
-                source={require('../assets/bedbbc4af4182ff9461b234dfb880971.png')}
+                source={require('../assets/dots.png')}
                 container={TouchableOpacity}
               />
             </TouchableOpacity>
@@ -91,7 +91,7 @@ export const ViewAll = ({ navigation }) =>  {
                           <View style={styles.pdfTile_item}>
                             <ImageBackground
                               style={[styles.pdfThumbnail, styles.pdfThumbnail_layout]}
-                              source={require('../assets/23a067db3896c1ac956e0e22fe9c7588.png')}
+                              source={require('../assets/pdf-bug-intro.png')}
                             />
                           </View>
                           <View style={styles.pdfTile_space} />
@@ -132,7 +132,7 @@ export const ViewAll = ({ navigation }) =>  {
                                   onPress={() => Alert.alert('click')}>
                                   <ImageBackground
                                     style={[styles.downloadIcon, styles.downloadIcon_layout]}
-                                    source={require('../assets/6784b72f243ed3938b4effbf0ffc0c7a.png')}
+                                    source={require('../assets/save.png')}
                                   />
                                 </TouchableOpacity>
                               </View>
@@ -149,7 +149,7 @@ export const ViewAll = ({ navigation }) =>  {
                           <View style={styles.block6_item}>
                             <ImageBackground
                               style={[styles.image1, styles.image1_layout]}
-                              source={require('../assets/2b2d102eac55f56c11649d75b48bf464.png')}
+                              source={require('../assets/pdf-human-computer.png')}
                             />
                           </View>
                           <View style={styles.block6_space} />
@@ -175,7 +175,7 @@ export const ViewAll = ({ navigation }) =>  {
                                   y="0px 34px 93px"
                                   style={styles.image2}
                                   onPress={() => Alert.alert('click')}
-                                  source={require('../assets/4517a97e95ebe8ad3751a63a5759b6d2.png')}
+                                  source={require('../assets/cloud.png')}
                                   container={TouchableOpacity}
                                 />
                               </TouchableOpacity>
@@ -188,7 +188,7 @@ export const ViewAll = ({ navigation }) =>  {
                           <View style={styles.pdfTile_item}>
                             <ImageBackground
                               style={[styles.image, styles.image_layout]}
-                              source={require('../assets/634a9d41d1a919acda75dccb24941e81.png')}
+                              source={require('../assets/pdf-tropical-plants.png')}
                             />
                           </View>
                           <View style={styles.pdfTile_space} />
@@ -225,7 +225,7 @@ export const ViewAll = ({ navigation }) =>  {
                                 <View x="0px 33fr 0px" y="0px minmax(0px, max-content) 89px" style={styles.block5}>
                                   <ImageBackground
                                     style={[styles.downloadIcon, styles.downloadIcon_layout]}
-                                    source={require('../assets/6784b72f243ed3938b4effbf0ffc0c7a.png')}
+                                    source={require('../assets/save.png')}
                                   />
                                 </View>
                               </View>
@@ -238,7 +238,7 @@ export const ViewAll = ({ navigation }) =>  {
                           <View style={styles.block9_item}>
                             <ImageBackground
                               style={[styles.image, styles.image_layout]}
-                              source={require('../assets/eb280550057d075f24cdd330438abed1.png')}
+                              source={require('../assets/pdf-popcorn.png')}
                             />
                           </View>
                           <View style={styles.block9_space} />
@@ -261,7 +261,7 @@ export const ViewAll = ({ navigation }) =>  {
                               <View style={styles.block7_item2}>
                                 <ImageBackground
                                   style={[styles.image2, styles.image2_layout]}
-                                  source={require('../assets/4517a97e95ebe8ad3751a63a5759b6d2.png')}
+                                  source={require('../assets/cloud.png')}
                                 />
                               </View>
                             </View>
@@ -273,7 +273,7 @@ export const ViewAll = ({ navigation }) =>  {
                           <View style={styles.pdfTile_item}>
                             <ImageBackground
                               style={[styles.image, styles.image_layout]}
-                              source={require('../assets/822a4ffacfed7a8c6c870fe46d9baffd.png')}
+                              source={require('../assets/pdf-sable-candidate.png')}
                             />
                           </View>
                           <View style={styles.pdfTile_space} />
@@ -310,7 +310,7 @@ export const ViewAll = ({ navigation }) =>  {
                                 <View x="0px 33fr 0px" y="0px minmax(0px, max-content) 89px" style={styles.block5}>
                                   <ImageBackground
                                     style={[styles.downloadIcon, styles.downloadIcon_layout]}
-                                    source={require('../assets/6784b72f243ed3938b4effbf0ffc0c7a.png')}
+                                    source={require('../assets/save.png')}
                                   />
                                 </View>
                               </View>
@@ -353,7 +353,7 @@ export const ViewAll = ({ navigation }) =>  {
                 onPress={() => Alert.alert('click')}>
                 <ImageBackground
                   style={[styles.orderByIcon, styles.orderByIcon_layout]}
-                  source={require('../assets/cc91d6ae1ee6693ad1312f5f6a5ca71d.png')}
+                  source={require('../assets/down-arrow.png')}
                 />
               </TouchableOpacity>
             </View>

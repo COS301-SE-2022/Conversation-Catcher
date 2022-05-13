@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Text, ImageBackground, TouchableOpacity} from 'react-native';
+
 export const SettingsPage = ({ navigation }) => {
   return (
     <View style={[styles.settigs, styles.settigs_layout]}>
@@ -29,7 +30,7 @@ export const SettingsPage = ({ navigation }) => {
                               <View style={[styles.settingsButtonContent, styles.settingsButtonContent_layout]}>
                                 <ImageBackground
                                   style={[styles.settingsButtonIcon, styles.settingsButtonIcon_layout]}
-                                  source={require('../assets/79679bee68e57c649afa27a8de7f3414.png')}
+                                  source={require('../assets/mail.png')}
                                 />
                                 <View style={[styles.settingsButtonText_box, styles.settingsButtonText_box_layout]}>
                                   <Text style={styles.settingsButtonText} ellipsizeMode={'clip'}>
@@ -52,7 +53,7 @@ export const SettingsPage = ({ navigation }) => {
                               <View style={[styles.settingsButtonContent, styles.settingsButtonContent_layout]}>
                                 <ImageBackground
                                   style={[styles.settingsButtonIcon, styles.settingsButtonIcon_layout]}
-                                  source={require('../assets/de8bda761eb9ceb32e01cf462e01ee7b.png')}
+                                  source={require('../assets/lock.png')}
                                 />
                                 <View style={[styles.settingsButtonText_box, styles.settingsButtonText_box_layout1]}>
                                   <Text style={styles.settingsButtonText} ellipsizeMode={'clip'}>
@@ -66,16 +67,17 @@ export const SettingsPage = ({ navigation }) => {
                             </View>
                           </ View>
 
-                          < View
+                          < TouchableOpacity
                             x="0px 288fr 2px"
                             y="102px minmax(0px, max-content) 51px"
                             absolute
-                            style={styles.settingsButton}>
+                            style={styles.settingsButton}
+                            onPress={() => navigation.navigate('Colour')}>
                             <View style={styles.settingsButton_item}>
                               <View style={[styles.settingsButtonContent, styles.settingsButtonContent_layout]}>
                                 <ImageBackground
                                   style={[styles.settingsButtonIcon, styles.settingsButtonIcon_layout]}
-                                  source={require('../assets/c2a1ee46204a89d839eacd0921c2b2f7.png')}
+                                  source={require('../assets/change-colour.png')}
                                 />
                                 <View style={[styles.settingsButtonText_box, styles.settingsButtonText_box_layout2]}>
                                   <Text style={styles.settingsButtonText} ellipsizeMode={'clip'}>
@@ -87,7 +89,7 @@ export const SettingsPage = ({ navigation }) => {
                             <View style={styles.settingsButton_item}>
                               <View style={[styles.settingsButtonDivider, styles.settingsButtonDivider_layout]} />
                             </View>
-                          </ View>
+                          </ TouchableOpacity>
 
                           < View
                             x="0px 290fr 0px"
@@ -100,7 +102,7 @@ export const SettingsPage = ({ navigation }) => {
                               <View style={styles.settingsButtonText_item}>
                                 <ImageBackground
                                   style={[styles.settingsButtonIcon, styles.settingsButtonIcon_layout1]}
-                                  source={require('../assets/754d89ce51e0854b878e2ef557f04bde.png')}
+                                  source={require('../assets/on-device.png')}
                                 />
                               </View>
                               <View style={styles.settingsButtonText_space} />
@@ -129,7 +131,7 @@ export const SettingsPage = ({ navigation }) => {
         onPress={() => navigation.navigate('Home')}>
           <ImageBackground
             style={[styles.backButton, styles.backButton_layout]}
-            source={require('../assets/f762e82c40c63fd888499d8d139bcf08.png')}
+            source={require('../assets/back-arrow.png')}
           />
         </TouchableOpacity >
       </ View>
