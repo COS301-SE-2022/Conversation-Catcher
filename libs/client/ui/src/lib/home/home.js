@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity, Alert } from 'react-native';
+import * as OpenAnything from 'react-native-openanything';
 
 export const Home = ({ navigation }) => {
   return (
@@ -21,7 +22,7 @@ export const Home = ({ navigation }) => {
                     x="0px 356fr 0px"
                     y="0px minmax(0px, max-content) 0px"
                     style={styles.pdfTile}
-                    onPress={() => Alert.alert('click')}>
+                    onPress={() => OpenAnything.Pdf("../assets/Bug_introduction_a modification_of_code.pdf")}>//Add pdf viewing
                     <View style={styles.pdfTile_item}>
                       <ImageBackground
                         style={[styles.pdfThumbnail, styles.pdfThumbnail_layout]}
