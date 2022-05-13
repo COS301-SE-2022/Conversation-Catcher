@@ -15,7 +15,7 @@ export function PdfTile(props) {
         <View style={styles.pdfTile_item}>
           <img
             style={[styles.pdfThumbnail, styles.pdfThumbnail_layout]}
-            source={require('../../../../ui/src/lib/assets/23a067db3896c1ac956e0e22fe9c7588.png')}
+            source={require('../../../../ui/src/lib/assets/pdf-bug-intro.png')}
             alt='PDF'
           />
         </View>
@@ -65,7 +65,7 @@ export function PdfTile(props) {
               >
                 <img
                   style={[styles.downloadIcon, styles.downloadIcon_layout]}
-                  source={require('../../../../ui/src/lib/assets/6784b72f243ed3938b4effbf0ffc0c7a.png')}
+                  source={require('../../../../ui/src/lib/assets/save.png')}
                   alt='PDF'
                 />
               </button>
