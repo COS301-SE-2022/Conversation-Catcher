@@ -432,14 +432,22 @@ exports[`Setup of settings snapshot 1`] = `
                         </View>
                       </View>
                       <View
-                        absolute={true}
+                        accessible={true}
+                        collapsable={false}
+                        focusable={true}
+                        onClick={[Function]}
+                        onResponderGrant={[Function]}
+                        onResponderMove={[Function]}
+                        onResponderRelease={[Function]}
+                        onResponderTerminate={[Function]}
+                        onResponderTerminationRequest={[Function]}
+                        onStartShouldSetResponder={[Function]}
                         style={
                           Object {
                             "flexGrow": 1,
+                            "opacity": 1,
                           }
                         }
-                        x="0px 288fr 2px"
-                        y="102px minmax(0px, max-content) 51px"
                       >
                         <View
                           style={
