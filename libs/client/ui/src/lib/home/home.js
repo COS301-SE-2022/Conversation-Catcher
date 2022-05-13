@@ -328,7 +328,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     borderRadius: 5,
     borderStyle: 'solid',
-    borderColor: '#d0d5ddff',
+    borderColor: "#3F89BE",
     borderWidth: 1,
     elevation: 2,
     shadowColor: '#000000',
@@ -522,7 +522,7 @@ const styles = StyleSheet.create({
   viewAllTouchableOpacity: {
     width: '100%',
     flexGrow: 1,
-    backgroundColor: '#3f89beff',
+    backgroundColor: "#3F89BE",
     borderRadius: 8,
     borderStyle: 'solid',
     borderColor: '#3f89beff',

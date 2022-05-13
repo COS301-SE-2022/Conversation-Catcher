@@ -132,7 +132,7 @@ exports[`Home snapshot 1`] = `
                 onStartShouldSetResponder={[Function]}
                 style={
                   Object {
-                    "borderColor": "#d0d5ddff",
+                    "borderColor": "#3F89BE",
                     "borderRadius": 5,
                     "borderStyle": "solid",
                     "borderWidth": 1,
@@ -432,7 +432,7 @@ exports[`Home snapshot 1`] = `
                 onStartShouldSetResponder={[Function]}
                 style={
                   Object {
-                    "borderColor": "#d0d5ddff",
+                    "borderColor": "#3F89BE",
                     "borderRadius": 5,
                     "borderStyle": "solid",
                     "borderWidth": 1,
@@ -709,7 +709,7 @@ exports[`Home snapshot 1`] = `
                 onStartShouldSetResponder={[Function]}
                 style={
                   Object {
-                    "borderColor": "#d0d5ddff",
+                    "borderColor": "#3F89BE",
                     "borderRadius": 5,
                     "borderStyle": "solid",
                     "borderWidth": 1,
@@ -1022,7 +1022,7 @@ exports[`Home snapshot 1`] = `
               onStartShouldSetResponder={[Function]}
               style={
                 Object {
-                  "backgroundColor": "#3f89beff",
+                  "backgroundColor": "#3F89BE",
                   "borderColor": "#3f89beff",
                   "borderRadius": 8,
                   "borderStyle": "solid",
