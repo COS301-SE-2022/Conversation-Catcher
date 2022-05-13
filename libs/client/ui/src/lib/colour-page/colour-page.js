@@ -32,7 +32,7 @@ export const ColourPage = ({ navigation}) => {
         <View style={styles.colourPageBody_item}>
           <ImageBackground
             style={[styles.backButton, styles.backButton_layout]}
-            source={require('../assets/f762e82c40c63fd888499d8d139bcf08.png')}
+            source={require('../assets/back-arrow.png')}
           />
         </View>
       </View>
@@ -222,4 +222,5 @@ const styles = StyleSheet.create({
     marginLeft: 'auto',
     marginRight: 'auto'
   }
+  
 });
