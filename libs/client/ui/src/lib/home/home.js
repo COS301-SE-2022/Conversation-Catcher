@@ -1,7 +1,20 @@
 import React from 'react';
 import { View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity, Alert } from 'react-native';
+import FileViewer from 'react-native-file-viewer';
+import RNFS from "react-native-fs";
 
 export const Home = ({ navigation }) => {
+  const OpenPDF = async (file) => {
+    const dest = `${RNFS.DocumentDirectoryPath}/${file}`;
+    RNFS.copyFileAssets(file, dest)
+    .then(() => FileViewer.open(dest))
+    .then(() => {
+    console.log(file+" opened");
+    })
+    .catch((error) => {
+    console.error(error);
+    });
+  };
   return (
     <View style={[styles.home, styles.home_layout]}>
       <View style={[styles.homeFlex, styles.homeFlex_layout]}>
@@ -21,7 +34,7 @@ export const Home = ({ navigation }) => {
                     x="0px 356fr 0px"
                     y="0px minmax(0px, max-content) 0px"
                     style={styles.pdfTile}
-                    onPress={() => Alert.alert('click')}>
+                    onPress={OpenPDF("Bug_introduction_a_modification_of_code.pdf")}>
                     <View style={styles.pdfTile_item}>
                       <ImageBackground
                         style={[styles.pdfThumbnail, styles.pdfThumbnail_layout]}
