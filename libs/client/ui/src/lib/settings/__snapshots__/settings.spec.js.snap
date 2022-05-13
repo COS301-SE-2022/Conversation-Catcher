@@ -204,7 +204,7 @@ exports[`Setup of settings snapshot 1`] = `
                               <Image
                                 source={
                                   Object {
-                                    "testUri": "../../../libs/client/ui/src/lib/assets/79679bee68e57c649afa27a8de7f3414.png",
+                                    "testUri": "../../../libs/client/ui/src/lib/assets/mail.png",
                                   }
                                 }
                                 style={
@@ -344,7 +344,7 @@ exports[`Setup of settings snapshot 1`] = `
                               <Image
                                 source={
                                   Object {
-                                    "testUri": "../../../libs/client/ui/src/lib/assets/de8bda761eb9ceb32e01cf462e01ee7b.png",
+                                    "testUri": "../../../libs/client/ui/src/lib/assets/lock.png",
                                   }
                                 }
                                 style={
@@ -484,7 +484,7 @@ exports[`Setup of settings snapshot 1`] = `
                               <Image
                                 source={
                                   Object {
-                                    "testUri": "../../../libs/client/ui/src/lib/assets/c2a1ee46204a89d839eacd0921c2b2f7.png",
+                                    "testUri": "../../../libs/client/ui/src/lib/assets/change-colour.png",
                                   }
                                 }
                                 style={
@@ -622,7 +622,7 @@ exports[`Setup of settings snapshot 1`] = `
                               <Image
                                 source={
                                   Object {
-                                    "testUri": "../../../libs/client/ui/src/lib/assets/754d89ce51e0854b878e2ef557f04bde.png",
+                                    "testUri": "../../../libs/client/ui/src/lib/assets/on-device.png",
                                   }
                                 }
                                 style={
@@ -747,7 +747,7 @@ exports[`Setup of settings snapshot 1`] = `
         <Image
           source={
             Object {
-              "testUri": "../../../libs/client/ui/src/lib/assets/f762e82c40c63fd888499d8d139bcf08.png",
+              "testUri": "../../../libs/client/ui/src/lib/assets/back-arrow.png",
             }
           }
           style={

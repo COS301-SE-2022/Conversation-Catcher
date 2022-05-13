@@ -47,7 +47,7 @@ exports[`PdfTile snapshot 1`] = `
         alt="PDF"
         source={
           Object {
-            "testUri": "../../../libs/client/ui/src/lib/assets/23a067db3896c1ac956e0e22fe9c7588.png",
+            "testUri": "../../../libs/client/ui/src/lib/assets/pdf-bug-intro.png",
           }
         }
         style={
@@ -223,7 +223,7 @@ exports[`PdfTile snapshot 1`] = `
               alt="PDF"
               source={
                 Object {
-                  "testUri": "../../../libs/client/ui/src/lib/assets/6784b72f243ed3938b4effbf0ffc0c7a.png",
+                  "testUri": "../../../libs/client/ui/src/lib/assets/save.png",
                 }
               }
               style={
