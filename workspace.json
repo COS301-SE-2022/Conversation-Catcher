@@ -8,6 +8,7 @@
     "api-pdf-manager-service": "libs/api/pdf-manager/service",
     "api-database-manager-api-interface": "libs/api/database-manager/api/interface",
     "api-database-manager-api-feature": "libs/api/database-manager/api/feature",
+    "api-pdf-manager-api": "libs/api/pdf-manager/api",
     "api-shell": "libs/api/shell",
     "api-speech-to-text-api": "libs/api/speech-to-text/api",
     "api-speech-to-text-repository": "libs/api/speech-to-text/repository",
@@ -17,6 +18,7 @@
     "api-summarise-text-service": "libs/api/summarise-text/service",
     "client": "apps/client",
     "client-e2e": "apps/client-e2e",
+    "client-shared-components": "libs/client/shared-components",
     "client-ui": "libs/client/ui"
   }
 }
