@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity, Alert } from 'react-native';
+import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
 
 export const Home = ({ navigation }) => {
   return (
@@ -15,6 +16,10 @@ export const Home = ({ navigation }) => {
               </View>
             </View>
             <View style={styles.pdfContents_item}>
+              <PdfTile 
+                name = 'Bug introduction: a modification of code' 
+                date = '1 May 2022, 9:37' 
+                source={'../assets/pdf-bug-intro.png'} />
               <View x="4px 356fr 0px" y="24px minmax(0px, max-content) 0px" style={styles.recentPdfTiles}>
                 <View style={styles.recentPdfTiles_item}>
                   <TouchableOpacity type="TouchableOpacity" id="btn"
@@ -55,7 +60,7 @@ export const Home = ({ navigation }) => {
                             </View>
                           </View>
                         </View>
-                        <View style={styles.pdfTileInfo_item1}>
+                        <View style={styles.pdfTileText_item}>
                           <TouchableOpacity 
                             x="0px 33fr 0px"
                             y="0px minmax(0px, max-content) 89px"
