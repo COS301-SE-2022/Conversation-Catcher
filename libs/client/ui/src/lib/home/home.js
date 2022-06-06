@@ -19,63 +19,9 @@ export const Home = ({ navigation }) => {
               <PdfTile 
                 name = 'Bug introduction: a modification of code' 
                 date = '1 May 2022, 9:37' 
-                source={'../assets/pdf-bug-intro.png'} />
+                source = '../assets/pdf-bug-intro.png' 
+                downloaded = {true}/>
               <View x="4px 356fr 0px" y="24px minmax(0px, max-content) 0px" style={styles.recentPdfTiles}>
-                <View style={styles.recentPdfTiles_item}>
-                  <TouchableOpacity type="TouchableOpacity" id="btn"
-                    x="0px 356fr 0px"
-                    y="0px minmax(0px, max-content) 0px"
-                    style={styles.pdfTile}
-                    onPress={() => Alert.alert('click')}>
-                    <View style={styles.pdfTile_item}>
-                      <ImageBackground
-                        style={[styles.pdfThumbnail, styles.pdfThumbnail_layout]}
-                        source={require('../assets/pdf-bug-intro.png')}
-                      />
-                    </View>
-                    <View style={styles.pdfTile_space}/>
-                    <View style={styles.pdfTile_item1}>
-                      <View x="0px 253fr 0px" y="0px minmax(0px, max-content) 0px" style={styles.pdfTileInfo}>
-                        <View style={styles.pdfTileInfo_item}>
-                          <View x="1px 219fr 0px" y="0px minmax(0px, max-content) 0px" style={styles.pdfTileText}>
-                            <View style={styles.pdfTileText_item}>
-                              <View
-                                x="0px 218fr 1px"
-                                y="29px minmax(0px, max-content) 0px"
-                                style={styles.pdfName_box}>
-                                <Text style={styles.pdfName} ellipsizeMode={'clip'}>
-                                  {'Bug introduction: a modification of code'}
-                                </Text>
-                              </View>
-                            </View>
-                            <View style={styles.pdfTileText_item}>
-                              <View
-                                x="1px 217fr 1px"
-                                y="9px minmax(0px, max-content) 29px"
-                                style={styles.pdfDate_box}>
-                                <Text style={styles.pdfDate} ellipsizeMode={'clip'}>
-                                  {'1 May 2022, 9:37'}
-                                </Text>
-                              </View>
-                            </View>
-                          </View>
-                        </View>
-                        <View style={styles.pdfTileText_item}>
-                          <TouchableOpacity 
-                            x="0px 33fr 0px"
-                            y="0px minmax(0px, max-content) 89px"
-                            style={styles.downloadState}
-                            onPress={() => Alert.alert('click')}>
-                            <ImageBackground
-                              style={[styles.downloadIcon, styles.downloadIcon_layout]}
-                              source={require('../assets/save.png')}
-                            />
-                          </TouchableOpacity>
-                        </View>
-                      </View>
-                    </View>
-                  </TouchableOpacity>
-                </View>
                 <View style={styles.recentPdfTiles_item}>
                   <TouchableOpacity
                     x="0px 356fr 0px"

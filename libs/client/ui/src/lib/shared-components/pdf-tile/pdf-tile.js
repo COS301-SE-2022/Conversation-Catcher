@@ -1,17 +1,34 @@
-import React from 'react';
-import { View, StyleSheet, Text, ImageBackground, TouchableOpacity, Alert, Component } from 'react-native';
+import React, {Component} from 'react';
+import { View, StyleSheet, Text, ImageBackground, TouchableOpacity, Alert} from 'react-native';
 
-class PdfTile extends Component {
-  constructor(props) {
-    super(props)
-    this.state = { loaded: false }
+function DownloadButtonState(props){
+  const d = props.d
+  if (d) {
+    return <ImageBackground
+              x="0px 31px 5px"
+              y="0px 34px 93px"
+              style={styles.image2}
+              onPress={() => Alert.alert('click')}
+              source={require('../assets/save.png')}
+              container={TouchableOpacity} />;
   }
+  return <ImageBackground
+          x="0px 31px 5px"
+          y="0px 34px 93px"
+          style={styles.image2}
+          onPress={() => Alert.alert('click')}
+          source={require('../assets/cloud.png')}
+          container={TouchableOpacity} />;
+}
+
+export default class PdfTile extends Component {
 
   render() {
     const {
       name,
       date,
-      source
+      source,
+      downloaded
     } = this.props
 
     return (
@@ -21,38 +38,28 @@ class PdfTile extends Component {
           y="18px minmax(0px, max-content) 0px"
           style={styles.pdfTile}
           onPress={() => Alert.alert('click')}>
-          <View style={styles.pdfTile_item}>
+          <View style={styles.thumbnail_containter}>
             <ImageBackground
-              style={[styles.pdfThumbnail, styles.pdfThumbnail_layout1]}
+              style={styles.pdfThumbnail}
               source={source}
             />
           </View>
           <View style={styles.pdfTile_space} />
-          <View style={styles.pdfTile_item2}>
-            <View x="0px 253fr 0px" y="0px minmax(0px, max-content) 1px" style={styles.block8}>
-              <View style={styles.block8_item}>
-                <View style={[styles.block9, styles.block9_layout]}>
-                  <View style={[styles.pdfName_box1, styles.pdfName_box1_layout]}>
-                    <Text style={styles.pdfName} ellipsizeMode={'clip'}>
-                      {name}
-                    </Text>
-                  </View>
-                  <View style={[styles.pdfDate_box1, styles.pdfDate_box1_layout]}>
-                    <Text style={styles.pdfDate} ellipsizeMode={'clip'}>
-                      {date}
-                    </Text>
-                  </View>
-                </View>
+          <View style={styles.pdfTile_contents_not_thumbnail}>
+            <View x="0px 253fr 0px" y="0px minmax(0px, max-content) 1px" style={styles.block9}>
+              <View style={styles.pdfName_box}>
+                <Text style={styles.pdfName} ellipsizeMode={'clip'}>
+                  {name}
+                </Text>
               </View>
-              <View style={styles.block8_item1}>
-                <ImageBackground
-                  x="0px 31px 5px"
-                  y="0px 34px 93px"
-                  style={styles.image2}
-                  onPress={() => Alert.alert('click')}
-                  source={require('../assets/cloud.png')}
-                  container={TouchableOpacity}
-                />
+              <View style={styles.pdfDate_box}>
+                <Text style={styles.pdfDate} ellipsizeMode={'clip'}>
+                  {date}
+                </Text>
+              </View>
+              <View style={styles.download_button}>
+                <DownloadButtonState 
+                  d={downloaded}/>
               </View>
             </View>
           </View>
@@ -93,16 +100,14 @@ const styles = StyleSheet.create({
     },
     flexDirection: 'row'
   },
-  pdfTile_item: {
+  thumbnail_containter: {
     flexGrow: 0,
     flexShrink: 1,
     flexBasis: 90
   },
   pdfThumbnail: {
     resizeMode: 'contain',
-    borderRadius: 5
-  },
-  pdfThumbnail_layout: {
+    borderRadius: 5,
     marginTop: 0,
     height: 127,
     marginBottom: 0,
@@ -115,11 +120,6 @@ const styles = StyleSheet.create({
     flexGrow: 0,
     flexShrink: 1,
     flexBasis: 13
-  },
-  pdfTile_item1: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 253
   },
   pdfTileInfo: {
     flexGrow: 1,
@@ -167,19 +167,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0,
     paddingVertical: 0
   },
-  pdfTileInfo_item1: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 33
-  },
   downloadState: {
     width: '100%',
     flexGrow: 1
   },
   downloadIcon: {
-    resizeMode: 'contain'
-  },
-  downloadIcon_layout: {
+    resizeMode: 'contain',
     marginTop: 10,
     height: 18,
     marginBottom: 10,
@@ -188,60 +181,40 @@ const styles = StyleSheet.create({
     minWidth: 18,
     marginRight: 11
   },
-  pdfThumbnail_layout1: {
-    marginTop: 0,
-    height: 128,
-    marginBottom: 0,
-    marginLeft: 0,
-    width: 90,
-    minWidth: 90,
-    marginRight: 0
-  },
-  pdfTile_item2: {
+  pdfTile_contents_not_thumbnail: {
     flexGrow: 0,
     flexShrink: 1,
     flexBasis: 253
   },
-  block8: {
-    flexGrow: 1,
-    flexDirection: 'row'
-  },
-  block9: {},
-  block9_layout: {
+  block9: {
     marginTop: 0,
     height: 127,
     marginBottom: 0,
     marginLeft: 5,
-    flexGrow: 1,
-    marginRight: 0
+    flexGrow: 1, //flexgrow: 0
+    marginRight: 0,
+    flexDirection: 'row',
+    flexShrink: 1,
+    flexBasis: 36
   },
-  pdfName_box1_layout: {
+  pdfName_box1: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
     position: 'absolute',
     top: 39,
     width: 223,
     right: -8
   },
-  pdfName_box1: {
+  pdfDate_box: {
     flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start'
-  },
-  pdfDate_box1_layout: {
+    alignItems: 'flex-end',
+    justifyContent: 'flex-start',
     position: 'absolute',
     top: 78,
     height: 20,
     left: -2,
     width: 127
-  },
-  pdfDate_box1: {
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-    justifyContent: 'flex-start'
-  },
-  block8_item1: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 36
   },
   image2: {
     resizeMode: 'contain'
@@ -256,58 +229,5 @@ const styles = StyleSheet.create({
     flexShrink: 1,
     flexBasis: 33
   },
-  viewAllTouchableOpacityFrame: {
-    width: '100%',
-    flexGrow: 1,
-    borderRadius: 8
-  },
-  viewAllTouchableOpacity: {
-    width: '100%',
-    flexGrow: 1,
-    backgroundColor: "#3F89BE",
-    borderRadius: 8,
-    borderStyle: 'solid',
-    borderColor: '#3f89beff',
-    borderWidth: 1,
-    elevation: 2,
-    shadowColor: '#000000',
-    shadowRadius: 2.621621621621622,
-    shadowOpacity: 0.2173913043478261,
-    shadowOffset: {
-      width: 0,
-      height: 1
-    }
-  },
-  viewAllTouchableOpacityLabel: {
-    color: '#ffffffff',
-    textAlign: 'left',
-    letterSpacing: 0,
-    lineHeight: 24,
-    fontSize: 20,
-    fontWeight: '400',
-    fontStyle: 'normal',
-    fontFamily: 'System' /* Jaldi */,
-    paddingHorizontal: 0,
-    paddingVertical: 0
-  },
-  viewAllTouchableOpacityLabel_box: {
-    flexGrow: 1,
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start'
-  },
-  homeDiv: {
-    backgroundColor: '#d0d5ddff',
-    borderRadius: 0.5,
-    overflow: 'hidden' /* for borderRadius */,
-    elevation: 2,
-    shadowColor: '#000000',
-    shadowRadius: 2.621621621621622,
-    shadowOpacity: 0.2173913043478261,
-    shadowOffset: {
-      width: 0,
-      height: 1
-    }
-  }
 });
 
