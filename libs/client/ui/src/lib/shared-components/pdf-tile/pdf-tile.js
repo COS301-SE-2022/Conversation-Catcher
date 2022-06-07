@@ -5,17 +5,11 @@ function DownloadButtonState(props){
   const d = props.d
   if (d) {
     return <ImageBackground
-              x="0px 31px 5px"
-              y="0px 34px 93px"
-              style={styles.image2}
               onPress={() => Alert.alert('click')}
               source={require('../assets/save.png')}
               container={TouchableOpacity} />;
   }
   return <ImageBackground
-          x="0px 31px 5px"
-          y="0px 34px 93px"
-          style={styles.image2}
           onPress={() => Alert.alert('click')}
           source={require('../assets/cloud.png')}
           container={TouchableOpacity} />;
@@ -32,98 +26,72 @@ export default class PdfTile extends Component {
     } = this.props
 
     return (
-      <View style={styles.recentPdfTiles_item}>
-        <TouchableOpacity
-          x="0px 356fr 0px"
-          y="18px minmax(0px, max-content) 0px"
-          style={styles.pdfTile}
-          onPress={() => Alert.alert('click')}>
-          <View style={styles.thumbnail_containter}>
-            <ImageBackground
-              style={styles.pdfThumbnail}
-              source={source}
-            />
-          </View>
-          <View style={styles.pdfTile_space} />
-          <View style={styles.pdfTile_contents_not_thumbnail}>
-            <View x="0px 253fr 0px" y="0px minmax(0px, max-content) 1px" style={styles.block9}>
-              <View style={styles.pdfName_box}>
-                <Text style={styles.pdfName} ellipsizeMode={'clip'}>
-                  {name}
-                </Text>
-              </View>
-              <View style={styles.pdfDate_box}>
-                <Text style={styles.pdfDate} ellipsizeMode={'clip'}>
-                  {date}
-                </Text>
-              </View>
-              <View style={styles.download_button}>
-                <DownloadButtonState 
-                  d={downloaded}/>
-              </View>
+      <TouchableOpacity
+        style={styles.pdfTile}
+        onPress={() => Alert.alert('click')}>
+        <View style={styles.thumbnail_containter}>
+          <ImageBackground
+            style={styles.pdfThumbnail}
+            source={source}
+          />
+        </View>
+        <View style={styles.pdfTile_contents_not_thumbnail}>
+          <View style={styles.pdfTile_contents_not_thumbnail_inner}>
+            <View style={styles.pdfName_box}>
+              <Text style={styles.pdfName} ellipsizeMode={'clip'}>
+                {name}
+              </Text>
+            </View>
+            <View style={styles.pdfDate_box}>
+              <Text style={styles.pdfDate} ellipsizeMode={'clip'}>
+                {date}
+              </Text>
+            </View>
+            <View style={styles.download_button}>
+              <DownloadButtonState 
+                d={downloaded}/>
             </View>
           </View>
-        </TouchableOpacity>
-      </View>
+        </View>
+      </TouchableOpacity>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  pdfContents: {
-    flexGrow: 1
-  },
-  pdfContents_item: {
-    flexGrow: 0,
-    flexShrink: 1
-  },
-  recentPdfTiles: {
-    flexGrow: 1
-  },
-  recentPdfTiles_item: {
-    flexGrow: 0,
-    flexShrink: 1
-  },
   pdfTile: {
-    flexGrow: 1,
+    flexShrink: 1,
     borderRadius: 5,
     borderStyle: 'solid',
-    borderColor: "#667084ff",
+    borderColor: "#c4c4c4ff",
     borderWidth: 1,
-    elevation: 2,
-    shadowColor: '#000000',
-    shadowRadius: 2.621621621621622,
-    shadowOpacity: 0.2173913043478261,
+    elevation: 1,
+    shadowColor: '#c4c4c4ff',
+    shadowRadius: 5,
+    shadowOpacity: 0.1,
     shadowOffset: {
-      width: 0,
-      height: 1
+      width: 2,
+      height: -2
     },
     flexDirection: 'row',
+    margin: 5
   },
   thumbnail_containter: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 90,
+    flex: 1,
     borderRadius: 5,
     borderStyle: 'solid',
     borderColor: "#3F89BE",
     borderWidth: 1,
+    aspectRatio: 1/1.4142,
   },
   pdfThumbnail: {
     resizeMode: 'contain',
     borderRadius: 5,
     marginTop: 0,
-    height: 127,
     marginBottom: 0,
     marginLeft: 0,
-    width: 90,
-    minWidth: 90,
+    //minWidth: 90,
     marginRight: 0
-  },
-  pdfTile_space: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 13
   },
   pdfTileInfo: {
     flexGrow: 1,
@@ -132,7 +100,6 @@ const styles = StyleSheet.create({
   pdfTileInfo_item: {
     flexGrow: 0,
     flexShrink: 1,
-    flexBasis: 220
   },
   pdfTileText: {
     flexGrow: 1
@@ -155,9 +122,9 @@ const styles = StyleSheet.create({
   },
   pdfName_box: {
     flexGrow: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start'
+    resizeMode: 'contain',
+    justifyContent: 'center',
+    paddingTop: 15
   },
   pdfDate: {
     color: '#667084ff',
@@ -170,6 +137,12 @@ const styles = StyleSheet.create({
     fontFamily: 'System' /* Inter */,
     paddingHorizontal: 0,
     paddingVertical: 0
+  },
+  pdfDate_box: {
+    flexGrow: 1,
+    resizeMode: 'contain',
+    justifyContent: 'center',
+    paddingBottom: 15
   },
   downloadState: {
     width: '100%',
@@ -186,52 +159,19 @@ const styles = StyleSheet.create({
     marginRight: 11
   },
   pdfTile_contents_not_thumbnail: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 253
+    flex: 4,
+    justifyContent: 'center'
   },
-  block9: {
+  pdfTile_contents_not_thumbnail_inner: {
     marginTop: 0,
-    height: 127,
     marginBottom: 0,
     marginLeft: 5,
     flexGrow: 1, //flexgrow: 0
     marginRight: 0,
-    flexDirection: 'row',
+    flexDirection: 'column',
     flexShrink: 1,
-    flexBasis: 36
-  },
-  pdfName_box1: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    position: 'absolute',
-    top: 39,
-    width: 223,
-    right: -8
-  },
-  pdfDate_box: {
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-    justifyContent: 'flex-start',
-    position: 'absolute',
-    top: 78,
-    height: 20,
-    left: -2,
-    width: 127
-  },
-  image2: {
-    resizeMode: 'contain'
-  },
-  pdfTile_item3: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 253
-  },
-  pdfTileInfo_item2: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 33
+    justifyContent: 'center',
+    paddingLeft: 10
   },
 });
 

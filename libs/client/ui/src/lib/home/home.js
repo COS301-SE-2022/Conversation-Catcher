@@ -1,16 +1,16 @@
 import React from 'react';
-import { View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity, Alert } from 'react-native';
+import { View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity, Alert, Dimensions } from 'react-native';
 import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
 
 export const Home = ({ navigation }) => {
   return (
     <View style={styles.home}>
-      <View x="3.61% 27.5% 68.89%" y="0px minmax(0px, max-content) 0px" style={styles.big_title_box}>
+      <View style={styles.big_title_box}>
         <Text style={styles.big_title} ellipsizeMode={'clip'}>
           {'Recents'}
         </Text>
       </View>
-      <View x="0px 360fr 4px" y="0px minmax(0px, max-content) 0px" style={styles.recentPdfTiles}>
+      <View style={styles.recentPdfTiles}>
         <PdfTile 
           name = 'Bug introduction: a modification of code' 
           date = '1 May 2022, 9:37' 
@@ -27,16 +27,12 @@ export const Home = ({ navigation }) => {
           source = {"../assets/pdf-tropical-plants.png"} 
           downloaded = {true}/>
       </View>
-      <View x="4px 356fr 0px" y="27px minmax(0px, max-content) 0px" style={styles.viewAllTouchableOpacityFrame}>
+      <View style={styles.viewAllTouchableOpacityFrame}>
         <TouchableOpacity
-          x="23px 310fr 23px"
-          y="0px minmax(0px, max-content) 0px"
           style={styles.viewAllTouchableOpacity}
           onPress={() =>
             navigation.navigate('ViewAll')}>
           <View
-            x="103px minmax(0px, max-content) 98fr"
-            y="10px minmax(0px, max-content) 10fr"
             style={styles.viewAllTouchableOpacityLabel_box}>
             <Text style={styles.viewAllTouchableOpacityLabel} ellipsizeMode={'clip'}>
               {'View all PDFs'}
@@ -46,13 +42,9 @@ export const Home = ({ navigation }) => {
       </View>
       <View style={styles.homeDiv} />
       <TouchableOpacity
-        x="27px 310fr 27px"
-        y="25px minmax(0px, max-content) 0px"
         style={styles.settingsTouchableOpacity}
         onPress={() => navigation.navigate('Settings')}>
         <View
-          x="0px 310fr 0px"
-          y="0px minmax(0px, max-content) 0px"
           style={styles.settingsSpacing}>
           <View style={styles.settingsSpacing_item}>
             <ImageBackground
@@ -60,21 +52,16 @@ export const Home = ({ navigation }) => {
               source={require('../assets/settings.png')}
             />
           </View>
-          <View style={styles.settingsSpacing_space} />
-          <View style={styles.settingsSpacing_item1}>
-            <View x="0px 66fr 121px" y="10px minmax(0px, max-content) 10px" style={styles.settingsText_box}>
-              <Text style={styles.settingsText} ellipsizeMode={'clip'}>
-                {'Settings'}
-              </Text>
-            </View>
+          <View style={styles.settingsText_box}>
+            <Text style={styles.settingsText} ellipsizeMode={'clip'}>
+              {'Settings'}
+            </Text>
           </View>
         </View>
       </TouchableOpacity>
-      <View x="28.3% 43.96% 27.75%" y="38px minmax(0px, max-content) 11px" style={styles.audioTouchableOpacityGroup}>
+      <View style={styles.audioTouchableOpacityGroup}>
         <View style={styles.audioTouchableOpacityGroup_item}>
           <TouchableOpacity
-            x="0px 80fr 0px"
-            y="0px minmax(0px, max-content) 0px"
             style={styles.recordAudioTouchableOpacity}
             onPress={() => Alert.alert('click')}>
             <ImageBackground
@@ -85,8 +72,6 @@ export const Home = ({ navigation }) => {
         </View>
         <View style={styles.audioTouchableOpacityGroup_item}>
           <TouchableOpacity
-            x="0px 80fr 0px"
-            y="0px minmax(0px, max-content) 0px"
             style={styles.uploadAudioTouchableOpacity}
             onPress={() => Alert.alert('click')}>
             <ImageBackground
@@ -113,20 +98,13 @@ const styles = StyleSheet.create({
   home: {
     backgroundColor: '#ffffffff',
     overflow: 'hidden',
-    marginTop: 0,
-    marginBottom: 0,
-    minHeight: 844,
-    //flex: 1,
-    flexShrink: 0,
-    marginLeft: 0,
     flexGrow: 1,
-    marginRight: 0,
-
-   // marginTop: 38,
-   // height: 768,
-   // marginLeft: 13,
-    //width: 364,
-   // minWidth: 364
+    //flex: 1,
+    //flexShrink: 0,
+    flexDirection: 'column',
+    //width: Dimensions.get('window').width,
+    //height: Dimensions.get('window').height,
+    justifyContent: 'space-between',
   },
   big_title: {
     color: '#344053ff',
@@ -141,23 +119,26 @@ const styles = StyleSheet.create({
     paddingVertical: 0
   },
   big_title_box: {
-//    flex: 1,
     flexGrow: 1,
-    flexDirection: 'row',
     alignItems: 'flex-start',
-    justifyContent: 'center'
+    paddingTop: 5,
+    paddingLeft: 7
   },
   recentPdfTiles: {
     flexGrow: 5,
-    //flex: 5
+    paddingLeft: 15,
+    paddingRight: 15,
+    justifyContent: 'space-between'
   },
   viewAllTouchableOpacityFrame: {
-    //flex: 1,
-    flexGrow: 1
+    flexGrow: 1,
   },
   viewAllTouchableOpacity: {
-    width: '100%',
-    flexGrow: 1,
+    marginTop: 10,
+    marginLeft: 30,
+    marginRight: 30,
+    justifyContent: 'center',
+    alignContent: 'center',
     backgroundColor: "#3F89BE",
     borderRadius: 8,
     borderStyle: 'solid',
@@ -174,23 +155,21 @@ const styles = StyleSheet.create({
   },
   viewAllTouchableOpacityLabel: {
     color: '#ffffffff',
-    textAlign: 'left',
+    textAlign: 'center',
     letterSpacing: 0,
     lineHeight: 24,
     fontSize: 20,
     fontWeight: '400',
     fontStyle: 'normal',
     fontFamily: 'System' /* Jaldi */,
-    paddingHorizontal: 0,
-    paddingVertical: 0,
-    //flex: 1
+    padding: 10,
   },
   viewAllTouchableOpacityLabel_box: {
-    flexGrow: 1,
+    //flexGrow: 1,
     //flex: 1,
     flexDirection: 'row',
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start'
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   homeDiv: {
     backgroundColor: '#d0d5ddff',
@@ -204,22 +183,17 @@ const styles = StyleSheet.create({
       width: 0,
       height: 1
     },
-    marginTop: 26,
     height: 1,
-    marginBottom: 0,
-    marginLeft: 4,
-    flexGrow: 1,
-    marginRight: 4,
-    //flex: 1
+    margin: 10,
+    flexShrink: 1
   },
   settingsTouchableOpacity: {
     width: '100%',
-    flexGrow: 1,
     borderRadius: 8,
-    //flex: 1
+    flexGrow: 1
   },
   settingsSpacing: {
-    flexGrow: 1,
+    //flex: 1,
     backgroundColor: '#9bcbedff',
     borderRadius: 8,
     overflow: 'hidden',
@@ -234,32 +208,24 @@ const styles = StyleSheet.create({
       width: 0,
       height: 1
     },
-    flexDirection: 'row'
+    //flexDirection: 'row'
   },
   settingsSpacing_item: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 39
+    //flexGrow: 0,
+    //flexShrink: 1,
+    //flexBasis: 39
   },
   settingsIcon: {
     resizeMode: 'contain',
     marginTop: 10,
-    height: 24,
     marginBottom: 10,
     marginLeft: 10,
-    width: 29,
-    minWidth: 29,
     marginRight: 0
   },
   settingsSpacing_space: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 84
-  },
-  settingsSpacing_item1: {
-    flexGrow: 0,
-    flexShrink: 0,
-    minWidth: 0
+    //flexGrow: 0,
+    //flexShrink: 1,
+    //flexBasis: 84
   },
   settingsText: {
     color: '#344053ff',
@@ -274,25 +240,24 @@ const styles = StyleSheet.create({
     paddingVertical: 0
   },
   settingsText_box: {
-    flexGrow: 1,
+    //flexGrow: 1,
     flexDirection: 'row',
     alignItems: 'flex-start',
     justifyContent: 'center'
   },
   audioTouchableOpacityGroup: {
     flexGrow: 1,
-    //flex: 1,
     borderRadius: 8,
     flexDirection: 'row'
   },
   audioTouchableOpacityGroup_item: {
-    flexGrow: 1,
-    flexShrink: 1,
-    flexBasis: 80
+    //flexGrow: 1,
+    //flexShrink: 1,
+    //flexBasis: 80
   },
   recordAudioTouchableOpacity: {
     width: '100%',
-    flexGrow: 1,
+    //flexGrow: 1,
     backgroundColor: '#d0d5ddff',
     borderTopLeftRadius: 8,
     borderBottomLeftRadius: 8,
@@ -318,7 +283,7 @@ const styles = StyleSheet.create({
   },
   uploadAudioTouchableOpacity: {
     width: '100%',
-    flexGrow: 1,
+    //flexGrow: 1,
     backgroundColor: '#d0d5ddff',
     borderTopRightRadius: 8,
     borderBottomRightRadius: 8,
