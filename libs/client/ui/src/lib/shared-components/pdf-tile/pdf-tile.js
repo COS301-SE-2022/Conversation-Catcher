@@ -60,7 +60,7 @@ export default class PdfTile extends Component {
 
 const styles = StyleSheet.create({
   pdfTile: {
-    flexShrink: 1,
+    flexGrow: 1,
     borderRadius: 5,
     borderStyle: 'solid',
     borderColor: "#c4c4c4ff",
@@ -77,21 +77,17 @@ const styles = StyleSheet.create({
     margin: 5
   },
   thumbnail_containter: {
-    flex: 1,
+    flexShrink: 1,
     borderRadius: 5,
     borderStyle: 'solid',
     borderColor: "#3F89BE",
     borderWidth: 1,
     aspectRatio: 1/1.4142,
+
   },
   pdfThumbnail: {
     resizeMode: 'contain',
     borderRadius: 5,
-    marginTop: 0,
-    marginBottom: 0,
-    marginLeft: 0,
-    //minWidth: 90,
-    marginRight: 0
   },
   pdfTileInfo: {
     flexGrow: 1,

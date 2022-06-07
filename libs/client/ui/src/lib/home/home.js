@@ -98,12 +98,12 @@ const styles = StyleSheet.create({
   home: {
     backgroundColor: '#ffffffff',
     overflow: 'hidden',
-    flexShrink: 1,
+    //flexShrink: 1,
     //flex: 1,
     //flexShrink: 0,
     flexDirection: 'column',
-    //width: Dimensions.get('window').width,
-    //height: Dimensions.get('window').height,
+    width: '100%',
+    height: '100%',
     justifyContent: 'space-between',
   },
   big_title: {
@@ -119,22 +119,26 @@ const styles = StyleSheet.create({
     paddingVertical: 0
   },
   big_title_box: {
-    flexShrink: 1,
     alignItems: 'flex-start',
-    paddingTop: 5,
-    paddingLeft: 15
+    justifyContent: 'center',
+    paddingLeft: 15,
+    height: '5%',
+    //width: '100%',
+    minHeight: 28
   },
   recentPdfTiles: {
-    flexShrink: 1,
+    height: '55%',
     paddingLeft: 15,
     paddingRight: 15,
     justifyContent: 'space-between'
   },
   viewAllTouchableOpacityFrame: {
-    flexShrink: 1,
+    height: '10%'
   },
   viewAllTouchableOpacity: {
-    marginTop: 10,
+    flexGrow: 1,
+    marginTop: 5,
+    marginBottom: 5,
     marginLeft: 30,
     marginRight: 30,
     justifyContent: 'center',
@@ -183,13 +187,14 @@ const styles = StyleSheet.create({
       height: 1
     },
     height: 1,
-    margin: 10,
     flexShrink: 1
   },
   settingsTouchableOpacityFrame: {
-    flexShrink: 1,
+    height: '10%'
   },
   settingTouchableOpacity: {
+    marginTop: 5,
+    marginBottom: 5,
     marginLeft: 30,
     marginRight: 30,
     backgroundColor: '#9bcbedff',
@@ -197,7 +202,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignContent: 'center',
     flexDirection: 'row',
-    flexShrink: 1,
+    flexGrow: 1,
     overflow: 'hidden',
     borderStyle: 'solid',
     borderColor: '#9bcbedff',
@@ -241,9 +246,13 @@ const styles = StyleSheet.create({
     //flexShrink: 1
   },
   audioTouchableOpacityGroup: {
-    flexShrink: 1,
+    //flexShrink: 1,
     borderRadius: 8,
-    flexDirection: 'row'
+    flexDirection: 'row',
+    height: '18%',
+    padding: 5,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   audioTouchableOpacityGroup_item: {
     //flexShrink: 1,
