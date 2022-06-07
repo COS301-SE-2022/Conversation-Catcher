@@ -14,17 +14,17 @@ export const Home = ({ navigation }) => {
         <PdfTile 
           name = 'Bug introduction: a modification of code' 
           date = '1 May 2022, 9:37' 
-          source = {"../assets/pdf-bug-intro.png"} 
+          source = {require('../assets/pdf-bug-intro.png')} 
           downloaded = {true}/>
         <PdfTile 
           name = 'Human-computer interaction' 
           date = '21 Apr 2022, 14:18' 
-          source = {"../assets/pdf-human-computer.png"} 
+          source = {require('../assets/pdf-human-computer.png')} 
           downloaded = {false}/>
         <PdfTile 
           name = 'The tropical plants of the Philippines' 
           date = '13 Apr 2022, 11:53' 
-          source = {"../assets/pdf-tropical-plants.png"} 
+          source = {require('../assets/pdf-tropical-plants.png')} 
           downloaded = {true}/>
       </View>
       <View style={styles.viewAllTouchableOpacityFrame}>
