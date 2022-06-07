@@ -42,11 +42,11 @@ export const Home = ({ navigation }) => {
       </View>
       <View style={styles.homeDiv} />
       <TouchableOpacity
-        style={styles.settingsTouchableOpacity}
+        style={styles.settingsTouchableOpacityFrame}
         onPress={() => navigation.navigate('Settings')}>
         <View
-          style={styles.settingsSpacing}>
-          <View style={styles.settingsSpacing_item}>
+          style={styles.settingTouchableOpacity}>
+          <View style={styles.settingsIcon_frame}>
             <ImageBackground
               style={styles.settingsIcon}
               source={require('../assets/settings.png')}
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
   home: {
     backgroundColor: '#ffffffff',
     overflow: 'hidden',
-    flexGrow: 1,
+    flexShrink: 1,
     //flex: 1,
     //flexShrink: 0,
     flexDirection: 'column',
@@ -110,8 +110,8 @@ const styles = StyleSheet.create({
     color: '#344053ff',
     textAlign: 'center',
     letterSpacing: 0,
-    lineHeight: 30,
-    fontSize: 30,
+    lineHeight: 28,
+    fontSize: 24,
     fontWeight: '700',
     fontStyle: 'normal',
     fontFamily: 'System' /* Jaldi */,
@@ -119,19 +119,19 @@ const styles = StyleSheet.create({
     paddingVertical: 0
   },
   big_title_box: {
-    flexGrow: 1,
+    flexShrink: 1,
     alignItems: 'flex-start',
     paddingTop: 5,
-    paddingLeft: 7
+    paddingLeft: 15
   },
   recentPdfTiles: {
-    flexGrow: 5,
+    flexShrink: 1,
     paddingLeft: 15,
     paddingRight: 15,
     justifyContent: 'space-between'
   },
   viewAllTouchableOpacityFrame: {
-    flexGrow: 1,
+    flexShrink: 1,
   },
   viewAllTouchableOpacity: {
     marginTop: 10,
@@ -157,16 +157,15 @@ const styles = StyleSheet.create({
     color: '#ffffffff',
     textAlign: 'center',
     letterSpacing: 0,
-    lineHeight: 24,
-    fontSize: 20,
+    lineHeight: 22,
+    fontSize: 18,
     fontWeight: '400',
     fontStyle: 'normal',
     fontFamily: 'System' /* Jaldi */,
     padding: 10,
   },
   viewAllTouchableOpacityLabel_box: {
-    //flexGrow: 1,
-    //flex: 1,
+
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center'
@@ -187,15 +186,18 @@ const styles = StyleSheet.create({
     margin: 10,
     flexShrink: 1
   },
-  settingsTouchableOpacity: {
-    width: '100%',
-    borderRadius: 8,
-    flexGrow: 1
+  settingsTouchableOpacityFrame: {
+    flexShrink: 1,
   },
-  settingsSpacing: {
-    //flex: 1,
+  settingTouchableOpacity: {
+    marginLeft: 30,
+    marginRight: 30,
     backgroundColor: '#9bcbedff',
     borderRadius: 8,
+    justifyContent: 'center',
+    alignContent: 'center',
+    flexDirection: 'row',
+    flexShrink: 1,
     overflow: 'hidden',
     borderStyle: 'solid',
     borderColor: '#9bcbedff',
@@ -208,12 +210,11 @@ const styles = StyleSheet.create({
       width: 0,
       height: 1
     },
-    //flexDirection: 'row'
   },
-  settingsSpacing_item: {
-    //flexGrow: 0,
-    //flexShrink: 1,
-    //flexBasis: 39
+  settingsIcon_frame: {
+    justifyContent: 'center',
+    alignContent: 'flex-start',
+    //flexShrink: 1
   },
   settingsIcon: {
     resizeMode: 'contain',
@@ -222,17 +223,12 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginRight: 0
   },
-  settingsSpacing_space: {
-    //flexGrow: 0,
-    //flexShrink: 1,
-    //flexBasis: 84
-  },
   settingsText: {
     color: '#344053ff',
     textAlign: 'center',
     letterSpacing: 0,
-    lineHeight: 24,
-    fontSize: 20,
+    lineHeight: 22,
+    fontSize: 18,
     fontWeight: '400',
     fontStyle: 'normal',
     fontFamily: 'System' /* Jaldi */,
@@ -240,24 +236,23 @@ const styles = StyleSheet.create({
     paddingVertical: 0
   },
   settingsText_box: {
-    //flexGrow: 1,
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    justifyContent: 'center'
+    alignItems: 'center',
+    justifyContent: 'center',
+    //flexShrink: 1
   },
   audioTouchableOpacityGroup: {
-    flexGrow: 1,
+    flexShrink: 1,
     borderRadius: 8,
     flexDirection: 'row'
   },
   audioTouchableOpacityGroup_item: {
-    //flexGrow: 1,
+    //flexShrink: 1,
     //flexShrink: 1,
     //flexBasis: 80
   },
   recordAudioTouchableOpacity: {
     width: '100%',
-    //flexGrow: 1,
+    //flexShrink: 1,
     backgroundColor: '#d0d5ddff',
     borderTopLeftRadius: 8,
     borderBottomLeftRadius: 8,
@@ -283,7 +278,7 @@ const styles = StyleSheet.create({
   },
   uploadAudioTouchableOpacity: {
     width: '100%',
-    //flexGrow: 1,
+    //flexShrink: 1,
     backgroundColor: '#d0d5ddff',
     borderTopRightRadius: 8,
     borderBottomRightRadius: 8,
