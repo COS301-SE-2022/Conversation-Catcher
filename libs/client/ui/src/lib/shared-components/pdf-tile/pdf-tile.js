@@ -6,12 +6,12 @@ function DownloadButtonState(props){
   if (d) {
     return <ImageBackground
               onPress={() => Alert.alert('click')}
-              source={require('../assets/save.png')}
+              source={'../assets/save.png'}
               container={TouchableOpacity} />;
   }
   return <ImageBackground
           onPress={() => Alert.alert('click')}
-          source={require('../assets/cloud.png')}
+          source={'../assets/cloud.png'}
           container={TouchableOpacity} />;
 }
 
