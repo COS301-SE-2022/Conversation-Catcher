@@ -1,9 +1,11 @@
 import { Module } from '@nestjs/common';
-import { ApiDatabaseManagerServiceFeatureService } from './api-database-manager-service-feature.service';
+import { DatabaseManagerService } from './database-manager.service';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
   controllers: [],
-  providers: [ApiDatabaseManagerServiceFeatureService],
-  exports: [ApiDatabaseManagerServiceFeatureService],
+  providers: [DatabaseManagerService],
+  exports: [DatabaseManagerService],
+  imports: [HttpModule],
 })
 export class ApiDatabaseManagerServiceFeatureModule {}
