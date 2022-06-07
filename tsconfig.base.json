@@ -15,17 +15,17 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@conversation-catcher/api/pdf-manager/service": [
-        "libs/api/pdf-manager/service/src/index.ts"
+      "@conversation-catcher/api/database-manager/api/feature": [
+        "libs/api/database-manager/api/feature/src/index.ts"
       ],
       "@conversation-catcher/api/database-manager/api/interface": [
         "libs/api/database-manager/api/interface/src/index.ts"
       ],
-      "@conversation-catcher/api/database-manager/api/feature": [
-        "libs/api/database-manager/api/feature/src/index.ts"
-      ],
       "@conversation-catcher/api/pdf-manager/api": [
         "libs/api/pdf-manager/api/src/index.ts"
+      ],
+      "@conversation-catcher/api/pdf-manager/service": [
+        "libs/api/pdf-manager/service/src/index.ts"
       ],
       "@conversation-catcher/api/speech-to-text/api": [
         "libs/api/speech-to-text/api/src/index.ts"
