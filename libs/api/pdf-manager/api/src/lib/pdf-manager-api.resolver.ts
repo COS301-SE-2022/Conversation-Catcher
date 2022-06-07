@@ -15,10 +15,11 @@ export class PdfManagerApiResolver {
     * creationDate: Date
     * dowloaded: boolean
 	
-	getPDFById
-	getPDFs
-	renamePDF
-	downloadPDF
+	Functions:
+	* getPDFById
+	* getPDFs
+	* renamePDF
+	* downloadPDF
 
     */
 
@@ -41,8 +42,8 @@ export class PdfManagerApiResolver {
 	}
 
 	@Query(() => [PdfEntity], { nullable: true })
-	async getPDFs() {
-		const pdfsArr = await this.pdfService.getPDFs();
+	async getPDFs(@Args('id', { type: () => [String] }) userid: string) {
+		const pdfsArr = await this.pdfService.getPDFs(userid);
 
 		if (pdfsArr.length > 0) {
 			const arrOfPDFs = new Array<PdfEntity>();
@@ -65,13 +66,13 @@ export class PdfManagerApiResolver {
 
 	@Mutation(() => PdfEntity)
   	async renamePDF(@Args('id', { type: () => [String] }) id: string, @Args('name', { type: () => String }) name: string) {
-		const pdf = this.pdfService.rename(id, name);
+		const pdf = this.pdfService.renamePDF(id, name);
 		return pdf;
 	}
 
 	@Mutation(() => PdfEntity)
   	async downloadPDF(@Args('id', { type: () => [String] }) id: string) {
-		const pdf = this.pdfService.download(id); 
+		const pdf = this.pdfService.downloadPDF(id); 
 		return pdf;
 	}
 }

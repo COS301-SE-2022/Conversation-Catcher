@@ -1,12 +1,12 @@
 //Repository
 import { CommandHandler, EventPublisher, ICommandHandler } from "@nestjs/cqrs";
 import { PdfManagerModel } from "../../models/pdf-manager.model";
-import { DownloadPdfEvent } from "../events/download-pdf.event";
-import { DownloadPdfEventHandler } from "../events/download-pdf.event.handler";
+//import { DownloadPdfEvent } from "../events/download-pdf.event";
+//import { DownloadPdfEventHandler } from "../events/download-pdf.event.handler";
 import { DownloadPdfCommand } from "../impl/download-pdf.command";
 
-@CommandHandler(DownloadPDFCommand)
-export class DownloadPdfHandler implements ICommandHandler<DownloadPDFCommand> {
+@CommandHandler(DownloadPdfCommand)
+export class DownloadPdfHandler implements ICommandHandler<DownloadPdfCommand> {
   constructor(private publisher: EventPublisher) {}
 
   async execute({id}: DownloadPdfCommand) {
