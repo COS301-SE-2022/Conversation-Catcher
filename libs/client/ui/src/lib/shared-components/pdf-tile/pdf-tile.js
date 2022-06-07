@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     borderRadius: 5,
     borderStyle: 'solid',
-    borderColor: "#3F89BE",
+    borderColor: "#667084ff",
     borderWidth: 1,
     elevation: 2,
     shadowColor: '#000000',
@@ -98,12 +98,16 @@ const styles = StyleSheet.create({
       width: 0,
       height: 1
     },
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   thumbnail_containter: {
     flexGrow: 0,
     flexShrink: 1,
-    flexBasis: 90
+    flexBasis: 90,
+    borderRadius: 5,
+    borderStyle: 'solid',
+    borderColor: "#3F89BE",
+    borderWidth: 1,
   },
   pdfThumbnail: {
     resizeMode: 'contain',
