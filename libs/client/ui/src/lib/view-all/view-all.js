@@ -6,99 +6,92 @@ import ModalDropdown from 'react-native-modal-dropdown';
 export const ViewAll = ({ navigation }) =>  {
   return (
     <View style={styles.viewAllPage}>
-        <View style={styles.viewAllTopBar}>
-          <View style={styles.big_title_box}>
-            <Text style={styles.big_title}>
-              {'PDFs'}
-            </Text>
-          </View>
-          
-
-            <View style={styles.searchBarGroup}>
-              <ImageBackground
-                style={styles.searchIcon}
-                //source={require('../assets/search.png')}
-              />
-
-              <TextInput
-                style={styles.searchInput}
-                placeholder="Search"
-                onChangeText={() => Alert.alert('click')}
-              />
-            </View>
-
+      <View style={styles.viewAllTopBar}>
+        <View style={styles.big_title_box}>
+          <Text style={styles.big_title}>
+            {'PDFs'}
+          </Text>
         </View>
 
-        <ScrollView style={styles.recentPdfTiles}>
-          <PdfTile 
-            name = 'Bug introduction: a modification of code' 
-            date = '1 May 2022, 9:37' 
-            source = {"../assets/pdf-bug-intro.png"} 
-            downloaded = {true}/>
-          <PdfTile 
-            name = 'Human-computer interaction' 
-            date = '21 Apr 2022, 14:18' 
-            source = {"../assets/pdf-human-computer.png"} 
-            downloaded = {false}/>
-          <PdfTile 
-            name = 'The tropical plants of the Philippines' 
-            date = '13 Apr 2022, 11:53' 
-            source = {"../assets/pdf-tropical-plants.png"} 
-            downloaded = {true}/>
-          <PdfTile 
-            name = 'Devin Brittain The snacks of the popcorn' 
-            date = '13 Apr 2022, 11:53' 
-            source = {"../assets/pdf-tropical-plants.png"} 
-            downloaded = {true}/>
-          <PdfTile 
-            name = 'The tropical plants of the Philippines' 
-            date = '13 Apr 2022, 11:53' 
-            source = {"../assets/pdf-tropical-plants.png"} 
-            downloaded = {true}/>
-          <PdfTile 
-            name = 'The tropical plants of the Philippines' 
-            date = '13 Apr 2022, 11:53' 
-            source = {"../assets/pdf-tropical-plants.png"} 
-            downloaded = {true}/>
-        </ScrollView>
+        <View style={styles.searchBarGroup}>
+          <ImageBackground
+            style={styles.searchIcon}
+            //source={require('../assets/search.png')}
+          />
 
-        <View style={styles.viewAllBottomBar}>
-          
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Search"
+            onChangeText={() => Alert.alert('click')}
+          />
+        </View>
+      </View>
 
-          <TouchableOpacity style={styles.bottomFlex_item}>
-            <ImageBackground
-              style={styles.backIcon}
-              onPress={() =>
-                navigation.navigate('Home')}
-              //source={require('../assets/back-arrow.png')}
-              container={TouchableOpacity}
-            />
-          </TouchableOpacity>
+      <ScrollView style={styles.recentPdfTiles}>
+        <PdfTile 
+          name = 'Bug introduction: a modification of code' 
+          date = '1 May 2022, 9:37' 
+          source = {"../assets/pdf-bug-intro.png"} 
+          downloaded = {true}/>
+        <PdfTile 
+          name = 'Human-computer interaction' 
+          date = '21 Apr 2022, 14:18' 
+          source = {"../assets/pdf-human-computer.png"} 
+          downloaded = {false}/>
+        <PdfTile 
+          name = 'The tropical plants of the Philippines' 
+          date = '13 Apr 2022, 11:53' 
+          source = {"../assets/pdf-tropical-plants.png"} 
+          downloaded = {true}/>
+        <PdfTile 
+          name = 'Devin Brittain The snacks of the popcorn' 
+          date = '13 Apr 2022, 11:53' 
+          source = {"../assets/pdf-tropical-plants.png"} 
+          downloaded = {true}/>
+        <PdfTile 
+          name = 'The tropical plants of the Philippines' 
+          date = '13 Apr 2022, 11:53' 
+          source = {"../assets/pdf-tropical-plants.png"} 
+          downloaded = {true}/>
+        <PdfTile 
+          name = 'The tropical plants of the Philippines' 
+          date = '13 Apr 2022, 11:53' 
+          source = {"../assets/pdf-tropical-plants.png"} 
+          downloaded = {true}/>
+      </ScrollView>
 
-          <TouchableOpacity style={styles.bottomFlex_item1}>
-            <ImageBackground
-              style={styles.moreOptionsIcon}
-              onPress={() => Alert.alert('click')}
-              //source={require('../assets/dots.png')}
-              container={TouchableOpacity}
-            />
-          </TouchableOpacity>
+      <View style={styles.viewAllBottomBar}>
+        <TouchableOpacity style={styles.backButton}>
+          <ImageBackground
+            style={styles.backIcon}
+            onPress={() =>
+              navigation.navigate('Home')}
+            //source={require('../assets/back-arrow.png')}
+            container={TouchableOpacity}
+          />
+        </TouchableOpacity>
 
-          <View
-            style={styles.orderByGroup}>
-            <Text style={styles.orderByLabel}>
-              {'Order by'}
-            </Text>
-            <ModalDropdown 
-              options={['Date', 'Name']}
-              defaultIndex={1}
-              style={styles.orderByDropdown}
-              textStyle={styles.orderByDropdownText}
-              dropdownStyle={styles.orderByDropdownStyle}/>
-          </View>
+        <TouchableOpacity style={styles.moreButton}>
+          <ImageBackground
+            style={styles.moreOptionsIcon}
+            onPress={() => Alert.alert('click')}
+            //source={require('../assets/dots.png')}
+            container={TouchableOpacity}
+          />
+        </TouchableOpacity>
 
-          
-          
+        <View
+          style={styles.orderByGroup}>
+          <Text style={styles.orderByLabel}>
+            {'Order by'}
+          </Text>
+          <ModalDropdown 
+            options={['Date', 'Name']}
+            defaultIndex={1}
+            style={styles.orderByDropdown}
+            textStyle={styles.orderByDropdownText}
+            dropdownStyle={styles.orderByDropdownStyle}/>
+        </View>     
       </View>
     </View>
   );
@@ -125,7 +118,9 @@ const styles = StyleSheet.create({
     shadowOffset: {
       width: 0,
       height: 1
-    }
+    },
+    alignItems: 'center',
+    flexDirection: 'column'
   },
   big_title: {
     color: '#344053ff',
@@ -136,20 +131,19 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontStyle: 'normal',
     fontFamily: 'System' /* Jaldi */,
-    paddingHorizontal: 0,
-    paddingVertical: 0
   },
   big_title_box: {
     alignItems: 'flex-start',
     justifyContent: 'center',
     paddingLeft: 15,
     height: '5%',
-    //width: '100%',
-    minHeight: 28
+    width: '100%',
+    minHeight: 28,
   },
   searchBarGroup: {
     width: '80%',
-    flexGrow: 1
+    flexShrink: 1,
+    margin: 10
   },
   searchInput: {
     backgroundColor: '#ffffffff',
@@ -185,6 +179,12 @@ const styles = StyleSheet.create({
     minWidth: 20,
     marginRight: 0
   },
+  recentPdfTiles: {
+    height: '70%',
+    paddingLeft: 15,
+    paddingRight: 15,
+    overflow: 'visible',
+  },
   viewAllBottomBar: {
     width: '100%',
     flexDirection: 'row',
@@ -192,59 +192,17 @@ const styles = StyleSheet.create({
     backgroundColor: '#c4c4c4ff',
     //shadowColor: 'transparent' /* cannot find mapping from CSS: 0px -4px 4px 0px rgba(0,0,0,0.09803921568627451), https://ethercreative.github.io/react-native-shadow-generator/ */
   },
+  backButton: {
 
-  bottomFlex: {
-    flexGrow: 1,
-    flexDirection: 'row'
-  },
-  bottomFlex_item: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 42
   },
   backIcon: {
     resizeMode: 'contain'
   },
-  bottomFlex_space: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 76
-  },
-  bottomFlex_item1: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 24
+  moreButton: {
+
   },
   moreOptionsIcon: {
     resizeMode: 'contain'
-  },
-  bottomFlex_space1: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 67
-  },
-  bottomFlex_item2: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 153
-  },
-  block12: {
-    width: '100%',
-    flexGrow: 1
-  },
-  block13: {
-    width: '100%',
-    flexGrow: 1
-  },
-  group: {
-    width: '100%',
-    flexGrow: 1
-  },
-  recentPdfTiles: {
-    height: '70%',
-    paddingLeft: 15,
-    paddingRight: 15,
-    overflow: 'visible',
   },
   block6: {
     flexGrow: 1,
@@ -343,56 +301,6 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     justifyContent: 'flex-start'
   },
-  block7_item1: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 36
-  },
-  image2: {
-    resizeMode: 'contain'
-  },
-  image: {
-    resizeMode: 'contain',
-    borderRadius: 5
-  },
-  image_layout: {
-    marginTop: 0,
-    height: 127,
-    marginBottom: 0,
-    marginLeft: 0,
-    width: 90,
-    minWidth: 90,
-    marginRight: 0
-  },
-  pdfTile_item2: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 253
-  },
-  block3: {
-    flexGrow: 1,
-    flexDirection: 'row'
-  },
-  block3_item: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 220
-  },
-  text_body_box1: {
-    flexGrow: 1,
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-    justifyContent: 'flex-start'
-  },
-  block3_item1: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 33
-  },
-  block5: {
-    width: '100%',
-    flexGrow: 1
-  },
   block9: {
     flexGrow: 1,
     borderRadius: 5,
@@ -408,73 +316,6 @@ const styles = StyleSheet.create({
       height: 1
     },
     flexDirection: 'row'
-  },
-  block9_item: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 90
-  },
-  block9_space: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 13
-  },
-  block9_item1: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 253
-  },
-  pdfName_box2_layout: {
-    position: 'absolute',
-    top: 29,
-    width: 218,
-    right: -3
-  },
-  pdfName_box2: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start'
-  },
-  text_body_box_layout1: {
-    position: 'absolute',
-    top: 78,
-    height: 20,
-    left: -2,
-    width: 123
-  },
-  block7_item2: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 36
-  },
-  image2_layout: {
-    marginTop: 0,
-    height: 34,
-    marginBottom: 93,
-    marginLeft: 0,
-    width: 31,
-    minWidth: 31,
-    marginRight: 5
-  },
-  pdfTile_item3: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 253
-  },
-  text_body_box2: {
-    flexGrow: 1,
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-    justifyContent: 'flex-start'
-  },
-  block3_item2: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 33
-  },
-  pdfFrame_space: {
-    flexGrow: 0,
-    flexShrink: 1
   },
   orderByGroup: {
     flexGrow: 1,
@@ -511,7 +352,8 @@ const styles = StyleSheet.create({
       height: 1
     },
     flexDirection: 'row',
-    marginVertical: 5
+    marginVertical: 5,
+    width: 120
   },
   orderByDropdownText: {
     color: '#667084ff',

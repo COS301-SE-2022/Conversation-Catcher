@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity, Alert } from 'react-native';
 import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export const Home = ({ navigation }) => {
   return (
@@ -39,18 +40,11 @@ export const Home = ({ navigation }) => {
           </View>
         </TouchableOpacity>
       </View>
-      <View style={styles.homeDiv} />
       <TouchableOpacity
         style={styles.settingsTouchableOpacityFrame}
         onPress={() => navigation.navigate('Settings')}>
         <View
           style={styles.settingTouchableOpacity}>
-          <View style={styles.settingsIcon_frame}>
-            <ImageBackground
-              style={styles.settingsIcon}
-              //source={require('../assets/settings.png')}
-            />
-          </View>
           <View style={styles.settingsText_box}>
             <Text style={styles.settingsText} ellipsizeMode={'clip'}>
               {'Settings'}
@@ -59,30 +53,28 @@ export const Home = ({ navigation }) => {
         </View>
       </TouchableOpacity>
       <View style={styles.audioTouchableOpacityGroup}>
-        <View style={styles.audioTouchableOpacityGroup_item}>
-          <TouchableOpacity
-            style={styles.recordAudioTouchableOpacity}
-            onPress={() => Alert.alert('click')}>
-            <ImageBackground
-              style={styles.recordAudioIcon}
-              //source={require('../assets/mic.png')}
+        <TouchableOpacity
+          style={styles.recordAudioTouchableOpacity}
+          onPress={() => Alert.alert('click')}>
+          <View style={styles.recordAudioIcon}>
+            <Icon 
+              color="#344053ff"
+              name="microphone"
+              size={40}
             />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.audioTouchableOpacityGroup_item}>
-          <TouchableOpacity
-            style={styles.uploadAudioTouchableOpacity}
-            onPress={() => Alert.alert('click')}>
-            <ImageBackground
-              style={styles.audioTouchableOpacityGroupDiv}
-              //source={require('../assets/verticalLine.png')}
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.uploadAudioTouchableOpacity}
+          onPress={() => Alert.alert('click')}>
+          <View style={styles.uploadAudioIcon}>
+            <Icon 
+              color="#344053ff"
+              name="upload"
+              size={40}
             />
-            <ImageBackground
-              style={styles.uploadAudioIcon}
-              //source={require('../assets/upload.png')}
-            />
-          </TouchableOpacity>
-        </View>
+          </View>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -189,14 +181,15 @@ const styles = StyleSheet.create({
     flexShrink: 1
   },
   settingsTouchableOpacityFrame: {
-    height: '10%'
+    height: '10%',
+    marginVertical: 10
   },
   settingTouchableOpacity: {
     marginTop: 5,
     marginBottom: 5,
     marginLeft: 30,
     marginRight: 30,
-    backgroundColor: '#9bcbedff',
+    backgroundColor: '#d0d5ddff',
     borderRadius: 8,
     justifyContent: 'center',
     alignContent: 'center',
@@ -204,7 +197,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     overflow: 'hidden',
     borderStyle: 'solid',
-    borderColor: '#9bcbedff',
+    borderColor: '#d0d5ddff',
     borderWidth: 1,
     elevation: 2,
     shadowColor: '#000000',
@@ -218,14 +211,7 @@ const styles = StyleSheet.create({
   settingsIcon_frame: {
     justifyContent: 'center',
     alignContent: 'flex-start',
-    //flexShrink: 1
-  },
-  settingsIcon: {
-    resizeMode: 'contain',
-    marginTop: 10,
-    marginBottom: 10,
-    marginLeft: 10,
-    marginRight: 0
+    paddingHorizontal: 7
   },
   settingsText: {
     color: '#344053ff',
@@ -242,25 +228,21 @@ const styles = StyleSheet.create({
   settingsText_box: {
     alignItems: 'center',
     justifyContent: 'center',
-    //flexShrink: 1
+    flexShrink: 1
   },
   audioTouchableOpacityGroup: {
-    //flexShrink: 1,
     borderRadius: 8,
     flexDirection: 'row',
-    height: '18%',
-    padding: 5,
+    height: '17%',
+    width: '40%',
     justifyContent: 'center',
-    alignItems: 'center'
-  },
-  audioTouchableOpacityGroup_item: {
-    //flexShrink: 1,
-    //flexShrink: 1,
-    //flexBasis: 80
+    alignItems: 'center',
+    alignSelf: 'center',
+    flexShrink: 1
   },
   recordAudioTouchableOpacity: {
-    width: '100%',
-    //flexShrink: 1,
+    width: '50%',
+    flexGrow: 1,
     backgroundColor: '#d0d5ddff',
     borderTopLeftRadius: 8,
     borderBottomLeftRadius: 8,
@@ -272,21 +254,17 @@ const styles = StyleSheet.create({
     shadowOffset: {
       width: 0,
       height: 1
-    }
+    },
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   recordAudioIcon: {
     resizeMode: 'contain',
-    marginTop: 20,
-    height: 40,
-    marginBottom: 20,
-    marginLeft: 27,
-    width: 26,
-    minWidth: 26,
-    marginRight: 27
+    padding: 10
   },
   uploadAudioTouchableOpacity: {
-    width: '100%',
-    //flexShrink: 1,
+    width: '50%',
+    flexGrow: 1,
     backgroundColor: '#d0d5ddff',
     borderTopRightRadius: 8,
     borderBottomRightRadius: 8,
@@ -298,26 +276,12 @@ const styles = StyleSheet.create({
     shadowOffset: {
       width: 0,
       height: 1
-    }
-  },
-  audioTouchableOpacityGroupDiv: {
-    resizeMode: 'contain',
-    borderStyle: 'solid',
-    borderColor: '#667085ff',
-    position: 'absolute',
-    top: -10,
-    height: 100,
-    left: -10,
-    width: 21
+    },
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   uploadAudioIcon: {
     resizeMode: 'contain',
-    marginTop: 22,
-    height: 36,
-    marginBottom: 22,
-    marginLeft: 22,
-    width: 36,
-    minWidth: 36,
-    marginRight: 22
+    padding: 10
   }
 });
