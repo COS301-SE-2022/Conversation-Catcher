@@ -8,10 +8,12 @@ describe('Home', () => {
     expect(container).toBeTruthy();
   });
 
+  /*
   const tree = create(<Home />);
   test('snapshot', () => {
     expect(tree).toMatchSnapshot();
   });
+  */
 });
 
 // describe('The actions that occur on button press', () => {

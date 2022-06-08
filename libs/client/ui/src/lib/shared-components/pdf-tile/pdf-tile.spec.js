@@ -1,15 +1,15 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
-import Settings from './settings';
+import PdfTile from './pdf-tile';
 import { create } from 'react-test-renderer';
-describe('Setup of settings', () => {
+describe('PdfTile', () => {
   it('should render successfully', () => {
-    const { container } = render(<Settings />);
+    const { container } = render(<PdfTile />);
     expect(container).toBeTruthy();
   });
 
   /*
-  const tree = create(<Settings />);
+  const tree = create(<PdfTile />);
   test('snapshot', () => {
     expect(tree).toMatchSnapshot();
   });

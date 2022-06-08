@@ -17,6 +17,7 @@ import Home from '../../../../libs/client/ui/src/lib/home/home.js';
 import ViewAll from '../../../../libs/client/ui/src/lib/view-all/view-all.js';
 import Settings from '../../../../libs/client/ui/src/lib/settings/settings.js';
 import Colour from '../../../../libs/client/ui/src/lib/colour-page/colour-page.js';
+import Login from '../../../../libs/client/ui/src/lib/login/login.js';
 
 const Stack = createNativeStackNavigator();
 
@@ -31,6 +32,7 @@ export const App = () => {
          <Stack.Screen name="ViewAll" component={ViewAll} />
          <Stack.Screen name="Settings" component={Settings} />
          <Stack.Screen name="Colour" component={Colour}/>
+         <Stack.Screen name="Login" component={Login}/>
       </Stack.Navigator>
     </NavigationContainer>
   )

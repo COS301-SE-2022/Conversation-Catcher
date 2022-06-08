@@ -32,7 +32,7 @@ export const ColourPage = ({ navigation}) => {
         <View style={styles.colourPageBody_item}>
           <ImageBackground
             style={[styles.backButton, styles.backButton_layout]}
-            source={require('../assets/back-arrow.png')}
+            //source={require('../assets/back-arrow.png')}
           />
         </View>
       </View>
