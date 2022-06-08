@@ -1,14 +1,15 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
-import { ViewAll } from './view-all';
+import PdfTile from './pdf-tile';
 import { create } from 'react-test-renderer';
-describe('ViewAll', () => {
+describe('PdfTile', () => {
   it('should render successfully', () => {
-    const { container } = render(<ViewAll />);
+    const { container } = render(<PdfTile />);
     expect(container).toBeTruthy();
   });
 
-  const tree = create(<ViewAll />);
+  
+  const tree = create(<PdfTile />);
   test('snapshot', () => {
     expect(tree).toMatchSnapshot();
   });

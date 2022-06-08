@@ -19,6 +19,10 @@
     "tslib": "^2.3.0"
   },
   "devDependencies": {
+    "@nestjs/apollo": "^10.0.14",
+    "@nestjs/axios": "^0.0.8",
+    "@nestjs/config": "^2.1.0",
+    "@nestjs/cqrs": "^8.0.4",
     "@nestjs/graphql": "^10.0.11",
     "@nestjs/schematics": "^8.0.0",
     "@nestjs/testing": "^8.0.0",
@@ -48,6 +52,8 @@
     "@types/react-native": "0.67.6",
     "@typescript-eslint/eslint-plugin": "~5.18.0",
     "@typescript-eslint/parser": "~5.18.0",
+    "apollo-server-express": "^3.8.2",
+    "axios": "^0.27.2",
     "babel-jest": "27.5.1",
     "detox": "19.6.5",
     "eslint": "~8.12.0",
