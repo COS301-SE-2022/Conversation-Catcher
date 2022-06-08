@@ -1,3 +1,4 @@
+import { Test, TestingModule } from '@nestjs/testing';
 import { PdfEntity } from './api-pdf.entity';
 
 describe('ApiStudentProfilesEntity', () => {
