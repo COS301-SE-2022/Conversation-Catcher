@@ -107,7 +107,8 @@ export const ViewAll = ({ navigation }) =>  {
         visible={moreVisible}
         onRequestClose={() => setMoreVisible(!moreVisible)}
       >
-        <View style={styles.moreModal}>
+        <View style={styles.modalBack}></View>
+        <View style={styles.moreModalInner}>
           <TouchableOpacity
             style={styles.moreModalButton}
             onPress={() => Alert.alert('click')}>
@@ -347,7 +348,13 @@ const styles = StyleSheet.create({
   orderByDropdownStyle: {
 
   },
-  moreModal: {
+  modalBack: {
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'white',
+    opacity: 0.1
+  },
+  moreModalInner: {
     width: '40%',
     flexShrink: 1,
     backgroundColor: '#f5f5f5ff',
