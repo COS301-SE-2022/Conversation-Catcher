@@ -58,7 +58,7 @@ export const Home = ({ navigation }) => {
           onPress={() => Alert.alert('click')}>
           <View style={styles.recordAudioIcon}>
             <Icon 
-              color="#344053ff"
+              color="#667084ff"
               name="microphone"
               size={40}
             />
@@ -69,7 +69,7 @@ export const Home = ({ navigation }) => {
           onPress={() => Alert.alert('click')}>
           <View style={styles.uploadAudioIcon}>
             <Icon 
-              color="#344053ff"
+              color="#667084ff"
               name="upload"
               size={40}
             />
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'center',
     paddingLeft: 15,
-    height: '5%',
+    height: '7%',
     //width: '100%',
     minHeight: 28
   },
@@ -238,7 +238,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
-    flexShrink: 1
+    flexShrink: 1,
+    elevation: 1,
+    shadowColor: '#000000',
+    shadowRadius: 1.810810810810811,
+    shadowOpacity: 0.2,
+    shadowOffset: {
+      width: 2,
+      height: 2
+    },
   },
   recordAudioTouchableOpacity: {
     width: '50%',
@@ -247,16 +255,10 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 8,
     borderBottomLeftRadius: 8,
     overflow: 'hidden',
-    elevation: 1,
-    shadowColor: '#000000',
-    shadowRadius: 1.810810810810811,
-    shadowOpacity: 0.2,
-    shadowOffset: {
-      width: 0,
-      height: 1
-    },
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    borderRightColor: '#667084ff',
+    borderRightWidth: 1,
   },
   recordAudioIcon: {
     resizeMode: 'contain',
@@ -269,16 +271,10 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 8,
     borderBottomRightRadius: 8,
     overflow: 'hidden',
-    elevation: 1,
-    shadowColor: '#000000',
-    shadowRadius: 1.810810810810811,
-    shadowOpacity: 0.2,
-    shadowOffset: {
-      width: 0,
-      height: 1
-    },
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    borderLeftColor: '#667084ff',
+    borderLeftWidth: 1,
   },
   uploadAudioIcon: {
     resizeMode: 'contain',

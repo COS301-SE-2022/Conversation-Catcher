@@ -1,9 +1,11 @@
-import React from 'react';
-import { View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity, Alert, ScrollView, TextInput} from 'react-native';
+import React, {useState} from 'react';
+import { View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity, Alert, ScrollView, TextInput, Modal} from 'react-native';
 import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
 import ModalDropdown from 'react-native-modal-dropdown';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export const ViewAll = ({ navigation }) =>  {
+  const [moreVisible, setMoreVisible] = useState(false);
   return (
     <View style={styles.viewAllPage}>
       <View style={styles.viewAllTopBar}>
@@ -14,10 +16,13 @@ export const ViewAll = ({ navigation }) =>  {
         </View>
 
         <View style={styles.searchBarGroup}>
-          <ImageBackground
-            style={styles.searchIcon}
-            //source={require('../assets/search.png')}
-          />
+          <View style={styles.searchIconFrame}>
+            <Icon 
+              color="#667084ff"
+              name="search"
+              size={24}
+            />
+          </View>
 
           <TextInput
             style={styles.searchInput}
@@ -61,23 +66,24 @@ export const ViewAll = ({ navigation }) =>  {
       </ScrollView>
 
       <View style={styles.viewAllBottomBar}>
-        <TouchableOpacity style={styles.backButton}>
-          <ImageBackground
-            style={styles.backIcon}
-            onPress={() =>
-              navigation.navigate('Home')}
-            //source={require('../assets/back-arrow.png')}
-            container={TouchableOpacity}
-          />
+        <TouchableOpacity 
+          style={styles.backButton}
+          onPress={() => navigation.navigate('Home')}>
+          <Icon 
+            name="angle-left"
+            color="#344053ff"
+            size={30}
+          />     
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.moreButton}>
-          <ImageBackground
-            style={styles.moreOptionsIcon}
-            onPress={() => Alert.alert('click')}
-            //source={require('../assets/dots.png')}
-            container={TouchableOpacity}
-          />
+        <TouchableOpacity 
+          style={styles.moreButton}
+          onPress={() => setMoreVisible(true)}>
+          <Icon 
+            name="ellipsis-h"
+            color="#344053ff"
+            size={30}
+          />   
         </TouchableOpacity>
 
         <View
@@ -93,6 +99,77 @@ export const ViewAll = ({ navigation }) =>  {
             dropdownStyle={styles.orderByDropdownStyle}/>
         </View>     
       </View>
+
+
+      <Modal
+        animationType='slide'
+        transparent={true}
+        visible={moreVisible}
+        onRequestClose={() => setMoreVisible(!moreVisible)}
+      >
+        <View style={styles.moreModal}>
+          <TouchableOpacity
+            style={styles.moreModalButton}
+            onPress={() => Alert.alert('click')}>
+            <View style={styles.moreModalButtonContent}>
+              <View style={styles.iconContainer}>
+                <Icon 
+                  style={styles.moreModalButtonIcon}
+                  name="paper-plane-o"
+                  size={18}
+                />
+              </View>
+              <View style={styles.moreModalButtonText_box}>
+                <Text style={styles.moreModalButtonText} ellipsizeMode={'clip'}>
+                  {'Share'}
+                </Text>
+              </View>
+            </View>   
+          </TouchableOpacity>
+
+          <View style={styles.moreModalButtonDivider} /> 
+
+          <TouchableOpacity
+            style={styles.moreModalButton}
+            onPress={() => Alert.alert('click')}>
+            <View style={styles.moreModalButtonContent}>
+              <View style={styles.iconContainer}>
+                <Icon 
+                  style={styles.moreModalButtonIcon}
+                  name="pencil-square-o"
+                  size={20}
+                />
+              </View>
+              <View style={styles.moreModalButtonText_box}>
+                <Text style={styles.moreModalButtonText}>
+                  {'Rename'}
+                </Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+
+          <View style={styles.moreModalButtonDivider} /> 
+
+          <TouchableOpacity 
+            style={styles.moreModalButton}
+            onPress={() => navigation.navigate('Colour')}>
+            <View style={styles.moreModalButtonContent}>
+              <View style={styles.iconContainer}>
+                <Icon 
+                  style={styles.moreModalButtonIcon}
+                  name="trash-o"
+                  size={20}
+                />
+              </View>
+              <View style={styles.moreModalButtonText_box}>
+                <Text style={styles.moreModalButtonText}>
+                  {'Delete'}
+                </Text>
+              </View>
+            </View> 
+          </TouchableOpacity>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -141,9 +218,11 @@ const styles = StyleSheet.create({
     minHeight: 28,
   },
   searchBarGroup: {
-    width: '80%',
+    width: '85%',
     flexShrink: 1,
-    margin: 10
+    margin: 10,
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   searchInput: {
     backgroundColor: '#ffffffff',
@@ -167,17 +246,12 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     fontStyle: 'normal',
     fontFamily: 'System' /* Inter */,
-    padding: 5
+    padding: 5,
+    flexGrow: 1
   },
-  searchIcon: {
+  searchIconFrame: {
     resizeMode: 'contain',
-    marginTop: 2,
-    height: 20,
-    marginBottom: 2,
-    marginLeft: 0,
-    width: 20,
-    minWidth: 20,
-    marginRight: 0
+    marginHorizontal: 10
   },
   recentPdfTiles: {
     height: '70%',
@@ -188,134 +262,32 @@ const styles = StyleSheet.create({
   viewAllBottomBar: {
     width: '100%',
     flexDirection: 'row',
-    flexGrow: 1,
+    flexShrink: 1,
     backgroundColor: '#c4c4c4ff',
     //shadowColor: 'transparent' /* cannot find mapping from CSS: 0px -4px 4px 0px rgba(0,0,0,0.09803921568627451), https://ethercreative.github.io/react-native-shadow-generator/ */
+    borderRadius: 5,
+    borderStyle: 'solid',
+    borderColor: '#d0d5ddff',
+    borderWidth: 1,
+    elevation: 2,
+    shadowColor: '#000000',
+    shadowRadius: 2.621621621621622,
+    shadowOpacity: 0.2173913043478261,
+    shadowOffset: {
+      width: 0,
+      height: 1
+    },
+    justifyContent: 'center'
   },
   backButton: {
-
-  },
-  backIcon: {
-    resizeMode: 'contain'
+    flexGrow: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   moreButton: {
-
-  },
-  moreOptionsIcon: {
-    resizeMode: 'contain'
-  },
-  block6: {
     flexGrow: 1,
-    borderRadius: 5,
-    borderStyle: 'solid',
-    borderColor: '#d0d5ddff',
-    borderWidth: 1,
-    elevation: 2,
-    shadowColor: '#000000',
-    shadowRadius: 2.621621621621622,
-    shadowOpacity: 0.2173913043478261,
-    shadowOffset: {
-      width: 0,
-      height: 1
-    },
-    flexDirection: 'row'
-  },
-  block6_item: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 90
-  },
-  image1: {
-    resizeMode: 'contain',
-    borderRadius: 5
-  },
-  image1_layout: {
-    marginTop: 0,
-    height: 128,
-    marginBottom: 0,
-    marginLeft: 0,
-    width: 90,
-    minWidth: 90,
-    marginRight: 0
-  },
-  block6_space: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 13
-  },
-  block6_item1: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 253
-  },
-  block7: {
-    flexGrow: 1,
-    flexDirection: 'row'
-  },
-  block7_item: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 217
-  },
-  block8: {},
-  block8_layout: {
-    marginTop: 0,
-    height: 127,
-    marginBottom: 0,
-    marginLeft: 5,
-    flexGrow: 1,
-    marginRight: 0
-  },
-  pdfName_box1_layout: {
-    position: 'absolute',
-    top: 39,
-    width: 223,
-    right: -8
-  },
-  pdfName_box1: {
-    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-start'
-  },
-  text_body_box_layout: {
-    position: 'absolute',
-    top: 78,
-    height: 20,
-    left: -2,
-    width: 127
-  },
-  text_body: {
-    color: '#667084ff',
-    textAlign: 'left',
-    letterSpacing: 0,
-    lineHeight: 20,
-    fontSize: 14,
-    fontWeight: '400',
-    fontStyle: 'normal',
-    fontFamily: 'System' /* Inter */,
-    paddingHorizontal: 0,
-    paddingVertical: 0
-  },
-  text_body_box: {
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-    justifyContent: 'flex-start'
-  },
-  block9: {
-    flexGrow: 1,
-    borderRadius: 5,
-    borderStyle: 'solid',
-    borderColor: '#d0d5ddff',
-    borderWidth: 1,
-    elevation: 2,
-    shadowColor: '#000000',
-    shadowRadius: 2.621621621621622,
-    shadowOpacity: 0.2173913043478261,
-    shadowOffset: {
-      width: 0,
-      height: 1
-    },
-    flexDirection: 'row'
+    justifyContent: 'center',
   },
   orderByGroup: {
     flexGrow: 1,
@@ -335,6 +307,7 @@ const styles = StyleSheet.create({
     fontStyle: 'normal',
     fontFamily: 'System' /* Inter */,
     padding: 3,
+    flexShrink: 1
   },
   orderByDropdown: {
     flexShrink: 1,
@@ -373,5 +346,54 @@ const styles = StyleSheet.create({
   },
   orderByDropdownStyle: {
 
-  }
+  },
+  moreModal: {
+    width: '40%',
+    flexShrink: 1,
+    backgroundColor: '#f5f5f5ff',
+    borderRadius: 7,
+    flexDirection: 'column',
+    borderWidth: 1,
+    borderColor: '#667084ff'
+  },
+  moreModalButton: {
+    flexGrow: 1,
+    height: '8%',
+    alignItems: 'center',
+    flexDirection: 'row'
+  },
+  moreModalButtonContent: {
+    flexGrow: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    //padding: 5
+  },
+  iconContainer: {
+    width: '40%',
+    height: '100%',
+    alignItems: 'center'
+  },
+  moreModalButtonIcon: {
+    color: "#3f89beff"
+  },
+  moreModalButtonText: {
+    color: '#344053ff',
+    textAlign: 'center',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 18,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+  },
+  moreModalButtonText_box: {
+    flexShrink: 1
+  },
+  moreModalButtonDivider: {
+    backgroundColor: '#d0d5ddff',
+    height: 1,
+    width: '87%',
+    alignSelf: 'center'
+  },
 });
