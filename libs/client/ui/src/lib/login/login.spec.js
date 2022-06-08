@@ -9,8 +9,10 @@ describe('Login', () => {
     expect(container).toBeTruthy();
   });
 
+  /*
   const tree = create(<Login />);
   test('snapshot', () => {
     expect(tree).toMatchSnapshot();
   });
+  */
 });

@@ -7,11 +7,12 @@ describe('ViewAll', () => {
     const { container } = render(<ViewAll />);
     expect(container).toBeTruthy();
   });
-
+/*
   const tree = create(<ViewAll />);
   test('snapshot', () => {
     expect(tree).toMatchSnapshot();
   });
+  */
 });
 
 // describe('The actions that occur on button press', () => {
