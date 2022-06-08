@@ -21,21 +21,8 @@
       "@conversation-catcher/api/database-manager/api/interface": [
         "libs/api/database-manager/api/interface/src/index.ts"
       ],
-
       "@conversation-catcher/api/database-manager/service/feature": [
         "libs/api/database-manager/service/feature/src/index.ts"
-      ],
-      "@conversation-catcher/api/pdf-manager/api/data-access": [
-        "libs/api/pdf-manager/api/data-access/src/index.ts"
-      ],
-      "@conversation-catcher/api/pdf-manager/api/feature": [
-        "libs/api/pdf-manager/api/feature/src/index.ts"
-      ],
-      "@conversation-catcher/api/pdf-manager/repository": [
-        "libs/api/pdf-manager/repository/src/index.ts"
-      ],
-      "@conversation-catcher/api/pdf-manager/service": [
-        "libs/api/pdf-manager/service/src/index.ts"
       ],
       "@conversation-catcher/api/pdf/api/data-access": [
         "libs/api/pdf/api/data-access/src/index.ts"
