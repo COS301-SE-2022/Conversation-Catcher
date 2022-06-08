@@ -1,143 +1,122 @@
 import React from 'react';
-import { View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity, Alert} from 'react-native';
+import { View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity, Alert, ScrollView} from 'react-native';
 import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
 
 export const ViewAll = ({ navigation }) =>  {
   return (
-    <View style={[styles.viewAllPage, styles.viewAllPage_layout]}>
+    <View style={styles.viewAllPage}>
         <View style={styles.viewAllTopBar}>
-          <View x="17px 356fr 17px" y="20px minmax(0px, max-content) 20px" style={styles.topFlex}>
-            <View style={styles.topFlex_item}>
-              <View x="7.3% 18.26% 74.44%" y="18px minmax(0px, max-content) 0px" style={styles.viewAllTitle_box}>
-                <Text style={styles.viewAllTitle} ellipsizeMode={'clip'}>
-                  {'PDFs'}
-                </Text>
-              </View>
-            </View>
-            <View style={styles.topFlex_item}>
-              <View x="0px 356fr 0px" y="11px minmax(0px, max-content) 0px" style={styles.searchBar}>
-                <View x="0px 356fr 0px" y="0px minmax(0px, max-content) 0px" style={styles.block19}>
-                  <TouchableOpacity style={[styles.block20, styles.block20_layout]} onPress={() => Alert.alert('click')}>
-                    <View x="14px 328fr 14px" y="10px minmax(0px, max-content) 10px" style={styles.searchContents}>
-                      <View style={styles.searchContents_item}>
-                        <ImageBackground
-                          style={[styles.searchIcon, styles.searchIcon_layout]}
-                          source={require('../assets/search.png')}
-                        />
-                      </View>
-                      <View style={styles.searchContents_space} />
-                      <View style={styles.searchContents_item1}>
-                        <View x="0px 57fr 243px" y="0px minmax(0px, max-content) 0px" style={styles.searchInput_box}>
-                          <Text style={styles.searchInput} ellipsizeMode={'clip'}>
-                            {'Search'}
-                          </Text>
-                        </View>
+          <View style={styles.viewAllTitle_box}>
+            <Text style={styles.viewAllTitle} ellipsizeMode={'clip'}>
+              {'PDFs'}
+            </Text>
+          </View>
+          
+          <View style={styles.topFlex_item}>
+            <View style={styles.searchBar}>
+                <TouchableOpacity style={[styles.block20, styles.block20_layout]} onPress={() => Alert.alert('click')}>
+                  <View style={styles.searchContents}>
+                    <View style={styles.searchContents_item}>
+                      <ImageBackground
+                        style={[styles.searchIcon, styles.searchIcon_layout]}
+                        source={require('../assets/search.png')}
+                      />
+                    </View>
+                    <View style={styles.searchContents_space} />
+                    <View style={styles.searchContents_item1}>
+                      <View style={styles.searchInput_box}>
+                        <Text style={styles.searchInput} ellipsizeMode={'clip'}>
+                          {'Search'}
+                        </Text>
                       </View>
                     </View>
-                  </TouchableOpacity>
-                </View>
-              </View>
+                  </View>
+                </TouchableOpacity>
             </View>
           </View>
         </View>
-        <View x="0px 390fr 0px" y="640px minmax(0px, max-content) 0px" style={styles.viewAllBottomBar}>
+
+        <ScrollView style={styles.recentPdfTiles}>
+          <PdfTile 
+            name = 'Bug introduction: a modification of code' 
+            date = '1 May 2022, 9:37' 
+            source = {"../assets/pdf-bug-intro.png"} 
+            downloaded = {true}/>
+          <PdfTile 
+            name = 'Human-computer interaction' 
+            date = '21 Apr 2022, 14:18' 
+            source = {"../assets/pdf-human-computer.png"} 
+            downloaded = {false}/>
+          <PdfTile 
+            name = 'The tropical plants of the Philippines' 
+            date = '13 Apr 2022, 11:53' 
+            source = {"../assets/pdf-tropical-plants.png"} 
+            downloaded = {true}/>
+          <PdfTile 
+            name = 'Devin Brittain The snacks of the popcorn' 
+            date = '13 Apr 2022, 11:53' 
+            source = {"../assets/pdf-tropical-plants.png"} 
+            downloaded = {true}/>
+          <PdfTile 
+            name = 'The tropical plants of the Philippines' 
+            date = '13 Apr 2022, 11:53' 
+            source = {"../assets/pdf-tropical-plants.png"} 
+            downloaded = {true}/>
+          <PdfTile 
+            name = 'The tropical plants of the Philippines' 
+            date = '13 Apr 2022, 11:53' 
+            source = {"../assets/pdf-tropical-plants.png"} 
+            downloaded = {true}/>
+        </ScrollView>
+
+        <View style={styles.viewAllBottomBar}>
           <View
-            x="57.18% 10.51% 32.31%"
-            y="8px minmax(0px, max-content) 13px"
-            absolute
             style={styles.orderByLabel_box}>
             <Text style={styles.orderByLabel} ellipsizeMode={'clip'}>
               {'Order by'}
             </Text>
           </View>
 
-          <View x="14px 362fr 14px" y="0px minmax(0px, max-content) 0px" style={styles.bottomFlex}>
-            <TouchableOpacity style={styles.bottomFlex_item}>
-              <ImageBackground
-                x="33px 9px 0px"
-                y="22px 18px 21px"
-                style={styles.backIcon}
-                onPress={() =>
-                  navigation.navigate('Home')}
-                source={require('../assets/back-arrow.png')}
-                container={TouchableOpacity}
-              />
-            </TouchableOpacity>
-            <View style={styles.bottomFlex_space} />
-            <TouchableOpacity style={styles.bottomFlex_item1}>
-              <ImageBackground
-                x="0px 24px 0px"
-                y="29px 3px 29px"
-                style={styles.moreOptionsIcon}
-                onPress={() => Alert.alert('click')}
-                source={require('../assets/dots.png')}
-                container={TouchableOpacity}
-              />
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity style={styles.bottomFlex_item}>
+            <ImageBackground
+              style={styles.backIcon}
+              onPress={() =>
+                navigation.navigate('Home')}
+              source={require('../assets/back-arrow.png')}
+              container={TouchableOpacity}
+            />
+          </TouchableOpacity>
 
-          <View style={styles.recentPdfTiles}>
-            <PdfTile 
-              name = 'Bug introduction: a modification of code' 
-              date = '1 May 2022, 9:37' 
-              source = {"../assets/pdf-bug-intro.png"} 
-              downloaded = {true}/>
-            <PdfTile 
-              name = 'Human-computer interaction' 
-              date = '21 Apr 2022, 14:18' 
-              source = {"../assets/pdf-human-computer.png"} 
-              downloaded = {false}/>
-            <PdfTile 
-              name = 'The tropical plants of the Philippines' 
-              date = '13 Apr 2022, 11:53' 
-              source = {"../assets/pdf-tropical-plants.png"} 
-              downloaded = {true}/>
-            <PdfTile 
-              name = 'Devin Brittain The snacks of the popcorn' 
-              date = '13 Apr 2022, 11:53' 
-              source = {"../assets/pdf-tropical-plants.png"} 
-              downloaded = {true}/>
-            <PdfTile 
-              name = 'The tropical plants of the Philippines' 
-              date = '13 Apr 2022, 11:53' 
-              source = {"../assets/pdf-tropical-plants.png"} 
-              downloaded = {true}/>
-            <PdfTile 
-              name = 'The tropical plants of the Philippines' 
-              date = '13 Apr 2022, 11:53' 
-              source = {"../assets/pdf-tropical-plants.png"} 
-              downloaded = {true}/>
-          </View>
+          <TouchableOpacity style={styles.bottomFlex_item1}>
+            <ImageBackground
+              style={styles.moreOptionsIcon}
+              onPress={() => Alert.alert('click')}
+              source={require('../assets/dots.png')}
+              container={TouchableOpacity}
+            />
+          </TouchableOpacity>
 
-        <TouchableOpacity
-          x="69.23% 23.08% 7.69%"
-          y="8px minmax(0px, max-content) 9px"
-          absolute
-          style={styles.orderByDropDown}
-          onPress={() => Alert.alert('click')}>
-          <View style={styles.orderByDropDown_item}>
-            <View style={[styles.orderByDropDownTextBox, styles.orderByDropDownTextBox_layout]}>
-              <View style={[styles.orderByDropDownText_box, styles.orderByDropDownText_box_layout]}>
+          <TouchableOpacity
+            style={styles.orderByDropDown}
+            onPress={() => Alert.alert('click')}>
+            <View style={styles.orderByDropDown_item}>
+              <View style={[styles.orderByDropDownTextBox, styles.orderByDropDownTextBox_layout]}>      
                 <Text style={styles.orderByDropDownText} ellipsizeMode={'clip'}>
                   {'Date'}
                 </Text>
               </View>
             </View>
-          </View>
-          <View style={styles.orderByDropDown_space} />
-          <View style={styles.orderByDropDown_item1}>
-            <TouchableOpacity
-              x="0px 20fr 14px"
-              y="12px minmax(0px, max-content) 12px"
-              style={styles.orderByTouchableOpacity}
-              onPress={() => Alert.alert('click')}>
-              <ImageBackground
-                style={[styles.orderByIcon, styles.orderByIcon_layout]}
-                source={require('../assets/down-arrow.png')}
-              />
-            </TouchableOpacity>
-          </View>
-        </TouchableOpacity>
+            <View style={styles.orderByDropDown_item1}>
+              <TouchableOpacity
+                style={styles.orderByTouchableOpacity}
+                onPress={() => Alert.alert('click')}>
+                <ImageBackground
+                  style={[styles.orderByIcon, styles.orderByIcon_layout]}
+                  source={require('../assets/down-arrow.png')}
+                />
+              </TouchableOpacity>
+            </View>
+          </TouchableOpacity>
       </View>
     </View>
   );
@@ -155,7 +134,7 @@ const styles = StyleSheet.create({
   },
   viewAllTopBar: {
     width: '100%',
-    flexGrow: 1,
+    flexShrink: 1,
     backgroundColor: '#c4c4c4ff',
     elevation: 2,
     shadowColor: '#000000',
@@ -165,13 +144,6 @@ const styles = StyleSheet.create({
       width: 0,
       height: 1
     }
-  },
-  topFlex: {
-    flexGrow: 1
-  },
-  topFlex_item: {
-    flexGrow: 0,
-    flexShrink: 1
   },
   viewAllTitle: {
     color: '#344053ff',
@@ -268,10 +240,10 @@ const styles = StyleSheet.create({
   },
   viewAllBottomBar: {
     width: '100%',
+    flexDirection: 'row',
     flexGrow: 1,
     backgroundColor: '#c4c4c4ff',
-    shadowColor:
-      'transparent' /* cannot find mapping from CSS: 0px -4px 4px 0px rgba(0,0,0,0.09803921568627451), https://ethercreative.github.io/react-native-shadow-generator/ */
+    //shadowColor: 'transparent' /* cannot find mapping from CSS: 0px -4px 4px 0px rgba(0,0,0,0.09803921568627451), https://ethercreative.github.io/react-native-shadow-generator/ */
   },
   orderByLabel: {
     color: '#344053ff',
@@ -338,131 +310,11 @@ const styles = StyleSheet.create({
     width: '100%',
     flexGrow: 1
   },
-  pdfFrame: {
-    position: 'absolute',
-    top: -628,
-    height: 1290,
-    left: -206,
-    width: 356
-  },
-  pdfFrame_item: {
-    flexGrow: 0,
-    flexShrink: 1
-  },
-  pdfTile: {
-    flexGrow: 1,
-    borderRadius: 5,
-    borderStyle: 'solid',
-    borderColor: '#d0d5ddff',
-    borderWidth: 1,
-    elevation: 2,
-    shadowColor: '#000000',
-    shadowRadius: 2.621621621621622,
-    shadowOpacity: 0.2173913043478261,
-    shadowOffset: {
-      width: 0,
-      height: 1
-    },
-    flexDirection: 'row'
-  },
-  pdfTile_item: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 90
-  },
-  pdfThumbnail: {
-    resizeMode: 'contain',
-    borderRadius: 5,
-    marginTop: 0,
-    height: 127,
-    marginBottom: 0,
-    marginLeft: 0,
-    width: 90,
-    minWidth: 90,
-    marginRight: 0
-  },
-  pdfTile_space: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 13
-  },
-  pdfTile_item1: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 253
-  },
-  pdfTileInfo: {
-    flexGrow: 1,
-    flexDirection: 'row'
-  },
-  pdfTileInfo_item: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 220
-  },
-  pdfTileText: {
-    flexGrow: 1
-  },
-  pdfTileText_item: {
-    flexGrow: 0,
-    flexShrink: 1
-  },
-  pdfName: {
-    color: '#344053ff',
-    textAlign: 'left',
-    letterSpacing: 0,
-    lineHeight: 20,
-    fontSize: 16,
-    fontWeight: '400',
-    fontStyle: 'normal',
-    fontFamily: 'System' /* Inter */,
-    paddingHorizontal: 0,
-    paddingVertical: 0
-  },
-  pdfName_box: {
-    flexGrow: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start'
-  },
-  pdfDate: {
-    color: '#667084ff',
-    textAlign: 'left',
-    letterSpacing: 0,
-    lineHeight: 20,
-    fontSize: 14,
-    fontWeight: '400',
-    fontStyle: 'normal',
-    fontFamily: 'System' /* Inter */,
-    paddingHorizontal: 0,
-    paddingVertical: 0
-  },
-  pdfDate_box: {
-    flexGrow: 1,
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-    justifyContent: 'flex-start'
-  },
-  pdfTileInfo_item1: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 33
-  },
-  downloadState: {
-    width: '100%',
-    flexGrow: 1
-  },
-  downloadIcon: {
-    resizeMode: 'contain'
-  },
-  downloadIcon_layout: {
-    marginTop: 10,
-    height: 18,
-    marginBottom: 10,
-    marginLeft: 4,
-    width: 18,
-    minWidth: 18,
-    marginRight: 11
+  recentPdfTiles: {
+    height: '70%',
+    paddingLeft: 15,
+    paddingRight: 15,
+    overflow: 'visible',
   },
   block6: {
     flexGrow: 1,
