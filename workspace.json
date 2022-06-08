@@ -3,11 +3,12 @@
   "projects": {
     "api": "apps/api",
     "api-pdf-manager-api-data-access": "libs/api/pdf-manager/api/data-access",
-    "api-pdf-manager-api-feature": "libs/api/pdf-manager/api/feature",
-    "api-pdf-manager-repository": "libs/api/pdf-manager/repository",
     "api-pdf-manager-service": "libs/api/pdf-manager/service",
     "api-database-manager-api-interface": "libs/api/database-manager/api/interface",
     "api-database-manager-api-feature": "libs/api/database-manager/api/feature",
+    "api-database-manager-api-feature": "libs/api/database-manager/api/feature",
+    "api-database-manager-api-interface": "libs/api/database-manager/api/interface",
+    "api-database-manager-service-feature": "libs/api/database-manager/service/feature",
     "api-pdf-manager-api": "libs/api/pdf-manager/api",
     "api-shell": "libs/api/shell",
     "api-speech-to-text-api": "libs/api/speech-to-text/api",
@@ -18,7 +19,6 @@
     "api-summarise-text-service": "libs/api/summarise-text/service",
     "client": "apps/client",
     "client-e2e": "apps/client-e2e",
-    "client-shared-components": "libs/client/shared-components",
     "client-ui": "libs/client/ui"
   }
 }
