@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Text, ImageBackground, TouchableOpacity, Alert} from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export const SettingsPage = ({ navigation }) => {
   return (
@@ -14,9 +15,10 @@ export const SettingsPage = ({ navigation }) => {
           style={styles.settingsButton}
           onPress={() => Alert.alert('click')}>
           <View style={styles.settingsButtonContent}>
-            <ImageBackground
+            <Icon 
               style={styles.settingsButtonIcon}
-              //source={require('../assets/mail.png')}
+              name="envelope"
+              size={18}
             />
             <View style={styles.settingsButtonText_box}>
               <Text style={styles.settingsButtonText} ellipsizeMode={'clip'}>
@@ -32,9 +34,10 @@ export const SettingsPage = ({ navigation }) => {
           style={styles.settingsButton}
           onPress={() => Alert.alert('click')}>
           <View style={styles.settingsButtonContent}>
-            <ImageBackground
+            <Icon 
               style={styles.settingsButtonIcon}
-              //source={require('../assets/lock.png')}
+              name="lock"
+              size={20}
             />
             <View style={styles.settingsButtonText_box}>
               <Text style={styles.settingsButtonText}>
@@ -50,9 +53,10 @@ export const SettingsPage = ({ navigation }) => {
           style={styles.settingsButton}
           onPress={() => navigation.navigate('Colour')}>
           <View style={styles.settingsButtonContent}>
-            <ImageBackground
+            <Icon 
               style={styles.settingsButtonIcon}
-              //source={require('../assets/change-colour.png')}
+              name="sliders"
+              size={20}
             />
             <View style={styles.settingsButtonText_box}>
               <Text style={styles.settingsButtonText}>
@@ -68,9 +72,10 @@ export const SettingsPage = ({ navigation }) => {
           style={styles.settingsButton}
           onPress={() => navigation.navigate('Login')}>
           <View style={styles.settingsButtonContent}>
-            <ImageBackground
+            <Icon 
               style={styles.settingsButtonIcon}
-              //source={require('../assets/on-device.png')}
+              name="sign-out"
+              size={20}
             />
             <View style={styles.settingsButtonText_box}>
               <Text style={styles.settingsButtonText}>
@@ -82,12 +87,13 @@ export const SettingsPage = ({ navigation }) => {
       </View> 
 
       <TouchableOpacity  
-        style={styles.settingsBody_item} 
+        style={styles.backButton} 
         onPress={() => navigation.navigate('Home')}>
-        <ImageBackground
-          style={styles.backButton}
-          //source={require('../assets/back-arrow.png')}
-        />
+          <Icon 
+            name="angle-left"
+            color="#3f89beff"
+            size={28}
+          />
       </TouchableOpacity >
     </ View>
   );
@@ -105,7 +111,8 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     flexShrink: 0,
     flexGrow: 1,
-    alignItems: 'center'
+    alignItems: 'center',
+    flexDirection: 'column'
   },
   big_title: {
     color: '#344053ff',
@@ -128,7 +135,6 @@ const styles = StyleSheet.create({
     minHeight: 28
   },
   settingsBody: {
-    flexShrink: 1,
     width: '85%',
     backgroundColor: '#f5f5f5ff',
     borderRadius: 7,
@@ -145,11 +151,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
+    //padding: 5
   },
   settingsButtonIcon: {
-    resizeMode: 'contain',
-    height: 24,
-    width: 24
+    color: "#3f89beff"
   },
   settingsButtonText: {
     color: '#344053ff',
@@ -171,13 +176,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   backButton: {
-    //resizeMode: 'contain',
-    resizeMode: 'cover',
-    height: 18,
-    marginBottom: 0,
-    //marginLeft: 'auto',
-    //marginRight: 'auto',
-    //flexShrink: 1
-    //flex: 1
-  },
+    //alignSelf: 'flex-end'
+  }
 });
