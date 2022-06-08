@@ -20,6 +20,8 @@ export class PdfManagerApiResolver {
 	* getPDFs
 	* renamePDF
 	* downloadPDF
+	delete?
+	?addPDf?
 
     */
 
