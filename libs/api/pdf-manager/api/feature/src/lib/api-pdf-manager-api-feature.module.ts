@@ -1,11 +1,26 @@
 import { Module } from '@nestjs/common';
 import { ApiPdfManagerApiFeatureResolver } from './api-pdf-manager-api-feature.resolver';
-import { ApiPdfManagerServiceFeatureService } from '@conversation-catcher/api/pdf-manager/service/feature';
+import { ApiPdfManagerServiceFeatureService, ApiPdfManagerServiceFeatureModule } from '@conversation-catcher/api/pdf-manager/service/feature';
+import { CommandBus, CqrsModule, QueryBus } from '@nestjs/cqrs';
 
-@Module({
-  imports: [ApiPdfManagerServiceFeatureService],
+/*@Module({
+  imports: [ApiPdfManagerApiFeatureResolver],
   controllers: [],
-  providers: [ApiPdfManagerApiFeatureResolver],
+  providers: [ApiPdfManagerServiceFeatureService],
   exports: [ApiPdfManagerApiFeatureResolver],
 })
-export class ApiPdfManagerApiFeatureModule {}
+export class ApiPdfManagerApiFeatureModule {}*/
+
+@Module({
+  imports: [ApiPdfManagerServiceFeatureModule, CqrsModule],
+  controllers: [],
+  providers: [
+    CommandBus,
+    QueryBus,
+    //PrismaService,
+    ApiPdfManagerApiFeatureResolver,
+    ApiPdfManagerServiceFeatureService,
+  ]
+  
+})
+export class ApiStudentExploreApiFeatureModule {}
