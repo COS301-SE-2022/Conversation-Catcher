@@ -1,39 +1,32 @@
 import React from 'react';
-import { View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity, Alert, ScrollView} from 'react-native';
+import { View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity, Alert, ScrollView, TextInput} from 'react-native';
 import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
+import ModalDropdown from 'react-native-modal-dropdown';
 
 export const ViewAll = ({ navigation }) =>  {
   return (
     <View style={styles.viewAllPage}>
         <View style={styles.viewAllTopBar}>
-          <View style={styles.viewAllTitle_box}>
-            <Text style={styles.viewAllTitle} ellipsizeMode={'clip'}>
+          <View style={styles.big_title_box}>
+            <Text style={styles.big_title}>
               {'PDFs'}
             </Text>
           </View>
           
-          <View style={styles.topFlex_item}>
-            <View style={styles.searchBar}>
-                <TouchableOpacity style={[styles.block20, styles.block20_layout]} onPress={() => Alert.alert('click')}>
-                  <View style={styles.searchContents}>
-                    <View style={styles.searchContents_item}>
-                      <ImageBackground
-                        style={[styles.searchIcon, styles.searchIcon_layout]}
-                        //source={require('../assets/search.png')}
-                      />
-                    </View>
-                    <View style={styles.searchContents_space} />
-                    <View style={styles.searchContents_item1}>
-                      <View style={styles.searchInput_box}>
-                        <Text style={styles.searchInput} ellipsizeMode={'clip'}>
-                          {'Search'}
-                        </Text>
-                      </View>
-                    </View>
-                  </View>
-                </TouchableOpacity>
+
+            <View style={styles.searchBarGroup}>
+              <ImageBackground
+                style={styles.searchIcon}
+                //source={require('../assets/search.png')}
+              />
+
+              <TextInput
+                style={styles.searchInput}
+                placeholder="Search"
+                onChangeText={() => Alert.alert('click')}
+              />
             </View>
-          </View>
+
         </View>
 
         <ScrollView style={styles.recentPdfTiles}>
@@ -70,12 +63,7 @@ export const ViewAll = ({ navigation }) =>  {
         </ScrollView>
 
         <View style={styles.viewAllBottomBar}>
-          <View
-            style={styles.orderByLabel_box}>
-            <Text style={styles.orderByLabel} ellipsizeMode={'clip'}>
-              {'Order by'}
-            </Text>
-          </View>
+          
 
           <TouchableOpacity style={styles.bottomFlex_item}>
             <ImageBackground
@@ -96,27 +84,21 @@ export const ViewAll = ({ navigation }) =>  {
             />
           </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.orderByDropDown}
-            onPress={() => Alert.alert('click')}>
-            <View style={styles.orderByDropDown_item}>
-              <View style={[styles.orderByDropDownTextBox, styles.orderByDropDownTextBox_layout]}>      
-                <Text style={styles.orderByDropDownText} ellipsizeMode={'clip'}>
-                  {'Date'}
-                </Text>
-              </View>
-            </View>
-            <View style={styles.orderByDropDown_item1}>
-              <TouchableOpacity
-                style={styles.orderByTouchableOpacity}
-                onPress={() => Alert.alert('click')}>
-                <ImageBackground
-                  style={[styles.orderByIcon, styles.orderByIcon_layout]}
-                  //source={require('../assets/down-arrow.png')}
-                />
-              </TouchableOpacity>
-            </View>
-          </TouchableOpacity>
+          <View
+            style={styles.orderByGroup}>
+            <Text style={styles.orderByLabel}>
+              {'Order by'}
+            </Text>
+            <ModalDropdown 
+              options={['Date', 'Name']}
+              defaultIndex={1}
+              style={styles.orderByDropdown}
+              textStyle={styles.orderByDropdownText}
+              dropdownStyle={styles.orderByDropdownStyle}/>
+          </View>
+
+          
+          
       </View>
     </View>
   );
@@ -145,33 +127,31 @@ const styles = StyleSheet.create({
       height: 1
     }
   },
-  viewAllTitle: {
+  big_title: {
     color: '#344053ff',
     textAlign: 'center',
     letterSpacing: 0,
-    lineHeight: 30,
-    fontSize: 30,
+    lineHeight: 28,
+    fontSize: 24,
     fontWeight: '700',
     fontStyle: 'normal',
     fontFamily: 'System' /* Jaldi */,
     paddingHorizontal: 0,
     paddingVertical: 0
   },
-  viewAllTitle_box: {
-    flexGrow: 1,
-    flexDirection: 'row',
+  big_title_box: {
     alignItems: 'flex-start',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    paddingLeft: 15,
+    height: '5%',
+    //width: '100%',
+    minHeight: 28
   },
-  searchBar: {
-    width: '100%',
+  searchBarGroup: {
+    width: '80%',
     flexGrow: 1
   },
-  block19: {
-    width: '100%',
-    flexGrow: 1
-  },
-  block20: {
+  searchInput: {
     backgroundColor: '#ffffffff',
     borderRadius: 8,
     borderStyle: 'solid',
@@ -185,20 +165,15 @@ const styles = StyleSheet.create({
       width: 0,
       height: 1
     },
-    marginTop: 0,
-    height: 44,
-    marginLeft: 0,
-    width: 356,
-    minWidth: 356
-  },
-  searchContents: {
-    flexGrow: 1,
-    flexDirection: 'row'
-  },
-  searchContents_item: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 20
+    color: '#667084ff',
+    textAlign: 'left',
+    letterSpacing: 0,
+    lineHeight: 24,
+    fontSize: 16,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+    padding: 5
   },
   searchIcon: {
     resizeMode: 'contain',
@@ -210,34 +185,6 @@ const styles = StyleSheet.create({
     minWidth: 20,
     marginRight: 0
   },
-  searchContents_space: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 8
-  },
-  searchContents_item1: {
-    flexGrow: 0,
-    flexShrink: 0,
-    minWidth: 0
-  },
-  searchInput: {
-    color: '#667084ff',
-    textAlign: 'left',
-    letterSpacing: 0,
-    lineHeight: 24,
-    fontSize: 16,
-    fontWeight: '400',
-    fontStyle: 'normal',
-    fontFamily: 'System' /* Inter */,
-    paddingHorizontal: 0,
-    paddingVertical: 0
-  },
-  searchInput_box: {
-    flexGrow: 1,
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start'
-  },
   viewAllBottomBar: {
     width: '100%',
     flexDirection: 'row',
@@ -245,24 +192,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#c4c4c4ff',
     //shadowColor: 'transparent' /* cannot find mapping from CSS: 0px -4px 4px 0px rgba(0,0,0,0.09803921568627451), https://ethercreative.github.io/react-native-shadow-generator/ */
   },
-  orderByLabel: {
-    color: '#344053ff',
-    textAlign: 'center',
-    letterSpacing: 0,
-    lineHeight: 20,
-    fontSize: 14,
-    fontWeight: '500',
-    fontStyle: 'normal',
-    fontFamily: 'System' /* Inter */,
-    paddingHorizontal: 0,
-    paddingVertical: 0
-  },
-  orderByLabel_box: {
-    flexGrow: 1,
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    justifyContent: 'center'
-  },
+
   bottomFlex: {
     flexGrow: 1,
     flexDirection: 'row'
@@ -546,8 +476,27 @@ const styles = StyleSheet.create({
     flexGrow: 0,
     flexShrink: 1
   },
-  orderByDropDown: {
+  orderByGroup: {
     flexGrow: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'flex-end',
+    marginVertical: 5,
+  },
+  orderByLabel: {
+    color: '#344053ff',
+    textAlign: 'center',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 14,
+    fontWeight: '500',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+    padding: 3,
+  },
+  orderByDropdown: {
+    flexShrink: 1,
     backgroundColor: '#ffffffff',
     borderRadius: 8,
     borderStyle: 'solid',
@@ -561,69 +510,26 @@ const styles = StyleSheet.create({
       width: 0,
       height: 1
     },
-    flexDirection: 'row'
+    flexDirection: 'row',
+    marginVertical: 5
   },
-  orderByDropDown_item: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 48
-  },
-  orderByDropDownTextBox: {},
-  orderByDropDownTextBox_layout: {
-    marginTop: 10,
-    height: 24,
-    marginBottom: 10,
-    marginLeft: 14,
-    flexGrow: 1,
-    marginRight: 0
-  },
-  orderByDropDownText_box_layout: {
-    position: 'absolute',
-    top: 0,
-    width: 40,
-    right: -6
-  },
-  orderByDropDownText: {
+  orderByDropdownText: {
     color: '#667084ff',
     textAlign: 'left',
     letterSpacing: 0,
-    lineHeight: 24,
+    lineHeight: 18,
     fontSize: 16,
     fontWeight: '400',
     fontStyle: 'normal',
     fontFamily: 'System' /* Inter */,
-    paddingHorizontal: 0,
-    paddingVertical: 0
+    padding: 10
   },
   orderByDropDownText_box: {
     flexDirection: 'row',
     alignItems: 'flex-start',
     justifyContent: 'flex-start'
   },
-  orderByDropDown_space: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 8
-  },
-  orderByDropDown_item1: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 34
-  },
-  orderByTouchableOpacity: {
-    width: '100%',
-    flexGrow: 1
-  },
-  orderByIcon: {
-    resizeMode: 'contain'
-  },
-  orderByIcon_layout: {
-    marginTop: 8,
-    height: 5,
-    marginBottom: 7,
-    marginLeft: 5,
-    width: 10,
-    minWidth: 10,
-    marginRight: 5
+  orderByDropdownStyle: {
+
   }
 });

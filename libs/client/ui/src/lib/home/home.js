@@ -30,8 +30,7 @@ export const Home = ({ navigation }) => {
       <View style={styles.viewAllTouchableOpacityFrame}>
         <TouchableOpacity
           style={styles.viewAllTouchableOpacity}
-          onPress={() =>
-            navigation.navigate('ViewAll')}>
+          onPress={() => navigation.navigate('ViewAll')}>
           <View
             style={styles.viewAllTouchableOpacityLabel_box}>
             <Text style={styles.viewAllTouchableOpacityLabel} ellipsizeMode={'clip'}>
