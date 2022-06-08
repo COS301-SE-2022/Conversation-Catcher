@@ -8,12 +8,12 @@ describe('PdfTile', () => {
     expect(container).toBeTruthy();
   });
 
-  /*
+  
   const tree = create(<PdfTile />);
   test('snapshot', () => {
     expect(tree).toMatchSnapshot();
   });
-  */
+  
 });
 
 // describe('The actions that occur on button press', () => {
