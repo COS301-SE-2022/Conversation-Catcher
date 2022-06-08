@@ -8,7 +8,7 @@ export class DatabaseManagerResolver {
 
   @Query(() => String, { name: 'test' })
   async pingStudentProfiles() {
-    const a = await this.dbService.getResult();
+    const a = await this.dbService.AddUser("John@test");
     console.log(a);
     return 'on';
   }

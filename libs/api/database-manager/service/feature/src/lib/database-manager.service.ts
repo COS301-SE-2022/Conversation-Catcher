@@ -26,9 +26,41 @@ export class DatabaseManagerService {
       },
     };
     return await lastValueFrom(
-    this.httpService
-      .post(url, data, config)
-      .pipe(tap((res) => console.log(res.status)),map((res) => res.data))
-      );
+      this.httpService.post(url, data, config).pipe(
+        tap((res) => console.log(res.status)),
+        map((res) => res.data)
+      )
+    );
+  }
+
+  async AddUser(sEmail: string): Promise<AxiosResponse<any>> {
+    const url =
+      'https://data.mongodb-api.com/app/data-dtzbr/endpoint/data/v1/action/insertOne';
+    const data = JSON.stringify({
+      collection: 'Users',
+      database: 'PDF',
+      dataSource: 'Cluster0',
+      document: {
+        email: sEmail,
+        password: '*****',
+        pdfs: ['BillGates', 'JonPostel'],
+      },
+    });
+
+    const config = {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Request-Headers': '*',
+        'api-key':
+          'YrnAKHnpVpmVD5qJ5wOMA9Ga7rRZhoniOEJTQJKaTJHWovGoVgoxELB2MkSTXBem',
+      },
+    };
+    return await lastValueFrom(
+      this.httpService.post(url, data, config).pipe(
+        tap((res) => console.log(res.status)),
+        map((res) => res.data)
+      )
+    );
   }
 }
