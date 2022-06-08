@@ -1,7 +1,8 @@
+import React from 'react';
 import { render } from '@testing-library/react-native';
 import Login from './login';
-
 import { create } from 'react-test-renderer';
+
 describe('Login', () => {
   it('should render successfully', () => {
     const { container } = render(<Login />);
