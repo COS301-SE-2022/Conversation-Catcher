@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity, Alert, Dimensions } from 'react-native';
+import { View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity, Alert } from 'react-native';
 import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
 
 export const Home = ({ navigation }) => {

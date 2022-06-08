@@ -1,187 +1,158 @@
  import React from 'react';
- import { View, StyleSheet, Text, Image, ImageBackground, Pressable, Alert, inputField } from 'react-native';
- import { Px } from './posize';
+ import { View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity, Alert, inputField } from 'react-native';
  
- export default function Login(props) {
+ export const Login = ({ navigation }) =>  {
    return (
-     <View style={[styles.logInPage, styles.logInPage_layout]}>
-       <Px.View x="0px 390fr 0px" y="194px minmax(0px, max-content) 194px" style={styles.logInBody}>
+     <View style={styles.logInPage}>
+       <View style={styles.logInBody}>
          <View style={styles.logInBody_item}>
-           <Px.View x="60fr 69.23% 60fr" y="7px minmax(0px, max-content) 0px" style={styles.logInTitle_box}>
-             <Text style={styles.logInTitle} ellipsizeMode={'clip'}>
+           <View style={styles.logInTitle_box}>
+             <Text style={styles.logInTitle}>
                {'Log in to your account'}
              </Text>
-           </Px.View>
+           </View>
          </View>
          <View style={styles.logInBody_item}>
-           <Px.View x="0px 390fr 0px" y="3px minmax(0px, max-content) 0px" style={styles.inputsGroup}>
-             <View style={[styles.textInputGroup, styles.textInputGroup_layout]}>
+           <View style={styles.inputsGroup}>
+             <View style={styles.textInputGroup}>
                <View style={styles.textInputGroup_item}>
-                 <Px.View x="0px 320fr 0px" y="0px minmax(0px, max-content) 0px" style={styles.inputBoxAndLabel}>
+                 <View style={styles.inputBoxAndLabel}>
                    <View style={styles.inputBoxAndLabel_item}>
-                     <Px.View x="0px 320fr 0px" y="0px minmax(0px, max-content) 0px" style={styles.inputLabel_box}>
-                       <Text style={styles.inputLabel} ellipsizeMode={'clip'}>
+                     <View style={styles.inputLabel_box}>
+                       <Text style={styles.inputLabel}>
                          {'Password'}
                        </Text>
-                     </Px.View>
+                     </View>
                    </View>
                    <View style={styles.inputBoxAndLabel_item}>
-                     <Px.View x="0px 320fr 0px" y="6px minmax(0px, max-content) 0px" style={styles.inputField}>
+                     <View style={styles.inputField}>
                        <View style={styles.inputField_item}>
-                         <Px.View
-                           x="14px 268fr 0px"
-                           y="10px minmax(0px, max-content) 10px"
+                         <View
                            style={styles.inputFieldContents}>
                            <View style={styles.inputFieldContents_item}>
                              <ImageBackground
-                               style={[styles.inputIcon, styles.inputIcon_layout]}
-                               source={require('../assets/81dabd54e7a5ce9bbb9fc86ac1a29ae9.png')}
+                               style={styles.inputIcon}
+                               source={require('../assets/lock.png')}
                              />
                            </View>
                            <View style={styles.inputFieldContents_space} />
                            <View style={styles.inputFieldContents_item1}>
-                             <Px.View
-                               x="0px 156fr 84px"
-                               y="0px minmax(0px, max-content) 0px"
+                             <View
                                style={styles.inputText_box}>
-                               <Text style={styles.inputText} ellipsizeMode={'clip'}>
+                               <Text style={styles.inputText}>
                                  {'*******************'}
                                </Text>
-                             </Px.View>
+                             </View>
                            </View>
-                         </Px.View>
+                         </View>
                        </View>
-                       <View style={styles.inputField_space} />
-                       <View style={styles.inputField_item1}>
-                         <ImageBackground
-                           style={[styles.helpIcon, styles.helpIcon_layout]}
-                           source={require('../assets/b9c2ad691b4709a9437438211db17b4a.png')}
-                         />
-                       </View>
-                     </Px.View>
+                     </View>
                    </View>
-                 </Px.View>
+                 </View>
                </View>
                <View style={styles.textInputGroup_item}>
-                 <Px.View x="0px 320fr 0px" y="6px minmax(0px, max-content) 67px" style={styles.hintText_box}>
-                   <Text style={styles.hintText} ellipsizeMode={'clip'}>
+                 <View style={styles.hintText_box}>
+                   <Text style={styles.hintText}>
                      {'This is a hint text to help user.'}
                    </Text>
-                 </Px.View>
+                 </View>
                </View>
              </View>
  
-             <Px.View x="35px 320fr 35px" y="20px minmax(0px, max-content) 148px" style={styles.textInputGroup1}>
+             <View style={styles.textInputGroup1}>
                <View style={styles.textInputGroup_item}>
-                 <Px.View x="0px 320fr 0px" y="0px minmax(0px, max-content) 0px" style={styles.inputBoxAndLabel}>
+                 <View style={styles.inputBoxAndLabel}>
                    <View style={styles.inputBoxAndLabel_item}>
-                     <Px.View x="0px 320fr 0px" y="0px minmax(0px, max-content) 0px" style={styles.inputLabel_box}>
-                       <Text style={styles.inputLabel} ellipsizeMode={'clip'}>
+                     <View style={styles.inputLabel_box}>
+                       <Text style={styles.inputLabel}>
                          {'Email'}
                        </Text>
-                     </Px.View>
+                     </View>
                    </View>
                    <View style={styles.inputBoxAndLabel_item}>
-                     <Px.View x="0px 320fr 0px" y="6px minmax(0px, max-content) 0px" style={styles.inputField}>
+                     <View style={styles.inputField}>
                        <View style={styles.inputField_item}>
-                         <Px.View
-                           x="14px 268fr 0px"
-                           y="10px minmax(0px, max-content) 10px"
+                         <View
                            style={styles.inputFieldContents}>
                            <View style={styles.inputFieldContents_item}>
                              <ImageBackground
                                style={[styles.inputIcon, styles.inputIcon_layout]}
-                               source={require('../assets/8ef12a3e0f56d76fb9df3482d1b0791c.png')}
+                               source={require('../assets/mail.png')}
                              />
                            </View>
                            <View style={styles.inputFieldContents_space} />
                            <View style={styles.inputFieldContents_item2}>
-                             <Px.View
-                               x="0px 170fr 70px"
-                               y="0px minmax(0px, max-content) 0px"
+                             <View
                                style={styles.inputText_box}>
-                               <Text style={styles.inputText} ellipsizeMode={'clip'}>
+                               <Text style={styles.inputText}>
                                  {'johnsmith@gmail.com'}
                                </Text>
-                             </Px.View>
+                             </View>
                            </View>
-                         </Px.View>
+                         </View>
                        </View>
-                       <View style={styles.inputField_space} />
-                       <View style={styles.inputField_item2}>
-                         <ImageBackground
-                           style={[styles.helpIcon, styles.helpIcon_layout]}
-                           source={require('../assets/b9c2ad691b4709a9437438211db17b4a.png')}
-                         />
-                       </View>
-                     </Px.View>
+                     </View>
                    </View>
-                 </Px.View>
+                 </View>
                </View>
                <View style={styles.textInputGroup_item}>
-                 <Px.View x="0px 320fr 0px" y="6px minmax(0px, max-content) 0px" style={styles.hintText_box}>
-                   <Text style={styles.hintText} ellipsizeMode={'clip'}>
+                 <View style={styles.hintText_box}>
+                   <Text style={styles.hintText}>
                      {'This is a hint text to help user.'}
                    </Text>
-                 </Px.View>
+                 </View>
                </View>
-             </Px.View>
-           </Px.View>
+             </View>
+           </View>
          </View>
          <View style={styles.logInBody_item}>
-           <Px.View x="40px 310fr 40px" y="3px minmax(0px, max-content) 0px" style={styles.logInButtonFrame}>
-             <Px.Pressable
-               x="0px 310fr 0px"
-               y="0px minmax(0px, max-content) 11px"
+           <View style={styles.logInButtonFrame}>
+             <TouchableOpacity
                style={styles.logInButton}
                onPress={() => Alert.alert('click')}>
-               <Px.View
-                 x="132px minmax(0px, max-content) 126fr"
-                 y="10px minmax(0px, max-content) 10fr"
+               <View
                  style={styles.logInButtonLabel_box}>
-                 <Text style={styles.logInButtonLabel} ellipsizeMode={'clip'}>
+                 <Text style={styles.logInButtonLabel}>
                    {'Log in'}
                  </Text>
-               </Px.View>
-             </Px.Pressable>
-           </Px.View>
+               </View>
+             </TouchableOpacity>
+           </View>
          </View>
          <View style={styles.logInBody_item}>
-           <Px.View x="101fr 48.21% 101fr" y="3px 41px 0px" style={styles.block10}>
-             <Pressable
+           <View style={styles.block10}>
+             <TouchableOpacity
                style={[styles.forgotPasswordButton, styles.forgotPasswordButton_layout]}
                onPress={() => Alert.alert('click')}>
-               <Px.View
-                 x="18px minmax(0px, max-content) 15fr"
-                 y="12px minmax(0px, max-content) 12fr"
+               <View
                  style={styles.forgotPasswordText_box}>
-                 <Text style={styles.forgotPasswordText} ellipsizeMode={'clip'}>
+                 <Text style={styles.forgotPasswordText}>
                    {'Forgot your password?'}
                  </Text>
-               </Px.View>
-             </Pressable>
-           </Px.View>
+               </View>
+             </TouchableOpacity>
+           </View>
          </View>
          <View style={styles.logInBody_item}>
-           <Px.View x="25.64% 48.97% 25.38%" y="3px 41px 6px" style={styles.block12}>
-             <Pressable
+           <View style={styles.block12}>
+             <TouchableOpacity
                style={[styles.noAccountButton, styles.noAccountButton_layout]}
                onPress={() => Alert.alert('click')}>
-               <Px.View
-                 x="18px minmax(0px, max-content) 15fr"
-                 y="12px minmax(0px, max-content) 12fr"
+               <View
                  style={styles.noAccountButtonText_box}>
-                 <Text style={styles.noAccountButtonText} ellipsizeMode={'clip'}>
+                 <Text style={styles.noAccountButtonText}>
                    {'Don’t have an account?'}
                  </Text>
-               </Px.View>
-             </Pressable>
-           </Px.View>
+               </View>
+             </TouchableOpacity>
+           </View>
          </View>
-       </Px.View>
+       </View>
      </View>
    );
  }
+
+ export default Login;
  
  Login.inStorybook = true;
  Login.fitScreen = false;
@@ -190,16 +161,9 @@
  const styles = StyleSheet.create({
    logInPage: {
      backgroundColor: '#ffffffff',
-     overflow: 'hidden'
-   },
-   logInPage_layout: {
-     marginTop: 0,
-     marginBottom: 0,
-     minHeight: 844,
+     overflow: 'hidden',
      flexShrink: 0,
-     marginLeft: 0,
      flexGrow: 1,
-     marginRight: 0
    },
    logInBody: {
      flexGrow: 1
@@ -231,13 +195,8 @@
      flexGrow: 1,
      borderRadius: 5
    },
-   textInputGroup: {},
-   textInputGroup_layout: {
-     position: 'absolute',
-     height: 163,
-     bottom: -40,
-     width: 320,
-     right: 35
+   textInputGroup: {
+    position: 'absolute',
    },
    textInputGroup_item: {
      flexGrow: 0,
@@ -289,7 +248,6 @@
    inputField_item: {
      flexGrow: 0,
      flexShrink: 1,
-     flexBasis: 282
    },
    inputFieldContents: {
      flexGrow: 1,
@@ -298,12 +256,9 @@
    inputFieldContents_item: {
      flexGrow: 0,
      flexShrink: 1,
-     flexBasis: 20
    },
    inputIcon: {
-     resizeMode: 'contain'
-   },
-   inputIcon_layout: {
+     resizeMode: 'contain',
      marginTop: 2,
      height: 20,
      marginBottom: 2,
@@ -351,9 +306,7 @@
      flexBasis: 30
    },
    helpIcon: {
-     resizeMode: 'contain'
-   },
-   helpIcon_layout: {
+     resizeMode: 'contain',
      marginTop: 14,
      height: 16,
      marginBottom: 14,
@@ -440,9 +393,7 @@
    },
    forgotPasswordButton: {
      backgroundColor: '#ffffffff',
-     borderRadius: 8
-   },
-   forgotPasswordButton_layout: {
+     borderRadius: 8,
      position: 'absolute',
      top: -2,
      height: 44,
@@ -475,14 +426,8 @@
    },
    noAccountButton: {
      backgroundColor: '#ffffffff',
-     borderRadius: 8
-   },
-   noAccountButton_layout: {
+     borderRadius: 8,
      position: 'absolute',
-     top: -2,
-     height: 44,
-     width: 191,
-     right: 0
    },
    noAccountButtonText: {
      color: '#667084ff',

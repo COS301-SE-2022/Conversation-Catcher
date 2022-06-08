@@ -66,7 +66,7 @@ export const SettingsPage = ({ navigation }) => {
 
         <TouchableOpacity
           style={styles.settingsButton}
-          onPress={() => Alert.alert('click')}>
+          onPress={() => navigation.navigate('Login')}>
           <View style={styles.settingsButtonContent}>
             <ImageBackground
               style={styles.settingsButtonIcon}
