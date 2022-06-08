@@ -1,24 +1,24 @@
 {
-  "sourceRoot": "libs/client/shared-components/src",
+  "sourceRoot": "libs/api/database-manager/service/feature/src",
   "projectType": "library",
-  "tags": [],
   "targets": {
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": [
-          "libs/client/shared-components/**/*.{ts,tsx,js,jsx}"
+          "libs/api/database-manager/service/feature/**/*.ts"
         ]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/client/shared-components"],
+      "outputs": ["coverage/libs/api/database-manager/service/feature"],
       "options": {
-        "jestConfig": "libs/client/shared-components/jest.config.js",
+        "jestConfig": "libs/api/database-manager/service/feature/jest.config.ts",
         "passWithNoTests": true
       }
     }
-  }
+  },
+  "tags": []
 }
