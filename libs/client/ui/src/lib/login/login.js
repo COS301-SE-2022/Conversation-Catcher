@@ -32,7 +32,7 @@
                            <View style={styles.inputFieldContents_item}>
                              <ImageBackground
                                style={styles.inputIcon}
-                               source={require('../assets/lock.png')}
+                               //source={require('../assets/lock.png')}
                              />
                            </View>
                            <View style={styles.inputFieldContents_space} />
@@ -77,7 +77,7 @@
                            <View style={styles.inputFieldContents_item}>
                              <ImageBackground
                                style={[styles.inputIcon, styles.inputIcon_layout]}
-                               source={require('../assets/mail.png')}
+                               //source={require('../assets/mail.png')}
                              />
                            </View>
                            <View style={styles.inputFieldContents_space} />

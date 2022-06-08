@@ -19,7 +19,7 @@ export const ViewAll = ({ navigation }) =>  {
                     <View style={styles.searchContents_item}>
                       <ImageBackground
                         style={[styles.searchIcon, styles.searchIcon_layout]}
-                        source={require('../assets/search.png')}
+                        //source={require('../assets/search.png')}
                       />
                     </View>
                     <View style={styles.searchContents_space} />
@@ -82,7 +82,7 @@ export const ViewAll = ({ navigation }) =>  {
               style={styles.backIcon}
               onPress={() =>
                 navigation.navigate('Home')}
-              source={require('../assets/back-arrow.png')}
+              //source={require('../assets/back-arrow.png')}
               container={TouchableOpacity}
             />
           </TouchableOpacity>
@@ -91,7 +91,7 @@ export const ViewAll = ({ navigation }) =>  {
             <ImageBackground
               style={styles.moreOptionsIcon}
               onPress={() => Alert.alert('click')}
-              source={require('../assets/dots.png')}
+              //source={require('../assets/dots.png')}
               container={TouchableOpacity}
             />
           </TouchableOpacity>
@@ -112,7 +112,7 @@ export const ViewAll = ({ navigation }) =>  {
                 onPress={() => Alert.alert('click')}>
                 <ImageBackground
                   style={[styles.orderByIcon, styles.orderByIcon_layout]}
-                  source={require('../assets/down-arrow.png')}
+                  //source={require('../assets/down-arrow.png')}
                 />
               </TouchableOpacity>
             </View>

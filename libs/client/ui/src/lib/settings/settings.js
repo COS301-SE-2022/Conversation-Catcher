@@ -16,7 +16,7 @@ export const SettingsPage = ({ navigation }) => {
           <View style={styles.settingsButtonContent}>
             <ImageBackground
               style={styles.settingsButtonIcon}
-              source={require('../assets/mail.png')}
+              //source={require('../assets/mail.png')}
             />
             <View style={styles.settingsButtonText_box}>
               <Text style={styles.settingsButtonText} ellipsizeMode={'clip'}>
@@ -34,7 +34,7 @@ export const SettingsPage = ({ navigation }) => {
           <View style={styles.settingsButtonContent}>
             <ImageBackground
               style={styles.settingsButtonIcon}
-              source={require('../assets/lock.png')}
+              //source={require('../assets/lock.png')}
             />
             <View style={styles.settingsButtonText_box}>
               <Text style={styles.settingsButtonText}>
@@ -52,7 +52,7 @@ export const SettingsPage = ({ navigation }) => {
           <View style={styles.settingsButtonContent}>
             <ImageBackground
               style={styles.settingsButtonIcon}
-              source={require('../assets/change-colour.png')}
+              //source={require('../assets/change-colour.png')}
             />
             <View style={styles.settingsButtonText_box}>
               <Text style={styles.settingsButtonText}>
@@ -70,7 +70,7 @@ export const SettingsPage = ({ navigation }) => {
           <View style={styles.settingsButtonContent}>
             <ImageBackground
               style={styles.settingsButtonIcon}
-              source={require('../assets/on-device.png')}
+              //source={require('../assets/on-device.png')}
             />
             <View style={styles.settingsButtonText_box}>
               <Text style={styles.settingsButtonText}>
@@ -86,7 +86,7 @@ export const SettingsPage = ({ navigation }) => {
         onPress={() => navigation.navigate('Home')}>
         <ImageBackground
           style={styles.backButton}
-          source={require('../assets/back-arrow.png')}
+          //source={require('../assets/back-arrow.png')}
         />
       </TouchableOpacity >
     </ View>

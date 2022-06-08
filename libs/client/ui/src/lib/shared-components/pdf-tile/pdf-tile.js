@@ -32,7 +32,7 @@ export default class PdfTile extends Component {
         <View style={styles.thumbnail_containter}>
           <ImageBackground
             style={styles.pdfThumbnail}
-            source={source}
+            //source={source}
           />
         </View>
         <View style={styles.pdfTile_contents_not_thumbnail}>

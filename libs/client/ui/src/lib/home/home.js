@@ -49,7 +49,7 @@ export const Home = ({ navigation }) => {
           <View style={styles.settingsIcon_frame}>
             <ImageBackground
               style={styles.settingsIcon}
-              source={require('../assets/settings.png')}
+              //source={require('../assets/settings.png')}
             />
           </View>
           <View style={styles.settingsText_box}>
@@ -66,7 +66,7 @@ export const Home = ({ navigation }) => {
             onPress={() => Alert.alert('click')}>
             <ImageBackground
               style={styles.recordAudioIcon}
-              source={require('../assets/mic.png')}
+              //source={require('../assets/mic.png')}
             />
           </TouchableOpacity>
         </View>
@@ -76,11 +76,11 @@ export const Home = ({ navigation }) => {
             onPress={() => Alert.alert('click')}>
             <ImageBackground
               style={styles.audioTouchableOpacityGroupDiv}
-              source={require('../assets/verticalLine.png')}
+              //source={require('../assets/verticalLine.png')}
             />
             <ImageBackground
               style={styles.uploadAudioIcon}
-              source={require('../assets/upload.png')}
+              //source={require('../assets/upload.png')}
             />
           </TouchableOpacity>
         </View>
