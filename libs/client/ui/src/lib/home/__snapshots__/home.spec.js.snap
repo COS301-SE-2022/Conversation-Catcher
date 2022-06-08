@@ -1,0 +1,924 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Home snapshot 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#ffffffff",
+      "flexDirection": "column",
+      "height": "100%",
+      "justifyContent": "space-between",
+      "overflow": "hidden",
+      "width": "100%",
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "flex-start",
+        "height": "5%",
+        "justifyContent": "center",
+        "minHeight": 28,
+        "paddingLeft": 15,
+      }
+    }
+  >
+    <Text
+      ellipsizeMode="clip"
+      style={
+        Object {
+          "color": "#344053ff",
+          "fontFamily": "System",
+          "fontSize": 24,
+          "fontStyle": "normal",
+          "fontWeight": "700",
+          "letterSpacing": 0,
+          "lineHeight": 28,
+          "paddingHorizontal": 0,
+          "paddingVertical": 0,
+          "textAlign": "center",
+        }
+      }
+    >
+      Recents
+    </Text>
+  </View>
+  <View
+    style={
+      Object {
+        "height": "55%",
+        "justifyContent": "space-between",
+        "paddingLeft": 15,
+        "paddingRight": 15,
+      }
+    }
+  >
+    <View
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "borderColor": "#c4c4c4ff",
+          "borderRadius": 5,
+          "borderStyle": "solid",
+          "borderWidth": 1,
+          "elevation": 1,
+          "flexDirection": "row",
+          "flexGrow": 1,
+          "margin": 5,
+          "opacity": 1,
+          "shadowColor": "#c4c4c4ff",
+          "shadowOffset": Object {
+            "height": 2,
+            "width": 2,
+          },
+          "shadowOpacity": 0.1,
+          "shadowRadius": 5,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "aspectRatio": 0.7071135624381276,
+            "borderColor": "#3F89BE",
+            "borderRadius": 5,
+            "borderStyle": "solid",
+            "borderWidth": 1,
+            "flexShrink": 1,
+          }
+        }
+      >
+        <View
+          accessibilityIgnoresInvertColors={true}
+          style={
+            Object {
+              "borderRadius": 5,
+              "resizeMode": "contain",
+            }
+          }
+        >
+          <Image
+            style={
+              Array [
+                Object {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                },
+                Object {
+                  "height": undefined,
+                  "width": undefined,
+                },
+                undefined,
+              ]
+            }
+          />
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "flex": 4,
+            "justifyContent": "center",
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "flexDirection": "column",
+              "flexGrow": 1,
+              "flexShrink": 1,
+              "justifyContent": "center",
+              "marginBottom": 0,
+              "marginLeft": 5,
+              "marginRight": 0,
+              "marginTop": 0,
+              "paddingLeft": 10,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "flexGrow": 1,
+                "justifyContent": "center",
+                "paddingTop": 15,
+                "resizeMode": "contain",
+              }
+            }
+          >
+            <Text
+              ellipsizeMode="clip"
+              style={
+                Object {
+                  "color": "#344053ff",
+                  "fontFamily": "System",
+                  "fontSize": 16,
+                  "fontStyle": "normal",
+                  "fontWeight": "400",
+                  "letterSpacing": 0,
+                  "lineHeight": 20,
+                  "paddingHorizontal": 0,
+                  "paddingVertical": 0,
+                  "textAlign": "left",
+                }
+              }
+            >
+              Bug introduction: a modification of code
+            </Text>
+          </View>
+          <View
+            style={
+              Object {
+                "flexGrow": 1,
+                "justifyContent": "center",
+                "paddingBottom": 15,
+                "resizeMode": "contain",
+              }
+            }
+          >
+            <Text
+              ellipsizeMode="clip"
+              style={
+                Object {
+                  "color": "#667084ff",
+                  "fontFamily": "System",
+                  "fontSize": 14,
+                  "fontStyle": "normal",
+                  "fontWeight": "400",
+                  "letterSpacing": 0,
+                  "lineHeight": 20,
+                  "paddingHorizontal": 0,
+                  "paddingVertical": 0,
+                  "textAlign": "left",
+                }
+              }
+            >
+              1 May 2022, 9:37
+            </Text>
+          </View>
+          <View>
+            <View
+              accessibilityIgnoresInvertColors={true}
+            >
+              <Image
+                container={
+                  Object {
+                    "$$typeof": Symbol(react.forward_ref),
+                    "render": [Function],
+                  }
+                }
+                onPress={[Function]}
+                style={
+                  Array [
+                    Object {
+                      "bottom": 0,
+                      "left": 0,
+                      "position": "absolute",
+                      "right": 0,
+                      "top": 0,
+                    },
+                    Object {
+                      "height": undefined,
+                      "width": undefined,
+                    },
+                    undefined,
+                  ]
+                }
+              />
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+    <View
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "borderColor": "#c4c4c4ff",
+          "borderRadius": 5,
+          "borderStyle": "solid",
+          "borderWidth": 1,
+          "elevation": 1,
+          "flexDirection": "row",
+          "flexGrow": 1,
+          "margin": 5,
+          "opacity": 1,
+          "shadowColor": "#c4c4c4ff",
+          "shadowOffset": Object {
+            "height": 2,
+            "width": 2,
+          },
+          "shadowOpacity": 0.1,
+          "shadowRadius": 5,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "aspectRatio": 0.7071135624381276,
+            "borderColor": "#3F89BE",
+            "borderRadius": 5,
+            "borderStyle": "solid",
+            "borderWidth": 1,
+            "flexShrink": 1,
+          }
+        }
+      >
+        <View
+          accessibilityIgnoresInvertColors={true}
+          style={
+            Object {
+              "borderRadius": 5,
+              "resizeMode": "contain",
+            }
+          }
+        >
+          <Image
+            style={
+              Array [
+                Object {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                },
+                Object {
+                  "height": undefined,
+                  "width": undefined,
+                },
+                undefined,
+              ]
+            }
+          />
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "flex": 4,
+            "justifyContent": "center",
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "flexDirection": "column",
+              "flexGrow": 1,
+              "flexShrink": 1,
+              "justifyContent": "center",
+              "marginBottom": 0,
+              "marginLeft": 5,
+              "marginRight": 0,
+              "marginTop": 0,
+              "paddingLeft": 10,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "flexGrow": 1,
+                "justifyContent": "center",
+                "paddingTop": 15,
+                "resizeMode": "contain",
+              }
+            }
+          >
+            <Text
+              ellipsizeMode="clip"
+              style={
+                Object {
+                  "color": "#344053ff",
+                  "fontFamily": "System",
+                  "fontSize": 16,
+                  "fontStyle": "normal",
+                  "fontWeight": "400",
+                  "letterSpacing": 0,
+                  "lineHeight": 20,
+                  "paddingHorizontal": 0,
+                  "paddingVertical": 0,
+                  "textAlign": "left",
+                }
+              }
+            >
+              Human-computer interaction
+            </Text>
+          </View>
+          <View
+            style={
+              Object {
+                "flexGrow": 1,
+                "justifyContent": "center",
+                "paddingBottom": 15,
+                "resizeMode": "contain",
+              }
+            }
+          >
+            <Text
+              ellipsizeMode="clip"
+              style={
+                Object {
+                  "color": "#667084ff",
+                  "fontFamily": "System",
+                  "fontSize": 14,
+                  "fontStyle": "normal",
+                  "fontWeight": "400",
+                  "letterSpacing": 0,
+                  "lineHeight": 20,
+                  "paddingHorizontal": 0,
+                  "paddingVertical": 0,
+                  "textAlign": "left",
+                }
+              }
+            >
+              21 Apr 2022, 14:18
+            </Text>
+          </View>
+          <View>
+            <View
+              accessibilityIgnoresInvertColors={true}
+            >
+              <Image
+                container={
+                  Object {
+                    "$$typeof": Symbol(react.forward_ref),
+                    "render": [Function],
+                  }
+                }
+                onPress={[Function]}
+                style={
+                  Array [
+                    Object {
+                      "bottom": 0,
+                      "left": 0,
+                      "position": "absolute",
+                      "right": 0,
+                      "top": 0,
+                    },
+                    Object {
+                      "height": undefined,
+                      "width": undefined,
+                    },
+                    undefined,
+                  ]
+                }
+              />
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+    <View
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "borderColor": "#c4c4c4ff",
+          "borderRadius": 5,
+          "borderStyle": "solid",
+          "borderWidth": 1,
+          "elevation": 1,
+          "flexDirection": "row",
+          "flexGrow": 1,
+          "margin": 5,
+          "opacity": 1,
+          "shadowColor": "#c4c4c4ff",
+          "shadowOffset": Object {
+            "height": 2,
+            "width": 2,
+          },
+          "shadowOpacity": 0.1,
+          "shadowRadius": 5,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "aspectRatio": 0.7071135624381276,
+            "borderColor": "#3F89BE",
+            "borderRadius": 5,
+            "borderStyle": "solid",
+            "borderWidth": 1,
+            "flexShrink": 1,
+          }
+        }
+      >
+        <View
+          accessibilityIgnoresInvertColors={true}
+          style={
+            Object {
+              "borderRadius": 5,
+              "resizeMode": "contain",
+            }
+          }
+        >
+          <Image
+            style={
+              Array [
+                Object {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                },
+                Object {
+                  "height": undefined,
+                  "width": undefined,
+                },
+                undefined,
+              ]
+            }
+          />
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "flex": 4,
+            "justifyContent": "center",
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "flexDirection": "column",
+              "flexGrow": 1,
+              "flexShrink": 1,
+              "justifyContent": "center",
+              "marginBottom": 0,
+              "marginLeft": 5,
+              "marginRight": 0,
+              "marginTop": 0,
+              "paddingLeft": 10,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "flexGrow": 1,
+                "justifyContent": "center",
+                "paddingTop": 15,
+                "resizeMode": "contain",
+              }
+            }
+          >
+            <Text
+              ellipsizeMode="clip"
+              style={
+                Object {
+                  "color": "#344053ff",
+                  "fontFamily": "System",
+                  "fontSize": 16,
+                  "fontStyle": "normal",
+                  "fontWeight": "400",
+                  "letterSpacing": 0,
+                  "lineHeight": 20,
+                  "paddingHorizontal": 0,
+                  "paddingVertical": 0,
+                  "textAlign": "left",
+                }
+              }
+            >
+              The tropical plants of the Philippines
+            </Text>
+          </View>
+          <View
+            style={
+              Object {
+                "flexGrow": 1,
+                "justifyContent": "center",
+                "paddingBottom": 15,
+                "resizeMode": "contain",
+              }
+            }
+          >
+            <Text
+              ellipsizeMode="clip"
+              style={
+                Object {
+                  "color": "#667084ff",
+                  "fontFamily": "System",
+                  "fontSize": 14,
+                  "fontStyle": "normal",
+                  "fontWeight": "400",
+                  "letterSpacing": 0,
+                  "lineHeight": 20,
+                  "paddingHorizontal": 0,
+                  "paddingVertical": 0,
+                  "textAlign": "left",
+                }
+              }
+            >
+              13 Apr 2022, 11:53
+            </Text>
+          </View>
+          <View>
+            <View
+              accessibilityIgnoresInvertColors={true}
+            >
+              <Image
+                container={
+                  Object {
+                    "$$typeof": Symbol(react.forward_ref),
+                    "render": [Function],
+                  }
+                }
+                onPress={[Function]}
+                style={
+                  Array [
+                    Object {
+                      "bottom": 0,
+                      "left": 0,
+                      "position": "absolute",
+                      "right": 0,
+                      "top": 0,
+                    },
+                    Object {
+                      "height": undefined,
+                      "width": undefined,
+                    },
+                    undefined,
+                  ]
+                }
+              />
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "height": "10%",
+      }
+    }
+  >
+    <View
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignContent": "center",
+          "backgroundColor": "#3F89BE",
+          "borderColor": "#3f89beff",
+          "borderRadius": 8,
+          "borderStyle": "solid",
+          "borderWidth": 1,
+          "elevation": 2,
+          "flexGrow": 1,
+          "justifyContent": "center",
+          "marginBottom": 5,
+          "marginLeft": 30,
+          "marginRight": 30,
+          "marginTop": 5,
+          "opacity": 1,
+          "shadowColor": "#000000",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.2173913043478261,
+          "shadowRadius": 2.621621621621622,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "center",
+          }
+        }
+      >
+        <Text
+          ellipsizeMode="clip"
+          style={
+            Object {
+              "color": "#ffffffff",
+              "fontFamily": "System",
+              "fontSize": 18,
+              "fontStyle": "normal",
+              "fontWeight": "400",
+              "letterSpacing": 0,
+              "lineHeight": 22,
+              "padding": 10,
+              "textAlign": "center",
+            }
+          }
+        >
+          View all PDFs
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "height": "10%",
+        "marginVertical": 10,
+        "opacity": 1,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignContent": "center",
+          "backgroundColor": "#d0d5ddff",
+          "borderColor": "#d0d5ddff",
+          "borderRadius": 8,
+          "borderStyle": "solid",
+          "borderWidth": 1,
+          "elevation": 2,
+          "flexDirection": "row",
+          "flexGrow": 1,
+          "justifyContent": "center",
+          "marginBottom": 5,
+          "marginLeft": 30,
+          "marginRight": 30,
+          "marginTop": 5,
+          "overflow": "hidden",
+          "shadowColor": "#000000",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.2173913043478261,
+          "shadowRadius": 2.621621621621622,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "flexShrink": 1,
+            "justifyContent": "center",
+          }
+        }
+      >
+        <Text
+          ellipsizeMode="clip"
+          style={
+            Object {
+              "color": "#344053ff",
+              "fontFamily": "System",
+              "fontSize": 18,
+              "fontStyle": "normal",
+              "fontWeight": "400",
+              "letterSpacing": 0,
+              "lineHeight": 22,
+              "paddingHorizontal": 0,
+              "paddingVertical": 0,
+              "textAlign": "center",
+            }
+          }
+        >
+          Settings
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "alignSelf": "center",
+        "borderRadius": 8,
+        "flexDirection": "row",
+        "flexShrink": 1,
+        "height": "17%",
+        "justifyContent": "center",
+        "width": "40%",
+      }
+    }
+  >
+    <View
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#d0d5ddff",
+          "borderBottomLeftRadius": 8,
+          "borderTopLeftRadius": 8,
+          "elevation": 1,
+          "flexGrow": 1,
+          "justifyContent": "center",
+          "opacity": 1,
+          "overflow": "hidden",
+          "shadowColor": "#000000",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.2,
+          "shadowRadius": 1.810810810810811,
+          "width": "50%",
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "padding": 10,
+            "resizeMode": "contain",
+          }
+        }
+      >
+        <Text
+          allowFontScaling={false}
+          selectable={false}
+          style={
+            Array [
+              Object {
+                "color": "#344053ff",
+                "fontSize": 40,
+              },
+              undefined,
+              Object {
+                "fontFamily": "FontAwesome",
+                "fontStyle": "normal",
+                "fontWeight": "normal",
+              },
+              Object {},
+            ]
+          }
+        >
+          
+        </Text>
+      </View>
+    </View>
+    <View
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#d0d5ddff",
+          "borderBottomRightRadius": 8,
+          "borderTopRightRadius": 8,
+          "elevation": 1,
+          "flexGrow": 1,
+          "justifyContent": "center",
+          "opacity": 1,
+          "overflow": "hidden",
+          "shadowColor": "#000000",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.2,
+          "shadowRadius": 1.810810810810811,
+          "width": "50%",
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "padding": 10,
+            "resizeMode": "contain",
+          }
+        }
+      >
+        <Text
+          allowFontScaling={false}
+          selectable={false}
+          style={
+            Array [
+              Object {
+                "color": "#344053ff",
+                "fontSize": 40,
+              },
+              undefined,
+              Object {
+                "fontFamily": "FontAwesome",
+                "fontStyle": "normal",
+                "fontWeight": "normal",
+              },
+              Object {},
+            ]
+          }
+        >
+          
+        </Text>
+      </View>
+    </View>
+  </View>
+</View>
+`;
