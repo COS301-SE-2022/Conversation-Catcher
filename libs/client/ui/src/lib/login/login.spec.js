@@ -1,19 +1,18 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
-import PdfTile from './pdf-tile';
+import Login from './login';
 import { create } from 'react-test-renderer';
-describe('PdfTile', () => {
+
+describe('Login', () => {
   it('should render successfully', () => {
-    const { container } = render(<PdfTile />);
+    const { container } = render(<Login />);
     expect(container).toBeTruthy();
   });
 
-  const tree = create(<PdfTile />);
+  
+  const tree = create(<Login />);
   test('snapshot', () => {
     expect(tree).toMatchSnapshot();
   });
+  
 });
-
-// describe('The actions that occur on button press', () => {
-//   it('should display the available colours')
-// });
