@@ -22,7 +22,7 @@ export class ApiPdfApiFeatureResolver {
 			return pdfObj;
 		}
 
-	    return null;
+	return null;
 	}
 
 	@Query(() => [PdfEntity], { nullable: true })
