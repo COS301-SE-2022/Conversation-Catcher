@@ -1,7 +1,7 @@
 import { Resolver } from '@nestjs/graphql';
 import { Query, Args, Mutation } from '@nestjs/graphql';
 import { PdfManagerService } from "@conversation-catcher/api/pdf-manager/service";
-import { PdfEntity } from "@conversation-catcher/api/pdf-manager/api/data-access"
+import { PdfEntity } from "@conversation-catcher/api/pdf-manager/api/data-access";
 
 @Resolver()
 export class PdfManagerApiResolver {
