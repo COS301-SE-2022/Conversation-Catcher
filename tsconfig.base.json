@@ -24,6 +24,15 @@
       "@conversation-catcher/api/database-manager/service/feature": [
         "libs/api/database-manager/service/feature/src/index.ts"
       ],
+      "@conversation-catcher/api/pdf-manager/api/data-access": [
+        "libs/api/pdf-manager/api/data-access/src/index.ts"
+      ],
+      "@conversation-catcher/api/pdf-manager/api/feature": [
+        "libs/api/pdf-manager/api/feature/src/index.ts"
+      ],
+      "@conversation-catcher/api/pdf-manager/service/feature": [
+        "libs/api/pdf-manager/service/feature/src/index.ts"
+      ],
       "@conversation-catcher/api/pdf/api/data-access": [
         "libs/api/pdf/api/data-access/src/index.ts"
       ],
