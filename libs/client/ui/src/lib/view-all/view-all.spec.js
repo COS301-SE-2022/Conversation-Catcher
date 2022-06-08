@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
-import { ViewAll } from './view-all';
+import ViewAll  from './view-all';
 import { create } from 'react-test-renderer';
 describe('ViewAll', () => {
   it('should render successfully', () => {
@@ -14,7 +14,3 @@ describe('ViewAll', () => {
   });
   
 });
-
-// describe('The actions that occur on button press', () => {
-//   it('should display the available colours')
-// });

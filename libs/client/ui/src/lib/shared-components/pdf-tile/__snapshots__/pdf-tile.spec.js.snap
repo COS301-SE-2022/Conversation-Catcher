@@ -1,0 +1,190 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PdfTile snapshot 1`] = `
+<View
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "borderColor": "#c4c4c4ff",
+      "borderRadius": 5,
+      "borderStyle": "solid",
+      "borderWidth": 1,
+      "elevation": 1,
+      "flexDirection": "row",
+      "flexGrow": 1,
+      "margin": 5,
+      "opacity": 1,
+      "shadowColor": "#c4c4c4ff",
+      "shadowOffset": Object {
+        "height": 2,
+        "width": 2,
+      },
+      "shadowOpacity": 0.1,
+      "shadowRadius": 5,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "aspectRatio": 0.7071135624381276,
+        "borderColor": "#3F89BE",
+        "borderRadius": 5,
+        "borderStyle": "solid",
+        "borderWidth": 1,
+        "flexShrink": 1,
+      }
+    }
+  >
+    <View
+      accessibilityIgnoresInvertColors={true}
+      style={
+        Object {
+          "borderRadius": 5,
+          "resizeMode": "contain",
+        }
+      }
+    >
+      <Image
+        style={
+          Array [
+            Object {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            },
+            Object {
+              "height": undefined,
+              "width": undefined,
+            },
+            undefined,
+          ]
+        }
+      />
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "flex": 4,
+        "justifyContent": "center",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexDirection": "column",
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "justifyContent": "center",
+          "marginBottom": 0,
+          "marginLeft": 5,
+          "marginRight": 0,
+          "marginTop": 0,
+          "paddingLeft": 10,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "flexGrow": 1,
+            "justifyContent": "center",
+            "paddingTop": 15,
+            "resizeMode": "contain",
+          }
+        }
+      >
+        <Text
+          ellipsizeMode="clip"
+          style={
+            Object {
+              "color": "#344053ff",
+              "fontFamily": "System",
+              "fontSize": 16,
+              "fontStyle": "normal",
+              "fontWeight": "400",
+              "letterSpacing": 0,
+              "lineHeight": 20,
+              "paddingHorizontal": 0,
+              "paddingVertical": 0,
+              "textAlign": "left",
+            }
+          }
+        />
+      </View>
+      <View
+        style={
+          Object {
+            "flexGrow": 1,
+            "justifyContent": "center",
+            "paddingBottom": 15,
+            "resizeMode": "contain",
+          }
+        }
+      >
+        <Text
+          ellipsizeMode="clip"
+          style={
+            Object {
+              "color": "#667084ff",
+              "fontFamily": "System",
+              "fontSize": 14,
+              "fontStyle": "normal",
+              "fontWeight": "400",
+              "letterSpacing": 0,
+              "lineHeight": 20,
+              "paddingHorizontal": 0,
+              "paddingVertical": 0,
+              "textAlign": "left",
+            }
+          }
+        />
+      </View>
+      <View>
+        <View
+          accessibilityIgnoresInvertColors={true}
+        >
+          <Image
+            container={
+              Object {
+                "$$typeof": Symbol(react.forward_ref),
+                "render": [Function],
+              }
+            }
+            onPress={[Function]}
+            style={
+              Array [
+                Object {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                },
+                Object {
+                  "height": undefined,
+                  "width": undefined,
+                },
+                undefined,
+              ]
+            }
+          />
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;

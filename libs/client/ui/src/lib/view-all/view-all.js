@@ -1,122 +1,97 @@
 import React from 'react';
-import { View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity, Alert, ScrollView} from 'react-native';
+import { View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity, Alert, ScrollView, TextInput} from 'react-native';
 import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
+import ModalDropdown from 'react-native-modal-dropdown';
 
 export const ViewAll = ({ navigation }) =>  {
   return (
     <View style={styles.viewAllPage}>
-        <View style={styles.viewAllTopBar}>
-          <View style={styles.viewAllTitle_box}>
-            <Text style={styles.viewAllTitle} ellipsizeMode={'clip'}>
-              {'PDFs'}
-            </Text>
-          </View>
-          
-          <View style={styles.topFlex_item}>
-            <View style={styles.searchBar}>
-                <TouchableOpacity style={[styles.block20, styles.block20_layout]} onPress={() => Alert.alert('click')}>
-                  <View style={styles.searchContents}>
-                    <View style={styles.searchContents_item}>
-                      <ImageBackground
-                        style={[styles.searchIcon, styles.searchIcon_layout]}
-                        //source={require('../assets/search.png')}
-                      />
-                    </View>
-                    <View style={styles.searchContents_space} />
-                    <View style={styles.searchContents_item1}>
-                      <View style={styles.searchInput_box}>
-                        <Text style={styles.searchInput} ellipsizeMode={'clip'}>
-                          {'Search'}
-                        </Text>
-                      </View>
-                    </View>
-                  </View>
-                </TouchableOpacity>
-            </View>
-          </View>
+      <View style={styles.viewAllTopBar}>
+        <View style={styles.big_title_box}>
+          <Text style={styles.big_title}>
+            {'PDFs'}
+          </Text>
         </View>
 
-        <ScrollView style={styles.recentPdfTiles}>
-          <PdfTile 
-            name = 'Bug introduction: a modification of code' 
-            date = '1 May 2022, 9:37' 
-            source = {"../assets/pdf-bug-intro.png"} 
-            downloaded = {true}/>
-          <PdfTile 
-            name = 'Human-computer interaction' 
-            date = '21 Apr 2022, 14:18' 
-            source = {"../assets/pdf-human-computer.png"} 
-            downloaded = {false}/>
-          <PdfTile 
-            name = 'The tropical plants of the Philippines' 
-            date = '13 Apr 2022, 11:53' 
-            source = {"../assets/pdf-tropical-plants.png"} 
-            downloaded = {true}/>
-          <PdfTile 
-            name = 'Devin Brittain The snacks of the popcorn' 
-            date = '13 Apr 2022, 11:53' 
-            source = {"../assets/pdf-tropical-plants.png"} 
-            downloaded = {true}/>
-          <PdfTile 
-            name = 'The tropical plants of the Philippines' 
-            date = '13 Apr 2022, 11:53' 
-            source = {"../assets/pdf-tropical-plants.png"} 
-            downloaded = {true}/>
-          <PdfTile 
-            name = 'The tropical plants of the Philippines' 
-            date = '13 Apr 2022, 11:53' 
-            source = {"../assets/pdf-tropical-plants.png"} 
-            downloaded = {true}/>
-        </ScrollView>
+        <View style={styles.searchBarGroup}>
+          <ImageBackground
+            style={styles.searchIcon}
+            //source={require('../assets/search.png')}
+          />
 
-        <View style={styles.viewAllBottomBar}>
-          <View
-            style={styles.orderByLabel_box}>
-            <Text style={styles.orderByLabel} ellipsizeMode={'clip'}>
-              {'Order by'}
-            </Text>
-          </View>
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Search"
+            onChangeText={() => Alert.alert('click')}
+          />
+        </View>
+      </View>
 
-          <TouchableOpacity style={styles.bottomFlex_item}>
-            <ImageBackground
-              style={styles.backIcon}
-              onPress={() =>
-                navigation.navigate('Home')}
-              //source={require('../assets/back-arrow.png')}
-              container={TouchableOpacity}
-            />
-          </TouchableOpacity>
+      <ScrollView style={styles.recentPdfTiles}>
+        <PdfTile 
+          name = 'Bug introduction: a modification of code' 
+          date = '1 May 2022, 9:37' 
+          source = {"../assets/pdf-bug-intro.png"} 
+          downloaded = {true}/>
+        <PdfTile 
+          name = 'Human-computer interaction' 
+          date = '21 Apr 2022, 14:18' 
+          source = {"../assets/pdf-human-computer.png"} 
+          downloaded = {false}/>
+        <PdfTile 
+          name = 'The tropical plants of the Philippines' 
+          date = '13 Apr 2022, 11:53' 
+          source = {"../assets/pdf-tropical-plants.png"} 
+          downloaded = {true}/>
+        <PdfTile 
+          name = 'Devin Brittain The snacks of the popcorn' 
+          date = '13 Apr 2022, 11:53' 
+          source = {"../assets/pdf-tropical-plants.png"} 
+          downloaded = {true}/>
+        <PdfTile 
+          name = 'The tropical plants of the Philippines' 
+          date = '13 Apr 2022, 11:53' 
+          source = {"../assets/pdf-tropical-plants.png"} 
+          downloaded = {true}/>
+        <PdfTile 
+          name = 'The tropical plants of the Philippines' 
+          date = '13 Apr 2022, 11:53' 
+          source = {"../assets/pdf-tropical-plants.png"} 
+          downloaded = {true}/>
+      </ScrollView>
 
-          <TouchableOpacity style={styles.bottomFlex_item1}>
-            <ImageBackground
-              style={styles.moreOptionsIcon}
-              onPress={() => Alert.alert('click')}
-              //source={require('../assets/dots.png')}
-              container={TouchableOpacity}
-            />
-          </TouchableOpacity>
+      <View style={styles.viewAllBottomBar}>
+        <TouchableOpacity style={styles.backButton}>
+          <ImageBackground
+            style={styles.backIcon}
+            onPress={() =>
+              navigation.navigate('Home')}
+            //source={require('../assets/back-arrow.png')}
+            container={TouchableOpacity}
+          />
+        </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.orderByDropDown}
-            onPress={() => Alert.alert('click')}>
-            <View style={styles.orderByDropDown_item}>
-              <View style={[styles.orderByDropDownTextBox, styles.orderByDropDownTextBox_layout]}>      
-                <Text style={styles.orderByDropDownText} ellipsizeMode={'clip'}>
-                  {'Date'}
-                </Text>
-              </View>
-            </View>
-            <View style={styles.orderByDropDown_item1}>
-              <TouchableOpacity
-                style={styles.orderByTouchableOpacity}
-                onPress={() => Alert.alert('click')}>
-                <ImageBackground
-                  style={[styles.orderByIcon, styles.orderByIcon_layout]}
-                  //source={require('../assets/down-arrow.png')}
-                />
-              </TouchableOpacity>
-            </View>
-          </TouchableOpacity>
+        <TouchableOpacity style={styles.moreButton}>
+          <ImageBackground
+            style={styles.moreOptionsIcon}
+            onPress={() => Alert.alert('click')}
+            //source={require('../assets/dots.png')}
+            container={TouchableOpacity}
+          />
+        </TouchableOpacity>
+
+        <View
+          style={styles.orderByGroup}>
+          <Text style={styles.orderByLabel}>
+            {'Order by'}
+          </Text>
+          <ModalDropdown 
+            options={['Date', 'Name']}
+            defaultIndex={1}
+            style={styles.orderByDropdown}
+            textStyle={styles.orderByDropdownText}
+            dropdownStyle={styles.orderByDropdownStyle}/>
+        </View>     
       </View>
     </View>
   );
@@ -143,35 +118,34 @@ const styles = StyleSheet.create({
     shadowOffset: {
       width: 0,
       height: 1
-    }
+    },
+    alignItems: 'center',
+    flexDirection: 'column'
   },
-  viewAllTitle: {
+  big_title: {
     color: '#344053ff',
     textAlign: 'center',
     letterSpacing: 0,
-    lineHeight: 30,
-    fontSize: 30,
+    lineHeight: 28,
+    fontSize: 24,
     fontWeight: '700',
     fontStyle: 'normal',
     fontFamily: 'System' /* Jaldi */,
-    paddingHorizontal: 0,
-    paddingVertical: 0
   },
-  viewAllTitle_box: {
-    flexGrow: 1,
-    flexDirection: 'row',
+  big_title_box: {
     alignItems: 'flex-start',
-    justifyContent: 'center'
-  },
-  searchBar: {
+    justifyContent: 'center',
+    paddingLeft: 15,
+    height: '5%',
     width: '100%',
-    flexGrow: 1
+    minHeight: 28,
   },
-  block19: {
-    width: '100%',
-    flexGrow: 1
+  searchBarGroup: {
+    width: '80%',
+    flexShrink: 1,
+    margin: 10
   },
-  block20: {
+  searchInput: {
     backgroundColor: '#ffffffff',
     borderRadius: 8,
     borderStyle: 'solid',
@@ -185,20 +159,15 @@ const styles = StyleSheet.create({
       width: 0,
       height: 1
     },
-    marginTop: 0,
-    height: 44,
-    marginLeft: 0,
-    width: 356,
-    minWidth: 356
-  },
-  searchContents: {
-    flexGrow: 1,
-    flexDirection: 'row'
-  },
-  searchContents_item: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 20
+    color: '#667084ff',
+    textAlign: 'left',
+    letterSpacing: 0,
+    lineHeight: 24,
+    fontSize: 16,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+    padding: 5
   },
   searchIcon: {
     resizeMode: 'contain',
@@ -210,33 +179,11 @@ const styles = StyleSheet.create({
     minWidth: 20,
     marginRight: 0
   },
-  searchContents_space: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 8
-  },
-  searchContents_item1: {
-    flexGrow: 0,
-    flexShrink: 0,
-    minWidth: 0
-  },
-  searchInput: {
-    color: '#667084ff',
-    textAlign: 'left',
-    letterSpacing: 0,
-    lineHeight: 24,
-    fontSize: 16,
-    fontWeight: '400',
-    fontStyle: 'normal',
-    fontFamily: 'System' /* Inter */,
-    paddingHorizontal: 0,
-    paddingVertical: 0
-  },
-  searchInput_box: {
-    flexGrow: 1,
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start'
+  recentPdfTiles: {
+    height: '70%',
+    paddingLeft: 15,
+    paddingRight: 15,
+    overflow: 'visible',
   },
   viewAllBottomBar: {
     width: '100%',
@@ -245,76 +192,17 @@ const styles = StyleSheet.create({
     backgroundColor: '#c4c4c4ff',
     //shadowColor: 'transparent' /* cannot find mapping from CSS: 0px -4px 4px 0px rgba(0,0,0,0.09803921568627451), https://ethercreative.github.io/react-native-shadow-generator/ */
   },
-  orderByLabel: {
-    color: '#344053ff',
-    textAlign: 'center',
-    letterSpacing: 0,
-    lineHeight: 20,
-    fontSize: 14,
-    fontWeight: '500',
-    fontStyle: 'normal',
-    fontFamily: 'System' /* Inter */,
-    paddingHorizontal: 0,
-    paddingVertical: 0
-  },
-  orderByLabel_box: {
-    flexGrow: 1,
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    justifyContent: 'center'
-  },
-  bottomFlex: {
-    flexGrow: 1,
-    flexDirection: 'row'
-  },
-  bottomFlex_item: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 42
+  backButton: {
+
   },
   backIcon: {
     resizeMode: 'contain'
   },
-  bottomFlex_space: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 76
-  },
-  bottomFlex_item1: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 24
+  moreButton: {
+
   },
   moreOptionsIcon: {
     resizeMode: 'contain'
-  },
-  bottomFlex_space1: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 67
-  },
-  bottomFlex_item2: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 153
-  },
-  block12: {
-    width: '100%',
-    flexGrow: 1
-  },
-  block13: {
-    width: '100%',
-    flexGrow: 1
-  },
-  group: {
-    width: '100%',
-    flexGrow: 1
-  },
-  recentPdfTiles: {
-    height: '70%',
-    paddingLeft: 15,
-    paddingRight: 15,
-    overflow: 'visible',
   },
   block6: {
     flexGrow: 1,
@@ -413,56 +301,6 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     justifyContent: 'flex-start'
   },
-  block7_item1: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 36
-  },
-  image2: {
-    resizeMode: 'contain'
-  },
-  image: {
-    resizeMode: 'contain',
-    borderRadius: 5
-  },
-  image_layout: {
-    marginTop: 0,
-    height: 127,
-    marginBottom: 0,
-    marginLeft: 0,
-    width: 90,
-    minWidth: 90,
-    marginRight: 0
-  },
-  pdfTile_item2: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 253
-  },
-  block3: {
-    flexGrow: 1,
-    flexDirection: 'row'
-  },
-  block3_item: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 220
-  },
-  text_body_box1: {
-    flexGrow: 1,
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-    justifyContent: 'flex-start'
-  },
-  block3_item1: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 33
-  },
-  block5: {
-    width: '100%',
-    flexGrow: 1
-  },
   block9: {
     flexGrow: 1,
     borderRadius: 5,
@@ -479,75 +317,27 @@ const styles = StyleSheet.create({
     },
     flexDirection: 'row'
   },
-  block9_item: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 90
-  },
-  block9_space: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 13
-  },
-  block9_item1: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 253
-  },
-  pdfName_box2_layout: {
-    position: 'absolute',
-    top: 29,
-    width: 218,
-    right: -3
-  },
-  pdfName_box2: {
+  orderByGroup: {
+    flexGrow: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-start'
+    justifyContent: 'center',
+    alignSelf: 'flex-end',
+    marginVertical: 5,
   },
-  text_body_box_layout1: {
-    position: 'absolute',
-    top: 78,
-    height: 20,
-    left: -2,
-    width: 123
+  orderByLabel: {
+    color: '#344053ff',
+    textAlign: 'center',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 14,
+    fontWeight: '500',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+    padding: 3,
   },
-  block7_item2: {
-    flexGrow: 0,
+  orderByDropdown: {
     flexShrink: 1,
-    flexBasis: 36
-  },
-  image2_layout: {
-    marginTop: 0,
-    height: 34,
-    marginBottom: 93,
-    marginLeft: 0,
-    width: 31,
-    minWidth: 31,
-    marginRight: 5
-  },
-  pdfTile_item3: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 253
-  },
-  text_body_box2: {
-    flexGrow: 1,
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-    justifyContent: 'flex-start'
-  },
-  block3_item2: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 33
-  },
-  pdfFrame_space: {
-    flexGrow: 0,
-    flexShrink: 1
-  },
-  orderByDropDown: {
-    flexGrow: 1,
     backgroundColor: '#ffffffff',
     borderRadius: 8,
     borderStyle: 'solid',
@@ -561,69 +351,27 @@ const styles = StyleSheet.create({
       width: 0,
       height: 1
     },
-    flexDirection: 'row'
+    flexDirection: 'row',
+    marginVertical: 5,
+    width: 120
   },
-  orderByDropDown_item: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 48
-  },
-  orderByDropDownTextBox: {},
-  orderByDropDownTextBox_layout: {
-    marginTop: 10,
-    height: 24,
-    marginBottom: 10,
-    marginLeft: 14,
-    flexGrow: 1,
-    marginRight: 0
-  },
-  orderByDropDownText_box_layout: {
-    position: 'absolute',
-    top: 0,
-    width: 40,
-    right: -6
-  },
-  orderByDropDownText: {
+  orderByDropdownText: {
     color: '#667084ff',
     textAlign: 'left',
     letterSpacing: 0,
-    lineHeight: 24,
+    lineHeight: 18,
     fontSize: 16,
     fontWeight: '400',
     fontStyle: 'normal',
     fontFamily: 'System' /* Inter */,
-    paddingHorizontal: 0,
-    paddingVertical: 0
+    padding: 10
   },
   orderByDropDownText_box: {
     flexDirection: 'row',
     alignItems: 'flex-start',
     justifyContent: 'flex-start'
   },
-  orderByDropDown_space: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 8
-  },
-  orderByDropDown_item1: {
-    flexGrow: 0,
-    flexShrink: 1,
-    flexBasis: 34
-  },
-  orderByTouchableOpacity: {
-    width: '100%',
-    flexGrow: 1
-  },
-  orderByIcon: {
-    resizeMode: 'contain'
-  },
-  orderByIcon_layout: {
-    marginTop: 8,
-    height: 5,
-    marginBottom: 7,
-    marginLeft: 5,
-    width: 10,
-    minWidth: 10,
-    marginRight: 5
+  orderByDropdownStyle: {
+
   }
 });
