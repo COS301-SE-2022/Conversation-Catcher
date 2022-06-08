@@ -3,7 +3,7 @@ import { ApiPdfServiceFeatureService } from './api-pdf-service-feature.service';
 
 @Module({
   controllers: [],
-  providers: [],
+  providers: [ApiPdfServiceFeatureService],
   exports: [
     ApiPdfServiceFeatureService,
   ],
