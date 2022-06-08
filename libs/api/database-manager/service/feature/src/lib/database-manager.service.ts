@@ -52,8 +52,43 @@ export class DatabaseManagerService {
       headers: {
         'Content-Type': 'application/json',
         'Access-Control-Request-Headers': '*',
-        'api-key':
-          'YrnAKHnpVpmVD5qJ5wOMA9Ga7rRZhoniOEJTQJKaTJHWovGoVgoxELB2MkSTXBem',
+        'api-key': '',
+      },
+    };
+    return await lastValueFrom(
+      this.httpService.post(url, data, config).pipe(
+        tap((res) => console.log(res.status)),
+        map((res) => res.data)
+      )
+    );
+  }
+
+  async AddPDF(
+    pdfID: string,
+    name: string,
+    path: string
+  ): Promise<AxiosResponse<any>> {
+    const url =
+      'https://data.mongodb-api.com/app/data-dtzbr/endpoint/data/v1/action/insertOne';
+    const data = JSON.stringify({
+      collection: 'PDF',
+      database: 'PDF',
+      dataSource: 'Cluster0',
+      document: {
+        id: pdfID,
+        name: name,
+        path: path,
+        creationDate: Date.now(),
+        dowloaded: true,
+      },
+    });
+
+    const config = {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Request-Headers': '*',
+        'api-key': '',
       },
     };
     return await lastValueFrom(
