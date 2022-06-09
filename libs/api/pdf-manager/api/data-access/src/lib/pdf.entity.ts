@@ -16,7 +16,7 @@ export class PdfEntity {
   name: string;
 
   @Field()
-  pdf: File;
+  pdf: string;
 
   @Field()
   creationDate: Date;
