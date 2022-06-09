@@ -2,7 +2,7 @@
   "name": "conversation-catcher",
   "version": "0.0.0",
   "license": "MIT",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "start": "nx serve",
     "build": "nx build",
