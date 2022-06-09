@@ -48,13 +48,18 @@ export default class PdfTile extends Component {
       date,
       source,
       downloaded,
-      showCheck
+      showCheck,
+      navigation
     } = this.props
 
     return (
       <TouchableOpacity
         style={styles.pdfTile}
-        onPress={() => Alert.alert('click')}>
+        onPress={() => navigation.navigate('PdfView', {
+          source: {source},
+          name: {name},
+          date: {date}
+        })}>
         <View style={styles.thumbnail_containter}>
           <ImageBackground
             style={styles.pdfThumbnail}

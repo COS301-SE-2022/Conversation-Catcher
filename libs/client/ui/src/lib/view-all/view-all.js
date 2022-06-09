@@ -41,42 +41,48 @@ export const ViewAll = ({ navigation }) =>  {
           date = '1 May 2022, 9:37' 
           source = {"../assets/pdf-bug-intro.png"} 
           downloaded = {true}
-          showCheck = {deleteMode}/>
+          showCheck = {deleteMode}
+          avigation = {navigation}/>
         <PdfTile 
           id = {2}
           name = 'Human-computer interaction' 
           date = '21 Apr 2022, 14:18' 
           source = {"../assets/pdf-human-computer.png"} 
           downloaded = {false}
-          showCheck = {deleteMode}/>
+          showCheck = {deleteMode}
+          avigation = {navigation}/>
         <PdfTile 
           id = {3}
           name = 'The tropical plants of the Philippines' 
           date = '13 Apr 2022, 11:53' 
           source = {"../assets/pdf-tropical-plants.png"} 
           downloaded = {true}
-          showCheck = {deleteMode}/>
+          showCheck = {deleteMode}
+          avigation = {navigation}/>
         <PdfTile 
           id = {4}
           name = 'Devin Brittain The snacks of the popcorn' 
           date = '13 Apr 2022, 11:53' 
           source = {"../assets/pdf-tropical-plants.png"} 
           downloaded = {true}
-          showCheck = {deleteMode}/>
+          showCheck = {deleteMode}
+          avigation = {navigation}/>
         <PdfTile 
           id = {5}
           name = 'The tropical plants of the Philippines' 
           date = '13 Apr 2022, 11:53' 
           source = {"../assets/pdf-tropical-plants.png"} 
           downloaded = {true}
-          showCheck = {deleteMode}/>
+          showCheck = {deleteMode}
+          avigation = {navigation}/>
         <PdfTile 
           id = {6}
           name = 'The tropical plants of the Philippines' 
           date = '13 Apr 2022, 11:53' 
           source = {"../assets/pdf-tropical-plants.png"} 
           downloaded = {true}
-          showCheck = {deleteMode}/>
+          showCheck = {deleteMode}
+          avigation = {navigation}/>
       </ScrollView>
 
       <View style={styles.viewAllBottomBar}>

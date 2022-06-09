@@ -18,21 +18,24 @@ export const Home = ({ navigation }) => {
           date = '1 May 2022, 9:37' 
           source = {require('../assets/pdf-bug-intro.png')} 
           downloaded = {true}
-          showCheck = {false}/>
+          showCheck = {false}
+          navigation = {navigation}/>
         <PdfTile 
           id = {2}
           name = 'Human-computer interaction' 
           date = '21 Apr 2022, 14:18' 
           source = {require('../assets/pdf-human-computer.png')} 
           downloaded = {false}
-          showCheck = {false}/>
+          showCheck = {false}
+          navigation = {navigation}/>
         <PdfTile 
           id = {3}
           name = 'The tropical plants of the Philippines' 
           date = '13 Apr 2022, 11:53' 
           source = {require('../assets/pdf-tropical-plants.png')} 
           downloaded = {true}
-          showCheck = {false}/>
+          showCheck = {false}
+          navigation = {navigation}/>
       </View>
       <View style={styles.viewAllTouchableOpacityFrame}>
         <TouchableOpacity
