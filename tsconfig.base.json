@@ -33,6 +33,9 @@
       "@conversation-catcher/api/pdf-manager/service/feature": [
         "libs/api/pdf-manager/service/feature/src/index.ts"
       ],
+      "@conversation-catcher/api/pdf-manager/shared": [
+        "libs/api/pdf-manager/shared/src/index.ts"
+      ],
       "@conversation-catcher/api/speech-to-text/api": [
         "libs/api/speech-to-text/api/src/index.ts"
       ],

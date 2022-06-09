@@ -8,6 +8,7 @@
     "api-pdf-manager-api-data-access": "libs/api/pdf-manager/api/data-access",
     "api-pdf-manager-api-feature": "libs/api/pdf-manager/api/feature",
     "api-pdf-manager-service-feature": "libs/api/pdf-manager/service/feature",
+    "api-pdf-manager-shared": "libs/api/pdf-manager/shared",
     "api-shell": "libs/api/shell",
     "api-speech-to-text-api": "libs/api/speech-to-text/api",
     "api-speech-to-text-repository": "libs/api/speech-to-text/repository",
