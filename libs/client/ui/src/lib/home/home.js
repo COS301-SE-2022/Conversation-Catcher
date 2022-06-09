@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity, Alert } from 'react-native';
 import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import colour from '../colour/colour';
 import Modal from 'react-native-modal';
 
 export const Home = ({ navigation }) => {
@@ -107,8 +108,8 @@ export const Home = ({ navigation }) => {
       </View>
       <View style={styles.viewAllTouchableOpacityFrame}>
         <TouchableOpacity
-          style={styles.viewAllTouchableOpacity}
-          onPress={() => navigation.navigate('ViewAll')}>
+          style={[styles.viewAllTouchableOpacity,{backgroundColor : colour.state}]}
+          onPress={() => {navigation.navigate('ViewAll')}}>
           <View
             style={styles.viewAllTouchableOpacityLabel_box}>
             <Text style={styles.viewAllTouchableOpacityLabel} ellipsizeMode={'clip'}>
@@ -323,7 +324,7 @@ const styles = StyleSheet.create({
     marginRight: 30,
     justifyContent: 'center',
     alignContent: 'center',
-    backgroundColor: "#3F89BE",
+    //backgroundColor: "#3F89BE",
     borderRadius: 8,
     borderStyle: 'solid',
     borderColor: '#3f89beff',
