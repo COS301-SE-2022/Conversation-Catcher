@@ -10,6 +10,7 @@ Multiprocessing moguls - Conversation Catcher - The conversation catcher is used
 [Functional Requirements (SRS) documents](https://github.com/COS301-SE-2022/Conversation-Catcher/wiki/SRS) <br>
 [GitHub Project Board](https://github.com/COS301-SE-2022/Conversation-Catcher/projects/1) <br>
 [Team member information](https://github.com/COS301-SE-2022/Conversation-Catcher/wiki/Team-Members) <br>
+[User Manual](https://github.com/COS301-SE-2022/Conversation-Catcher/wiki/User-Manual) <br>
 
 
 
