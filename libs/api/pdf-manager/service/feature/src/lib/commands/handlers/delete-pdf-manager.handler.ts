@@ -2,6 +2,7 @@ import { HttpService } from '@nestjs/axios';
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import { lastValueFrom, map, tap } from 'rxjs';
 import { PdfManagerServiceModel } from '../../models/pdf-manager-service-feature.model';
+import { GlobalKey } from '@conversation-catcher/api/pdf-manager/shared';
 //import {  } from "../events/delete-.event";
 import { DeletePdfCommand } from '../impl/delete-pdf-manager.command';
 
@@ -25,7 +26,7 @@ export class DeletePdfHandler implements ICommandHandler<DeletePdfCommand> {
       headers: {
         'Content-Type': 'application/json',
         'Access-Control-Request-Headers': '*',
-        'api-key': '',
+        'api-key': GlobalKey.key,
       },
     };
     return await lastValueFrom(

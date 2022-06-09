@@ -27,7 +27,7 @@ export class DatabaseManagerResolver {
 
   @Query(() => String)
   async renamePDF() {
-    const a = await this.dbService.RenamePDF('id', 'newName');
+    const a = await this.dbService.changeUploadedPDF('id');
     console.log(a);
     return 'on';
     /*** id: string

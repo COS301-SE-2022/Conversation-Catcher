@@ -2,10 +2,12 @@ import { HttpService } from '@nestjs/axios';
 import { Inject, Injectable } from '@nestjs/common';
 import { lastValueFrom, map, tap, Observable } from 'rxjs';
 import { AxiosResponse } from 'axios';
+import { GlobalKey } from '@conversation-catcher/api/pdf-manager/shared';
+import { notDeepEqual } from 'assert';
 
 @Injectable()
 export class DatabaseManagerService {
-  constructor(private httpService: HttpService, @Inject('KEY') private key : string) {}
+  constructor(private httpService: HttpService) {}
 
   async getResult(): Promise<AxiosResponse<any>> {
     const url =
@@ -22,7 +24,7 @@ export class DatabaseManagerService {
       headers: {
         'Content-Type': 'application/json',
         'Access-Control-Request-Headers': '*',
-        'api-key': '',
+        'api-key': GlobalKey.key,
       },
     };
     return await lastValueFrom(
@@ -52,7 +54,7 @@ export class DatabaseManagerService {
       headers: {
         'Content-Type': 'application/json',
         'Access-Control-Request-Headers': '*',
-        'api-key': '',
+        'api-key': GlobalKey.key,
       },
     };
     return await lastValueFrom(
@@ -79,7 +81,7 @@ export class DatabaseManagerService {
         name: name,
         path: path,
         creationDate: Date.now(),
-        dowloaded: true,
+        downloaded: true,
       },
     });
 
@@ -88,7 +90,7 @@ export class DatabaseManagerService {
       headers: {
         'Content-Type': 'application/json',
         'Access-Control-Request-Headers': '*',
-        'api-key': '',
+        'api-key': GlobalKey.key,
       },
     };
     return await lastValueFrom(
@@ -112,13 +114,13 @@ export class DatabaseManagerService {
         $set: { name: name },
       },
     });
-
+    console.log('API key: ' + GlobalKey.key);
     const config = {
       method: 'post',
       headers: {
         'Content-Type': 'application/json',
         'Access-Control-Request-Headers': '*',
-        'api-key': '',
+        'api-key': GlobalKey.key,
       },
     };
     return await lastValueFrom(
@@ -129,18 +131,17 @@ export class DatabaseManagerService {
     );
   }
 
-  async changeUploadedPDF(pdfID: string, name: string): Promise<AxiosResponse<any>> {
+  async changeUploadedPDF(
+    pdfID: string,
+  ): Promise<AxiosResponse<any>> {
     const url =
       'https://data.mongodb-api.com/app/data-dtzbr/endpoint/data/v1/action/';
-    const action = 'updateOne';
-    const data = JSON.stringify({
+    let action = 'findOne';
+    let data = JSON.stringify({
       collection: 'PDF',
       database: 'PDF',
       dataSource: 'Cluster0',
       filter: { id: pdfID },
-      update: {
-        $set: { name: name },
-      },
     });
 
     const config = {
@@ -148,9 +149,29 @@ export class DatabaseManagerService {
       headers: {
         'Content-Type': 'application/json',
         'Access-Control-Request-Headers': '*',
-        'api-key': '',
+        'api-key': GlobalKey.key,
       },
     };
+    const res = await lastValueFrom(
+      this.httpService.post(url + action, data, config).pipe(
+        tap((res) => console.log(res.status)),
+        map((res) => res.data)
+      )
+    );
+
+    console.log(res);
+
+    action = 'updateOne';
+    data = JSON.stringify({
+      collection: 'PDF',
+      database: 'PDF',
+      dataSource: 'Cluster0',
+      filter: { id: pdfID },
+      update: {
+        $set: { downloaded: !res.document.downloaded },
+      },
+    });
+
     return await lastValueFrom(
       this.httpService.post(url + action, data, config).pipe(
         tap((res) => console.log(res.status)),

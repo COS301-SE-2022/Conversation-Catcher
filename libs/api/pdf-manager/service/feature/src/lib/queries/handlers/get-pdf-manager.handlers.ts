@@ -12,7 +12,8 @@ export class GetPdfByIdHandler implements IQueryHandler<GetPdfByIdQuery> {
     const url =
       'https://data.mongodb-api.com/app/data-dtzbr/endpoint/data/v1/action/';
     const action = 'findOne';
-    const data = JSON.stringify({
+
+    const data = JSON.stringify({//the data object passed to the http request which specifies what should be returned
       collection: 'PDF',
       database: 'PDF',
       dataSource: 'Cluster0',
@@ -27,6 +28,7 @@ export class GetPdfByIdHandler implements IQueryHandler<GetPdfByIdQuery> {
         'api-key': '',
       },
     };
+    //Returns the result of the httpRequest
     return await lastValueFrom(
       this.repository.post(url + action, data, config).pipe(
         tap((res) => console.log(res.status)),

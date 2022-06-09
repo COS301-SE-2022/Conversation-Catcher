@@ -2,6 +2,7 @@ import { HttpService } from '@nestjs/axios';
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import { lastValueFrom, map, tap } from 'rxjs';
 import { PdfManagerServiceModel } from '../../models/pdf-manager-service-feature.model';
+import { GlobalKey } from '@conversation-catcher/api/pdf-manager/shared';
 //import { SetNamePdfEvent, SetDownloadedPdfEvent } from "../events/set-pdf-manager.event";
 //import { SetNamePdfEventHandler, SetDownloadedPdfEventHandler } from "../events/set-pdf-manager.event.handler";
 import {
@@ -15,21 +16,18 @@ export class SetDownloadedPdfHandler
 {
   constructor(
     private publisher: EventPublisher,
-    private repository: HttpService
+    private httpService: HttpService
   ) {} //private repository: Repository,
 
   async execute({ id }: SetDownloadedPdfCommand) {
     const url =
       'https://data.mongodb-api.com/app/data-dtzbr/endpoint/data/v1/action/';
-    const action = 'updateOne';
-    const data = JSON.stringify({
+    let action = 'findOne';
+    let data = JSON.stringify({
       collection: 'PDF',
       database: 'PDF',
       dataSource: 'Cluster0',
       filter: { id: id },
-      update: {
-        $set: { downloaded: false },
-      },
     });
 
     const config = {
@@ -37,16 +35,35 @@ export class SetDownloadedPdfHandler
       headers: {
         'Content-Type': 'application/json',
         'Access-Control-Request-Headers': '*',
-        'api-key': '',
+        'api-key': GlobalKey.key,
       },
     };
-    return await lastValueFrom(
-      this.repository.post(url + action, data, config).pipe(
+    const res = await lastValueFrom(
+      this.httpService.post(url + action, data, config).pipe(
         tap((res) => console.log(res.status)),
         map((res) => res.data)
       )
     );
-    return { id } as Partial<PdfManagerServiceModel>;
+
+    console.log(res);
+
+    action = 'updateOne';
+    data = JSON.stringify({
+      collection: 'PDF',
+      database: 'PDF',
+      dataSource: 'Cluster0',
+      filter: { id: id },
+      update: {
+        $set: { downloaded: !res.document.downloaded },
+      },
+    });
+
+    return await lastValueFrom(
+      this.httpService.post(url + action, data, config).pipe(
+        tap((res) => console.log(res.status)),
+        map((res) => res.data)
+      )
+    );
   }
 }
 
@@ -76,15 +93,15 @@ export class SetNamePdfHandler implements ICommandHandler<SetNamePdfCommand> {
       headers: {
         'Content-Type': 'application/json',
         'Access-Control-Request-Headers': '*',
-        'api-key': '',
+        'api-key': GlobalKey.key,
       },
     };
     return await lastValueFrom(
+      //Updates the name and returns if it was a success or not
       this.repository.post(url + action, data, config).pipe(
         tap((res) => console.log(res.status)),
         map((res) => res.data)
       )
     );
-    return { id, name } as Partial<PdfManagerServiceModel>;
   }
 }
