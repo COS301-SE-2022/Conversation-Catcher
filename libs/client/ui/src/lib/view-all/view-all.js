@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
-import { View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity, Alert, ScrollView, TextInput, Modal} from 'react-native';
+import { View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity, Alert, ScrollView, TextInput} from 'react-native';
 import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
 import ModalDropdown from 'react-native-modal-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Modal from 'react-native-modal';
 
 export const ViewAll = ({ navigation }) =>  {
   const [moreVisible, setMoreVisible] = useState(false);
@@ -115,78 +116,75 @@ export const ViewAll = ({ navigation }) =>  {
 
 
       <Modal
-        animationType='slide'
-        transparent={true}
-        visible={moreVisible}
-        onRequestClose={() => setMoreVisible(!moreVisible)}
+        style={styles.modal}
+        isVisible={moreVisible}
+        avoidKeyboard={true}
+        hasBackdrop={true}
+        backdropColor='white'
+        onBackdropPress={() => setMoreVisible(false)}
       >
-        
-        {/*<TouchableOpacity style={styles.modalBack}
-          onPress={() => setMoreVisible(false)}>*/}
-          <View style={styles.moreModalInner}>
-            <TouchableOpacity
-              style={styles.moreModalButton}
-              onPress={() => Alert.alert('click')}>
-              <View style={styles.moreModalButtonContent}>
-                <View style={styles.iconContainer}>
-                  <Icon 
-                    style={styles.moreModalButtonIcon}
-                    name="paper-plane-o"
-                    size={18}
-                  />
-                </View>
-                <View style={styles.moreModalButtonText_box}>
-                  <Text style={styles.moreModalButtonText} ellipsizeMode={'clip'}>
-                    {'Share'}
-                  </Text>
-                </View>
-              </View>   
-            </TouchableOpacity>
-
-            <View style={styles.moreModalButtonDivider} /> 
-
-            <TouchableOpacity
-              style={styles.moreModalButton}
-              onPress={() => Alert.alert('click')}>
-              <View style={styles.moreModalButtonContent}>
-                <View style={styles.iconContainer}>
-                  <Icon 
-                    style={styles.moreModalButtonIcon}
-                    name="pencil-square-o"
-                    size={20}
-                  />
-                </View>
-                <View style={styles.moreModalButtonText_box}>
-                  <Text style={styles.moreModalButtonText}>
-                    {'Rename'}
-                  </Text>
-                </View>
+        <View style={styles.moreModalInner}>
+          <TouchableOpacity
+            style={styles.moreModalButton}
+            onPress={() => Alert.alert('click')}>
+            <View style={styles.moreModalButtonContent}>
+              <View style={styles.iconContainer}>
+                <Icon 
+                  style={styles.moreModalButtonIcon}
+                  name="paper-plane-o"
+                  size={18}
+                />
               </View>
-            </TouchableOpacity>
+              <View style={styles.moreModalButtonText_box}>
+                <Text style={styles.moreModalButtonText} ellipsizeMode={'clip'}>
+                  {'Share'}
+                </Text>
+              </View>
+            </View>   
+          </TouchableOpacity>
 
-            <View style={styles.moreModalButtonDivider} /> 
+          <View style={styles.moreModalButtonDivider} /> 
 
-            <TouchableOpacity 
-              style={styles.moreModalButton}
-              onPress={() => setDeleteMode(true)}>
-              <View style={styles.moreModalButtonContent}>
-                <View style={styles.iconContainer}>
-                  <Icon 
-                    style={styles.moreModalButtonIcon}
-                    name="trash-o"
-                    size={20}
-                  />
-                </View>
-                <View style={styles.moreModalButtonText_box}>
-                  <Text style={styles.moreModalButtonText}>
-                    {'Delete'}
-                  </Text>
-                </View>
-              </View> 
-            </TouchableOpacity>
-          </View>
-        {/*</TouchableOpacity>*/}
+          <TouchableOpacity
+            style={styles.moreModalButton}
+            onPress={() => Alert.alert('click')}>
+            <View style={styles.moreModalButtonContent}>
+              <View style={styles.iconContainer}>
+                <Icon 
+                  style={styles.moreModalButtonIcon}
+                  name="pencil-square-o"
+                  size={20}
+                />
+              </View>
+              <View style={styles.moreModalButtonText_box}>
+                <Text style={styles.moreModalButtonText}>
+                  {'Rename'}
+                </Text>
+              </View>
+            </View>
+          </TouchableOpacity>
 
+          <View style={styles.moreModalButtonDivider} /> 
+
+          <TouchableOpacity 
+            style={styles.moreModalButton}
+            onPress={() => setDeleteMode(true)}>
+            <View style={styles.moreModalButtonContent}>
+              <View style={styles.iconContainer}>
+                <Icon 
+                  style={styles.moreModalButtonIcon}
+                  name="trash-o"
+                  size={20}
+                />
+              </View>
+              <View style={styles.moreModalButtonText_box}>
+                <Text style={styles.moreModalButtonText}>
+                  {'Delete'}
+                </Text>
+              </View>
+            </View> 
+          </TouchableOpacity>
+        </View>
       </Modal>
     </View>
   );
@@ -365,13 +363,12 @@ const styles = StyleSheet.create({
   orderByDropdownStyle: {
 
   },
-  modalBack: {
-    flexGrow: 1,
-    backgroundColor: 'white',
-    opacity: 0.1
+  modal: {
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   moreModalInner: {
-    width: '40%',
+    width: '45%',
     flexShrink: 1,
     backgroundColor: '#f5f5f5ff',
     borderRadius: 7,

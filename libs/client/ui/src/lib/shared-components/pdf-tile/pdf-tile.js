@@ -26,7 +26,7 @@ function DetermineTileCorner(props){
   const c = props.c
   if (c){
     return <BouncyCheckbox
-            size={25}
+            size={20}
             fillColor="red"
             unfillColor="#FFFFFF"
             iconStyle={{ borderColor: "red" }}
