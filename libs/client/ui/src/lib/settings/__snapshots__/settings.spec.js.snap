@@ -17,7 +17,7 @@ exports[`Setup of settings snapshot 1`] = `
     style={
       Object {
         "alignItems": "flex-start",
-        "height": "7%",
+        "height": "10%",
         "justifyContent": "center",
         "minHeight": 28,
         "paddingLeft": 15,
@@ -85,29 +85,39 @@ exports[`Setup of settings snapshot 1`] = `
           }
         }
       >
-        <Text
-          allowFontScaling={false}
-          selectable={false}
+        <View
           style={
-            Array [
-              Object {
-                "color": undefined,
-                "fontSize": 18,
-              },
-              Object {
-                "color": "#3f89beff",
-              },
-              Object {
-                "fontFamily": "FontAwesome",
-                "fontStyle": "normal",
-                "fontWeight": "normal",
-              },
-              Object {},
-            ]
+            Object {
+              "alignItems": "center",
+              "height": "100%",
+              "width": "15%",
+            }
           }
         >
-          
-        </Text>
+          <Text
+            allowFontScaling={false}
+            selectable={false}
+            style={
+              Array [
+                Object {
+                  "color": undefined,
+                  "fontSize": 18,
+                },
+                Object {
+                  "color": "#3f89beff",
+                },
+                Object {
+                  "fontFamily": "FontAwesome",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                Object {},
+              ]
+            }
+          >
+            
+          </Text>
+        </View>
         <View
           style={
             Object {
@@ -176,29 +186,39 @@ exports[`Setup of settings snapshot 1`] = `
           }
         }
       >
-        <Text
-          allowFontScaling={false}
-          selectable={false}
+        <View
           style={
-            Array [
-              Object {
-                "color": undefined,
-                "fontSize": 20,
-              },
-              Object {
-                "color": "#3f89beff",
-              },
-              Object {
-                "fontFamily": "FontAwesome",
-                "fontStyle": "normal",
-                "fontWeight": "normal",
-              },
-              Object {},
-            ]
+            Object {
+              "alignItems": "center",
+              "height": "100%",
+              "width": "15%",
+            }
           }
         >
-          
-        </Text>
+          <Text
+            allowFontScaling={false}
+            selectable={false}
+            style={
+              Array [
+                Object {
+                  "color": undefined,
+                  "fontSize": 20,
+                },
+                Object {
+                  "color": "#3f89beff",
+                },
+                Object {
+                  "fontFamily": "FontAwesome",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                Object {},
+              ]
+            }
+          >
+            
+          </Text>
+        </View>
         <View
           style={
             Object {
@@ -266,29 +286,39 @@ exports[`Setup of settings snapshot 1`] = `
           }
         }
       >
-        <Text
-          allowFontScaling={false}
-          selectable={false}
+        <View
           style={
-            Array [
-              Object {
-                "color": undefined,
-                "fontSize": 20,
-              },
-              Object {
-                "color": "#3f89beff",
-              },
-              Object {
-                "fontFamily": "FontAwesome",
-                "fontStyle": "normal",
-                "fontWeight": "normal",
-              },
-              Object {},
-            ]
+            Object {
+              "alignItems": "center",
+              "height": "100%",
+              "width": "15%",
+            }
           }
         >
-          
-        </Text>
+          <Text
+            allowFontScaling={false}
+            selectable={false}
+            style={
+              Array [
+                Object {
+                  "color": undefined,
+                  "fontSize": 20,
+                },
+                Object {
+                  "color": "#3f89beff",
+                },
+                Object {
+                  "fontFamily": "FontAwesome",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                Object {},
+              ]
+            }
+          >
+            
+          </Text>
+        </View>
         <View
           style={
             Object {
@@ -356,29 +386,39 @@ exports[`Setup of settings snapshot 1`] = `
           }
         }
       >
-        <Text
-          allowFontScaling={false}
-          selectable={false}
+        <View
           style={
-            Array [
-              Object {
-                "color": undefined,
-                "fontSize": 20,
-              },
-              Object {
-                "color": "#3f89beff",
-              },
-              Object {
-                "fontFamily": "FontAwesome",
-                "fontStyle": "normal",
-                "fontWeight": "normal",
-              },
-              Object {},
-            ]
+            Object {
+              "alignItems": "center",
+              "height": "100%",
+              "width": "15%",
+            }
           }
         >
-          
-        </Text>
+          <Text
+            allowFontScaling={false}
+            selectable={false}
+            style={
+              Array [
+                Object {
+                  "color": undefined,
+                  "fontSize": 20,
+                },
+                Object {
+                  "color": "#3f89beff",
+                },
+                Object {
+                  "fontFamily": "FontAwesome",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                Object {},
+              ]
+            }
+          >
+            
+          </Text>
+        </View>
         <View
           style={
             Object {
@@ -419,7 +459,13 @@ exports[`Setup of settings snapshot 1`] = `
     onStartShouldSetResponder={[Function]}
     style={
       Object {
+        "alignItems": "center",
+        "bottom": 0,
+        "height": "15%",
+        "justifyContent": "center",
         "opacity": 1,
+        "position": "absolute",
+        "width": "15%",
       }
     }
   >
