@@ -3,5 +3,5 @@ export interface ColourProps {}
 export class Colour {
   static state:string
 }
-Colour.state = "Blue";
+Colour.state = "#3F89BE";
 export default Colour;
