@@ -56,7 +56,7 @@ export default class PdfTile extends Component {
       <TouchableOpacity
         style={styles.pdfTile}
         onPress={() => navigation.navigate('PdfView', {
-          source: require('Bug introduction a modification of code.pdf'),
+          source: require('../../assets/Bug introduction a modification of code.pdf'),
           name: name,
           date: date
         })}>

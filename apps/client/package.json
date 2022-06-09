@@ -18,6 +18,10 @@
     "react-native-screens": "*",
     "react-test-renderer": "*",
     "react-native-modal-dropdown": "*",
-    "react-native-vector-icons": "*"
+    "react-native-vector-icons": "*",
+    "react-native-bouncy-checkbox-group": "*",
+    "react-native-pdf": "*",
+    "react-native-bouncy-checkbox": "*",
+    "react-native-modal": "*"
   }
 }
