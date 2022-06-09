@@ -24,4 +24,16 @@ export class DatabaseManagerResolver {
      * creationDate: Date
      * dowloaded: boolean */
   }
+
+  @Query(() => String)
+  async renamePDF() {
+    const a = await this.dbService.RenamePDF('id', 'newName');
+    console.log(a);
+    return 'on';
+    /*** id: string
+     * name: string
+     * path: string
+     * creationDate: Date
+     * dowloaded: boolean */
+  }
 }

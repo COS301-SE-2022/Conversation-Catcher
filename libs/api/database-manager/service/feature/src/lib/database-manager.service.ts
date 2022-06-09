@@ -98,4 +98,34 @@ export class DatabaseManagerService {
       )
     );
   }
+
+  async RenamePDF(pdfID: string, name: string): Promise<AxiosResponse<any>> {
+    const url =
+      'https://data.mongodb-api.com/app/data-dtzbr/endpoint/data/v1/action/';
+    const action = 'updateOne';
+    const data = JSON.stringify({
+      collection: 'PDF',
+      database: 'PDF',
+      dataSource: 'Cluster0',
+      filter: { id: pdfID },
+      update: {
+        $set: { name: name },
+      },
+    });
+
+    const config = {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Request-Headers': '*',
+        'api-key': '',
+      },
+    };
+    return await lastValueFrom(
+      this.httpService.post(url + action, data, config).pipe(
+        tap((res) => console.log(res.status)),
+        map((res) => res.data)
+      )
+    );
+  }
 }

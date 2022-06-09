@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, DynamicModule } from '@nestjs/common';
 import { ApiShellModule } from '@conversation-catcher/shell';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -9,4 +9,11 @@ import { ConfigModule } from '@nestjs/config';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  static configure(config): DynamicModule {
+    return {
+      module: AppModule,
+      providers: [{ provide: 'CONFIG', useValue: config }]
+    }
+  }
+}
