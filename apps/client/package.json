@@ -22,6 +22,10 @@
     "react-native-bouncy-checkbox-group": "*",
     "react-native-pdf": "*",
     "react-native-bouncy-checkbox": "*",
-    "react-native-modal": "*"
+    "react-native-modal": "*",
+    "react-native-view-pdf": "*",
+    "react-pdf": "*",
+    "react-native-openanything": "*",
+    "open": "*"
   }
 }

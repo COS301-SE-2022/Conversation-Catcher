@@ -4,17 +4,17 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 
 function DownloadButtonState(props){
-  const d = props.d
-  if (d) {
+  const [downloadState, setDownloadState] = React.useState(props.d);
+  if (downloadState) {
     return <Icon
-              onPress={() => Alert.alert('click')}
+              onPress={() => setDownloadState(!downloadState)}
               color="#3f89beff"
               name="save"
               size={20}
               container={TouchableOpacity} />;
   }
   return <Icon
-          onPress={() => Alert.alert('click')}
+          onPress={() => setDownloadState(!downloadState)}
           color="#3f89beff"
           name="cloud"
           size={20}
@@ -55,11 +55,7 @@ export default class PdfTile extends Component {
     return (
       <TouchableOpacity
         style={styles.pdfTile}
-        onPress={() => navigation.navigate('PdfView', {
-          source: require('../../assets/Bug introduction a modification of code.pdf'),
-          name: name,
-          date: date
-        })}>
+        onPress={() => Alert.alert('https://www.orimi.com/pdf-test.pdf')}>
         <View style={styles.thumbnail_containter}>
           <ImageBackground
             style={styles.pdfThumbnail}

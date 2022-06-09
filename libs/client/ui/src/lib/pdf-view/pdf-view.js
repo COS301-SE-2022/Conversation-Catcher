@@ -1,15 +1,19 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { View, StyleSheet, Text, TouchableOpacity, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import PdfComponent from '../pdf-view-component/pdf-view-component.js';
 
 export const PdfView = ({ route, navigation }) =>  {
-  
+  const [numPages, setNumPages] = useState(null);
+  const [pageNumber, setPageNumber] = useState(1);
   const {
     source,
     name,
     date
   } = route.params
+
+  function onDocumentLoadSuccess({ numPages }) {
+    setNumPages(numPages);
+  }
 
   return (
     <View style={styles.pdfPage}>
@@ -21,12 +25,14 @@ export const PdfView = ({ route, navigation }) =>  {
           {date}
         </Text>
       </View>
-
-      <PdfComponent 
-        style={styles.pdfView}
-        source={source}
-      />
-      
+{/*
+      <Document file={source} onLoadSuccess={onDocumentLoadSuccess}>
+        <Page pageNumber={pageNumber} />
+      </Document>
+      <Text>
+        Page {pageNumber} of {numPages}
+      </Text>
+  */}
       <View style={styles.pdfBottomBar}>
         <TouchableOpacity
           style={styles.optionsButton}
@@ -140,7 +146,6 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderColor: '#d0d5ddff',
     borderWidth: 1,
-    elevation: 2,
     shadowColor: '#000000',
     shadowRadius: 2.621621621621622,
     shadowOpacity: 0.2173913043478261,

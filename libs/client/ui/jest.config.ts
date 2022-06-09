@@ -15,6 +15,6 @@ module.exports = {
     ),
   },
   transformIgnorePatterns: [
-    "node_modules/(?!(@react-native|react-native|react-native-vector-icons|react-native-modal-dropdown|react-native-bouncy-checkbox|react-native-bouncy-checkbox-group|react-native-modal|react-native-pdf)/)"
+    "node_modules/(?!(@react-native|react-native|react-native-vector-icons|react-native-modal-dropdown|react-native-bouncy-checkbox|react-native-bouncy-checkbox-group|react-native-modal|react-pdf)/)"
   ]
 };
