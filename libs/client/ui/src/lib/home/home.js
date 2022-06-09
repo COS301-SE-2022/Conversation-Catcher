@@ -1,9 +1,66 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity, Alert } from 'react-native';
 import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Modal from 'react-native-modal';
 
 export const Home = ({ navigation }) => {
+  const [recordingStopVisible, setRecordingStopVisible] = useState(false);
+  const [recordAudioState, setRecordAudioState] = useState(false);
+  const [uploadVisible, setUploadVisible] = useState(false);
+  const [fileSelected, setFileSelected] = useState(false);
+
+  function RecordAudioButtonState(props){
+    if (recordAudioState) {
+      return <TouchableOpacity
+              style={[styles.recordAudioTouchableOpacity, styles.recordAudioTouchableOpacityTrue]}
+              
+              onPress={() => {
+                setRecordingStopVisible(true)
+              }}>
+              <View style={styles.recordAudioIcon}>
+                <Icon 
+                  color="#ffffffff"
+                  name="stop"
+                  size={40}
+                />
+              </View>
+            </TouchableOpacity>;
+    }
+    return <TouchableOpacity
+              style={[styles.recordAudioTouchableOpacity, styles.recordAudioTouchableOpacityFalse]}
+              onPress={() => {
+                setRecordAudioState(true)
+              }}>
+              <View style={styles.recordAudioIcon}>
+                <Icon 
+                  color="#667084ff"
+                  name="microphone"
+                  size={40}
+                />
+              </View>
+            </TouchableOpacity>;
+  }
+
+  function UploadAudioCenter(props){
+    if (fileSelected) {
+      return <TouchableOpacity
+              style={styles.uploadModalButton}
+              onPress={() => setUploadVisible(false)}>
+              <View style={styles.uploadModalButtonContent}>
+                <View style={styles.iconContainer}>
+                  <Icon 
+                    style={styles.uploadModalButtonIcon}
+                    name="file-sound-o"
+                    size={40}
+                  />
+                </View>
+              </View>   
+            </TouchableOpacity>
+    }
+    return 
+  }
+
   return (
     <View style={styles.home}>
       <View style={styles.big_title_box}>
@@ -17,7 +74,7 @@ export const Home = ({ navigation }) => {
           name = 'Bug introduction: a modification of code' 
           date = '1 May 2022, 9:37' 
           source = {require('../assets/pdf-bug-intro.png')} 
-          downloaded = {true}
+          RecordAudioed = {true}
           showCheck = {false}
           navigation = {navigation}/>
         <PdfTile 
@@ -25,7 +82,7 @@ export const Home = ({ navigation }) => {
           name = 'Human-computer interaction' 
           date = '21 Apr 2022, 14:18' 
           source = {require('../assets/pdf-human-computer.png')} 
-          downloaded = {false}
+          RecordAudioed = {false}
           showCheck = {false}
           navigation = {navigation}/>
         <PdfTile 
@@ -33,7 +90,7 @@ export const Home = ({ navigation }) => {
           name = 'The tropical plants of the Philippines' 
           date = '13 Apr 2022, 11:53' 
           source = {require('../assets/pdf-tropical-plants.png')} 
-          downloaded = {true}
+          RecordAudioed = {true}
           showCheck = {false}
           navigation = {navigation}/>
       </View>
@@ -62,20 +119,11 @@ export const Home = ({ navigation }) => {
         </View>
       </TouchableOpacity>
       <View style={styles.audioTouchableOpacityGroup}>
-        <TouchableOpacity
-          style={styles.recordAudioTouchableOpacity}
-          onPress={() => Alert.alert('click')}>
-          <View style={styles.recordAudioIcon}>
-            <Icon 
-              color="#667084ff"
-              name="microphone"
-              size={40}
-            />
-          </View>
-        </TouchableOpacity>
+        <RecordAudioButtonState
+        />
         <TouchableOpacity
           style={styles.uploadAudioTouchableOpacity}
-          onPress={() => Alert.alert('click')}>
+          onPress={() => setUploadVisible(true)}>
           <View style={styles.uploadAudioIcon}>
             <Icon 
               color="#667084ff"
@@ -85,6 +133,120 @@ export const Home = ({ navigation }) => {
           </View>
         </TouchableOpacity>
       </View>
+
+      <Modal
+        style={styles.modal}
+        isVisible={recordingStopVisible}
+        hasBackdrop={true}
+        backdropColor='white'
+        onBackdropPress={() => setRecordingStopVisible(false)}
+      >
+        <View style={styles.recordingStopModalInner}>
+          <Text style={styles.modalTitle}>
+            {'Recording has been stopped'}
+          </Text>
+
+          <View style={styles.recordingStopModalButtonDivider} /> 
+
+          <TouchableOpacity
+            style={styles.recordingStopModalButton}
+            onPress={() => {
+              setRecordAudioState(false)
+              setRecordingStopVisible(false)
+            }}>
+            <View style={styles.recordingStopModalButtonContent}>
+              <View style={styles.iconContainer}>
+                <Icon 
+                  style={styles.recordingStopModalButtonIcon}
+                  name="refresh"
+                  size={18}
+                />
+              </View>
+              <View style={styles.recordingStopModalButtonText_box}>
+                <Text style={styles.recordingStopModalButtonText} ellipsizeMode={'clip'}>
+                  {'Convert recording'}
+                </Text>
+              </View>
+            </View>   
+          </TouchableOpacity>
+
+          <View style={styles.recordingStopModalButtonDivider} /> 
+
+          <TouchableOpacity
+            style={styles.recordingStopModalButton}
+            onPress={() => {
+              setRecordingStopVisible(false)
+            }}>
+            <View style={styles.recordingStopModalButtonContent}>
+              <View style={styles.iconContainer}>
+                <Icon 
+                  style={styles.recordingStopModalButtonIcon}
+                  name="microphone"
+                  size={20}
+                />
+              </View>
+              <View style={styles.recordingStopModalButtonText_box}>
+                <Text style={styles.recordingStopModalButtonText}>
+                  {'Resume recording'}
+                </Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+
+          <View style={styles.recordingStopModalButtonDivider} /> 
+
+          <TouchableOpacity 
+            style={styles.recordingStopModalButton}
+            onPress={() => {
+              setRecordAudioState(false)
+              setRecordingStopVisible(false)
+            }}>
+            <View style={styles.recordingStopModalButtonContent}>
+              <View style={styles.iconContainer}>
+                <Icon 
+                  style={styles.recordingStopModalButtonIcon}
+                  name="trash-o"
+                  size={20}
+                />
+              </View>
+              <View style={styles.recordingStopModalButtonText_box}>
+                <Text style={styles.recordingStopModalButtonText}>
+                  {'Discard recording'}
+                </Text>
+              </View>
+            </View> 
+          </TouchableOpacity>
+        </View>
+      </Modal>
+
+      <Modal
+        style={styles.modal}
+        isVisible={uploadVisible}
+        hasBackdrop={true}
+        backdropColor='white'
+        onBackdropPress={() => setUploadVisible(false)}
+      >
+        <View style={styles.uploadModalInner}>
+          <Text style={styles.modalTitle}>
+            {'Select a file:'}
+          </Text>
+
+          
+
+          <TouchableOpacity
+            style={styles.uploadFileButton}
+            state={null}
+            onPress={() => Alert.alert('click')}>
+            <View style={styles.uploadModalButtonContent}>
+              <View style={styles.uploadModalButtonText_box}>
+                <Text style={styles.uploadModalButtonText}>
+                  {'Upload'}
+                </Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -264,7 +426,6 @@ const styles = StyleSheet.create({
   recordAudioTouchableOpacity: {
     width: '50%',
     flexGrow: 1,
-    backgroundColor: '#d0d5ddff',
     borderTopLeftRadius: 8,
     borderBottomLeftRadius: 8,
     overflow: 'hidden',
@@ -272,6 +433,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRightColor: '#667084ff',
     borderRightWidth: 1,
+  },
+  recordAudioTouchableOpacityTrue: {
+    backgroundColor: "#3F89BE"
+  },
+  recordAudioTouchableOpacityFalse: {
+    backgroundColor: "#d0d5ddff"
   },
   recordAudioIcon: {
     resizeMode: 'contain',
@@ -292,5 +459,131 @@ const styles = StyleSheet.create({
   uploadAudioIcon: {
     resizeMode: 'contain',
     padding: 10
-  }
+  },
+  modal: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  modalTitle: {
+    color: '#344053ff',
+    textAlign: 'center',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 18,
+    fontWeight: '600',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+    padding: 15
+  },
+  recordingStopModalInner: {
+    width: '70%',
+    flexShrink: 1,
+    backgroundColor: '#f5f5f5ff',
+    borderRadius: 7,
+    flexDirection: 'column',
+    borderWidth: 1,
+    borderColor: '#667084ff',
+    opacity: 1
+  },
+  recordingStopModalButton: {
+    flexGrow: 1,
+    height: '8%',
+    alignItems: 'center',
+    flexDirection: 'row'
+  },
+  recordingStopModalButtonContent: {
+    flexGrow: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    //padding: 5
+  },
+  iconContainer: {
+    width: '25%',
+    height: '100%',
+    alignItems: 'center'
+  },
+  recordingStopModalButtonIcon: {
+    color: "#3f89beff"
+  },
+  recordingStopModalButtonText: {
+    color: '#344053ff',
+    textAlign: 'center',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 18,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+  },
+  recordingStopModalButtonText_box: {
+    flexShrink: 1
+  },
+  recordingStopModalButtonDivider: {
+    backgroundColor: '#d0d5ddff',
+    height: 1,
+    width: '87%',
+    alignSelf: 'center'
+  },
+  uploadModalInner: {
+    width: '55%',
+    flexShrink: 1,
+    backgroundColor: '#d0d5ddff',
+    borderRadius: 7,
+    flexDirection: 'column',
+    borderWidth: 1,
+    borderColor: '#667084ff',
+    opacity: 1
+  },
+  uploadModalButton: {
+    flexGrow: 1,
+    height: '8%',
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  uploadFileButton: {
+    flexGrow: 1,
+    height: '5%',
+    alignItems: 'center',
+    flexDirection: 'row',
+    margin: 10,
+    justifyContent: 'center',
+    alignContent: 'center',
+    backgroundColor: "#3F89BE",
+    borderRadius: 8,
+    borderStyle: 'solid',
+    borderColor: '#3f89beff',
+    borderWidth: 1,
+    elevation: 2,
+    shadowColor: '#000000',
+    shadowRadius: 2.621621621621622,
+    shadowOpacity: 0.2173913043478261,
+    shadowOffset: {
+      width: 0,
+      height: 1
+    }
+  },
+  uploadModalButtonContent: {
+    flexGrow: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    //padding: 5
+  },
+  uploadModalButtonIcon: {
+    color: "#3f89beff"
+  },
+  uploadModalButtonText: {
+    color: '#ffffffff',
+    textAlign: 'center',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 18,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+  },
+  uploadModalButtonText_box: {
+    flexShrink: 1
+  },
 });

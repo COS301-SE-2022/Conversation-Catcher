@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { View, StyleSheet, Text, ImageBackground, TouchableOpacity, Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
+import FileViewer from "react-native-file-viewer";
 
 function DownloadButtonState(props){
   const [downloadState, setDownloadState] = React.useState(props.d);
@@ -23,7 +24,7 @@ function DownloadButtonState(props){
 
 function DetermineTileCorner(props){
   const [checkboxState, setCheckboxState] = React.useState(false);
-  const c = props.c
+  const c = props.c;
   if (c){
     return <BouncyCheckbox
             size={20}
@@ -36,8 +37,6 @@ function DetermineTileCorner(props){
   }
   return DownloadButtonState(props)
 }
-
-
 
 export default class PdfTile extends Component {
 
@@ -55,7 +54,7 @@ export default class PdfTile extends Component {
     return (
       <TouchableOpacity
         style={styles.pdfTile}
-        onPress={() => Alert.alert('https://www.orimi.com/pdf-test.pdf')}>
+        onPress={() => FileViewer.open(source)}>
         <View style={styles.thumbnail_containter}>
           <ImageBackground
             style={styles.pdfThumbnail}
@@ -142,7 +141,6 @@ const styles = StyleSheet.create({
     fontStyle: 'normal',
     fontFamily: 'System' /* Inter */,
     paddingHorizontal: 0,
-    paddingVertical: 0
   },
   pdfName_box: {
     flexGrow: 1,

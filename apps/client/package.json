@@ -26,6 +26,7 @@
     "react-native-view-pdf": "*",
     "react-pdf": "*",
     "react-native-openanything": "*",
-    "open": "*"
+    "open": "*",
+    "react-native-file-viewer": "*"
   }
 }
