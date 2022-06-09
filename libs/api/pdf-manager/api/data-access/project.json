@@ -1,17 +1,24 @@
 {
+  "$schema": "..\\..\\..\\..\\..\\node_modules\\nx\\schemas\\project-schema.json",
   "sourceRoot": "libs/api/pdf-manager/api/data-access/src",
   "projectType": "library",
   "targets": {
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
+      "outputs": [
+        "{options.outputFile}"
+      ],
       "options": {
-        "lintFilePatterns": ["libs/api/pdf-manager/api/data-access/**/*.ts"]
+        "lintFilePatterns": [
+          "libs/api/pdf-manager/api/data-access/**/*.ts"
+        ]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/api/pdf-manager/api/data-access"],
+      "outputs": [
+        "coverage/libs/api/pdf-manager/api/data-access"
+      ],
       "options": {
         "jestConfig": "libs/api/pdf-manager/api/data-access/jest.config.ts",
         "passWithNoTests": true

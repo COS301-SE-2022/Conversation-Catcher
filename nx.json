@@ -3,9 +3,6 @@
   "affected": {
     "defaultBase": "main"
   },
-  "cli": {
-    "defaultCollection": "@nrwl/react-native"
-  },
   "implicitDependencies": {
     "package.json": {
       "dependencies": "*",
@@ -30,5 +27,6 @@
       }
     ]
   },
-  "defaultProject": "client"
+  "defaultProject": "client",
+  "$schema": "./node_modules/nx/schemas/nx-schema.json"
 }

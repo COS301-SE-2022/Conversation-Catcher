@@ -1,6 +1,5 @@
-import { Query, Args, Resolver, Mutation } from '@nestjs/graphql';
+import { Query, Resolver } from '@nestjs/graphql';
 import { DatabaseManagerService } from '@conversation-catcher/api/database-manager/service/feature';
-import { tap, map } from 'rxjs';
 
 @Resolver()
 export class DatabaseManagerResolver {
@@ -16,6 +15,18 @@ export class DatabaseManagerResolver {
   @Query(() => String)
   async addPDF() {
     const a = await this.dbService.AddPDF('id', 'name', 'path');
+    console.log(a);
+    return 'on';
+    /*** id: string
+     * name: string
+     * path: string
+     * creationDate: Date
+     * dowloaded: boolean */
+  }
+
+  @Query(() => String)
+  async renamePDF() {
+    const a = await this.dbService.changeUploadedPDF('id');
     console.log(a);
     return 'on';
     /*** id: string
