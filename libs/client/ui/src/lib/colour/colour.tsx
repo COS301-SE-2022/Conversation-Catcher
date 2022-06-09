@@ -1,4 +1,4 @@
-export interface ColourProps {}
+//export interface ColourProps {}
 
 export class Colour {
   static state:string
