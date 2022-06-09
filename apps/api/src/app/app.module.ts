@@ -9,11 +9,4 @@ import { ConfigModule } from '@nestjs/config';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {
-  static configure(config): DynamicModule {
-    return {
-      module: AppModule,
-      providers: [{ provide: 'CONFIG', useValue: config }]
-    }
-  }
-}
+export class AppModule {}

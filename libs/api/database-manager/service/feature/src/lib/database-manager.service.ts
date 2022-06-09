@@ -1,11 +1,11 @@
 import { HttpService } from '@nestjs/axios';
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { lastValueFrom, map, tap, Observable } from 'rxjs';
 import { AxiosResponse } from 'axios';
 
 @Injectable()
 export class DatabaseManagerService {
-  constructor(private httpService: HttpService) {}
+  constructor(private httpService: HttpService, @Inject('KEY') private key : string) {}
 
   async getResult(): Promise<AxiosResponse<any>> {
     const url =
@@ -100,6 +100,36 @@ export class DatabaseManagerService {
   }
 
   async RenamePDF(pdfID: string, name: string): Promise<AxiosResponse<any>> {
+    const url =
+      'https://data.mongodb-api.com/app/data-dtzbr/endpoint/data/v1/action/';
+    const action = 'updateOne';
+    const data = JSON.stringify({
+      collection: 'PDF',
+      database: 'PDF',
+      dataSource: 'Cluster0',
+      filter: { id: pdfID },
+      update: {
+        $set: { name: name },
+      },
+    });
+
+    const config = {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Request-Headers': '*',
+        'api-key': '',
+      },
+    };
+    return await lastValueFrom(
+      this.httpService.post(url + action, data, config).pipe(
+        tap((res) => console.log(res.status)),
+        map((res) => res.data)
+      )
+    );
+  }
+
+  async changeUploadedPDF(pdfID: string, name: string): Promise<AxiosResponse<any>> {
     const url =
       'https://data.mongodb-api.com/app/data-dtzbr/endpoint/data/v1/action/';
     const action = 'updateOne';
