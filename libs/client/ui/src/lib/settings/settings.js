@@ -15,11 +15,13 @@ export const SettingsPage = ({ navigation }) => {
           style={styles.settingsButton}
           onPress={() => Alert.alert('click')}>
           <View style={styles.settingsButtonContent}>
-            <Icon 
-              style={styles.settingsButtonIcon}
-              name="envelope"
-              size={18}
-            />
+            <View style={styles.iconContainer}>
+              <Icon 
+                style={styles.settingsButtonIcon}
+                name="envelope"
+                size={18}
+              />
+            </View>
             <View style={styles.settingsButtonText_box}>
               <Text style={styles.settingsButtonText} ellipsizeMode={'clip'}>
                 {'Change email'}
@@ -34,11 +36,13 @@ export const SettingsPage = ({ navigation }) => {
           style={styles.settingsButton}
           onPress={() => Alert.alert('click')}>
           <View style={styles.settingsButtonContent}>
-            <Icon 
-              style={styles.settingsButtonIcon}
-              name="lock"
-              size={20}
-            />
+            <View style={styles.iconContainer}>
+              <Icon 
+                style={styles.settingsButtonIcon}
+                name="lock"
+                size={20}
+              />
+            </View>
             <View style={styles.settingsButtonText_box}>
               <Text style={styles.settingsButtonText}>
                 {'Change password'}
@@ -53,11 +57,13 @@ export const SettingsPage = ({ navigation }) => {
           style={styles.settingsButton}
           onPress={() => navigation.navigate('Colour')}>
           <View style={styles.settingsButtonContent}>
-            <Icon 
-              style={styles.settingsButtonIcon}
-              name="sliders"
-              size={20}
-            />
+            <View style={styles.iconContainer}>
+              <Icon 
+                style={styles.settingsButtonIcon}
+                name="sliders"
+                size={20}
+              />
+            </View>
             <View style={styles.settingsButtonText_box}>
               <Text style={styles.settingsButtonText}>
                 {'Change colour'}
@@ -72,11 +78,13 @@ export const SettingsPage = ({ navigation }) => {
           style={styles.settingsButton}
           onPress={() => navigation.navigate('Login')}>
           <View style={styles.settingsButtonContent}>
-            <Icon 
-              style={styles.settingsButtonIcon}
-              name="sign-out"
-              size={20}
-            />
+            <View style={styles.iconContainer}>
+              <Icon 
+                style={styles.settingsButtonIcon}
+                name="sign-out"
+                size={20}
+              />
+            </View>
             <View style={styles.settingsButtonText_box}>
               <Text style={styles.settingsButtonText}>
                 {'Log out'}
@@ -130,7 +138,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'center',
     paddingLeft: 15,
-    height: '7%',
+    height: '10%',
     width: '100%',
     minHeight: 28
   },
@@ -152,6 +160,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     //padding: 5
+  },
+  iconContainer: {
+    width: '15%',
+    height: '100%',
+    alignItems: 'center'
   },
   settingsButtonIcon: {
     color: "#3f89beff"
@@ -176,6 +189,11 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   backButton: {
-    //alignSelf: 'flex-end'
+    width: '15%',
+    height: '15%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    bottom: 0
   }
 });

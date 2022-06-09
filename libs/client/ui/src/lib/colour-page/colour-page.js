@@ -2,6 +2,8 @@ import { render } from '@testing-library/react-native';
 import React, { useState } from 'react';
 import { View, StyleSheet, Text, Image, ImageBackground, Button, Alert } from 'react-native';
 import colour from '../colour/colour';
+import BouncyCheckboxGroup, {ICheckboxButton,} from "react-native-bouncy-checkbox-group";
+
 
 export const ColourPage = ({ navigation}) => {
   return (
