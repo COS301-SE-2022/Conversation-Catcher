@@ -1,6 +1,7 @@
 import { render } from '@testing-library/react-native';
 import React, { useState } from 'react';
 import { View, StyleSheet, Text, Image, ImageBackground, Button, Alert } from 'react-native';
+import colour from '../colour/colour';
 
 export const ColourPage = ({ navigation}) => {
   return (
@@ -17,12 +18,12 @@ export const ColourPage = ({ navigation}) => {
           <View x="18.5px 250fr 19.5px" y="31px minmax(0px, max-content) 0px" style={styles.colourOptionsBackground}>
             <View x="9px 232fr 9px" y="6px minmax(0px, max-content) 6px" style={styles.colourOptionsGroup}>
               <Button
-                onPress={Alert.alert("Clicked")}
+                onPress={()=>{colour.state = "Green"}}
                 title={"Green"}
                 color="#3F89BE"
               />
               <Button
-                onPress={Alert.alert("Clicked")}
+                onPress={()=>{colour.state = "Blue"}}
                 title={"Blue"}
                 color="forestgreen"
               />

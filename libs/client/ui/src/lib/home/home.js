@@ -2,8 +2,15 @@ import React from 'react';
 import { View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity, Alert } from 'react-native';
 import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import colour from '../colour/colour';
 
 export const Home = ({ navigation }) => {
+  var colourStyle1;
+  if (colour.state == "Blue"){
+    colourStyle1 = "#3F89BE";
+  } else if (colour.state == "Green"){
+    colourStyle1 = "lime";
+  }
   return (
     <View style={styles.home}>
       <View style={styles.big_title_box}>
@@ -30,8 +37,8 @@ export const Home = ({ navigation }) => {
       </View>
       <View style={styles.viewAllTouchableOpacityFrame}>
         <TouchableOpacity
-          style={styles.viewAllTouchableOpacity}
-          onPress={() => navigation.navigate('ViewAll')}>
+          style={styles.viewAllTouchableOpacity} backgroundColor={colourStyle1}
+          onPress={() => {navigation.navigate('ViewAll');alert(colour.state);}}>
           <View
             style={styles.viewAllTouchableOpacityLabel_box}>
             <Text style={styles.viewAllTouchableOpacityLabel} ellipsizeMode={'clip'}>

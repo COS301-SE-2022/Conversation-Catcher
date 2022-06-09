@@ -17,6 +17,7 @@
     "react-native-safe-area-context": "*",
     "react-native-screens": "*",
     "react-test-renderer": "*",
-    "react-native-modal-dropdown": "*"
+    "react-native-modal-dropdown": "*",
+    "react-native-vector-icons": "*"
   }
 }
