@@ -7,7 +7,17 @@ import { PdfEntity } from "@conversation-catcher/api/pdf-manager/api/data-access
 @Resolver()
 export class ApiPdfManagerApiFeatureResolver {
 	constructor(private pdfService: ApiPdfManagerServiceFeatureService) {}
+	
+	
+	/*
+		id - id of pdf in DB
+		name - name of pdf
+		pdf - the pdf
+		creationDate - date when file was created
+		dowloaded - if the pdf is stored locally or not
+	*/
 
+	// get a single pdf by its id
 	@Query(() => PdfEntity)
 	async getPDFById(@Args('c=pdfID', { type: () => String }) id: string) {
 		const pdfArr = await this.pdfService.getPdfById(id);
@@ -16,16 +26,17 @@ export class ApiPdfManagerApiFeatureResolver {
 			const pdfObj = new PdfEntity();
 			pdfObj.id = pdfArr.id;
 			pdfObj.name = pdfArr.name;
-			pdfObj.path = pdfArr.path;
+			pdfObj.pdf = pdfArr.pdf;
 			pdfObj.creationDate = pdfArr.creationDate
 			pdfObj.downloaded = pdfArr.downloaded
 			
 			return pdfObj;
 		}
 
-	  return null;
+	  	return null;
 	}
 
+	// get all of the user's pdfs
 	@Query(() => [PdfEntity], { nullable: true })
 	async getPDFs(@Args('c=pdfID', { type: () => String }) userid: string) {
 		const pdfsArr = await this.pdfService.getPdfs(userid);
@@ -39,7 +50,7 @@ export class ApiPdfManagerApiFeatureResolver {
 		
 				pdfsObj.id = pdf.id;
 				pdfsObj.name = pdf.name;
-				pdfsObj.path = pdf.path;
+				pdfsObj.pdf = pdf.pdf;
 				pdfsObj.downloaded = pdf.downloaded
 
 				arrOfPDFs.push(pdfsObj);
@@ -49,21 +60,60 @@ export class ApiPdfManagerApiFeatureResolver {
 		} 
 	}
 
+	// rename the pdf with this id
 	@Mutation(() => PdfEntity)
   	async renamePDF(@Args('id', { type: () => [String] }) id: string, @Args('name', { type: () => String }) name: string) {
-		const pdf = this.pdfService.SetNamePdf(id, name);
-		return pdf;
+		const pdfArr = await this.pdfService.SetNamePdf(id, name);
+
+		if (pdfArr.length > 0) {
+			const pdfObj = new PdfEntity();
+			pdfObj.id = pdfArr.id;
+			pdfObj.name = pdfArr.name;
+			pdfObj.pdf = pdfArr.pdf;
+			pdfObj.creationDate = pdfArr.creationDate
+			pdfObj.downloaded = pdfArr.downloaded
+			
+			return pdfObj;
+		}
+
+		return null;
 	}
 
+	// change if true to false and if false to true and change the file appropraitely
 	@Mutation(() => PdfEntity)
-  	async downloadPDF(@Args('id', { type: () => [String] }) id: string) {
-		const pdf = this.pdfService.SetDownloadedPdf(id); 
-		return pdf;
+  	async downloadedPDF(@Args('id', { type: () => [String] }) id: string) {
+		const pdfArr = await this.pdfService.SetDownloadedPdf(id);
+
+		if (pdfArr.length > 0) {
+			const pdfObj = new PdfEntity();
+			pdfObj.id = pdfArr.id;
+			pdfObj.name = pdfArr.name;
+			pdfObj.pdf = pdfArr.pdf;
+			pdfObj.creationDate = pdfArr.creationDate
+			pdfObj.downloaded = pdfArr.downloaded
+			
+			return pdfObj;
+		}
+
+	  	return null;
 	}
 
+	// delete pdf with this id from DB
 	@Mutation(() => PdfEntity)
   	async deletePDF(@Args('id', { type: () => [String] }) id: string) {
-		const pdf = this.pdfService.DeletePdf(id); 
-		return pdf;
+		const pdfArr = await this.pdfService.DeletePdf(id);
+
+		if (pdfArr.length > 0) {
+			const pdfObj = new PdfEntity();
+			pdfObj.id = pdfArr.id;
+			pdfObj.name = pdfArr.name;
+			pdfObj.pdf = pdfArr.pdf;
+			pdfObj.creationDate = pdfArr.creationDate
+			pdfObj.downloaded = pdfArr.downloaded
+			
+			return pdfObj;
+		}
+
+		return null;
 	}
 }
