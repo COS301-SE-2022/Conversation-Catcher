@@ -306,7 +306,6 @@ dependencies {
 
     
     androidTestImplementation('com.wix:detox:+')
-    
 }
 
 if (isNewArchitectureEnabled()) {
