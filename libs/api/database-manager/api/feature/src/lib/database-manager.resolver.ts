@@ -35,4 +35,11 @@ export class DatabaseManagerResolver {
      * creationDate: Date
      * dowloaded: boolean */
   }
+
+  @Query(() => String)
+  async getAllPdfs() {
+    const a = await this.dbService.getAllPdfs('John@test');
+    console.log(a);
+    return 'success';
+  }
 }

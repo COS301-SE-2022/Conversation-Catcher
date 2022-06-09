@@ -43,9 +43,9 @@ export class DatabaseManagerService {
       database: 'PDF',
       dataSource: 'Cluster0',
       document: {
-        email: sEmail,
+        email: 'Jon@Postel',
         password: '*****',
-        pdfs: ['BillGates', 'JonPostel'],
+        pdfs: ['id'],
       },
     });
 
@@ -131,9 +131,7 @@ export class DatabaseManagerService {
     );
   }
 
-  async changeUploadedPDF(
-    pdfID: string,
-  ): Promise<AxiosResponse<any>> {
+  async changeUploadedPDF(pdfID: string): Promise<AxiosResponse<any>> {
     const url =
       'https://data.mongodb-api.com/app/data-dtzbr/endpoint/data/v1/action/';
     let action = 'findOne';
@@ -178,5 +176,58 @@ export class DatabaseManagerService {
         map((res) => res.data)
       )
     );
+  }
+
+  async getAllPdfs(email: string): Promise<any[]> {
+    const url =
+      'https://data.mongodb-api.com/app/data-dtzbr/endpoint/data/v1/action/';
+    let action = 'findOne';
+    let data = JSON.stringify({
+      collection: 'Users',
+      database: 'PDF',
+      dataSource: 'Cluster0',
+      filter: { email: email },
+    });
+
+    const config = {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Request-Headers': '*',
+        'api-key': GlobalKey.key,
+      },
+    };
+    const result = await lastValueFrom(
+      this.httpService.post(url + action, data, config).pipe(
+        tap((res) => console.log(res.status)),
+        map((res) => res.data)
+      )
+    );
+
+    const object = [];
+
+    const arr = result.document.pdfs;
+    console.log(arr);
+    for (let i = 0; i < arr.length; i++) {
+      const pdfID = arr[i];
+      console.log(arr[i]);
+      action = 'findOne';
+      data = JSON.stringify({
+        collection: 'PDF',
+        database: 'PDF',
+        dataSource: 'Cluster0',
+        filter: { id: pdfID },
+      });
+
+      object.push(
+        await lastValueFrom(
+          this.httpService.post(url + action, data, config).pipe(
+            tap((res) => console.log(res.status)),
+            map((res) => res.data.document)
+          )
+        )
+      );
+    }
+    return object;
   }
 }
