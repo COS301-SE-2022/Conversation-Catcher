@@ -12,7 +12,7 @@ import { CommandBus, CqrsModule, QueryBus } from '@nestjs/cqrs';
 export class ApiPdfManagerApiFeatureModule {}*/
 
 @Module({
-  imports: [ApiPdfManagerServiceFeatureModule, CqrsModule],
+  imports: [ApiPdfManagerServiceFeatureModule, CqrsModule, ApiPdfManagerServiceFeatureService],
   controllers: [],
   providers: [
     CommandBus,
@@ -20,6 +20,7 @@ export class ApiPdfManagerApiFeatureModule {}*/
     //PrismaService,
     ApiPdfManagerApiFeatureResolver,
     ApiPdfManagerServiceFeatureService,
+    
   ]
   
 })
