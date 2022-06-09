@@ -3,9 +3,9 @@ import { Field, ObjectType } from '@nestjs/graphql';
 @ObjectType()
 export class PdfEntity {
   /*
-  id;
-	name;
-	path;
+  id
+	name
+	pdf
 	creationDate
 	dowloaded
   */
@@ -16,7 +16,7 @@ export class PdfEntity {
   name: string;
 
   @Field()
-  path: string;
+  pdf: File;
 
   @Field()
   creationDate: Date;
