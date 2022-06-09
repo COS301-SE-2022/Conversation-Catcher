@@ -1,6 +1,5 @@
-import { Query, Args, Resolver, Mutation } from '@nestjs/graphql';
+import { Query, Resolver } from '@nestjs/graphql';
 import { DatabaseManagerService } from '@conversation-catcher/api/database-manager/service/feature';
-import { tap, map } from 'rxjs';
 
 @Resolver()
 export class DatabaseManagerResolver {
