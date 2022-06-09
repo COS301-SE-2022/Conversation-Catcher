@@ -57,8 +57,8 @@ export default class PdfTile extends Component {
         style={styles.pdfTile}
         onPress={() => navigation.navigate('PdfView', {
           source: require('Bug introduction a modification of code.pdf'),
-          name: {name},
-          date: {date}
+          name: name,
+          date: date
         })}>
         <View style={styles.thumbnail_containter}>
           <ImageBackground
@@ -69,12 +69,12 @@ export default class PdfTile extends Component {
         <View style={styles.pdfTile_contents_not_thumbnail}>
           <View style={styles.pdfTile_contents_not_thumbnail_inner}>
             <View style={styles.pdfName_box}>
-              <Text style={styles.pdfName} ellipsizeMode={'clip'}>
+              <Text style={styles.pdfName}>
                 {name}
               </Text>
             </View>
             <View style={styles.pdfDate_box}>
-              <Text style={styles.pdfDate} ellipsizeMode={'clip'}>
+              <Text style={styles.pdfDate}>
                 {date}
               </Text>
             </View>

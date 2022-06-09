@@ -42,7 +42,7 @@ export const ViewAll = ({ navigation }) =>  {
           source = {"../assets/pdf-bug-intro.png"} 
           downloaded = {true}
           showCheck = {deleteMode}
-          avigation = {navigation}/>
+          navigation = {navigation}/>
         <PdfTile 
           id = {2}
           name = 'Human-computer interaction' 
@@ -50,7 +50,7 @@ export const ViewAll = ({ navigation }) =>  {
           source = {"../assets/pdf-human-computer.png"} 
           downloaded = {false}
           showCheck = {deleteMode}
-          avigation = {navigation}/>
+          navigation = {navigation}/>
         <PdfTile 
           id = {3}
           name = 'The tropical plants of the Philippines' 
@@ -58,7 +58,7 @@ export const ViewAll = ({ navigation }) =>  {
           source = {"../assets/pdf-tropical-plants.png"} 
           downloaded = {true}
           showCheck = {deleteMode}
-          avigation = {navigation}/>
+          navigation = {navigation}/>
         <PdfTile 
           id = {4}
           name = 'Devin Brittain The snacks of the popcorn' 
@@ -66,7 +66,7 @@ export const ViewAll = ({ navigation }) =>  {
           source = {"../assets/pdf-tropical-plants.png"} 
           downloaded = {true}
           showCheck = {deleteMode}
-          avigation = {navigation}/>
+          navigation = {navigation}/>
         <PdfTile 
           id = {5}
           name = 'The tropical plants of the Philippines' 
@@ -74,7 +74,7 @@ export const ViewAll = ({ navigation }) =>  {
           source = {"../assets/pdf-tropical-plants.png"} 
           downloaded = {true}
           showCheck = {deleteMode}
-          avigation = {navigation}/>
+          navigation = {navigation}/>
         <PdfTile 
           id = {6}
           name = 'The tropical plants of the Philippines' 
@@ -82,7 +82,7 @@ export const ViewAll = ({ navigation }) =>  {
           source = {"../assets/pdf-tropical-plants.png"} 
           downloaded = {true}
           showCheck = {deleteMode}
-          avigation = {navigation}/>
+          navigation = {navigation}/>
       </ScrollView>
 
       <View style={styles.viewAllBottomBar}>

@@ -32,7 +32,7 @@ export const App = () => {
           component={Home}/>
          <Stack.Screen name="ViewAll" component={ViewAll}/>
          <Stack.Screen name="PdfView" component={PdfView}/>
-         <Stack.Screen name="Settings" component={Settings} />
+         <Stack.Screen name="Settings" component={Settings}/>
          <Stack.Screen name="Colour" component={Colour}/>
          <Stack.Screen name="Login" component={Login}/>
       </Stack.Navigator>

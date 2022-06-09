@@ -1,27 +1,28 @@
 import React from 'react';
 import { View, StyleSheet, Text, TouchableOpacity, Alert } from 'react-native';
-import Pdf from 'react-native-pdf';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import PdfComponent from '../pdf-view-component/pdf-view-component.js';
 
-export const PdfView = ({ navigation }) =>  {
+export const PdfView = ({ route, navigation }) =>  {
+  
   const {
     source,
     name,
     date
-  } = this.props
-  
+  } = route.params
+
   return (
     <View style={styles.pdfPage}>
       <View style={styles.pdfTopBar}>
-        <View style={styles.pdfName}>
+        <Text style={styles.pdfName}>
           {name}
-        </View>
-        <View style={styles.pdfDate}>
+        </Text>
+        <Text style={styles.pdfDate}>
           {date}
-        </View>
+        </Text>
       </View>
 
-      <Pdf 
+      <PdfComponent 
         style={styles.pdfView}
         source={source}
       />
@@ -29,7 +30,7 @@ export const PdfView = ({ navigation }) =>  {
       <View style={styles.pdfBottomBar}>
         <TouchableOpacity
           style={styles.optionsButton}
-          onPress={() => navigation.navigate('Home')}>
+          onPress={() => navigation.goBack()}>
           <View style={styles.iconContainer}>
             <Icon 
               style={styles.optionsButtonIcon}
