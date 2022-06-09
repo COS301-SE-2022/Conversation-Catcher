@@ -19,5 +19,6 @@
     "client": "apps/client",
     "client-e2e": "apps/client-e2e",
     "client-ui": "libs/client/ui"
-  }
+  },
+  "$schema": "./node_modules/nx/schemas/workspace-schema.json"
 }
