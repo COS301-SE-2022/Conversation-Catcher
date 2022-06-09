@@ -182,14 +182,18 @@ exports[`ViewAll snapshot 1`] = `
       >
         <View
           style={
-            Object {
-              "aspectRatio": 0.7071135624381276,
-              "borderColor": "#3F89BE",
-              "borderRadius": 5,
-              "borderStyle": "solid",
-              "borderWidth": 1,
-              "flex": 1,
-            }
+            Array [
+              Object {
+                "aspectRatio": 0.7071135624381276,
+                "borderRadius": 5,
+                "borderStyle": "solid",
+                "borderWidth": 1,
+                "flex": 1,
+              },
+              Object {
+                "borderColor": "#3F89BE",
+              },
+            ]
           }
         >
           <View
@@ -323,7 +327,7 @@ exports[`ViewAll snapshot 1`] = `
               style={
                 Array [
                   Object {
-                    "color": "#3f89beff",
+                    "color": "#3F89BE",
                     "fontSize": 20,
                   },
                   undefined,
@@ -336,7 +340,7 @@ exports[`ViewAll snapshot 1`] = `
                 ]
               }
             >
-              
+              
             </Text>
           </View>
         </View>
@@ -375,14 +379,18 @@ exports[`ViewAll snapshot 1`] = `
       >
         <View
           style={
-            Object {
-              "aspectRatio": 0.7071135624381276,
-              "borderColor": "#3F89BE",
-              "borderRadius": 5,
-              "borderStyle": "solid",
-              "borderWidth": 1,
-              "flex": 1,
-            }
+            Array [
+              Object {
+                "aspectRatio": 0.7071135624381276,
+                "borderRadius": 5,
+                "borderStyle": "solid",
+                "borderWidth": 1,
+                "flex": 1,
+              },
+              Object {
+                "borderColor": "#3F89BE",
+              },
+            ]
           }
         >
           <View
@@ -516,7 +524,7 @@ exports[`ViewAll snapshot 1`] = `
               style={
                 Array [
                   Object {
-                    "color": "#3f89beff",
+                    "color": "#3F89BE",
                     "fontSize": 20,
                   },
                   undefined,
@@ -568,14 +576,18 @@ exports[`ViewAll snapshot 1`] = `
       >
         <View
           style={
-            Object {
-              "aspectRatio": 0.7071135624381276,
-              "borderColor": "#3F89BE",
-              "borderRadius": 5,
-              "borderStyle": "solid",
-              "borderWidth": 1,
-              "flex": 1,
-            }
+            Array [
+              Object {
+                "aspectRatio": 0.7071135624381276,
+                "borderRadius": 5,
+                "borderStyle": "solid",
+                "borderWidth": 1,
+                "flex": 1,
+              },
+              Object {
+                "borderColor": "#3F89BE",
+              },
+            ]
           }
         >
           <View
@@ -709,7 +721,7 @@ exports[`ViewAll snapshot 1`] = `
               style={
                 Array [
                   Object {
-                    "color": "#3f89beff",
+                    "color": "#3F89BE",
                     "fontSize": 20,
                   },
                   undefined,
@@ -722,7 +734,7 @@ exports[`ViewAll snapshot 1`] = `
                 ]
               }
             >
-              
+              
             </Text>
           </View>
         </View>
@@ -761,14 +773,18 @@ exports[`ViewAll snapshot 1`] = `
       >
         <View
           style={
-            Object {
-              "aspectRatio": 0.7071135624381276,
-              "borderColor": "#3F89BE",
-              "borderRadius": 5,
-              "borderStyle": "solid",
-              "borderWidth": 1,
-              "flex": 1,
-            }
+            Array [
+              Object {
+                "aspectRatio": 0.7071135624381276,
+                "borderRadius": 5,
+                "borderStyle": "solid",
+                "borderWidth": 1,
+                "flex": 1,
+              },
+              Object {
+                "borderColor": "#3F89BE",
+              },
+            ]
           }
         >
           <View
@@ -902,7 +918,7 @@ exports[`ViewAll snapshot 1`] = `
               style={
                 Array [
                   Object {
-                    "color": "#3f89beff",
+                    "color": "#3F89BE",
                     "fontSize": 20,
                   },
                   undefined,
@@ -915,7 +931,7 @@ exports[`ViewAll snapshot 1`] = `
                 ]
               }
             >
-              
+              
             </Text>
           </View>
         </View>
@@ -954,14 +970,18 @@ exports[`ViewAll snapshot 1`] = `
       >
         <View
           style={
-            Object {
-              "aspectRatio": 0.7071135624381276,
-              "borderColor": "#3F89BE",
-              "borderRadius": 5,
-              "borderStyle": "solid",
-              "borderWidth": 1,
-              "flex": 1,
-            }
+            Array [
+              Object {
+                "aspectRatio": 0.7071135624381276,
+                "borderRadius": 5,
+                "borderStyle": "solid",
+                "borderWidth": 1,
+                "flex": 1,
+              },
+              Object {
+                "borderColor": "#3F89BE",
+              },
+            ]
           }
         >
           <View
@@ -1095,7 +1115,7 @@ exports[`ViewAll snapshot 1`] = `
               style={
                 Array [
                   Object {
-                    "color": "#3f89beff",
+                    "color": "#3F89BE",
                     "fontSize": 20,
                   },
                   undefined,
@@ -1108,7 +1128,7 @@ exports[`ViewAll snapshot 1`] = `
                 ]
               }
             >
-              
+              
             </Text>
           </View>
         </View>
@@ -1147,14 +1167,18 @@ exports[`ViewAll snapshot 1`] = `
       >
         <View
           style={
-            Object {
-              "aspectRatio": 0.7071135624381276,
-              "borderColor": "#3F89BE",
-              "borderRadius": 5,
-              "borderStyle": "solid",
-              "borderWidth": 1,
-              "flex": 1,
-            }
+            Array [
+              Object {
+                "aspectRatio": 0.7071135624381276,
+                "borderRadius": 5,
+                "borderStyle": "solid",
+                "borderWidth": 1,
+                "flex": 1,
+              },
+              Object {
+                "borderColor": "#3F89BE",
+              },
+            ]
           }
         >
           <View
@@ -1288,7 +1312,7 @@ exports[`ViewAll snapshot 1`] = `
               style={
                 Array [
                   Object {
-                    "color": "#3f89beff",
+                    "color": "#3F89BE",
                     "fontSize": 20,
                   },
                   undefined,
@@ -1301,7 +1325,7 @@ exports[`ViewAll snapshot 1`] = `
                 ]
               }
             >
-              
+              
             </Text>
           </View>
         </View>
@@ -1578,6 +1602,33 @@ exports[`ViewAll snapshot 1`] = `
       </View>
     </View>
   </View>
+  <Modal
+    animationType="none"
+    deviceHeight={null}
+    deviceWidth={null}
+    hardwareAccelerated={false}
+    hideModalContentWhileAnimating={false}
+    onBackdropPress={[Function]}
+    onModalHide={[Function]}
+    onModalWillHide={[Function]}
+    onModalWillShow={[Function]}
+    onRequestClose={[Function]}
+    panResponderThreshold={4}
+    scrollHorizontal={false}
+    scrollOffset={0}
+    scrollOffsetMax={0}
+    scrollTo={null}
+    statusBarTranslucent={false}
+    supportedOrientations={
+      Array [
+        "portrait",
+        "landscape",
+      ]
+    }
+    swipeThreshold={100}
+    transparent={true}
+    visible={false}
+  />
   <Modal
     animationType="none"
     deviceHeight={null}

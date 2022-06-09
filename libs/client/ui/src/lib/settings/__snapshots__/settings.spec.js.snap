@@ -103,9 +103,12 @@ exports[`Setup of settings snapshot 1`] = `
                   "color": undefined,
                   "fontSize": 18,
                 },
-                Object {
-                  "color": "#3f89beff",
-                },
+                Array [
+                  undefined,
+                  Object {
+                    "color": "#3F89BE",
+                  },
+                ],
                 Object {
                   "fontFamily": "FontAwesome",
                   "fontStyle": "normal",
@@ -204,9 +207,12 @@ exports[`Setup of settings snapshot 1`] = `
                   "color": undefined,
                   "fontSize": 20,
                 },
-                Object {
-                  "color": "#3f89beff",
-                },
+                Array [
+                  undefined,
+                  Object {
+                    "color": "#3F89BE",
+                  },
+                ],
                 Object {
                   "fontFamily": "FontAwesome",
                   "fontStyle": "normal",
@@ -304,9 +310,12 @@ exports[`Setup of settings snapshot 1`] = `
                   "color": undefined,
                   "fontSize": 20,
                 },
-                Object {
-                  "color": "#3f89beff",
-                },
+                Array [
+                  undefined,
+                  Object {
+                    "color": "#3F89BE",
+                  },
+                ],
                 Object {
                   "fontFamily": "FontAwesome",
                   "fontStyle": "normal",
@@ -404,9 +413,12 @@ exports[`Setup of settings snapshot 1`] = `
                   "color": undefined,
                   "fontSize": 20,
                 },
-                Object {
-                  "color": "#3f89beff",
-                },
+                Array [
+                  undefined,
+                  Object {
+                    "color": "#3F89BE",
+                  },
+                ],
                 Object {
                   "fontFamily": "FontAwesome",
                   "fontStyle": "normal",
@@ -475,7 +487,7 @@ exports[`Setup of settings snapshot 1`] = `
       style={
         Array [
           Object {
-            "color": "#3f89beff",
+            "color": "#3F89BE",
             "fontSize": 28,
           },
           undefined,
