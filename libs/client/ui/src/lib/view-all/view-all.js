@@ -1,13 +1,76 @@
 import React, {useState} from 'react';
-import { View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity, Alert, ScrollView, TextInput} from 'react-native';
+import { View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity, Alert, ScrollView, TextInput, Share} from 'react-native';
 import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
 import ModalDropdown from 'react-native-modal-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
+import colour from '../colour/colour';
 
 export const ViewAll = ({ navigation }) =>  {
   const [moreVisible, setMoreVisible] = useState(false);
   const [deleteMode, setDeleteMode] = useState(false);
+  const [bottomModalVisible, setBottomModalVisible] = useState(false);
+  const [bottomModalType, setBottomModalType] = useState("none");
+
+  function BottomModalButton(props){
+  
+    if (props.type === "share") {
+      return <TouchableOpacity 
+              style={styles.backButton}
+              onPress={() => setBottomModalVisible(false)}>
+              <Icon 
+                name="paper-plane-o"
+                color="#ffffffff"
+                size={22}
+              /> 
+            </TouchableOpacity>;
+    }
+    if (props.type === "rename")
+    {
+      return <TouchableOpacity 
+              style={styles.backButton}
+              onPress={() => setBottomModalVisible(false)}>
+              <Icon 
+                name="pencil-square-o"
+                color="#ffffffff"
+                size={22}
+              /> 
+            </TouchableOpacity>;
+    }
+    return <TouchableOpacity 
+            style={styles.backButton}
+            onPress={() => {
+              setDeleteMode(false);
+              setBottomModalVisible(false);
+            }}>
+            <Icon 
+              name="trash-o"
+              color="#ffffffff"
+              size={22}
+            /> 
+          </TouchableOpacity>;
+  }
+
+  const onShare = async () => {
+    try {
+      const result = await Share.share({
+        message:
+          'React Native | A framework for building native apps using React',
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  }
+
   return (
     <View style={styles.viewAllPage}>
       <View style={styles.viewAllTopBar}>
@@ -132,11 +195,15 @@ export const ViewAll = ({ navigation }) =>  {
         <View style={styles.moreModalInner}>
           <TouchableOpacity
             style={styles.moreModalButton}
-            onPress={() => Alert.alert('click')}>
+            onPress={() => {
+              setBottomModalType("share");
+              setBottomModalVisible(true);
+              setMoreVisible(false);
+            }}>
             <View style={styles.moreModalButtonContent}>
               <View style={styles.iconContainer}>
                 <Icon 
-                  style={styles.moreModalButtonIcon}
+                  style={{color : colour.state}}
                   name="paper-plane-o"
                   size={18}
                 />
@@ -153,11 +220,15 @@ export const ViewAll = ({ navigation }) =>  {
 
           <TouchableOpacity
             style={styles.moreModalButton}
-            onPress={() => Alert.alert('click')}>
+            onPress={() => {
+              setBottomModalType("rename");
+              setBottomModalVisible(true);
+              setMoreVisible(false);
+            }}>
             <View style={styles.moreModalButtonContent}>
               <View style={styles.iconContainer}>
                 <Icon 
-                  style={styles.moreModalButtonIcon}
+                  style={{color : colour.state}}
                   name="pencil-square-o"
                   size={20}
                 />
@@ -174,11 +245,16 @@ export const ViewAll = ({ navigation }) =>  {
 
           <TouchableOpacity 
             style={styles.moreModalButton}
-            onPress={() => setDeleteMode(true)}>
+            onPress={() => {
+              setBottomModalType("delete");
+              setBottomModalVisible(true);
+              setDeleteMode(true);
+              setMoreVisible(false);
+            }}>
             <View style={styles.moreModalButtonContent}>
               <View style={styles.iconContainer}>
                 <Icon 
-                  style={styles.moreModalButtonIcon}
+                  style={{color : colour.state}}
                   name="trash-o"
                   size={20}
                 />
@@ -192,7 +268,35 @@ export const ViewAll = ({ navigation }) =>  {
           </TouchableOpacity>
         </View>
       </Modal>
-    </View>
+
+        <Modal 
+          isVisible={bottomModalVisible}
+          coverScreen={false}
+          hasBackdrop={false}
+          style={{
+            width: '100%',
+            height: '8%',
+            margin: 0,
+            justifyContent: 'flex-end',}}
+          >
+          <View style={[styles.modalBottomBar, {backgroundColor : colour.state}]}>
+            <TouchableOpacity 
+              style={styles.backButton}
+              onPress={() => {
+                setBottomModalVisible(false);
+                setDeleteMode(false);
+              }}>
+              <Icon 
+                name="angle-left"
+                color="#ffffffff"
+                size={30}
+              /> 
+            </TouchableOpacity>
+
+            <BottomModalButton type={bottomModalType}/>
+          </View>
+        </Modal>
+      </View>
   );
 }
 export default ViewAll;
@@ -403,9 +507,6 @@ const styles = StyleSheet.create({
     height: '100%',
     alignItems: 'center'
   },
-  moreModalButtonIcon: {
-    color: "#3f89beff"
-  },
   moreModalButtonText: {
     color: '#344053ff',
     textAlign: 'center',
@@ -424,5 +525,13 @@ const styles = StyleSheet.create({
     height: 1,
     width: '87%',
     alignSelf: 'center'
+  },
+  modalBottomBar: {
+    width: '100%',
+    height: '13%',
+    flexDirection: 'row',
+    //flexShrink: 1,
+    justifyContent: 'center',
+    //alignSelf: 'flex-end'
   },
 });

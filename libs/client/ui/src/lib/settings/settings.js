@@ -97,7 +97,7 @@ export const SettingsPage = ({ navigation }) => {
 
       <TouchableOpacity  
         style={styles.backButton} 
-        onPress={() => navigation.navigate('Home')}>
+        onPress={() => navigation.goBack()}>
           <Icon 
             name="angle-left"
             color={colour.state}

@@ -34,7 +34,7 @@ export const ColourPage = ({ navigation}) => {
 
       <TouchableOpacity  
         style={styles.backButton} 
-        onPress={() => navigation.navigate('Home')}>
+        onPress={() => navigation.goBack()}>
           <Icon 
             name="angle-left"
             color="#344053ff"
@@ -93,6 +93,7 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     fontStyle: 'normal',
     fontFamily: 'System' /* Inter */,
+    textDecorationLine: 'none'
   },
   colourItemDivider: {
     backgroundColor: '#d0d5ddff',

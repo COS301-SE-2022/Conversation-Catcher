@@ -24,10 +24,6 @@ const Stack = createNativeStackNavigator();
 
 export const App = () => {
 
-  useEffect(() => {
-    const temp = Colour.state
-  });
-
   return (
     <NavigationContainer>
       <Stack.Navigator>

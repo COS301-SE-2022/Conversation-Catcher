@@ -29,14 +29,14 @@ function DetermineTileCorner(props){
   if (c){
     return <BouncyCheckbox
             size={20}
-            fillColor="red"
+            fillColor={colour.state}
             unfillColor="#FFFFFF"
-            iconStyle={{ borderColor: "red" }}
+            iconStyle={{ borderColor: colour.state }}
             isChecked={checkboxState}
             onPress={() => setCheckboxState(!checkboxState)}
-          />
+          />;
   }
-  return DownloadButtonState(props)
+  return <DownloadButtonState downloadState={props.downloaded}/>;
 }
 
 export default class PdfTile extends Component {
