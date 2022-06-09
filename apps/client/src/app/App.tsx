@@ -18,7 +18,6 @@ import ViewAll from '../../../../libs/client/ui/src/lib/view-all/view-all.js';
 import Settings from '../../../../libs/client/ui/src/lib/settings/settings.js';
 import ChangeColour from '../../../../libs/client/ui/src/lib/colour-page/colour-page.js';
 import Login from '../../../../libs/client/ui/src/lib/login/login.js';
-import Colour from '../../../../libs/client/ui/src/lib/colour/colour';
 
 const Stack = createNativeStackNavigator();
 
