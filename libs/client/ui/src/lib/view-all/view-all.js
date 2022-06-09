@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 export const ViewAll = ({ navigation }) =>  {
   const [moreVisible, setMoreVisible] = useState(false);
+  const [deleteMode, setDeleteMode] = useState(false);
   return (
     <View style={styles.viewAllPage}>
       <View style={styles.viewAllTopBar}>
@@ -34,35 +35,47 @@ export const ViewAll = ({ navigation }) =>  {
 
       <ScrollView style={styles.recentPdfTiles}>
         <PdfTile 
+          id = {1}
           name = 'Bug introduction: a modification of code' 
           date = '1 May 2022, 9:37' 
           source = {"../assets/pdf-bug-intro.png"} 
-          downloaded = {true}/>
+          downloaded = {true}
+          showCheck = {deleteMode}/>
         <PdfTile 
+          id = {2}
           name = 'Human-computer interaction' 
           date = '21 Apr 2022, 14:18' 
           source = {"../assets/pdf-human-computer.png"} 
-          downloaded = {false}/>
+          downloaded = {false}
+          showCheck = {deleteMode}/>
         <PdfTile 
+          id = {3}
           name = 'The tropical plants of the Philippines' 
           date = '13 Apr 2022, 11:53' 
           source = {"../assets/pdf-tropical-plants.png"} 
-          downloaded = {true}/>
+          downloaded = {true}
+          showCheck = {deleteMode}/>
         <PdfTile 
+          id = {4}
           name = 'Devin Brittain The snacks of the popcorn' 
           date = '13 Apr 2022, 11:53' 
           source = {"../assets/pdf-tropical-plants.png"} 
-          downloaded = {true}/>
+          downloaded = {true}
+          showCheck = {deleteMode}/>
         <PdfTile 
+          id = {5}
           name = 'The tropical plants of the Philippines' 
           date = '13 Apr 2022, 11:53' 
           source = {"../assets/pdf-tropical-plants.png"} 
-          downloaded = {true}/>
+          downloaded = {true}
+          showCheck = {deleteMode}/>
         <PdfTile 
+          id = {6}
           name = 'The tropical plants of the Philippines' 
           date = '13 Apr 2022, 11:53' 
           source = {"../assets/pdf-tropical-plants.png"} 
-          downloaded = {true}/>
+          downloaded = {true}
+          showCheck = {deleteMode}/>
       </ScrollView>
 
       <View style={styles.viewAllBottomBar}>
@@ -107,69 +120,73 @@ export const ViewAll = ({ navigation }) =>  {
         visible={moreVisible}
         onRequestClose={() => setMoreVisible(!moreVisible)}
       >
-        <View style={styles.modalBack}></View>
-        <View style={styles.moreModalInner}>
-          <TouchableOpacity
-            style={styles.moreModalButton}
-            onPress={() => Alert.alert('click')}>
-            <View style={styles.moreModalButtonContent}>
-              <View style={styles.iconContainer}>
-                <Icon 
-                  style={styles.moreModalButtonIcon}
-                  name="paper-plane-o"
-                  size={18}
-                />
-              </View>
-              <View style={styles.moreModalButtonText_box}>
-                <Text style={styles.moreModalButtonText} ellipsizeMode={'clip'}>
-                  {'Share'}
-                </Text>
-              </View>
-            </View>   
-          </TouchableOpacity>
+        
+        {/*<TouchableOpacity style={styles.modalBack}
+          onPress={() => setMoreVisible(false)}>*/}
+          <View style={styles.moreModalInner}>
+            <TouchableOpacity
+              style={styles.moreModalButton}
+              onPress={() => Alert.alert('click')}>
+              <View style={styles.moreModalButtonContent}>
+                <View style={styles.iconContainer}>
+                  <Icon 
+                    style={styles.moreModalButtonIcon}
+                    name="paper-plane-o"
+                    size={18}
+                  />
+                </View>
+                <View style={styles.moreModalButtonText_box}>
+                  <Text style={styles.moreModalButtonText} ellipsizeMode={'clip'}>
+                    {'Share'}
+                  </Text>
+                </View>
+              </View>   
+            </TouchableOpacity>
 
-          <View style={styles.moreModalButtonDivider} /> 
+            <View style={styles.moreModalButtonDivider} /> 
 
-          <TouchableOpacity
-            style={styles.moreModalButton}
-            onPress={() => Alert.alert('click')}>
-            <View style={styles.moreModalButtonContent}>
-              <View style={styles.iconContainer}>
-                <Icon 
-                  style={styles.moreModalButtonIcon}
-                  name="pencil-square-o"
-                  size={20}
-                />
+            <TouchableOpacity
+              style={styles.moreModalButton}
+              onPress={() => Alert.alert('click')}>
+              <View style={styles.moreModalButtonContent}>
+                <View style={styles.iconContainer}>
+                  <Icon 
+                    style={styles.moreModalButtonIcon}
+                    name="pencil-square-o"
+                    size={20}
+                  />
+                </View>
+                <View style={styles.moreModalButtonText_box}>
+                  <Text style={styles.moreModalButtonText}>
+                    {'Rename'}
+                  </Text>
+                </View>
               </View>
-              <View style={styles.moreModalButtonText_box}>
-                <Text style={styles.moreModalButtonText}>
-                  {'Rename'}
-                </Text>
-              </View>
-            </View>
-          </TouchableOpacity>
+            </TouchableOpacity>
 
-          <View style={styles.moreModalButtonDivider} /> 
+            <View style={styles.moreModalButtonDivider} /> 
 
-          <TouchableOpacity 
-            style={styles.moreModalButton}
-            onPress={() => navigation.navigate('Colour')}>
-            <View style={styles.moreModalButtonContent}>
-              <View style={styles.iconContainer}>
-                <Icon 
-                  style={styles.moreModalButtonIcon}
-                  name="trash-o"
-                  size={20}
-                />
-              </View>
-              <View style={styles.moreModalButtonText_box}>
-                <Text style={styles.moreModalButtonText}>
-                  {'Delete'}
-                </Text>
-              </View>
-            </View> 
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity 
+              style={styles.moreModalButton}
+              onPress={() => setDeleteMode(true)}>
+              <View style={styles.moreModalButtonContent}>
+                <View style={styles.iconContainer}>
+                  <Icon 
+                    style={styles.moreModalButtonIcon}
+                    name="trash-o"
+                    size={20}
+                  />
+                </View>
+                <View style={styles.moreModalButtonText_box}>
+                  <Text style={styles.moreModalButtonText}>
+                    {'Delete'}
+                  </Text>
+                </View>
+              </View> 
+            </TouchableOpacity>
+          </View>
+        {/*</TouchableOpacity>*/}
+
       </Modal>
     </View>
   );
@@ -349,8 +366,7 @@ const styles = StyleSheet.create({
 
   },
   modalBack: {
-    width: '100%',
-    height: '100%',
+    flexGrow: 1,
     backgroundColor: 'white',
     opacity: 0.1
   },
@@ -361,7 +377,8 @@ const styles = StyleSheet.create({
     borderRadius: 7,
     flexDirection: 'column',
     borderWidth: 1,
-    borderColor: '#667084ff'
+    borderColor: '#667084ff',
+    opacity: 1
   },
   moreModalButton: {
     flexGrow: 1,

@@ -13,20 +13,26 @@ export const Home = ({ navigation }) => {
       </View>
       <View style={styles.recentPdfTiles}>
         <PdfTile 
+          id = {1}
           name = 'Bug introduction: a modification of code' 
           date = '1 May 2022, 9:37' 
           source = {require('../assets/pdf-bug-intro.png')} 
-          downloaded = {true}/>
+          downloaded = {true}
+          showCheck = {false}/>
         <PdfTile 
+          id = {2}
           name = 'Human-computer interaction' 
           date = '21 Apr 2022, 14:18' 
           source = {require('../assets/pdf-human-computer.png')} 
-          downloaded = {false}/>
+          downloaded = {false}
+          showCheck = {false}/>
         <PdfTile 
+          id = {3}
           name = 'The tropical plants of the Philippines' 
           date = '13 Apr 2022, 11:53' 
           source = {require('../assets/pdf-tropical-plants.png')} 
-          downloaded = {true}/>
+          downloaded = {true}
+          showCheck = {false}/>
       </View>
       <View style={styles.viewAllTouchableOpacityFrame}>
         <TouchableOpacity
@@ -113,18 +119,22 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'center',
     paddingLeft: 15,
-    height: '7%',
+    height: '5%',
     //width: '100%',
     minHeight: 28
   },
   recentPdfTiles: {
-    height: '55%',
+    //height: '55%',
+    flexShrink: 1,
     paddingLeft: 15,
     paddingRight: 15,
     justifyContent: 'space-between'
   },
   viewAllTouchableOpacityFrame: {
-    height: '10%'
+    //height: '10%'
+    flexGrow: 1,
+    justifyContent: 'center',
+    marginTop: 20
   },
   viewAllTouchableOpacity: {
     flexGrow: 1,
@@ -182,7 +192,7 @@ const styles = StyleSheet.create({
   },
   settingsTouchableOpacityFrame: {
     height: '10%',
-    marginVertical: 10
+    marginVertical: 5
   },
   settingTouchableOpacity: {
     marginTop: 5,
@@ -239,13 +249,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'center',
     flexShrink: 1,
-    elevation: 1,
+    //elevation: 1,
     shadowColor: '#000000',
     shadowRadius: 1.810810810810811,
     shadowOpacity: 0.2,
     shadowOffset: {
-      width: 2,
-      height: 2
+      width: 1,
+      height: 1
     },
   },
   recordAudioTouchableOpacity: {

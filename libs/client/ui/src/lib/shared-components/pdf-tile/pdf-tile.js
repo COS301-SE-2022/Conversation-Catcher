@@ -1,28 +1,54 @@
 import React, {Component} from 'react';
 import { View, StyleSheet, Text, ImageBackground, TouchableOpacity, Alert} from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import BouncyCheckbox from "react-native-bouncy-checkbox";
 
 function DownloadButtonState(props){
   const d = props.d
   if (d) {
-    return <ImageBackground
+    return <Icon
               onPress={() => Alert.alert('click')}
-              //source={require('../../assets/save.png')}
+              color="#3f89beff"
+              name="save"
+              size={20}
               container={TouchableOpacity} />;
   }
-  return <ImageBackground
+  return <Icon
           onPress={() => Alert.alert('click')}
-          //source={require('../../assets/cloud.png')}
+          color="#3f89beff"
+          name="cloud"
+          size={20}
           container={TouchableOpacity} />;
 }
+
+function DetermineTileCorner(props){
+  const [checkboxState, setCheckboxState] = React.useState(false);
+  const c = props.c
+  if (c){
+    return <BouncyCheckbox
+            size={25}
+            fillColor="red"
+            unfillColor="#FFFFFF"
+            iconStyle={{ borderColor: "red" }}
+            isChecked={checkboxState}
+            onPress={() => setCheckboxState(!checkboxState)}
+          />
+  }
+  return DownloadButtonState(props)
+}
+
+
 
 export default class PdfTile extends Component {
 
   render() {
     const {
+      id,
       name,
       date,
       source,
-      downloaded
+      downloaded,
+      showCheck
     } = this.props
 
     return (
@@ -47,10 +73,11 @@ export default class PdfTile extends Component {
                 {date}
               </Text>
             </View>
-            <View style={styles.download_button}>
-              <DownloadButtonState 
-                d={downloaded}/>
-            </View>
+          </View>
+          <View style={styles.download_button}>
+            <DetermineTileCorner 
+              d={downloaded}
+              c={showCheck}/>
           </View>
         </View>
       </TouchableOpacity>
@@ -77,7 +104,7 @@ const styles = StyleSheet.create({
     margin: 5
   },
   thumbnail_containter: {
-    flexShrink: 1,
+    flex: 1,
     borderRadius: 5,
     borderStyle: 'solid',
     borderColor: "#3F89BE",
@@ -140,34 +167,25 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingBottom: 15
   },
-  downloadState: {
-    width: '100%',
-    flexGrow: 1
-  },
-  downloadIcon: {
-    resizeMode: 'contain',
-    marginTop: 10,
-    height: 18,
-    marginBottom: 10,
-    marginLeft: 4,
-    width: 18,
-    minWidth: 18,
-    marginRight: 11
+  download_button: {
+    padding: 10,
+    flex: 1,
   },
   pdfTile_contents_not_thumbnail: {
     flex: 4,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    flexDirection: 'row'
   },
   pdfTile_contents_not_thumbnail_inner: {
     marginTop: 0,
     marginBottom: 0,
     marginLeft: 5,
-    flexGrow: 1, //flexgrow: 0
+    //flexGrow: 1, //flexgrow: 0
     marginRight: 0,
     flexDirection: 'column',
-    flexShrink: 1,
     justifyContent: 'center',
-    paddingLeft: 10
+    paddingLeft: 10,
+    flex: 10
   },
 });
 
