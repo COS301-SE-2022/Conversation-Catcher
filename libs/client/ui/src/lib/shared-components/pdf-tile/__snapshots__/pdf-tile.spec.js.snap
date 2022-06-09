@@ -35,14 +35,18 @@ exports[`PdfTile snapshot 1`] = `
 >
   <View
     style={
-      Object {
-        "aspectRatio": 0.7071135624381276,
-        "borderColor": "#3F89BE",
-        "borderRadius": 5,
-        "borderStyle": "solid",
-        "borderWidth": 1,
-        "flex": 1,
-      }
+      Array [
+        Object {
+          "aspectRatio": 0.7071135624381276,
+          "borderRadius": 5,
+          "borderStyle": "solid",
+          "borderWidth": 1,
+          "flex": 1,
+        },
+        Object {
+          "borderColor": "#3F89BE",
+        },
+      ]
     }
   >
     <View
@@ -172,7 +176,7 @@ exports[`PdfTile snapshot 1`] = `
         style={
           Array [
             Object {
-              "color": "#3f89beff",
+              "color": "#3F89BE",
               "fontSize": 20,
             },
             undefined,
