@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { View, StyleSheet, Text, ImageBackground, TouchableOpacity, Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
-import FileViewer from "react-native-file-viewer";
+//import FileViewer from "react-native-file-viewer";
 
 function DownloadButtonState(props){
   const [downloadState, setDownloadState] = React.useState(props.d);
@@ -54,7 +54,8 @@ export default class PdfTile extends Component {
     return (
       <TouchableOpacity
         style={styles.pdfTile}
-        onPress={() => FileViewer.open(source)}>
+        //onPress={() => FileViewer.open(source)}>
+        onPress={() => Alert.alert('pdf')}>
         <View style={styles.thumbnail_containter}>
           <ImageBackground
             style={styles.pdfThumbnail}

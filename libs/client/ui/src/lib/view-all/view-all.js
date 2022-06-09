@@ -219,7 +219,9 @@ const styles = StyleSheet.create({
       height: 1
     },
     alignItems: 'center',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    top: 0,
+    zIndex: 999
   },
   big_title: {
     color: '#344053ff',

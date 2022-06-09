@@ -45,20 +45,31 @@ export const Home = ({ navigation }) => {
   function UploadAudioCenter(props){
     if (fileSelected) {
       return <TouchableOpacity
-              style={styles.uploadModalButton}
-              onPress={() => setUploadVisible(false)}>
-              <View style={styles.uploadModalButtonContent}>
-                <View style={styles.iconContainer}>
-                  <Icon 
-                    style={styles.uploadModalButtonIcon}
-                    name="file-sound-o"
-                    size={40}
-                  />
-                </View>
-              </View>   
+              style={styles.changeUploadModalButton}
+              onPress={() => Alert.alert('hiii')}>
+              <Icon 
+                style={styles.uploadModalButtonIcon}
+                name="file-sound-o"
+                size={16}
+              />
+              <Text style={styles.changeUploadModalButtonText}>
+                {'fine name here'}
+              </Text>
             </TouchableOpacity>
     }
-    return 
+    return <TouchableOpacity
+            style={styles.uploadModalButton}
+            onPress={() => setFileSelected(true)}>
+            <View style={styles.uploadModalButtonContent}>
+              <View style={styles.iconContainer}>
+                <Icon 
+                  style={styles.uploadModalButtonIcon}
+                  name="file-sound-o"
+                  size={40}
+                />
+              </View>
+            </View>   
+          </TouchableOpacity>
   }
 
   return (
@@ -225,18 +236,21 @@ export const Home = ({ navigation }) => {
         hasBackdrop={true}
         backdropColor='white'
         onBackdropPress={() => setUploadVisible(false)}
+        onModalHide={() => setFileSelected(false)}
       >
         <View style={styles.uploadModalInner}>
           <Text style={styles.modalTitle}>
             {'Select a file:'}
           </Text>
 
-          
+          <UploadAudioCenter 
+
+          />
 
           <TouchableOpacity
             style={styles.uploadFileButton}
             state={null}
-            onPress={() => Alert.alert('click')}>
+            onPress={() => setUploadVisible(false)}>
             <View style={styles.uploadModalButtonContent}>
               <View style={styles.uploadModalButtonText_box}>
                 <Text style={styles.uploadModalButtonText}>
@@ -533,13 +547,36 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     borderWidth: 1,
     borderColor: '#667084ff',
-    opacity: 1
   },
   uploadModalButton: {
     flexGrow: 1,
     height: '8%',
     alignItems: 'center',
     flexDirection: 'row',
+  },
+  changeUploadModalButton: {
+    flexGrow: 1,
+    height: '5%',
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginHorizontal: 10,
+    justifyContent: 'center',
+    alignContent: 'center',
+    flexShrink: 1,
+    backgroundColor: '#ffffffff',
+    borderRadius: 7,
+    borderWidth: 1,
+    borderColor: '#667084ff',
+  },
+  changeUploadModalButtonText: {
+    color: '#3F89BE',
+    textAlign: 'center',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 18,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
   },
   uploadFileButton: {
     flexGrow: 1,
