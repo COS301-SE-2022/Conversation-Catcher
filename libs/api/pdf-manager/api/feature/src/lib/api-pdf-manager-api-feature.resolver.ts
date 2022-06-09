@@ -8,7 +8,6 @@ import { PdfEntity } from "@conversation-catcher/api/pdf-manager/api/data-access
 export class ApiPdfManagerApiFeatureResolver {
 	constructor(private pdfService: ApiPdfManagerServiceFeatureService) {}
 	
-	
 	/*
 		id - id of pdf in DB
 		name - name of pdf
@@ -24,11 +23,11 @@ export class ApiPdfManagerApiFeatureResolver {
   
 		if (pdfArr.length > 0) {
 			const pdfObj = new PdfEntity();
-			pdfObj.id = pdfArr.id;
-			pdfObj.name = pdfArr.name;
-			pdfObj.pdf = pdfArr.pdf;
-			pdfObj.creationDate = pdfArr.creationDate
-			pdfObj.downloaded = pdfArr.downloaded
+			pdfObj.id = pdfArr.document.id;
+			pdfObj.name = pdfArr.document.name;
+			pdfObj.pdf = pdfArr.document.pdf.toString('ascii');
+			pdfObj.creationDate = pdfArr.document.creationDate;
+			pdfObj.downloaded = pdfArr.document.downloaded;
 			
 			return pdfObj;
 		}
@@ -48,10 +47,11 @@ export class ApiPdfManagerApiFeatureResolver {
 				const pdf = pdfsArr[index];
 				const pdfsObj = new PdfEntity();
 		
-				pdfsObj.id = pdf.id;
-				pdfsObj.name = pdf.name;
-				pdfsObj.pdf = pdf.pdf;
-				pdfsObj.downloaded = pdf.downloaded
+				pdfsObj.id = pdf.document.id;
+				pdfsObj.name = pdf.document.name;
+				pdfsObj.pdf = pdf.document.pdf.toString('ascii');
+				pdfsObj.creationDate = pdf.document.creationDate;
+				pdfsObj.downloaded = pdf.document.downloaded;
 
 				arrOfPDFs.push(pdfsObj);
 			}
@@ -67,11 +67,11 @@ export class ApiPdfManagerApiFeatureResolver {
 
 		if (pdfArr.length > 0) {
 			const pdfObj = new PdfEntity();
-			pdfObj.id = pdfArr.id;
-			pdfObj.name = pdfArr.name;
-			pdfObj.pdf = pdfArr.pdf;
-			pdfObj.creationDate = pdfArr.creationDate
-			pdfObj.downloaded = pdfArr.downloaded
+			pdfObj.id = pdfArr.document.id;
+			pdfObj.name = pdfArr.document.name;
+			pdfObj.pdf = pdfArr.document.pdf.toString('ascii');
+			pdfObj.creationDate = pdfArr.document.creationDate;
+			pdfObj.downloaded = pdfArr.document.downloaded;
 			
 			return pdfObj;
 		}
@@ -86,11 +86,11 @@ export class ApiPdfManagerApiFeatureResolver {
 
 		if (pdfArr.length > 0) {
 			const pdfObj = new PdfEntity();
-			pdfObj.id = pdfArr.id;
-			pdfObj.name = pdfArr.name;
-			pdfObj.pdf = pdfArr.pdf;
-			pdfObj.creationDate = pdfArr.creationDate
-			pdfObj.downloaded = pdfArr.downloaded
+			pdfObj.id = pdfArr.document.id;
+			pdfObj.name = pdfArr.document.name;
+			pdfObj.pdf = pdfArr.document.pdf.toString('ascii');
+			pdfObj.creationDate = pdfArr.document.creationDate;
+			pdfObj.downloaded = pdfArr.document.downloaded;
 			
 			return pdfObj;
 		}
@@ -105,11 +105,11 @@ export class ApiPdfManagerApiFeatureResolver {
 
 		if (pdfArr.length > 0) {
 			const pdfObj = new PdfEntity();
-			pdfObj.id = pdfArr.id;
-			pdfObj.name = pdfArr.name;
-			pdfObj.pdf = pdfArr.pdf;
-			pdfObj.creationDate = pdfArr.creationDate
-			pdfObj.downloaded = pdfArr.downloaded
+			pdfObj.id = pdfArr.document.id;
+			pdfObj.name = pdfArr.document.name;
+			pdfObj.pdf = pdfArr.document.pdf.toString('ascii');
+			pdfObj.creationDate = pdfArr.document.creationDate;
+			pdfObj.downloaded = pdfArr.downloaded;
 			
 			return pdfObj;
 		}
