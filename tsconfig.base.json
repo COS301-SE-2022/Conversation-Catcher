@@ -15,29 +15,17 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@conversation-catcher/api/database-manager/api/feature": [
-        "libs/api/database-manager/api/feature/src/index.ts"
+      "@conversation-catcher/api/pdf-manager/service": [
+        "libs/api/pdf-manager/service/src/index.ts"
       ],
       "@conversation-catcher/api/database-manager/api/interface": [
         "libs/api/database-manager/api/interface/src/index.ts"
       ],
-      "@conversation-catcher/api/database-manager/service/feature": [
-        "libs/api/database-manager/service/feature/src/index.ts"
+      "@conversation-catcher/api/database-manager/api/feature": [
+        "libs/api/database-manager/api/feature/src/index.ts"
       ],
       "@conversation-catcher/api/pdf-manager/api": [
         "libs/api/pdf-manager/api/src/index.ts"
-      ],
-      "@conversation-catcher/api/pdf-manager/api/data-access": [
-        "libs/api/pdf-manager/api/data-access/src/index.ts"
-      ],
-      "@conversation-catcher/api/pdf-manager/api/feature": [
-        "libs/api/pdf-manager/api/feature/src/index.ts"
-      ],
-      "@conversation-catcher/api/pdf-manager/service/feature": [
-        "libs/api/pdf-manager/service/feature/src/index.ts"
-      ],
-      "@conversation-catcher/api/pdf-manager/shared": [
-        "libs/api/pdf-manager/shared/src/index.ts"
       ],
       "@conversation-catcher/api/speech-to-text/api": [
         "libs/api/speech-to-text/api/src/index.ts"
@@ -57,10 +45,10 @@
       "@conversation-catcher/api/summarise-text/service": [
         "libs/api/summarise-text/service/src/index.ts"
       ],
-      "@conversation-catcher/client/ui": ["libs/client/ui/src/index.ts"],
-      "@conversation-catcher/client/ui/src/lib/shared-components": [
-        "libs/client/ui/src/lib/shared-components/src/index.js"
+      "@conversation-catcher/client/shared-components": [
+        "libs/client/shared-components/src/index.js"
       ],
+      "@conversation-catcher/client/ui": ["libs/client/ui/src/index.ts"],
       "@conversation-catcher/shell": ["libs/api/shell/src/index.ts"]
     }
   },

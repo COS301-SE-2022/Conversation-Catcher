@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   displayName: 'client',
   preset: 'react-native',
   testRunner: 'jest-jasmine2',

@@ -1,6 +1,6 @@
-export default {
+module.exports = {
   displayName: 'api-summarise-text-service',
-  preset: '../../../../jest.preset.js',
+  preset: '../../../../jest.preset.ts',
   globals: {
     'ts-jest': {
       tsconfig: '<rootDir>/tsconfig.spec.json',

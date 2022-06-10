@@ -1,24 +1,17 @@
 {
-  "$schema": "..\\..\\..\\..\\node_modules\\nx\\schemas\\project-schema.json",
   "sourceRoot": "libs/api/summarise-text/api/src",
   "projectType": "library",
   "targets": {
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
+      "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "libs/api/summarise-text/api/**/*.ts"
-        ]
+        "lintFilePatterns": ["libs/api/summarise-text/api/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "coverage/libs/api/summarise-text/api"
-      ],
+      "outputs": ["coverage/libs/api/summarise-text/api"],
       "options": {
         "jestConfig": "libs/api/summarise-text/api/jest.config.ts",
         "passWithNoTests": true

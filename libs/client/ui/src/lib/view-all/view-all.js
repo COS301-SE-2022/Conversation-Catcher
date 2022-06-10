@@ -1,342 +1,389 @@
-import React, {useState} from 'react';
-import { View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity, Alert, ScrollView, TextInput, Share} from 'react-native';
-import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
-import ModalDropdown from 'react-native-modal-dropdown';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import Modal from 'react-native-modal';
-import colour from '../colour/colour';
+import React from 'react';
+import { View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity, Alert} from 'react-native';
 
 export const ViewAll = ({ navigation }) =>  {
-  const [moreVisible, setMoreVisible] = useState(false);
-  const [deleteMode, setDeleteMode] = useState(false);
-  const [bottomModalVisible, setBottomModalVisible] = useState(false);
-  const [bottomModalType, setBottomModalType] = useState("none");
-  const [renameModalVisible, setRenameModalVisible] = useState(false);
-
-  function BottomModalButton(props){
-  
-    if (props.type === "share") {
-      return <TouchableOpacity 
-              style={styles.backButton}
-              onPress={() => setBottomModalVisible(false)}>
-              <Icon 
-                name="paper-plane-o"
-                color="#ffffffff"
-                size={22}
-              /> 
-            </TouchableOpacity>;
-    }
-    if (props.type === "rename")
-    {
-      return <TouchableOpacity 
-              style={styles.backButton}
-              onPress={() => setBottomModalVisible(false)}>
-              <Icon 
-                name="pencil-square-o"
-                color="#ffffffff"
-                size={22}
-              /> 
-            </TouchableOpacity>;
-    }
-    return <TouchableOpacity 
-            style={styles.backButton}
-            onPress={() => {
-              setDeleteMode(false);
-              setBottomModalVisible(false);
-            }}>
-            <Icon 
-              name="trash-o"
-              color="#ffffffff"
-              size={22}
-            /> 
-          </TouchableOpacity>;
-  }
-
-  const onShare = async () => {
-    try {
-      const result = await Share.share({
-        message:
-          'React Native | A framework for building native apps using React',
-      });
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          // shared with activity type of result.activityType
-        } else {
-          // shared
-        }
-      } else if (result.action === Share.dismissedAction) {
-        // dismissed
-      }
-    } catch (error) {
-      alert(error.message);
-    }
-  }
-
   return (
-    <View style={styles.viewAllPage}>
-      <View style={styles.viewAllTopBar}>
-        <View style={styles.big_title_box}>
-          <Text style={styles.big_title}>
-            {'PDFs'}
-          </Text>
-        </View>
-
-        <View style={styles.searchBarGroup}>
-          <View style={styles.searchIconFrame}>
-            <Icon 
-              color="#667084ff"
-              name="search"
-              size={24}
-            />
-          </View>
-
-          <TextInput
-            style={styles.searchInput}
-            placeholder="Search"
-            onChangeText={() => Alert.alert('click')}
-          />
-        </View>
-      </View>
-
-      <ScrollView style={styles.recentPdfTiles}>
-        <PdfTile 
-          id = {1}
-          name = 'Bug introduction: a modification of code' 
-          date = '1 May 2022, 9:37' 
-          source = {"../assets/pdf-bug-intro.png"} 
-          downloaded = {true}
-          showCheck = {deleteMode}
-          navigation = {navigation}/>
-        <PdfTile 
-          id = {2}
-          name = 'Human-computer interaction' 
-          date = '21 Apr 2022, 14:18' 
-          source = {"../assets/pdf-human-computer.png"} 
-          downloaded = {false}
-          showCheck = {deleteMode}
-          navigation = {navigation}/>
-        <PdfTile 
-          id = {3}
-          name = 'The tropical plants of the Philippines' 
-          date = '13 Apr 2022, 11:53' 
-          source = {"../assets/pdf-tropical-plants.png"} 
-          downloaded = {true}
-          showCheck = {deleteMode}
-          navigation = {navigation}/>
-        <PdfTile 
-          id = {4}
-          name = 'Devin Brittain The snacks of the popcorn' 
-          date = '13 Apr 2022, 11:53' 
-          source = {"../assets/pdf-tropical-plants.png"} 
-          downloaded = {true}
-          showCheck = {deleteMode}
-          navigation = {navigation}/>
-        <PdfTile 
-          id = {5}
-          name = 'The tropical plants of the Philippines' 
-          date = '13 Apr 2022, 11:53' 
-          source = {"../assets/pdf-tropical-plants.png"} 
-          downloaded = {true}
-          showCheck = {deleteMode}
-          navigation = {navigation}/>
-        <PdfTile 
-          id = {6}
-          name = 'The tropical plants of the Philippines' 
-          date = '13 Apr 2022, 11:53' 
-          source = {"../assets/pdf-tropical-plants.png"} 
-          downloaded = {true}
-          showCheck = {deleteMode}
-          navigation = {navigation}/>
-      </ScrollView>
-
-      <View style={styles.viewAllBottomBar}>
-        <TouchableOpacity 
-          style={styles.backButton}
-          onPress={() => navigation.navigate('Home')}>
-          <Icon 
-            name="angle-left"
-            color="#344053ff"
-            size={30}
-          />     
-        </TouchableOpacity>
-
-        <TouchableOpacity 
-          style={styles.moreButton}
-          onPress={() => setMoreVisible(true)}>
-          <Icon 
-            name="ellipsis-h"
-            color="#344053ff"
-            size={30}
-          />   
-        </TouchableOpacity>
-
-        <View
-          style={styles.orderByGroup}>
-          <Text style={styles.orderByLabel}>
-            {'Order by'}
-          </Text>
-          <ModalDropdown 
-            options={['Date', 'Name']}
-            defaultIndex={1}
-            style={styles.orderByDropdown}
-            textStyle={styles.orderByDropdownText}
-            dropdownStyle={styles.orderByDropdownStyle}/>
-        </View>     
-      </View>
-
-
-      <Modal
-        style={styles.modal}
-        isVisible={moreVisible}
-        avoidKeyboard={true}
-        hasBackdrop={true}
-        backdropColor='white'
-        onBackdropPress={() => setMoreVisible(false)}
-      >
-        <View style={styles.moreModalInner}>
-          <TouchableOpacity
-            style={styles.moreModalButton}
-            onPress={() => {
-              setBottomModalType("share");
-              setBottomModalVisible(true);
-              setMoreVisible(false);
-            }}>
-            <View style={styles.moreModalButtonContent}>
-              <View style={styles.iconContainer}>
-                <Icon 
-                  style={{color : colour.state}}
-                  name="paper-plane-o"
-                  size={18}
-                />
-              </View>
-              <View style={styles.moreModalButtonText_box}>
-                <Text style={styles.moreModalButtonText} ellipsizeMode={'clip'}>
-                  {'Share'}
-                </Text>
-              </View>
-            </View>   
-          </TouchableOpacity>
-
-          <View style={styles.moreModalButtonDivider} /> 
-
-          <TouchableOpacity
-            style={styles.moreModalButton}
-            onPress={() => {
-              setBottomModalType("rename");
-              setBottomModalVisible(true);
-              setMoreVisible(false);
-            }}>
-            <View style={styles.moreModalButtonContent}>
-              <View style={styles.iconContainer}>
-                <Icon 
-                  style={{color : colour.state}}
-                  name="pencil-square-o"
-                  size={20}
-                />
-              </View>
-              <View style={styles.moreModalButtonText_box}>
-                <Text style={styles.moreModalButtonText}>
-                  {'Rename'}
+    <View style={[styles.viewAllPage, styles.viewAllPage_layout]}>
+      <View style={styles.viewAllPage_item}>
+        <View x="0px 390fr 0px" y="0px minmax(0px, max-content) 0px" style={styles.viewAllTopBar}>
+          <View x="17px 356fr 17px" y="20px minmax(0px, max-content) 20px" style={styles.topFlex}>
+            <View style={styles.topFlex_item}>
+              <View x="7.3% 18.26% 74.44%" y="18px minmax(0px, max-content) 0px" style={styles.viewAllTitle_box}>
+                <Text style={styles.viewAllTitle} ellipsizeMode={'clip'}>
+                  {'PDFs'}
                 </Text>
               </View>
             </View>
-          </TouchableOpacity>
-
-          <View style={styles.moreModalButtonDivider} /> 
-
-          <TouchableOpacity 
-            style={styles.moreModalButton}
-            onPress={() => {
-              setBottomModalType("delete");
-              setBottomModalVisible(true);
-              setDeleteMode(true);
-              setMoreVisible(false);
-            }}>
-            <View style={styles.moreModalButtonContent}>
-              <View style={styles.iconContainer}>
-                <Icon 
-                  style={{color : colour.state}}
-                  name="trash-o"
-                  size={20}
-                />
+            <View style={styles.topFlex_item}>
+              <View x="0px 356fr 0px" y="11px minmax(0px, max-content) 0px" style={styles.searchBar}>
+                <View x="0px 356fr 0px" y="0px minmax(0px, max-content) 0px" style={styles.block19}>
+                  <TouchableOpacity style={[styles.block20, styles.block20_layout]} onPress={() => Alert.alert('click')}>
+                    <View x="14px 328fr 14px" y="10px minmax(0px, max-content) 10px" style={styles.searchContents}>
+                      <View style={styles.searchContents_item}>
+                        <ImageBackground
+                          style={[styles.searchIcon, styles.searchIcon_layout]}
+                          source={require('../assets/search.png')}
+                        />
+                      </View>
+                      <View style={styles.searchContents_space} />
+                      <View style={styles.searchContents_item1}>
+                        <View x="0px 57fr 243px" y="0px minmax(0px, max-content) 0px" style={styles.searchInput_box}>
+                          <Text style={styles.searchInput} ellipsizeMode={'clip'}>
+                            {'Search'}
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                </View>
               </View>
-              <View style={styles.moreModalButtonText_box}>
-                <Text style={styles.moreModalButtonText}>
-                  {'Delete'}
-                </Text>
-              </View>
-            </View> 
-          </TouchableOpacity>
+            </View>
+          </View>
         </View>
-      </Modal>
-
-        <Modal 
-          isVisible={bottomModalVisible}
-          coverScreen={false}
-          hasBackdrop={false}
-          style={{
-            width: '100%',
-            height: '8%',
-            margin: 0,
-            justifyContent: 'flex-end',}}
-          >
-          <View style={[styles.modalBottomBar, {backgroundColor : colour.state}]}>
-            <TouchableOpacity 
-              style={styles.backButton}
-              onPress={() => {
-                setBottomModalVisible(false);
-                setDeleteMode(false);
-              }}>
-              <Icon 
-                name="angle-left"
-                color="#ffffffff"
-                size={30}
-              /> 
-            </TouchableOpacity>
-
-            <BottomModalButton type={bottomModalType}/>
-          </View>
-        </Modal>
-
-        <Modal 
-          style={styles.renameModal}
-          isVisible={renameModalVisible}
-          avoidKeyboard={true}
-          >
-          <View style={styles.moreModalInner}>
-            <TextInput
-              editable/>
-            <TouchableOpacity 
-              style={[styles.backButton, {backgroundColor : colour.state}]}
-              onPress={() => {
-                setBottomModalVisible(false);
-                setDeleteMode(false);
-              }}>
-                <Text>
-                  {'Rename file'}
-                </Text>
-            </TouchableOpacity>
-
-            <BottomModalButton type={bottomModalType}/>
-          </View>
-        </Modal>
       </View>
+      <View style={styles.viewAllPage_item}>
+        <View x="0px 390fr 0px" y="640px minmax(0px, max-content) 0px" style={styles.viewAllBottomBar}>
+          <View
+            x="57.18% 10.51% 32.31%"
+            y="8px minmax(0px, max-content) 13px"
+            absolute
+            style={styles.orderByLabel_box}>
+            <Text style={styles.orderByLabel} ellipsizeMode={'clip'}>
+              {'Order by'}
+            </Text>
+          </View>
+
+          <View x="14px 362fr 14px" y="0px minmax(0px, max-content) 0px" style={styles.bottomFlex}>
+            <TouchableOpacity style={styles.bottomFlex_item}>
+              <ImageBackground
+                x="33px 9px 0px"
+                y="22px 18px 21px"
+                style={styles.backIcon}
+                onPress={() =>
+                  navigation.navigate('Home')}
+                source={require('../assets/back-arrow.png')}
+                container={TouchableOpacity}
+              />
+            </TouchableOpacity>
+            <View style={styles.bottomFlex_space} />
+            <TouchableOpacity style={styles.bottomFlex_item1}>
+              <ImageBackground
+                x="0px 24px 0px"
+                y="29px 3px 29px"
+                style={styles.moreOptionsIcon}
+                onPress={() => Alert.alert('click')}
+                source={require('../assets/dots.png')}
+                container={TouchableOpacity}
+              />
+            </TouchableOpacity>
+            <View style={styles.bottomFlex_space1} />
+            <View style={styles.bottomFlex_item2}>
+              <View x="0px 153fr 0px" y="8px minmax(0px, max-content) 0px" style={styles.block12}>
+                <View x="0px 41px 112fr" y="0px minmax(0px, max-content) 13px" style={styles.block13}>
+                  <View x="0px 41fr 0px" y="0px minmax(0px, max-content) 0px" style={styles.group}>
+                    <View style={[styles.pdfFrame, styles.pdfFrame_layout]}>
+                      <View style={styles.pdfFrame_item}>
+                        <TouchableOpacity
+                          x="0px 356fr 0px"
+                          y="0px minmax(0px, max-content) 0px"
+                          style={styles.pdfTile}
+                          onPress={() => Alert.alert('click')}>
+                          <View style={styles.pdfTile_item}>
+                            <ImageBackground
+                              style={[styles.pdfThumbnail, styles.pdfThumbnail_layout]}
+                              source={require('../assets/pdf-bug-intro.png')}
+                            />
+                          </View>
+                          <View style={styles.pdfTile_space} />
+                          <View style={styles.pdfTile_item1}>
+                            <View x="0px 253fr 0px" y="0px minmax(0px, max-content) 0px" style={styles.pdfTileInfo}>
+                              <View style={styles.pdfTileInfo_item}>
+                                <View
+                                  x="1px 219fr 0px"
+                                  y="0px minmax(0px, max-content) 0px"
+                                  style={styles.pdfTileText}>
+                                  <View style={styles.pdfTileText_item}>
+                                    <View
+                                      x="0px 218fr 1px"
+                                      y="29px minmax(0px, max-content) 0px"
+                                      style={styles.pdfName_box}>
+                                      <Text style={styles.pdfName} ellipsizeMode={'clip'}>
+                                        {'Bug introduction: a modification of code'}
+                                      </Text>
+                                    </View>
+                                  </View>
+                                  <View style={styles.pdfTileText_item}>
+                                    <View
+                                      x="1px 217fr 1px"
+                                      y="9px minmax(0px, max-content) 29px"
+                                      style={styles.pdfDate_box}>
+                                      <Text style={styles.pdfDate} ellipsizeMode={'clip'}>
+                                        {'1 May 2022, 9:37'}
+                                      </Text>
+                                    </View>
+                                  </View>
+                                </View>
+                              </View>
+                              <View style={styles.pdfTileInfo_item1}>
+                                <TouchableOpacity
+                                  x="0px 33fr 0px"
+                                  y="0px minmax(0px, max-content) 89px"
+                                  style={styles.downloadState}
+                                  onPress={() => Alert.alert('click')}>
+                                  <ImageBackground
+                                    style={[styles.downloadIcon, styles.downloadIcon_layout]}
+                                    source={require('../assets/save.png')}
+                                  />
+                                </TouchableOpacity>
+                              </View>
+                            </View>
+                          </View>
+                        </TouchableOpacity>
+                      </View>
+                      <View style={styles.pdfFrame_item}>
+                        <TouchableOpacity
+                          x="0px 356fr 0px"
+                          y="18px minmax(0px, max-content) 0px"
+                          style={styles.block6}
+                          onPress={() => Alert.alert('click')}>
+                          <View style={styles.block6_item}>
+                            <ImageBackground
+                              style={[styles.image1, styles.image1_layout]}
+                              source={require('../assets/pdf-human-computer.png')}
+                            />
+                          </View>
+                          <View style={styles.block6_space} />
+                          <View style={styles.block6_item1}>
+                            <View x="0px 253fr 0px" y="0px minmax(0px, max-content) 1px" style={styles.block7}>
+                              <View style={styles.block7_item}>
+                                <View style={[styles.block8, styles.block8_layout]}>
+                                  <View style={[styles.pdfName_box1, styles.pdfName_box1_layout]}>
+                                    <Text style={styles.pdfName} ellipsizeMode={'clip'}>
+                                      {'Human-computer interaction'}
+                                    </Text>
+                                  </View>
+                                  <View style={[styles.text_body_box, styles.text_body_box_layout]}>
+                                    <Text style={styles.text_body} ellipsizeMode={'clip'}>
+                                      {'21 Apr 2022, 14:18'}
+                                    </Text>
+                                  </View>
+                                </View>
+                              </View>
+                              <TouchableOpacity style={styles.block7_item1}>
+                                <ImageBackground
+                                  x="0px 31px 5px"
+                                  y="0px 34px 93px"
+                                  style={styles.image2}
+                                  onPress={() => Alert.alert('click')}
+                                  source={require('../assets/cloud.png')}
+                                  container={TouchableOpacity}
+                                />
+                              </TouchableOpacity>
+                            </View>
+                          </View>
+                        </TouchableOpacity>
+                      </View>
+                      <View style={styles.pdfFrame_item}>
+                        <View x="0px 356fr 0px" y="18px minmax(0px, max-content) 0px" style={styles.pdfTile}>
+                          <View style={styles.pdfTile_item}>
+                            <ImageBackground
+                              style={[styles.image, styles.image_layout]}
+                              source={require('../assets/pdf-tropical-plants.png')}
+                            />
+                          </View>
+                          <View style={styles.pdfTile_space} />
+                          <View style={styles.pdfTile_item2}>
+                            <View x="0px 253fr 0px" y="0px minmax(0px, max-content) 0px" style={styles.block3}>
+                              <View style={styles.block3_item}>
+                                <View
+                                  x="1px 219fr 0px"
+                                  y="0px minmax(0px, max-content) 0px"
+                                  style={styles.pdfTileText}>
+                                  <View style={styles.pdfTileText_item}>
+                                    <View
+                                      x="0px 218fr 1px"
+                                      y="29px minmax(0px, max-content) 0px"
+                                      style={styles.pdfName_box}>
+                                      <Text style={styles.pdfName} ellipsizeMode={'clip'}>
+                                        {'The tropical plants of the Philippines'}
+                                      </Text>
+                                    </View>
+                                  </View>
+                                  <View style={styles.pdfTileText_item}>
+                                    <View
+                                      x="1px 217fr 1px"
+                                      y="9px minmax(0px, max-content) 29px"
+                                      style={styles.text_body_box1}>
+                                      <Text style={styles.text_body} ellipsizeMode={'clip'}>
+                                        {'13 Apr 2022, 11:53'}
+                                      </Text>
+                                    </View>
+                                  </View>
+                                </View>
+                              </View>
+                              <View style={styles.block3_item1}>
+                                <View x="0px 33fr 0px" y="0px minmax(0px, max-content) 89px" style={styles.block5}>
+                                  <ImageBackground
+                                    style={[styles.downloadIcon, styles.downloadIcon_layout]}
+                                    source={require('../assets/save.png')}
+                                  />
+                                </View>
+                              </View>
+                            </View>
+                          </View>
+                        </View>
+                      </View>
+                      <View style={styles.pdfFrame_item}>
+                        <View x="0px 356fr 0px" y="18px minmax(0px, max-content) 0px" style={styles.block9}>
+                          <View style={styles.block9_item}>
+                            <ImageBackground
+                              style={[styles.image, styles.image_layout]}
+                              source={require('../assets/pdf-popcorn.png')}
+                            />
+                          </View>
+                          <View style={styles.block9_space} />
+                          <View style={styles.block9_item1}>
+                            <View x="0px 253fr 0px" y="0px minmax(0px, max-content) 0px" style={styles.block7}>
+                              <View style={styles.block7_item}>
+                                <View style={[styles.block8, styles.block8_layout]}>
+                                  <View style={[styles.pdfName_box2, styles.pdfName_box2_layout]}>
+                                    <Text style={styles.pdfName} ellipsizeMode={'clip'}>
+                                      {'Devin Brittain The snacks of the popcorn'}
+                                    </Text>
+                                  </View>
+                                  <View style={[styles.text_body_box, styles.text_body_box_layout1]}>
+                                    <Text style={styles.text_body} ellipsizeMode={'clip'}>
+                                      {'4 Apr 2022, 13:03'}
+                                    </Text>
+                                  </View>
+                                </View>
+                              </View>
+                              <View style={styles.block7_item2}>
+                                <ImageBackground
+                                  style={[styles.image2, styles.image2_layout]}
+                                  source={require('../assets/cloud.png')}
+                                />
+                              </View>
+                            </View>
+                          </View>
+                        </View>
+                      </View>
+                      <View style={styles.pdfFrame_item}>
+                        <View x="0px 356fr 0px" y="18px minmax(0px, max-content) 0px" style={styles.pdfTile}>
+                          <View style={styles.pdfTile_item}>
+                            <ImageBackground
+                              style={[styles.image, styles.image_layout]}
+                              source={require('../assets/pdf-sable-candidate.png')}
+                            />
+                          </View>
+                          <View style={styles.pdfTile_space} />
+                          <View style={styles.pdfTile_item3}>
+                            <View x="0px 253fr 0px" y="0px minmax(0px, max-content) 0px" style={styles.block3}>
+                              <View style={styles.block3_item}>
+                                <View
+                                  x="1px 219fr 0px"
+                                  y="0px minmax(0px, max-content) 0px"
+                                  style={styles.pdfTileText}>
+                                  <View style={styles.pdfTileText_item}>
+                                    <View
+                                      x="0px 212fr 7px"
+                                      y="39px minmax(0px, max-content) 0px"
+                                      style={styles.pdfName_box}>
+                                      <Text style={styles.pdfName} ellipsizeMode={'clip'}>
+                                        {'I am a very sable candidate'}
+                                      </Text>
+                                    </View>
+                                  </View>
+                                  <View style={styles.pdfTileText_item}>
+                                    <View
+                                      x="1px 217fr 1px"
+                                      y="9px minmax(0px, max-content) 39px"
+                                      style={styles.text_body_box2}>
+                                      <Text style={styles.text_body} ellipsizeMode={'clip'}>
+                                        {'29 March 2022, 14:57'}
+                                      </Text>
+                                    </View>
+                                  </View>
+                                </View>
+                              </View>
+                              <View style={styles.block3_item2}>
+                                <View x="0px 33fr 0px" y="0px minmax(0px, max-content) 89px" style={styles.block5}>
+                                  <ImageBackground
+                                    style={[styles.downloadIcon, styles.downloadIcon_layout]}
+                                    source={require('../assets/save.png')}
+                                  />
+                                </View>
+                              </View>
+                            </View>
+                          </View>
+                        </View>
+                      </View>
+                      <View style={styles.pdfFrame_space} />
+                      <View style={styles.pdfFrame_space} />
+                      <View style={styles.pdfFrame_space} />
+                      <View style={styles.pdfFrame_space} />
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+
+          <TouchableOpacity
+            x="69.23% 23.08% 7.69%"
+            y="8px minmax(0px, max-content) 9px"
+            absolute
+            style={styles.orderByDropDown}
+            onPress={() => Alert.alert('click')}>
+            <View style={styles.orderByDropDown_item}>
+              <View style={[styles.orderByDropDownTextBox, styles.orderByDropDownTextBox_layout]}>
+                <View style={[styles.orderByDropDownText_box, styles.orderByDropDownText_box_layout]}>
+                  <Text style={styles.orderByDropDownText} ellipsizeMode={'clip'}>
+                    {'Date'}
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View style={styles.orderByDropDown_space} />
+            <View style={styles.orderByDropDown_item1}>
+              <TouchableOpacity
+                x="0px 20fr 14px"
+                y="12px minmax(0px, max-content) 12px"
+                style={styles.orderByTouchableOpacity}
+                onPress={() => Alert.alert('click')}>
+                <ImageBackground
+                  style={[styles.orderByIcon, styles.orderByIcon_layout]}
+                  source={require('../assets/down-arrow.png')}
+                />
+              </TouchableOpacity>
+            </View>
+          </TouchableOpacity>
+
+        </View>
+      </View>
+    </View>
   );
 }
 export default ViewAll;
 
 const styles = StyleSheet.create({
   viewAllPage: {
-    backgroundColor: '#ffffffff',
+    backgroundColor: '#ffffffff'
+  },
+  viewAllPage_layout: {
     marginTop: 0,
     marginBottom: 0,
     marginLeft: 0,
     flexGrow: 1,
     marginRight: 0
   },
+  viewAllPage_item: {
+    flexGrow: 0,
+    flexShrink: 1
+  },
   viewAllTopBar: {
     width: '100%',
-    flexShrink: 1,
+    flexGrow: 1,
     backgroundColor: '#c4c4c4ff',
     elevation: 2,
     shadowColor: '#000000',
@@ -345,38 +392,42 @@ const styles = StyleSheet.create({
     shadowOffset: {
       width: 0,
       height: 1
-    },
-    alignItems: 'center',
-    flexDirection: 'column',
-    top: 0,
-    zIndex: 999
+    }
   },
-  big_title: {
+  topFlex: {
+    flexGrow: 1
+  },
+  topFlex_item: {
+    flexGrow: 0,
+    flexShrink: 1
+  },
+  viewAllTitle: {
     color: '#344053ff',
     textAlign: 'center',
     letterSpacing: 0,
-    lineHeight: 28,
-    fontSize: 24,
+    lineHeight: 30,
+    fontSize: 30,
     fontWeight: '700',
     fontStyle: 'normal',
     fontFamily: 'System' /* Jaldi */,
+    paddingHorizontal: 0,
+    paddingVertical: 0
   },
-  big_title_box: {
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-    paddingLeft: 15,
-    height: '5%',
-    width: '100%',
-    minHeight: 28,
-  },
-  searchBarGroup: {
-    width: '85%',
-    flexShrink: 1,
-    margin: 10,
+  viewAllTitle_box: {
+    flexGrow: 1,
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'flex-start',
+    justifyContent: 'center'
   },
-  searchInput: {
+  searchBar: {
+    width: '100%',
+    flexGrow: 1
+  },
+  block19: {
+    width: '100%',
+    flexGrow: 1
+  },
+  block20: {
     backgroundColor: '#ffffffff',
     borderRadius: 8,
     borderStyle: 'solid',
@@ -389,7 +440,47 @@ const styles = StyleSheet.create({
     shadowOffset: {
       width: 0,
       height: 1
-    },
+    }
+  },
+  block20_layout: {
+    marginTop: 0,
+    height: 44,
+    marginLeft: 0,
+    width: 356,
+    minWidth: 356
+  },
+  searchContents: {
+    flexGrow: 1,
+    flexDirection: 'row'
+  },
+  searchContents_item: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 20
+  },
+  searchIcon: {
+    resizeMode: 'contain'
+  },
+  searchIcon_layout: {
+    marginTop: 2,
+    height: 20,
+    marginBottom: 2,
+    marginLeft: 0,
+    width: 20,
+    minWidth: 20,
+    marginRight: 0
+  },
+  searchContents_space: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 8
+  },
+  searchContents_item1: {
+    flexGrow: 0,
+    flexShrink: 0,
+    minWidth: 0
+  },
+  searchInput: {
     color: '#667084ff',
     textAlign: 'left',
     letterSpacing: 0,
@@ -398,25 +489,101 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     fontStyle: 'normal',
     fontFamily: 'System' /* Inter */,
-    padding: 5,
-    flexGrow: 1
+    paddingHorizontal: 0,
+    paddingVertical: 0
   },
-  searchIconFrame: {
-    resizeMode: 'contain',
-    marginHorizontal: 10
-  },
-  recentPdfTiles: {
-    height: '70%',
-    paddingLeft: 15,
-    paddingRight: 15,
-    overflow: 'visible',
+  searchInput_box: {
+    flexGrow: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start'
   },
   viewAllBottomBar: {
     width: '100%',
-    flexDirection: 'row',
-    flexShrink: 1,
+    flexGrow: 1,
     backgroundColor: '#c4c4c4ff',
-    //shadowColor: 'transparent' /* cannot find mapping from CSS: 0px -4px 4px 0px rgba(0,0,0,0.09803921568627451), https://ethercreative.github.io/react-native-shadow-generator/ */
+    shadowColor:
+      'transparent' /* cannot find mapping from CSS: 0px -4px 4px 0px rgba(0,0,0,0.09803921568627451), https://ethercreative.github.io/react-native-shadow-generator/ */
+  },
+  orderByLabel: {
+    color: '#344053ff',
+    textAlign: 'center',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 14,
+    fontWeight: '500',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+    paddingHorizontal: 0,
+    paddingVertical: 0
+  },
+  orderByLabel_box: {
+    flexGrow: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'center'
+  },
+  bottomFlex: {
+    flexGrow: 1,
+    flexDirection: 'row'
+  },
+  bottomFlex_item: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 42
+  },
+  backIcon: {
+    resizeMode: 'contain'
+  },
+  bottomFlex_space: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 76
+  },
+  bottomFlex_item1: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 24
+  },
+  moreOptionsIcon: {
+    resizeMode: 'contain'
+  },
+  bottomFlex_space1: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 67
+  },
+  bottomFlex_item2: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 153
+  },
+  block12: {
+    width: '100%',
+    flexGrow: 1
+  },
+  block13: {
+    width: '100%',
+    flexGrow: 1
+  },
+  group: {
+    width: '100%',
+    flexGrow: 1
+  },
+  pdfFrame: {},
+  pdfFrame_layout: {
+    position: 'absolute',
+    top: -628,
+    height: 1290,
+    left: -206,
+    width: 356
+  },
+  pdfFrame_item: {
+    flexGrow: 0,
+    flexShrink: 1
+  },
+  pdfTile: {
+    flexGrow: 1,
     borderRadius: 5,
     borderStyle: 'solid',
     borderColor: '#d0d5ddff',
@@ -429,40 +596,341 @@ const styles = StyleSheet.create({
       width: 0,
       height: 1
     },
-    justifyContent: 'center'
+    flexDirection: 'row'
   },
-  backButton: {
+  pdfTile_item: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 90
+  },
+  pdfThumbnail: {
+    resizeMode: 'contain',
+    borderRadius: 5
+  },
+  pdfThumbnail_layout: {
+    marginTop: 0,
+    height: 127,
+    marginBottom: 0,
+    marginLeft: 0,
+    width: 90,
+    minWidth: 90,
+    marginRight: 0
+  },
+  pdfTile_space: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 13
+  },
+  pdfTile_item1: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 253
+  },
+  pdfTileInfo: {
     flexGrow: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: 'row'
   },
-  moreButton: {
-    flexGrow: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+  pdfTileInfo_item: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 220
   },
-  orderByGroup: {
+  pdfTileText: {
+    flexGrow: 1
+  },
+  pdfTileText_item: {
+    flexGrow: 0,
+    flexShrink: 1
+  },
+  pdfName: {
+    color: '#344053ff',
+    textAlign: 'left',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 16,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+    paddingHorizontal: 0,
+    paddingVertical: 0
+  },
+  pdfName_box: {
     flexGrow: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    alignSelf: 'flex-end',
-    marginVertical: 5,
+    justifyContent: 'flex-start'
   },
-  orderByLabel: {
-    color: '#344053ff',
-    textAlign: 'center',
+  pdfDate: {
+    color: '#667084ff',
+    textAlign: 'left',
     letterSpacing: 0,
     lineHeight: 20,
     fontSize: 14,
-    fontWeight: '500',
+    fontWeight: '400',
     fontStyle: 'normal',
     fontFamily: 'System' /* Inter */,
-    padding: 3,
+    paddingHorizontal: 0,
+    paddingVertical: 0
+  },
+  pdfDate_box: {
+    flexGrow: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'flex-start'
+  },
+  pdfTileInfo_item1: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 33
+  },
+  downloadState: {
+    width: '100%',
+    flexGrow: 1
+  },
+  downloadIcon: {
+    resizeMode: 'contain'
+  },
+  downloadIcon_layout: {
+    marginTop: 10,
+    height: 18,
+    marginBottom: 10,
+    marginLeft: 4,
+    width: 18,
+    minWidth: 18,
+    marginRight: 11
+  },
+  block6: {
+    flexGrow: 1,
+    borderRadius: 5,
+    borderStyle: 'solid',
+    borderColor: '#d0d5ddff',
+    borderWidth: 1,
+    elevation: 2,
+    shadowColor: '#000000',
+    shadowRadius: 2.621621621621622,
+    shadowOpacity: 0.2173913043478261,
+    shadowOffset: {
+      width: 0,
+      height: 1
+    },
+    flexDirection: 'row'
+  },
+  block6_item: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 90
+  },
+  image1: {
+    resizeMode: 'contain',
+    borderRadius: 5
+  },
+  image1_layout: {
+    marginTop: 0,
+    height: 128,
+    marginBottom: 0,
+    marginLeft: 0,
+    width: 90,
+    minWidth: 90,
+    marginRight: 0
+  },
+  block6_space: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 13
+  },
+  block6_item1: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 253
+  },
+  block7: {
+    flexGrow: 1,
+    flexDirection: 'row'
+  },
+  block7_item: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 217
+  },
+  block8: {},
+  block8_layout: {
+    marginTop: 0,
+    height: 127,
+    marginBottom: 0,
+    marginLeft: 5,
+    flexGrow: 1,
+    marginRight: 0
+  },
+  pdfName_box1_layout: {
+    position: 'absolute',
+    top: 39,
+    width: 223,
+    right: -8
+  },
+  pdfName_box1: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start'
+  },
+  text_body_box_layout: {
+    position: 'absolute',
+    top: 78,
+    height: 20,
+    left: -2,
+    width: 127
+  },
+  text_body: {
+    color: '#667084ff',
+    textAlign: 'left',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 14,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+    paddingHorizontal: 0,
+    paddingVertical: 0
+  },
+  text_body_box: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'flex-start'
+  },
+  block7_item1: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 36
+  },
+  image2: {
+    resizeMode: 'contain'
+  },
+  image: {
+    resizeMode: 'contain',
+    borderRadius: 5
+  },
+  image_layout: {
+    marginTop: 0,
+    height: 127,
+    marginBottom: 0,
+    marginLeft: 0,
+    width: 90,
+    minWidth: 90,
+    marginRight: 0
+  },
+  pdfTile_item2: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 253
+  },
+  block3: {
+    flexGrow: 1,
+    flexDirection: 'row'
+  },
+  block3_item: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 220
+  },
+  text_body_box1: {
+    flexGrow: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'flex-start'
+  },
+  block3_item1: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 33
+  },
+  block5: {
+    width: '100%',
+    flexGrow: 1
+  },
+  block9: {
+    flexGrow: 1,
+    borderRadius: 5,
+    borderStyle: 'solid',
+    borderColor: '#d0d5ddff',
+    borderWidth: 1,
+    elevation: 2,
+    shadowColor: '#000000',
+    shadowRadius: 2.621621621621622,
+    shadowOpacity: 0.2173913043478261,
+    shadowOffset: {
+      width: 0,
+      height: 1
+    },
+    flexDirection: 'row'
+  },
+  block9_item: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 90
+  },
+  block9_space: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 13
+  },
+  block9_item1: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 253
+  },
+  pdfName_box2_layout: {
+    position: 'absolute',
+    top: 29,
+    width: 218,
+    right: -3
+  },
+  pdfName_box2: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start'
+  },
+  text_body_box_layout1: {
+    position: 'absolute',
+    top: 78,
+    height: 20,
+    left: -2,
+    width: 123
+  },
+  block7_item2: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 36
+  },
+  image2_layout: {
+    marginTop: 0,
+    height: 34,
+    marginBottom: 93,
+    marginLeft: 0,
+    width: 31,
+    minWidth: 31,
+    marginRight: 5
+  },
+  pdfTile_item3: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 253
+  },
+  text_body_box2: {
+    flexGrow: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'flex-start'
+  },
+  block3_item2: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 33
+  },
+  pdfFrame_space: {
+    flexGrow: 0,
     flexShrink: 1
   },
-  orderByDropdown: {
-    flexShrink: 1,
+  orderByDropDown: {
+    flexGrow: 1,
     backgroundColor: '#ffffffff',
     borderRadius: 8,
     borderStyle: 'solid',
@@ -476,86 +944,69 @@ const styles = StyleSheet.create({
       width: 0,
       height: 1
     },
-    flexDirection: 'row',
-    marginVertical: 5,
-    width: 120
+    flexDirection: 'row'
   },
-  orderByDropdownText: {
+  orderByDropDown_item: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 48
+  },
+  orderByDropDownTextBox: {},
+  orderByDropDownTextBox_layout: {
+    marginTop: 10,
+    height: 24,
+    marginBottom: 10,
+    marginLeft: 14,
+    flexGrow: 1,
+    marginRight: 0
+  },
+  orderByDropDownText_box_layout: {
+    position: 'absolute',
+    top: 0,
+    width: 40,
+    right: -6
+  },
+  orderByDropDownText: {
     color: '#667084ff',
     textAlign: 'left',
     letterSpacing: 0,
-    lineHeight: 18,
+    lineHeight: 24,
     fontSize: 16,
     fontWeight: '400',
     fontStyle: 'normal',
     fontFamily: 'System' /* Inter */,
-    padding: 10
+    paddingHorizontal: 0,
+    paddingVertical: 0
   },
   orderByDropDownText_box: {
     flexDirection: 'row',
     alignItems: 'flex-start',
     justifyContent: 'flex-start'
   },
-  orderByDropdownStyle: {
-
-  },
-  modal: {
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  moreModalInner: {
-    width: '45%',
+  orderByDropDown_space: {
+    flexGrow: 0,
     flexShrink: 1,
-    backgroundColor: '#f5f5f5ff',
-    borderRadius: 7,
-    flexDirection: 'column',
-    borderWidth: 1,
-    borderColor: '#667084ff',
-    opacity: 1
+    flexBasis: 8
   },
-  moreModalButton: {
-    flexGrow: 1,
-    height: '8%',
-    alignItems: 'center',
-    flexDirection: 'row'
+  orderByDropDown_item1: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 34
   },
-  moreModalButtonContent: {
-    flexGrow: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    //padding: 5
-  },
-  iconContainer: {
-    width: '40%',
-    height: '100%',
-    alignItems: 'center'
-  },
-  moreModalButtonText: {
-    color: '#344053ff',
-    textAlign: 'center',
-    letterSpacing: 0,
-    lineHeight: 20,
-    fontSize: 18,
-    fontWeight: '400',
-    fontStyle: 'normal',
-    fontFamily: 'System' /* Inter */,
-  },
-  moreModalButtonText_box: {
-    flexShrink: 1
-  },
-  moreModalButtonDivider: {
-    backgroundColor: '#d0d5ddff',
-    height: 1,
-    width: '87%',
-    alignSelf: 'center'
-  },
-  modalBottomBar: {
+  orderByTouchableOpacity: {
     width: '100%',
-    height: '13%',
-    flexDirection: 'row',
-    //flexShrink: 1,
-    justifyContent: 'center',
-    //alignSelf: 'flex-end'
+    flexGrow: 1
   },
+  orderByIcon: {
+    resizeMode: 'contain'
+  },
+  orderByIcon_layout: {
+    marginTop: 8,
+    height: 5,
+    marginBottom: 7,
+    marginLeft: 5,
+    width: 10,
+    minWidth: 10,
+    marginRight: 5
+  }
 });

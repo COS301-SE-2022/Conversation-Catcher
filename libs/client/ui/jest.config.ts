@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   displayName: 'client-ui',
   preset: 'react-native',
   testRunner: 'jest-jasmine2',
@@ -14,7 +14,4 @@ export default {
       'react-native/jest/assetFileTransformer.js'
     ),
   },
-  transformIgnorePatterns: [
-    "node_modules/(?!(@react-native|react-native|react-native-vector-icons|react-native-modal-dropdown|react-native-bouncy-checkbox|react-native-bouncy-checkbox-group|react-native-audio-record|react-native-animatable|react-native-modal|buffer|react-native-permissions|react-native-sound|react-native-document-picker|react-native-file-viewer)/)"
-  ]
 };

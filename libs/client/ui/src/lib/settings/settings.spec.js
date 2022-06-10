@@ -8,12 +8,10 @@ describe('Setup of settings', () => {
     expect(container).toBeTruthy();
   });
 
-  
   const tree = create(<Settings />);
   test('snapshot', () => {
     expect(tree).toMatchSnapshot();
   });
-  
 });
 
 // describe('The actions that occur on button press', () => {

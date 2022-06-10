@@ -1,24 +1,17 @@
 {
-  "$schema": "..\\..\\..\\..\\node_modules\\nx\\schemas\\project-schema.json",
   "sourceRoot": "libs/api/speech-to-text/service/src",
   "projectType": "library",
   "targets": {
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
+      "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "libs/api/speech-to-text/service/**/*.ts"
-        ]
+        "lintFilePatterns": ["libs/api/speech-to-text/service/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "coverage/libs/api/speech-to-text/service"
-      ],
+      "outputs": ["coverage/libs/api/speech-to-text/service"],
       "options": {
         "jestConfig": "libs/api/speech-to-text/service/jest.config.ts",
         "passWithNoTests": true

@@ -1,24 +1,17 @@
 {
-  "$schema": "..\\..\\..\\..\\..\\node_modules\\nx\\schemas\\project-schema.json",
   "sourceRoot": "libs/api/database-manager/api/interface/src",
   "projectType": "library",
   "targets": {
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
+      "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "libs/api/database-manager/api/interface/**/*.ts"
-        ]
+        "lintFilePatterns": ["libs/api/database-manager/api/interface/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "coverage/libs/api/database-manager/api/interface"
-      ],
+      "outputs": ["coverage/libs/api/database-manager/api/interface"],
       "options": {
         "jestConfig": "libs/api/database-manager/api/interface/jest.config.ts",
         "passWithNoTests": true

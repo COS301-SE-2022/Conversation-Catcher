@@ -1,5 +1,4 @@
 {
-  "$schema": "..\\..\\node_modules\\nx\\schemas\\project-schema.json",
   "sourceRoot": "apps/client/src",
   "projectType": "application",
   "targets": {
@@ -22,9 +21,7 @@
     },
     "bundle-ios": {
       "executor": "@nrwl/react-native:bundle",
-      "outputs": [
-        "apps/client/build"
-      ],
+      "outputs": ["apps/client/build"],
       "options": {
         "entryFile": "src/main.tsx",
         "platform": "ios",
@@ -61,20 +58,14 @@
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
+      "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "apps/client/**/*.{ts,tsx,js,jsx}"
-        ]
+        "lintFilePatterns": ["apps/client/**/*.{ts,tsx,js,jsx}"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "coverage/apps/client"
-      ],
+      "outputs": ["coverage/apps/client"],
       "options": {
         "jestConfig": "apps/client/jest.config.ts",
         "passWithNoTests": true

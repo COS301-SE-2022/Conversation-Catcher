@@ -1,11 +1,10 @@
-import { Module, DynamicModule } from '@nestjs/common';
-import { ApiShellModule } from '@conversation-catcher/shell';
+import { Module } from '@nestjs/common';
+
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [ApiShellModule,ConfigModule.forRoot()],
+  imports: [],
   controllers: [AppController],
   providers: [AppService],
 })
