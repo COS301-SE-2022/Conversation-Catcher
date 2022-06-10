@@ -11,6 +11,7 @@ export const ViewAll = ({ navigation }) =>  {
   const [deleteMode, setDeleteMode] = useState(false);
   const [bottomModalVisible, setBottomModalVisible] = useState(false);
   const [bottomModalType, setBottomModalType] = useState("none");
+  const [renameModalVisible, setRenameModalVisible] = useState(false);
 
   function BottomModalButton(props){
   
@@ -291,6 +292,29 @@ export const ViewAll = ({ navigation }) =>  {
                 color="#ffffffff"
                 size={30}
               /> 
+            </TouchableOpacity>
+
+            <BottomModalButton type={bottomModalType}/>
+          </View>
+        </Modal>
+
+        <Modal 
+          style={styles.renameModal}
+          isVisible={renameModalVisible}
+          avoidKeyboard={true}
+          >
+          <View style={styles.moreModalInner}>
+            <TextInput
+              editable/>
+            <TouchableOpacity 
+              style={[styles.backButton, {backgroundColor : colour.state}]}
+              onPress={() => {
+                setBottomModalVisible(false);
+                setDeleteMode(false);
+              }}>
+                <Text>
+                  {'Rename file'}
+                </Text>
             </TouchableOpacity>
 
             <BottomModalButton type={bottomModalType}/>

@@ -1,15 +1,34 @@
-import React, {useState} from 'react';
-import { View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity, Alert } from 'react-native';
+import React, {useState, useCallback} from 'react';
+import { View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity, Alert, PermissionsAndroid } from 'react-native';
 import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import colour from '../colour/colour';
 import Modal from 'react-native-modal';
+import { Buffer } from 'buffer';
+//import Permissions from 'react-native-permissions';
+//import Sound from 'react-native-sound';
+//import AudioRecord from 'react-native-audio-record';
+import DocumentPicker, { types } from 'react-native-document-picker';
 
 export const Home = ({ navigation }) => {
   const [recordingStopVisible, setRecordingStopVisible] = useState(false);
   const [recordAudioState, setRecordAudioState] = useState(false);
   const [uploadVisible, setUploadVisible] = useState(false);
   const [fileSelected, setFileSelected] = useState(false);
+
+  const [fileResponse, setFileResponse] = useState([]);
+
+  const handleDocumentSelection = useCallback(async () => {
+    try {
+      const response = await DocumentPicker.pick({
+        presentationStyle: 'fullScreen',
+        type: [types.audio]
+      });
+      setFileResponse(response);
+    } catch (err) {
+      console.warn(err);
+    }
+  }, []);
 
   function RecordAudioButtonState(props){
     if (recordAudioState) {
@@ -31,7 +50,8 @@ export const Home = ({ navigation }) => {
     return <TouchableOpacity
               style={[styles.recordAudioTouchableOpacity, {backgroundColor : "#d0d5ddff"}]}
               onPress={() => {
-                setRecordAudioState(true)
+                setRecordAudioState(true);
+                start();
               }}>
               <View style={styles.recordAudioIcon}>
                 <Icon 
@@ -47,20 +67,24 @@ export const Home = ({ navigation }) => {
     if (fileSelected) {
       return <TouchableOpacity
               style={styles.changeUploadModalButton}
-              onPress={() => Alert.alert('hiii')}>
+              onPress={() => handleDocumentSelection()}>
               <Icon 
                 style={[styles.uploadModalButtonIcon, {color : colour.state}]}
                 name="file-sound-o"
                 size={16}
               />
+              {fileResponse.map((file, index) => (
               <Text style={[styles.changeUploadModalButtonText, {color : colour.state}]}>
-                {'fine name here'}
+                {file?.uri}
               </Text>
+              ))}
             </TouchableOpacity>
     }
     return <TouchableOpacity
             style={styles.uploadModalButton}
-            onPress={() => setFileSelected(true)}>
+            onPress={() => {
+              setFileSelected(true)
+              handleDocumentSelection()}}>
             <View style={styles.uploadModalButtonContent}>
               <View style={styles.iconContainer}>
                 <Icon 
@@ -72,6 +96,66 @@ export const Home = ({ navigation }) => {
             </View>   
           </TouchableOpacity>
   }
+
+  const componentDidMount = async () =>  {
+    await checkPermission();
+
+    const options = {
+      sampleRate: 16000,
+      channels: 1,
+      bitsPerSample: 16,
+      wavFile: 'test.wav'
+    };
+
+//    AudioRecord.init(options);
+
+{/*    AudioRecord.on('data', data => {
+      const chunk = Buffer.from(data, 'base64');
+      console.log('chunk size', chunk.byteLength);
+      // do something with audio chunk
+    });*/} 
+  }
+
+  const checkPermission = async () => {
+    const p = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.RECORD_AUDIO);
+    console.log('permission check', p);
+    if (p === 'authorized') return;
+    return requestPermission();
+  };
+
+  const requestPermission = async () => {
+    const p = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.RECORD_AUDIO);
+    console.log('permission request', p);
+  };
+
+    //var sound = null;
+    var state = {
+      audioFile: '',
+      recording: false,
+      loaded: false,
+      paused: true
+    };
+
+  const start = () => {
+    console.log('start record');
+    state.audioFile = '';
+    state.recording = true;
+    state.loaded = false;
+    //AudioRecord.start();
+  };
+
+  const stop = async () => {
+    if (!state.recording) return;
+    console.log('stop record');
+    //state.audioFile = await AudioRecord.stop();
+    console.log('audioFile', state.audioFile);
+    //componentDidMount();
+    state.audioFile = false;
+    state.recording = false;
+    
+  };
+
+  componentDidMount();
 
   return (
     <View style={styles.home}>
@@ -151,8 +235,9 @@ export const Home = ({ navigation }) => {
         isVisible={recordingStopVisible}
         hasBackdrop={true}
         backdropColor='white'
-        onBackdropPress={() => setRecordingStopVisible(false)}
-      >
+        onBackdropPress={() => {
+            setRecordingStopVisible(false)
+          }}>
         <View style={styles.recordingStopModalInner}>
           <Text style={styles.modalTitle}>
             {'Recording has been stopped'}
@@ -163,8 +248,9 @@ export const Home = ({ navigation }) => {
           <TouchableOpacity
             style={styles.recordingStopModalButton}
             onPress={() => {
-              setRecordAudioState(false)
-              setRecordingStopVisible(false)
+              stop();
+              setRecordAudioState(false);
+              setRecordingStopVisible(false);
             }}>
             <View style={styles.recordingStopModalButtonContent}>
               <View style={styles.iconContainer}>
@@ -210,6 +296,7 @@ export const Home = ({ navigation }) => {
           <TouchableOpacity 
             style={styles.recordingStopModalButton}
             onPress={() => {
+              stop()
               setRecordAudioState(false)
               setRecordingStopVisible(false)
             }}>
@@ -244,14 +331,14 @@ export const Home = ({ navigation }) => {
             {'Select a file:'}
           </Text>
 
-          <UploadAudioCenter 
-
-          />
+          <UploadAudioCenter/>
 
           <TouchableOpacity
             style={[styles.uploadFileButton, {backgroundColor : colour.state}]}
             state={null}
-            onPress={() => setUploadVisible(false)}>
+            onPress={() => {
+              setUploadVisible(false)
+              }}>
             <View style={styles.uploadModalButtonContent}>
               <View style={styles.uploadModalButtonText_box}>
                 <Text style={styles.uploadModalButtonText}>
@@ -263,7 +350,7 @@ export const Home = ({ navigation }) => {
         </View>
       </Modal>
     </View>
-  );
+  )
 }
 export default Home;
 
