@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useCallback} from 'react';
 import { View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity, Alert, PermissionsAndroid } from 'react-native';
 import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -7,13 +7,28 @@ import Modal from 'react-native-modal';
 import { Buffer } from 'buffer';
 //import Permissions from 'react-native-permissions';
 //import Sound from 'react-native-sound';
-import AudioRecord from 'react-native-audio-record';
+//import AudioRecord from 'react-native-audio-record';
+import DocumentPicker, { types } from 'react-native-document-picker';
 
 export const Home = ({ navigation }) => {
   const [recordingStopVisible, setRecordingStopVisible] = useState(false);
   const [recordAudioState, setRecordAudioState] = useState(false);
   const [uploadVisible, setUploadVisible] = useState(false);
   const [fileSelected, setFileSelected] = useState(false);
+
+  const [fileResponse, setFileResponse] = useState([]);
+
+  const handleDocumentSelection = useCallback(async () => {
+    try {
+      const response = await DocumentPicker.pick({
+        presentationStyle: 'fullScreen',
+        type: [types.audio]
+      });
+      setFileResponse(response);
+    } catch (err) {
+      console.warn(err);
+    }
+  }, []);
 
   function RecordAudioButtonState(props){
     if (recordAudioState) {
@@ -52,20 +67,24 @@ export const Home = ({ navigation }) => {
     if (fileSelected) {
       return <TouchableOpacity
               style={styles.changeUploadModalButton}
-              onPress={() => Alert.alert('hiii')}>
+              onPress={() => handleDocumentSelection()}>
               <Icon 
                 style={[styles.uploadModalButtonIcon, {color : colour.state}]}
                 name="file-sound-o"
                 size={16}
               />
+              {fileResponse.map((file, index) => (
               <Text style={[styles.changeUploadModalButtonText, {color : colour.state}]}>
-                {'fine name here'}
+                {file?.uri}
               </Text>
+              ))}
             </TouchableOpacity>
     }
     return <TouchableOpacity
             style={styles.uploadModalButton}
-            onPress={() => setFileSelected(true)}>
+            onPress={() => {
+              setFileSelected(true)
+              handleDocumentSelection()}}>
             <View style={styles.uploadModalButtonContent}>
               <View style={styles.iconContainer}>
                 <Icon 
@@ -88,13 +107,13 @@ export const Home = ({ navigation }) => {
       wavFile: 'test.wav'
     };
 
-    AudioRecord.init(options);
+//    AudioRecord.init(options);
 
-    AudioRecord.on('data', data => {
+{/*    AudioRecord.on('data', data => {
       const chunk = Buffer.from(data, 'base64');
       console.log('chunk size', chunk.byteLength);
       // do something with audio chunk
-    });
+    });*/} 
   }
 
   const checkPermission = async () => {
@@ -122,13 +141,13 @@ export const Home = ({ navigation }) => {
     state.audioFile = '';
     state.recording = true;
     state.loaded = false;
-    AudioRecord.start();
+    //AudioRecord.start();
   };
 
   const stop = async () => {
     if (!state.recording) return;
     console.log('stop record');
-    state.audioFile = await AudioRecord.stop();
+    //state.audioFile = await AudioRecord.stop();
     console.log('audioFile', state.audioFile);
     //componentDidMount();
     state.audioFile = false;
@@ -317,7 +336,9 @@ export const Home = ({ navigation }) => {
           <TouchableOpacity
             style={[styles.uploadFileButton, {backgroundColor : colour.state}]}
             state={null}
-            onPress={() => setUploadVisible(false)}>
+            onPress={() => {
+              setUploadVisible(false)
+              }}>
             <View style={styles.uploadModalButtonContent}>
               <View style={styles.uploadModalButtonText_box}>
                 <Text style={styles.uploadModalButtonText}>

@@ -15,6 +15,6 @@ export default {
     ),
   },
   transformIgnorePatterns: [
-    "node_modules/(?!(@react-native|react-native|react-native-vector-icons|react-native-modal-dropdown|react-native-bouncy-checkbox|react-native-bouncy-checkbox-group|react-native-audio-record|react-native-animatable|react-native-modal|buffer|react-native-permissions|react-native-sound|react-native-file-viewer)/)"
+    "node_modules/(?!(@react-native|react-native|react-native-vector-icons|react-native-modal-dropdown|react-native-bouncy-checkbox|react-native-bouncy-checkbox-group|react-native-audio-record|react-native-animatable|react-native-modal|buffer|react-native-permissions|react-native-sound|react-native-document-picker|react-native-file-viewer)/)"
   ]
 };

@@ -19,6 +19,7 @@
     "react-native-audio-record": "^0.2.2",
     "react-native-bouncy-checkbox": "^2.1.10",
     "react-native-bouncy-checkbox-group": "^0.1.0",
+    "react-native-document-picker": "^8.1.0",
     "react-native-file-viewer": "^2.1.5",
     "react-native-modal": "^13.0.1",
     "react-native-modal-dropdown": "^1.0.2",
