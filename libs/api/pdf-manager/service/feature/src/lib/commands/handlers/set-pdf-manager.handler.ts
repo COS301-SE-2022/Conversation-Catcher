@@ -58,6 +58,20 @@ export class SetDownloadedPdfHandler
       },
     });
 
+    //Updates the name
+    this.httpService.post(url + action, data, config).pipe(
+      tap((res) => console.log(res.status)),
+      map((res) => res.data)
+    );
+
+    //return updated record
+    action = 'findOne';
+    data = JSON.stringify({
+      collection: 'PDF',
+      database: 'PDF',
+      dataSource: 'Cluster0',
+      filter: { id: id },
+    });
     return await lastValueFrom(
       this.httpService.post(url + action, data, config).pipe(
         tap((res) => console.log(res.status)),
@@ -77,8 +91,8 @@ export class SetNamePdfHandler implements ICommandHandler<SetNamePdfCommand> {
   async execute({ id, name }: SetNamePdfCommand) {
     const url =
       'https://data.mongodb-api.com/app/data-dtzbr/endpoint/data/v1/action/';
-    const action = 'updateOne';
-    const data = JSON.stringify({
+    let action = 'updateOne';
+    let data = JSON.stringify({
       collection: 'PDF',
       database: 'PDF',
       dataSource: 'Cluster0',
@@ -96,8 +110,21 @@ export class SetNamePdfHandler implements ICommandHandler<SetNamePdfCommand> {
         'api-key': GlobalKey.key,
       },
     };
+    //Updates the name
+    this.repository.post(url + action, data, config).pipe(
+      tap((res) => console.log(res.status)),
+      map((res) => res.data)
+    );
+
+    //return updated record
+    action = 'findOne';
+    data = JSON.stringify({
+      collection: 'PDF',
+      database: 'PDF',
+      dataSource: 'Cluster0',
+      filter: { id: id },
+    });
     return await lastValueFrom(
-      //Updates the name and returns if it was a success or not
       this.repository.post(url + action, data, config).pipe(
         tap((res) => console.log(res.status)),
         map((res) => res.data)
