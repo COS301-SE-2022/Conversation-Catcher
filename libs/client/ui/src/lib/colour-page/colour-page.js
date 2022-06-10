@@ -42,6 +42,8 @@ export const ColourPage = ({ navigation}) => {
           />
       </TouchableOpacity >
     </View>
+
+    
   );
 };
 export default ColourPage;

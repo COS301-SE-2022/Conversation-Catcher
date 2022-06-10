@@ -27,6 +27,10 @@
     "react-pdf": "*",
     "react-native-openanything": "*",
     "open": "*",
-    "react-native-file-viewer": "*"
+    "react-native-file-viewer": "*",
+    "buffer": "*",
+    "react-native-permissions": "*",
+    "react-native-sound": "*",
+    "react-native-audio-record": "*"
   }
 }
