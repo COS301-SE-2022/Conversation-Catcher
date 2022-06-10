@@ -14,7 +14,7 @@ export const Home = ({ navigation }) => {
   function RecordAudioButtonState(props){
     if (recordAudioState) {
       return <TouchableOpacity
-              style={[styles.recordAudioTouchableOpacity, styles.recordAudioTouchableOpacityTrue]}
+              style={[styles.recordAudioTouchableOpacity, {backgroundColor : colour.state}]}
               
               onPress={() => {
                 setRecordingStopVisible(true)
@@ -29,7 +29,7 @@ export const Home = ({ navigation }) => {
             </TouchableOpacity>;
     }
     return <TouchableOpacity
-              style={[styles.recordAudioTouchableOpacity, styles.recordAudioTouchableOpacityFalse]}
+              style={[styles.recordAudioTouchableOpacity, {backgroundColor : "#d0d5ddff"}]}
               onPress={() => {
                 setRecordAudioState(true)
               }}>
@@ -49,11 +49,11 @@ export const Home = ({ navigation }) => {
               style={styles.changeUploadModalButton}
               onPress={() => Alert.alert('hiii')}>
               <Icon 
-                style={styles.uploadModalButtonIcon}
+                style={[styles.uploadModalButtonIcon, {color : colour.state}]}
                 name="file-sound-o"
                 size={16}
               />
-              <Text style={styles.changeUploadModalButtonText}>
+              <Text style={[styles.changeUploadModalButtonText, {color : colour.state}]}>
                 {'fine name here'}
               </Text>
             </TouchableOpacity>
@@ -169,7 +169,7 @@ export const Home = ({ navigation }) => {
             <View style={styles.recordingStopModalButtonContent}>
               <View style={styles.iconContainer}>
                 <Icon 
-                  style={styles.recordingStopModalButtonIcon}
+                  style={{color : colour.state}}
                   name="refresh"
                   size={18}
                 />
@@ -192,7 +192,7 @@ export const Home = ({ navigation }) => {
             <View style={styles.recordingStopModalButtonContent}>
               <View style={styles.iconContainer}>
                 <Icon 
-                  style={styles.recordingStopModalButtonIcon}
+                  style={{color : colour.state}}
                   name="microphone"
                   size={20}
                 />
@@ -216,7 +216,7 @@ export const Home = ({ navigation }) => {
             <View style={styles.recordingStopModalButtonContent}>
               <View style={styles.iconContainer}>
                 <Icon 
-                  style={styles.recordingStopModalButtonIcon}
+                  style={{color : colour.state}}
                   name="trash-o"
                   size={20}
                 />
@@ -249,7 +249,7 @@ export const Home = ({ navigation }) => {
           />
 
           <TouchableOpacity
-            style={styles.uploadFileButton}
+            style={[styles.uploadFileButton, {backgroundColor : colour.state}]}
             state={null}
             onPress={() => setUploadVisible(false)}>
             <View style={styles.uploadModalButtonContent}>
@@ -324,11 +324,7 @@ const styles = StyleSheet.create({
     marginRight: 30,
     justifyContent: 'center',
     alignContent: 'center',
-    //backgroundColor: "#3F89BE",
     borderRadius: 8,
-    borderStyle: 'solid',
-    borderColor: '#3f89beff',
-    borderWidth: 1,
     elevation: 2,
     shadowColor: '#000000',
     shadowRadius: 2.621621621621622,
@@ -449,12 +445,6 @@ const styles = StyleSheet.create({
     borderRightColor: '#667084ff',
     borderRightWidth: 1,
   },
-  recordAudioTouchableOpacityTrue: {
-    backgroundColor: "#3F89BE"
-  },
-  recordAudioTouchableOpacityFalse: {
-    backgroundColor: "#d0d5ddff"
-  },
   recordAudioIcon: {
     resizeMode: 'contain',
     padding: 10
@@ -518,9 +508,6 @@ const styles = StyleSheet.create({
     height: '100%',
     alignItems: 'center'
   },
-  recordingStopModalButtonIcon: {
-    color: "#3f89beff"
-  },
   recordingStopModalButtonText: {
     color: '#344053ff',
     textAlign: 'center',
@@ -570,7 +557,6 @@ const styles = StyleSheet.create({
     borderColor: '#667084ff',
   },
   changeUploadModalButtonText: {
-    color: '#3F89BE',
     textAlign: 'center',
     letterSpacing: 0,
     lineHeight: 20,
@@ -587,11 +573,7 @@ const styles = StyleSheet.create({
     margin: 10,
     justifyContent: 'center',
     alignContent: 'center',
-    backgroundColor: "#3F89BE",
     borderRadius: 8,
-    borderStyle: 'solid',
-    borderColor: '#3f89beff',
-    borderWidth: 1,
     elevation: 2,
     shadowColor: '#000000',
     shadowRadius: 2.621621621621622,
@@ -607,9 +589,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     //padding: 5
-  },
-  uploadModalButtonIcon: {
-    color: "#3f89beff"
   },
   uploadModalButtonText: {
     color: '#ffffffff',

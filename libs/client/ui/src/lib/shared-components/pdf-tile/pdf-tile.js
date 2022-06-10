@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { View, StyleSheet, Text, ImageBackground, TouchableOpacity, Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
+import colour from '../colour/colour';
 //import FileViewer from "react-native-file-viewer";
 
 function DownloadButtonState(props){
@@ -9,14 +10,14 @@ function DownloadButtonState(props){
   if (downloadState) {
     return <Icon
               onPress={() => setDownloadState(!downloadState)}
-              color="#3f89beff"
+              color={colour.state}
               name="save"
               size={20}
               container={TouchableOpacity} />;
   }
   return <Icon
           onPress={() => setDownloadState(!downloadState)}
-          color="#3f89beff"
+          color={colour.state}
           name="cloud"
           size={20}
           container={TouchableOpacity} />;
@@ -28,14 +29,14 @@ function DetermineTileCorner(props){
   if (c){
     return <BouncyCheckbox
             size={20}
-            fillColor="red"
+            fillColor={colour.state}
             unfillColor="#FFFFFF"
-            iconStyle={{ borderColor: "red" }}
+            iconStyle={{ borderColor: colour.state }}
             isChecked={checkboxState}
             onPress={() => setCheckboxState(!checkboxState)}
-          />
+          />;
   }
-  return DownloadButtonState(props)
+  return <DownloadButtonState downloadState={props.downloaded}/>;
 }
 
 export default class PdfTile extends Component {
@@ -56,7 +57,7 @@ export default class PdfTile extends Component {
         style={styles.pdfTile}
         //onPress={() => FileViewer.open(source)}>
         onPress={() => Alert.alert('pdf')}>
-        <View style={styles.thumbnail_containter}>
+        <View style={[styles.thumbnail_containter, {borderColor : colour.state}]}>
           <ImageBackground
             style={styles.pdfThumbnail}
             //source={source}
@@ -108,7 +109,6 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: 5,
     borderStyle: 'solid',
-    borderColor: "#3F89BE",
     borderWidth: 1,
     aspectRatio: 1/1.4142,
 

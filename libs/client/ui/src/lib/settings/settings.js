@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Text, ImageBackground, TouchableOpacity, Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import colour from '../colour/colour';
 
 export const SettingsPage = ({ navigation }) => {
   return (
@@ -17,7 +18,7 @@ export const SettingsPage = ({ navigation }) => {
           <View style={styles.settingsButtonContent}>
             <View style={styles.iconContainer}>
               <Icon 
-                style={styles.settingsButtonIcon}
+                style={[styles.settingsButtonIcon, {color : colour.state}]}
                 name="envelope"
                 size={18}
               />
@@ -38,7 +39,7 @@ export const SettingsPage = ({ navigation }) => {
           <View style={styles.settingsButtonContent}>
             <View style={styles.iconContainer}>
               <Icon 
-                style={styles.settingsButtonIcon}
+                style={[styles.settingsButtonIcon, {color : colour.state}]}
                 name="lock"
                 size={20}
               />
@@ -59,7 +60,7 @@ export const SettingsPage = ({ navigation }) => {
           <View style={styles.settingsButtonContent}>
             <View style={styles.iconContainer}>
               <Icon 
-                style={styles.settingsButtonIcon}
+                style={[styles.settingsButtonIcon, {color : colour.state}]}
                 name="sliders"
                 size={20}
               />
@@ -80,7 +81,7 @@ export const SettingsPage = ({ navigation }) => {
           <View style={styles.settingsButtonContent}>
             <View style={styles.iconContainer}>
               <Icon 
-                style={styles.settingsButtonIcon}
+                style={[styles.settingsButtonIcon, {color : colour.state}]}
                 name="sign-out"
                 size={20}
               />
@@ -96,10 +97,10 @@ export const SettingsPage = ({ navigation }) => {
 
       <TouchableOpacity  
         style={styles.backButton} 
-        onPress={() => navigation.navigate('Home')}>
+        onPress={() => navigation.goBack()}>
           <Icon 
             name="angle-left"
-            color="#3f89beff"
+            color={colour.state}
             size={28}
           />
       </TouchableOpacity >
@@ -165,9 +166,6 @@ const styles = StyleSheet.create({
     width: '15%',
     height: '100%',
     alignItems: 'center'
-  },
-  settingsButtonIcon: {
-    color: "#3f89beff"
   },
   settingsButtonText: {
     color: '#344053ff',

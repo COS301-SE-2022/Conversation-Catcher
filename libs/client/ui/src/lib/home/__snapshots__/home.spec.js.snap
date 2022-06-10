@@ -88,14 +88,18 @@ exports[`Home snapshot 1`] = `
     >
       <View
         style={
-          Object {
-            "aspectRatio": 0.7071135624381276,
-            "borderColor": "#3F89BE",
-            "borderRadius": 5,
-            "borderStyle": "solid",
-            "borderWidth": 1,
-            "flex": 1,
-          }
+          Array [
+            Object {
+              "aspectRatio": 0.7071135624381276,
+              "borderRadius": 5,
+              "borderStyle": "solid",
+              "borderWidth": 1,
+              "flex": 1,
+            },
+            Object {
+              "borderColor": "#3F89BE",
+            },
+          ]
         }
       >
         <View
@@ -229,7 +233,7 @@ exports[`Home snapshot 1`] = `
             style={
               Array [
                 Object {
-                  "color": "#3f89beff",
+                  "color": "#3F89BE",
                   "fontSize": 20,
                 },
                 undefined,
@@ -281,14 +285,18 @@ exports[`Home snapshot 1`] = `
     >
       <View
         style={
-          Object {
-            "aspectRatio": 0.7071135624381276,
-            "borderColor": "#3F89BE",
-            "borderRadius": 5,
-            "borderStyle": "solid",
-            "borderWidth": 1,
-            "flex": 1,
-          }
+          Array [
+            Object {
+              "aspectRatio": 0.7071135624381276,
+              "borderRadius": 5,
+              "borderStyle": "solid",
+              "borderWidth": 1,
+              "flex": 1,
+            },
+            Object {
+              "borderColor": "#3F89BE",
+            },
+          ]
         }
       >
         <View
@@ -422,7 +430,7 @@ exports[`Home snapshot 1`] = `
             style={
               Array [
                 Object {
-                  "color": "#3f89beff",
+                  "color": "#3F89BE",
                   "fontSize": 20,
                 },
                 undefined,
@@ -474,14 +482,18 @@ exports[`Home snapshot 1`] = `
     >
       <View
         style={
-          Object {
-            "aspectRatio": 0.7071135624381276,
-            "borderColor": "#3F89BE",
-            "borderRadius": 5,
-            "borderStyle": "solid",
-            "borderWidth": 1,
-            "flex": 1,
-          }
+          Array [
+            Object {
+              "aspectRatio": 0.7071135624381276,
+              "borderRadius": 5,
+              "borderStyle": "solid",
+              "borderWidth": 1,
+              "flex": 1,
+            },
+            Object {
+              "borderColor": "#3F89BE",
+            },
+          ]
         }
       >
         <View
@@ -615,7 +627,7 @@ exports[`Home snapshot 1`] = `
             style={
               Array [
                 Object {
-                  "color": "#3f89beff",
+                  "color": "#3F89BE",
                   "fontSize": 20,
                 },
                 undefined,
@@ -658,10 +670,7 @@ exports[`Home snapshot 1`] = `
         Object {
           "alignContent": "center",
           "backgroundColor": "#3F89BE",
-          "borderColor": "#3f89beff",
           "borderRadius": 8,
-          "borderStyle": "solid",
-          "borderWidth": 1,
           "elevation": 2,
           "flexGrow": 1,
           "justifyContent": "center",

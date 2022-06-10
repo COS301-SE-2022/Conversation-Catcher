@@ -8,7 +8,6 @@ import { PdfEntity } from "@conversation-catcher/api/pdf-manager/api/data-access
 export class ApiPdfManagerApiFeatureResolver {
 	constructor(private pdfService: ApiPdfManagerServiceFeatureService) {}
 	
-	
 	/*
 		id - id of pdf in DB
 		name - name of pdf
@@ -27,8 +26,8 @@ export class ApiPdfManagerApiFeatureResolver {
 			pdfObj.id = pdfArr.id;
 			pdfObj.name = pdfArr.name;
 			pdfObj.pdf = pdfArr.pdf;
-			pdfObj.creationDate = pdfArr.creationDate
-			pdfObj.downloaded = pdfArr.downloaded
+			pdfObj.creationDate = pdfArr.creationDate;
+			pdfObj.downloaded = pdfArr.downloaded;
 			
 			return pdfObj;
 		}
@@ -50,8 +49,9 @@ export class ApiPdfManagerApiFeatureResolver {
 		
 				pdfsObj.id = pdf.id;
 				pdfsObj.name = pdf.name;
-				pdfsObj.pdf = pdf.pdf;
-				pdfsObj.downloaded = pdf.downloaded
+				pdfsObj.pdf = pdf.pdf.toString('ascii');
+				pdfsObj.creationDate = pdf.creationDate;
+				pdfsObj.downloaded = pdf.downloaded;
 
 				arrOfPDFs.push(pdfsObj);
 			}
@@ -69,9 +69,9 @@ export class ApiPdfManagerApiFeatureResolver {
 			const pdfObj = new PdfEntity();
 			pdfObj.id = pdfArr.id;
 			pdfObj.name = pdfArr.name;
-			pdfObj.pdf = pdfArr.pdf;
-			pdfObj.creationDate = pdfArr.creationDate
-			pdfObj.downloaded = pdfArr.downloaded
+			pdfObj.pdf = pdfArr.pdf.toString('ascii');
+			pdfObj.creationDate = pdfArr.creationDate;
+			pdfObj.downloaded = pdfArr.downloaded;
 			
 			return pdfObj;
 		}
@@ -88,9 +88,9 @@ export class ApiPdfManagerApiFeatureResolver {
 			const pdfObj = new PdfEntity();
 			pdfObj.id = pdfArr.id;
 			pdfObj.name = pdfArr.name;
-			pdfObj.pdf = pdfArr.pdf;
-			pdfObj.creationDate = pdfArr.creationDate
-			pdfObj.downloaded = pdfArr.downloaded
+			pdfObj.pdf = pdfArr.pdf.toString('ascii');
+			pdfObj.creationDate = pdfArr.creationDate;
+			pdfObj.downloaded = pdfArr.downloaded;
 			
 			return pdfObj;
 		}
@@ -108,9 +108,9 @@ export class ApiPdfManagerApiFeatureResolver {
 			const pdfObj = new PdfEntity();
 			pdfObj.id = pdfArr.id;
 			pdfObj.name = pdfArr.name;
-			pdfObj.pdf = pdfArr.pdf;
-			pdfObj.creationDate = pdfArr.creationDate
-			pdfObj.downloaded = pdfArr.downloaded
+			pdfObj.pdf = pdfArr.pdf.toString('ascii');
+			pdfObj.creationDate = pdfArr.creationDate;
+			pdfObj.downloaded = pdfArr.downloaded;
 			
 			return pdfObj;
 		}
