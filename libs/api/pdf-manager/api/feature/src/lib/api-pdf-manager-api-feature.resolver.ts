@@ -7,7 +7,7 @@ import { PdfEntity } from "@conversation-catcher/api/pdf-manager/api/data-access
 @Resolver()
 export class ApiPdfManagerApiFeatureResolver {
 	constructor(private pdfService: ApiPdfManagerServiceFeatureService) {}
-	
+
 	/*
 		id - id of pdf in DB
 		name - name of pdf
@@ -18,9 +18,9 @@ export class ApiPdfManagerApiFeatureResolver {
 
 	// get a single pdf by its id
 	@Query(() => PdfEntity)
-	async getPDFById(@Args('c=pdfID', { type: () => String }) id: string) {
+	async getPDFById(@Args('id', { type: () => String }) id: string) {
 		const pdfArr = await this.pdfService.getPdfById(id);
-  
+
 		if (pdfArr.length > 0) {
 			const pdfObj = new PdfEntity();
 			pdfObj.id = pdfArr.id;
@@ -28,7 +28,7 @@ export class ApiPdfManagerApiFeatureResolver {
 			pdfObj.pdf = pdfArr.pdf;
 			pdfObj.creationDate = pdfArr.creationDate;
 			pdfObj.downloaded = pdfArr.downloaded;
-			
+
 			return pdfObj;
 		}
 
@@ -37,7 +37,7 @@ export class ApiPdfManagerApiFeatureResolver {
 
 	// get all of the user's pdfs
 	@Query(() => [PdfEntity], { nullable: true })
-	async getPDFs(@Args('c=pdfID', { type: () => String }) userid: string) {
+	async getPDFs(@Args('id', { type: () => String }) userid: string) {
 		const pdfsArr = await this.pdfService.getPdfs(userid);
 
 		if (pdfsArr.length > 0) {
@@ -46,7 +46,7 @@ export class ApiPdfManagerApiFeatureResolver {
 			for (let index = 0; index < pdfsArr.length; index++) {
 				const pdf = pdfsArr[index];
 				const pdfsObj = new PdfEntity();
-		
+
 				pdfsObj.id = pdf.id;
 				pdfsObj.name = pdf.name;
 				pdfsObj.pdf = pdf.pdf.toString('ascii');
@@ -55,9 +55,9 @@ export class ApiPdfManagerApiFeatureResolver {
 
 				arrOfPDFs.push(pdfsObj);
 			}
-		
+
 			return arrOfPDFs;
-		} 
+		}
 	}
 
 	// rename the pdf with this id
@@ -72,7 +72,7 @@ export class ApiPdfManagerApiFeatureResolver {
 			pdfObj.pdf = pdfArr.pdf.toString('ascii');
 			pdfObj.creationDate = pdfArr.creationDate;
 			pdfObj.downloaded = pdfArr.downloaded;
-			
+
 			return pdfObj;
 		}
 
@@ -91,7 +91,7 @@ export class ApiPdfManagerApiFeatureResolver {
 			pdfObj.pdf = pdfArr.pdf.toString('ascii');
 			pdfObj.creationDate = pdfArr.creationDate;
 			pdfObj.downloaded = pdfArr.downloaded;
-			
+
 			return pdfObj;
 		}
 
@@ -110,7 +110,7 @@ export class ApiPdfManagerApiFeatureResolver {
 			pdfObj.pdf = pdfArr.pdf.toString('ascii');
 			pdfObj.creationDate = pdfArr.creationDate;
 			pdfObj.downloaded = pdfArr.downloaded;
-			
+
 			return pdfObj;
 		}
 
