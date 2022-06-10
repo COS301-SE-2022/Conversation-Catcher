@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
-import { View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity, Alert } from 'react-native';
+import { View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity, Alert, PermissionsAndroid } from 'react-native';
 import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import colour from '../colour/colour';
 import Modal from 'react-native-modal';
 import { Buffer } from 'buffer';
-import Permissions from 'react-native-permissions';
+//import Permissions from 'react-native-permissions';
 import Sound from 'react-native-sound';
 import AudioRecord from 'react-native-audio-record';
 
@@ -35,7 +35,6 @@ export const Home = ({ navigation }) => {
     return <TouchableOpacity
               style={[styles.recordAudioTouchableOpacity, {backgroundColor : "#d0d5ddff"}]}
               onPress={() => {
-                componentDidMount();
                 setRecordAudioState(true);
                 start();
               }}>
@@ -80,7 +79,7 @@ export const Home = ({ navigation }) => {
   }
 
   const componentDidMount = async () =>  {
-    await this.checkPermission();
+    await checkPermission();
 
     const options = {
       sampleRate: 16000,
@@ -99,73 +98,93 @@ export const Home = ({ navigation }) => {
   }
 
   const checkPermission = async () => {
-    const p = await Permissions.check('microphone');
+    const p = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.RECORD_AUDIO);
     console.log('permission check', p);
     if (p === 'authorized') return;
-    return this.requestPermission();
+    return requestPermission();
   };
 
   const requestPermission = async () => {
-    const p = await Permissions.request('microphone');
+    const p = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.RECORD_AUDIO);
     console.log('permission request', p);
   };
 
+    //var sound = null;
+    var state = {
+      audioFile: '',
+      recording: false,
+      loaded: false,
+      paused: true,
+      sound: null
+    };
+
   const start = () => {
     console.log('start record');
+    state.audioFile = '';
+    state.recording = true;
+    state.loaded = false;
     AudioRecord.start();
   };
 
   const stop = async () => {
-    if (!this.state.recording) return;
+    if (!state.recording) return;
     console.log('stop record');
-    let audioFile = await AudioRecord.stop();
-    console.log('audioFile', audioFile);
+    state.audioFile = await AudioRecord.stop();
+    console.log('audioFile', state.audioFile);
+    load();
+    play();
+    componentDidMount();
+    state.audioFile = false;
+    state.recording = false;
+    
   };
 
   const load = () => {
     return new Promise((resolve, reject) => {
-      if (!this.state.audioFile) {
+      if (!state.audioFile) {
         return reject('file path is empty');
       }
 
-      this.sound = new Sound(this.state.audioFile, '', error => {
+      state.sound = new Sound(state.audioFile, '', error => {
         if (error) {
           console.log('failed to load the file', error);
           return reject(error);
         }
-        this.setState({ loaded: true });
+        state.loaded = true;
         return resolve();
       });
     });
   };
 
   const play = async () => {
-    if (!this.state.loaded) {
+    if (!state.loaded) {
       try {
-        await this.load();
+        await load();
       } catch (error) {
         console.log(error);
       }
     }
 
-    this.setState({ paused: false });
+    state.paused = false;
     Sound.setCategory('Playback');
 
-    this.sound.play(success => {
+    state.sound.play(success => {
       if (success) {
         console.log('successfully finished playing');
       } else {
         console.log('playback failed due to audio decoding errors');
       }
-      this.setState({ paused: true });
-      // this.sound.release();
+      state.paused = true;
+      // sound.release();
     });
   };
 
   const pause = () => {
-    this.sound.pause();
-    this.setState({ paused: true });
+    state.sound.pause();
+    state.paused = true ;
   };
+
+  componentDidMount();
 
   return (
     <View style={styles.home}>
@@ -245,7 +264,9 @@ export const Home = ({ navigation }) => {
         isVisible={recordingStopVisible}
         hasBackdrop={true}
         backdropColor='white'
-        onBackdropPress={() => setRecordingStopVisible(false)}>
+        onBackdropPress={() => {
+            setRecordingStopVisible(false)
+          }}>
         <View style={styles.recordingStopModalInner}>
           <Text style={styles.modalTitle}>
             {'Recording has been stopped'}
@@ -256,11 +277,9 @@ export const Home = ({ navigation }) => {
           <TouchableOpacity
             style={styles.recordingStopModalButton}
             onPress={() => {
+              stop();
               setRecordAudioState(false);
               setRecordingStopVisible(false);
-              //title="Stop";
-              //disabled={!recording};
-              stop();
             }}>
             <View style={styles.recordingStopModalButtonContent}>
               <View style={styles.iconContainer}>
@@ -306,6 +325,7 @@ export const Home = ({ navigation }) => {
           <TouchableOpacity 
             style={styles.recordingStopModalButton}
             onPress={() => {
+              stop()
               setRecordAudioState(false)
               setRecordingStopVisible(false)
             }}>
