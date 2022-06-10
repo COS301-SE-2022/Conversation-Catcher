@@ -1,356 +1,262 @@
-import React, {useState, useCallback} from 'react';
-import { View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity, Alert, PermissionsAndroid } from 'react-native';
-import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import colour from '../colour/colour';
-import Modal from 'react-native-modal';
-import { Buffer } from 'buffer';
-//import Permissions from 'react-native-permissions';
-//import Sound from 'react-native-sound';
-import AudioRecord from 'react-native-audio-record';
-import DocumentPicker, { types } from 'react-native-document-picker';
+import React from 'react';
+import { View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity, Alert } from 'react-native';
 
 export const Home = ({ navigation }) => {
-  const [recordingStopVisible, setRecordingStopVisible] = useState(false);
-  const [recordAudioState, setRecordAudioState] = useState(false);
-  const [uploadVisible, setUploadVisible] = useState(false);
-  const [fileSelected, setFileSelected] = useState(false);
-
-  const [fileResponse, setFileResponse] = useState([]);
-
-  const handleDocumentSelection = useCallback(async () => {
-    try {
-      const response = await DocumentPicker.pick({
-        presentationStyle: 'fullScreen',
-        type: [types.audio]
-      });
-      setFileResponse(response);
-    } catch (err) {
-      console.warn(err);
-    }
-  }, []);
-
-  function RecordAudioButtonState(props){
-    if (recordAudioState) {
-      return <TouchableOpacity
-              style={[styles.recordAudioTouchableOpacity, {backgroundColor : colour.state}]}
-              
-              onPress={() => {
-                setRecordingStopVisible(true)
-              }}>
-              <View style={styles.recordAudioIcon}>
-                <Icon 
-                  color="#ffffffff"
-                  name="stop"
-                  size={40}
-                />
-              </View>
-            </TouchableOpacity>;
-    }
-    return <TouchableOpacity
-              style={[styles.recordAudioTouchableOpacity, {backgroundColor : "#d0d5ddff"}]}
-              onPress={() => {
-                setRecordAudioState(true);
-                start();
-              }}>
-              <View style={styles.recordAudioIcon}>
-                <Icon 
-                  color="#667084ff"
-                  name="microphone"
-                  size={40}
-                />
-              </View>
-            </TouchableOpacity>;
-  }
-
-  function UploadAudioCenter(props){
-    if (fileSelected) {
-      return <TouchableOpacity
-              style={styles.changeUploadModalButton}
-              onPress={() => handleDocumentSelection()}>
-              <Icon 
-                style={[styles.uploadModalButtonIcon, {color : colour.state}]}
-                name="file-sound-o"
-                size={16}
-              />
-              {fileResponse.map((file, index) => (
-              <Text style={[styles.changeUploadModalButtonText, {color : colour.state}]}>
-                {file?.uri}
-              </Text>
-              ))}
-            </TouchableOpacity>
-    }
-    return <TouchableOpacity
-            style={styles.uploadModalButton}
-            onPress={() => {
-              setFileSelected(true)
-              handleDocumentSelection()}}>
-            <View style={styles.uploadModalButtonContent}>
-              <View style={styles.iconContainer}>
-                <Icon 
-                  style={styles.uploadModalButtonIcon}
-                  name="file-sound-o"
-                  size={40}
-                />
-              </View>
-            </View>   
-          </TouchableOpacity>
-  }
-
-  const componentDidMount = async () =>  {
-    await checkPermission();
-
-    const options = {
-      sampleRate: 16000,
-      channels: 1,
-      bitsPerSample: 16,
-      wavFile: 'test.wav'
-    };
-
-    AudioRecord.init(options);
-
-    AudioRecord.on('data', data => {
-      const chunk = Buffer.from(data, 'base64');
-      console.log('chunk size', chunk.byteLength);
-      // do something with audio chunk
-    })
-  }
-
-  const checkPermission = async () => {
-    const p = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.RECORD_AUDIO);
-    console.log('permission check', p);
-    if (p === 'authorized') return;
-    return requestPermission();
-  };
-
-  const requestPermission = async () => {
-    const p = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.RECORD_AUDIO);
-    console.log('permission request', p);
-  };
-
-    //var sound = null;
-    var state = {
-      audioFile: '',
-      recording: false,
-      loaded: false,
-      paused: true
-    };
-
-  const start = () => {
-    console.log('start record');
-    state.audioFile = '';
-    state.recording = true;
-    state.loaded = false;
-    AudioRecord.start();
-  };
-
-  const stop = async () => {
-    if (!state.recording) return;
-    console.log('stop record');
-    state.audioFile = await AudioRecord.stop();
-    console.log('audioFile', state.audioFile);
-    componentDidMount();
-    state.audioFile = false;
-    state.recording = false;
-    
-  };
-
-  componentDidMount();
-
   return (
-    <View style={styles.home}>
-      <View style={styles.big_title_box}>
-        <Text style={styles.big_title} ellipsizeMode={'clip'}>
-          {'Recents'}
-        </Text>
-      </View>
-      <View style={styles.recentPdfTiles}>
-        <PdfTile 
-          id = {1}
-          name = 'Bug introduction: a modification of code' 
-          date = '1 May 2022, 9:37' 
-          source = {require('../assets/pdf-bug-intro.png')} 
-          RecordAudioed = {true}
-          showCheck = {false}
-          navigation = {navigation}/>
-        <PdfTile 
-          id = {2}
-          name = 'Human-computer interaction' 
-          date = '21 Apr 2022, 14:18' 
-          source = {require('../assets/pdf-human-computer.png')} 
-          RecordAudioed = {false}
-          showCheck = {false}
-          navigation = {navigation}/>
-        <PdfTile 
-          id = {3}
-          name = 'The tropical plants of the Philippines' 
-          date = '13 Apr 2022, 11:53' 
-          source = {require('../assets/pdf-tropical-plants.png')} 
-          RecordAudioed = {true}
-          showCheck = {false}
-          navigation = {navigation}/>
-      </View>
-      <View style={styles.viewAllTouchableOpacityFrame}>
-        <TouchableOpacity
-          style={[styles.viewAllTouchableOpacity,{backgroundColor : colour.state}]}
-          onPress={() => {navigation.navigate('ViewAll')}}>
-          <View
-            style={styles.viewAllTouchableOpacityLabel_box}>
-            <Text style={styles.viewAllTouchableOpacityLabel} ellipsizeMode={'clip'}>
-              {'View all PDFs'}
-            </Text>
-          </View>
-        </TouchableOpacity>
-      </View>
-      <TouchableOpacity
-        style={styles.settingsTouchableOpacityFrame}
-        onPress={() => navigation.navigate('Settings')}>
-        <View
-          style={styles.settingTouchableOpacity}>
-          <View style={styles.settingsText_box}>
-            <Text style={styles.settingsText} ellipsizeMode={'clip'}>
-              {'Settings'}
-            </Text>
-          </View>
-        </View>
-      </TouchableOpacity>
-      <View style={styles.audioTouchableOpacityGroup}>
-        <RecordAudioButtonState
-        />
-        <TouchableOpacity
-          style={styles.uploadAudioTouchableOpacity}
-          onPress={() => setUploadVisible(true)}>
-          <View style={styles.uploadAudioIcon}>
-            <Icon 
-              color="#667084ff"
-              name="upload"
-              size={40}
-            />
-          </View>
-        </TouchableOpacity>
-      </View>
-
-      <Modal
-        style={styles.modal}
-        isVisible={recordingStopVisible}
-        hasBackdrop={true}
-        backdropColor='white'
-        onBackdropPress={() => {
-            setRecordingStopVisible(false)
-          }}>
-        <View style={styles.recordingStopModalInner}>
-          <Text style={styles.modalTitle}>
-            {'Recording has been stopped'}
-          </Text>
-
-          <View style={styles.recordingStopModalButtonDivider} /> 
-
-          <TouchableOpacity
-            style={styles.recordingStopModalButton}
-            onPress={() => {
-              stop();
-              setRecordAudioState(false);
-              setRecordingStopVisible(false);
-            }}>
-            <View style={styles.recordingStopModalButtonContent}>
-              <View style={styles.iconContainer}>
-                <Icon 
-                  style={{color : colour.state}}
-                  name="refresh"
-                  size={18}
-                />
-              </View>
-              <View style={styles.recordingStopModalButtonText_box}>
-                <Text style={styles.recordingStopModalButtonText} ellipsizeMode={'clip'}>
-                  {'Convert recording'}
-                </Text>
-              </View>
-            </View>   
-          </TouchableOpacity>
-
-          <View style={styles.recordingStopModalButtonDivider} /> 
-
-          <TouchableOpacity
-            style={styles.recordingStopModalButton}
-            onPress={() => {
-              setRecordingStopVisible(false)
-            }}>
-            <View style={styles.recordingStopModalButtonContent}>
-              <View style={styles.iconContainer}>
-                <Icon 
-                  style={{color : colour.state}}
-                  name="microphone"
-                  size={20}
-                />
-              </View>
-              <View style={styles.recordingStopModalButtonText_box}>
-                <Text style={styles.recordingStopModalButtonText}>
-                  {'Resume recording'}
+    <View style={[styles.home, styles.home_layout]}>
+      <View style={[styles.homeFlex, styles.homeFlex_layout]}>
+        <View style={styles.homeFlex_item}>
+          <View x="0px 360fr 4px" y="0px minmax(0px, max-content) 0px" style={styles.pdfContents}>
+            <View style={styles.pdfContents_item}>
+              <View x="3.61% 27.5% 68.89%" y="0px minmax(0px, max-content) 0px" style={styles.big_title_box}>
+                <Text style={styles.big_title} ellipsizeMode={'clip'}>
+                  {'Recents'}
                 </Text>
               </View>
             </View>
-          </TouchableOpacity>
-
-          <View style={styles.recordingStopModalButtonDivider} /> 
-
-          <TouchableOpacity 
-            style={styles.recordingStopModalButton}
-            onPress={() => {
-              stop()
-              setRecordAudioState(false)
-              setRecordingStopVisible(false)
-            }}>
-            <View style={styles.recordingStopModalButtonContent}>
-              <View style={styles.iconContainer}>
-                <Icon 
-                  style={{color : colour.state}}
-                  name="trash-o"
-                  size={20}
+            <View style={styles.pdfContents_item}>
+              <View x="4px 356fr 0px" y="24px minmax(0px, max-content) 0px" style={styles.recentPdfTiles}>
+                <View style={styles.recentPdfTiles_item}>
+                  <TouchableOpacity type="TouchableOpacity" id="btn"
+                    x="0px 356fr 0px"
+                    y="0px minmax(0px, max-content) 0px"
+                    style={styles.pdfTile}
+                    onPress={() => Alert.alert('click')}>
+                    <View style={styles.pdfTile_item}>
+                      <ImageBackground
+                        style={[styles.pdfThumbnail, styles.pdfThumbnail_layout]}
+                        source={require('../assets/pdf-bug-intro.png')}
+                      />
+                    </View>
+                    <View style={styles.pdfTile_space}/>
+                    <View style={styles.pdfTile_item1}>
+                      <View x="0px 253fr 0px" y="0px minmax(0px, max-content) 0px" style={styles.pdfTileInfo}>
+                        <View style={styles.pdfTileInfo_item}>
+                          <View x="1px 219fr 0px" y="0px minmax(0px, max-content) 0px" style={styles.pdfTileText}>
+                            <View style={styles.pdfTileText_item}>
+                              <View
+                                x="0px 218fr 1px"
+                                y="29px minmax(0px, max-content) 0px"
+                                style={styles.pdfName_box}>
+                                <Text style={styles.pdfName} ellipsizeMode={'clip'}>
+                                  {'Bug introduction: a modification of code'}
+                                </Text>
+                              </View>
+                            </View>
+                            <View style={styles.pdfTileText_item}>
+                              <View
+                                x="1px 217fr 1px"
+                                y="9px minmax(0px, max-content) 29px"
+                                style={styles.pdfDate_box}>
+                                <Text style={styles.pdfDate} ellipsizeMode={'clip'}>
+                                  {'1 May 2022, 9:37'}
+                                </Text>
+                              </View>
+                            </View>
+                          </View>
+                        </View>
+                        <View style={styles.pdfTileInfo_item1}>
+                          <TouchableOpacity 
+                            x="0px 33fr 0px"
+                            y="0px minmax(0px, max-content) 89px"
+                            style={styles.downloadState}
+                            onPress={() => Alert.alert('click')}>
+                            <ImageBackground
+                              style={[styles.downloadIcon, styles.downloadIcon_layout]}
+                              source={require('../assets/save.png')}
+                            />
+                          </TouchableOpacity>
+                        </View>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.recentPdfTiles_item}>
+                  <TouchableOpacity
+                    x="0px 356fr 0px"
+                    y="18px minmax(0px, max-content) 0px"
+                    style={styles.pdfTile}
+                    onPress={() => Alert.alert('click')}>
+                    <View style={styles.pdfTile_item}>
+                      <ImageBackground
+                        style={[styles.pdfThumbnail, styles.pdfThumbnail_layout1]}
+                        source={require('../assets/pdf-human-computer.png')}
+                      />
+                    </View>
+                    <View style={styles.pdfTile_space} />
+                    <View style={styles.pdfTile_item2}>
+                      <View x="0px 253fr 0px" y="0px minmax(0px, max-content) 1px" style={styles.block8}>
+                        <View style={styles.block8_item}>
+                          <View style={[styles.block9, styles.block9_layout]}>
+                            <View style={[styles.pdfName_box1, styles.pdfName_box1_layout]}>
+                              <Text style={styles.pdfName} ellipsizeMode={'clip'}>
+                                {'Human-computer interaction'}
+                              </Text>
+                            </View>
+                            <View style={[styles.pdfDate_box1, styles.pdfDate_box1_layout]}>
+                              <Text style={styles.pdfDate} ellipsizeMode={'clip'}>
+                                {'21 Apr 2022, 14:18'}
+                              </Text>
+                            </View>
+                          </View>
+                        </View>
+                        <View style={styles.block8_item1}>
+                          <ImageBackground
+                            x="0px 31px 5px"
+                            y="0px 34px 93px"
+                            style={styles.image2}
+                            onPress={() => Alert.alert('click')}
+                            source={require('../assets/cloud.png')}
+                            container={TouchableOpacity}
+                          />
+                        </View>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.recentPdfTiles_item}>
+                  <TouchableOpacity
+                    x="0px 356fr 0px"
+                    y="18px minmax(0px, max-content) 0px"
+                    style={styles.pdfTile}
+                    onPress={() => Alert.alert('click')}>
+                    <View style={styles.pdfTile_item}>
+                      <ImageBackground
+                        style={[styles.pdfThumbnail, styles.pdfThumbnail_layout]}
+                        source={require('../assets/pdf-tropical-plants.png')}
+                      />
+                    </View>
+                    <View style={styles.pdfTile_space} />
+                    <View style={styles.pdfTile_item3}>
+                      <View x="0px 253fr 0px" y="0px minmax(0px, max-content) 0px" style={styles.pdfTileInfo}>
+                        <View style={styles.pdfTileInfo_item}>
+                          <View x="1px 219fr 0px" y="0px minmax(0px, max-content) 0px" style={styles.pdfTileText}>
+                            <View style={styles.pdfTileText_item}>
+                              <View
+                                x="0px 218fr 1px"
+                                y="29px minmax(0px, max-content) 0px"
+                                style={styles.pdfName_box}>
+                                <Text style={styles.pdfName} ellipsizeMode={'clip'}>
+                                  {'The tropical plants of the Philippines'}
+                                </Text>
+                              </View>
+                            </View>
+                            <View style={styles.pdfTileText_item}>
+                              <View
+                                x="1px 217fr 1px"
+                                y="9px minmax(0px, max-content) 29px"
+                                style={styles.pdfDate_box}>
+                                <Text style={styles.pdfDate} ellipsizeMode={'clip'}>
+                                  {'13 Apr 2022, 11:53'}
+                                </Text>
+                              </View>
+                            </View>
+                          </View>
+                        </View>
+                        <View style={styles.pdfTileInfo_item2}>
+                          <TouchableOpacity
+                            x="0px 33fr 0px"
+                            y="0px minmax(0px, max-content) 89px"
+                            style={styles.downloadState}
+                            onPress={() => Alert.alert('click')}>
+                            <ImageBackground
+                              style={[styles.downloadIcon, styles.downloadIcon_layout]}
+                              source={require('../assets/save.png')}
+                            />
+                          </TouchableOpacity>
+                        </View>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </View>
+            <View style={styles.pdfContents_item}>
+              <View x="4px 356fr 0px" y="27px minmax(0px, max-content) 0px" style={styles.viewAllTouchableOpacityFrame}>
+                <TouchableOpacity
+                  x="23px 310fr 23px"
+                  y="0px minmax(0px, max-content) 0px"
+                  style={styles.viewAllTouchableOpacity}
+                  onPress={() =>
+                    navigation.navigate('ViewAll')}>
+                  <View
+                    x="103px minmax(0px, max-content) 98fr"
+                    y="10px minmax(0px, max-content) 10fr"
+                    style={styles.viewAllTouchableOpacityLabel_box}>
+                    <Text style={styles.viewAllTouchableOpacityLabel} ellipsizeMode={'clip'}>
+                      {'View all PDFs'}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </View>
+        <View style={styles.homeFlex_item}>
+          <View style={[styles.homeDiv, styles.homeDiv_layout]} />
+        </View>
+        <View style={styles.homeFlex_item}>
+          <TouchableOpacity
+            x="27px 310fr 27px"
+            y="25px minmax(0px, max-content) 0px"
+            style={styles.settingsTouchableOpacity}
+            onPress={() => navigation.navigate('Settings')}>
+            <View
+              x="0px 310fr 0px"
+              y="0px minmax(0px, max-content) 0px"
+              style={styles.settingsSpacing}>
+              <View style={styles.settingsSpacing_item}>
+                <ImageBackground
+                  style={[styles.settingsIcon, styles.settingsIcon_layout]}
+                  source={require('../assets/settings.png')}
                 />
               </View>
-              <View style={styles.recordingStopModalButtonText_box}>
-                <Text style={styles.recordingStopModalButtonText}>
-                  {'Discard recording'}
-                </Text>
-              </View>
-            </View> 
-          </TouchableOpacity>
-        </View>
-      </Modal>
-
-      <Modal
-        style={styles.modal}
-        isVisible={uploadVisible}
-        hasBackdrop={true}
-        backdropColor='white'
-        onBackdropPress={() => setUploadVisible(false)}
-        onModalHide={() => setFileSelected(false)}
-      >
-        <View style={styles.uploadModalInner}>
-          <Text style={styles.modalTitle}>
-            {'Select a file:'}
-          </Text>
-
-          <UploadAudioCenter/>
-
-          <TouchableOpacity
-            style={[styles.uploadFileButton, {backgroundColor : colour.state}]}
-            state={null}
-            onPress={() => {
-              setUploadVisible(false)
-              }}>
-            <View style={styles.uploadModalButtonContent}>
-              <View style={styles.uploadModalButtonText_box}>
-                <Text style={styles.uploadModalButtonText}>
-                  {'Upload'}
-                </Text>
+              <View style={styles.settingsSpacing_space} />
+              <View style={styles.settingsSpacing_item1}>
+                <View x="0px 66fr 121px" y="10px minmax(0px, max-content) 10px" style={styles.settingsText_box}>
+                  <Text style={styles.settingsText} ellipsizeMode={'clip'}>
+                    {'Settings'}
+                  </Text>
+                </View>
               </View>
             </View>
           </TouchableOpacity>
         </View>
-      </Modal>
+        <View style={styles.homeFlex_item}>
+          <View x="28.3% 43.96% 27.75%" y="38px minmax(0px, max-content) 11px" style={styles.audioTouchableOpacityGroup}>
+            <View style={styles.audioTouchableOpacityGroup_item}>
+              <TouchableOpacity
+                x="0px 80fr 0px"
+                y="0px minmax(0px, max-content) 0px"
+                style={styles.recordAudioTouchableOpacity}
+                onPress={() => Alert.alert('click')}>
+                <ImageBackground
+                  style={[styles.recordAudioIcon, styles.recordAudioIcon_layout]}
+                  source={require('../assets/mic.png')}
+                />
+              </TouchableOpacity>
+            </View>
+            <View style={styles.audioTouchableOpacityGroup_item}>
+              <TouchableOpacity
+                x="0px 80fr 0px"
+                y="0px minmax(0px, max-content) 0px"
+                style={styles.uploadAudioTouchableOpacity}
+                onPress={() => Alert.alert('click')}>
+                <ImageBackground
+                  style={[styles.audioTouchableOpacityGroupDiv, styles.audioTouchableOpacityGroupDiv_layout]}
+                  source={require('../assets/verticalLine.png')}
+                />
+                <ImageBackground
+                  style={[styles.uploadAudioIcon, styles.uploadAudioIcon_layout]}
+                  source={require('../assets/upload.png')}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </View>
     </View>
-  )
+  );
 }
 export default Home;
 
@@ -361,21 +267,44 @@ Home.scrollHeight = 844;
 const styles = StyleSheet.create({
   home: {
     backgroundColor: '#ffffffff',
-    overflow: 'hidden',
-    //flexShrink: 1,
-    //flex: 1,
-    //flexShrink: 0,
-    flexDirection: 'column',
-    width: '100%',
-    height: '100%',
-    justifyContent: 'space-between',
+    overflow: 'hidden'
+  },
+  home_layout: {
+    marginTop: 0,
+    marginBottom: 0,
+    minHeight: 844,
+    flexShrink: 0,
+    marginLeft: 0,
+    flexGrow: 1,
+    marginRight: 0
+  },
+  homeFlex: {
+    overflow: 'hidden'
+  },
+  homeFlex_layout: {
+    marginTop: 38,
+    height: 768,
+    marginLeft: 13,
+    width: 364,
+    minWidth: 364
+  },
+  homeFlex_item: {
+    flexGrow: 0,
+    flexShrink: 1
+  },
+  pdfContents: {
+    flexGrow: 1
+  },
+  pdfContents_item: {
+    flexGrow: 0,
+    flexShrink: 1
   },
   big_title: {
     color: '#344053ff',
     textAlign: 'center',
     letterSpacing: 0,
-    lineHeight: 28,
-    fontSize: 24,
+    lineHeight: 30,
+    fontSize: 30,
     fontWeight: '700',
     fontStyle: 'normal',
     fontFamily: 'System' /* Jaldi */,
@@ -383,35 +312,221 @@ const styles = StyleSheet.create({
     paddingVertical: 0
   },
   big_title_box: {
+    flexGrow: 1,
+    flexDirection: 'row',
     alignItems: 'flex-start',
-    justifyContent: 'center',
-    paddingLeft: 15,
-    height: '5%',
-    //width: '100%',
-    minHeight: 28
+    justifyContent: 'center'
   },
   recentPdfTiles: {
-    //height: '55%',
+    flexGrow: 1
+  },
+  recentPdfTiles_item: {
+    flexGrow: 0,
+    flexShrink: 1
+  },
+  pdfTile: {
+    flexGrow: 1,
+    borderRadius: 5,
+    borderStyle: 'solid',
+    borderColor: "#3F89BE",
+    borderWidth: 1,
+    elevation: 2,
+    shadowColor: '#000000',
+    shadowRadius: 2.621621621621622,
+    shadowOpacity: 0.2173913043478261,
+    shadowOffset: {
+      width: 0,
+      height: 1
+    },
+    flexDirection: 'row'
+  },
+  pdfTile_item: {
+    flexGrow: 0,
     flexShrink: 1,
-    paddingLeft: 15,
-    paddingRight: 15,
-    justifyContent: 'space-between'
+    flexBasis: 90
+  },
+  pdfThumbnail: {
+    resizeMode: 'contain',
+    borderRadius: 5
+  },
+  pdfThumbnail_layout: {
+    marginTop: 0,
+    height: 127,
+    marginBottom: 0,
+    marginLeft: 0,
+    width: 90,
+    minWidth: 90,
+    marginRight: 0
+  },
+  pdfTile_space: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 13
+  },
+  pdfTile_item1: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 253
+  },
+  pdfTileInfo: {
+    flexGrow: 1,
+    flexDirection: 'row'
+  },
+  pdfTileInfo_item: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 220
+  },
+  pdfTileText: {
+    flexGrow: 1
+  },
+  pdfTileText_item: {
+    flexGrow: 0,
+    flexShrink: 1
+  },
+  pdfName: {
+    color: '#344053ff',
+    textAlign: 'left',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 16,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+    paddingHorizontal: 0,
+    paddingVertical: 0
+  },
+  pdfName_box: {
+    flexGrow: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start'
+  },
+  pdfDate: {
+    color: '#667084ff',
+    textAlign: 'left',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 14,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+    paddingHorizontal: 0,
+    paddingVertical: 0
+  },
+  pdfDate_box: {
+    flexGrow: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'flex-start'
+  },
+  pdfTileInfo_item1: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 33
+  },
+  downloadState: {
+    width: '100%',
+    flexGrow: 1
+  },
+  downloadIcon: {
+    resizeMode: 'contain'
+  },
+  downloadIcon_layout: {
+    marginTop: 10,
+    height: 18,
+    marginBottom: 10,
+    marginLeft: 4,
+    width: 18,
+    minWidth: 18,
+    marginRight: 11
+  },
+  pdfThumbnail_layout1: {
+    marginTop: 0,
+    height: 128,
+    marginBottom: 0,
+    marginLeft: 0,
+    width: 90,
+    minWidth: 90,
+    marginRight: 0
+  },
+  pdfTile_item2: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 253
+  },
+  block8: {
+    flexGrow: 1,
+    flexDirection: 'row'
+  },
+  block8_item: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 217
+  },
+  block9: {},
+  block9_layout: {
+    marginTop: 0,
+    height: 127,
+    marginBottom: 0,
+    marginLeft: 5,
+    flexGrow: 1,
+    marginRight: 0
+  },
+  pdfName_box1_layout: {
+    position: 'absolute',
+    top: 39,
+    width: 223,
+    right: -8
+  },
+  pdfName_box1: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start'
+  },
+  pdfDate_box1_layout: {
+    position: 'absolute',
+    top: 78,
+    height: 20,
+    left: -2,
+    width: 127
+  },
+  pdfDate_box1: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'flex-start'
+  },
+  block8_item1: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 36
+  },
+  image2: {
+    resizeMode: 'contain'
+  },
+  pdfTile_item3: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 253
+  },
+  pdfTileInfo_item2: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 33
   },
   viewAllTouchableOpacityFrame: {
-    //height: '10%'
+    width: '100%',
     flexGrow: 1,
-    justifyContent: 'center',
-    marginTop: 20
+    borderRadius: 8
   },
   viewAllTouchableOpacity: {
+    width: '100%',
     flexGrow: 1,
-    marginTop: 5,
-    marginBottom: 5,
-    marginLeft: 30,
-    marginRight: 30,
-    justifyContent: 'center',
-    alignContent: 'center',
+    backgroundColor: "#3F89BE",
     borderRadius: 8,
+    borderStyle: 'solid',
+    borderColor: '#3f89beff',
+    borderWidth: 1,
     elevation: 2,
     shadowColor: '#000000',
     shadowRadius: 2.621621621621622,
@@ -423,20 +538,21 @@ const styles = StyleSheet.create({
   },
   viewAllTouchableOpacityLabel: {
     color: '#ffffffff',
-    textAlign: 'center',
+    textAlign: 'left',
     letterSpacing: 0,
-    lineHeight: 22,
-    fontSize: 18,
+    lineHeight: 24,
+    fontSize: 20,
     fontWeight: '400',
     fontStyle: 'normal',
     fontFamily: 'System' /* Jaldi */,
-    padding: 10,
+    paddingHorizontal: 0,
+    paddingVertical: 0
   },
   viewAllTouchableOpacityLabel_box: {
-
+    flexGrow: 1,
     flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center'
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start'
   },
   homeDiv: {
     backgroundColor: '#d0d5ddff',
@@ -449,28 +565,28 @@ const styles = StyleSheet.create({
     shadowOffset: {
       width: 0,
       height: 1
-    },
+    }
+  },
+  homeDiv_layout: {
+    marginTop: 26,
     height: 1,
-    flexShrink: 1
-  },
-  settingsTouchableOpacityFrame: {
-    height: '10%',
-    marginVertical: 5
-  },
-  settingTouchableOpacity: {
-    marginTop: 5,
-    marginBottom: 5,
-    marginLeft: 30,
-    marginRight: 30,
-    backgroundColor: '#d0d5ddff',
-    borderRadius: 8,
-    justifyContent: 'center',
-    alignContent: 'center',
-    flexDirection: 'row',
+    marginBottom: 0,
+    marginLeft: 4,
     flexGrow: 1,
+    marginRight: 4
+  },
+  settingsTouchableOpacity: {
+    width: '100%',
+    flexGrow: 1,
+    borderRadius: 8
+  },
+  settingsSpacing: {
+    flexGrow: 1,
+    backgroundColor: '#9bcbedff',
+    borderRadius: 8,
     overflow: 'hidden',
     borderStyle: 'solid',
-    borderColor: '#d0d5ddff',
+    borderColor: '#9bcbedff',
     borderWidth: 1,
     elevation: 2,
     shadowColor: '#000000',
@@ -480,18 +596,41 @@ const styles = StyleSheet.create({
       width: 0,
       height: 1
     },
+    flexDirection: 'row'
   },
-  settingsIcon_frame: {
-    justifyContent: 'center',
-    alignContent: 'flex-start',
-    paddingHorizontal: 7
+  settingsSpacing_item: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 39
+  },
+  settingsIcon: {
+    resizeMode: 'contain'
+  },
+  settingsIcon_layout: {
+    marginTop: 10,
+    height: 24,
+    marginBottom: 10,
+    marginLeft: 10,
+    width: 29,
+    minWidth: 29,
+    marginRight: 0
+  },
+  settingsSpacing_space: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 84
+  },
+  settingsSpacing_item1: {
+    flexGrow: 0,
+    flexShrink: 0,
+    minWidth: 0
   },
   settingsText: {
     color: '#344053ff',
     textAlign: 'center',
     letterSpacing: 0,
-    lineHeight: 22,
-    fontSize: 18,
+    lineHeight: 24,
+    fontSize: 20,
     fontWeight: '400',
     fontStyle: 'normal',
     fontFamily: 'System' /* Jaldi */,
@@ -499,195 +638,87 @@ const styles = StyleSheet.create({
     paddingVertical: 0
   },
   settingsText_box: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexShrink: 1
+    flexGrow: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'center'
   },
   audioTouchableOpacityGroup: {
+    flexGrow: 1,
     borderRadius: 8,
-    flexDirection: 'row',
-    height: '17%',
-    width: '40%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    alignSelf: 'center',
+    flexDirection: 'row'
+  },
+  audioTouchableOpacityGroup_item: {
+    flexGrow: 1,
     flexShrink: 1,
-    //elevation: 1,
-    shadowColor: '#000000',
-    shadowRadius: 1.810810810810811,
-    shadowOpacity: 0.2,
-    shadowOffset: {
-      width: 1,
-      height: 1
-    },
+    flexBasis: 80
   },
   recordAudioTouchableOpacity: {
-    width: '50%',
+    width: '100%',
     flexGrow: 1,
+    backgroundColor: '#d0d5ddff',
     borderTopLeftRadius: 8,
     borderBottomLeftRadius: 8,
     overflow: 'hidden',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRightColor: '#667084ff',
-    borderRightWidth: 1,
-  },
-  recordAudioIcon: {
-    resizeMode: 'contain',
-    padding: 10
-  },
-  uploadAudioTouchableOpacity: {
-    width: '50%',
-    flexGrow: 1,
-    backgroundColor: '#d0d5ddff',
-    borderTopRightRadius: 8,
-    borderBottomRightRadius: 8,
-    overflow: 'hidden',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderLeftColor: '#667084ff',
-    borderLeftWidth: 1,
-  },
-  uploadAudioIcon: {
-    resizeMode: 'contain',
-    padding: 10
-  },
-  modal: {
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  modalTitle: {
-    color: '#344053ff',
-    textAlign: 'center',
-    letterSpacing: 0,
-    lineHeight: 20,
-    fontSize: 18,
-    fontWeight: '600',
-    fontStyle: 'normal',
-    fontFamily: 'System' /* Inter */,
-    padding: 15
-  },
-  recordingStopModalInner: {
-    width: '70%',
-    flexShrink: 1,
-    backgroundColor: '#f5f5f5ff',
-    borderRadius: 7,
-    flexDirection: 'column',
-    borderWidth: 1,
-    borderColor: '#667084ff',
-    opacity: 1
-  },
-  recordingStopModalButton: {
-    flexGrow: 1,
-    height: '8%',
-    alignItems: 'center',
-    flexDirection: 'row'
-  },
-  recordingStopModalButtonContent: {
-    flexGrow: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    //padding: 5
-  },
-  iconContainer: {
-    width: '25%',
-    height: '100%',
-    alignItems: 'center'
-  },
-  recordingStopModalButtonText: {
-    color: '#344053ff',
-    textAlign: 'center',
-    letterSpacing: 0,
-    lineHeight: 20,
-    fontSize: 18,
-    fontWeight: '400',
-    fontStyle: 'normal',
-    fontFamily: 'System' /* Inter */,
-  },
-  recordingStopModalButtonText_box: {
-    flexShrink: 1
-  },
-  recordingStopModalButtonDivider: {
-    backgroundColor: '#d0d5ddff',
-    height: 1,
-    width: '87%',
-    alignSelf: 'center'
-  },
-  uploadModalInner: {
-    width: '55%',
-    flexShrink: 1,
-    backgroundColor: '#d0d5ddff',
-    borderRadius: 7,
-    flexDirection: 'column',
-    borderWidth: 1,
-    borderColor: '#667084ff',
-  },
-  uploadModalButton: {
-    flexGrow: 1,
-    height: '8%',
-    alignItems: 'center',
-    flexDirection: 'row',
-  },
-  changeUploadModalButton: {
-    flexGrow: 1,
-    height: '5%',
-    alignItems: 'center',
-    flexDirection: 'row',
-    marginHorizontal: 10,
-    justifyContent: 'center',
-    alignContent: 'center',
-    flexShrink: 1,
-    backgroundColor: '#ffffffff',
-    borderRadius: 7,
-    borderWidth: 1,
-    borderColor: '#667084ff',
-  },
-  changeUploadModalButtonText: {
-    textAlign: 'center',
-    letterSpacing: 0,
-    lineHeight: 20,
-    fontSize: 18,
-    fontWeight: '400',
-    fontStyle: 'normal',
-    fontFamily: 'System' /* Inter */,
-  },
-  uploadFileButton: {
-    flexGrow: 1,
-    height: '5%',
-    alignItems: 'center',
-    flexDirection: 'row',
-    margin: 10,
-    justifyContent: 'center',
-    alignContent: 'center',
-    borderRadius: 8,
-    elevation: 2,
+    elevation: 1,
     shadowColor: '#000000',
-    shadowRadius: 2.621621621621622,
-    shadowOpacity: 0.2173913043478261,
+    shadowRadius: 1.810810810810811,
+    shadowOpacity: 0.2,
     shadowOffset: {
       width: 0,
       height: 1
     }
   },
-  uploadModalButtonContent: {
+  recordAudioIcon: {
+    resizeMode: 'contain'
+  },
+  recordAudioIcon_layout: {
+    marginTop: 20,
+    height: 40,
+    marginBottom: 20,
+    marginLeft: 27,
+    width: 26,
+    minWidth: 26,
+    marginRight: 27
+  },
+  uploadAudioTouchableOpacity: {
+    width: '100%',
     flexGrow: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    //padding: 5
+    backgroundColor: '#d0d5ddff',
+    borderTopRightRadius: 8,
+    borderBottomRightRadius: 8,
+    overflow: 'hidden',
+    elevation: 1,
+    shadowColor: '#000000',
+    shadowRadius: 1.810810810810811,
+    shadowOpacity: 0.2,
+    shadowOffset: {
+      width: 0,
+      height: 1
+    }
   },
-  uploadModalButtonText: {
-    color: '#ffffffff',
-    textAlign: 'center',
-    letterSpacing: 0,
-    lineHeight: 20,
-    fontSize: 18,
-    fontWeight: '400',
-    fontStyle: 'normal',
-    fontFamily: 'System' /* Inter */,
+  audioTouchableOpacityGroupDiv: {
+    resizeMode: 'contain',
+    borderStyle: 'solid',
+    borderColor: '#667085ff'
   },
-  uploadModalButtonText_box: {
-    flexShrink: 1
+  audioTouchableOpacityGroupDiv_layout: {
+    position: 'absolute',
+    top: -10,
+    height: 100,
+    left: -10,
+    width: 21
   },
+  uploadAudioIcon: {
+    resizeMode: 'contain'
+  },
+  uploadAudioIcon_layout: {
+    marginTop: 22,
+    height: 36,
+    marginBottom: 22,
+    marginLeft: 22,
+    width: 36,
+    minWidth: 36,
+    marginRight: 22
+  }
 });
