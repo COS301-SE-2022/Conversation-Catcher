@@ -3,9 +3,6 @@
   "affected": {
     "defaultBase": "main"
   },
-  "cli": {
-    "defaultCollection": "@nrwl/react-native"
-  },
   "implicitDependencies": {
     "package.json": {
       "dependencies": "*",
@@ -17,7 +14,12 @@
     "default": {
       "runner": "@nrwl/nx-cloud",
       "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"],
+        "cacheableOperations": [
+          "build",
+          "lint",
+          "test",
+          "e2e"
+        ],
         "accessToken": "Yzk2MDM1MzUtYTlmYy00YTYxLThjYWMtMDc0YzNiOGNkYTVlfHJlYWQtd3JpdGU="
       }
     }
@@ -30,5 +32,6 @@
       }
     ]
   },
-  "defaultProject": "client"
+  "defaultProject": "client",
+  "$schema": "./node_modules/nx/schemas/nx-schema.json"
 }

@@ -16,6 +16,22 @@
     "react-native-reanimated": "*",
     "react-native-safe-area-context": "*",
     "react-native-screens": "*",
-    "react-test-renderer": "*"
+    "react-test-renderer": "*",
+    "react-native-modal-dropdown": "*",
+    "react-native-vector-icons": "*",
+    "react-native-bouncy-checkbox-group": "*",
+    "react-native-pdf": "*",
+    "react-native-bouncy-checkbox": "*",
+    "react-native-modal": "*",
+    "react-native-view-pdf": "*",
+    "react-pdf": "*",
+    "react-native-openanything": "*",
+    "open": "*",
+    "react-native-file-viewer": "*",
+    "buffer": "*",
+    "react-native-permissions": "*",
+    "react-native-sound": "*",
+    "react-native-audio-record": "*",
+    "react-native-document-picker": "*"
   }
 }
