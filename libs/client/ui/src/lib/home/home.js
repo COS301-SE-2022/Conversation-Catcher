@@ -6,7 +6,7 @@ import colour from '../colour/colour';
 import Modal from 'react-native-modal';
 import { Buffer } from 'buffer';
 //import Permissions from 'react-native-permissions';
-import Sound from 'react-native-sound';
+//import Sound from 'react-native-sound';
 import AudioRecord from 'react-native-audio-record';
 
 export const Home = ({ navigation }) => {
@@ -114,8 +114,7 @@ export const Home = ({ navigation }) => {
       audioFile: '',
       recording: false,
       loaded: false,
-      paused: true,
-      sound: null
+      paused: true
     };
 
   const start = () => {
@@ -131,57 +130,10 @@ export const Home = ({ navigation }) => {
     console.log('stop record');
     state.audioFile = await AudioRecord.stop();
     console.log('audioFile', state.audioFile);
-    load();
-    play();
-    componentDidMount();
+    //componentDidMount();
     state.audioFile = false;
     state.recording = false;
     
-  };
-
-  const load = () => {
-    return new Promise((resolve, reject) => {
-      if (!state.audioFile) {
-        return reject('file path is empty');
-      }
-
-      state.sound = new Sound(state.audioFile, '', error => {
-        if (error) {
-          console.log('failed to load the file', error);
-          return reject(error);
-        }
-        state.loaded = true;
-        return resolve();
-      });
-    });
-  };
-
-  const play = async () => {
-    if (!state.loaded) {
-      try {
-        await load();
-      } catch (error) {
-        console.log(error);
-      }
-    }
-
-    state.paused = false;
-    Sound.setCategory('Playback');
-
-    state.sound.play(success => {
-      if (success) {
-        console.log('successfully finished playing');
-      } else {
-        console.log('playback failed due to audio decoding errors');
-      }
-      state.paused = true;
-      // sound.release();
-    });
-  };
-
-  const pause = () => {
-    state.sound.pause();
-    state.paused = true ;
   };
 
   componentDidMount();
