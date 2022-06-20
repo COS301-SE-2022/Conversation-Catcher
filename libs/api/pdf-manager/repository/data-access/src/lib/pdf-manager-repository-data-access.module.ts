@@ -6,4 +6,4 @@ import { MongoDBAccess } from './mongodb-access';
   providers: [MongoDBAccess],
   exports: [MongoDBAccess],
 })
-export class ApiPdfManagerRepositoryDataAccessModule {}
+export class PdfManagerRepositoryDataAccessModule {}
