@@ -2,7 +2,7 @@ import { HttpService } from '@nestjs/axios';
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import { lastValueFrom, map, tap } from 'rxjs';
 import { PdfManagerServiceModel } from '../../models/pdf-manager-service-feature.model';
-import { GlobalKey } from '@conversation-catcher/api/pdf-manager/shared';
+import { MongoDBAccess } from '@conversation-catcher/api/pdf-manager/repository/data-access';
 //import { SetNamePdfEvent, SetDownloadedPdfEvent } from "../events/set-pdf-manager.event";
 //import { SetNamePdfEventHandler, SetDownloadedPdfEventHandler } from "../events/set-pdf-manager.event.handler";
 import {
@@ -16,8 +16,8 @@ export class SetDownloadedPdfHandler
 {
   constructor(
     private publisher: EventPublisher,
-    private httpService: HttpService
-  ) {} //private repository: Repository,
+    private repository: MongoDBAccess
+  ) {}
 
   async execute({ id }: SetDownloadedPdfCommand) {
     const url =
@@ -30,14 +30,6 @@ export class SetDownloadedPdfHandler
       filter: { id: id },
     });
 
-    const config = {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Request-Headers': '*',
-        'api-key': GlobalKey.key,
-      },
-    };
     const res = await lastValueFrom(
       this.httpService.post(url + action, data, config).pipe(
         tap((res) => console.log(res.status)),
@@ -102,14 +94,6 @@ export class SetNamePdfHandler implements ICommandHandler<SetNamePdfCommand> {
       },
     });
 
-    const config = {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Request-Headers': '*',
-        'api-key': GlobalKey.key,
-      },
-    };
     //Updates the name
     this.repository.post(url + action, data, config).pipe(
       tap((res) => console.log(res.status)),

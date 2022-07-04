@@ -72,8 +72,8 @@ export class MongoDBAccess {
     const data = JSON.stringify({
       //the data object passed to the http request which specifies what should be returned
       collection: this.pdfCollection,
-        database: this.db,
-        dataSource: this.cluster,
+      database: this.db,
+      dataSource: this.cluster,
       filter: { id: id },
     });
 
@@ -82,6 +82,23 @@ export class MongoDBAccess {
       this.httpService.post(this.url + this.action, data, this.config).pipe(
         tap((res) => console.log(res.status)),
         map((res) => res.data.document)
+      )
+    );
+  }
+
+  async deletePDF(id: string) {
+    this.action = 'deleteOne';
+    const data = JSON.stringify({
+      collection: this.pdfCollection,
+      database: this.db,
+      dataSource: this.cluster,
+      filter: { id: id },
+    });
+
+    return await lastValueFrom(
+      this.httpService.post(this.url + this.action, data, this.config).pipe(
+        tap((res) => console.log(res.status)),
+        map((res) => res.data)
       )
     );
   }
