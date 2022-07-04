@@ -102,4 +102,89 @@ export class MongoDBAccess {
       )
     );
   }
+
+  async changeDownloaded(id: string) {
+    this.action = 'findOne';
+    let data = JSON.stringify({
+      collection: this.pdfCollection,
+      database: this.db,
+      dataSource: this.cluster,
+      filter: { id: id },
+    });
+
+    const res = await lastValueFrom(
+      this.httpService.post(this.url + this.action, data, this.config).pipe(
+        tap((res) => console.log(res.status)),
+        map((res) => res.data)
+      )
+    );
+
+    console.log(res);
+
+    this.action = 'updateOne';
+    data = JSON.stringify({
+      collection: this.pdfCollection,
+      database: this.db,
+      dataSource: this.cluster,
+      filter: { id: id },
+      update: {
+        $set: { downloaded: !res.document.downloaded },
+      },
+    });
+
+    //Updates the name
+    this.httpService.post(this.url + this.action, data, this.config).pipe(
+      tap((res) => console.log(res.status)),
+      map((res) => res.data)
+    );
+
+    //return updated record
+    this.action = 'findOne';
+    data = JSON.stringify({
+      collection: this.pdfCollection,
+      database: this.db,
+      dataSource: this.cluster,
+      filter: { id: id },
+    });
+    return await lastValueFrom(
+      this.httpService.post(this.url + this.action, data, this.config).pipe(
+        tap((res) => console.log(res.status)),
+        map((res) => res.data)
+      )
+    );
+  }
+
+  async setPDFName(id: string, name: string) {
+    this.action = 'updateOne';
+    let data = JSON.stringify({
+      collection: this.pdfCollection,
+      database: this.db,
+      dataSource: this.cluster,
+      filter: { id: id },
+      update: {
+        $set: { name: name },
+      },
+    });
+
+    //Updates the name
+    this.httpService.post(this.url + this.action, data, this.config).pipe(
+      tap((res) => console.log(res.status)),
+      map((res) => res.data)
+    );
+
+    //return updated record
+    this.action = 'findOne';
+    data = JSON.stringify({
+      collection: this.pdfCollection,
+      database: this.db,
+      dataSource: this.cluster,
+      filter: { id: id },
+    });
+    return await lastValueFrom(
+      this.httpService.post(this.url + this.action, data, this.config).pipe(
+        tap((res) => console.log(res.status)),
+        map((res) => res.data)
+      )
+    );
+  }
 }
