@@ -3,7 +3,6 @@ import { View, StyleSheet, Text, ImageBackground, TouchableOpacity, Alert} from 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import colour from '../colour/colour';
-//import FileViewer from "react-native-file-viewer";
 
 function DownloadButtonState(props){
   const [downloadState, setDownloadState] = React.useState(props.d);
@@ -38,6 +37,11 @@ function DetermineTileCorner(props){
   }
   return <DownloadButtonState downloadState={props.downloaded}/>;
 }
+
+const pdfSource = {
+  uri: 'http://samples.leanpub.com/thereactnativebook-sample.pdf',
+  cache: true,
+};
 
 export default class PdfTile extends Component {
 

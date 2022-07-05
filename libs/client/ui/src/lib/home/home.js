@@ -7,7 +7,7 @@ import Modal from 'react-native-modal';
 import { Buffer } from 'buffer';
 //import Permissions from 'react-native-permissions';
 //import Sound from 'react-native-sound';
-//import AudioRecord from 'react-native-audio-record';
+import AudioRecord from 'react-native-audio-record';
 import DocumentPicker, { types } from 'react-native-document-picker';
 
 export const Home = ({ navigation }) => {
@@ -107,14 +107,14 @@ export const Home = ({ navigation }) => {
       wavFile: 'test.wav'
     };
 
-//    AudioRecord.init(options);
+    AudioRecord.init(options);
 
-{/*    AudioRecord.on('data', data => {
+    AudioRecord.on('data', data => {
       const chunk = Buffer.from(data, 'base64');
       console.log('chunk size', chunk.byteLength);
       // do something with audio chunk
-    });*/} 
-  }
+    })} 
+  
 
   const checkPermission = async () => {
     const p = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.RECORD_AUDIO);
@@ -141,15 +141,15 @@ export const Home = ({ navigation }) => {
     state.audioFile = '';
     state.recording = true;
     state.loaded = false;
-    //AudioRecord.start();
+    AudioRecord.start();
   };
 
   const stop = async () => {
     if (!state.recording) return;
     console.log('stop record');
-    //state.audioFile = await AudioRecord.stop();
+    state.audioFile = await AudioRecord.stop();
     console.log('audioFile', state.audioFile);
-    //componentDidMount();
+    componentDidMount();
     state.audioFile = false;
     state.recording = false;
     
@@ -169,24 +169,24 @@ export const Home = ({ navigation }) => {
           id = {1}
           name = 'Bug introduction: a modification of code' 
           date = '1 May 2022, 9:37' 
-          source = {require('../assets/pdf-bug-intro.png')} 
-          RecordAudioed = {true}
+          thumbnailSource = {require('../assets/pdf-bug-intro.png')} 
+          downloaded = {true}
           showCheck = {false}
           navigation = {navigation}/>
         <PdfTile 
           id = {2}
           name = 'Human-computer interaction' 
           date = '21 Apr 2022, 14:18' 
-          source = {require('../assets/pdf-human-computer.png')} 
-          RecordAudioed = {false}
+          thumbnailSource = {require('../assets/pdf-human-computer.png')} 
+          downloaded = {false}
           showCheck = {false}
           navigation = {navigation}/>
         <PdfTile 
           id = {3}
           name = 'The tropical plants of the Philippines' 
           date = '13 Apr 2022, 11:53' 
-          source = {require('../assets/pdf-tropical-plants.png')} 
-          RecordAudioed = {true}
+          thumbnailSource = {require('../assets/pdf-tropical-plants.png')} 
+          downloaded = {true}
           showCheck = {false}
           navigation = {navigation}/>
       </View>
