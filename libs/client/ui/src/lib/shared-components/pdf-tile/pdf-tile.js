@@ -38,7 +38,7 @@ function DetermineTileCorner(props){
   return <DownloadButtonState downloadState={props.downloaded}/>;
 }
 
-const pdfSource = {
+const pdfthumbnailSource = {
   uri: 'http://samples.leanpub.com/thereactnativebook-sample.pdf',
   cache: true,
 };
@@ -50,21 +50,21 @@ export default class PdfTile extends Component {
       id,
       name,
       date,
-      source,
+      thumbnailSource,
       downloaded,
       showCheck,
-      navigation
+      pdfSource,
+      nav
     } = this.props
 
     return (
       <TouchableOpacity
         style={styles.pdfTile}
-        //onPress={() => FileViewer.open(source)}>
-        onPress={() => Alert.alert('pdf')}>
+        onPress={() => nav.navigate('PdfView', {pdfSource: pdfSource})}>
         <View style={[styles.thumbnail_containter, {borderColor : colour.state}]}>
           <ImageBackground
             style={styles.pdfThumbnail}
-            //source={source}
+            //thumbnailSource={thumbnailSource}
           />
         </View>
         <View style={styles.pdfTile_contents_not_thumbnail}>

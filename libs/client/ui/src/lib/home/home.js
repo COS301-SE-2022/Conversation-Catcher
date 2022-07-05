@@ -172,7 +172,8 @@ export const Home = ({ navigation }) => {
           thumbnailSource = {require('../assets/pdf-bug-intro.png')} 
           downloaded = {true}
           showCheck = {false}
-          pdfSource = 'http://samples.leanpub.com/thereactnativebook-sample.pdf'/>
+          pdfSource = 'http://samples.leanpub.com/thereactnativebook-sample.pdf'
+          nav = {navigation}/>
         <PdfTile 
           id = {2}
           name = 'Human-computer interaction' 
@@ -180,7 +181,8 @@ export const Home = ({ navigation }) => {
           thumbnailSource = {require('../assets/pdf-human-computer.png')} 
           downloaded = {false}
           showCheck = {false}
-          pdfSource = 'http://samples.leanpub.com/thereactnativebook-sample.pdf'/>
+          pdfSource = 'http://samples.leanpub.com/thereactnativebook-sample.pdf'
+          nav = {navigation}/>
         <PdfTile 
           id = {3}
           name = 'The tropical plants of the Philippines' 
@@ -188,7 +190,8 @@ export const Home = ({ navigation }) => {
           thumbnailSource = {require('../assets/pdf-tropical-plants.png')} 
           downloaded = {true}
           showCheck = {false}
-          pdfSource = 'http://samples.leanpub.com/thereactnativebook-sample.pdf'/>
+          pdfSource = 'http://samples.leanpub.com/thereactnativebook-sample.pdf'
+          nav = {navigation}/>
       </View>
       <View style={styles.viewAllTouchableOpacityFrame}>
         <TouchableOpacity
