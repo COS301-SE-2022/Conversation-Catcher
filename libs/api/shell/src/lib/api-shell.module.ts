@@ -14,8 +14,8 @@ import { ApiStudentExploreApiFeatureModule as PdfManager } from '@conversation-c
       driver: ApolloDriver,
       playground: true,
     }),
-    // DatabaseManager,
-    PdfManager,
+    DatabaseManager,
+    // PdfManager,
   ],
 })
 export class ApiShellModule {}
