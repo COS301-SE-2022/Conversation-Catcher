@@ -69,7 +69,7 @@ export const Home = ({ navigation }) => {
               style={styles.changeUploadModalButton}
               onPress={() => handleDocumentSelection()}>
               <Icon 
-                style={[styles.uploadModalButtonIcon, {color : colour.state}]}
+                style={{color : colour.state}}
                 name="file-sound-o"
                 size={16}
               />

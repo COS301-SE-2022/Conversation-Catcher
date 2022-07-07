@@ -305,33 +305,33 @@ export const ViewAll = ({ navigation }) =>  {
         </View>
       </Modal>
 
-        <Modal 
-          isVisible={bottomModalVisible}
-          coverScreen={false}
-          hasBackdrop={false}
-          style={{
-            width: '100%',
-            height: '8%',
-            margin: 0,
-            justifyContent: 'flex-end',}}
-          >
-          <View style={[styles.modalBottomBar, {backgroundColor : colour.state}]}>
-            <TouchableOpacity 
-              style={styles.backButton}
-              onPress={() => {
-                setBottomModalVisible(false);
-                setSelectMode(false);
-              }}>
-              <Icon 
-                name="angle-left"
-                color="#ffffffff"
-                size={30}
-              /> 
-            </TouchableOpacity>
+      <Modal 
+        isVisible={bottomModalVisible}
+        coverScreen={false}
+        hasBackdrop={false}
+        style={{
+          width: '100%',
+          height: '8%',
+          margin: 0,
+          justifyContent: 'flex-end',}}
+        >
+        <View style={[styles.modalBottomBar, {backgroundColor : colour.state}]}>
+          <TouchableOpacity 
+            style={styles.backButton}
+            onPress={() => {
+              setBottomModalVisible(false);
+              setSelectMode(false);
+            }}>
+            <Icon 
+              name="angle-left"
+              color="#ffffffff"
+              size={30}
+            /> 
+          </TouchableOpacity>
 
-            <BottomModalButton type={bottomModalType}/>
-          </View>
-        </Modal>
+          <BottomModalButton type={bottomModalType}/>
+        </View>
+      </Modal>
 
         <Modal 
           style={styles.renameModal}

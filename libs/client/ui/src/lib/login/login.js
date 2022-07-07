@@ -1,6 +1,7 @@
  import React from 'react';
- import { View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity, Alert, TextInput, Icon } from 'react-native';
+ import { View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity, Alert, TextInput } from 'react-native';
  import colour from '../colour/colour';
+ import Icon from 'react-native-vector-icons/FontAwesome';
  
  export const Login = ({ navigation }) =>  {
    return (
@@ -20,13 +21,14 @@
         <View style={styles.inputField}>
           <View style={styles.inputText_box}>
             <Icon 
-              style={[styles.settingsButtonIcon, {color : colour.state}]}
+              style={{color : colour.state}}
               name="envelope"
               size={18}
             />
-            <Text style={styles.inputText}>
-              {'johnsmith@gmail.com'}
-            </Text>
+            <TextInput style={styles.inputText}
+              placeholder='johnsmith@gmail.com'
+              underlineColorAndroid="transparent"
+              />
           </View>
         </View>
         <View style={styles.hintText_box}>
@@ -40,13 +42,16 @@
           </Text>
         </View> 
         <View style={styles.inputField}>
-          <ImageBackground
-            style={styles.inputIcon}
-          />
           <View style={styles.inputText_box}>
-            <Text style={styles.inputText}>
-              {'*******************'}
-            </Text>
+            <Icon 
+              style={{color : colour.state}}
+              name="lock"
+              size={20}
+            />
+            <TextInput style={styles.inputText}
+              placeholder='*******************'
+              underlineColorAndroid="transparent"
+            />
           </View>
         </View> 
         <View style={styles.hintText_box}>
@@ -159,16 +164,6 @@
        height: 1
      },
      flexDirection: 'row'
-   },
-   inputIcon: {
-     resizeMode: 'contain',
-     marginTop: 2,
-     height: 20,
-     marginBottom: 2,
-     marginLeft: 0,
-     width: 20,
-     minWidth: 20,
-     marginRight: 0
    },
    inputText: {
      color: '#344053ff',
