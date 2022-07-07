@@ -14,8 +14,6 @@
          </View>
          <View style={styles.logInBody_item}>
            <View style={styles.inputsGroup}>
-             <View style={styles.textInputGroup}>
-               <View style={styles.textInputGroup_item}>
                  <View style={styles.inputBoxAndLabel}>
                    <View style={styles.inputBoxAndLabel_item}>
                      <View style={styles.inputLabel_box}>
@@ -32,7 +30,6 @@
                            <View style={styles.inputFieldContents_item}>
                              <ImageBackground
                                style={styles.inputIcon}
-                               //source={require('../assets/lock.png')}
                              />
                            </View>
                            <View style={styles.inputFieldContents_space} />
@@ -49,7 +46,7 @@
                      </View>
                    </View>
                  </View>
-               </View>
+
                <View style={styles.textInputGroup_item}>
                  <View style={styles.hintText_box}>
                    <Text style={styles.hintText}>
@@ -57,7 +54,6 @@
                    </Text>
                  </View>
                </View>
-             </View>
  
              <View style={styles.textInputGroup1}>
                <View style={styles.textInputGroup_item}>
@@ -193,21 +189,8 @@
    inputsGroup: {
      width: '100%',
      flexGrow: 1,
-     borderRadius: 5
-   },
-   textInputGroup: {
-    position: 'absolute',
-   },
-   textInputGroup_item: {
-     flexGrow: 0,
-     flexShrink: 1
-   },
-   inputBoxAndLabel: {
-     flexGrow: 1
-   },
-   inputBoxAndLabel_item: {
-     flexGrow: 0,
-     flexShrink: 1
+     borderRadius: 5,
+     position: 'absolute',
    },
    inputLabel: {
      color: '#344053ff',
@@ -245,17 +228,9 @@
      },
      flexDirection: 'row'
    },
-   inputField_item: {
-     flexGrow: 0,
-     flexShrink: 1,
-   },
    inputFieldContents: {
      flexGrow: 1,
      flexDirection: 'row'
-   },
-   inputFieldContents_item: {
-     flexGrow: 0,
-     flexShrink: 1,
    },
    inputIcon: {
      resizeMode: 'contain',
@@ -333,19 +308,6 @@
      alignItems: 'flex-start',
      justifyContent: 'flex-start'
    },
-   textInputGroup1: {
-     flexGrow: 1
-   },
-   inputFieldContents_item2: {
-     flexGrow: 0,
-     flexShrink: 0,
-     minWidth: 0
-   },
-   inputField_item2: {
-     flexGrow: 0,
-     flexShrink: 1,
-     flexBasis: 30
-   },
    logInButtonFrame: {
      width: '100%',
      flexGrow: 1,
@@ -386,11 +348,6 @@
      alignItems: 'flex-start',
      justifyContent: 'flex-start'
    },
-   block10: {
-     width: '100%',
-     flexGrow: 1,
-     borderRadius: 8
-   },
    forgotPasswordButton: {
      backgroundColor: '#ffffffff',
      borderRadius: 8,
@@ -418,11 +375,6 @@
      flexDirection: 'row',
      alignItems: 'flex-start',
      justifyContent: 'flex-start'
-   },
-   block12: {
-     width: '100%',
-     flexGrow: 1,
-     borderRadius: 8
    },
    noAccountButton: {
      backgroundColor: '#ffffffff',
