@@ -1,24 +1,52 @@
 import React, {useState} from 'react';
-import { View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity, Alert, ScrollView, TextInput, Share} from 'react-native';
+import { View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity, Alert, ScrollView, TextInput} from 'react-native';
 import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
 import ModalDropdown from 'react-native-modal-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
+import Share from "react-native-share";
 import colour from '../colour/colour';
 
 export const ViewAll = ({ navigation }) =>  {
   const [moreVisible, setMoreVisible] = useState(false);
-  const [deleteMode, setDeleteMode] = useState(false);
+  const [selectMode, setSelectMode] = useState(false);
   const [bottomModalVisible, setBottomModalVisible] = useState(false);
   const [bottomModalType, setBottomModalType] = useState("none");
   const [renameModalVisible, setRenameModalVisible] = useState(false);
+
+  const url = "https://awesome.contents.com/";
+  const title = "Awesome Contents";
+  const message = "Please check this out.";
+
+  const options = {
+    title,
+    url,
+    message,
+  };
+
+  const share = async (customOptions = options) => {
+    try {
+      await Share.open(customOptions);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
 
   function BottomModalButton(props){
   
     if (props.type === "share") {
       return <TouchableOpacity 
               style={styles.backButton}
-              onPress={() => setBottomModalVisible(false)}>
+              onPress={async () => {
+                await share({
+                  title: "Sharing pdf file from awesome share app",
+                  message: "Please take a look at this file",
+                  url: "../assets/thereactnativebook-sample.pdf",
+                });
+                setSelectMode(false);
+                setBottomModalVisible(false)}
+              }>
               <Icon 
                 name="paper-plane-o"
                 color="#ffffffff"
@@ -41,7 +69,7 @@ export const ViewAll = ({ navigation }) =>  {
     return <TouchableOpacity 
             style={styles.backButton}
             onPress={() => {
-              setDeleteMode(false);
+              setSelectMode(false);
               setBottomModalVisible(false);
             }}>
             <Icon 
@@ -105,7 +133,7 @@ export const ViewAll = ({ navigation }) =>  {
           date = '1 May 2022, 9:37' 
           thumbnailSource = {"../assets/pdf-bug-intro.png"} 
           downloaded = {true}
-          showCheck = {deleteMode}
+          showCheck = {selectMode}
           pdfSource = 'http://samples.leanpub.com/thereactnativebook-sample.pdf'
           nav = {navigation}/>
         <PdfTile 
@@ -114,7 +142,7 @@ export const ViewAll = ({ navigation }) =>  {
           date = '21 Apr 2022, 14:18' 
           thumbnailSource = {"../assets/pdf-human-computer.png"} 
           downloaded = {false}
-          showCheck = {deleteMode}
+          showCheck = {selectMode}
           pdfSource = 'http://samples.leanpub.com/thereactnativebook-sample.pdf'
           nav = {navigation}/>
         <PdfTile 
@@ -123,7 +151,7 @@ export const ViewAll = ({ navigation }) =>  {
           date = '13 Apr 2022, 11:53' 
           thumbnailSource = {"../assets/pdf-tropical-plants.png"} 
           downloaded = {true}
-          showCheck = {deleteMode}
+          showCheck = {selectMode}
           pdfSource = 'http://samples.leanpub.com/thereactnativebook-sample.pdf'
           nav = {navigation}/>
         <PdfTile 
@@ -132,7 +160,7 @@ export const ViewAll = ({ navigation }) =>  {
           date = '13 Apr 2022, 11:53' 
           thumbnailSource = {"../assets/pdf-tropical-plants.png"} 
           downloaded = {true}
-          showCheck = {deleteMode}
+          showCheck = {selectMode}
           pdfSource = 'http://samples.leanpub.com/thereactnativebook-sample.pdf'
           nav = {navigation}/>
         <PdfTile 
@@ -141,7 +169,7 @@ export const ViewAll = ({ navigation }) =>  {
           date = '13 Apr 2022, 11:53' 
           source = {"../assets/pdf-tropical-plants.png"} 
           downloaded = {true}
-          showCheck = {deleteMode}
+          showCheck = {selectMode}
           pdfSource = 'http://samples.leanpub.com/thereactnativebook-sample.pdf'
           nav = {navigation}/>
         <PdfTile 
@@ -150,7 +178,7 @@ export const ViewAll = ({ navigation }) =>  {
           date = '13 Apr 2022, 11:53' 
           thumbnailSource = {"../assets/pdf-tropical-plants.png"} 
           downloaded = {true}
-          showCheck = {deleteMode}
+          showCheck = {selectMode}
           pdfSource = 'http://samples.leanpub.com/thereactnativebook-sample.pdf'
           nav = {navigation}/>
       </ScrollView>
@@ -204,6 +232,7 @@ export const ViewAll = ({ navigation }) =>  {
             style={styles.moreModalButton}
             onPress={() => {
               setBottomModalType("share");
+              setSelectMode(true);
               setBottomModalVisible(true);
               setMoreVisible(false);
             }}>
@@ -255,7 +284,7 @@ export const ViewAll = ({ navigation }) =>  {
             onPress={() => {
               setBottomModalType("delete");
               setBottomModalVisible(true);
-              setDeleteMode(true);
+              setSelectMode(true);
               setMoreVisible(false);
             }}>
             <View style={styles.moreModalButtonContent}>
@@ -291,7 +320,7 @@ export const ViewAll = ({ navigation }) =>  {
               style={styles.backButton}
               onPress={() => {
                 setBottomModalVisible(false);
-                setDeleteMode(false);
+                setSelectMode(false);
               }}>
               <Icon 
                 name="angle-left"
@@ -316,7 +345,7 @@ export const ViewAll = ({ navigation }) =>  {
               style={[styles.backButton, {backgroundColor : colour.state}]}
               onPress={() => {
                 setBottomModalVisible(false);
-                setDeleteMode(false);
+                setSelectMode(false);
               }}>
                 <Text>
                   {'Rename file'}

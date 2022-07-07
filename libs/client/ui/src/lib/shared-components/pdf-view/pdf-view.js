@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet, Dimensions} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import colour from '../colour/colour';
-import Pdf from 'react-native-pdf';
+//import Pdf from 'react-native-pdf';
 
 export const PdfViewPage = ({ route, navigation }) => {
   const { pdfSource } = route.params;
@@ -12,6 +12,7 @@ export const PdfViewPage = ({ route, navigation }) => {
   };
   return (
     <View style={styles.container}>
+      {/*
       <Pdf
         source={source}
         onLoadComplete={(numberOfPages, filePath) => {
@@ -28,6 +29,7 @@ export const PdfViewPage = ({ route, navigation }) => {
         }}
         style={styles.pdf}
       />
+      */}
     </View>
   );
 }
