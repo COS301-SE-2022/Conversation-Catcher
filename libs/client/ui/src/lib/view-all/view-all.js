@@ -337,7 +337,7 @@ export const ViewAll = ({ navigation }) =>  {
           style={styles.renameModal}
           isVisible={renameModalVisible}
           avoidKeyboard={true}
-          >
+        >
           <View style={styles.moreModalInner}>
             <TextInput
               editable/>

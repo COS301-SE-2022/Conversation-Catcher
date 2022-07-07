@@ -12,7 +12,6 @@
         </Text>
       </View>
       <View style={styles.inputsGroup}>
-        
         <View style={styles.inputLabel_box}>
           <Text style={styles.inputLabel}>
             {'Email'}
@@ -83,7 +82,7 @@
         onPress={() => Alert.alert('click')}>
         <View style={styles.noAccountButtonText_box}>
           <Text style={styles.noAccountButtonText}>
-            {'Don’t have an account?'}
+            {"Don’t have an account?"}
           </Text>
         </View>
       </TouchableOpacity>
@@ -102,7 +101,9 @@
     backgroundColor: '#ffffffff',
     overflow: 'hidden',
     flexGrow: 1,
-    flexDirection: 'column'
+    flexDirection: 'column',
+    justifyContent: 'center',
+
   },
   big_title: {
     color: '#344053ff',
@@ -121,174 +122,173 @@
     justifyContent: 'center',
     paddingLeft: 15,
     height: '5%',
-    //width: '100%',
     minHeight: 28
   },
   inputsGroup: {
-    width: '100%',
-    flexGrow: 1,
-    borderRadius: 5,
+    width: '85%',
   },
-   inputLabel: {
-     color: '#344053ff',
-     textAlign: 'left',
-     letterSpacing: 0,
-     lineHeight: 20,
-     fontSize: 14,
-     fontWeight: '500',
-     fontStyle: 'normal',
-     fontFamily: 'System' /* Inter */,
-     paddingHorizontal: 0,
-     paddingVertical: 0
-   },
-   inputLabel_box: {
-     flexGrow: 1,
-     flexDirection: 'row',
-     alignItems: 'flex-start',
-     justifyContent: 'flex-start'
-   },
-   inputField: {
-     flexGrow: 1,
-     backgroundColor: '#ffffffff',
-     borderRadius: 8,
-     overflow: 'hidden',
-     borderStyle: 'solid',
-     borderColor: '#d0d5ddff',
-     borderWidth: 1,
-     elevation: 2,
-     shadowColor: '#000000',
-     shadowRadius: 2.621621621621622,
-     shadowOpacity: 0.2173913043478261,
-     shadowOffset: {
-       width: 0,
-       height: 1
-     },
-     flexDirection: 'row'
-   },
-   inputText: {
-     color: '#344053ff',
-     textAlign: 'left',
-     letterSpacing: 0,
-     lineHeight: 24,
-     fontSize: 16,
-     fontWeight: '400',
-     fontStyle: 'normal',
-     fontFamily: 'System' /* Inter */,
-     paddingHorizontal: 0,
-     paddingVertical: 0
-   },
-   inputText_box: {
-     flexGrow: 1,
-     flexDirection: 'row',
-     alignItems: 'flex-start',
-     justifyContent: 'flex-start'
-   },
-   helpIcon: {
-     resizeMode: 'contain',
-     marginTop: 14,
-     height: 16,
-     marginBottom: 14,
-     marginLeft: 0,
-     width: 16,
-     minWidth: 16,
-     marginRight: 14
-   },
-   hintText: {
-     color: '#667084ff',
-     textAlign: 'left',
-     letterSpacing: 0,
-     lineHeight: 20,
-     fontSize: 14,
-     fontWeight: '400',
-     fontStyle: 'normal',
-     fontFamily: 'System' /* Inter */,
-     paddingHorizontal: 0,
-     paddingVertical: 0
-   },
-   hintText_box: {
-     flexGrow: 1,
-     flexDirection: 'row',
-     alignItems: 'flex-start',
-     justifyContent: 'flex-start'
-   },
-   logInButton: {
-     width: '100%',
-     flexGrow: 1,
-     backgroundColor: '#3f89beff',
-     borderRadius: 8,
-     borderStyle: 'solid',
-     borderColor: '#3f89beff',
-     borderWidth: 1,
-     elevation: 2,
-     shadowColor: '#000000',
-     shadowRadius: 2.621621621621622,
-     shadowOpacity: 0.2173913043478261,
-     shadowOffset: {
-       width: 0,
-       height: 1
-     }
-   },
-   logInButtonLabel: {
-     color: '#ffffffff',
-     textAlign: 'left',
-     letterSpacing: 0,
-     lineHeight: 24,
-     fontSize: 20,
-     fontWeight: '400',
-     fontStyle: 'normal',
-     fontFamily: 'System' /* Jaldi */,
-     paddingHorizontal: 0,
-     paddingVertical: 0
-   },
-   logInButtonLabel_box: {
-     flexGrow: 1,
-     flexDirection: 'row',
-     alignItems: 'flex-start',
-     justifyContent: 'flex-start'
-   },
-   forgotPasswordButton: {
-     backgroundColor: '#ffffffff',
-     borderRadius: 8,
-   },
-   forgotPasswordText: {
-     color: '#667084ff',
-     textAlign: 'left',
-     textDecorationLine: 'underline',
-     letterSpacing: 0,
-     lineHeight: 20,
-     fontSize: 14,
-     fontWeight: '400',
-     fontStyle: 'normal',
-     fontFamily: 'System' /* Inter */,
-     paddingHorizontal: 0,
-     paddingVertical: 0
-   },
-   forgotPasswordText_box: {
-     flexGrow: 1,
-     flexDirection: 'row',
-     alignItems: 'flex-start',
-     justifyContent: 'flex-start'
-   },
-   noAccountButton: {
-     backgroundColor: '#ffffffff',
-     borderRadius: 8,
-     flexGrow: 1,
-     flexDirection: 'row',
-     alignItems: 'flex-start',
-     justifyContent: 'flex-start'
-   },
-   noAccountButtonText: {
-     color: '#667084ff',
-     textAlign: 'left',
-     textDecorationLine: 'underline',
-     letterSpacing: 0,
-     lineHeight: 20,
-     fontSize: 14,
-     fontWeight: '400',
-     fontStyle: 'normal',
-     fontFamily: 'System' /* Inter */,
-     paddingHorizontal: 0,
-     paddingVertical: 0
-   },
+  inputLabel: {
+    color: '#344053ff',
+    textAlign: 'left',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 14,
+    fontWeight: '500',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+    paddingHorizontal: 0,
+    paddingVertical: 0
+  },
+  inputLabel_box: {
+    flexGrow: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start'
+  },
+  inputField: {
+    //flexGrow: 1,
+    backgroundColor: '#ffffffff',
+    borderRadius: 8,
+    overflow: 'hidden',
+    borderStyle: 'solid',
+    borderColor: '#d0d5ddff',
+    borderWidth: 1,
+    elevation: 2,
+    shadowColor: '#000000',
+    shadowRadius: 2.621621621621622,
+    shadowOpacity: 0.2173913043478261,
+    shadowOffset: {
+      width: 0,
+      height: 1
+    },
+    flexDirection: 'row'
+  },
+  inputText: {
+    color: '#344053ff',
+    textAlign: 'left',
+    letterSpacing: 0,
+    lineHeight: 24,
+    fontSize: 16,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+    paddingHorizontal: 0,
+    paddingVertical: 0,
+    flex: 1
+  },
+  inputText_box: {
+    flexGrow: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start'
+  },
+  helpIcon: {
+    resizeMode: 'contain',
+    marginTop: 14,
+    height: 16,
+    marginBottom: 14,
+    marginLeft: 0,
+    width: 16,
+    minWidth: 16,
+    marginRight: 14
+  },
+  hintText: {
+    color: '#667084ff',
+    textAlign: 'left',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 14,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+    paddingHorizontal: 0,
+    paddingVertical: 0
+  },
+  hintText_box: {
+    flexGrow: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start'
+  },
+  logInButton: {
+    //width: '100%',
+    height: '10%',
+    flexGrow: 1,
+    backgroundColor: '#3f89beff',
+    borderRadius: 8,
+    borderStyle: 'solid',
+    borderColor: '#3f89beff',
+    borderWidth: 1,
+    elevation: 2,
+    shadowColor: '#000000',
+    shadowRadius: 2.621621621621622,
+    shadowOpacity: 0.2173913043478261,
+    shadowOffset: {
+      width: 0,
+      height: 1
+    }
+  },
+  logInButtonLabel: {
+    color: '#ffffffff',
+    textAlign: 'left',
+    letterSpacing: 0,
+    lineHeight: 24,
+    fontSize: 20,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Jaldi */,
+    paddingHorizontal: 0,
+    paddingVertical: 0
+  },
+  logInButtonLabel_box: {
+    flexGrow: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  forgotPasswordButton: {
+    backgroundColor: '#ffffffff',
+    borderRadius: 8,
+  },
+  forgotPasswordText: {
+    color: '#667084ff',
+    textAlign: 'left',
+    textDecorationLine: 'underline',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 14,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+    paddingHorizontal: 0,
+    paddingVertical: 0
+  },
+  forgotPasswordText_box: {
+    flexGrow: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start'
+  },
+  noAccountButton: {
+    backgroundColor: '#ffffffff',
+    borderRadius: 8,
+    flexGrow: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start'
+  },
+  noAccountButtonText: {
+    color: '#667084ff',
+    textAlign: 'left',
+    textDecorationLine: 'underline',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 14,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+    paddingHorizontal: 0,
+    paddingVertical: 0
+  },
  });
  

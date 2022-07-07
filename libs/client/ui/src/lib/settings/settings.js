@@ -39,7 +39,7 @@ export const SettingsPage = ({ navigation }) => {
           <View style={styles.settingsButtonContent}>
             <View style={styles.iconContainer}>
               <Icon 
-                style={[styles.settingsButtonIcon, {color : colour.state}]}
+                style={{color : colour.state}}
                 name="lock"
                 size={20}
               />
@@ -60,7 +60,7 @@ export const SettingsPage = ({ navigation }) => {
           <View style={styles.settingsButtonContent}>
             <View style={styles.iconContainer}>
               <Icon 
-                style={[styles.settingsButtonIcon, {color : colour.state}]}
+                style={{color : colour.state}}
                 name="sliders"
                 size={20}
               />
