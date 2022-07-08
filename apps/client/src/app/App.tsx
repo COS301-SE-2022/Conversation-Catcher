@@ -18,6 +18,7 @@ import ViewAll from '../../../../libs/client/ui/src/lib/view-all/view-all.js';
 import Settings from '../../../../libs/client/ui/src/lib/settings/settings.js';
 import ChangeColour from '../../../../libs/client/ui/src/lib/colour-page/colour-page.js';
 import Login from '../../../../libs/client/ui/src/lib/login/login.js';
+import Register from '../../../../libs/client/ui/src/lib/register/register.js';
 import PdfView from '../../../../libs/client/ui/src/lib/shared-components/pdf-view/pdf-view.js';
 
 const Stack = createNativeStackNavigator();
@@ -34,6 +35,7 @@ export const App = () => {
          <Stack.Screen name="Settings" component={Settings}/>
          <Stack.Screen name="Colour" component={ChangeColour}/>
          <Stack.Screen name="Login" component={Login}/>
+         <Stack.Screen name="Register" component={Register}/>
          <Stack.Screen name="PdfView" component={PdfView}/>
       </Stack.Navigator>
     </NavigationContainer>

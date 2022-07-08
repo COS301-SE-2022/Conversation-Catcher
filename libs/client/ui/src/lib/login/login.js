@@ -61,7 +61,7 @@
       </View>
       <TouchableOpacity
         style={styles.logInButton}
-        onPress={() => Alert.alert('click')}>
+        onPress={() => {navigation.navigate('Home')}}>
         <View style={styles.logInButtonLabel_box}>
           <Text style={styles.logInButtonLabel}>
             {'Log in'}
@@ -79,7 +79,7 @@
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.noAccountButton}
-        onPress={() => Alert.alert('click')}>
+        onPress={() => {navigation.navigate('Register')}}>
         <View style={styles.noAccountButtonText_box}>
           <Text style={styles.noAccountButtonText}>
             {"Don’t have an account?"}
