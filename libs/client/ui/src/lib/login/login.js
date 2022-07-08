@@ -12,51 +12,59 @@
         </Text>
       </View>
       <View style={styles.inputsGroup}>
-        <View style={styles.inputLabel_box}>
-          <Text style={styles.inputLabel}>
-            {'Email'}
-          </Text>
-        </View>  
-        <View style={styles.inputField}>
-          <View style={styles.inputText_box}>
-            <Icon 
-              style={[styles.inputIcon, {color : colour.state}]}
-              name="envelope"
-              size={18}
-            />
-            <TextInput style={styles.inputText}
-              placeholder='johnsmith@gmail.com'
-              underlineColorAndroid="transparent"
+        <View style={styles.inputsItem}>
+          <View style={styles.inputLabel_box}>
+            <Text style={styles.inputLabel}>
+              {'Email'}
+            </Text>
+          </View>  
+          <View style={styles.inputField}>
+            <View style={styles.inputText_box}>
+              <View style={styles.inputIcon}>
+                <Icon 
+                  style={{color : colour.state}}
+                  name="envelope"
+                  size={15}
               />
+              </View>
+              <TextInput style={styles.inputText}
+                placeholder='johnsmith@gmail.com'
+                underlineColorAndroid="transparent"
+                />
+            </View>
+          </View>
+          <View style={styles.hintText_box}>
+            <Text style={styles.hintText}>
+              {'This is a hint text to help user.'}
+            </Text>
           </View>
         </View>
-        <View style={styles.hintText_box}>
-          <Text style={styles.hintText}>
-            {'This is a hint text to help user.'}
-          </Text>
-        </View>
+        <View style={styles.inputsItem}>
         <View style={styles.inputLabel_box}>
           <Text style={styles.inputLabel}>
             {'Password'}
           </Text>
         </View> 
-        <View style={styles.inputField}>
-          <View style={styles.inputText_box}>
-            <Icon 
-              style={[styles.inputIcon, {color : colour.state}]}
-              name="lock"
-              size={20}
-            />
-            <TextInput style={styles.inputText}
-              placeholder='*******************'
-              underlineColorAndroid="transparent"
-            />
+          <View style={styles.inputField}>
+            <View style={styles.inputText_box}>
+              <View style={styles.inputIcon}>
+                <Icon 
+                  style={{color : colour.state}}
+                  name="lock"
+                  size={21}
+                />
+              </View>
+              <TextInput style={styles.inputText}
+                placeholder='*******************'
+                underlineColorAndroid="transparent"
+              />
+            </View>
+          </View> 
+          <View style={styles.hintText_box}>
+            <Text style={styles.hintText}>
+              {'This is a hint text to help user.'}
+            </Text>
           </View>
-        </View> 
-        <View style={styles.hintText_box}>
-          <Text style={styles.hintText}>
-            {'This is a hint text to help user.'}
-          </Text>
         </View>   
       </View>
       <TouchableOpacity
@@ -126,6 +134,9 @@
   inputsGroup: {
     width: '85%',
   },
+  inputsItem: {
+    padding: 10
+  },
   inputLabel: {
     color: '#344053ff',
     textAlign: 'left',
@@ -160,11 +171,17 @@
       width: 0,
       height: 1
     },
-    flexDirection: 'row'
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   inputIcon: {
-    padding: 5,
-    width: '15%'
+    //width: '15%',
+    //flexShrink: 1,
+    //aspectRatio: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingRight: 10
   },
   inputText: {
     color: '#344053ff',
@@ -177,13 +194,14 @@
     fontFamily: 'System' /* Inter */,
     paddingHorizontal: 0,
     paddingVertical: 0,
-    flex: 1
+    flex: 1,
   },
   inputText_box: {
     flexGrow: 1,
     flexDirection: 'row',
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start'
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 10
   },
   helpIcon: {
     resizeMode: 'contain',
@@ -214,9 +232,9 @@
     justifyContent: 'flex-start'
   },
   logInButton: {
-    //width: '100%',
-    height: '10%',
-    flexGrow: 1,
+    width: '80%',
+    height: '6%',
+    margin: 20,
     backgroundColor: '#3f89beff',
     borderRadius: 8,
     borderStyle: 'solid',
