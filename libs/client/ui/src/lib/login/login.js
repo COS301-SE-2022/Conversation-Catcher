@@ -22,15 +22,22 @@
             <View style={styles.inputText_box}>
               <View style={styles.inputIcon}>
                 <Icon 
-                  style={{color : colour.state}}
+                  style={{color: colour.state}}
                   name="envelope"
                   size={15}
-              />
+                />
               </View>
               <TextInput style={styles.inputText}
                 placeholder='johnsmith@gmail.com'
                 underlineColorAndroid="transparent"
+              />
+              <View style={styles.helpIcon}>
+                <Icon 
+                  style={{color: '#d0d5ddff'}}
+                  name="question-circle-o"
+                  size={17}
                 />
+              </View>
             </View>
           </View>
           <View style={styles.hintText_box}>
@@ -58,6 +65,13 @@
                 placeholder='*******************'
                 underlineColorAndroid="transparent"
               />
+              <View style={styles.helpIcon}>
+                <Icon 
+                  style={{color: '#d0d5ddff'}}
+                  name="question-circle-o"
+                  size={17}
+                />
+              </View>
             </View>
           </View> 
           <View style={styles.hintText_box}>
