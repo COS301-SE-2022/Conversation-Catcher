@@ -11,7 +11,7 @@ export const ForgotPassword = ({ navigation }) =>  {
      return (<View>
               <View style={styles.hintText_box}>
                 <Text style={styles.hintText}>
-                {'This is an email hint text to help the user.'}
+                {'The email has been sent.'}
                 </Text>
               </View>
               <TouchableOpacity
@@ -19,7 +19,7 @@ export const ForgotPassword = ({ navigation }) =>  {
                 onPress={() => Alert.alert('click')}>
                 <View style={styles.smallGreyText_box}>
                   <Text style={styles.smallGreyText}>
-                    {'Forgot your password?'}
+                    {'Resend email?'}
                   </Text>
                 </View>
               </TouchableOpacity>
@@ -66,15 +66,6 @@ export const ForgotPassword = ({ navigation }) =>  {
               placeholder='johnsmith@gmail.com'
               underlineColorAndroid="transparent"
             />
-            <TouchableOpacity 
-              style={styles.helpIcon}
-              >
-              <Icon 
-                style={{color: '#d0d5ddff'}}
-                name="question-circle-o"
-                size={17}
-              />
-            </TouchableOpacity>
           </View>
         </View>
         <SuccessMessage/>
@@ -134,14 +125,13 @@ const styles = StyleSheet.create({
    fontWeight: '500',
    fontStyle: 'normal',
    fontFamily: 'System' /* Inter */,
-   paddingBottom: 5
+   //paddingBottom: 5
  },
  inputLabel_box: {
    flexGrow: 1,
    flexDirection: 'row',
    alignItems: 'flex-start',
    justifyContent: 'flex-start',
-   paddingBottom: 5
  },
  inputField: {
    //flexGrow: 1,
@@ -204,14 +194,14 @@ const styles = StyleSheet.create({
  hintText_box: {
    flexGrow: 1,
    flexDirection: 'row',
-   alignItems: 'flex-start',
-   justifyContent: 'flex-start',
+   alignItems: 'center',
+   justifyContent: 'center',
    margin: 5
  },
  changeMailButton: {
-   width: '80%',
-   height: '10%',
-   margin: 20,
+   width: '100%',
+   height: '25%',
+   marginVertical: 20,
    backgroundColor: '#3f89beff',
    borderRadius: 8,
    borderStyle: 'solid',
@@ -261,8 +251,8 @@ const styles = StyleSheet.create({
  smallGreyText_box: {
    flexShrink: 1,
    flexDirection: 'row',
-   alignItems: 'flex-start',
-   justifyContent: 'flex-start',
+   alignItems: 'center',
+   justifyContent: 'center',
    margin: 5
  },
 });
