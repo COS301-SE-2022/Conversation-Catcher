@@ -3,143 +3,95 @@ import { View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity, Alert
 import colour from '../colour/colour';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-export const Register = ({ navigation }) =>  {
- const [showMailHint, setShowMailHint] = useState(false);
- const [showPasswordHint, setShowPasswordHint] = useState(false);
- function MailHint(){
-   if (showMailHint)
+export const ForgotPassword = ({ navigation }) =>  {
+ const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+ function SuccessMessage(){
+   if (showSuccessMessage)
    {
-     return (<Text style={styles.hintText}>
-               {'This is an email hint text to help the user.'}
-             </Text>)
+     return (<View>
+              <View style={styles.hintText_box}>
+                <Text style={styles.hintText}>
+                {'This is an email hint text to help the user.'}
+                </Text>
+              </View>
+              <TouchableOpacity
+                style={styles.smallGreyButton}
+                onPress={() => Alert.alert('click')}>
+                <View style={styles.smallGreyText_box}>
+                  <Text style={styles.smallGreyText}>
+                    {'Forgot your password?'}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            </View>)
    }
    else
    {
-     return null;
+     return (<TouchableOpacity
+              style={styles.changeMailButton}
+              onPress={() => setShowSuccessMessage(true)}>
+              <View style={styles.changeMailButtonLabel_box}>
+                <Text style={styles.changeMailButtonLabel}>
+                  {'Send reset email'}
+                </Text>
+              </View>
+            </TouchableOpacity>)
    }
  }
- function 
- PasswordHint(){
-   if (showPasswordHint)
-   {
-     return (<Text style={styles.hintText}>
-               {'This is a password hint text to help the user.'}
-             </Text>)
-   }
-   else
-   {
-     return null;
-   }
- }
+
  return (
-   <View style={styles.registerPage}>
+   <View style={styles.logInPage}>
      <View style={styles.big_title_box}>
        <Text style={styles.big_title}>
-         {'Create new account'}
+         {'Reset password'}
        </Text>
      </View>
      <View style={styles.inputsGroup}>
-       <View style={styles.inputsItem}>
-         <View style={styles.inputLabel_box}>
-           <Text style={styles.inputLabel}>
-             {'Email'}
-           </Text>
-         </View>  
-         <View style={styles.inputField}>
-           <View style={styles.inputText_box}>
-             <View style={styles.inputIcon}>
-               <Icon 
-                 style={{color: colour.state}}
-                 name="envelope"
-                 size={15}
-               />
-             </View>
-             <TextInput style={styles.inputText}
-               placeholder='johnsmith@gmail.com'
-               underlineColorAndroid="transparent"
-             />
-             <TouchableOpacity 
-               style={styles.helpIcon}
-               onPress={() => setShowMailHint(!showMailHint)}>
-               <Icon 
-                 style={{color: '#d0d5ddff'}}
-                 name="question-circle-o"
-                 size={17}
-               />
-             </TouchableOpacity>
-           </View>
-         </View>
-         <View style={styles.hintText_box}>
-           <MailHint/>
-         </View>
-       </View>
-       <View style={styles.inputsItem}>
-       <View style={styles.inputLabel_box}>
-         <Text style={styles.inputLabel}>
-           {'Password'}
-         </Text>
-       </View> 
-         <View style={styles.inputField}>
-           <View style={styles.inputText_box}>
-             <View style={styles.inputIcon}>
-               <Icon 
-                 style={{color : colour.state}}
-                 name="lock"
-                 size={21}
-               />
-             </View>
-             <TextInput style={styles.inputText}
-               placeholder='*******************'
-               underlineColorAndroid="transparent"
-             />
-             <TouchableOpacity 
-               style={styles.helpIcon}
-               onPress={() => setShowPasswordHint(!showPasswordHint)}>
-               <Icon 
-                 style={{color: '#d0d5ddff'}}
-                 name="question-circle-o"
-                 size={17}
-               />
-             </TouchableOpacity>
-           </View>
-         </View> 
-         <View style={styles.hintText_box}>
-           <Text style={styles.hintText}>
-             <PasswordHint/>
-           </Text>
-         </View>
-       </View>   
+      <View style={styles.inputsItem}>
+        <View style={styles.inputLabel_box}>
+          <Text style={styles.inputLabel}>
+            {'Email'}
+          </Text>
+        </View>  
+        <View style={styles.inputField}>
+          <View style={styles.inputText_box}>
+            <View style={styles.inputIcon}>
+              <Icon 
+                style={{color: colour.state}}
+                name="envelope"
+                size={15}
+              />
+            </View>
+            <TextInput style={styles.inputText}
+              placeholder='johnsmith@gmail.com'
+              underlineColorAndroid="transparent"
+            />
+            <TouchableOpacity 
+              style={styles.helpIcon}
+              >
+              <Icon 
+                style={{color: '#d0d5ddff'}}
+                name="question-circle-o"
+                size={17}
+              />
+            </TouchableOpacity>
+          </View>
+        </View>
+        <SuccessMessage/>
+      </View> 
      </View>
-     <TouchableOpacity
-       style={styles.registerButton}
-       onPress={() => {navigation.navigate('Home')}}>
-       <View style={styles.registerButtonLabel_box}>
-         <Text style={styles.registerButtonLabel}>
-           {'Register'}
-         </Text>
-       </View>
-     </TouchableOpacity>
-     <TouchableOpacity
-       style={styles.smallGreyButton}
-       onPress={() => {navigation.navigate('Login')}}>
-       <View style={styles.smallGreyText_box}>
-         <Text style={styles.smallGreyText}>
-           {"Already a user?"}
-         </Text>
-       </View>
-     </TouchableOpacity>
     </View>
   );
 }
 
-export default Register;
+export default ForgotPassword;
 
-Register.inStorybook = true;
-Register.fitScreen = false;
-Register.scrollHeight = 844;
+ForgotPassword.inStorybook = true;
+ForgotPassword.fitScreen = false;
+//Login.scrollHeight = 844;
 
 const styles = StyleSheet.create({
- registerPage: {
+ logInPage: {
    backgroundColor: '#ffffffff',
    overflow: 'hidden',
    flexGrow: 1,
@@ -239,16 +191,6 @@ const styles = StyleSheet.create({
    justifyContent: 'center',
    margin: 5
  },
- helpIcon: {
-   resizeMode: 'contain',
-   marginTop: 10,
-   height: 16,
-   marginBottom: 10,
-   marginLeft: 0,
-   width: 16,
-   minWidth: 16,
-   marginRight: 5
- },
  hintText: {
    color: '#667084ff',
    textAlign: 'left',
@@ -266,7 +208,7 @@ const styles = StyleSheet.create({
    justifyContent: 'flex-start',
    margin: 5
  },
- registerButton: {
+ changeMailButton: {
    width: '80%',
    height: '10%',
    margin: 20,
@@ -284,7 +226,7 @@ const styles = StyleSheet.create({
      height: 1
    }
  },
- registerButtonLabel: {
+ changeMailButtonLabel: {
    color: '#ffffffff',
    textAlign: 'left',
    letterSpacing: 0,
@@ -296,7 +238,7 @@ const styles = StyleSheet.create({
    paddingHorizontal: 0,
    paddingVertical: 0
  },
- registerButtonLabel_box: {
+ changeMailButtonLabel_box: {
    flexGrow: 1,
    flexDirection: 'row',
    alignItems: 'center',

@@ -5,6 +5,32 @@
  
  export const Login = ({ navigation }) =>  {
   const [showMailHint, setShowMailHint] = useState(false);
+  const [showPasswordHint, setShowPasswordHint] = useState(false);
+  function MailHint(){
+    if (showMailHint)
+    {
+      return (<Text style={styles.hintText}>
+                {'This is an email hint text to help the user.'}
+              </Text>)
+    }
+    else
+    {
+      return null;
+    }
+  }
+  function 
+  PasswordHint(){
+    if (showPasswordHint)
+    {
+      return (<Text style={styles.hintText}>
+                {'This is a password hint text to help the user.'}
+              </Text>)
+    }
+    else
+    {
+      return null;
+    }
+  }
   return (
     <View style={styles.logInPage}>
       <View style={styles.big_title_box}>
@@ -32,7 +58,9 @@
                 placeholder='johnsmith@gmail.com'
                 underlineColorAndroid="transparent"
               />
-              <TouchableOpacity style={styles.helpIcon}>
+              <TouchableOpacity 
+                style={styles.helpIcon}
+                onPress={() => setShowMailHint(!showMailHint)}>
                 <Icon 
                   style={{color: '#d0d5ddff'}}
                   name="question-circle-o"
@@ -42,9 +70,7 @@
             </View>
           </View>
           <View style={styles.hintText_box}>
-            <Text style={styles.hintText}>
-              {'This is a hint text to help the user.'}
-            </Text>
+            <MailHint/>
           </View>
         </View>
         <View style={styles.inputsItem}>
@@ -66,7 +92,9 @@
                 placeholder='*******************'
                 underlineColorAndroid="transparent"
               />
-              <TouchableOpacity style={styles.helpIcon}>
+              <TouchableOpacity 
+                style={styles.helpIcon}
+                onPress={() => setShowPasswordHint(!showPasswordHint)}>
                 <Icon 
                   style={{color: '#d0d5ddff'}}
                   name="question-circle-o"
@@ -77,7 +105,7 @@
           </View> 
           <View style={styles.hintText_box}>
             <Text style={styles.hintText}>
-              {'This is a hint text to help the user.'}
+              <PasswordHint/>
             </Text>
           </View>
         </View>   
@@ -93,7 +121,7 @@
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.smallGreyButton}
-        onPress={() => Alert.alert('click')}>
+        onPress={() => {navigation.navigate('ForgotPassword')}}>
         <View style={styles.smallGreyText_box}>
           <Text style={styles.smallGreyText}>
             {'Forgot your password?'}
@@ -140,9 +168,9 @@
     paddingVertical: 0
   },
   big_title_box: {
-    alignItems: 'flex-start',
+    alignItems: 'center',
     justifyContent: 'center',
-    paddingLeft: 15,
+    //paddingLeft: 15,
     height: '12%',
     minHeight: 28,
     width: '100%',

@@ -20,6 +20,7 @@ import ChangeColour from '../../../../libs/client/ui/src/lib/colour-page/colour-
 import Login from '../../../../libs/client/ui/src/lib/login/login.js';
 import Register from '../../../../libs/client/ui/src/lib/register/register.js';
 import PdfView from '../../../../libs/client/ui/src/lib/shared-components/pdf-view/pdf-view.js';
+import ForgotPassword from '../../../../libs/client/ui/src/lib/forgot-password/forgot-password.js';
 
 const Stack = createNativeStackNavigator();
 
@@ -37,6 +38,7 @@ export const App = () => {
          <Stack.Screen name="Login" component={Login}/>
          <Stack.Screen name="Register" component={Register}/>
          <Stack.Screen name="PdfView" component={PdfView}/>
+         <Stack.Screen name="ForgotPassword" component={ForgotPassword}/>
       </Stack.Navigator>
     </NavigationContainer>
   )
