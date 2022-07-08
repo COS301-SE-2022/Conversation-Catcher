@@ -129,31 +129,32 @@
     justifyContent: 'center',
     paddingLeft: 15,
     height: '5%',
-    minHeight: 28
+    minHeight: 28,
+    width: '100%'
   },
   inputsGroup: {
     width: '85%',
   },
   inputsItem: {
-    padding: 10
+    padding: 7
   },
   inputLabel: {
     color: '#344053ff',
     textAlign: 'left',
     letterSpacing: 0,
     lineHeight: 20,
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: '500',
     fontStyle: 'normal',
     fontFamily: 'System' /* Inter */,
-    paddingHorizontal: 0,
-    paddingVertical: 0
+    paddingBottom: 5
   },
   inputLabel_box: {
     flexGrow: 1,
     flexDirection: 'row',
     alignItems: 'flex-start',
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
+    paddingBottom: 5
   },
   inputField: {
     //flexGrow: 1,
@@ -222,14 +223,13 @@
     fontWeight: '400',
     fontStyle: 'normal',
     fontFamily: 'System' /* Inter */,
-    paddingHorizontal: 0,
-    paddingVertical: 0
   },
   hintText_box: {
     flexGrow: 1,
     flexDirection: 'row',
     alignItems: 'flex-start',
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
+    margin: 5
   },
   logInButton: {
     width: '80%',
