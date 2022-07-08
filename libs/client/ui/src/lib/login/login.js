@@ -20,7 +20,7 @@
         <View style={styles.inputField}>
           <View style={styles.inputText_box}>
             <Icon 
-              style={{color : colour.state}}
+              style={[styles.inputIcon, {color : colour.state}]}
               name="envelope"
               size={18}
             />
@@ -43,7 +43,7 @@
         <View style={styles.inputField}>
           <View style={styles.inputText_box}>
             <Icon 
-              style={{color : colour.state}}
+              style={[styles.inputIcon, {color : colour.state}]}
               name="lock"
               size={20}
             />
@@ -102,8 +102,7 @@
     overflow: 'hidden',
     flexGrow: 1,
     flexDirection: 'column',
-    justifyContent: 'center',
-
+    alignItems: 'center'
   },
   big_title: {
     color: '#344053ff',
@@ -162,6 +161,10 @@
       height: 1
     },
     flexDirection: 'row'
+  },
+  inputIcon: {
+    padding: 5,
+    width: '15%'
   },
   inputText: {
     color: '#344053ff',
