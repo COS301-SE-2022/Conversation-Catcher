@@ -1,10 +1,11 @@
- import React from 'react';
+ import React, {useState} from 'react';
  import { View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity, Alert, TextInput } from 'react-native';
  import colour from '../colour/colour';
  import Icon from 'react-native-vector-icons/FontAwesome';
  
  export const Login = ({ navigation }) =>  {
-   return (
+  const [showMailHint, setShowMailHint] = useState(false);
+  return (
     <View style={styles.logInPage}>
       <View style={styles.big_title_box}>
         <Text style={styles.big_title}>
@@ -31,18 +32,18 @@
                 placeholder='johnsmith@gmail.com'
                 underlineColorAndroid="transparent"
               />
-              <View style={styles.helpIcon}>
+              <TouchableOpacity style={styles.helpIcon}>
                 <Icon 
                   style={{color: '#d0d5ddff'}}
                   name="question-circle-o"
                   size={17}
                 />
-              </View>
+              </TouchableOpacity>
             </View>
           </View>
           <View style={styles.hintText_box}>
             <Text style={styles.hintText}>
-              {'This is a hint text to help user.'}
+              {'This is a hint text to help the user.'}
             </Text>
           </View>
         </View>
@@ -65,18 +66,18 @@
                 placeholder='*******************'
                 underlineColorAndroid="transparent"
               />
-              <View style={styles.helpIcon}>
+              <TouchableOpacity style={styles.helpIcon}>
                 <Icon 
                   style={{color: '#d0d5ddff'}}
                   name="question-circle-o"
                   size={17}
                 />
-              </View>
+              </TouchableOpacity>
             </View>
           </View> 
           <View style={styles.hintText_box}>
             <Text style={styles.hintText}>
-              {'This is a hint text to help user.'}
+              {'This is a hint text to help the user.'}
             </Text>
           </View>
         </View>   
@@ -91,19 +92,19 @@
         </View>
       </TouchableOpacity>
       <TouchableOpacity
-        style={styles.forgotPasswordButton}
+        style={styles.smallGreyButton}
         onPress={() => Alert.alert('click')}>
-        <View style={styles.forgotPasswordText_box}>
-          <Text style={styles.forgotPasswordText}>
+        <View style={styles.smallGreyText_box}>
+          <Text style={styles.smallGreyText}>
             {'Forgot your password?'}
           </Text>
         </View>
       </TouchableOpacity>
       <TouchableOpacity
-        style={styles.noAccountButton}
+        style={styles.smallGreyButton}
         onPress={() => {navigation.navigate('Register')}}>
-        <View style={styles.noAccountButtonText_box}>
-          <Text style={styles.noAccountButtonText}>
+        <View style={styles.smallGreyText_box}>
+          <Text style={styles.smallGreyText}>
             {"Don’t have an account?"}
           </Text>
         </View>
@@ -142,9 +143,10 @@
     alignItems: 'flex-start',
     justifyContent: 'center',
     paddingLeft: 15,
-    height: '5%',
+    height: '12%',
     minHeight: 28,
-    width: '100%'
+    width: '100%',
+    padding: 5
   },
   inputsGroup: {
     width: '85%',
@@ -195,14 +197,14 @@
     //flexShrink: 1,
     //aspectRatio: 1,
     justifyContent: 'center',
-    alignItems: 'center',
-    paddingRight: 10
+    alignItems: 'center', 
+    paddingHorizontal: 10
   },
   inputText: {
     color: '#344053ff',
     textAlign: 'left',
     letterSpacing: 0,
-    lineHeight: 24,
+    lineHeight: 20,
     fontSize: 16,
     fontWeight: '400',
     fontStyle: 'normal',
@@ -216,17 +218,17 @@
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    margin: 10
+    margin: 5
   },
   helpIcon: {
     resizeMode: 'contain',
-    marginTop: 14,
+    marginTop: 10,
     height: 16,
-    marginBottom: 14,
+    marginBottom: 10,
     marginLeft: 0,
     width: 16,
     minWidth: 16,
-    marginRight: 14
+    marginRight: 5
   },
   hintText: {
     color: '#667084ff',
@@ -247,7 +249,7 @@
   },
   logInButton: {
     width: '80%',
-    height: '6%',
+    height: '10%',
     margin: 20,
     backgroundColor: '#3f89beff',
     borderRadius: 8,
@@ -281,49 +283,26 @@
     alignItems: 'center',
     justifyContent: 'center'
   },
-  forgotPasswordButton: {
+  smallGreyButton: {
     backgroundColor: '#ffffffff',
-    borderRadius: 8,
   },
-  forgotPasswordText: {
+  smallGreyText: {
     color: '#667084ff',
     textAlign: 'left',
     textDecorationLine: 'underline',
     letterSpacing: 0,
-    lineHeight: 20,
+    lineHeight: 16,
     fontSize: 14,
     fontWeight: '400',
     fontStyle: 'normal',
     fontFamily: 'System' /* Inter */,
-    paddingHorizontal: 0,
-    paddingVertical: 0
   },
-  forgotPasswordText_box: {
-    flexGrow: 1,
+  smallGreyText_box: {
+    flexShrink: 1,
     flexDirection: 'row',
     alignItems: 'flex-start',
-    justifyContent: 'flex-start'
-  },
-  noAccountButton: {
-    backgroundColor: '#ffffffff',
-    borderRadius: 8,
-    flexGrow: 1,
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start'
-  },
-  noAccountButtonText: {
-    color: '#667084ff',
-    textAlign: 'left',
-    textDecorationLine: 'underline',
-    letterSpacing: 0,
-    lineHeight: 20,
-    fontSize: 14,
-    fontWeight: '400',
-    fontStyle: 'normal',
-    fontFamily: 'System' /* Inter */,
-    paddingHorizontal: 0,
-    paddingVertical: 0
+    justifyContent: 'flex-start',
+    margin: 5
   },
  });
  
