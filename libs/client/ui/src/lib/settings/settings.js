@@ -103,7 +103,7 @@ export const SettingsPage = ({ navigation }) => {
             color={colour.state}
             size={28}
           />
-      </TouchableOpacity >
+      </TouchableOpacity>
     </ View>
   );
 }

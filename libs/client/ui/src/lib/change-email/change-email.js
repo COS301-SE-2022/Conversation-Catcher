@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 export const ChangeEmail = ({ navigation }) =>  {
  const [showMailHint, setShowMailHint] = useState(false);
- const [showPasswordHint, setShowPasswordHint] = useState(false);
+ const [showSuccessMessage, setShowSuccessMessage] = useState(false);
  function MailHint(){
    if (showMailHint)
    {
@@ -18,31 +18,30 @@ export const ChangeEmail = ({ navigation }) =>  {
      return null;
    }
  }
- function 
- PasswordHint(){
-   if (showPasswordHint)
-   {
-     return (<Text style={styles.hintText}>
-               {'This is a password hint text to help the user.'}
-             </Text>)
-   }
-   else
-   {
-     return null;
-   }
- }
+ function SuccessMessage(){
+  if (showSuccessMessage)
+  {
+    return (<Text style={styles.hintText}>
+              {'Email has been changed successfully.'}
+            </Text>)
+  }
+  else
+  {
+    return null;
+  }
+}
  return (
    <View style={styles.logInPage}>
      <View style={styles.big_title_box}>
        <Text style={styles.big_title}>
-         {'Log in to your account'}
+         {'Change your email'}
        </Text>
      </View>
      <View style={styles.inputsGroup}>
        <View style={styles.inputsItem}>
          <View style={styles.inputLabel_box}>
            <Text style={styles.inputLabel}>
-             {'Email'}
+             {'New email'}
            </Text>
          </View>  
          <View style={styles.inputField}>
@@ -74,69 +73,47 @@ export const ChangeEmail = ({ navigation }) =>  {
          </View>
        </View>
        <View style={styles.inputsItem}>
-       <View style={styles.inputLabel_box}>
-         <Text style={styles.inputLabel}>
-           {'Password'}
-         </Text>
-       </View> 
+         <View style={styles.inputLabel_box}>
+           <Text style={styles.inputLabel}>
+             {'Re-enter new email'}
+           </Text>
+         </View>  
          <View style={styles.inputField}>
            <View style={styles.inputText_box}>
              <View style={styles.inputIcon}>
                <Icon 
-                 style={{color : colour.state}}
-                 name="lock"
-                 size={21}
+                 style={{color: colour.state}}
+                 name="envelope"
+                 size={15}
                />
              </View>
              <TextInput style={styles.inputText}
-               placeholder='*******************'
+               placeholder='johnsmith@gmail.com'
                underlineColorAndroid="transparent"
              />
-             <TouchableOpacity 
-               style={styles.helpIcon}
-               onPress={() => setShowPasswordHint(!showPasswordHint)}>
-               <Icon 
-                 style={{color: '#d0d5ddff'}}
-                 name="question-circle-o"
-                 size={17}
-               />
-             </TouchableOpacity>
            </View>
-         </View> 
-         <View style={styles.hintText_box}>
-           <Text style={styles.hintText}>
-             <PasswordHint/>
-           </Text>
          </View>
        </View>   
      </View>
      <TouchableOpacity
        style={styles.logInButton}
-       onPress={() => {navigation.navigate('Home')}}>
+       onPress={() => setShowSuccessMessage(true)}>
        <View style={styles.logInButtonLabel_box}>
          <Text style={styles.logInButtonLabel}>
-           {'Log in'}
+           {'Change email'}
          </Text>
        </View>
      </TouchableOpacity>
-     <TouchableOpacity
-       style={styles.smallGreyButton}
-       onPress={() => {navigation.navigate('ForgotPassword')}}>
-       <View style={styles.smallGreyText_box}>
-         <Text style={styles.smallGreyText}>
-           {'Forgot your password?'}
-         </Text>
-       </View>
-     </TouchableOpacity>
-     <TouchableOpacity
-       style={styles.smallGreyButton}
-       onPress={() => {navigation.navigate('Register')}}>
-       <View style={styles.smallGreyText_box}>
-         <Text style={styles.smallGreyText}>
-           {"Don’t have an account?"}
-         </Text>
-       </View>
-     </TouchableOpacity>
+     <SuccessMessage/>
+     <TouchableOpacity  
+        style={styles.backButton} 
+        onPress={() => navigation.goBack()}>
+          <Icon 
+            name="angle-left"
+            color={colour.state}
+            size={28}
+          />
+      </TouchableOpacity>
     </View>
   );
 }
@@ -238,7 +215,7 @@ const styles = StyleSheet.create({
    fontStyle: 'normal',
    fontFamily: 'System' /* Inter */,
    paddingHorizontal: 0,
-   paddingVertical: 0,
+   paddingVertical: 5,
    flex: 1,
  },
  inputText_box: {
@@ -332,4 +309,12 @@ const styles = StyleSheet.create({
    justifyContent: 'flex-start',
    margin: 5
  },
+ backButton: {
+  width: '15%',
+  height: '15%',
+  alignItems: 'center',
+  justifyContent: 'center',
+  position: 'absolute',
+  bottom: 0
+}
 });
