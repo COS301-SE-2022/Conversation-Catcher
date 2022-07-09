@@ -145,7 +145,7 @@
  
  Login.inStorybook = true;
  Login.fitScreen = false;
- Login.scrollHeight = 844;
+ //Login.scrollHeight = 844;
  
  const styles = StyleSheet.create({
   logInPage: {

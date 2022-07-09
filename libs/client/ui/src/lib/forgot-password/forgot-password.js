@@ -71,6 +71,16 @@ export const ForgotPassword = ({ navigation }) =>  {
         <SuccessMessage/>
       </View> 
      </View>
+
+     <TouchableOpacity  
+        style={styles.backButton} 
+        onPress={() => navigation.goBack()}>
+          <Icon 
+            name="angle-left"
+            color={colour.state}
+            size={28}
+          />
+      </TouchableOpacity >
     </View>
   );
 }
@@ -108,13 +118,13 @@ const styles = StyleSheet.create({
    height: '12%',
    minHeight: 28,
    width: '100%',
-   padding: 5
+   //padding: 5
  },
  inputsGroup: {
    width: '85%',
  },
  inputsItem: {
-   padding: 7
+   padding: 5
  },
  inputLabel: {
    color: '#344053ff',
@@ -125,13 +135,13 @@ const styles = StyleSheet.create({
    fontWeight: '500',
    fontStyle: 'normal',
    fontFamily: 'System' /* Inter */,
-   //paddingBottom: 5
  },
  inputLabel_box: {
-   flexGrow: 1,
+   flexShrink: 1,
    flexDirection: 'row',
    alignItems: 'flex-start',
    justifyContent: 'flex-start',
+   paddingBottom: 10
  },
  inputField: {
    //flexGrow: 1,
@@ -196,12 +206,13 @@ const styles = StyleSheet.create({
    flexDirection: 'row',
    alignItems: 'center',
    justifyContent: 'center',
-   margin: 5
+   margin: 5,
+   paddingTop: 15
  },
  changeMailButton: {
    width: '100%',
    height: '25%',
-   marginVertical: 20,
+   marginVertical: 25,
    backgroundColor: '#3f89beff',
    borderRadius: 8,
    borderStyle: 'solid',
@@ -253,6 +264,14 @@ const styles = StyleSheet.create({
    flexDirection: 'row',
    alignItems: 'center',
    justifyContent: 'center',
-   margin: 5
+   margin: 5,
  },
+ backButton: {
+  width: '15%',
+  height: '15%',
+  alignItems: 'center',
+  justifyContent: 'center',
+  position: 'absolute',
+  bottom: 0
+},
 });

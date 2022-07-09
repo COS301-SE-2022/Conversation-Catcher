@@ -21,6 +21,8 @@ import Login from '../../../../libs/client/ui/src/lib/login/login.js';
 import Register from '../../../../libs/client/ui/src/lib/register/register.js';
 import PdfView from '../../../../libs/client/ui/src/lib/shared-components/pdf-view/pdf-view.js';
 import ForgotPassword from '../../../../libs/client/ui/src/lib/forgot-password/forgot-password.js';
+import ChangePassword from '../../../../libs/client/ui/src/lib/change-password/change-password.js';
+import ChangeEmail from '../../../../libs/client/ui/src/lib/change-email/change-email.js';
 
 const Stack = createNativeStackNavigator();
 
@@ -39,6 +41,8 @@ export const App = () => {
          <Stack.Screen name="Register" component={Register}/>
          <Stack.Screen name="PdfView" component={PdfView}/>
          <Stack.Screen name="ForgotPassword" component={ForgotPassword}/>
+         <Stack.Screen name="ChangePassword" component={ChangePassword}/>
+         <Stack.Screen name="ChangeEmail" component={ChangeEmail}/>
       </Stack.Navigator>
     </NavigationContainer>
   )
