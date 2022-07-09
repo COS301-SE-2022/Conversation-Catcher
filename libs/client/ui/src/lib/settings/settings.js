@@ -14,7 +14,7 @@ export const SettingsPage = ({ navigation }) => {
       < View style={styles.settingsBody}>
         <TouchableOpacity
           style={styles.settingsButton}
-          onPress={() => Alert.alert('click')}>
+          onPress={() => navigation.navigate('ChangeEmail')}>
           <View style={styles.settingsButtonContent}>
             <View style={styles.iconContainer}>
               <Icon 
@@ -35,7 +35,7 @@ export const SettingsPage = ({ navigation }) => {
 
         <TouchableOpacity
           style={styles.settingsButton}
-          onPress={() => Alert.alert('click')}>
+          onPress={() => navigation.navigate('ChangePassword')}>
           <View style={styles.settingsButtonContent}>
             <View style={styles.iconContainer}>
               <Icon 
