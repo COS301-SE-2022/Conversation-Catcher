@@ -1,4 +1,4 @@
-import { HttpService } from '@nestjs/axios';
+
 import { lastValueFrom, map, tap } from 'rxjs';
 import { GlobalKey } from '@conversation-catcher/api/pdf-manager/shared';
 

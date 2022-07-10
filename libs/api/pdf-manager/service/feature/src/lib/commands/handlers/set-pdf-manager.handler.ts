@@ -17,6 +17,7 @@ export class SetDownloadedPdfHandler
   ) {}
 
   async execute({ id }: SetDownloadedPdfCommand) {
+    console.log("here");
     return await this.repository.changeDownloaded(id);
   }
 }

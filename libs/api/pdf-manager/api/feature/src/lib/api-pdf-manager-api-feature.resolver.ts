@@ -1,12 +1,13 @@
 import { Resolver } from '@nestjs/graphql';
 import { Query, Args, Mutation } from '@nestjs/graphql';
 import { ApiPdfManagerServiceFeatureService } from "@conversation-catcher/api/pdf-manager/service/feature";
+import { ApiPdfManagerServiceService } from "@conversation-catcher/api/pdf-manager/service";
 import { PdfEntity } from "@conversation-catcher/api/pdf-manager/api/data-access"
 //yarn nx run api-pdf-manager-api-feature:test
 
 @Resolver()
 export class ApiPdfManagerApiFeatureResolver {
-	constructor(private pdfService: ApiPdfManagerServiceFeatureService) {}
+	constructor(private pdfService: ApiPdfManagerServiceFeatureService, private otherService: ApiPdfManagerServiceService) {}
 
 	/*
 		id - id of pdf in DB
@@ -82,8 +83,8 @@ export class ApiPdfManagerApiFeatureResolver {
 	// change if true to false and if false to true and change the file appropraitely
 	@Mutation(() => PdfEntity)
   	async downloadedPDF(@Args('id', { type: () => [String] }) id: string) {
-		const pdfArr = await this.pdfService.SetDownloadedPdf(id);
-
+		const pdfArr = await this.otherService.SetDownloadedPdf(id);
+      console.log(pdfArr);
 		if (pdfArr.length > 0) {
 			const pdfObj = new PdfEntity();
 			pdfObj.id = pdfArr.id;
@@ -94,7 +95,6 @@ export class ApiPdfManagerApiFeatureResolver {
 
 			return pdfObj;
 		}
-
 	  	return null;
 	}
 
