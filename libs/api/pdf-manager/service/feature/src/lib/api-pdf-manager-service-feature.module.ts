@@ -18,8 +18,6 @@ import * as CommandHandlers from './commands/handlers';
     CommandHandlers.SetDownloadedPdfHandler,
     CommandHandlers.DeletePdfHandler,
     ApiPdfManagerServiceFeatureService,
-    QueryBus,
-    CommandBus,
     //PrismaService,
     //Repository,
   ],

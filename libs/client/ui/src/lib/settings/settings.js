@@ -29,51 +29,23 @@ export const SettingsPage = ({ navigation }) => {
     uri: 'http://localhost:3333/graphql',
     headers: {
       // Header(if any)
-      // authorization: 'a1b2c3d4-a1b2-a1b2c3d4e5f6',
+      authorization: 'a1b2c3d4-a1b2-a1b2c3d4e5f6',
     },
     cache: new InMemoryCache(),
     // link WebSocketLink subscription
     link: wsLink,
   });
 
-  useEffect(() => {
-    // Creating Suscription Observer
-    let observer = client.subscribe({
-      query: gql`
-        subscription userAdded {
-          userAdded {
-            name
-            age
-            email
-            address
-            password
-          }
-        }
-      `,
-    });
-
-    // Observer callback
-    let subscriptionObj = observer.subscribe((result) => {
-      console.log('Subscription data => ', result.data.userAdded);
-      setUser(result.data.userAdded);
-    });
-
-    return () => {
-      // Unsubscribe subscription
-      console.log('Unsubscribed');
-      subscriptionObj.unsubscribe();
-    };
-  }, []);
-
   const simpleQuery = async () => {
     // Calling Simple Graph Query
     const { data, error } = await client.query({
       query: gql`
-        query users {
+        query {
           getAllPdfs
         }
       `,
     });
+    console.log('simpleQuery called again!');
     // In case Error in Response
     if (error) {
       alert(`error + ${JSON.stringify(error)}`);
@@ -91,10 +63,7 @@ export const SettingsPage = ({ navigation }) => {
           <Text style={styles.big_title}>{'Settings'}</Text>
         </View>
         <View style={styles.settingsBody}>
-          <TouchableOpacity
-            style={styles.settingsButton}
-            onPress={simpleQuery}
-          >
+          <TouchableOpacity style={styles.settingsButton} onPress={simpleQuery}>
             <View style={styles.settingsButtonContent}>
               <View style={styles.iconContainer}>
                 <Icon
