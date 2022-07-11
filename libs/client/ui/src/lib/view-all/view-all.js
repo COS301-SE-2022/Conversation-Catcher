@@ -384,7 +384,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'column',
     top: 0,
-    zIndex: 999
+    zIndex: 999,
+    minHeight: 88
   },
   big_title: {
     color: '#344053ff',
@@ -400,6 +401,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'center',
     paddingLeft: 15,
+    paddingTop: 5,
     height: '5%',
     width: '100%',
     minHeight: 28,
@@ -409,7 +411,8 @@ const styles = StyleSheet.create({
     flexShrink: 1,
     margin: 10,
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    minHeight: 38
   },
   searchInput: {
     backgroundColor: '#ffffffff',
@@ -532,7 +535,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start'
   },
   orderByDropdownStyle: {
-
+    flexShrink: 1
   },
   modal: {
     justifyContent: 'center',
