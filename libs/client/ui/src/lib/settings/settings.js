@@ -3,6 +3,7 @@ import { View, StyleSheet, Text, ImageBackground, TouchableOpacity, Alert} from 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import colour from '../colour/colour';
 
+
 export const SettingsPage = ({ navigation }) => {
   return (
     <View style={styles.settings}>
@@ -97,7 +98,7 @@ export const SettingsPage = ({ navigation }) => {
 
       <TouchableOpacity  
         style={styles.backButton} 
-        onPress={() => navigation.goBack()}>
+        onPress={() => navigation.navigate('Home')}>
           <Icon 
             name="angle-left"
             color={colour.state}

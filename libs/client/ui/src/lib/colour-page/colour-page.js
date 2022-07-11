@@ -4,6 +4,7 @@ import { View, StyleSheet, Text, Image, ImageBackground, Button, Alert, Touchabl
 import colour from '../colour/colour';
 import BouncyCheckboxGroup, {ICheckboxButton,} from "react-native-bouncy-checkbox-group";
 import Icon from 'react-native-vector-icons/FontAwesome';
+import RNRestart from 'react-native-restart';
 
 export const ColourPage = ({ navigation}) => {
   return (
@@ -28,6 +29,7 @@ export const ColourPage = ({ navigation}) => {
             style={{ flexDirection: "column" }}
             onChange={(selectedItem) => {
               colour.state = selectedItem.fillColor;
+              RNRestart.Restart();
             }}
           />
         </View>
