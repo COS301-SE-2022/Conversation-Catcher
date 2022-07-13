@@ -9,7 +9,7 @@ import { CovertSpeechCommand } from "./commands/impl";
 export class ApiSpeechToTextServiceService {
     constructor(private commandBus: CommandBus, private queryBus: QueryBus) {}
 
-    async CovertSpeech(audio : string) {
+    async CovertSpeech(audio : AudioBuffer) {
         return await this.commandBus.execute( new CovertSpeechCommand(audio))
     }
 }

@@ -7,9 +7,10 @@ import { PdfEntity } from "@conversation-catcher/api/pdf-manager/api/data-access
 export class ApiSpeechToTextApiResolver {
     constructor(private SpeechToTextService: ApiSpeechToTextServiceService) {}
 
-    @Mutation(() => PdfEntity)
-  	async CovertSpeech(@Args('audio', { type: () => [String] }) audio: string) {
-		this.SpeechToTextService.CovertSpeech(audio);
+    @Mutation()
+  	async CovertSpeech(@Args('audioFile', { type: () => [AudioBuffer] }) audioFile: AudioBuffer) {
+		this.SpeechToTextService.CovertSpeech(audioFile);
+		//const audioFile = new Audio();
 	  	return;
 	}
 }

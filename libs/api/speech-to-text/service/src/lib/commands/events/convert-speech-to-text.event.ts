@@ -1,5 +1,5 @@
 export class CovertSpeechPdfEvent  {
     constructor(
-      public readonly audio: string
+      public readonly audio: AudioBuffer
     ) {}
 }
