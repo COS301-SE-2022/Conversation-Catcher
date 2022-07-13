@@ -7,7 +7,7 @@ import { PdfEntity } from "@conversation-catcher/api/pdf-manager/api/data-access
 
 @Resolver()
 export class ApiPdfManagerApiFeatureResolver {
-	constructor(private pdfService: ApiPdfManagerServiceFeatureService, private otherService: ApiPdfManagerServiceService) {}
+	constructor(private otherService: ApiPdfManagerServiceFeatureService, private pdfService: ApiPdfManagerServiceService) {}
 
 	/*
 		id - id of pdf in DB
@@ -24,11 +24,11 @@ export class ApiPdfManagerApiFeatureResolver {
 
 		if (pdfArr.length > 0) {
 			const pdfObj = new PdfEntity();
-			pdfObj.id = pdfArr.id;
-			pdfObj.name = pdfArr.name;
-			pdfObj.pdf = pdfArr.pdf;
-			pdfObj.creationDate = pdfArr.creationDate;
-			pdfObj.downloaded = pdfArr.downloaded;
+			// pdfObj.id = pdfArr.id;
+			// pdfObj.name = pdfArr.name;
+			// pdfObj.pdf = pdfArr.pdf;
+			// pdfObj.creationDate = pdfArr.creationDate;
+			// pdfObj.downloaded = pdfArr.downloaded;
 
 			return pdfObj;
 		}
@@ -83,7 +83,7 @@ export class ApiPdfManagerApiFeatureResolver {
 	// change if true to false and if false to true and change the file appropraitely
 	@Mutation(() => PdfEntity)
   	async downloadedPDF(@Args('id', { type: () => [String] }) id: string) {
-		const pdfArr = await this.otherService.SetDownloadedPdf(id);
+		const pdfArr = await this.pdfService.SetDownloadedPdf(id);
       console.log(pdfArr);
 		if (pdfArr.length > 0) {
 			const pdfObj = new PdfEntity();
