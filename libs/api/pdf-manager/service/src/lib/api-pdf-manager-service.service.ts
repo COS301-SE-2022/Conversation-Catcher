@@ -22,6 +22,7 @@ export class ApiPdfManagerServiceService {
   async DeletePdf(id: string) {
     return await this.commandBus.execute(new DeletePdfCommand(id));
   }
+  
   //queries
   async getPdfById(id: string) {
     return await this.queryBus.execute(new GetPdfByIdQuery(id));

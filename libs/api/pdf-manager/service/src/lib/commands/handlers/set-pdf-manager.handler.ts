@@ -9,9 +9,7 @@ import { lastValueFrom, map, tap } from 'rxjs';
 
 @CommandHandler(SetNamePdfCommand)
 export class SetNamePdfHandler implements ICommandHandler<SetNamePdfCommand> {
-  constructor(
-    private repository: MongoDBAccess
-  ) {}
+  constructor(private repository: MongoDBAccess) {}
 
   async execute({ id, name }: SetNamePdfCommand) {
     console.log('Running command for setname');
@@ -26,9 +24,69 @@ export class SetDownloadedPdfHandler
     private repository: MongoDBAccess,
     private httpService: HttpService
   ) {}
-  async execute({id}: SetDownloadedPdfCommand): Promise<any> {
-    // return await this.repository.changeDownloaded(command.id);
+  async execute({ id }: SetDownloadedPdfCommand): Promise<any> {
     console.log('HAndling command setDownloadPDF');
+    // return await this.repository.changeDownloaded(id);
+
+    const url =
+      'https://data.mongodb-api.com/app/data-dtzbr/endpoint/data/v1/action/';
+    const config = {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Request-Headers': '*',
+        'api-key':
+          'YrnAKHnpVpmVD5qJ5wOMA9Ga7rRZhoniOEJTQJKaTJHWovGoVgoxELB2MkSTXBem',
+      },
+    };
+    let action = 'findOne';
+    let data = JSON.stringify({
+      collection: 'PDF',
+      database: 'PDF',
+      dataSource: 'Cluster0',
+      filter: { id: id },
+    });
+
+    const res = await lastValueFrom(
+      this.httpService.post(url + action, data, config).pipe(
+        tap((res) => console.log(res.status)),
+        map((res) => res.data)
+      )
+    );
+
+    console.log(res);
+
+    action = 'updateOne';
+    data = JSON.stringify({
+      collection: 'PDF',
+      database: 'PDF',
+      dataSource: 'Cluster0',
+      filter: { id: id },
+      update: {
+        $set: { downloaded: !res.document.downloaded },
+      },
+    });
+
+    //Updates the name
+    this.httpService.post(url + action, data, config).pipe(
+      tap((res) => console.log(res.status)),
+      map((res) => res.data)
+    );
+
+    //return updated record
+    action = 'findOne';
+    data = JSON.stringify({
+      collection: 'PDF',
+      database: 'PDF',
+      dataSource: 'Cluster0',
+      filter: { id: id },
+    });
+    return await lastValueFrom(
+      this.httpService.post(url + action, data, config).pipe(
+        tap((res) => console.log(res.status)),
+        map((res) => res.data)
+      )
+    );
   }
 }
 
@@ -47,7 +105,7 @@ export class SetDownloadedPdfHandler
 //   collection: 'PDF',
 //     database: 'PDF',
 //     dataSource: 'Cluster0',
-//   filter: { id: 'id' },
+//   filter: { id: id },
 // });
 
 // const res = await lastValueFrom(
@@ -64,7 +122,7 @@ export class SetDownloadedPdfHandler
 //   collection: 'PDF',
 //     database: 'PDF',
 //     dataSource: 'Cluster0',
-//   filter: { id: command.id },
+//   filter: { id: id },
 //   update: {
 //     $set: { downloaded: !res.document.downloaded },
 //   },
@@ -82,7 +140,7 @@ export class SetDownloadedPdfHandler
 //   collection: 'PDF',
 //     database: 'PDF',
 //     dataSource: 'Cluster0',
-//   filter: { id: command.id },
+//   filter: { id: id },
 // });
 // return await lastValueFrom(
 //   this.httpService.post(url + action, data, config).pipe(

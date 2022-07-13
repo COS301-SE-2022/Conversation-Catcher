@@ -24,11 +24,11 @@ export class ApiPdfManagerApiFeatureResolver {
 
 		if (pdfArr.length > 0) {
 			const pdfObj = new PdfEntity();
-			// pdfObj.id = pdfArr.id;
-			// pdfObj.name = pdfArr.name;
-			// pdfObj.pdf = pdfArr.pdf;
-			// pdfObj.creationDate = pdfArr.creationDate;
-			// pdfObj.downloaded = pdfArr.downloaded;
+			pdfObj.id = pdfArr.id;
+			pdfObj.name = pdfArr.name;
+			pdfObj.pdf = pdfArr.pdf;
+			pdfObj.creationDate = pdfArr.creationDate;
+			pdfObj.downloaded = pdfArr.downloaded;
 
 			return pdfObj;
 		}
