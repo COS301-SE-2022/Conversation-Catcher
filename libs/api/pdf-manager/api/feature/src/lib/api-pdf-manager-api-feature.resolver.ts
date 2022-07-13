@@ -99,7 +99,7 @@ export class ApiPdfManagerApiFeatureResolver {
 	}
 
 	// delete pdf with this id from DB
-	@Mutation(() => PdfEntity)
+	@Mutation()
   	async deletePDF(@Args('id', { type: () => [String] }) id: string) {
 		await this.pdfService.DeletePdf(id);
 		//const pdfArr = await this.pdfService.DeletePdf(id);
