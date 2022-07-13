@@ -25,7 +25,7 @@ export class DatabaseManagerResolver {
   }
 
   @Mutation(() => String)
-  async renamePDF(
+  async renPDF(
     @Args('id', { type: () => String }) id: string,
     @Args('name', { type: () => String }) name: string
   ) {
@@ -36,6 +36,7 @@ export class DatabaseManagerResolver {
 
   @Query(() => String)
   async getAllPdfs() {
+    const a = await this.dbService.changeDownloaded('id');
     return 'success';
   }
 }

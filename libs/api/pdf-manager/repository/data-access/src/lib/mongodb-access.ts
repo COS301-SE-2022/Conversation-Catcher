@@ -1,6 +1,7 @@
 
 import { lastValueFrom, map, tap } from 'rxjs';
 import { GlobalKey } from '@conversation-catcher/api/pdf-manager/shared';
+import { HttpService } from '@nestjs/axios';
 
 export class MongoDBAccess {
   constructor(private httpService: HttpService) {}
