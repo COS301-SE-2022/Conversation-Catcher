@@ -7,9 +7,9 @@ export class ApiSpeechToTextApiResolver {
     constructor(private SpeechToTextService: ApiSpeechToTextServiceService) {}
 
     @Mutation()
-  	async CovertSpeech(@Args('audioFile', { type: () => [AudioBuffer] }) audioFile: AudioBuffer) {
+  	async CovertSpeech(@Args('audioFile', { type: () => [Audio] }) audioFile : typeof Audio) {
 		this.SpeechToTextService.CovertSpeech(audioFile);
-		//const audioFile = new Audio();
+		//const File = new Audio();
 	  	return;
 	}
 }
