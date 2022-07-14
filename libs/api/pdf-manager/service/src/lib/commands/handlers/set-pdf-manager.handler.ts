@@ -25,7 +25,7 @@ export class SetDownloadedPdfHandler
     // private httpService: HttpService
   ) {}
   async execute({ id }: SetDownloadedPdfCommand): Promise<any> {
-    console.log('HAndling command setDownloadPDF');
+    console.log('HAndling command setDownloadPDF with id ' + id);
     return await this.repository.changeDownloaded(id);
   }
 }

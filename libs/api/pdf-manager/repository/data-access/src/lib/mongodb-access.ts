@@ -1,4 +1,3 @@
-
 import { lastValueFrom, map, tap } from 'rxjs';
 import { GlobalKey } from '@conversation-catcher/api/pdf-manager/shared';
 import { HttpService } from '@nestjs/axios';
@@ -27,6 +26,9 @@ export class MongoDBAccess {
 
   //Functions
   async getUserPdfs(userid: string) {
+    //Add empty string to variable to force variable to be interpreted as a string in stead of an array of strings. The
+    //same logic applies to all other similiar cases
+    userid = userid + '';
     //First fetch the user
     this.action = 'findOne';
     let data = JSON.stringify({
@@ -71,6 +73,7 @@ export class MongoDBAccess {
 
   async getPDF(id: string) {
     this.action = 'findOne';
+    id = id + '';
 
     const data = JSON.stringify({
       //the data object passed to the http request which specifies what should be returned
@@ -90,6 +93,7 @@ export class MongoDBAccess {
   }
 
   async deletePDF(id: string) {
+    id = id + '';
     this.action = 'deleteOne';
     const data = JSON.stringify({
       collection: this.pdfCollection,
@@ -107,6 +111,8 @@ export class MongoDBAccess {
   }
 
   async changeDownloaded(id: string) {
+    id = id + '';
+    console.log(id);
     this.action = 'findOne';
     let data = JSON.stringify({
       collection: this.pdfCollection,
@@ -158,6 +164,8 @@ export class MongoDBAccess {
   }
 
   async setPDFName(id: string, name: string) {
+    id = id + '';
+    name = name + '';
     this.action = 'updateOne';
     let data = JSON.stringify({
       collection: this.pdfCollection,
