@@ -2,14 +2,16 @@
 import { lastValueFrom, map, tap } from 'rxjs';
 import { GlobalKey } from '@conversation-catcher/api/pdf-manager/shared';
 import { HttpService } from '@nestjs/axios';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class MongoDBAccess {
   constructor(private httpService: HttpService) {}
 
   //Private attributes of class:
   private url =
     'https://data.mongodb-api.com/app/data-dtzbr/endpoint/data/v1/action/';
-  private action = 'findOne';
+  private action;
   private config = {
     method: 'post',
     headers: {
