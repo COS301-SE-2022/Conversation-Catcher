@@ -185,16 +185,6 @@ export const ViewAll = ({ navigation }) =>  {
 
       <View style={styles.viewAllBottomBar}>
         <TouchableOpacity 
-          style={styles.backButton}
-          onPress={() => navigation.navigate('Home')}>
-          <Icon 
-            name="angle-left"
-            color="#344053ff"
-            size={30}
-          />     
-        </TouchableOpacity>
-
-        <TouchableOpacity 
           style={styles.moreButton}
           onPress={() => setMoreVisible(true)}>
           <Icon 
@@ -204,6 +194,16 @@ export const ViewAll = ({ navigation }) =>  {
           />   
         </TouchableOpacity>
 
+        <TouchableOpacity 
+          style={styles.backButton}
+          onPress={() => navigation.navigate('Home')}>
+          <Icon 
+            name="angle-left"
+            color="#344053ff"
+            size={30}
+          />     
+        </TouchableOpacity>
+
         <View
           style={styles.orderByGroup}>
           <Text style={styles.orderByLabel}>
@@ -211,10 +211,13 @@ export const ViewAll = ({ navigation }) =>  {
           </Text>
           <ModalDropdown 
             options={['Date', 'Name']}
-            defaultIndex={1}
+            defaultIndex={0}
+            defaultValue={'Date'}
             style={styles.orderByDropdown}
             textStyle={styles.orderByDropdownText}
-            dropdownStyle={styles.orderByDropdownStyle}/>
+            dropdownStyle={styles.orderByDropdownStyle}
+            dropdownTextStyle={styles.orderByDropdownTextStyle}
+            dropdownTextSelectHighlightStyle={{color: colour.state}}/>
         </View>     
       </View>
 
@@ -497,7 +500,8 @@ const styles = StyleSheet.create({
     fontStyle: 'normal',
     fontFamily: 'System' /* Inter */,
     padding: 3,
-    flexShrink: 1
+    flexShrink: 1, 
+    width: 50
   },
   orderByDropdown: {
     flexShrink: 1,
@@ -516,7 +520,7 @@ const styles = StyleSheet.create({
     },
     flexDirection: 'row',
     marginVertical: 5,
-    width: 120
+    width: 65
   },
   orderByDropdownText: {
     color: '#667084ff',
@@ -535,7 +539,21 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start'
   },
   orderByDropdownStyle: {
-    flexShrink: 1
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 80,
+    borderRadius: 8
+  },
+  orderByDropdownTextStyle: {
+    color: '#667084ff',
+    textAlign: 'left',
+    letterSpacing: 0,
+    lineHeight: 18,
+    fontSize: 16,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+    padding: 10
   },
   modal: {
     justifyContent: 'center',

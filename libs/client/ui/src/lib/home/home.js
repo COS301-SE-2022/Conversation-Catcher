@@ -86,9 +86,9 @@ export const Home = ({ navigation }) => {
               setFileSelected(true)
               handleDocumentSelection()}}>
             <View style={styles.uploadModalButtonContent}>
-              <View style={styles.iconContainer}>
+              <View style={styles.fileUploadIconContainer}>
                 <Icon 
-                  style={styles.uploadModalButtonIcon}
+                  //style={styles.uploadModalButtonIcon}
                   name="file-sound-o"
                   size={40}
                 />
@@ -693,4 +693,7 @@ const styles = StyleSheet.create({
   uploadModalButtonText_box: {
     flexShrink: 1
   },
+  fileUploadIconContainer: {
+    flexShrink: 1
+  }
 });
