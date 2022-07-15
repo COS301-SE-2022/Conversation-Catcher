@@ -105,14 +105,14 @@ export class MongoDBAccess {
     return await lastValueFrom(
       this.httpService.post(this.url + this.action, data, this.config).pipe(
         tap((res) => console.log(res.status)),
-        map((res) => res.data)
+        map((res) => res.data.document)
       )
     );
   }
 
   async changeDownloaded(id: string) {
     id = id + '';
-    console.log(id);
+    // console.log(id);
     this.action = 'findOne';
     let data = JSON.stringify({
       collection: this.pdfCollection,
@@ -128,7 +128,7 @@ export class MongoDBAccess {
       )
     );
 
-    console.log(res);
+    // console.log(res);
 
     this.action = 'updateOne';
     data = JSON.stringify({
@@ -158,7 +158,7 @@ export class MongoDBAccess {
     return await lastValueFrom(
       this.httpService.post(this.url + this.action, data, this.config).pipe(
         tap((res) => console.log(res.status)),
-        map((res) => res.data)
+        map((res) => res.data.document)
       )
     );
   }
@@ -194,7 +194,7 @@ export class MongoDBAccess {
     return await lastValueFrom(
       this.httpService.post(this.url + this.action, data, this.config).pipe(
         tap((res) => console.log(res.status)),
-        map((res) => res.data)
+        map((res) => res.data.document)
       )
     );
   }

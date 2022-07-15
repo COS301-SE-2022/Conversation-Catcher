@@ -10,7 +10,14 @@ export class ApiPdfManagerApiFeatureResolver {
   constructor(
     // private otherService: ApiPdfManagerServiceFeatureService,
     private pdfService: ApiPdfManagerServiceService
-  ) {}
+  ) {
+    this.errorObj = new PdfEntity();
+    this.errorObj.id = 'error';
+    this.errorObj.name = 'error';
+    this.errorObj.pdf = null;
+    this.errorObj.downloaded = false;
+  }
+  private errorObj;
 
   /*
 		id - id of pdf in DB
@@ -25,7 +32,7 @@ export class ApiPdfManagerApiFeatureResolver {
   async getPDFById(@Args('id', { type: () => String }) id: string) {
     const pdfArr = await this.pdfService.getPdfById(id);
 
-    if (pdfArr.length > 0) {
+    if (pdfArr != undefined) {
       const pdfObj = new PdfEntity();
       pdfObj.id = pdfArr.id;
       pdfObj.name = pdfArr.name;
@@ -36,7 +43,7 @@ export class ApiPdfManagerApiFeatureResolver {
       return pdfObj;
     }
 
-    return null;
+    return this.errorObj;
   }
 
   // get all of the user's pdfs
@@ -44,7 +51,7 @@ export class ApiPdfManagerApiFeatureResolver {
   async getPDFs(@Args('id', { type: () => String }) userid: string) {
     const pdfsArr = await this.pdfService.getPdfs(userid);
 
-    if (pdfsArr.length > 0) {
+    if (pdfsArr != undefined) {
       const arrOfPDFs = new Array<PdfEntity>();
 
       for (let index = 0; index < pdfsArr.length; index++) {
@@ -62,6 +69,7 @@ export class ApiPdfManagerApiFeatureResolver {
 
       return arrOfPDFs;
     }
+    return this.errorObj;
   }
 
   // rename the pdf with this id
@@ -72,7 +80,7 @@ export class ApiPdfManagerApiFeatureResolver {
   ) {
     const pdfArr = await this.pdfService.SetNamePdf(id, name);
 
-    if (pdfArr.length > 0) {
+    if (pdfArr != undefined) {
       const pdfObj = new PdfEntity();
       pdfObj.id = pdfArr.id;
       pdfObj.name = pdfArr.name;
@@ -83,15 +91,15 @@ export class ApiPdfManagerApiFeatureResolver {
       return pdfObj;
     }
 
-    return null;
+    return this.errorObj;
   }
 
   // change if true to false and if false to true and change the file appropraitely
   @Mutation(() => PdfEntity)
   async downloadedPDF(@Args('id', { type: () => [String] }) id: string) {
     const pdfArr = await this.pdfService.SetDownloadedPdf(id);
-    console.log(pdfArr);
-    if (pdfArr.length > 0) {
+    // console.log(pdfArr);
+    if (pdfArr != undefined) {
       const pdfObj = new PdfEntity();
       pdfObj.id = pdfArr.id;
       pdfObj.name = pdfArr.name;
@@ -101,7 +109,7 @@ export class ApiPdfManagerApiFeatureResolver {
 
       return pdfObj;
     }
-    return null;
+    return this.errorObj;
   }
 
   // delete pdf with this id from DB
@@ -110,7 +118,7 @@ export class ApiPdfManagerApiFeatureResolver {
     await this.pdfService.DeletePdf(id);
     //const pdfArr = await this.pdfService.DeletePdf(id);
 
-    /*if (pdfArr.length > 0) {
+    /*if (pdfArr != undefined) {
 			const pdfObj = new PdfEntity();
 			pdfObj.id = pdfArr.id;
 			pdfObj.name = pdfArr.name;
