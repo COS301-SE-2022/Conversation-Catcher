@@ -25,16 +25,18 @@ export class DatabaseManagerResolver {
   }
 
   @Mutation(() => String)
-  async renamePDF(@Args('id', { type: () => String }) id: string, @Args('name', { type: () => String }) name: string) {
-    const a = await this.dbService.renamePDF(id,name);
+  async renPDF(
+    @Args('id', { type: () => String }) id: string,
+    @Args('name', { type: () => String }) name: string
+  ) {
+    const a = await this.dbService.renamePDF(id, name);
     console.log(a);
     return 'on';
   }
 
   @Query(() => String)
   async getAllPdfs() {
-    const a = await this.dbService.getAllPdfs('John@test');
-    console.log(a);
+    const a = await this.dbService.changeDownloaded('id');
     return 'success';
   }
 }

@@ -34,12 +34,12 @@ export const Home = ({ navigation }) => {
     if (recordAudioState) {
       return <TouchableOpacity
               style={[styles.recordAudioTouchableOpacity, {backgroundColor : colour.state}]}
-              
+
               onPress={() => {
                 setRecordingStopVisible(true)
               }}>
               <View style={styles.recordAudioIcon}>
-                <Icon 
+                <Icon
                   color="#ffffffff"
                   name="stop"
                   size={40}
@@ -54,7 +54,7 @@ export const Home = ({ navigation }) => {
                 start();
               }}>
               <View style={styles.recordAudioIcon}>
-                <Icon 
+                <Icon
                   color="#667084ff"
                   name="microphone"
                   size={40}
@@ -68,7 +68,7 @@ export const Home = ({ navigation }) => {
       return <TouchableOpacity
               style={styles.changeUploadModalButton}
               onPress={() => handleDocumentSelection()}>
-              <Icon 
+              <Icon
                 style={[styles.uploadModalButtonIcon, {color : colour.state}]}
                 name="file-sound-o"
                 size={16}
@@ -87,13 +87,13 @@ export const Home = ({ navigation }) => {
               handleDocumentSelection()}}>
             <View style={styles.uploadModalButtonContent}>
               <View style={styles.iconContainer}>
-                <Icon 
+                <Icon
                   style={styles.uploadModalButtonIcon}
                   name="file-sound-o"
                   size={40}
                 />
               </View>
-            </View>   
+            </View>
           </TouchableOpacity>
   }
 
@@ -113,7 +113,7 @@ export const Home = ({ navigation }) => {
       const chunk = Buffer.from(data, 'base64');
       console.log('chunk size', chunk.byteLength);
       // do something with audio chunk
-    });*/} 
+    });*/}
   }
 
   const checkPermission = async () => {
@@ -152,7 +152,7 @@ export const Home = ({ navigation }) => {
     //componentDidMount();
     state.audioFile = false;
     state.recording = false;
-    
+
   };
 
   componentDidMount();
@@ -165,27 +165,27 @@ export const Home = ({ navigation }) => {
         </Text>
       </View>
       <View style={styles.recentPdfTiles}>
-        <PdfTile 
+        <PdfTile
           id = {1}
-          name = 'Bug introduction: a modification of code' 
-          date = '1 May 2022, 9:37' 
-          source = {require('../assets/pdf-bug-intro.png')} 
+          name = 'Bug introduction: a modification of code'
+          date = '1 May 2022, 9:37'
+          source = {require('../assets/pdf-bug-intro.png')}
           RecordAudioed = {true}
           showCheck = {false}
           navigation = {navigation}/>
-        <PdfTile 
+        <PdfTile
           id = {2}
-          name = 'Human-computer interaction' 
-          date = '21 Apr 2022, 14:18' 
-          source = {require('../assets/pdf-human-computer.png')} 
+          name = 'Human-computer interaction'
+          date = '21 Apr 2022, 14:18'
+          source = {require('../assets/pdf-human-computer.png')}
           RecordAudioed = {false}
           showCheck = {false}
           navigation = {navigation}/>
-        <PdfTile 
+        <PdfTile
           id = {3}
-          name = 'The tropical plants of the Philippines' 
-          date = '13 Apr 2022, 11:53' 
-          source = {require('../assets/pdf-tropical-plants.png')} 
+          name = 'The tropical plants of the Philippines'
+          date = '13 Apr 2022, 11:53'
+          source = {require('../assets/pdf-tropical-plants.png')}
           RecordAudioed = {true}
           showCheck = {false}
           navigation = {navigation}/>
@@ -221,7 +221,7 @@ export const Home = ({ navigation }) => {
           style={styles.uploadAudioTouchableOpacity}
           onPress={() => setUploadVisible(true)}>
           <View style={styles.uploadAudioIcon}>
-            <Icon 
+            <Icon
               color="#667084ff"
               name="upload"
               size={40}
@@ -243,7 +243,7 @@ export const Home = ({ navigation }) => {
             {'Recording has been stopped'}
           </Text>
 
-          <View style={styles.recordingStopModalButtonDivider} /> 
+          <View style={styles.recordingStopModalButtonDivider} />
 
           <TouchableOpacity
             style={styles.recordingStopModalButton}
@@ -254,7 +254,7 @@ export const Home = ({ navigation }) => {
             }}>
             <View style={styles.recordingStopModalButtonContent}>
               <View style={styles.iconContainer}>
-                <Icon 
+                <Icon
                   style={{color : colour.state}}
                   name="refresh"
                   size={18}
@@ -265,10 +265,10 @@ export const Home = ({ navigation }) => {
                   {'Convert recording'}
                 </Text>
               </View>
-            </View>   
+            </View>
           </TouchableOpacity>
 
-          <View style={styles.recordingStopModalButtonDivider} /> 
+          <View style={styles.recordingStopModalButtonDivider} />
 
           <TouchableOpacity
             style={styles.recordingStopModalButton}
@@ -277,7 +277,7 @@ export const Home = ({ navigation }) => {
             }}>
             <View style={styles.recordingStopModalButtonContent}>
               <View style={styles.iconContainer}>
-                <Icon 
+                <Icon
                   style={{color : colour.state}}
                   name="microphone"
                   size={20}
@@ -291,9 +291,9 @@ export const Home = ({ navigation }) => {
             </View>
           </TouchableOpacity>
 
-          <View style={styles.recordingStopModalButtonDivider} /> 
+          <View style={styles.recordingStopModalButtonDivider} />
 
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.recordingStopModalButton}
             onPress={() => {
               stop()
@@ -302,7 +302,7 @@ export const Home = ({ navigation }) => {
             }}>
             <View style={styles.recordingStopModalButtonContent}>
               <View style={styles.iconContainer}>
-                <Icon 
+                <Icon
                   style={{color : colour.state}}
                   name="trash-o"
                   size={20}
@@ -313,7 +313,7 @@ export const Home = ({ navigation }) => {
                   {'Discard recording'}
                 </Text>
               </View>
-            </View> 
+            </View>
           </TouchableOpacity>
         </View>
       </Modal>
