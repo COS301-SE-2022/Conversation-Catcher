@@ -149,7 +149,7 @@ x_tr,x_val,y_tr,y_val=train_test_split(np.array(df['text']),np.array(df['summary
 from keras.preprocessing.text import Tokenizer 
 from keras.preprocessing.sequence import pad_sequences
 
-#prepare a tokenizer for reviews on training data
+# Prepare a tokenizer for reviews on training data
 
 x_tokenizer = Tokenizer() 
 x_tokenizer.fit_on_texts(list(x_tr))
@@ -191,3 +191,78 @@ x_val   =   pad_sequences(x_val_seq, maxlen=max_text_len, padding='post')
 # Size of vocabulary ( +1 for padding token)
 
 x_voc   =  x_tokenizer.num_words + 1
+
+# -------------------------- Summary tokanizer ------------------------------
+
+# Prepare a tokenizer for reviews on training data
+
+y_tokenizer = Tokenizer()   
+y_tokenizer.fit_on_texts(list(y_tr))
+
+# Calculate rare words and coverage (word count less that thresh is rare)
+
+thresh=6
+
+cnt=0
+tot_cnt=0
+freq=0
+tot_freq=0
+
+for key,value in y_tokenizer.word_counts.items():
+    tot_cnt=tot_cnt+1
+    tot_freq=tot_freq+value
+    if(value<thresh):
+        cnt=cnt+1
+        freq=freq+value
+    
+print("% of rare words in vocabulary:",(cnt/tot_cnt)*100)
+print("Total Coverage of rare words:",(freq/tot_freq)*100)
+
+# Prepare a tokenizer for reviews on training data
+
+y_tokenizer = Tokenizer(num_words=tot_cnt-cnt) 
+y_tokenizer.fit_on_texts(list(y_tr))
+
+# Convert text sequences into integer sequences
+
+y_tr_seq    =   y_tokenizer.texts_to_sequences(y_tr) 
+y_val_seq   =   y_tokenizer.texts_to_sequences(y_val) 
+
+# Padding zero upto maximum length
+
+y_tr    =   pad_sequences(y_tr_seq, maxlen=max_summary_len, padding='post')
+y_val   =   pad_sequences(y_val_seq, maxlen=max_summary_len, padding='post')
+
+# Size of vocabulary
+
+y_voc  =   y_tokenizer.num_words + 1
+
+# Check whether word count of start token is equal to length of the training data
+
+y_tokenizer.word_counts['sostok'],len(y_tr)   
+
+# Deleting the rows that contain only start and end tokens
+
+ind=[]
+for i in range(len(y_tr)):
+    cnt=0
+    for j in y_tr[i]:
+        if j!=0:
+            cnt=cnt+1
+    if(cnt==2):
+        ind.append(i)
+
+y_tr=np.delete(y_tr,ind, axis=0)
+x_tr=np.delete(x_tr,ind, axis=0)
+
+ind=[]
+for i in range(len(y_val)):
+    cnt=0
+    for j in y_val[i]:
+        if j!=0:
+            cnt=cnt+1
+    if(cnt==2):
+        ind.append(i)
+
+y_val=np.delete(y_val,ind, axis=0)
+x_val=np.delete(x_val,ind, axis=0)
