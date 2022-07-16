@@ -110,3 +110,84 @@ for t in data['Summary']:
 data['cleaned_text']=cleaned_text
 data['cleaned_summary']=cleaned_summary
 
+# Drop empty rows
+
+data.replace('', np.nan, inplace=True)
+data.dropna(axis=0,inplace=True)
+
+# Set max text length and max summary length based on length distributions
+
+max_text_len=30
+max_summary_len=8
+
+# Select text and summaries whose lengths fall within the above boundaries and
+
+cleaned_text =np.array(data['cleaned_text'])
+cleaned_summary=np.array(data['cleaned_summary'])
+
+short_text=[]
+short_summary=[]
+
+for i in range(len(cleaned_text)):
+    if(len(cleaned_summary[i].split())<=max_summary_len and len(cleaned_text[i].split())<=max_text_len):
+        short_text.append(cleaned_text[i])
+        short_summary.append(cleaned_summary[i])
+        
+df=pd.DataFrame({'text':short_text,'summary':short_summary})
+
+# Add start and end tokens
+
+df['summary'] = df['summary'].apply(lambda x : 'sostok '+ x + ' eostok')
+
+# Split dataset into training and validation set (90:10)
+
+from sklearn.model_selection import train_test_split
+x_tr,x_val,y_tr,y_val=train_test_split(np.array(df['text']),np.array(df['summary']),test_size=0.1,random_state=0,shuffle=True) 
+
+# -------------------------- Text tokanizer ------------------------------
+
+from keras.preprocessing.text import Tokenizer 
+from keras.preprocessing.sequence import pad_sequences
+
+#prepare a tokenizer for reviews on training data
+
+x_tokenizer = Tokenizer() 
+x_tokenizer.fit_on_texts(list(x_tr))
+
+# Calculate rare words and coverage (word count less that thresh is rare)
+
+thresh=4
+
+cnt=0 # total rare words (count below thresh)
+tot_cnt=0 # total unique words in text
+freq=0
+tot_freq=0
+
+for key,value in x_tokenizer.word_counts.items():
+    tot_cnt=tot_cnt+1
+    tot_freq=tot_freq+value
+    if(value<thresh):
+        cnt=cnt+1
+        freq=freq+value
+    
+print("% of rare words in vocabulary:",(cnt/tot_cnt)*100)
+print("Total Coverage of rare words:",(freq/tot_freq)*100)
+
+# Prepare a tokenizer for reviews on training data. tot-cnt - cnt gives top most common words
+
+x_tokenizer = Tokenizer(num_words=tot_cnt-cnt) 
+x_tokenizer.fit_on_texts(list(x_tr))
+
+# Convert text sequences into integer sequences
+
+x_tr_seq    =   x_tokenizer.texts_to_sequences(x_tr) 
+x_val_seq   =   x_tokenizer.texts_to_sequences(x_val)
+
+# Padding zero upto maximum length
+
+x_tr    =   pad_sequences(x_tr_seq,  maxlen=max_text_len, padding='post')
+x_val   =   pad_sequences(x_val_seq, maxlen=max_text_len, padding='post')
+
+# Size of vocabulary ( +1 for padding token)
+
+x_voc   =  x_tokenizer.num_words + 1
