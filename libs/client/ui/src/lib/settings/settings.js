@@ -18,12 +18,12 @@ export const SettingsPage = ({ navigation }) => {
   const [user, setUser] = useState({});
 
   // Connection for the subscription
-  const wsLink = new WebSocketLink({
-    uri: `ws://localhost:3333/graphql`,
-    options: {
-      reconnect: true,
-    },
-  });
+  // const wsLink = new WebSocketLink({
+  //   uri: `ws://localhost:3333/graphql`,
+  //   options: {
+  //     reconnect: true,
+  //   },
+  // });
   // Initialize Apollo Client
   const client = new ApolloClient({
     uri: 'http://localhost:3333/graphql',
@@ -33,7 +33,7 @@ export const SettingsPage = ({ navigation }) => {
     },
     cache: new InMemoryCache(),
     // link WebSocketLink subscription
-    link: wsLink,
+    // link: wsLink,
   });
 
   const simpleQuery = async () => {
