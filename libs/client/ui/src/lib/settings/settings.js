@@ -11,7 +11,7 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import colour from '../colour/colour';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
-import { gql } from '@apollo/client';
+import { gql, useMutation } from '@apollo/client';
 import { WebSocketLink } from '@apollo/client/link/ws';
 
 export const SettingsPage = ({ navigation }) => {
@@ -29,7 +29,7 @@ export const SettingsPage = ({ navigation }) => {
     uri: 'http://localhost:3333/graphql',
     headers: {
       // Header(if any)
-      authorization: 'a1b2c3d4-a1b2-a1b2c3d4e5f6',
+      // authorization: 'a1b2c3d4-a1b2-a1b2c3d4e5f6',
     },
     cache: new InMemoryCache(),
     // link WebSocketLink subscription
@@ -38,22 +38,26 @@ export const SettingsPage = ({ navigation }) => {
 
   const simpleQuery = async () => {
     // Calling Simple Graph Query
-    const { data, error } = await client.query({
-      query: gql`
-        mutation {
-          
-        }
-      `,
-    });
+    console.log('Calling simple query');
+    client
+      .mutate({
+        mutation: gql`
+          mutation myMutation{
+            downloadedPDF(id: "id") {
+              id
+              name
+              downloaded
+            }
+          }
+        `,
+      })
+      .then((resp) => {
+        console.log('Success', resp);
+      })
+      .catch((err) => {
+        throw err;
+      });
     console.log('simpleQuery called again!');
-    // In case Error in Response
-    if (error) {
-      alert(`error + ${JSON.stringify(error)}`);
-      console.log('error', JSON.stringify(error));
-      return;
-    }
-    alert(`Got Record of ${data.users.length} Users`);
-    console.log('data', JSON.stringify(data));
   };
 
   return (
@@ -63,10 +67,7 @@ export const SettingsPage = ({ navigation }) => {
         <Text style={styles.big_title}>{'Settings'}</Text>
       </View>
       <View style={styles.settingsBody}>
-        <TouchableOpacity
-          style={styles.settingsButton}
-          onPress={simpleQuery}
-        >
+        <TouchableOpacity style={styles.settingsButton} onPress={simpleQuery}>
           <View style={styles.settingsButtonContent}>
             <View style={styles.iconContainer}>
               <Icon

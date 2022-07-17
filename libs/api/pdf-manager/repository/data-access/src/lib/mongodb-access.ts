@@ -141,10 +141,13 @@ export class MongoDBAccess {
       },
     });
 
-    //Updates the name
-    this.httpService.post(this.url + this.action, data, this.config).pipe(
-      tap((res) => console.log(res.status)),
-      map((res) => res.data)
+    //Updates the downloaded
+
+    const temp = await lastValueFrom(
+      this.httpService.post(this.url + this.action, data, this.config).pipe(
+        tap((res) => console.log('updating ' + res.status)),
+        map((res) => res.data)
+      )
     );
 
     //return updated record
