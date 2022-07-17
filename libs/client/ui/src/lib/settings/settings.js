@@ -12,49 +12,49 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import colour from '../colour/colour';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { gql } from '@apollo/client';
-// import { WebSocketLink } from '@apollo/client/link/ws';
+import { WebSocketLink } from '@apollo/client/link/ws';
 
 export const SettingsPage = ({ navigation }) => {
   const [user, setUser] = useState({});
 
-  // // Connection for the subscription
-  // const wsLink = new WebSocketLink({
-  //   uri: `ws://localhost:3333/graphql`,
-  //   options: {
-  //     reconnect: true,
-  //   },
-  // });
-  // // Initialize Apollo Client
-  // const client = new ApolloClient({
-  //   uri: 'http://localhost:3333/graphql',
-  //   headers: {
-  //     // Header(if any)
-  //     authorization: 'a1b2c3d4-a1b2-a1b2c3d4e5f6',
-  //   },
-  //   cache: new InMemoryCache(),
-  //   // link WebSocketLink subscription
-  //   link: wsLink,
-  // });
+  // Connection for the subscription
+  const wsLink = new WebSocketLink({
+    uri: `ws://localhost:3333/graphql`,
+    options: {
+      reconnect: true,
+    },
+  });
+  // Initialize Apollo Client
+  const client = new ApolloClient({
+    uri: 'http://localhost:3333/graphql',
+    headers: {
+      // Header(if any)
+      authorization: 'a1b2c3d4-a1b2-a1b2c3d4e5f6',
+    },
+    cache: new InMemoryCache(),
+    // link WebSocketLink subscription
+    link: wsLink,
+  });
 
-  // const simpleQuery = async () => {
-  //   // Calling Simple Graph Query
-  //   const { data, error } = await client.query({
-  //     query: gql`
-  //       query {
-  //         getAllPdfs
-  //       }
-  //     `,
-  //   });
-  //   console.log('simpleQuery called again!');
-  //   // In case Error in Response
-  //   if (error) {
-  //     alert(`error + ${JSON.stringify(error)}`);
-  //     console.log('error', JSON.stringify(error));
-  //     return;
-  //   }
-  //   alert(`Got Record of ${data.users.length} Users`);
-  //   console.log('data', JSON.stringify(data));
-  // };
+  const simpleQuery = async () => {
+    // Calling Simple Graph Query
+    const { data, error } = await client.query({
+      query: gql`
+        mutation {
+          
+        }
+      `,
+    });
+    console.log('simpleQuery called again!');
+    // In case Error in Response
+    if (error) {
+      alert(`error + ${JSON.stringify(error)}`);
+      console.log('error', JSON.stringify(error));
+      return;
+    }
+    alert(`Got Record of ${data.users.length} Users`);
+    console.log('data', JSON.stringify(data));
+  };
 
   return (
     // <ApolloProvider client={client}>
@@ -65,7 +65,7 @@ export const SettingsPage = ({ navigation }) => {
       <View style={styles.settingsBody}>
         <TouchableOpacity
           style={styles.settingsButton}
-          onPress={console.log('pressed')}
+          onPress={simpleQuery}
         >
           <View style={styles.settingsButtonContent}>
             <View style={styles.iconContainer}>
