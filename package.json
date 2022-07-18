@@ -13,6 +13,7 @@
     "@nestjs/common": "^8.0.0",
     "@nestjs/core": "^8.0.0",
     "@nestjs/platform-express": "^8.0.0",
+    "@reduxjs/toolkit": "1.8.1",
     "buffer": "^6.0.3",
     "react": "18.1.0",
     "react-native": "0.68.2",
@@ -26,6 +27,7 @@
     "react-native-permissions": "^3.3.1",
     "react-native-sound": "^0.11.2",
     "react-native-vector-icons": "^9.1.0",
+    "react-redux": "8.0.1",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.0.0",
     "tslib": "^2.3.0"
