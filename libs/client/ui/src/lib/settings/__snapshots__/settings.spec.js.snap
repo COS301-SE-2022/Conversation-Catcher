@@ -207,12 +207,9 @@ exports[`Setup of settings snapshot 1`] = `
                   "color": undefined,
                   "fontSize": 20,
                 },
-                Array [
-                  undefined,
-                  Object {
-                    "color": "#3F89BE",
-                  },
-                ],
+                Object {
+                  "color": "#3F89BE",
+                },
                 Object {
                   "fontFamily": "FontAwesome",
                   "fontStyle": "normal",
@@ -310,12 +307,9 @@ exports[`Setup of settings snapshot 1`] = `
                   "color": undefined,
                   "fontSize": 20,
                 },
-                Array [
-                  undefined,
-                  Object {
-                    "color": "#3F89BE",
-                  },
-                ],
+                Object {
+                  "color": "#3F89BE",
+                },
                 Object {
                   "fontFamily": "FontAwesome",
                   "fontStyle": "normal",
