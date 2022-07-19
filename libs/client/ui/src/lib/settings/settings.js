@@ -42,7 +42,7 @@ export const SettingsPage = ({ navigation }) => {
     client
       .mutate({
         mutation: gql`
-          mutation myMutation{
+          mutation myMutation {
             downloadedPDF(id: "id") {
               id
               name
@@ -60,100 +60,123 @@ export const SettingsPage = ({ navigation }) => {
     console.log('simpleQuery called again!');
   };
 
-  return (
-    // <ApolloProvider client={client}>
-    <View style={styles.settings}>
-      <View style={styles.big_title_box}>
-        <Text style={styles.big_title}>{'Settings'}</Text>
+  //React native hook for making an api call
+  // Define mutation
+  const INCREMENT_COUNTER = gql`
+    mutation myMutation {
+      downloadedPDF(id: "id") {
+        id
+        name
+        downloaded
+      }
+    }
+  `;
+
+  function MyComponent() {
+    // Pass mutation to useMutation
+    const [mutateFunction, { data, loading, error }] =
+      useMutation(INCREMENT_COUNTER);
+
+    return (
+      // <ApolloProvider client={client}>
+      <View style={styles.settings}>
+        <View style={styles.big_title_box}>
+          <Text style={styles.big_title}>{'Settings'}</Text>
+        </View>
+        <View style={styles.settingsBody}>
+          <TouchableOpacity
+            style={styles.settingsButton}
+            onPress={mutateFunction}
+          >
+            <View style={styles.settingsButtonContent}>
+              <View style={styles.iconContainer}>
+                <Icon
+                  style={[styles.settingsButtonIcon, { color: colour.state }]}
+                  name="envelope"
+                  size={18}
+                />
+              </View>
+              <View style={styles.settingsButtonText_box}>
+                <Text style={styles.settingsButtonText} ellipsizeMode={'clip'}>
+                  {'Change email'}
+                </Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+
+          <View style={styles.settingsButtonDivider} />
+
+          <TouchableOpacity
+            style={styles.settingsButton}
+            onPress={() => Alert.alert('click')}
+          >
+            <View style={styles.settingsButtonContent}>
+              <View style={styles.iconContainer}>
+                <Icon
+                  style={[styles.settingsButtonIcon, { color: colour.state }]}
+                  name="lock"
+                  size={20}
+                />
+              </View>
+              <View style={styles.settingsButtonText_box}>
+                <Text style={styles.settingsButtonText}>
+                  {'Change password'}
+                </Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+
+          <View style={styles.settingsButtonDivider} />
+
+          <TouchableOpacity
+            style={styles.settingsButton}
+            onPress={() => navigation.navigate('Colour')}
+          >
+            <View style={styles.settingsButtonContent}>
+              <View style={styles.iconContainer}>
+                <Icon
+                  style={[styles.settingsButtonIcon, { color: colour.state }]}
+                  name="sliders"
+                  size={20}
+                />
+              </View>
+              <View style={styles.settingsButtonText_box}>
+                <Text style={styles.settingsButtonText}>{'Change colour'}</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+
+          <View style={styles.settingsButtonDivider} />
+
+          <TouchableOpacity
+            style={styles.settingsButton}
+            onPress={() => navigation.navigate('Login')}
+          >
+            <View style={styles.settingsButtonContent}>
+              <View style={styles.iconContainer}>
+                <Icon
+                  style={[styles.settingsButtonIcon, { color: colour.state }]}
+                  name="sign-out"
+                  size={20}
+                />
+              </View>
+              <View style={styles.settingsButtonText_box}>
+                <Text style={styles.settingsButtonText}>{'Log out'}</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </View>
+
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigation.goBack()}
+        >
+          <Icon name="angle-left" color={colour.state} size={28} />
+        </TouchableOpacity>
       </View>
-      <View style={styles.settingsBody}>
-        <TouchableOpacity style={styles.settingsButton} onPress={simpleQuery}>
-          <View style={styles.settingsButtonContent}>
-            <View style={styles.iconContainer}>
-              <Icon
-                style={[styles.settingsButtonIcon, { color: colour.state }]}
-                name="envelope"
-                size={18}
-              />
-            </View>
-            <View style={styles.settingsButtonText_box}>
-              <Text style={styles.settingsButtonText} ellipsizeMode={'clip'}>
-                {'Change email'}
-              </Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-
-        <View style={styles.settingsButtonDivider} />
-
-        <TouchableOpacity
-          style={styles.settingsButton}
-          onPress={() => Alert.alert('click')}
-        >
-          <View style={styles.settingsButtonContent}>
-            <View style={styles.iconContainer}>
-              <Icon
-                style={[styles.settingsButtonIcon, { color: colour.state }]}
-                name="lock"
-                size={20}
-              />
-            </View>
-            <View style={styles.settingsButtonText_box}>
-              <Text style={styles.settingsButtonText}>{'Change password'}</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-
-        <View style={styles.settingsButtonDivider} />
-
-        <TouchableOpacity
-          style={styles.settingsButton}
-          onPress={() => navigation.navigate('Colour')}
-        >
-          <View style={styles.settingsButtonContent}>
-            <View style={styles.iconContainer}>
-              <Icon
-                style={[styles.settingsButtonIcon, { color: colour.state }]}
-                name="sliders"
-                size={20}
-              />
-            </View>
-            <View style={styles.settingsButtonText_box}>
-              <Text style={styles.settingsButtonText}>{'Change colour'}</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-
-        <View style={styles.settingsButtonDivider} />
-
-        <TouchableOpacity
-          style={styles.settingsButton}
-          onPress={() => navigation.navigate('Login')}
-        >
-          <View style={styles.settingsButtonContent}>
-            <View style={styles.iconContainer}>
-              <Icon
-                style={[styles.settingsButtonIcon, { color: colour.state }]}
-                name="sign-out"
-                size={20}
-              />
-            </View>
-            <View style={styles.settingsButtonText_box}>
-              <Text style={styles.settingsButtonText}>{'Log out'}</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-      </View>
-
-      <TouchableOpacity
-        style={styles.backButton}
-        onPress={() => navigation.goBack()}
-      >
-        <Icon name="angle-left" color={colour.state} size={28} />
-      </TouchableOpacity>
-    </View>
-    // </ApolloProvider>
-  );
+      // </ApolloProvider>
+    );
+  }
 };
 
 export default SettingsPage;
