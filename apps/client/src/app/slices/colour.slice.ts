@@ -57,7 +57,7 @@ export const initialColourState: ColourState = colourAdapter.getInitialState({
   error: null,
 });
 
-export const colourSlice = createSlice({
+export const colourSlice = createSlice({//initial state with reducers
   name: COLOUR_FEATURE_KEY,
   initialState: initialColourState,
   reducers: {
@@ -84,10 +84,9 @@ export const colourSlice = createSlice({
   },
 });
 
-/*
- * Export reducer for store configuration.
- */
-export const colourReducer = colourSlice.reducer;
+export const colourReducer = colourSlice.reducer;//Used in the main.tsx
+
+//Add action creators
 
 /*
  * Export action creators to be dispatched. For use with the `useDispatch` hook.
@@ -108,6 +107,8 @@ export const colourReducer = colourSlice.reducer;
  * See: https://react-redux.js.org/next/api/hooks#usedispatch
  */
 export const colourActions = colourSlice.actions;
+
+//Add selectors
 
 /*
  * Export selectors to query state. For use with the `useSelector` hook.
@@ -134,3 +135,5 @@ export const selectColourEntities = createSelector(
   getColourState,
   selectEntities
 );
+
+//Add subscribers
