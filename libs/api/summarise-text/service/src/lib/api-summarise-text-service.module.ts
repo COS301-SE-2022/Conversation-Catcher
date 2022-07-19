@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ApiSummariseTextServiceService } from './api-summarise-text-service.service';
 import { CqrsModule } from '@nestjs/cqrs';
-//import * as CommandHandlers from './commands/handlers';
+import * as CommandHandlers from './commands/handlers';
 //import * as QueryHandlers from './queries/handlers';
 
 @Module({
@@ -10,12 +10,11 @@ import { CqrsModule } from '@nestjs/cqrs';
     CqrsModule,
   ],
   providers: [
-    ApiSummariseTextServiceService
-    //CommandHandlers
-    //QueryHandlers
+    ApiSummariseTextServiceService,
+    CommandHandlers.SummariesHandler,
   ],
   exports: [
-    ApiSummariseTextServiceService
+    ApiSummariseTextServiceService,
   ],
 })
 export class ApiSummariseTextServiceModule {}

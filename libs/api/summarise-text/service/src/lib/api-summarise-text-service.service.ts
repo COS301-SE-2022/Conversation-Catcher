@@ -1,19 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-//import { DeletePdfCommand } from './commands/impl/delete-pdf-manager.command';
-//import { GetPdfByIdQuery, GetPdfsQuery } from './queries/impl';
+import { SummariseCommand } from './commands/impl/summarise-summarise-text.command';
 
 @Injectable()
 export class ApiSummariseTextServiceService {
     constructor(private commandBus: CommandBus, private queryBus: QueryBus) {}
 
     //commands
-    /*async SetDownloadedPdf(id: string) {
-        return await this.commandBus.execute(new SetDownloadedPdfCommand(id));
+    async Summarise(text: string) {
+        return await this.commandBus.execute(new SummariseCommand(text));
     }
   
     //queries
-    async getPdfById(id: string) {
+    /*async getPdfById(id: string) {
         return await this.queryBus.execute(new GetPdfByIdQuery(id));
     }*/
 }
