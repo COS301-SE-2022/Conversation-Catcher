@@ -8,7 +8,7 @@ import { MongoDBAccess } from '@conversation-catcher/api/pdf-manager/repository/
 import { CovertSpeechCommand } from '../impl/convert-speech-to-text.command';
 
 @CommandHandler(CovertSpeechCommand)
-export class SetDownloadedPdfHandler
+export class CovertSpeechHandler
   implements ICommandHandler<CovertSpeechCommand>
 {
   constructor(
