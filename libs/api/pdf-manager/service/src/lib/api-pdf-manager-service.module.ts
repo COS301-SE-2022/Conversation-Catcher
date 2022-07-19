@@ -8,7 +8,9 @@ import { PdfManagerRepositoryDataAccessModule } from '@conversation-catcher/api/
 
 @Module({
   controllers: [],
-  imports: [CqrsModule, PdfManagerRepositoryDataAccessModule],
+  imports: [
+    CqrsModule, PdfManagerRepositoryDataAccessModule
+  ],
   providers: [
     ApiPdfManagerServiceService,
     CommandHandlers.SetDownloadedPdfHandler,
@@ -17,6 +19,8 @@ import { PdfManagerRepositoryDataAccessModule } from '@conversation-catcher/api/
     QueryHandlers.GetPdfByIdHandler,
     QueryHandlers.GetPdfsHandler,
   ],
-  exports: [ApiPdfManagerServiceService],
+  exports: [
+    ApiPdfManagerServiceService
+  ],
 })
 export class ApiPdfManagerServiceModule {}
