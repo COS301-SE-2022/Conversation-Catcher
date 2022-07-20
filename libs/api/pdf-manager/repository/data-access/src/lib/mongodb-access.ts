@@ -72,24 +72,25 @@ export class MongoDBAccess {
   }
 
   async getPDF(id: string) {
-    this.action = 'findOne';
     id = id + '';
-
+    console.log(id);
+    this.action = 'findOne';
     const data = JSON.stringify({
-      //the data object passed to the http request which specifies what should be returned
       collection: this.pdfCollection,
       database: this.db,
       dataSource: this.cluster,
       filter: { id: id },
     });
 
-    //Returns the result of the httpRequest
-    return await lastValueFrom(
+    const res = await lastValueFrom(
       this.httpService.post(this.url + this.action, data, this.config).pipe(
         tap((res) => console.log(res.status)),
-        map((res) => res.data.document)
+        map((res) => res.data)
       )
     );
+
+    console.log(res);
+    return res;
   }
 
   async deletePDF(id: string) {
@@ -129,6 +130,7 @@ export class MongoDBAccess {
     );
 
     // console.log(res);
+    if (res.document == null) return null;
 
     this.action = 'updateOne';
     data = JSON.stringify({
