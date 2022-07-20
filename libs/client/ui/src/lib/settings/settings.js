@@ -25,40 +25,40 @@ export const SettingsPage = ({ navigation }) => {
   //   },
   // });
   // Initialize Apollo Client
-  const client = new ApolloClient({
-    uri: 'http://localhost:3333/graphql',
-    headers: {
-      // Header(if any)
-      // authorization: 'a1b2c3d4-a1b2-a1b2c3d4e5f6',
-    },
-    cache: new InMemoryCache(),
-    // link WebSocketLink subscription
-    // link: wsLink,
-  });
+  // const client = new ApolloClient({
+  //   uri: 'http://10.0.2.2:3333/graphql',
+  //   headers: {
+  //     // Header(if any)
+  //     // authorization: 'a1b2c3d4-a1b2-a1b2c3d4e5f6',
+  //   },
+  //   cache: new InMemoryCache(),
+  //   // link WebSocketLink subscription
+  //   // link: wsLink,
+  // });
 
-  const simpleQuery = async () => {
-    // Calling Simple Graph Query
-    console.log('Calling simple query');
-    client
-      .mutate({
-        mutation: gql`
-          mutation myMutation {
-            downloadedPDF(id: "id") {
-              id
-              name
-              downloaded
-            }
-          }
-        `,
-      })
-      .then((resp) => {
-        console.log('Success', resp);
-      })
-      .catch((err) => {
-        throw err;
-      });
-    console.log('simpleQuery called again!');
-  };
+  // const simpleQuery = async () => {
+  //   // Calling Simple Graph Query
+  //   console.log('Calling simple query');
+  //   client
+  //     .mutate({
+  //       mutation: gql`
+  //         mutation myMutation {
+  //           downloadedPDF(id: "id") {
+  //             id
+  //             name
+  //             downloaded
+  //           }
+  //         }
+  //       `,
+  //     })
+  //     .then((resp) => {
+  //       console.log('Success', resp);
+  //     })
+  //     .catch((err) => {
+  //       throw err;
+  //     });
+  //   console.log('simpleQuery called again!');
+  // };
 
   //React native hook for making an api call
   // Define mutation
@@ -177,6 +177,7 @@ export const SettingsPage = ({ navigation }) => {
       // </ApolloProvider>
     );
   }
+  return MyComponent();
 };
 
 export default SettingsPage;
