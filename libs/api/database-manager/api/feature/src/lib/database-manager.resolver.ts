@@ -1,4 +1,4 @@
-import { Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { DatabaseManagerService } from '@conversation-catcher/api/database-manager/service/feature';
 
 @Resolver()
@@ -7,14 +7,14 @@ export class DatabaseManagerResolver {
 
   @Query(() => String)
   async addUser() {
-    const a = await this.dbService.AddUser('John@test');
+    const a = await this.dbService.addUser('John@test');
     console.log(a);
     return 'on';
   }
 
   @Query(() => String)
   async addPDF() {
-    const a = await this.dbService.AddPDF('id', 'name', 'path');
+    const a = await this.dbService.addPDF('id', 'name', 'path');
     console.log(a);
     return 'on';
     /*** id: string
@@ -24,22 +24,19 @@ export class DatabaseManagerResolver {
      * dowloaded: boolean */
   }
 
-  @Query(() => String)
-  async renamePDF() {
-    const a = await this.dbService.changeUploadedPDF('id');
+  @Mutation(() => String)
+  async renPDF(
+    @Args('id', { type: () => String }) id: string,
+    @Args('name', { type: () => String }) name: string
+  ) {
+    const a = await this.dbService.renamePDF(id, name);
     console.log(a);
     return 'on';
-    /*** id: string
-     * name: string
-     * path: string
-     * creationDate: Date
-     * dowloaded: boolean */
   }
 
   @Query(() => String)
   async getAllPdfs() {
-    const a = await this.dbService.getAllPdfs('John@test');
-    console.log(a);
+    const a = await this.dbService.changeDownloaded('id');
     return 'success';
   }
 }

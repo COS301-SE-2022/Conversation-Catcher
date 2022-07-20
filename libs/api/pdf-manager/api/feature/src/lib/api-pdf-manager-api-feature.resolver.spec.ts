@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ApiPdfManagerApiFeatureResolver } from './api-pdf-manager-api-feature.resolver';
-import { ApiPdfManagerServiceFeatureService } from '@conversation-catcher/api/pdf-manager/service/feature';
+import { ApiPdfManagerServiceService } from '@conversation-catcher/api/pdf-manager/service';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 
 describe('ApiPdfManagerApiFeatureResolver', () => {
@@ -9,7 +9,7 @@ describe('ApiPdfManagerApiFeatureResolver', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [ApiPdfManagerApiFeatureResolver,
-        ApiPdfManagerServiceFeatureService,
+        ApiPdfManagerServiceService,
         CommandBus,
         QueryBus,],
     })

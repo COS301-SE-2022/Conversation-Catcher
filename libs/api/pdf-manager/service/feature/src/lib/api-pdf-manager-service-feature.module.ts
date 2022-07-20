@@ -1,15 +1,14 @@
-//import { Repository } from '@graduates/api/pdf-manager/repository/data-access';
-//import { PrismaService } from '@conversation-catcher/api/shared/services/prisma/data-access';
 import { Module } from '@nestjs/common';
-import { CqrsModule } from '@nestjs/cqrs';
+import { PdfManagerRepositoryDataAccessModule } from '@conversation-catcher/api/pdf-manager/repository/data-access';
+import { CommandBus, CqrsModule, QueryBus } from '@nestjs/cqrs';
 import { ApiPdfManagerServiceFeatureService } from './api-pdf-manager-service-feature.service';
 import * as QueryHandlers from './queries/handlers';
 import * as CommandHandlers from './commands/handlers';
 //yarn nx run api-pdf-manager-service-feature:test
 
 @Module({
-  imports: [CqrsModule],
-  controllers:[],
+  imports: [CqrsModule, PdfManagerRepositoryDataAccessModule],
+  controllers: [],
   providers: [
     QueryHandlers.GetPdfByIdHandler,
     QueryHandlers.GetPdfsHandler,
@@ -17,8 +16,8 @@ import * as CommandHandlers from './commands/handlers';
     CommandHandlers.SetDownloadedPdfHandler,
     CommandHandlers.DeletePdfHandler,
     ApiPdfManagerServiceFeatureService,
-    //PrismaService,
-    //Repository,
+    CommandBus,
+    QueryBus
   ],
   exports: [ApiPdfManagerServiceFeatureService],
 })

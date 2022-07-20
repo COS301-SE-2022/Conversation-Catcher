@@ -35,7 +35,7 @@ export class DatabaseManagerService {
     );
   }
 
-  async AddUser(sEmail: string): Promise<AxiosResponse<any>> {
+  async addUser(sEmail: string): Promise<AxiosResponse<any>> {
     const url =
       'https://data.mongodb-api.com/app/data-dtzbr/endpoint/data/v1/action/insertOne';
     const data = JSON.stringify({
@@ -65,7 +65,7 @@ export class DatabaseManagerService {
     );
   }
 
-  async AddPDF(
+  async addPDF(
     pdfID: string,
     name: string,
     path: string
@@ -101,7 +101,7 @@ export class DatabaseManagerService {
     );
   }
 
-  async RenamePDF(pdfID: string, name: string): Promise<AxiosResponse<any>> {
+  async renamePDF(pdfID: string, name: string): Promise<AxiosResponse<any>> {
     const url =
       'https://data.mongodb-api.com/app/data-dtzbr/endpoint/data/v1/action/';
     const action = 'updateOne';
@@ -114,7 +114,6 @@ export class DatabaseManagerService {
         $set: { name: name },
       },
     });
-    console.log('API key: ' + GlobalKey.key);
     const config = {
       method: 'post',
       headers: {
@@ -229,5 +228,65 @@ export class DatabaseManagerService {
       );
     }
     return object;
+  }
+  async changeDownloaded(id: string) {
+    const url =
+      'https://data.mongodb-api.com/app/data-dtzbr/endpoint/data/v1/action/';
+      const config = {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Request-Headers': '*',
+          'api-key': GlobalKey.key,
+        },
+      };
+    let action = 'findOne';
+    let data = JSON.stringify({
+      collection: 'PDF',
+        database: 'PDF',
+        dataSource: 'Cluster0',
+      filter: { id: id },
+    });
+
+    const res = await lastValueFrom(
+      this.httpService.post(url + action, data, config).pipe(
+        tap((res) => console.log(res.status)),
+        map((res) => res.data)
+      )
+    );
+
+    console.log(res);
+
+    action = 'updateOne';
+    data = JSON.stringify({
+      collection: 'PDF',
+        database: 'PDF',
+        dataSource: 'Cluster0',
+      filter: { id: id },
+      update: {
+        $set: { downloaded: !res.document.downloaded },
+      },
+    });
+
+    //Updates the name
+    this.httpService.post(url + action, data, config).pipe(
+      tap((res) => console.log(res.status)),
+      map((res) => res.data)
+    );
+
+    //return updated record
+    action = 'findOne';
+    data = JSON.stringify({
+      collection: 'PDF',
+        database: 'PDF',
+        dataSource: 'Cluster0',
+      filter: { id: id },
+    });
+    return await lastValueFrom(
+      this.httpService.post(url + action, data, config).pipe(
+        tap((res) => console.log(res.status)),
+        map((res) => res.data)
+      )
+    );
   }
 }

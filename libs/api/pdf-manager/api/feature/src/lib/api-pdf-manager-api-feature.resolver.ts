@@ -1,14 +1,25 @@
 import { Resolver } from '@nestjs/graphql';
 import { Query, Args, Mutation } from '@nestjs/graphql';
-import { ApiPdfManagerServiceFeatureService } from "@conversation-catcher/api/pdf-manager/service/feature";
-import { PdfEntity } from "@conversation-catcher/api/pdf-manager/api/data-access"
+// import { ApiPdfManagerServiceFeatureService } from "@conversation-catcher/api/pdf-manager/service/feature";
+import { ApiPdfManagerServiceService } from '@conversation-catcher/api/pdf-manager/service';
+import { PdfEntity } from '@conversation-catcher/api/pdf-manager/api/data-access';
 //yarn nx run api-pdf-manager-api-feature:test
 
 @Resolver()
 export class ApiPdfManagerApiFeatureResolver {
-	constructor(private pdfService: ApiPdfManagerServiceFeatureService) {}
-	
-	/*
+  constructor(
+    // private otherService: ApiPdfManagerServiceFeatureService,
+    private pdfService: ApiPdfManagerServiceService
+  ) {
+    this.errorObj = new PdfEntity();
+    this.errorObj.id = 'error';
+    this.errorObj.name = 'error';
+    this.errorObj.pdf = null;
+    this.errorObj.downloaded = false;
+  }
+  private errorObj;
+
+  /*
 		id - id of pdf in DB
 		name - name of pdf
 		pdf - the pdf
@@ -16,104 +27,103 @@ export class ApiPdfManagerApiFeatureResolver {
 		dowloaded - if the pdf is stored locally or not
 	*/
 
-	// get a single pdf by its id
-	@Query(() => PdfEntity)
-	async getPDFById(@Args('c=pdfID', { type: () => String }) id: string) {
-		const pdfArr = await this.pdfService.getPdfById(id);
-  
-		if (pdfArr.length > 0) {
-			const pdfObj = new PdfEntity();
-			pdfObj.id = pdfArr.id;
-			pdfObj.name = pdfArr.name;
-			pdfObj.pdf = pdfArr.pdf;
-			pdfObj.creationDate = pdfArr.creationDate;
-			pdfObj.downloaded = pdfArr.downloaded;
-			
-			return pdfObj;
-		}
+  // get a single pdf by its id
+  @Query(() => PdfEntity)
+  async getPDFById(@Args('id', { type: () => String }) id: string) {
+    const pdfArr = await this.pdfService.getPdfById(id);
 
-	  	return null;
-	}
+    if (pdfArr != undefined) {
+      const pdfObj = new PdfEntity();
+      pdfObj.id = pdfArr.id;
+      pdfObj.name = pdfArr.name;
+      pdfObj.pdf = pdfArr.pdf;
+      pdfObj.creationDate = pdfArr.creationDate;
+      pdfObj.downloaded = pdfArr.downloaded;
 
-	// get all of the user's pdfs
-	@Query(() => [PdfEntity], { nullable: true })
-	async getPDFs(@Args('c=pdfID', { type: () => String }) userid: string) {
-		const pdfsArr = await this.pdfService.getPdfs(userid);
+      return pdfObj;
+    }
 
-		if (pdfsArr.length > 0) {
-			const arrOfPDFs = new Array<PdfEntity>();
+    return this.errorObj;
+  }
 
-			for (let index = 0; index < pdfsArr.length; index++) {
-				const pdf = pdfsArr[index];
-				const pdfsObj = new PdfEntity();
-		
-				pdfsObj.id = pdf.id;
-				pdfsObj.name = pdf.name;
-				pdfsObj.pdf = pdf.pdf.toString('ascii');
-				pdfsObj.creationDate = pdf.creationDate;
-				pdfsObj.downloaded = pdf.downloaded;
+  // get all of the user's pdfs
+  @Query(() => [PdfEntity], { nullable: true })
+  async getPDFs(@Args('id', { type: () => String }) userid: string) {
+    const pdfsArr = await this.pdfService.getPdfs(userid);
 
-				arrOfPDFs.push(pdfsObj);
-			}
-		
-			return arrOfPDFs;
-		} 
-	}
+    if (pdfsArr != undefined) {
+      const arrOfPDFs = new Array<PdfEntity>();
 
-	// rename the pdf with this id
-	@Mutation(() => PdfEntity)
-  	async renamePDF(@Args('id', { type: () => [String] }) id: string, @Args('name', { type: () => String }) name: string) {
-		const pdfArr = await this.pdfService.SetNamePdf(id, name);
+      for (let index = 0; index < pdfsArr.length; index++) {
+        const pdf = pdfsArr[index];
+        const pdfsObj = new PdfEntity();
 
-		if (pdfArr.length > 0) {
-			const pdfObj = new PdfEntity();
-			pdfObj.id = pdfArr.id;
-			pdfObj.name = pdfArr.name;
-			pdfObj.pdf = pdfArr.pdf.toString('ascii');
-			pdfObj.creationDate = pdfArr.creationDate;
-			pdfObj.downloaded = pdfArr.downloaded;
-			
-			return pdfObj;
-		}
+        pdfsObj.id = pdf.id;
+        pdfsObj.name = pdf.name;
+        pdfsObj.pdf = pdf.pdf.toString('ascii');
+        pdfsObj.creationDate = pdf.creationDate;
+        pdfsObj.downloaded = pdf.downloaded;
 
-		return null;
-	}
+        arrOfPDFs.push(pdfsObj);
+      }
 
-	// change if true to false and if false to true and change the file appropraitely
-	@Mutation(() => PdfEntity)
-  	async downloadedPDF(@Args('id', { type: () => [String] }) id: string) {
-		const pdfArr = await this.pdfService.SetDownloadedPdf(id);
+      return arrOfPDFs;
+    }
+    return this.errorObj;
+  }
 
-		if (pdfArr.length > 0) {
-			const pdfObj = new PdfEntity();
-			pdfObj.id = pdfArr.id;
-			pdfObj.name = pdfArr.name;
-			pdfObj.pdf = pdfArr.pdf.toString('ascii');
-			pdfObj.creationDate = pdfArr.creationDate;
-			pdfObj.downloaded = pdfArr.downloaded;
-			
-			return pdfObj;
-		}
+  // rename the pdf with this id
+  @Mutation(() => PdfEntity)
+  async renamePDF(
+    @Args('id', { type: () => [String] }) id: string,
+    @Args('name', { type: () => String }) name: string
+  ) {
+    const pdfArr = await this.pdfService.SetNamePdf(id, name);
 
-	  	return null;
-	}
+    if (pdfArr != undefined) {
+      const pdfObj = new PdfEntity();
+      pdfObj.id = pdfArr.id;
+      pdfObj.name = pdfArr.name;
+      pdfObj.pdf = pdfArr.pdf.toString('ascii');
+      pdfObj.creationDate = pdfArr.creationDate;
+      pdfObj.downloaded = pdfArr.downloaded;
+
+      return pdfObj;
+    }
+
+    return this.errorObj;
+  }
+
+  // change if true to false and if false to true and change the file appropraitely
+  @Mutation(() => PdfEntity)
+  async downloadedPDF(@Args('id', { type: () => [String] }) id: string) {
+    const pdfArr = await this.pdfService.SetDownloadedPdf(id);
+    // console.log(pdfArr);
+    if (pdfArr != undefined) {
+      const pdfObj = new PdfEntity();
+      pdfObj.id = pdfArr.id;
+      pdfObj.name = pdfArr.name;
+      pdfObj.pdf = pdfArr.pdf.toString('ascii');
+      pdfObj.creationDate = pdfArr.creationDate;
+      pdfObj.downloaded = pdfArr.downloaded;
+
+      return pdfObj;
+    }
+    return this.errorObj;
+  }
 
 	// delete pdf with this id from DB
-	@Mutation(() => PdfEntity)
-  	async deletePDF(@Args('id', { type: () => [String] }) id: string) {
-		const pdfArr = await this.pdfService.DeletePdf(id);
-
-		if (pdfArr.length > 0) {
+	@Mutation()
+  async deletePDF(@Args('id', { type: () => [String] }) id: string) {
+		/*const pdfArr = await this.pdfService.DeletePdf(id);
+    if (pdfArr != undefined) {
 			const pdfObj = new PdfEntity();
 			pdfObj.id = pdfArr.id;
 			pdfObj.name = pdfArr.name;
 			pdfObj.pdf = pdfArr.pdf.toString('ascii');
 			pdfObj.creationDate = pdfArr.creationDate;
 			pdfObj.downloaded = pdfArr.downloaded;
-			
-			return pdfObj;
-		}
 
-		return null;
-	}
+			return pdfObj;*/
+  }
 }
