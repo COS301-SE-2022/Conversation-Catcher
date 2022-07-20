@@ -112,13 +112,11 @@ export class ApiPdfManagerApiFeatureResolver {
     return this.errorObj;
   }
 
-  // delete pdf with this id from DB
-  @Mutation(() => PdfEntity)
+	// delete pdf with this id from DB
+	@Mutation()
   async deletePDF(@Args('id', { type: () => [String] }) id: string) {
-    await this.pdfService.DeletePdf(id);
-    //const pdfArr = await this.pdfService.DeletePdf(id);
-
-    /*if (pdfArr != undefined) {
+		/*const pdfArr = await this.pdfService.DeletePdf(id);
+    if (pdfArr != undefined) {
 			const pdfObj = new PdfEntity();
 			pdfObj.id = pdfArr.id;
 			pdfObj.name = pdfArr.name;
@@ -126,9 +124,6 @@ export class ApiPdfManagerApiFeatureResolver {
 			pdfObj.creationDate = pdfArr.creationDate;
 			pdfObj.downloaded = pdfArr.downloaded;
 
-			return pdfObj;
-		}
-
-		return null;*/
+			return pdfObj;*/
   }
 }
