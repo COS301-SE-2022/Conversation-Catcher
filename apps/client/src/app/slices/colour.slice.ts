@@ -6,8 +6,9 @@ import {
   EntityState,
   PayloadAction,
 } from '@reduxjs/toolkit';
+import { YellowBox } from 'react-native';
 
-export const COLOUR_FEATURE_KEY = 'colour';
+export const COLOUR = 'colour';
 
 /*
  * Update these interfaces according to your requirements.
@@ -40,51 +41,37 @@ export const colourAdapter = createEntityAdapter<ColourEntity>();
  * }, [dispatch]);
  * ```
  */
-export const fetchColour = createAsyncThunk(
-  'colour/fetchStatus',
-  async (_, thunkAPI) => {
-    /**
-     * Replace this with your custom fetch call.
-     * For example, `return myApi.getColours()`;
-     * Right now we just return an empty array.
-     */
-    return Promise.resolve([]);
-  }
-);
+// export const fetchColour = createAsyncThunk(
+//   'colour/fetchStatus',
+//   async (_, thunkAPI) => {
+//     /**
+//      * Replace this with your custom fetch call.
+//      * For example, `return myApi.getColours()`;
+//      * Right now we just return an empty array.
+//      */
+//     return Promise.resolve([]);
+//   }
+// );
 
-export const initialColourState: ColourState = colourAdapter.getInitialState({
-  loadingStatus: 'not loaded',
-  error: null,
-});
+// export const initialColourState: ColourState = colourAdapter.getInitialState({
+//   loadingStatus: 'not loaded',
+//   error: null,
+// });
 
 export const colourSlice = createSlice({//initial state with reducers
-  name: COLOUR_FEATURE_KEY,
-  initialState: initialColourState,
+  name: COLOUR,
+  initialState: {value:"#3F89BE"},
   reducers: {
-    add: colourAdapter.addOne,
-    remove: colourAdapter.removeOne,
-    // ...
-  },
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchColour.pending, (state: ColourState) => {
-        state.loadingStatus = 'loading';
-      })
-      .addCase(
-        fetchColour.fulfilled,
-        (state: ColourState, action: PayloadAction<ColourEntity[]>) => {
-          colourAdapter.setAll(state, action.payload);
-          state.loadingStatus = 'loaded';
-        }
-      )
-      .addCase(fetchColour.rejected, (state: ColourState, action) => {
-        state.loadingStatus = 'error';
-        state.error = action.error.message;
-      });
+    salmon:state => {state.value = "#ff987e"},
+    blue:state => {state.value = "#66a8d6"},
+    purple:state => {state.value = "#cab6f4"},
+    yellow:state => {state.value = "#ffd1a7"},
+    green:state => {state.value = "#71d86d"}
   },
 });
 
 export const colourReducer = colourSlice.reducer;//Used in the main.tsx
+
 
 //Add action creators
 
@@ -127,7 +114,7 @@ export const colourActions = colourSlice.actions;
 const { selectAll, selectEntities } = colourAdapter.getSelectors();
 
 export const getColourState = (rootState: unknown): ColourState =>
-  rootState[COLOUR_FEATURE_KEY];
+  rootState[COLOUR];
 
 export const selectAllColour = createSelector(getColourState, selectAll);
 
