@@ -1,12 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ApiSpeechToTextServiceService } from './api-speech-to-text-service.service';
+import { CommandBus, CqrsModule, QueryBus } from '@nestjs/cqrs';
 
 describe('ApiSpeechToTextServiceService', () => {
   let service: ApiSpeechToTextServiceService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [ApiSpeechToTextServiceService],
+      imports:[CqrsModule],
+      providers: [ApiSpeechToTextServiceService,QueryBus,CommandBus,],
     }).compile();
 
     service = module.get<ApiSpeechToTextServiceService>(
