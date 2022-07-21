@@ -6,7 +6,6 @@ import {
   EntityState,
   PayloadAction,
 } from '@reduxjs/toolkit';
-import { YellowBox } from 'react-native';
 
 export const COLOUR = 'colour';
 

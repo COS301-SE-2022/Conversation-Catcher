@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { colourReducer } from './app/slices/colour.slice';
 
 //configure the store with the colourReducer
-const store = configureStore({reducer: colourReducer})
+const store = configureStore({reducer: {colour:colourReducer}})
 
 //Package the app within provider with the store parameter
 const RNRedux = () => (
