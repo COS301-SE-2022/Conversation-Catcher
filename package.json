@@ -33,6 +33,7 @@
     "tslib": "^2.3.0"
   },
   "devDependencies": {
+    "@apollo/client": "^3.6.9",
     "@nestjs/apollo": "^10.0.14",
     "@nestjs/axios": "^0.0.8",
     "@nestjs/config": "^2.1.0",
@@ -100,6 +101,7 @@
     "react-redux": "^8.0.2",
     "react-test-renderer": "18.1.0",
     "redux": "^4.2.0",
+    "subscriptions-transport-ws": "^0.11.0",
     "ts-jest": "27.1.4",
     "ts-node": "10.8.1",
     "typescript": "4.7.3"

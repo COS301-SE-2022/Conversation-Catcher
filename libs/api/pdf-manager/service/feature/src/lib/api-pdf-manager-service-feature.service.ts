@@ -13,10 +13,10 @@ export class ApiPdfManagerServiceFeatureService {
         return await this.queryBus.execute( new GetPdfByIdQuery(id))
     }
     async getPdfs(userid : string) {
-        return await this.commandBus.execute( new GetPdfsQuery(userid))
+        return await this.queryBus.execute( new GetPdfsQuery(userid))
     }
     async SetNamePdf(id : string, name : string) {
-        return await this.queryBus.execute( new SetNamePdfCommand(id, name))
+        return await this.commandBus.execute( new SetNamePdfCommand(id, name))
     }
     async SetDownloadedPdf(id : string) {
         return await this.commandBus.execute( new SetDownloadedPdfCommand(id))

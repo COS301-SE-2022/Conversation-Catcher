@@ -1,14 +1,16 @@
-import { HttpService } from '@nestjs/axios';
 import { lastValueFrom, map, tap } from 'rxjs';
 import { GlobalKey } from '@conversation-catcher/api/pdf-manager/shared';
+import { HttpService } from '@nestjs/axios';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class MongoDBAccess {
   constructor(private httpService: HttpService) {}
 
   //Private attributes of class:
   private url =
     'https://data.mongodb-api.com/app/data-dtzbr/endpoint/data/v1/action/';
-  private action = 'findOne';
+  private action;
   private config = {
     method: 'post',
     headers: {
@@ -24,6 +26,9 @@ export class MongoDBAccess {
 
   //Functions
   async getUserPdfs(userid: string) {
+    //Add empty string to variable to force variable to be interpreted as a string in stead of an array of strings. The
+    //same logic applies to all other similiar cases
+    userid = userid + '';
     //First fetch the user
     this.action = 'findOne';
     let data = JSON.stringify({
@@ -68,6 +73,7 @@ export class MongoDBAccess {
 
   async getPDF(id: string) {
     this.action = 'findOne';
+    id = id + '';
 
     const data = JSON.stringify({
       //the data object passed to the http request which specifies what should be returned
@@ -87,6 +93,7 @@ export class MongoDBAccess {
   }
 
   async deletePDF(id: string) {
+    id = id + '';
     this.action = 'deleteOne';
     const data = JSON.stringify({
       collection: this.pdfCollection,
@@ -98,12 +105,14 @@ export class MongoDBAccess {
     return await lastValueFrom(
       this.httpService.post(this.url + this.action, data, this.config).pipe(
         tap((res) => console.log(res.status)),
-        map((res) => res.data)
+        map((res) => res.data.document)
       )
     );
   }
 
   async changeDownloaded(id: string) {
+    id = id + '';
+    // console.log(id);
     this.action = 'findOne';
     let data = JSON.stringify({
       collection: this.pdfCollection,
@@ -119,7 +128,7 @@ export class MongoDBAccess {
       )
     );
 
-    console.log(res);
+    // console.log(res);
 
     this.action = 'updateOne';
     data = JSON.stringify({
@@ -149,12 +158,14 @@ export class MongoDBAccess {
     return await lastValueFrom(
       this.httpService.post(this.url + this.action, data, this.config).pipe(
         tap((res) => console.log(res.status)),
-        map((res) => res.data)
+        map((res) => res.data.document)
       )
     );
   }
 
   async setPDFName(id: string, name: string) {
+    id = id + '';
+    name = name + '';
     this.action = 'updateOne';
     let data = JSON.stringify({
       collection: this.pdfCollection,
@@ -183,7 +194,7 @@ export class MongoDBAccess {
     return await lastValueFrom(
       this.httpService.post(this.url + this.action, data, this.config).pipe(
         tap((res) => console.log(res.status)),
-        map((res) => res.data)
+        map((res) => res.data.document)
       )
     );
   }
