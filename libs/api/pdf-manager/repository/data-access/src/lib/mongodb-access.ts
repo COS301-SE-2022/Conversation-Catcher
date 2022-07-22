@@ -73,7 +73,7 @@ export class MongoDBAccess {
 
   async getPDF(id: string) {
     id = id + '';
-    console.log(id);
+    // console.log(id);
     this.action = 'findOne';
     const data = JSON.stringify({
       collection: this.pdfCollection,
@@ -82,15 +82,12 @@ export class MongoDBAccess {
       filter: { id: id },
     });
 
-    const res = await lastValueFrom(
+    return await lastValueFrom(
       this.httpService.post(this.url + this.action, data, this.config).pipe(
         tap((res) => console.log(res.status)),
-        map((res) => res.data)
+        map((res) => res.data.document)
       )
     );
-
-    console.log(res);
-    return res;
   }
 
   async deletePDF(id: string) {
@@ -129,7 +126,7 @@ export class MongoDBAccess {
       )
     );
 
-    // console.log(res);
+    //check wether a valid id has been used and return null if invalid id
     if (res.document == null) return null;
 
     this.action = 'updateOne';
@@ -143,7 +140,7 @@ export class MongoDBAccess {
       },
     });
 
-    //Updates the name
+    //Updates the downloaded field of a pdf
     this.httpService.post(this.url + this.action, data, this.config).pipe(
       tap((res) => console.log(res.status)),
       map((res) => res.data)
