@@ -99,7 +99,6 @@ export class ApiPdfManagerApiFeatureResolver {
   @Mutation(() => PdfEntity)
   async downloadedPDF(@Args('id', { type: () => [String] }) id: string) {
     const pdfArr = await this.pdfService.SetDownloadedPdf(id);
-    // console.log(pdfArr);
     if (pdfArr != undefined) {
       const pdfObj = new PdfEntity();
       pdfObj.id = pdfArr.id;

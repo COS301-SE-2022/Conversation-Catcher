@@ -40,7 +40,6 @@ export class MongoDBAccess {
 
     const result = await lastValueFrom(
       this.httpService.post(this.url + this.action, data, this.config).pipe(
-        tap((res) => console.log(res.status)),
         map((res) => res.data)
       )
     );
@@ -62,7 +61,6 @@ export class MongoDBAccess {
       object.push(
         await lastValueFrom(
           this.httpService.post(this.url + this.action, data, this.config).pipe(
-            tap((res) => console.log(res.status)),
             map((res) => res.data.document)
           )
         )
@@ -73,7 +71,6 @@ export class MongoDBAccess {
 
   async getPDF(id: string) {
     id = id + '';
-    // console.log(id);
     this.action = 'findOne';
     const data = JSON.stringify({
       collection: this.pdfCollection,
@@ -84,7 +81,6 @@ export class MongoDBAccess {
 
     return await lastValueFrom(
       this.httpService.post(this.url + this.action, data, this.config).pipe(
-        tap((res) => console.log(res.status)),
         map((res) => res.data.document)
       )
     );
@@ -102,7 +98,6 @@ export class MongoDBAccess {
 
     return await lastValueFrom(
       this.httpService.post(this.url + this.action, data, this.config).pipe(
-        tap((res) => console.log(res.status)),
         map((res) => res.data.document)
       )
     );
@@ -110,7 +105,6 @@ export class MongoDBAccess {
 
   async changeDownloaded(id: string) {
     id = id + '';
-    // console.log(id);
     this.action = 'findOne';
     let data = JSON.stringify({
       collection: this.pdfCollection,
@@ -121,7 +115,6 @@ export class MongoDBAccess {
 
     const res = await lastValueFrom(
       this.httpService.post(this.url + this.action, data, this.config).pipe(
-        tap((res) => console.log(res.status)),
         map((res) => res.data)
       )
     );
@@ -142,7 +135,6 @@ export class MongoDBAccess {
 
     //Updates the downloaded field of a pdf
     this.httpService.post(this.url + this.action, data, this.config).pipe(
-      tap((res) => console.log(res.status)),
       map((res) => res.data)
     );
 
@@ -156,7 +148,6 @@ export class MongoDBAccess {
     });
     return await lastValueFrom(
       this.httpService.post(this.url + this.action, data, this.config).pipe(
-        tap((res) => console.log(res.status)),
         map((res) => res.data.document)
       )
     );
@@ -178,7 +169,6 @@ export class MongoDBAccess {
 
     //Updates the name
     this.httpService.post(this.url + this.action, data, this.config).pipe(
-      tap((res) => console.log(res.status)),
       map((res) => res.data)
     );
 
@@ -192,7 +182,6 @@ export class MongoDBAccess {
     });
     return await lastValueFrom(
       this.httpService.post(this.url + this.action, data, this.config).pipe(
-        tap((res) => console.log(res.status)),
         map((res) => res.data.document)
       )
     );
