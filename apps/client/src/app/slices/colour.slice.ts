@@ -6,6 +6,7 @@ import {
   EntityState,
   PayloadAction,
 } from '@reduxjs/toolkit';
+import { act } from '@testing-library/react-native';
 
 export const COLOUR = 'colour';
 
@@ -61,11 +62,7 @@ export const colourSlice = createSlice({//initial state with reducers
   name: COLOUR,
   initialState: {value:"#3F89BE"},
   reducers: {
-    salmon:state => {state.value = "#ff987e"},
-    blue:state => {state.value = "#66a8d6"},
-    purple:state => {state.value = "#cab6f4"},
-    yellow:state => {state.value = "#ffd1a7"},
-    green:state => {state.value = "#71d86d"}
+    setColour: (state,action) => {state.value = action.payload}
   },
 });
 
@@ -96,30 +93,7 @@ export const colourActions = colourSlice.actions;
 
 //Add selectors
 
-/*
- * Export selectors to query state. For use with the `useSelector` hook.
- *
- * e.g.
- * ```
- * import { useSelector } from 'react-redux';
- *
- * // ...
- *
- * const entities = useSelector(selectAllColour);
- * ```
- *
- * See: https://react-redux.js.org/next/api/hooks#useselector
- */
-const { selectAll, selectEntities } = colourAdapter.getSelectors();
-
-export const getColourState = (rootState: unknown): ColourState =>
-  rootState[COLOUR];
-
-export const selectAllColour = createSelector(getColourState, selectAll);
-
-export const selectColourEntities = createSelector(
-  getColourState,
-  selectEntities
-);
+//get current colour
+export const selectColour = state => state.COLOUR.value
 
 //Add subscribers
