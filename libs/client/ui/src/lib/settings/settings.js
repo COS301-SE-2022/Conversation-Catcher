@@ -9,14 +9,16 @@ import {
   SafeAreaView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import colour from '../colour/colour';
+//import colour from '../colour/colour';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { gql } from '@apollo/client';
 // import { WebSocketLink } from '@apollo/client/link/ws';
+import { useSelector } from 'react-redux';
+import { selectColour } from 'apps/client/src/app/slices/colour.slice';
 
 export const SettingsPage = ({ navigation }) => {
   const [user, setUser] = useState({});
-
+  const colourState = useSelector(selectColour)
   // // Connection for the subscription
   // const wsLink = new WebSocketLink({
   //   uri: `ws://localhost:3333/graphql`,
@@ -70,7 +72,7 @@ export const SettingsPage = ({ navigation }) => {
           <View style={styles.settingsButtonContent}>
             <View style={styles.iconContainer}>
               <Icon
-                style={[styles.settingsButtonIcon, { color: colour.state }]}
+                style={[styles.settingsButtonIcon, { color: colourState }]}
                 name="envelope"
                 size={18}
               />
@@ -92,7 +94,7 @@ export const SettingsPage = ({ navigation }) => {
           <View style={styles.settingsButtonContent}>
             <View style={styles.iconContainer}>
               <Icon
-                style={[styles.settingsButtonIcon, { color: colour.state }]}
+                style={[styles.settingsButtonIcon, { color: colourState }]}
                 name="lock"
                 size={20}
               />
@@ -112,7 +114,7 @@ export const SettingsPage = ({ navigation }) => {
           <View style={styles.settingsButtonContent}>
             <View style={styles.iconContainer}>
               <Icon
-                style={[styles.settingsButtonIcon, { color: colour.state }]}
+                style={[styles.settingsButtonIcon, { color: colourState }]}
                 name="sliders"
                 size={20}
               />
@@ -132,7 +134,7 @@ export const SettingsPage = ({ navigation }) => {
           <View style={styles.settingsButtonContent}>
             <View style={styles.iconContainer}>
               <Icon
-                style={[styles.settingsButtonIcon, { color: colour.state }]}
+                style={[styles.settingsButtonIcon, { color: colourState }]}
                 name="sign-out"
                 size={20}
               />
@@ -148,7 +150,7 @@ export const SettingsPage = ({ navigation }) => {
         style={styles.backButton}
         onPress={() => navigation.goBack()}
       >
-        <Icon name="angle-left" color={colour.state} size={28} />
+        <Icon name="angle-left" color={colourState} size={28} />
       </TouchableOpacity>
     </View>
     // </ApolloProvider>
