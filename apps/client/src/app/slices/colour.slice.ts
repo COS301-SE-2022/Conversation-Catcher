@@ -10,36 +10,36 @@ import { act } from '@testing-library/react-native';
 
 export const COLOUR = 'colour';
 
-//Interfaces (Not sure what they do, only remove if you know what you are doing)
-export interface ColourEntity {
-  id: number;
-}
-export interface ColourState extends EntityState<ColourEntity> {
-  loadingStatus: 'not loaded' | 'loading' | 'loaded' | 'error';
-  error: string;
-}
-export const colourAdapter = createEntityAdapter<ColourEntity>();
+//Interfaces (Not sure what they do, uncomment if problems occur)
+// export interface ColourEntity {
+//   id: number;
+// }
+// export interface ColourState extends EntityState<ColourEntity> {
+//   loadingStatus: 'not loaded' | 'loading' | 'loaded' | 'error';
+//   error: string;
+// }
+// export const colourAdapter = createEntityAdapter<ColourEntity>();
 
 //initial state with reducers
 export const colourSlice = createSlice({
   name: COLOUR,
   initialState: {value:"#3F89BE"},
   reducers: {
-    setColour: (state,action) => {state.value = action.payload}
+    setColour: (state,action) => {state.value = action.payload}//use param in dispatch
   },
 });
 
 export const colourReducer = colourSlice.reducer;//Used in the main.tsx
 
-
-//Add action creators
-//action to change the colour
-const changeColour = colour => {
-  return {
-    type: 'COLOUR/Change',
-    payload: colour
-  }
-}
+//May not need
+// //Add action creators
+// //action to change the colour
+// const changeColour = colour => {
+//   return {
+//     type: 'COLOUR/Change',
+//     payload: colour
+//   }
+// }
 
 export const colourActions = colourSlice.actions;
 
