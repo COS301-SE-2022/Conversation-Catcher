@@ -24,40 +24,6 @@ export interface ColourState extends EntityState<ColourEntity> {
 
 export const colourAdapter = createEntityAdapter<ColourEntity>();
 
-/**
- * Export an effect using createAsyncThunk from
- * the Redux Toolkit: https://redux-toolkit.js.org/api/createAsyncThunk
- *
- * e.g.
- * ```
- * import React, { useEffect } from 'react';
- * import { useDispatch } from 'react-redux';
- *
- * // ...
- *
- * const dispatch = useDispatch();
- * useEffect(() => {
- *   dispatch(fetchColour())
- * }, [dispatch]);
- * ```
- */
-// export const fetchColour = createAsyncThunk(
-//   'colour/fetchStatus',
-//   async (_, thunkAPI) => {
-//     /**
-//      * Replace this with your custom fetch call.
-//      * For example, `return myApi.getColours()`;
-//      * Right now we just return an empty array.
-//      */
-//     return Promise.resolve([]);
-//   }
-// );
-
-// export const initialColourState: ColourState = colourAdapter.getInitialState({
-//   loadingStatus: 'not loaded',
-//   error: null,
-// });
-
 export const colourSlice = createSlice({//initial state with reducers
   name: COLOUR,
   initialState: {value:"#3F89BE"},
@@ -71,24 +37,15 @@ export const colourReducer = colourSlice.reducer;//Used in the main.tsx
 
 //Add action creators
 
-/*
- * Export action creators to be dispatched. For use with the `useDispatch` hook.
- *
- * e.g.
- * ```
- * import React, { useEffect } from 'react';
- * import { useDispatch } from 'react-redux';
- *
- * // ...
- *
- * const dispatch = useDispatch();
- * useEffect(() => {
- *   dispatch(colourActions.add({ id: 1 }))
- * }, [dispatch]);
- * ```
- *
- * See: https://react-redux.js.org/next/api/hooks#usedispatch
- */
+//action to change the colour
+const changeColour = colour => {
+  return {
+    type: 'COLOUR/Change',
+    payload: colour
+  }
+}
+
+
 export const colourActions = colourSlice.actions;
 
 //Add selectors
