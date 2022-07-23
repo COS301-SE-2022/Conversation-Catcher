@@ -2,22 +2,25 @@ import React, {Component} from 'react';
 import { View, StyleSheet, Text, ImageBackground, TouchableOpacity, Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
-import colour from '../colour/colour';
+//import colour from '../colour/colour';
+import { useSelector } from 'react-redux'
+import { selectColour } from 'apps/client/src/app/slices/colour.slice';
 //import FileViewer from "react-native-file-viewer";
 
 function DownloadButtonState(props){
+  const colourState = useSelector(selectColour)
   const [downloadState, setDownloadState] = React.useState(props.d);
   if (downloadState) {
     return <Icon
               onPress={() => setDownloadState(!downloadState)}
-              color={colour.state}
+              color={colourState}
               name="save"
               size={20}
               container={TouchableOpacity} />;
   }
   return <Icon
           onPress={() => setDownloadState(!downloadState)}
-          color={colour.state}
+          color={colourState}
           name="cloud"
           size={20}
           container={TouchableOpacity} />;
@@ -29,9 +32,9 @@ function DetermineTileCorner(props){
   if (c){
     return <BouncyCheckbox
             size={20}
-            fillColor={colour.state}
+            fillColor={colourState}
             unfillColor="#FFFFFF"
-            iconStyle={{ borderColor: colour.state }}
+            iconStyle={{ borderColor: colourState }}
             isChecked={checkboxState}
             onPress={() => setCheckboxState(!checkboxState)}
           />;
@@ -57,7 +60,7 @@ export default class PdfTile extends Component {
         style={styles.pdfTile}
         //onPress={() => FileViewer.open(source)}>
         onPress={() => Alert.alert('pdf')}>
-        <View style={[styles.thumbnail_containter, {borderColor : colour.state}]}>
+        <View style={[styles.thumbnail_containter, {borderColor : colourState}]}>
           <ImageBackground
             style={styles.pdfThumbnail}
             //source={source}

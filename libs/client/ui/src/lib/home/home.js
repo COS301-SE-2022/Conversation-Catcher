@@ -2,15 +2,18 @@ import React, {useState, useCallback} from 'react';
 import { View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity, Alert, PermissionsAndroid } from 'react-native';
 import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import colour from '../colour/colour';
+//import colour from '../colour/colour';
 import Modal from 'react-native-modal';
 import { Buffer } from 'buffer';
 //import Permissions from 'react-native-permissions';
 //import Sound from 'react-native-sound';
 //import AudioRecord from 'react-native-audio-record';
 import DocumentPicker, { types } from 'react-native-document-picker';
+import { useSelector } from 'react-redux';
+import { selectColour } from 'apps/client/src/app/slices/colour.slice.js';
 
 export const Home = ({ navigation }) => {
+  const colourState = useSelector(selectColour);
   const [recordingStopVisible, setRecordingStopVisible] = useState(false);
   const [recordAudioState, setRecordAudioState] = useState(false);
   const [uploadVisible, setUploadVisible] = useState(false);
@@ -33,7 +36,7 @@ export const Home = ({ navigation }) => {
   function RecordAudioButtonState(props){
     if (recordAudioState) {
       return <TouchableOpacity
-              style={[styles.recordAudioTouchableOpacity, {backgroundColor : colour.state}]}
+              style={[styles.recordAudioTouchableOpacity, {backgroundColor : colourState}]}
 
               onPress={() => {
                 setRecordingStopVisible(true)
@@ -69,12 +72,12 @@ export const Home = ({ navigation }) => {
               style={styles.changeUploadModalButton}
               onPress={() => handleDocumentSelection()}>
               <Icon
-                style={[styles.uploadModalButtonIcon, {color : colour.state}]}
+                style={[styles.uploadModalButtonIcon, {color : colourState}]}
                 name="file-sound-o"
                 size={16}
               />
               {fileResponse.map((file, index) => (
-              <Text style={[styles.changeUploadModalButtonText, {color : colour.state}]}>
+              <Text style={[styles.changeUploadModalButtonText, {color : colourState}]}>
                 {file?.uri}
               </Text>
               ))}
@@ -192,7 +195,7 @@ export const Home = ({ navigation }) => {
       </View>
       <View style={styles.viewAllTouchableOpacityFrame}>
         <TouchableOpacity
-          style={[styles.viewAllTouchableOpacity,{backgroundColor : colour.state}]}
+          style={[styles.viewAllTouchableOpacity,{backgroundColor : colourState}]}
           onPress={() => {navigation.navigate('ViewAll')}}>
           <View
             style={styles.viewAllTouchableOpacityLabel_box}>
@@ -255,7 +258,7 @@ export const Home = ({ navigation }) => {
             <View style={styles.recordingStopModalButtonContent}>
               <View style={styles.iconContainer}>
                 <Icon
-                  style={{color : colour.state}}
+                  style={{color : colourState}}
                   name="refresh"
                   size={18}
                 />
@@ -278,7 +281,7 @@ export const Home = ({ navigation }) => {
             <View style={styles.recordingStopModalButtonContent}>
               <View style={styles.iconContainer}>
                 <Icon
-                  style={{color : colour.state}}
+                  style={{color : colourState}}
                   name="microphone"
                   size={20}
                 />
@@ -303,7 +306,7 @@ export const Home = ({ navigation }) => {
             <View style={styles.recordingStopModalButtonContent}>
               <View style={styles.iconContainer}>
                 <Icon
-                  style={{color : colour.state}}
+                  style={{color : colourState}}
                   name="trash-o"
                   size={20}
                 />
@@ -334,7 +337,7 @@ export const Home = ({ navigation }) => {
           <UploadAudioCenter/>
 
           <TouchableOpacity
-            style={[styles.uploadFileButton, {backgroundColor : colour.state}]}
+            style={[styles.uploadFileButton, {backgroundColor : colourState}]}
             state={null}
             onPress={() => {
               setUploadVisible(false)

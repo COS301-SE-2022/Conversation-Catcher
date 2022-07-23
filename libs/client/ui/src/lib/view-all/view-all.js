@@ -5,8 +5,11 @@ import ModalDropdown from 'react-native-modal-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
 import colour from '../colour/colour';
+import { useSelector } from 'react-redux';
+import { selectColour } from 'apps/client/src/app/slices/colour.slice.js';
 
 export const ViewAll = ({ navigation }) =>  {
+  const colourState = useSelector(selectColour);
   const [moreVisible, setMoreVisible] = useState(false);
   const [deleteMode, setDeleteMode] = useState(false);
   const [bottomModalVisible, setBottomModalVisible] = useState(false);
@@ -204,7 +207,7 @@ export const ViewAll = ({ navigation }) =>  {
             <View style={styles.moreModalButtonContent}>
               <View style={styles.iconContainer}>
                 <Icon 
-                  style={{color : colour.state}}
+                  style={{color : colourState}}
                   name="paper-plane-o"
                   size={18}
                 />
@@ -229,7 +232,7 @@ export const ViewAll = ({ navigation }) =>  {
             <View style={styles.moreModalButtonContent}>
               <View style={styles.iconContainer}>
                 <Icon 
-                  style={{color : colour.state}}
+                  style={{color : colourState}}
                   name="pencil-square-o"
                   size={20}
                 />
@@ -255,7 +258,7 @@ export const ViewAll = ({ navigation }) =>  {
             <View style={styles.moreModalButtonContent}>
               <View style={styles.iconContainer}>
                 <Icon 
-                  style={{color : colour.state}}
+                  style={{color : colourState}}
                   name="trash-o"
                   size={20}
                 />
@@ -280,7 +283,7 @@ export const ViewAll = ({ navigation }) =>  {
             margin: 0,
             justifyContent: 'flex-end',}}
           >
-          <View style={[styles.modalBottomBar, {backgroundColor : colour.state}]}>
+          <View style={[styles.modalBottomBar, {backgroundColor : colourState}]}>
             <TouchableOpacity 
               style={styles.backButton}
               onPress={() => {
@@ -307,7 +310,7 @@ export const ViewAll = ({ navigation }) =>  {
             <TextInput
               editable/>
             <TouchableOpacity 
-              style={[styles.backButton, {backgroundColor : colour.state}]}
+              style={[styles.backButton, {backgroundColor : colourState}]}
               onPress={() => {
                 setBottomModalVisible(false);
                 setDeleteMode(false);
