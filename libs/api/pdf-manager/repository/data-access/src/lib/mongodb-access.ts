@@ -39,13 +39,13 @@ export class MongoDBAccess {
     });
 
     const result = await lastValueFrom(
-      this.httpService.post(this.url + this.action, data, this.config).pipe(
-        map((res) => res.data)
-      )
+      this.httpService
+        .post(this.url + this.action, data, this.config)
+        .pipe(map((res) => res.data))
     );
 
     const object = [];
-
+    if (result.document == null) return null;
     const arr = result.document.pdfs;
     // Then go through all the users pdf's and adds them to object
     for (let i = 0; i < arr.length; i++) {
@@ -60,9 +60,9 @@ export class MongoDBAccess {
 
       object.push(
         await lastValueFrom(
-          this.httpService.post(this.url + this.action, data, this.config).pipe(
-            map((res) => res.data.document)
-          )
+          this.httpService
+            .post(this.url + this.action, data, this.config)
+            .pipe(map((res) => res.data.document))
         )
       );
     }
@@ -80,9 +80,9 @@ export class MongoDBAccess {
     });
 
     return await lastValueFrom(
-      this.httpService.post(this.url + this.action, data, this.config).pipe(
-        map((res) => res.data.document)
-      )
+      this.httpService
+        .post(this.url + this.action, data, this.config)
+        .pipe(map((res) => res.data.document))
     );
   }
 
@@ -97,9 +97,9 @@ export class MongoDBAccess {
     });
 
     return await lastValueFrom(
-      this.httpService.post(this.url + this.action, data, this.config).pipe(
-        map((res) => res.data.document)
-      )
+      this.httpService
+        .post(this.url + this.action, data, this.config)
+        .pipe(map((res) => res.data.document))
     );
   }
 
@@ -114,9 +114,9 @@ export class MongoDBAccess {
     });
 
     const res = await lastValueFrom(
-      this.httpService.post(this.url + this.action, data, this.config).pipe(
-        map((res) => res.data)
-      )
+      this.httpService
+        .post(this.url + this.action, data, this.config)
+        .pipe(map((res) => res.data))
     );
 
     //check wether a valid id has been used and return null if invalid id
@@ -134,8 +134,10 @@ export class MongoDBAccess {
     });
 
     //Updates the downloaded field of a pdf
-    this.httpService.post(this.url + this.action, data, this.config).pipe(
-      map((res) => res.data)
+    const temp = await lastValueFrom(
+      this.httpService
+        .post(this.url + this.action, data, this.config)
+        .pipe(map((res) => res.data))
     );
 
     //return updated record
@@ -147,9 +149,9 @@ export class MongoDBAccess {
       filter: { id: id },
     });
     return await lastValueFrom(
-      this.httpService.post(this.url + this.action, data, this.config).pipe(
-        map((res) => res.data.document)
-      )
+      this.httpService
+        .post(this.url + this.action, data, this.config)
+        .pipe(map((res) => res.data.document))
     );
   }
 
@@ -168,8 +170,10 @@ export class MongoDBAccess {
     });
 
     //Updates the name
-    this.httpService.post(this.url + this.action, data, this.config).pipe(
-      map((res) => res.data)
+    const temp = await lastValueFrom(
+      this.httpService
+        .post(this.url + this.action, data, this.config)
+        .pipe(map((res) => res.data))
     );
 
     //return updated record
@@ -181,9 +185,9 @@ export class MongoDBAccess {
       filter: { id: id },
     });
     return await lastValueFrom(
-      this.httpService.post(this.url + this.action, data, this.config).pipe(
-        map((res) => res.data.document)
-      )
+      this.httpService
+        .post(this.url + this.action, data, this.config)
+        .pipe(map((res) => res.data.document))
     );
   }
 }

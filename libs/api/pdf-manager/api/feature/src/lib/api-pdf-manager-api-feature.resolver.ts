@@ -70,7 +70,7 @@ export class ApiPdfManagerApiFeatureResolver {
 
       return arrOfPDFs;
     }
-    return this.errorObj;
+    return [this.errorObj];
   }
 
   // rename the pdf with this id
