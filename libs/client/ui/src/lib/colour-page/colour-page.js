@@ -4,6 +4,7 @@ import { View, StyleSheet, Text, Image, ImageBackground, Button, Alert, Touchabl
 import colour from '../colour/colour';
 import BouncyCheckboxGroup, {ICheckboxButton,} from "react-native-bouncy-checkbox-group";
 import Icon from 'react-native-vector-icons/FontAwesome';
+import RNRestart from 'react-native-restart';
 
 export const ColourPage = ({ navigation}) => {
   return (
@@ -17,9 +18,10 @@ export const ColourPage = ({ navigation}) => {
       <View style={[styles.container, styles.colourOptionsBackground]}>
         <View
           style={{
-            marginTop: 16,
-            marginLeft: 32,
+            //marginTop: 16,
+            //marginLeft: 32,
             justifyContent: "center",
+            margin: 10
           }}
         >
           <BouncyCheckboxGroup
@@ -27,6 +29,7 @@ export const ColourPage = ({ navigation}) => {
             style={{ flexDirection: "column" }}
             onChange={(selectedItem) => {
               colour.state = selectedItem.fillColor;
+              RNRestart.Restart();
             }}
           />
         </View>
@@ -80,7 +83,7 @@ const styles = StyleSheet.create({
     minHeight: 28
   },
   colourOptionsBackground: {
-    width: '85%',
+    width: '80%',
     backgroundColor: '#f5f5f5ff',
     borderRadius: 7,
     flexDirection: 'column',
@@ -100,7 +103,7 @@ const styles = StyleSheet.create({
   colourItemDivider: {
     backgroundColor: '#d0d5ddff',
     height: 1,
-    width: '87%',
+    width: '80%',
     alignSelf: 'center'
   },
   backButton: {
@@ -119,8 +122,8 @@ const styles = StyleSheet.create({
 });
 
 const _iconStyle = (borderColor) => ({
-  height: 50,
-  width: 50,
+  height: 30,
+  width: 30,
   borderRadius: 25,
   borderColor: borderColor,
 });

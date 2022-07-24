@@ -1,24 +1,52 @@
 import React, {useState} from 'react';
-import { View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity, Alert, ScrollView, TextInput, Share} from 'react-native';
+import { View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity, Alert, ScrollView, TextInput} from 'react-native';
 import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
 import ModalDropdown from 'react-native-modal-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
+import Share from "react-native-share";
 import colour from '../colour/colour';
 
 export const ViewAll = ({ navigation }) =>  {
   const [moreVisible, setMoreVisible] = useState(false);
-  const [deleteMode, setDeleteMode] = useState(false);
+  const [selectMode, setSelectMode] = useState(false);
   const [bottomModalVisible, setBottomModalVisible] = useState(false);
   const [bottomModalType, setBottomModalType] = useState("none");
   const [renameModalVisible, setRenameModalVisible] = useState(false);
+
+  const url = "https://awesome.contents.com/";
+  const title = "Awesome Contents";
+  const message = "Please check this out.";
+
+  const options = {
+    title,
+    url,
+    message,
+  };
+
+  const share = async (customOptions = options) => {
+    try {
+      await Share.open(customOptions);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
 
   function BottomModalButton(props){
   
     if (props.type === "share") {
       return <TouchableOpacity 
               style={styles.backButton}
-              onPress={() => setBottomModalVisible(false)}>
+              onPress={async () => {
+                await share({
+                  title: "Sharing pdf file from awesome share app",
+                  message: "Please take a look at this file",
+                  url: "../assets/thereactnativebook-sample.pdf",
+                });
+                setSelectMode(false);
+                setBottomModalVisible(false)}
+              }>
               <Icon 
                 name="paper-plane-o"
                 color="#ffffffff"
@@ -41,7 +69,7 @@ export const ViewAll = ({ navigation }) =>  {
     return <TouchableOpacity 
             style={styles.backButton}
             onPress={() => {
-              setDeleteMode(false);
+              setSelectMode(false);
               setBottomModalVisible(false);
             }}>
             <Icon 
@@ -103,63 +131,59 @@ export const ViewAll = ({ navigation }) =>  {
           id = {1}
           name = 'Bug introduction: a modification of code' 
           date = '1 May 2022, 9:37' 
-          source = {"../assets/pdf-bug-intro.png"} 
+          thumbnailSource = {"../assets/pdf-bug-intro.png"} 
           downloaded = {true}
-          showCheck = {deleteMode}
-          navigation = {navigation}/>
+          showCheck = {selectMode}
+          pdfSource = 'http://samples.leanpub.com/thereactnativebook-sample.pdf'
+          nav = {navigation}/>
         <PdfTile 
           id = {2}
           name = 'Human-computer interaction' 
           date = '21 Apr 2022, 14:18' 
-          source = {"../assets/pdf-human-computer.png"} 
+          thumbnailSource = {"../assets/pdf-human-computer.png"} 
           downloaded = {false}
-          showCheck = {deleteMode}
-          navigation = {navigation}/>
+          showCheck = {selectMode}
+          pdfSource = 'http://samples.leanpub.com/thereactnativebook-sample.pdf'
+          nav = {navigation}/>
         <PdfTile 
           id = {3}
           name = 'The tropical plants of the Philippines' 
           date = '13 Apr 2022, 11:53' 
-          source = {"../assets/pdf-tropical-plants.png"} 
+          thumbnailSource = {"../assets/pdf-tropical-plants.png"} 
           downloaded = {true}
-          showCheck = {deleteMode}
-          navigation = {navigation}/>
+          showCheck = {selectMode}
+          pdfSource = 'http://samples.leanpub.com/thereactnativebook-sample.pdf'
+          nav = {navigation}/>
         <PdfTile 
           id = {4}
           name = 'Devin Brittain The snacks of the popcorn' 
           date = '13 Apr 2022, 11:53' 
-          source = {"../assets/pdf-tropical-plants.png"} 
+          thumbnailSource = {"../assets/pdf-tropical-plants.png"} 
           downloaded = {true}
-          showCheck = {deleteMode}
-          navigation = {navigation}/>
+          showCheck = {selectMode}
+          pdfSource = 'http://samples.leanpub.com/thereactnativebook-sample.pdf'
+          nav = {navigation}/>
         <PdfTile 
           id = {5}
           name = 'The tropical plants of the Philippines' 
           date = '13 Apr 2022, 11:53' 
           source = {"../assets/pdf-tropical-plants.png"} 
           downloaded = {true}
-          showCheck = {deleteMode}
-          navigation = {navigation}/>
+          showCheck = {selectMode}
+          pdfSource = 'http://samples.leanpub.com/thereactnativebook-sample.pdf'
+          nav = {navigation}/>
         <PdfTile 
           id = {6}
           name = 'The tropical plants of the Philippines' 
           date = '13 Apr 2022, 11:53' 
-          source = {"../assets/pdf-tropical-plants.png"} 
+          thumbnailSource = {"../assets/pdf-tropical-plants.png"} 
           downloaded = {true}
-          showCheck = {deleteMode}
-          navigation = {navigation}/>
+          showCheck = {selectMode}
+          pdfSource = 'http://samples.leanpub.com/thereactnativebook-sample.pdf'
+          nav = {navigation}/>
       </ScrollView>
 
       <View style={styles.viewAllBottomBar}>
-        <TouchableOpacity 
-          style={styles.backButton}
-          onPress={() => navigation.navigate('Home')}>
-          <Icon 
-            name="angle-left"
-            color="#344053ff"
-            size={30}
-          />     
-        </TouchableOpacity>
-
         <TouchableOpacity 
           style={styles.moreButton}
           onPress={() => setMoreVisible(true)}>
@@ -170,6 +194,16 @@ export const ViewAll = ({ navigation }) =>  {
           />   
         </TouchableOpacity>
 
+        <TouchableOpacity 
+          style={styles.backButton}
+          onPress={() => navigation.navigate('Home')}>
+          <Icon 
+            name="angle-left"
+            color="#344053ff"
+            size={30}
+          />     
+        </TouchableOpacity>
+
         <View
           style={styles.orderByGroup}>
           <Text style={styles.orderByLabel}>
@@ -177,10 +211,13 @@ export const ViewAll = ({ navigation }) =>  {
           </Text>
           <ModalDropdown 
             options={['Date', 'Name']}
-            defaultIndex={1}
+            defaultIndex={0}
+            defaultValue={'Date'}
             style={styles.orderByDropdown}
             textStyle={styles.orderByDropdownText}
-            dropdownStyle={styles.orderByDropdownStyle}/>
+            dropdownStyle={styles.orderByDropdownStyle}
+            dropdownTextStyle={styles.orderByDropdownTextStyle}
+            dropdownTextSelectHighlightStyle={{color: colour.state}}/>
         </View>     
       </View>
 
@@ -198,6 +235,7 @@ export const ViewAll = ({ navigation }) =>  {
             style={styles.moreModalButton}
             onPress={() => {
               setBottomModalType("share");
+              setSelectMode(true);
               setBottomModalVisible(true);
               setMoreVisible(false);
             }}>
@@ -249,7 +287,7 @@ export const ViewAll = ({ navigation }) =>  {
             onPress={() => {
               setBottomModalType("delete");
               setBottomModalVisible(true);
-              setDeleteMode(true);
+              setSelectMode(true);
               setMoreVisible(false);
             }}>
             <View style={styles.moreModalButtonContent}>
@@ -270,39 +308,39 @@ export const ViewAll = ({ navigation }) =>  {
         </View>
       </Modal>
 
-        <Modal 
-          isVisible={bottomModalVisible}
-          coverScreen={false}
-          hasBackdrop={false}
-          style={{
-            width: '100%',
-            height: '8%',
-            margin: 0,
-            justifyContent: 'flex-end',}}
-          >
-          <View style={[styles.modalBottomBar, {backgroundColor : colour.state}]}>
-            <TouchableOpacity 
-              style={styles.backButton}
-              onPress={() => {
-                setBottomModalVisible(false);
-                setDeleteMode(false);
-              }}>
-              <Icon 
-                name="angle-left"
-                color="#ffffffff"
-                size={30}
-              /> 
-            </TouchableOpacity>
+      <Modal 
+        isVisible={bottomModalVisible}
+        coverScreen={false}
+        hasBackdrop={false}
+        style={{
+          width: '100%',
+          height: '8%',
+          margin: 0,
+          justifyContent: 'flex-end',}}
+        >
+        <View style={[styles.modalBottomBar, {backgroundColor : colour.state}]}>
+          <TouchableOpacity 
+            style={styles.backButton}
+            onPress={() => {
+              setBottomModalVisible(false);
+              setSelectMode(false);
+            }}>
+            <Icon 
+              name="angle-left"
+              color="#ffffffff"
+              size={30}
+            /> 
+          </TouchableOpacity>
 
-            <BottomModalButton type={bottomModalType}/>
-          </View>
-        </Modal>
+          <BottomModalButton type={bottomModalType}/>
+        </View>
+      </Modal>
 
         <Modal 
           style={styles.renameModal}
           isVisible={renameModalVisible}
           avoidKeyboard={true}
-          >
+        >
           <View style={styles.moreModalInner}>
             <TextInput
               editable/>
@@ -310,7 +348,7 @@ export const ViewAll = ({ navigation }) =>  {
               style={[styles.backButton, {backgroundColor : colour.state}]}
               onPress={() => {
                 setBottomModalVisible(false);
-                setDeleteMode(false);
+                setSelectMode(false);
               }}>
                 <Text>
                   {'Rename file'}
@@ -349,7 +387,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'column',
     top: 0,
-    zIndex: 999
+    zIndex: 999,
+    minHeight: 88
   },
   big_title: {
     color: '#344053ff',
@@ -365,6 +404,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'center',
     paddingLeft: 15,
+    paddingTop: 5,
     height: '5%',
     width: '100%',
     minHeight: 28,
@@ -374,7 +414,8 @@ const styles = StyleSheet.create({
     flexShrink: 1,
     margin: 10,
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    minHeight: 38
   },
   searchInput: {
     backgroundColor: '#ffffffff',
@@ -459,7 +500,8 @@ const styles = StyleSheet.create({
     fontStyle: 'normal',
     fontFamily: 'System' /* Inter */,
     padding: 3,
-    flexShrink: 1
+    flexShrink: 1, 
+    width: 50
   },
   orderByDropdown: {
     flexShrink: 1,
@@ -478,7 +520,7 @@ const styles = StyleSheet.create({
     },
     flexDirection: 'row',
     marginVertical: 5,
-    width: 120
+    width: 65
   },
   orderByDropdownText: {
     color: '#667084ff',
@@ -497,7 +539,21 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start'
   },
   orderByDropdownStyle: {
-
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 80,
+    borderRadius: 8
+  },
+  orderByDropdownTextStyle: {
+    color: '#667084ff',
+    textAlign: 'left',
+    letterSpacing: 0,
+    lineHeight: 18,
+    fontSize: 16,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+    padding: 10
   },
   modal: {
     justifyContent: 'center',
