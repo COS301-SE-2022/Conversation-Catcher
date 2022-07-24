@@ -6,8 +6,8 @@ export class GetPdfByIdHandler implements IQueryHandler<GetPdfByIdQuery> {
   constructor(private repository: MongoDBAccess) {}
 
   async execute({ id }: GetPdfByIdQuery): Promise<any> {
-    console.log('Calling query for pdfByID');
-    // return await this.repository.getPDF(id);
+    // console.log('Calling query for pdfByID');
+    return await this.repository.getPDF(id);
   }
 }
 
@@ -16,7 +16,7 @@ export class GetPdfsHandler implements IQueryHandler<GetPdfsQuery> {
   constructor(private repository: MongoDBAccess) {}
 
   async execute({ userid }: GetPdfsQuery): Promise<any> {
-    console.log('Calling query for Get all pdfs');
-    // return await this.repository.getUserPdfs(userid);
+    // console.log('Calling query for Get all pdfs');
+    return await this.repository.getUserPdfs(userid);
   }
 }
