@@ -16,6 +16,7 @@ export class ApiPdfManagerApiFeatureResolver {
     this.errorObj.name = 'error';
     this.errorObj.pdf = null;
     this.errorObj.downloaded = false;
+    // this.errorObj.creationDate =
   }
   private errorObj;
 
@@ -69,7 +70,7 @@ export class ApiPdfManagerApiFeatureResolver {
 
       return arrOfPDFs;
     }
-    return this.errorObj;
+    return [this.errorObj];
   }
 
   // rename the pdf with this id
@@ -98,7 +99,6 @@ export class ApiPdfManagerApiFeatureResolver {
   @Mutation(() => PdfEntity)
   async downloadedPDF(@Args('id', { type: () => [String] }) id: string) {
     const pdfArr = await this.pdfService.SetDownloadedPdf(id);
-    // console.log(pdfArr);
     if (pdfArr != undefined) {
       const pdfObj = new PdfEntity();
       pdfObj.id = pdfArr.id;
@@ -112,18 +112,19 @@ export class ApiPdfManagerApiFeatureResolver {
     return this.errorObj;
   }
 
-	// delete pdf with this id from DB
-	@Mutation()
+  // delete pdf with this id from DB
+  @Mutation(() => PdfEntity)
   async deletePDF(@Args('id', { type: () => [String] }) id: string) {
-		/*const pdfArr = await this.pdfService.DeletePdf(id);
+    const pdfArr = await this.pdfService.DeletePdf(id);
     if (pdfArr != undefined) {
-			const pdfObj = new PdfEntity();
-			pdfObj.id = pdfArr.id;
-			pdfObj.name = pdfArr.name;
-			pdfObj.pdf = pdfArr.pdf.toString('ascii');
-			pdfObj.creationDate = pdfArr.creationDate;
-			pdfObj.downloaded = pdfArr.downloaded;
+      const pdfObj = new PdfEntity();
+      pdfObj.id = pdfArr.id;
+      pdfObj.name = pdfArr.name;
+      pdfObj.pdf = pdfArr.pdf.toString('ascii');
+      pdfObj.creationDate = pdfArr.creationDate;
+      pdfObj.downloaded = pdfArr.downloaded;
 
-			return pdfObj;*/
+      return pdfObj;
+    }
   }
 }
