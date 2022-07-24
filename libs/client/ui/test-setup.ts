@@ -5,3 +5,9 @@ jest.mock('react-native-share', () => {
     open: jest.fn(),
   };
 });
+
+jest.mock('react-native-audio-record', () => {
+  return {
+    open: jest.fn(),
+  };
+});
