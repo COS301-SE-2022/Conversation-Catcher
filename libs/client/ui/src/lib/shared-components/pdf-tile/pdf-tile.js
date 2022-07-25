@@ -8,7 +8,6 @@ import { selectColour } from 'apps/client/src/app/slices/colour.slice';
 //import FileViewer from "react-native-file-viewer";
 
 function DownloadButtonState(props){
-  const colourState = useSelector(selectColour)
   const [downloadState, setDownloadState] = React.useState(props.d);
   if (downloadState) {
     return <Icon
@@ -48,7 +47,7 @@ const pdfthumbnailSource = {
 };
 
 export default class PdfTile extends Component {
-
+  colourState = useSelector(selectColour)
   render() {
     const {
       id,
