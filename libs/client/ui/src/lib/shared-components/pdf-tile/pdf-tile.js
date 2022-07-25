@@ -46,8 +46,8 @@ const pdfthumbnailSource = {
   cache: true,
 };
 
-export default class PdfTile extends Component {
-  colourState = useSelector(selectColour)
+export default class PdfTile extends Component {//make into function component
+  
   render() {
     const {
       id,
@@ -59,7 +59,7 @@ export default class PdfTile extends Component {
       pdfSource,
       nav
     } = this.props
-
+    colourState = useSelector(selectColour)
     return (
       <TouchableOpacity
         style={styles.pdfTile}

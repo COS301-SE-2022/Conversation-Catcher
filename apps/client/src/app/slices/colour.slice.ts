@@ -45,6 +45,6 @@ export const colourActions = colourSlice.actions;
 
 //Add selectors
 //get current colour
-export const selectColour = state => state.COLOUR.value
+export const selectColour = state => state.value
 
 //Add subscribers
