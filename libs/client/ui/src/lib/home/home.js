@@ -10,7 +10,7 @@ import { Buffer } from 'buffer';
 import AudioRecord from 'react-native-audio-record';
 import DocumentPicker, { types } from 'react-native-document-picker';
 import { useSelector } from 'react-redux';
-import { selectColour } from 'apps/client/src/app/slices/colour.slice.js';
+import { selectColour } from '../../../../../../apps/client/src/app/slices/colour.slice';
 
 export const Home = ({ navigation }) => {
   const colourState = useSelector(selectColour);

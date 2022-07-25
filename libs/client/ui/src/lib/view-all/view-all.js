@@ -7,7 +7,7 @@ import Modal from 'react-native-modal';
 import Share from "react-native-share";
 import colour from '../colour/colour';
 import { useSelector } from 'react-redux';
-import { selectColour } from 'apps/client/src/app/slices/colour.slice.js';
+import { selectColour } from '../../../../../../apps/client/src/app/slices/colour.slice';
 
 export const ViewAll = ({ navigation }) =>  {
   const colourState = useSelector(selectColour);
