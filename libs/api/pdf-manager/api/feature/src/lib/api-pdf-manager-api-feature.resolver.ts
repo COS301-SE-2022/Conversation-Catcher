@@ -16,6 +16,7 @@ export class ApiPdfManagerApiFeatureResolver {
     this.errorObj.name = 'error';
     this.errorObj.pdf = null;
     this.errorObj.downloaded = false;
+    this.errorObj.text = null;
     // this.errorObj.creationDate =
   }
   private errorObj;
@@ -40,6 +41,7 @@ export class ApiPdfManagerApiFeatureResolver {
       pdfObj.pdf = pdfArr.pdf;
       pdfObj.creationDate = pdfArr.creationDate;
       pdfObj.downloaded = pdfArr.downloaded;
+      pdfObj.text = pdfArr.text;
 
       return pdfObj;
     }
@@ -64,6 +66,7 @@ export class ApiPdfManagerApiFeatureResolver {
         pdfsObj.pdf = pdf.pdf.toString('ascii');
         pdfsObj.creationDate = pdf.creationDate;
         pdfsObj.downloaded = pdf.downloaded;
+        pdfsObj.text = pdf.text;
 
         arrOfPDFs.push(pdfsObj);
       }
@@ -88,6 +91,7 @@ export class ApiPdfManagerApiFeatureResolver {
       pdfObj.pdf = pdfArr.pdf.toString('ascii');
       pdfObj.creationDate = pdfArr.creationDate;
       pdfObj.downloaded = pdfArr.downloaded;
+      pdfObj.text = pdfArr.text;
 
       return pdfObj;
     }
@@ -106,6 +110,7 @@ export class ApiPdfManagerApiFeatureResolver {
       pdfObj.pdf = pdfArr.pdf.toString('ascii');
       pdfObj.creationDate = pdfArr.creationDate;
       pdfObj.downloaded = pdfArr.downloaded;
+      pdfObj.text = pdfArr.text;
 
       return pdfObj;
     }
@@ -123,6 +128,7 @@ export class ApiPdfManagerApiFeatureResolver {
       pdfObj.pdf = pdfArr.pdf.toString('ascii');
       pdfObj.creationDate = pdfArr.creationDate;
       pdfObj.downloaded = pdfArr.downloaded;
+      pdfObj.text = pdfArr.text;
 
       return pdfObj;
     }
