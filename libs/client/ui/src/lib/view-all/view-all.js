@@ -200,7 +200,7 @@ export const ViewAll = ({ navigation }) => {
     return (<ScrollView style={styles.recentPdfTiles}>
       { data.getPDFs.map((item,key)=>(
         <PdfTile
-        id= {key + 1}
+        key = {key}
         name= {item.name}
         date="13 Apr 2022, 11:53"
         source={''}

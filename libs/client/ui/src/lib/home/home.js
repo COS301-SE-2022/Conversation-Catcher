@@ -193,17 +193,18 @@ export const Home = ({ navigation }) => {
     )
 
     for (let i=0; i<3; i++){
-      if (data.getPDFs[i] != undefined)
+      if (data.getPDFs[i] !== undefined)
         newArr.push(data.getPDFs[i]);
     }
-    
+
     return (<View style={styles.recentPdfTiles}>
-      { data.getPDFs.map((item,key)=>(
+      { data.getPDFs.map((item, key)=>(
         <PdfTile
-        id= {key + 1}
+        // id= {key + 1}
+        key = { key }
         name= {item.name}
         date="13 Apr 2022, 11:53"
-        source={''}
+        thumbnailSource={''}
         text={item.text}
         downloaded={item.downloaded}
         pdfSource=""
