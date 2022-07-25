@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/accessible-emoji */
 import React, { useRef, useState, useEffect } from 'react';
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import {
   SafeAreaView,
   StyleSheet,
@@ -27,8 +28,18 @@ import ChangeEmail from '../../../../libs/client/ui/src/lib/change-email/change-
 const Stack = createNativeStackNavigator();
 
 export const App = () => {
-
+  const client = new ApolloClient({
+    uri: 'http://10.0.2.2:3333/graphql',
+    // headers: {
+    //   // Header(if any)
+    //   // authorization: 'a1b2c3d4-a1b2-a1b2c3d4e5f6',
+    // },
+    cache: new InMemoryCache(),
+    // link WebSocketLink subscription
+    // link: wsLink,
+  });
   return (
+    <ApolloProvider client={client}>
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
@@ -45,6 +56,7 @@ export const App = () => {
          <Stack.Screen name="ChangeEmail" component={ChangeEmail}/>
       </Stack.Navigator>
     </NavigationContainer>
+    </ApolloProvider>
   )
   }
 export default App;
