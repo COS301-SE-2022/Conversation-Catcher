@@ -140,76 +140,44 @@ export const ViewAll = ({ navigation }) => {
     const { data, loading, error } = useQuery(GET_USER_PDFS);
     console.log("GetPdfs");
     console.log(data);
+    console.log(loading);
+    console.log(error);
+    if (loading)
+    return (
+      <ScrollView style={styles.recentPdfTiles}>
+        <Text>loading...</Text>
+      </ScrollView>
+    )
+
+    if (error)
+    return (
+      <ScrollView style={styles.recentPdfTiles}>
+        <Text>An error occured...</Text>
+        <Text>error[0]</Text>
+      </ScrollView>
+    )
+
+    return (<ScrollView style={styles.recentPdfTiles}>
+      { data.getPDFs.map((item,key)=>(
+        <PdfTile
+        id={key}
+        name= {item.name}
+        date="13 Apr 2022, 11:53"
+        source={''}
+        downloaded={item.downloaded}
+        showCheck={selectMode}
+        pdfSource=""
+        nav={navigation}
+      />)
+      ) }
+
+    </ScrollView> );
   }
 
   function Pdfs() {
     // use redux to het email
-    useSetName();
-    useGetPdfs();
-    return (
-      <ScrollView style={styles.recentPdfTiles}>
-        <PdfTile
-          id={1}
-          name="Bug introduction: a modification of code"
-          date="1 May 2022, 9:37"
-          thumbnailSource={'../assets/pdf-bug-intro.png'}
-          downloaded={true}
-          showCheck={selectMode}
-          pdfSource="http://samples.leanpub.com/thereactnativebook-sample.pdf"
-          nav={navigation}
-        />
-        <PdfTile
-          id={2}
-          name="Human-computer interaction"
-          date="21 Apr 2022, 14:18"
-          thumbnailSource={'../assets/pdf-human-computer.png'}
-          downloaded={false}
-          showCheck={selectMode}
-          pdfSource="http://samples.leanpub.com/thereactnativebook-sample.pdf"
-          nav={navigation}
-        />
-        <PdfTile
-          id={3}
-          name="The tropical plants of the Philippines"
-          date="13 Apr 2022, 11:53"
-          thumbnailSource={'../assets/pdf-tropical-plants.png'}
-          downloaded={true}
-          showCheck={selectMode}
-          pdfSource="http://samples.leanpub.com/thereactnativebook-sample.pdf"
-          nav={navigation}
-        />
-        <PdfTile
-          id={4}
-          name="Devin Brittain The snacks of the popcorn"
-          date="13 Apr 2022, 11:53"
-          thumbnailSource={'../assets/pdf-tropical-plants.png'}
-          downloaded={true}
-          showCheck={selectMode}
-          pdfSource="http://samples.leanpub.com/thereactnativebook-sample.pdf"
-          nav={navigation}
-        />
-        <PdfTile
-          id={5}
-          name="The tropical plants of the Philippines"
-          date="13 Apr 2022, 11:53"
-          source={'../assets/pdf-tropical-plants.png'}
-          downloaded={true}
-          showCheck={selectMode}
-          pdfSource="http://samples.leanpub.com/thereactnativebook-sample.pdf"
-          nav={navigation}
-        />
-        <PdfTile
-          id={6}
-          name="The tropical plants of the Philippines"
-          date="13 Apr 2022, 11:53"
-          thumbnailSource={'../assets/pdf-tropical-plants.png'}
-          downloaded={true}
-          showCheck={selectMode}
-          pdfSource="http://samples.leanpub.com/thereactnativebook-sample.pdf"
-          nav={navigation}
-        />
-      </ScrollView>
-    );
+    return useGetPdfs();
+
   }
 
   return (
