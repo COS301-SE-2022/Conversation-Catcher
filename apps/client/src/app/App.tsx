@@ -23,28 +23,40 @@ import PdfView from '../../../../libs/client/ui/src/lib/shared-components/pdf-vi
 import ForgotPassword from '../../../../libs/client/ui/src/lib/forgot-password/forgot-password.js';
 import ChangePassword from '../../../../libs/client/ui/src/lib/change-password/change-password.js';
 import ChangeEmail from '../../../../libs/client/ui/src/lib/change-email/change-email.js';
+import { Provider } from 'react-redux';
+import { colourReducer } from './slices/colour.slice';
+import { configureStore } from '@reduxjs/toolkit';
+
+//configure the store
+const store = configureStore({
+    reducer: {
+        colour:colourReducer
+    }
+})
 
 const Stack = createNativeStackNavigator();
 
 export const App = () => {
-
+//
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Home"
-          component={Home}/>
-         <Stack.Screen name="ViewAll" component={ViewAll}/>
-         <Stack.Screen name="Settings" component={Settings}/>
-         <Stack.Screen name="Colour" component={ChangeColour}/>
-         <Stack.Screen name="Login" component={Login}/>
-         <Stack.Screen name="Register" component={Register}/>
-         <Stack.Screen name="PdfView" component={PdfView}/>
-         <Stack.Screen name="ForgotPassword" component={ForgotPassword}/>
-         <Stack.Screen name="ChangePassword" component={ChangePassword}/>
-         <Stack.Screen name="ChangeEmail" component={ChangeEmail}/>
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store = { store }>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="Home"
+            component={Home}/>
+          <Stack.Screen name="ViewAll" component={ViewAll}/>
+          <Stack.Screen name="Settings" component={Settings}/>
+          <Stack.Screen name="Colour" component={ChangeColour}/>
+          <Stack.Screen name="Login" component={Login}/>
+          <Stack.Screen name="Register" component={Register}/>
+          <Stack.Screen name="PdfView" component={PdfView}/>
+          <Stack.Screen name="ForgotPassword" component={ForgotPassword}/>
+          <Stack.Screen name="ChangePassword" component={ChangePassword}/>
+          <Stack.Screen name="ChangeEmail" component={ChangeEmail}/>
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   )
   }
 export default App;
