@@ -52,6 +52,7 @@ export default class PdfTile extends Component {
       date,
       thumbnailSource,
       downloaded,
+      text,
       showCheck,
       pdfSource,
       nav
@@ -81,7 +82,7 @@ export default class PdfTile extends Component {
             </View>
           </View>
           <View style={styles.download_button}>
-            <DetermineTileCorner 
+            <DetermineTileCorner
               d={downloaded}
               c={showCheck}/>
           </View>

@@ -160,10 +160,11 @@ export const ViewAll = ({ navigation }) => {
     return (<ScrollView style={styles.recentPdfTiles}>
       { data.getPDFs.map((item,key)=>(
         <PdfTile
-        id={key}
+        id= {key + 1}
         name= {item.name}
         date="13 Apr 2022, 11:53"
         source={''}
+        text={item.pdf}
         downloaded={item.downloaded}
         showCheck={selectMode}
         pdfSource=""
