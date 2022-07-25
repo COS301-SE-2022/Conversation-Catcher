@@ -1,5 +1,6 @@
 import React, {useState, useCallback} from 'react';
 import { View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity, Alert, PermissionsAndroid } from 'react-native';
+import { gql, useQuery, useMutation } from '@apollo/client';
 import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import colour from '../colour/colour';
@@ -68,7 +69,7 @@ export const Home = ({ navigation }) => {
       return <TouchableOpacity
               style={styles.changeUploadModalButton}
               onPress={() => handleDocumentSelection()}>
-              <Icon 
+              <Icon
                 style={{color : colour.state}}
                 name="file-sound-o"
                 size={16}
@@ -87,7 +88,7 @@ export const Home = ({ navigation }) => {
               handleDocumentSelection()}}>
             <View style={styles.uploadModalButtonContent}>
               <View style={styles.fileUploadIconContainer}>
-                <Icon 
+                <Icon
                   //style={styles.uploadModalButtonIcon}
                   name="file-sound-o"
                   size={40}
@@ -113,8 +114,8 @@ export const Home = ({ navigation }) => {
       const chunk = Buffer.from(data, 'base64');
       console.log('chunk size', chunk.byteLength);
       // do something with audio chunk
-    })} 
-  
+    })}
+
 
   const checkPermission = async () => {
     const p = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.RECORD_AUDIO);
@@ -155,6 +156,63 @@ export const Home = ({ navigation }) => {
 
   };
 
+  const GET_USER_PDFS = gql`
+    query getForUser {
+      getPDFs(id: "John@test") {
+        id
+        name
+        # creationDate,
+        downloaded
+        #pdf
+      }
+    }
+  `;
+
+  function Pdfs() {
+    // use redux to het email
+    const { data, loading, error } = useQuery(GET_USER_PDFS);
+    console.log("GetPdfs");
+    console.log(data);
+    console.log(loading);
+    console.log(error);
+    const newArr = []
+
+    if (loading)
+    return (
+      <View style={styles.recentPdfTiles}>
+        <Text>loading...</Text>
+      </View>
+    )
+
+    if (error)
+    return (
+      <View style={styles.recentPdfTiles}>
+        <Text>An error occured...</Text>
+        <Text>error[0]</Text>
+      </View>
+    )
+
+    for (let i=0; i<3; i++){
+      if (data.getPDFs[i] != undefined)
+        newArr.push(data.getPDFs[i]);
+    }
+    
+    return (<View style={styles.recentPdfTiles}>
+      { data.getPDFs.map((item,key)=>(
+        <PdfTile
+        id= {key + 1}
+        name= {item.name}
+        date="13 Apr 2022, 11:53"
+        source={''}
+        text={item.text}
+        downloaded={item.downloaded}
+        pdfSource=""
+        nav={navigation}
+      />))}
+    </View> );
+
+  }
+
   componentDidMount();
 
   return (
@@ -164,35 +222,9 @@ export const Home = ({ navigation }) => {
           {'Recents'}
         </Text>
       </View>
-      <View style={styles.recentPdfTiles}>
-        <PdfTile
-          id = {1}
-          name = 'Bug introduction: a modification of code' 
-          date = '1 May 2022, 9:37' 
-          thumbnailSource = {require('../assets/pdf-bug-intro.png')} 
-          downloaded = {true}
-          showCheck = {false}
-          pdfSource = 'http://samples.leanpub.com/thereactnativebook-sample.pdf'
-          nav = {navigation}/>
-        <PdfTile 
-          id = {2}
-          name = 'Human-computer interaction' 
-          date = '21 Apr 2022, 14:18' 
-          thumbnailSource = {require('../assets/pdf-human-computer.png')} 
-          downloaded = {false}
-          showCheck = {false}
-          pdfSource = 'http://samples.leanpub.com/thereactnativebook-sample.pdf'
-          nav = {navigation}/>
-        <PdfTile 
-          id = {3}
-          name = 'The tropical plants of the Philippines' 
-          date = '13 Apr 2022, 11:53' 
-          thumbnailSource = {require('../assets/pdf-tropical-plants.png')} 
-          downloaded = {true}
-          showCheck = {false}
-          pdfSource = 'http://samples.leanpub.com/thereactnativebook-sample.pdf'
-          nav = {navigation}/>
-      </View>
+
+      <Pdfs/>
+
       <View style={styles.viewAllTouchableOpacityFrame}>
         <TouchableOpacity
           style={[styles.viewAllTouchableOpacity,{backgroundColor : colour.state}]}

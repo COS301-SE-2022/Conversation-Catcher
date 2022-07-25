@@ -117,26 +117,66 @@ export const ViewAll = ({ navigation }) => {
     }
   `;
 
-  const INCREMENT_COUNTER = gql`
-    mutation myMutation {
-      downloadedPDF(id: "id") {
-        id
-        name
-        downloaded
-      }
-    }
-  `;
+  // const INCREMENT_COUNTER = gql`
+  //   mutation myMutation {
+  //     downloadedPDF(id: "id") {
+  //       id
+  //       name
+  //       downloaded
+  //     }
+  //   }
+  // `;
 
-  function useSetName() {
-    console.log('setNameCalled');
-    const [mutateFunction, { data, loading, error }] =
-      useMutation(INCREMENT_COUNTER);
-    mutateFunction();
-    console.log(data);
-    return <p>This is me!</p>;
-  }
+  // function useSetName() {
+  //   console.log('setNameCalled');
+  //   const [mutateFunction, { data, loading, error }] =
+  //     useMutation(INCREMENT_COUNTER);
+  //   mutateFunction();
+  //   console.log(data);
+  //   return <p>This is me!</p>;
+  // }
 
-  function useGetPdfs() {
+  // function useGetPdfs() {
+  //   const { data, loading, error } = useQuery(GET_USER_PDFS);
+  //   console.log("GetPdfs");
+  //   console.log(data);
+  //   console.log(loading);
+  //   console.log(error);
+  //   if (loading)
+  //   return (
+  //     <ScrollView style={styles.recentPdfTiles}>
+  //       <Text>loading...</Text>
+  //     </ScrollView>
+  //   )
+
+  //   if (error)
+  //   return (
+  //     <ScrollView style={styles.recentPdfTiles}>
+  //       <Text>An error occured...</Text>
+  //       <Text>error[0]</Text>
+  //     </ScrollView>
+  //   )
+
+  //   return (<ScrollView style={styles.recentPdfTiles}>
+  //     { data.getPDFs.map((item,key)=>(
+  //       <PdfTile
+  //       id= {key + 1}
+  //       name= {item.name}
+  //       date="13 Apr 2022, 11:53"
+  //       source={''}
+  //       text={item.pdf}
+  //       downloaded={item.downloaded}
+  //       showCheck={selectMode}
+  //       pdfSource=""
+  //       nav={navigation}
+  //     />)
+  //     ) }
+
+  //   </ScrollView> );
+  // }
+
+  function Pdfs() {
+    // use redux to het email
     const { data, loading, error } = useQuery(GET_USER_PDFS);
     console.log("GetPdfs");
     console.log(data);
@@ -164,7 +204,7 @@ export const ViewAll = ({ navigation }) => {
         name= {item.name}
         date="13 Apr 2022, 11:53"
         source={''}
-        text={item.pdf}
+        text={item.text}
         downloaded={item.downloaded}
         showCheck={selectMode}
         pdfSource=""
@@ -173,11 +213,6 @@ export const ViewAll = ({ navigation }) => {
       ) }
 
     </ScrollView> );
-  }
-
-  function Pdfs() {
-    // use redux to het email
-    return useGetPdfs();
 
   }
 
