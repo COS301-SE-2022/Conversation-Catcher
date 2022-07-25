@@ -31,7 +31,7 @@
     "react-native-audio-record": "*",
     "react-native-document-picker": "*",
 
-    "@reduxjs/toolkit": "*"
+    "@reduxjs/toolkit": "*",
 
     "react-native-share": "*",
     "react-native-restart": "*"
