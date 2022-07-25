@@ -7,7 +7,7 @@ export class DeletePdfHandler implements ICommandHandler<DeletePdfCommand> {
   constructor(private repository: MongoDBAccess) {}
 
   async execute({ id }: DeletePdfCommand) {
-    console.log('Delete command called');
-    // return this.repository.deletePDF(id);
+    // console.log('Delete command called');
+    return this.repository.deletePDF(id);
   }
 }
