@@ -430,19 +430,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-
-
-  orderByDropDownText_box: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
-  },
-  orderByDropdownStyle: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 80,
-    borderRadius: 8,
-  },
   orderByDropdownTextStyle: {
     color: '#667084ff',
     textAlign: 'left',
