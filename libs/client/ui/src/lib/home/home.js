@@ -190,7 +190,6 @@ export const Home = ({ navigation }) => {
     return (
       <View style={styles.recentPdfTiles}>
         <Text>An error occured...</Text>
-        <Text>{error[0]}</Text>
       </View>
     )
 

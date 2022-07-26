@@ -17,6 +17,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
 import Share from 'react-native-share';
 import colour from '../colour/colour';
+import Loading from '../shared-components/loading/loading.js';
 
 export const ViewAll = ({ navigation }) => {
   const [moreVisible, setMoreVisible] = useState(false);
@@ -185,7 +186,7 @@ export const ViewAll = ({ navigation }) => {
     if (loading)
     return (
       <ScrollView style={styles.recentPdfTiles}>
-        <Text>loading...</Text>
+        <Loading/>
       </ScrollView>
     )
 
