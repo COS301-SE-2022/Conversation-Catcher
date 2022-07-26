@@ -2,6 +2,9 @@
   "version": 2,
   "projects": {
     "api": "apps/api",
+    "api-authentication-api-data-access": "libs/api/authentication/api/data-access",
+    "api-authentication-api-feature": "libs/api/authentication/api/feature",
+    "api-authentication-service": "libs/api/authentication/service",
     "api-database-manager-api-feature": "libs/api/database-manager/api/feature",
     "api-database-manager-api-interface": "libs/api/database-manager/api/interface",
     "api-database-manager-service-feature": "libs/api/database-manager/service/feature",
