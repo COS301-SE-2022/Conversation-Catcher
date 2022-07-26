@@ -18,9 +18,9 @@ export class PdfEntity {
   @Field()
   pdf: string;
 
-  @Field()
-  creationDate: Date;
-  
+  @Field({nullable : true})
+  creationDate: string;
+
   @Field()
   downloaded: boolean;
 }
