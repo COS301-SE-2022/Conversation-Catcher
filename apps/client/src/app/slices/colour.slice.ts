@@ -23,9 +23,9 @@ export const COLOUR = 'colour';
 //initial state with reducers
 export const colourSlice = createSlice({
   name: COLOUR,
-  initialState: {value:"#3F89BE"},
+  initialState: {colour:"#3F89BE"},
   reducers: {
-    setColour: (state,action) => {state.value = action.payload}//use param in dispatch
+    setColour: (state,action) => {state.colour = action.payload}//use param in dispatch
   },
 });
 
@@ -45,6 +45,6 @@ export const colourActions = colourSlice.actions;
 
 //Add selectors
 //get current colour
-export const selectColour = state => state.value
+export const selectColour = state => state.colour
 
 //Add subscribers
