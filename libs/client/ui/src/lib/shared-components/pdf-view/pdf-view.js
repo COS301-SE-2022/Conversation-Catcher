@@ -181,7 +181,12 @@ export const PdfView = ({ navigation }) => {
         <View style={styles.big_title_box}>
           <Text style={styles.big_title}>{'PDFs'}</Text>
         </View>
-
+        <TouchableOpacity
+          style={styles.moreButton}
+          onPress={() => setMoreVisible(true)}
+        >
+          <Icon name="ellipsis-h" color="#344053ff" size={30} />
+        </TouchableOpacity>
         
       </View>
 
@@ -190,16 +195,11 @@ export const PdfView = ({ navigation }) => {
       </Text>
 
       <View style={styles.viewAllBottomBar}>
-        <TouchableOpacity
-          style={styles.moreButton}
-          onPress={() => setMoreVisible(true)}
-        >
-          <Icon name="ellipsis-h" color="#344053ff" size={30} />
-        </TouchableOpacity>
+        
 
         <TouchableOpacity
           style={styles.backButton}
-          onPress={() => navigation.navigate('Home')}
+          onPress={() => navigation.goBack()}
         >
           <Icon name="angle-left" color="#344053ff" size={30} />
         </TouchableOpacity>
@@ -391,43 +391,7 @@ const styles = StyleSheet.create({
     width: '100%',
     minHeight: 28,
   },
-  searchBarGroup: {
-    width: '85%',
-    flexShrink: 1,
-    margin: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-    minHeight: 38,
-  },
-  searchInput: {
-    backgroundColor: '#ffffffff',
-    borderRadius: 8,
-    borderStyle: 'solid',
-    borderColor: '#d0d5ddff',
-    borderWidth: 1,
-    elevation: 2,
-    shadowColor: '#000000',
-    shadowRadius: 2.621621621621622,
-    shadowOpacity: 0.2173913043478261,
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    color: '#667084ff',
-    textAlign: 'left',
-    letterSpacing: 0,
-    lineHeight: 24,
-    fontSize: 16,
-    fontWeight: '400',
-    fontStyle: 'normal',
-    fontFamily: 'System' /* Inter */,
-    padding: 5,
-    flexGrow: 1,
-  },
-  searchIconFrame: {
-    resizeMode: 'contain',
-    marginHorizontal: 10,
-  },
+
   recentPdfTiles: {
     height: '70%',
     paddingLeft: 15,
@@ -453,37 +417,18 @@ const styles = StyleSheet.create({
       height: 1,
     },
     justifyContent: 'center',
+    alignSelf: 'flex-end'
   },
   backButton: {
     flexGrow: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    padding: 10
   },
   moreButton: {
     flexGrow: 1,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  orderByGroup: {
-    flexGrow: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    alignSelf: 'flex-end',
-    marginVertical: 5,
-  },
-  orderByLabel: {
-    color: '#344053ff',
-    textAlign: 'center',
-    letterSpacing: 0,
-    lineHeight: 20,
-    fontSize: 14,
-    fontWeight: '500',
-    fontStyle: 'normal',
-    fontFamily: 'System' /* Inter */,
-    padding: 3,
-    flexShrink: 1,
-    width: 50,
   },
   orderByDropdown: {
     flexShrink: 1,
