@@ -186,7 +186,7 @@ export const PdfView = ({ navigation }) => {
       </View>
 
       <Text>
-
+        
       </Text>
 
       <View style={styles.viewAllBottomBar}>
@@ -204,6 +204,7 @@ export const PdfView = ({ navigation }) => {
           <Icon name="angle-left" color="#344053ff" size={30} />
         </TouchableOpacity>
 
+      
       </View>
 
       <Modal
