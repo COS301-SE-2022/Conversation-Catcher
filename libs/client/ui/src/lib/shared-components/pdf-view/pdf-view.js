@@ -431,17 +431,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 
-  orderByDropdownText: {
-    color: '#667084ff',
-    textAlign: 'left',
-    letterSpacing: 0,
-    lineHeight: 18,
-    fontSize: 16,
-    fontWeight: '400',
-    fontStyle: 'normal',
-    fontFamily: 'System' /* Inter */,
-    padding: 10,
-  },
+
   orderByDropDownText_box: {
     flexDirection: 'row',
     alignItems: 'flex-start',
