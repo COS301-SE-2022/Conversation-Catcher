@@ -199,7 +199,7 @@ export const Home = ({ navigation }) => {
     }
 
     return (<View style={styles.recentPdfTiles}>
-      { data.getPDFs.map((item, key)=>(
+      { newArr.map((item, key)=>(
         <PdfTile
         // id= {key + 1}
         key = { key }
