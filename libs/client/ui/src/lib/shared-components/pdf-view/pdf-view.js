@@ -430,25 +430,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  orderByDropdown: {
-    flexShrink: 1,
-    backgroundColor: '#ffffffff',
-    borderRadius: 8,
-    borderStyle: 'solid',
-    borderColor: '#d0d5ddff',
-    borderWidth: 1,
-    elevation: 2,
-    shadowColor: '#000000',
-    shadowRadius: 2.621621621621622,
-    shadowOpacity: 0.2173913043478261,
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    flexDirection: 'row',
-    marginVertical: 5,
-    width: 65,
-  },
+
   orderByDropdownText: {
     color: '#667084ff',
     textAlign: 'left',
