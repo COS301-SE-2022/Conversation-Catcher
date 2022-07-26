@@ -5,6 +5,7 @@ import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import colour from '../colour/colour';
 import Modal from 'react-native-modal';
+import Loading from '../shared-components/pdf-tile/pdf-tile.js';
 import { Buffer } from 'buffer';
 //import Permissions from 'react-native-permissions';
 //import Sound from 'react-native-sound';
@@ -161,7 +162,7 @@ export const Home = ({ navigation }) => {
       getPDFs(id: "John@test") {
         id
         name
-        # creationDate,
+        creationDate,
         downloaded
         #pdf
       }
@@ -188,7 +189,7 @@ export const Home = ({ navigation }) => {
     return (
       <View style={styles.recentPdfTiles}>
         <Text>An error occured...</Text>
-        <Text>error[0]</Text>
+        <Text>{error[0]}</Text>
       </View>
     )
 
@@ -203,7 +204,7 @@ export const Home = ({ navigation }) => {
         // id= {key + 1}
         key = { key }
         name= {item.name}
-        date="13 Apr 2022, 11:53"
+        date= {item.creationDate}
         thumbnailSource={''}
         text={item.text}
         downloaded={item.downloaded}

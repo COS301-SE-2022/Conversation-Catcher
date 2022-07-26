@@ -193,7 +193,7 @@ export const ViewAll = ({ navigation }) => {
     return (
       <ScrollView style={styles.recentPdfTiles}>
         <Text>An error occured...</Text>
-        <Text>error[0]</Text>
+        <Text>{error[0]}</Text>
       </ScrollView>
     )
 
