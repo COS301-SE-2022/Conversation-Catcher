@@ -26,6 +26,12 @@ export const Home = ({ navigation }) => {
   const [recordAudioState, setRecordAudioState] = useState(false);
   const [uploadVisible, setUploadVisible] = useState(false);
   const [fileSelected, setFileSelected] = useState(false);
+  const [state, setState] = useState({
+    audioFile: '',
+    recording: false,
+    loaded: false,
+    paused: true,
+  });
 
   const [fileResponse, setFileResponse] = useState([]);
 
@@ -44,13 +50,13 @@ export const Home = ({ navigation }) => {
   `;
 
   const SUMMARISE_TEXT = gql`
-    mutation summariseText {
-      Summarise(text: "Paragraph")
+    mutation summariseText($text: String!) {
+      Summarise(text: $text)
     }
   `;
 
   const CONVERT_SPEECH = gql`
-    mutation speechToText{
+    mutation speechToText {
       ConvertSpeech
     }
   `;
@@ -172,7 +178,7 @@ export const Home = ({ navigation }) => {
     const p = await PermissionsAndroid.check(
       PermissionsAndroid.PERMISSIONS.RECORD_AUDIO
     );
-    console.log('permission check', p);
+    // console.log('permission check', p);
     if (p === 'authorized') return;
     return requestPermission();
   };
@@ -181,29 +187,27 @@ export const Home = ({ navigation }) => {
     const p = await PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.RECORD_AUDIO
     );
-    console.log('permission request', p);
+    // console.log('permission request', p);
   };
 
   //var sound = null;
-  var state = {
-    audioFile: '',
-    recording: false,
-    loaded: false,
-    paused: true,
-  };
 
   const start = () => {
     console.log('start record');
     state.audioFile = '';
     state.recording = true;
     state.loaded = false;
+    console.log(state.recording);
     AudioRecord.start();
   };
 
   const stop = async () => {
+    console.log(state.recording);
     if (!state.recording) return;
     console.log('stop record');
     state.audioFile = await AudioRecord.stop();
+    //file containing audiofile
+    console.log(await summariseText({variables:{ text: (await speechToText()).data.ConvertSpeech}}));
     console.log('audioFile', state.audioFile);
     componentDidMount();
     state.audioFile = false;
@@ -327,7 +331,8 @@ export const Home = ({ navigation }) => {
 
           <TouchableOpacity
             style={styles.recordingStopModalButton}
-            onPress={() => {
+            onPress={async () => {
+              console.log('pressed');
               stop();
               setRecordAudioState(false);
               setRecordingStopVisible(false);
