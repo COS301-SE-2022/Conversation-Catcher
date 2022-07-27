@@ -18,7 +18,7 @@ import Modal from 'react-native-modal';
 import Share from 'react-native-share';
 import colour from '../colour/colour';
 
-export const PdfView = ({ navigation }) => {
+export const PdfView = ({ route, navigation }) => {
   const [moreVisible, setMoreVisible] = useState(false);
   const [selectMode, setSelectMode] = useState(false);
   const [bottomModalVisible, setBottomModalVisible] = useState(false);
@@ -28,6 +28,8 @@ export const PdfView = ({ navigation }) => {
   const url = 'https://awesome.contents.com/';
   const title = 'Awesome Contents';
   const message = 'Please check this out.';
+
+  const {text, name} = route.params;
 
   const options = {
     title,
@@ -179,11 +181,12 @@ export const PdfView = ({ navigation }) => {
     <View style={styles.viewAllPage}>
       <View style={styles.viewAllTopBar}>
         <View style={styles.big_title_box}>
-          <Text style={styles.big_title}>{'PDFs'}</Text>
+          <Text style={styles.big_title}>{name}</Text>
         </View>
         <TouchableOpacity
           style={styles.moreButton}
-          onPress={() => setMoreVisible(true)}
+          onPress={() => {setMoreVisible(true)
+            console.log(text);}}
         >
           <Icon name="ellipsis-h" color="#344053ff" size={30} />
         </TouchableOpacity>
@@ -191,7 +194,7 @@ export const PdfView = ({ navigation }) => {
       </View>
 
       <Text>
-        
+        {text}
       </Text>
 
       <View style={styles.viewAllBottomBar}>
@@ -367,7 +370,7 @@ const styles = StyleSheet.create({
       height: 1,
     },
     alignItems: 'center',
-    flexDirection: 'column',
+    flexDirection: 'row',
     top: 0,
     zIndex: 999,
     minHeight: 88,
@@ -388,7 +391,7 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     paddingTop: 5,
     height: '5%',
-    width: '100%',
+    width: '50%',
     minHeight: 28,
   },
 
@@ -429,17 +432,6 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  orderByDropdownTextStyle: {
-    color: '#667084ff',
-    textAlign: 'left',
-    letterSpacing: 0,
-    lineHeight: 18,
-    fontSize: 16,
-    fontWeight: '400',
-    fontStyle: 'normal',
-    fontFamily: 'System' /* Inter */,
-    padding: 10,
   },
   modal: {
     justifyContent: 'center',
