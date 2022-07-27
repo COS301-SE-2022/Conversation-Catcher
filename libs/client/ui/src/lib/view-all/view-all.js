@@ -157,7 +157,7 @@ export const ViewAll = ({ navigation }) => {
     }
     // objArr.sort((a,b) => {if (a.name < b.name) return -1; return 1})
     // sortObjects(currOrderValue);
-    this.forceUpdate();
+    Pdfs.forceUpdate();
     console.log(itemValue);
   }
 
