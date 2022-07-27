@@ -146,24 +146,63 @@ export const ViewAll = ({ navigation }) => {
     if (currOrderValue === itemValue) return;
     currOrderValue = itemValue;
     // Sort PDFs array according to currOrderValue
-    sortObjects(currOrderValue);
+    switch (currOrderValue) {
+      case 'Name':
+        objArr.sort((a,b) => {if (a.name < b.name) return -1; return 1})
+        console.log(objArr)
+        break;
+      case 'Date':
+        objArr.sort((a,b) => {if (a.creationDate < b.creationDate) return -1; return 1})
+        break;
+    }
+    // objArr.sort((a,b) => {if (a.name < b.name) return -1; return 1})
+    // sortObjects(currOrderValue);
+    this.forceUpdate();
     console.log(itemValue);
   }
 
   function sortObjects(sortBy) {
     //Using selection sort ... this can be upgraded in the future
-    let tempArr = [];
-    let max = null;
-    for (let i = 0; i < objArr.length; i++) {
-      for (let j = 0; j < objArr.length; j++) {
-        if (max == null || max.sortBy < objArr[j].sortBy)
-          if (tempArr.indexOf(max) === -1) max = objArr[j];
-      }
-      tempArr[i] = max;
-      max = null;
+    let tempArr = objArr;
+    let max = {};
+    max.creationDate = tempArr[0].creationDate;
+    max.downloaded = tempArr[0].downloaded;
+    max.name = tempArr[0].name;
+    let index = -1;
+    console.log(max);
+    max.name = 'test';
+    // console.log(objArr[0].name);
+    // for (let i = 0; i < objArr.length; i++) {
+    //   for (let j = 0; j < objArr.length; j++) {
+    switch (sortBy) {
+      case 'Name':
+        // if (max == null || max.name > objArr[j].name) {
+        //   console.log(max);
+        //   console.log(tempArr.indexOf(max))
+        //   if (tempArr.sort) {
+        //     max = objArr[j];
+        //     index = j;
+        //   }
+        // }
+
+        break;
+      case 'Date':
+        // if (max == null || max.creationDate < objArr[j].creationDate) {
+        // if (tempArr.indexOf(max) === -1)
+        // max = objArr[j];
+        // index = j;
+        // }
+
+        break;
+      //   }
+      // }
+      // tempArr[i] = max;
+      // max = null;
+      // console.log(index);
+      // objArr[index] = null;
     }
-    objArr = tempArr;
-    console.log(tempArr);
+    // objArr = tempArr;
+    // console.log(objArr);
   }
 
   function Pdfs() {
@@ -187,7 +226,21 @@ export const ViewAll = ({ navigation }) => {
           <Text>{error[0]}</Text>
         </ScrollView>
       );
-    if (objArr[0] === undefined) objArr = data.getPDFs;
+    if (objArr[0] === undefined) {
+      // console.log(objArr);
+      // console.log(data.getPDFs);
+      for (let i = 0; i < data.getPDFs.length; i++) {
+        //create deep copy
+        objArr.push({
+          name: data.getPDFs[i].name,
+          creationDate: data.getPDFs[i].creationDate,
+          downloaded: data.getPDFs[i].downloaded,
+          pdf: data.getPDFs[i].pdf,
+          text: data.getPDFs[i].text,
+          id: data.getPDFs[i].id,
+        })
+      }
+    }
     return (
       <ScrollView style={styles.recentPdfTiles}>
         {objArr.map((item, key) => (
