@@ -77,7 +77,7 @@ export const Home = ({ navigation }) => {
               />
               {fileResponse.map((file, index) => (
               <Text style={[styles.changeUploadModalButtonText, {color : colour.state}]}>
-                {file?.uri}
+                {file?.name}
               </Text>
               ))}
             </TouchableOpacity>

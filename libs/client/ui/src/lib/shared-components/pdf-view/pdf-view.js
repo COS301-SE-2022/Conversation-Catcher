@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     top: 0,
     zIndex: 999,
-    minHeight: 88,
+    //minHeight: 88,
   },
   big_title: {
     color: '#344053ff',
@@ -207,8 +207,7 @@ const styles = StyleSheet.create({
   big_title_box: {
     alignItems: 'flex-start',
     justifyContent: 'center',
-    paddingLeft: 15,
-    paddingTop: 5,
+    padding: 15,
     flexGrow: 1,
     minHeight: 28,
   },
