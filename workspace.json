@@ -2,7 +2,6 @@
   "version": 2,
   "projects": {
     "api": "apps/api",
-    "api-authentication-api-data-access": "libs/api/authentication/api/data-access",
     "api-authentication-api-feature": "libs/api/authentication/api/feature",
     "api-authentication-repository-data-access": "libs/api/authentication/repository/data-access",
     "api-authentication-service": "libs/api/authentication/service",
