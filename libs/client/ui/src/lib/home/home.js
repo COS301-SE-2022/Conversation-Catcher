@@ -5,7 +5,7 @@ import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import colour from '../colour/colour';
 import Modal from 'react-native-modal';
-import Loading from '../shared-components/pdf-tile/pdf-tile.js';
+import Loading from '../shared-components/loading/loading.js';
 import { Buffer } from 'buffer';
 //import Permissions from 'react-native-permissions';
 //import Sound from 'react-native-sound';
@@ -165,6 +165,7 @@ export const Home = ({ navigation }) => {
         creationDate,
         downloaded
         #pdf
+        text
       }
     }
   `;
@@ -173,23 +174,23 @@ export const Home = ({ navigation }) => {
     // use redux to het email
     const { data, loading, error } = useQuery(GET_USER_PDFS);
     console.log("GetPdfs");
-    console.log(data);
-    console.log(loading);
-    console.log(error);
+    // console.log(data);
+    // console.log(loading);
+    // console.log(error);
     const newArr = []
 
     if (loading)
     return (
       <View style={styles.recentPdfTiles}>
-        <Text>loading...</Text>
+        <Loading/>
       </View>
     )
+
 
     if (error)
     return (
       <View style={styles.recentPdfTiles}>
         <Text>An error occured...</Text>
-        <Text>{error[0]}</Text>
       </View>
     )
 
@@ -199,7 +200,7 @@ export const Home = ({ navigation }) => {
     }
 
     return (<View style={styles.recentPdfTiles}>
-      { data.getPDFs.map((item, key)=>(
+      { newArr.map((item, key)=>(
         <PdfTile
         // id= {key + 1}
         key = { key }
