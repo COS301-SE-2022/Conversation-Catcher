@@ -31,6 +31,20 @@ export const ViewAll = ({ navigation }) => {
   const title = 'Awesome Contents';
   const message = 'Please check this out.';
 
+  //graphql syntax trees
+  const GET_USER_PDFS = gql`
+    query getForUser {
+      getPDFs(id: "John@test") {
+        id
+        name
+        creationDate
+        downloaded
+        #pdf
+        text
+      }
+    }
+  `;
+
   //variables for object sorting
   const [objArr, setObjArr] = useState([]);
   let currOrderValue = 'Date';
@@ -111,38 +125,6 @@ export const ViewAll = ({ navigation }) => {
     }
   };
 
-  const GET_USER_PDFS = gql`
-    query getForUser {
-      getPDFs(id: "John@test") {
-        id
-        name
-        creationDate
-        downloaded
-        #pdf
-        text
-      }
-    }
-  `;
-
-  // const INCREMENT_COUNTER = gql`
-  //   mutation myMutation {
-  //     downloadedPDF(id: "id") {
-  //       id
-  //       name
-  //       downloaded
-  //     }
-  //   }
-  // `;
-
-  // function useSetName() {
-  //   console.log('setNameCalled');
-  //   const [mutateFunction, { data, loading, error }] =
-  //     useMutation(INCREMENT_COUNTER);
-  //   mutateFunction();
-  //   console.log(data);
-  //   return <p>This is me!</p>;
-  // }
-
   function changeArray(index, itemValue) {
     if (currOrderValue === itemValue) return;
     currOrderValue = itemValue;
@@ -150,13 +132,19 @@ export const ViewAll = ({ navigation }) => {
     switch (currOrderValue) {
       case 'Name':
         var temp2 = objArr;
-        temp2.sort((a,b) => {if (a.name < b.name) return -1; return 1})
+        temp2.sort((a, b) => {
+          if (a.name < b.name) return -1;
+          return 1;
+        });
         setObjArr(temp2);
-        console.log(objArr)
+        console.log(objArr);
         break;
       case 'Date':
         var temp = objArr;
-        temp.sort((a,b) => {if (a.creationDate < b.creationDate) return -1; return 1})
+        temp.sort((a, b) => {
+          if (a.creationDate < b.creationDate) return -1;
+          return 1;
+        });
         setObjArr(temp);
         console.log(objArr);
         break;
@@ -168,7 +156,6 @@ export const ViewAll = ({ navigation }) => {
   }
 
   function Pdfs() {
-    
     // use redux to het email
     const { data, loading, error } = useQuery(GET_USER_PDFS);
     console.log('GetPdfs');
@@ -201,7 +188,7 @@ export const ViewAll = ({ navigation }) => {
           pdf: data.getPDFs[i].pdf,
           text: data.getPDFs[i].text,
           id: data.getPDFs[i].id,
-        })
+        });
       }
     }
     return (
