@@ -15,6 +15,15 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@conversation-catcher/api/authentication/api/feature": [
+        "libs/api/authentication/api/feature/src/index.ts"
+      ],
+      "@conversation-catcher/api/authentication/repository/data-access": [
+        "libs/api/authentication/repository/data-access/src/index.ts"
+      ],
+      "@conversation-catcher/api/authentication/service": [
+        "libs/api/authentication/service/src/index.ts"
+      ],
       "@conversation-catcher/api/database-manager/api/feature": [
         "libs/api/database-manager/api/feature/src/index.ts"
       ],
