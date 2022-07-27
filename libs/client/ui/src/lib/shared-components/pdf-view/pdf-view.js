@@ -21,10 +21,6 @@ import colour from '../colour/colour';
 
 export const PdfView = ({ route, navigation }) => {
   const [moreVisible, setMoreVisible] = useState(false);
-  const [selectMode, setSelectMode] = useState(false);
-  const [bottomModalVisible, setBottomModalVisible] = useState(false);
-  const [bottomModalType, setBottomModalType] = useState('none');
-  const [renameModalVisible, setRenameModalVisible] = useState(false);
 
   const {text, name} = route.params;
 
@@ -122,8 +118,6 @@ export const PdfView = ({ route, navigation }) => {
           <TouchableOpacity
             style={styles.moreModalButton}
             onPress={() => {
-              setBottomModalType('rename');
-              setBottomModalVisible(true);
               setMoreVisible(false);
             }}
           >
@@ -146,9 +140,6 @@ export const PdfView = ({ route, navigation }) => {
           <TouchableOpacity
             style={styles.moreModalButton}
             onPress={() => {
-              setBottomModalType('delete');
-              setBottomModalVisible(true);
-              setSelectMode(true);
               setMoreVisible(false);
             }}
           >
@@ -168,50 +159,6 @@ export const PdfView = ({ route, navigation }) => {
         </View>
       </Modal>
 
-      <Modal
-        isVisible={bottomModalVisible}
-        coverScreen={false}
-        hasBackdrop={false}
-        style={{
-          width: '100%',
-          height: '8%',
-          margin: 0,
-          justifyContent: 'flex-end',
-        }}
-      >
-        <View
-          style={[styles.modalBottomBar, { backgroundColor: colour.state }]}
-        >
-          <TouchableOpacity
-            style={styles.backButton}
-            onPress={() => {
-              setBottomModalVisible(false);
-              setSelectMode(false);
-            }}
-          >
-            <Icon name="angle-left" color="#ffffffff" size={30} />
-          </TouchableOpacity>
-        </View>
-      </Modal>
-
-      <Modal
-        style={styles.renameModal}
-        isVisible={renameModalVisible}
-        avoidKeyboard={true}
-      >
-        <View style={styles.moreModalInner}>
-          <TextInput editable />
-          <TouchableOpacity
-            style={[styles.backButton, { backgroundColor: colour.state }]}
-            onPress={() => {
-              setBottomModalVisible(false);
-              setSelectMode(false);
-            }}
-          >
-            <Text>{'Rename file'}</Text>
-          </TouchableOpacity>
-        </View>
-      </Modal>
     </View>
   );
 };
