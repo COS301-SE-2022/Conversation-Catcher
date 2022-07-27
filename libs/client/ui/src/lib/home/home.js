@@ -173,7 +173,6 @@ export const Home = ({ navigation }) => {
   function Pdfs() {
     // use redux to het email
     const { data, loading, error } = useQuery(GET_USER_PDFS);
-    console.log("GetPdfs");
     // console.log(data);
     // console.log(loading);
     // console.log(error);

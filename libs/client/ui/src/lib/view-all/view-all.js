@@ -25,6 +25,7 @@ export const ViewAll = ({ navigation }) => {
   const [bottomModalVisible, setBottomModalVisible] = useState(false);
   const [bottomModalType, setBottomModalType] = useState('none');
   const [renameModalVisible, setRenameModalVisible] = useState(false);
+  // const [refreshPage, setRefreshPage] = useState('');
 
   const url = 'https://awesome.contents.com/';
   const title = 'Awesome Contents';
@@ -153,11 +154,13 @@ export const ViewAll = ({ navigation }) => {
         break;
       case 'Date':
         objArr.sort((a,b) => {if (a.creationDate < b.creationDate) return -1; return 1})
+        console.log(objArr);
         break;
     }
+    // setRefreshPage('refresh');
     // objArr.sort((a,b) => {if (a.name < b.name) return -1; return 1})
     // sortObjects(currOrderValue);
-    Pdfs.forceUpdate();
+    
     console.log(itemValue);
   }
 
@@ -205,7 +208,7 @@ export const ViewAll = ({ navigation }) => {
     // console.log(objArr);
   }
 
-  function Pdfs() {
+  function Pdfs( refreshPage) {
     // use redux to het email
     const { data, loading, error } = useQuery(GET_USER_PDFS);
     console.log('GetPdfs');
