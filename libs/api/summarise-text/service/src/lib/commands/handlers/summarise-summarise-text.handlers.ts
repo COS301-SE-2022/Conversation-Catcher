@@ -9,8 +9,7 @@ export class SummariesHandler implements ICommandHandler<SummariseCommand> {
   // constructor() {}
 
   async execute({ text }: SummariseCommand) {
-    console.log('Running command for setname');
     // Place AI service here.
-    // return await this.repository.Summaries(text);
+    return 'summarised ' + text;
   }
 }

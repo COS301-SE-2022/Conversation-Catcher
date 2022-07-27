@@ -10,6 +10,7 @@ export class ApiSpeechToTextServiceService {
     constructor(private commandBus: CommandBus, private queryBus: QueryBus) {}
 
     async ConvertSpeech(/*audio : typeof Audio*/) {
+        // return "Text";
         return await this.commandBus.execute( new CovertSpeechCommand(/*audio*/))
     }
 }
