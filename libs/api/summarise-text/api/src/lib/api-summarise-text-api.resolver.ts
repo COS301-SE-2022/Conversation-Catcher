@@ -16,20 +16,6 @@ export class ApiSummariseTextApiResolver {
 
     @Mutation(()=>String)
     async Summarise(@Args('text', { type: () => [String] }) text: string) {
-        await this.service.Summarise(text);
-        
-        /*if (pdfArr != undefined) {
-            const pdfObj = new PdfEntity();
-            pdfObj.id = pdfArr.id;
-            pdfObj.name = pdfArr.name;
-            pdfObj.pdf = pdfArr.pdf.toString('ascii');
-            pdfObj.creationDate = pdfArr.creationDate;
-            pdfObj.downloaded = pdfArr.downloaded;
-
-            return pdfObj;
-        }
-
-        return this.errorObj;*/
-        return "Executed";
+        return await this.service.Summarise(text);
     }
 }

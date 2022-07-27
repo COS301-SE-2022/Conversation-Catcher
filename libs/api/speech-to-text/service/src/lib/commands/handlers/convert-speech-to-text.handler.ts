@@ -17,6 +17,6 @@ export class CovertSpeechHandler
   // ) {}
 
   async execute({ audio }: CovertSpeechCommand) {
-    //return await this.repository.CovertSpeech(audio);
+    return 'This is the returned Text';
   }
 }
