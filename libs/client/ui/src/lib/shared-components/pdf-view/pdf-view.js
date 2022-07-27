@@ -9,13 +9,14 @@ import {
   Alert,
   ScrollView,
   TextInput,
+  Share
 } from 'react-native';
 import { gql, useQuery, useMutation } from '@apollo/client';
 import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
 import ModalDropdown from 'react-native-modal-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
-import Share from 'react-native-share';
+//import Share from 'react-native-share';
 import colour from '../colour/colour';
 
 export const PdfView = ({ route, navigation }) => {
@@ -25,83 +26,16 @@ export const PdfView = ({ route, navigation }) => {
   const [bottomModalType, setBottomModalType] = useState('none');
   const [renameModalVisible, setRenameModalVisible] = useState(false);
 
-  const url = 'https://awesome.contents.com/';
-  const title = 'Awesome Contents';
-  const message = 'Please check this out.';
-
   const {text, name} = route.params;
-
-  const options = {
-    title,
-    url,
-    message,
-  };
-
-  const share = async (customOptions = options) => {
-    try {
-      await Share.open(customOptions);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  function BottomModalButton(props) {
-    if (props.type === 'share') {
-      return (
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={async () => {
-            await share({
-              title: 'Sharing pdf file from awesome share app',
-              message: 'Please take a look at this file',
-              url: '../assets/thereactnativebook-sample.pdf',
-            });
-            setSelectMode(false);
-            setBottomModalVisible(false);
-          }}
-        >
-          <Icon name="paper-plane-o" color="#ffffffff" size={22} />
-        </TouchableOpacity>
-      );
-    }
-    if (props.type === 'rename') {
-      return (
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => setBottomModalVisible(false)}
-        >
-          <Icon name="pencil-square-o" color="#ffffffff" size={22} />
-        </TouchableOpacity>
-      );
-    }
-    return (
-      <TouchableOpacity
-        style={styles.backButton}
-        onPress={() => {
-          setSelectMode(false);
-          setBottomModalVisible(false);
-        }}
-      >
-        <Icon name="trash-o" color="#ffffffff" size={22} />
-      </TouchableOpacity>
-    );
-  }
 
   const onShare = async () => {
     try {
       const result = await Share.share({
         message:
-          'React Native | A framework for building native apps using React',
+          text.text,
+        title: 
+          name.name
       });
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          // shared with activity type of result.activityType
-        } else {
-          // shared
-        }
-      } else if (result.action === Share.dismissedAction) {
-        // dismissed
-      }
     } catch (error) {
       alert(error.message);
     }
@@ -165,12 +99,7 @@ export const PdfView = ({ route, navigation }) => {
         <View style={styles.moreModalInner}>
           <TouchableOpacity
             style={styles.moreModalButton}
-            onPress={() => {
-              setBottomModalType('share');
-              setSelectMode(true);
-              setBottomModalVisible(true);
-              setMoreVisible(false);
-            }}
+            onPress={onShare}
           >
             <View style={styles.moreModalButtonContent}>
               <View style={styles.iconContainer}>
@@ -262,8 +191,6 @@ export const PdfView = ({ route, navigation }) => {
           >
             <Icon name="angle-left" color="#ffffffff" size={30} />
           </TouchableOpacity>
-
-          <BottomModalButton type={bottomModalType} />
         </View>
       </Modal>
 
@@ -283,8 +210,6 @@ export const PdfView = ({ route, navigation }) => {
           >
             <Text>{'Rename file'}</Text>
           </TouchableOpacity>
-
-          <BottomModalButton type={bottomModalType} />
         </View>
       </Modal>
     </View>
@@ -334,13 +259,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingLeft: 15,
     paddingTop: 5,
-    height: '5%',
-    width: '50%',
+    flexGrow: 1,
     minHeight: 28,
   },
   pdfTextContainer: {
     height: '70%',
-    padding: 15
+    padding: 15,
+    overflow: 'scroll',
   },
   pdfText: {
     color: '#344053ff',
