@@ -1,6 +1,6 @@
 {
   "$schema": "..\\..\\..\\..\\node_modules\\nx\\schemas\\project-schema.json",
-  "sourceRoot": "libs/api/authentication/api-authentication-api-service/src",
+  "sourceRoot": "libs/api/authentication/service/src",
   "projectType": "library",
   "targets": {
     "lint": {
@@ -8,17 +8,17 @@
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": [
-          "libs/api/authentication/api-authentication-api-service/**/*.ts"
+          "libs/api/authentication/service/**/*.ts"
         ]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
       "outputs": [
-        "coverage/libs/api/authentication/api-authentication-api-service"
+        "coverage/libs/api/authentication/service"
       ],
       "options": {
-        "jestConfig": "libs/api/authentication/api-authentication-api-service/jest.config.ts",
+        "jestConfig": "libs/api/authentication/service/jest.config.ts",
         "passWithNoTests": true
       }
     }

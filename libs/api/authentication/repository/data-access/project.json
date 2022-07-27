@@ -1,6 +1,6 @@
 {
   "$schema": "..\\..\\..\\..\\..\\node_modules\\nx\\schemas\\project-schema.json",
-  "sourceRoot": "libs/api/pdf-manager/repository/data-access/src",
+  "sourceRoot": "libs/api/authentication/repository/data-access/src",
   "projectType": "library",
   "targets": {
     "lint": {
@@ -8,15 +8,15 @@
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": [
-          "libs/api/pdf-manager/repository/data-access/**/*.ts"
+          "libs/api/authentication/repository/data-access/**/*.ts"
         ]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/api/pdf-manager/repository/data-access"],
+      "outputs": ["coverage/libs/api/authentication/repository/data-access"],
       "options": {
-        "jestConfig": "libs/api/pdf-manager/repository/data-access/jest.config.ts",
+        "jestConfig": "libs/api/authentication/repository/data-access/jest.config.ts",
         "passWithNoTests": true
       }
     }

@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { ApiAuthenticationApiFeatureResolver } from './api-authentication-api-feature.resolver';
 import { ApiAuthenticationServiceModule } from "@conversation-catcher/api/authentication/service";
 import { CqrsModule } from '@nestjs/cqrs';
-//yarn nx run api-authentication-feature:test
+//yarn nx run api-authentication-api-feature:test
 describe('ApiAuthenticationFeatureResolver', () => {
   let resolver: ApiAuthenticationApiFeatureResolver;
 
