@@ -4,6 +4,7 @@
     "api": "apps/api",
     "api-authentication-api-data-access": "libs/api/authentication/api/data-access",
     "api-authentication-api-feature": "libs/api/authentication/api/feature",
+    "api-authentication-repository-data-access": "libs/api/authentication/repository/data-access",
     "api-authentication-service": "libs/api/authentication/service",
     "api-database-manager-api-feature": "libs/api/database-manager/api/feature",
     "api-database-manager-api-interface": "libs/api/database-manager/api/interface",

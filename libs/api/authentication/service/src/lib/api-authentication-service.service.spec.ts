@@ -1,6 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ApiAuthenticationServiceService } from './api-authentication-service.service';
+import { ApiAuthenticationRepositoryDataAccessModule } from '@conversation-catcher/api/authentication/repository/data-access';
 import { CqrsModule } from '@nestjs/cqrs';
+import * as CommandHandlers from './commands/handlers';
+import * as QueryHandlers from './queries/handlers';
 
 describe('ApiAuthenticationServiceService', () => {
   let service: ApiAuthenticationServiceService;
@@ -9,12 +12,12 @@ describe('ApiAuthenticationServiceService', () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
         CqrsModule,
-        //PdfManagerRepositoryDataAccessModule,
+        ApiAuthenticationRepositoryDataAccessModule,
       ],
       providers: [
         ApiAuthenticationServiceService,
-        //CommandHandlers.DeletePdfHandler,
-        //QueryHandlers.GetPdfByIdHandler,
+        CommandHandlers.SignUpHandler,
+        QueryHandlers.logInHandler,
       ],
       exports: [
         ApiAuthenticationServiceService,

@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { ApiAuthenticationServiceService } from './api-authentication-service.service';
-//import { PdfManagerRepositoryDataAccessModule } from '@conversation-catcher/api/pdf-manager/repository/data-access';
+import { ApiAuthenticationRepositoryDataAccessModule } from '@conversation-catcher/api/authentication/repository/data-access';
 import { CqrsModule } from '@nestjs/cqrs';
-//import * as CommandHandlers from './commands/handlers';
-//import * as QueryHandlers from './queries/handlers';
+import * as CommandHandlers from './commands/handlers';
+import * as QueryHandlers from './queries/handlers';
 
 @Module({
   controllers: [
@@ -11,12 +11,12 @@ import { CqrsModule } from '@nestjs/cqrs';
   ],
   imports: [
     CqrsModule,
-    //PdfManagerRepositoryDataAccessModule,
+    ApiAuthenticationRepositoryDataAccessModule,
   ],
   providers: [
     ApiAuthenticationServiceService,
-    //CommandHandlers.DeletePdfHandler,
-    //QueryHandlers.GetPdfByIdHandler,
+    CommandHandlers.SignUpHandler,
+    QueryHandlers.logInHandler,
   ],
   exports: [
     ApiAuthenticationServiceService,

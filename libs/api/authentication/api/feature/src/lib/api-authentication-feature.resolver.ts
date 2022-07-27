@@ -8,26 +8,26 @@ export class ApiAuthenticationFeatureResolver {
         // private otherService: ApiPdfManagerServiceFeatureService,
         private authService: ApiAuthenticationServiceService
     ) {
-        this.errorObj = false;
+        this.errorObj = '0';
     }
     private errorObj;
     
-    @Query(() => Boolean)
-    async logIn(@Args('user', { type: () => JSON }) user: JSON) {
-        const flag = await this.authService.logIn(user);
+    @Query(() => String)
+    async logIn(@Args('email', { type: () => String }) email: string) {
+        const id = await this.authService.logIn(email);
 
-        if (flag != undefined) {
-            return flag;
+        if (id != undefined) {
+            return id;
         }
         return this.errorObj;
     }
 
-    @Mutation(() => Boolean)
-    async signUp(@Args('user', { type: () => [JSON] }) user: JSON) {
-        const flag = await this.authService.signUp(user);
+    @Mutation(() => String)
+    async signUp(@Args('email', { type: () => [String] }) email: string) {
+        const id = await this.authService.signUp(email);
 
-        if (flag != undefined) {
-            return flag;
+        if (id != undefined) {
+            return id;
         }
         return this.errorObj;
     }
