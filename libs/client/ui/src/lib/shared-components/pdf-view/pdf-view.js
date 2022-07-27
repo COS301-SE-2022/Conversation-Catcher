@@ -119,69 +119,12 @@ export const PdfView = ({ route, navigation }) => {
     }
   `;
 
-  // const INCREMENT_COUNTER = gql`
-  //   mutation myMutation {
-  //     downloadedPDF(id: "id") {
-  //       id
-  //       name
-  //       downloaded
-  //     }
-  //   }
-  // `;
-
-  // function useSetName() {
-  //   console.log('setNameCalled');
-  //   const [mutateFunction, { data, loading, error }] =
-  //     useMutation(INCREMENT_COUNTER);
-  //   mutateFunction();
-  //   console.log(data);
-  //   return <p>This is me!</p>;
-  // }
-
-  // function useGetPdfs() {
-  //   const { data, loading, error } = useQuery(GET_USER_PDFS);
-  //   console.log("GetPdfs");
-  //   console.log(data);
-  //   console.log(loading);
-  //   console.log(error);
-  //   if (loading)
-  //   return (
-  //     <ScrollView style={styles.recentPdfTiles}>
-  //       <Text>loading...</Text>
-  //     </ScrollView>
-  //   )
-
-  //   if (error)
-  //   return (
-  //     <ScrollView style={styles.recentPdfTiles}>
-  //       <Text>An error occured...</Text>
-  //       <Text>error[0]</Text>
-  //     </ScrollView>
-  //   )
-
-  //   return (<ScrollView style={styles.recentPdfTiles}>
-  //     { data.getPDFs.map((item,key)=>(
-  //       <PdfTile
-  //       id= {key + 1}
-  //       name= {item.name}
-  //       date="13 Apr 2022, 11:53"
-  //       source={''}
-  //       text={item.pdf}
-  //       downloaded={item.downloaded}
-  //       showCheck={selectMode}
-  //       pdfSource=""
-  //       nav={navigation}
-  //     />)
-  //     ) }
-
-  //   </ScrollView> );
-  // }
-
+  
   return (
     <View style={styles.viewAllPage}>
       <View style={styles.viewAllTopBar}>
         <View style={styles.big_title_box}>
-          <Text style={styles.big_title}>{name}</Text>
+          <Text style={styles.big_title}>{name.name}</Text>
         </View>
         <TouchableOpacity
           style={styles.moreButton}
@@ -190,12 +133,13 @@ export const PdfView = ({ route, navigation }) => {
         >
           <Icon name="ellipsis-h" color="#344053ff" size={30} />
         </TouchableOpacity>
-        
       </View>
 
-      <Text>
-        {text}
-      </Text>
+      <View style={styles.pdfTextContainer}>
+        <Text style={styles.pdfText}>
+          {text.text}
+        </Text>
+      </View>
 
       <View style={styles.viewAllBottomBar}>
         
@@ -394,12 +338,20 @@ const styles = StyleSheet.create({
     width: '50%',
     minHeight: 28,
   },
-
-  recentPdfTiles: {
+  pdfTextContainer: {
     height: '70%',
-    paddingLeft: 15,
-    paddingRight: 15,
-    overflow: 'visible',
+    padding: 15
+  },
+  pdfText: {
+    color: '#344053ff',
+    textAlign: 'left',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 16,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+    paddingHorizontal: 0,
   },
   viewAllBottomBar: {
     width: '100%',
@@ -420,7 +372,9 @@ const styles = StyleSheet.create({
       height: 1,
     },
     justifyContent: 'center',
-    alignSelf: 'flex-end'
+    alignSelf: 'flex-end',
+    position: 'absolute',
+    bottom: 0,
   },
   backButton: {
     flexGrow: 1,
