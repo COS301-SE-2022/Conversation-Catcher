@@ -12,8 +12,8 @@ export class SetNamePdfHandler implements ICommandHandler<SetNamePdfCommand> {
   constructor(private repository: MongoDBAccess) {}
 
   async execute({ id, name }: SetNamePdfCommand) {
-    console.log('Running command for setname');
-    // return await this.repository.setPDFName(id, name);
+    // console.log('Running command for setname');
+    return await this.repository.setPDFName(id, name);
   }
 }
 @CommandHandler(SetDownloadedPdfCommand)
@@ -25,7 +25,7 @@ export class SetDownloadedPdfHandler
     // private httpService: HttpService
   ) {}
   async execute({ id }: SetDownloadedPdfCommand): Promise<any> {
-    console.log('HAndling command setDownloadPDF with id ' + id);
+    // console.log('HAndling command setDownloadPDF with id ' + id);
     return await this.repository.changeDownloaded(id);
   }
 }
