@@ -5,7 +5,7 @@ import { CqrsModule, QueryBus, CommandBus } from '@nestjs/cqrs';
 import * as CommandHandlers from './commands/handlers';
 
 @Module({
-  controllers: [
+  imports: [
     CqrsModule,
     //PdfManagerRepositoryDataAccessModule,
   ],

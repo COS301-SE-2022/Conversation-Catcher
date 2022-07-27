@@ -3,7 +3,7 @@ import { ApiSpeechToTextApiResolver } from './api-speech-to-text-api.resolver';
 import { ApiSpeechToTextServiceModule, ApiSpeechToTextServiceService } from "@conversation-catcher/api/speech-to-text/service";
 import { CqrsModule, CommandBus, QueryBus } from '@nestjs/cqrs';
 @Module({
-  controllers: [
+  imports: [
     CqrsModule,
     ApiSpeechToTextServiceModule,
   ],

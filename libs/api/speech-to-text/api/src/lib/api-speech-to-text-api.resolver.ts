@@ -6,10 +6,10 @@ import { ApiSpeechToTextServiceService } from "@conversation-catcher/api/speech-
 export class ApiSpeechToTextApiResolver {
     constructor(private SpeechToTextService: ApiSpeechToTextServiceService) {}
 
-    @Mutation()
-  	async CovertSpeech(@Args('audioFile', { type: () => [Audio] }) audioFile : typeof Audio) {
-		this.SpeechToTextService.CovertSpeech(audioFile);
+    @Mutation(()=> String)
+  	async ConvertSpeech(/*@Args('audioFile', { type: () => [Audio] }) audioFile : typeof Audio*/) {
+		return await this.SpeechToTextService.ConvertSpeech(/*audioFile*/);
 		//const File = new Audio();
-	  	return;
+	  // return "Executed";
 	}
 }

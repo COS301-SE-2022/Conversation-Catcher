@@ -1,5 +1,5 @@
-import { Resolver } from '@nestjs/graphql';
-import { /*Query,*/ Args, Mutation } from '@nestjs/graphql';
+import { Resolver, Args, Mutation } from '@nestjs/graphql';
+// import { /*Query,*/  } from '@nestjs/graphql';
 import { ApiSummariseTextServiceService } from "@conversation-catcher/api/summarise-text/service";
 
 @Resolver()
@@ -14,7 +14,7 @@ export class ApiSummariseTextApiResolver {
     }
     private errorObj;*/
 
-    @Mutation()
+    @Mutation(()=>String)
     async Summarise(@Args('text', { type: () => [String] }) text: string) {
         await this.service.Summarise(text);
         
@@ -30,5 +30,6 @@ export class ApiSummariseTextApiResolver {
         }
 
         return this.errorObj;*/
+        return "Executed";
     }
 }
