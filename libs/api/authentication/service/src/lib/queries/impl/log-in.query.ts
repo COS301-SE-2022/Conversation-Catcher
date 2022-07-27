@@ -1,3 +1,5 @@
 export class logInQuery {
-    constructor(public readonly email) {}
+    constructor(
+        public readonly user?: JSON,
+      ) {}
 }

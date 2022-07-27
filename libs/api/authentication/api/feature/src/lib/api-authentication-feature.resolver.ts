@@ -13,21 +13,21 @@ export class ApiAuthenticationFeatureResolver {
     private errorObj;
     
     @Query(() => Boolean)
-    async logIn(@Args('email', { type: () => String }) email: string) {
-        const id = await this.authService.logIn(email);
+    async logIn(@Args('user', { type: () => JSON }) user: JSON) {
+        const flag = await this.authService.logIn(user);
 
-        if (id != undefined) {
-            return id;
+        if (flag != undefined) {
+            return flag;
         }
         return this.errorObj;
     }
 
     @Mutation(() => Boolean)
-    async signUp(@Args('email', { type: () => [String] }) email: string) {
-        const id = await this.authService.signUp(email);
+    async signUp(@Args('user', { type: () => [JSON] }) user: JSON) {
+        const flag = await this.authService.signUp(user);
 
-        if (id != undefined) {
-            return id;
+        if (flag != undefined) {
+            return flag;
         }
         return this.errorObj;
     }

@@ -6,7 +6,7 @@ import { logInQuery } from '../impl';
 export class logInHandler implements IQueryHandler<logInQuery> {
   //constructor(private repository: MongoDBAccess) {}
 
-  async execute({ email }: logInQuery): Promise<any> {
+  async execute({ user }: logInQuery): Promise<any> {
     //console.log('Calling query for pdfByID');
     // return await this.repository.getPDF(id);
   }

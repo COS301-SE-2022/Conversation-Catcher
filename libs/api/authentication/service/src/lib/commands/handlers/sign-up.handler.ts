@@ -8,7 +8,7 @@ import {
 export class SignUpHandler implements ICommandHandler<SignUpCommand> {
   //constructor() {}
 
-  async execute({ email }: SignUpCommand) {
+  async execute({ user }: SignUpCommand) {
     console.log('Running command for setname');
     // return await this.repository.setPDFName(id, name);
   }
