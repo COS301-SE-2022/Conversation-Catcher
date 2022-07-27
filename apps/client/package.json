@@ -23,15 +23,14 @@
     "react-native-pdf": "*",
     "react-native-bouncy-checkbox": "*",
     "react-native-modal": "*",
-    "react-native-view-pdf": "*",
-    "react-pdf": "*",
-    "react-native-openanything": "*",
     "open": "*",
     "react-native-file-viewer": "*",
     "buffer": "*",
     "react-native-permissions": "*",
     "react-native-sound": "*",
     "react-native-audio-record": "*",
-    "react-native-document-picker": "*"
+    "react-native-document-picker": "*",
+    "react-native-share": "*",
+    "react-native-restart": "*"
   }
 }
