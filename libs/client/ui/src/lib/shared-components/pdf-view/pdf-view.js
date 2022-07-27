@@ -95,7 +95,10 @@ export const PdfView = ({ route, navigation }) => {
         <View style={styles.moreModalInner}>
           <TouchableOpacity
             style={styles.moreModalButton}
-            onPress={onShare}
+            onPress={() => {
+              setMoreVisible(false);
+              onShare();
+            }}
           >
             <View style={styles.moreModalButtonContent}>
               <View style={styles.iconContainer}>
