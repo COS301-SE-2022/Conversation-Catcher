@@ -165,6 +165,7 @@ export const Home = ({ navigation }) => {
         creationDate,
         downloaded
         #pdf
+        text
       }
     }
   `;
@@ -173,9 +174,9 @@ export const Home = ({ navigation }) => {
     // use redux to het email
     const { data, loading, error } = useQuery(GET_USER_PDFS);
     console.log("GetPdfs");
-    console.log(data);
-    console.log(loading);
-    console.log(error);
+    // console.log(data);
+    // console.log(loading);
+    // console.log(error);
     const newArr = []
 
     if (loading)

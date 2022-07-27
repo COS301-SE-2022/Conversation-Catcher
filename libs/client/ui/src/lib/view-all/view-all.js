@@ -30,6 +30,10 @@ export const ViewAll = ({ navigation }) => {
   const title = 'Awesome Contents';
   const message = 'Please check this out.';
 
+  //variables for object sorting
+  let currOrderValue = 'Date';
+  let objArr = [];
+
   const options = {
     title,
     url,
@@ -111,9 +115,10 @@ export const ViewAll = ({ navigation }) => {
       getPDFs(id: "John@test") {
         id
         name
-        # creationDate,
+        creationDate
         downloaded
         #pdf
+        text
       }
     }
   `;
@@ -137,84 +142,69 @@ export const ViewAll = ({ navigation }) => {
   //   return <p>This is me!</p>;
   // }
 
-  // function useGetPdfs() {
-  //   const { data, loading, error } = useQuery(GET_USER_PDFS);
-  //   console.log("GetPdfs");
-  //   console.log(data);
-  //   console.log(loading);
-  //   console.log(error);
-  //   if (loading)
-  //   return (
-  //     <ScrollView style={styles.recentPdfTiles}>
-  //       <Text>loading...</Text>
-  //     </ScrollView>
-  //   )
+  function changeArray(index, itemValue) {
+    if (currOrderValue === itemValue) return;
+    currOrderValue = itemValue;
+    // Sort PDFs array according to currOrderValue
+    sortObjects(currOrderValue);
+    console.log(itemValue);
+  }
 
-  //   if (error)
-  //   return (
-  //     <ScrollView style={styles.recentPdfTiles}>
-  //       <Text>An error occured...</Text>
-  //       <Text>error[0]</Text>
-  //     </ScrollView>
-  //   )
-
-  //   return (<ScrollView style={styles.recentPdfTiles}>
-  //     { data.getPDFs.map((item,key)=>(
-  //       <PdfTile
-  //       id= {key + 1}
-  //       name= {item.name}
-  //       date="13 Apr 2022, 11:53"
-  //       source={''}
-  //       text={item.pdf}
-  //       downloaded={item.downloaded}
-  //       showCheck={selectMode}
-  //       pdfSource=""
-  //       nav={navigation}
-  //     />)
-  //     ) }
-
-  //   </ScrollView> );
-  // }
+  function sortObjects(sortBy) {
+    //Using selection sort ... this can be upgraded in the future
+    let tempArr = [];
+    let max = null;
+    for (let i = 0; i < objArr.length; i++) {
+      for (let j = 0; j < objArr.length; j++) {
+        if (max == null || max.sortBy < objArr[j].sortBy)
+          if (tempArr.indexOf(max) === -1) max = objArr[j];
+      }
+      tempArr[i] = max;
+      max = null;
+    }
+    objArr = tempArr;
+    console.log(tempArr);
+  }
 
   function Pdfs() {
     // use redux to het email
     const { data, loading, error } = useQuery(GET_USER_PDFS);
-    console.log("GetPdfs");
-    console.log(data);
-    console.log(loading);
-    console.log(error);
+    console.log('GetPdfs');
+    // console.log(data);
+    // console.log(loading);
+    // console.log(error);
     if (loading)
-    return (
-      <ScrollView style={styles.recentPdfTiles}>
-        <Loading/>
-      </ScrollView>
-    )
+      return (
+        <ScrollView style={styles.recentPdfTiles}>
+          <Loading />
+        </ScrollView>
+      );
 
     if (error)
+      return (
+        <ScrollView style={styles.recentPdfTiles}>
+          <Text>An error occured...</Text>
+          <Text>{error[0]}</Text>
+        </ScrollView>
+      );
+    if (objArr[0] === undefined) objArr = data.getPDFs;
     return (
       <ScrollView style={styles.recentPdfTiles}>
-        <Text>An error occured...</Text>
-        <Text>{error[0]}</Text>
+        {objArr.map((item, key) => (
+          <PdfTile
+            key={key}
+            name={item.name}
+            date={item.creationDate}
+            source={''}
+            text={item.text}
+            downloaded={item.downloaded}
+            showCheck={selectMode}
+            pdfSource=""
+            nav={navigation}
+          />
+        ))}
       </ScrollView>
-    )
-
-    return (<ScrollView style={styles.recentPdfTiles}>
-      { data.getPDFs.map((item,key)=>(
-        <PdfTile
-        key = {key}
-        name= {item.name}
-        date="13 Apr 2022, 11:53"
-        source={''}
-        text={item.text}
-        downloaded={item.downloaded}
-        showCheck={selectMode}
-        pdfSource=""
-        nav={navigation}
-      />)
-      ) }
-
-    </ScrollView> );
-
+    );
   }
 
   return (
@@ -260,6 +250,7 @@ export const ViewAll = ({ navigation }) => {
             options={['Date', 'Name']}
             defaultIndex={0}
             defaultValue={'Date'}
+            onSelect={(index, itemValue) => changeArray(index, itemValue)}
             style={styles.orderByDropdown}
             textStyle={styles.orderByDropdownText}
             dropdownStyle={styles.orderByDropdownStyle}
