@@ -115,24 +115,20 @@ export const Home = ({ navigation }) => {
 
   function UploadAudioCenter(props) {
     if (fileSelected) {
-      return (
-        <TouchableOpacity
-          style={styles.changeUploadModalButton}
-          onPress={() => handleDocumentSelection()}
-        >
-          <Icon style={{ color: colour.state }} name="file-sound-o" size={16} />
-          {fileResponse.map((file, index) => (
-            <Text
-              style={[
-                styles.changeUploadModalButtonText,
-                { color: colour.state },
-              ]}
-            >
-              {file?.uri}
-            </Text>
-          ))}
-        </TouchableOpacity>
-      );
+      return <TouchableOpacity
+              style={styles.changeUploadModalButton}
+              onPress={() => handleDocumentSelection()}>
+              <Icon
+                style={{color : colour.state}}
+                name="file-sound-o"
+                size={16}
+              />
+              {fileResponse.map((file, index) => (
+              <Text style={[styles.changeUploadModalButtonText, {color : colour.state}]}>
+                {file?.name}
+              </Text>
+              ))}
+            </TouchableOpacity>
     }
     return (
       <TouchableOpacity

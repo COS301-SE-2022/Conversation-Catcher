@@ -61,8 +61,7 @@ export default class PdfTile extends Component {
     return (
       <TouchableOpacity
         style={styles.pdfTile}
-        onPress={() => {console.log({text})
-          nav.navigate('PdfView', {text: {text}, name: {name}})}}>
+        onPress={() => nav.navigate('PdfView', {text: {text}, name: {name}})}>
         <View style={[styles.thumbnail_containter, {borderColor : colour.state}]}>
           <ImageBackground
             style={styles.pdfThumbnail}
