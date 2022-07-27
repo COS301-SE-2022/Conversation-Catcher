@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { ApiAuthenticationServiceModule } from "@conversation-catcher/api/authentication/service";
-import { ApiAuthenticationFeatureResolver } from "./api-authentication-feature.resolver";
+import { ApiAuthenticationApiFeatureResolver } from "./api-authentication-api-feature.resolver";
 
 @Module({
   imports:[
@@ -12,7 +12,7 @@ import { ApiAuthenticationFeatureResolver } from "./api-authentication-feature.r
 
   ],
   providers: [
-    ApiAuthenticationFeatureResolver,
+    ApiAuthenticationApiFeatureResolver,
   ],
   exports: [
 

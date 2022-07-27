@@ -3,7 +3,7 @@ import { Query, Args, Mutation } from '@nestjs/graphql';
 import { ApiAuthenticationServiceService } from '@conversation-catcher/api/authentication/service';
 //yarn nx run api-pdf-manager-api-feature:test
 @Resolver()
-export class ApiAuthenticationFeatureResolver {
+export class ApiAuthenticationApiFeatureResolver {
     constructor(
         // private otherService: ApiPdfManagerServiceFeatureService,
         private authService: ApiAuthenticationServiceService

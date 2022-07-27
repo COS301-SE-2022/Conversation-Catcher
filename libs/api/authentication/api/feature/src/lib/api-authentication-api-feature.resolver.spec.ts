@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ApiAuthenticationFeatureResolver } from './api-authentication-feature.resolver';
+import { ApiAuthenticationApiFeatureResolver } from './api-authentication-api-feature.resolver';
 import { ApiAuthenticationServiceModule } from "@conversation-catcher/api/authentication/service";
 import { CqrsModule } from '@nestjs/cqrs';
-
+//yarn nx run api-authentication-feature:test
 describe('ApiAuthenticationFeatureResolver', () => {
-  let resolver: ApiAuthenticationFeatureResolver;
+  let resolver: ApiAuthenticationApiFeatureResolver;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -13,12 +13,12 @@ describe('ApiAuthenticationFeatureResolver', () => {
         ApiAuthenticationServiceModule,
       ],
       providers: [
-        ApiAuthenticationFeatureResolver,
+        ApiAuthenticationApiFeatureResolver,
       ],
     }).compile();
 
-    resolver = module.get<ApiAuthenticationFeatureResolver>(
-      ApiAuthenticationFeatureResolver
+    resolver = module.get<ApiAuthenticationApiFeatureResolver>(
+      ApiAuthenticationApiFeatureResolver
     );
   });
 
