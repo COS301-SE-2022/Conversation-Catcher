@@ -32,8 +32,8 @@ export const ViewAll = ({ navigation }) => {
   const message = 'Please check this out.';
 
   //variables for object sorting
+  const [objArr, setObjArr] = useState([]);
   let currOrderValue = 'Date';
-  let objArr = [];
 
   const options = {
     title,
@@ -149,66 +149,26 @@ export const ViewAll = ({ navigation }) => {
     // Sort PDFs array according to currOrderValue
     switch (currOrderValue) {
       case 'Name':
-        objArr.sort((a,b) => {if (a.name < b.name) return -1; return 1})
+        var temp2 = objArr;
+        temp2.sort((a,b) => {if (a.name < b.name) return -1; return 1})
+        setObjArr(temp2);
         console.log(objArr)
         break;
       case 'Date':
-        objArr.sort((a,b) => {if (a.creationDate < b.creationDate) return -1; return 1})
+        var temp = objArr;
+        temp.sort((a,b) => {if (a.creationDate < b.creationDate) return -1; return 1})
+        setObjArr(temp);
         console.log(objArr);
         break;
     }
     // setRefreshPage('refresh');
     // objArr.sort((a,b) => {if (a.name < b.name) return -1; return 1})
     // sortObjects(currOrderValue);
-    
     console.log(itemValue);
   }
 
-  function sortObjects(sortBy) {
-    //Using selection sort ... this can be upgraded in the future
-    let tempArr = objArr;
-    let max = {};
-    max.creationDate = tempArr[0].creationDate;
-    max.downloaded = tempArr[0].downloaded;
-    max.name = tempArr[0].name;
-    let index = -1;
-    console.log(max);
-    max.name = 'test';
-    // console.log(objArr[0].name);
-    // for (let i = 0; i < objArr.length; i++) {
-    //   for (let j = 0; j < objArr.length; j++) {
-    switch (sortBy) {
-      case 'Name':
-        // if (max == null || max.name > objArr[j].name) {
-        //   console.log(max);
-        //   console.log(tempArr.indexOf(max))
-        //   if (tempArr.sort) {
-        //     max = objArr[j];
-        //     index = j;
-        //   }
-        // }
-
-        break;
-      case 'Date':
-        // if (max == null || max.creationDate < objArr[j].creationDate) {
-        // if (tempArr.indexOf(max) === -1)
-        // max = objArr[j];
-        // index = j;
-        // }
-
-        break;
-      //   }
-      // }
-      // tempArr[i] = max;
-      // max = null;
-      // console.log(index);
-      // objArr[index] = null;
-    }
-    // objArr = tempArr;
-    // console.log(objArr);
-  }
-
-  function Pdfs( refreshPage) {
+  function Pdfs() {
+    
     // use redux to het email
     const { data, loading, error } = useQuery(GET_USER_PDFS);
     console.log('GetPdfs');
@@ -230,7 +190,7 @@ export const ViewAll = ({ navigation }) => {
         </ScrollView>
       );
     if (objArr[0] === undefined) {
-      // console.log(objArr);
+      console.log('objArr');
       // console.log(data.getPDFs);
       for (let i = 0; i < data.getPDFs.length; i++) {
         //create deep copy
