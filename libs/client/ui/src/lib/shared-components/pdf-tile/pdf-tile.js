@@ -27,6 +27,7 @@ function DownloadButtonState(props){
 }
 
 function DetermineTileCorner(props){
+  const colourState = useSelector(selectColour);
   const [checkboxState, setCheckboxState] = React.useState(false);
   const c = props.c;
   if (c){
