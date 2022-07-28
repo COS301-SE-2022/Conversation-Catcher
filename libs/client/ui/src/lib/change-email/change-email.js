@@ -99,7 +99,7 @@ export const ChangeEmail = ({ navigation }) =>  {
        </View>   
      </View>
      <TouchableOpacity
-       style={styles.logInButton}
+       style={[styles.logInButton,{backgroundColor : colourState}, {borderColor : colourState}]}
        onPress={() => setShowSuccessMessage(true)}>
        <View style={styles.logInButtonLabel_box}>
          <Text style={styles.logInButtonLabel}>
@@ -259,10 +259,10 @@ const styles = StyleSheet.create({
    width: '80%',
    height: '10%',
    margin: 20,
-   backgroundColor: '#3f89beff',
+   //backgroundColor: '#3f89beff',
    borderRadius: 8,
    borderStyle: 'solid',
-   borderColor: '#3f89beff',
+   //borderColor: '#3f89beff',
    borderWidth: 1,
    elevation: 2,
    shadowColor: '#000000',
