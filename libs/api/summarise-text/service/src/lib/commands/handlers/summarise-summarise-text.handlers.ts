@@ -1,6 +1,6 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { SummariseCommand } from '../impl/summarise-summarise-text.command';
-import { ajax, css } from "jquery";
+import { ajax } from "jquery";
 // import { MongoDBAccess } from '@conversation-catcher/api/pdf-manager/repository/data-access';
 // import { HttpService } from '@nestjs/axios';
 // import { lastValueFrom, map, tap } from 'rxjs';
