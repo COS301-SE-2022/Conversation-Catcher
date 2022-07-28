@@ -1,3 +1,4 @@
+/* eslint-disable @nrwl/nx/enforce-module-boundaries */
 /* eslint-disable jsx-a11y/accessible-emoji */
 import React, { useRef, useState, useEffect } from 'react';
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
