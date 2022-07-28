@@ -6,12 +6,14 @@
 ![GitHub repo size](https://img.shields.io/github/repo-size/COS301-SE-2022/Conversation-Catcher)
 
 Multiprocessing moguls - Conversation Catcher - The conversation catcher is used to record a conversation and convert it into structured text that can be analysed to extract the main and important ideas of the conversation. <br>
-[Multiprocessing moguls - Demo 1 - link]() <br>
+[Multiprocessing moguls - Demo 1 - link](https://drive.google.com/file/d/1WpsXG5zylm56bT9f_6F1-bOO9ZpunfR2/view?usp=sharing) <br>
+[Multiprocessing moguls - Demo 2 - link](https://drive.google.com/file/d/14bQFBt5VnbDpeEGc2W5Pa0BSND2wmY-c/view?usp=sharing) <br>
 [Functional Requirements (SRS) documents](https://github.com/COS301-SE-2022/Conversation-Catcher/wiki/SRS) <br>
 [GitHub Project Board](https://github.com/COS301-SE-2022/Conversation-Catcher/projects/1) <br>
 [Team member information](https://github.com/COS301-SE-2022/Conversation-Catcher/wiki/Team-Members) <br>
 [User Manual](https://github.com/COS301-SE-2022/Conversation-Catcher/wiki/User-Manual) <br>
 [Technical installation manual](https://github.com/COS301-SE-2022/Conversation-Catcher/wiki/Technical-installation-manual)<br>
+[Coding Standards](https://github.com/COS301-SE-2022/Conversation-Catcher/wiki/Coding-Standards)<br>
 
 
 
