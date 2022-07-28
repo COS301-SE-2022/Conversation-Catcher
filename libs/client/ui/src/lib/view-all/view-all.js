@@ -410,7 +410,7 @@ export const ViewAll = ({ navigation }) =>  {
           
           <TextInput style={styles.renameModalTextInput} defaultValue={"temp"} />
           <TouchableOpacity
-            style={[styles.renameFileButton, { backgroundColor: colour.state }]}
+            style={[styles.renameFileButton, { backgroundColor: colourState }]}
             state={null}
             onPress={() => {
               setRenameVisible(false);

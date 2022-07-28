@@ -178,7 +178,7 @@ export const PdfView = ({ route, navigation }) => {
           
           <TextInput style={styles.renameModalTextInput} defaultValue={name.name} />
           <TouchableOpacity
-            style={[styles.renameFileButton, { backgroundColor: colour.state }]}
+            style={[styles.renameFileButton, { backgroundColor: colourState }]}
             state={null}
             onPress={() => {
               setRenameVisible(false);
@@ -206,7 +206,7 @@ export const PdfView = ({ route, navigation }) => {
             {'Are you sure you want to delete ' + name.name + '?'}
           </Text>
           <TouchableOpacity
-            style={[styles.renameFileButton, { backgroundColor: colour.state }]}
+            style={[styles.renameFileButton, { backgroundColor: colourState }]}
             state={null}
             onPress={() => {
               setDeleteConfirmVisible(false);
@@ -219,7 +219,7 @@ export const PdfView = ({ route, navigation }) => {
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.renameFileButton, { backgroundColor: colour.state }]}
+            style={[styles.renameFileButton, { backgroundColor: colourState }]}
             state={null}
             onPress={() => {
               setDeleteConfirmVisible(false);
