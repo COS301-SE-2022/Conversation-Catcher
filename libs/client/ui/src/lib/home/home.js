@@ -12,7 +12,6 @@ import {
 import { gql, useQuery, useMutation } from '@apollo/client';
 import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
 import Icon from 'react-native-vector-icons/FontAwesome';
-//import colour from '../colour/colour';
 import Modal from 'react-native-modal';
 import Loading from '../shared-components/loading/loading.js';
 import { Buffer } from 'buffer';

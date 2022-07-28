@@ -16,7 +16,6 @@ import ModalDropdown from 'react-native-modal-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
 import Share from 'react-native-share';
-import colour from '../colour/colour';
 import { useSelector } from 'react-redux';
 import { selectColour } from '../../../../../../apps/client/src/app/slices/colour.slice';
 import Loading from '../shared-components/loading/loading.js';

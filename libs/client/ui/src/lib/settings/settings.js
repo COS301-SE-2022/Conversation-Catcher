@@ -9,7 +9,6 @@ import {
   SafeAreaView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-//import colour from '../colour/colour';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { gql } from '@apollo/client';
 // import { WebSocketLink } from '@apollo/client/link/ws';
