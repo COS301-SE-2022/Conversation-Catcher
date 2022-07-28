@@ -1,7 +1,6 @@
 from transformers import Wav2Vec2Processor, Wav2Vec2ForCTC
 import librosa
 import torch
-import soundfile as sf
 
 # load model and tokenizer
 processor = Wav2Vec2Processor.from_pretrained("facebook/wav2vec2-base-960h")
