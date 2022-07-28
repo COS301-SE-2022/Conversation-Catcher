@@ -7,5 +7,5 @@ describe('colour reducer', () => {
   }),
   it('returns a string containing #',() =>{
     expect(getColour).toContain("#")
-  }),
+  })
 });
