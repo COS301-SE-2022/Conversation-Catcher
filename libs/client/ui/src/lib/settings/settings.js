@@ -13,7 +13,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { gql } from '@apollo/client';
 // import { WebSocketLink } from '@apollo/client/link/ws';
 import { useSelector } from 'react-redux';
-import { selectColour} from '../../../../../../apps/client/src/app/slices/colour.slice';
+import { selectColour} from 'apps/client/src/app/slices/colour.slice';
 
 
 export const SettingsPage = ({ navigation }) => {

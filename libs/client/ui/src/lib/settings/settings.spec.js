@@ -3,7 +3,7 @@ import { render } from '@testing-library/react-native';
 import Settings from './settings';
 import { create } from 'react-test-renderer';
 import { configureStore } from '@reduxjs/toolkit';
-import reducer from '../../../../../../apps/client/src/app/slices/colour.slice';
+import reducer from 'apps/client/src/app/slices/colour.slice';
 import { Provider } from 'react-redux';
 
 describe('Setup of settings', () => {

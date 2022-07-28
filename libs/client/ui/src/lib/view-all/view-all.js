@@ -17,7 +17,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
 import Share from 'react-native-share';
 import { useSelector } from 'react-redux';
-import { selectColour } from '../../../../../../apps/client/src/app/slices/colour.slice';
+import { selectColour } from 'apps/client/src/app/slices/colour.slice';
 import Loading from '../shared-components/loading/loading.js';
 
 export const ViewAll = ({ navigation }) =>  {
@@ -260,7 +260,7 @@ export const ViewAll = ({ navigation }) =>  {
             textStyle={styles.orderByDropdownText}
             dropdownStyle={styles.orderByDropdownStyle}
             dropdownTextStyle={styles.orderByDropdownTextStyle}
-            dropdownTextSelectHighlightStyle={{ color: colour.state }}
+            dropdownTextSelectHighlightStyle={{ color: colourState }}
           />
         </View>
       </View>
