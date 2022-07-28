@@ -1,6 +1,5 @@
 from flask import Flask, jsonify, render_template, request
 from flask_cors import CORS
-import base64
 import os
 from summarise_text import summarise_text
 
