@@ -7,23 +7,23 @@ import reducer from '../../../../../../../apps/client/src/app/slices/colour.slic
 import { configureStore } from '@reduxjs/toolkit';
 
 describe('PdfTile', () => {
+  const store = configureStore({
+    reducer: {
+        colour:reducer
+    }
+  })
+  const TestComponent = () => (
+    <Provider store = { store }>
+        <PdfTile />
+    </Provider>
+)
   it('should render successfully', () => {//Wrap component in provider
-    const store = configureStore({
-      reducer: {
-          colour:reducer
-      }
-    })
-    const TestComponent = () => (
-      <Provider store = { store }>
-          <PdfTile />
-      </Provider>
-  )
     const { container } = render(<TestComponent/>);
     expect(container).toBeTruthy();
   });
 
   
-  const tree = create(<PdfTile />);
+  const tree = create(<TestComponent/>);
   test('snapshot', () => {
     expect(tree).toMatchSnapshot();
   });

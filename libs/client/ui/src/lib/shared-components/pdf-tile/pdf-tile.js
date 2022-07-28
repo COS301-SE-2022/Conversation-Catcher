@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 //import colour from '../colour/colour';
 import { useSelector } from 'react-redux'
-import { selectColour } from 'apps/client/src/app/slices/colour.slice';
+import { getColour, selectColour } from 'apps/client/src/app/slices/colour.slice';
 //import FileViewer from "react-native-file-viewer";
 
 function DownloadButtonState(props){
@@ -12,14 +12,14 @@ function DownloadButtonState(props){
   if (downloadState) {
     return <Icon
               onPress={() => setDownloadState(!downloadState)}
-              color={colourState}
+              color={getColour}
               name="save"
               size={20}
               container={TouchableOpacity} />;
   }
   return <Icon
           onPress={() => setDownloadState(!downloadState)}
-          color={colourState}
+          color={getColour}
           name="cloud"
           size={20}
           container={TouchableOpacity} />;
@@ -31,9 +31,9 @@ function DetermineTileCorner(props){
   if (c){
     return <BouncyCheckbox
             size={20}
-            fillColor={colourState}
+            fillColor={getColour}
             unfillColor="#FFFFFF"
-            iconStyle={{ borderColor: colourState }}
+            iconStyle={{ borderColor: getColour }}
             isChecked={checkboxState}
             onPress={() => setCheckboxState(!checkboxState)}
           />;
@@ -56,13 +56,12 @@ const PdfTile = ({id,name,date,thumbnailSource,downloaded,showCheck,pdfSource,na
   //   pdfSource,
   //   nav
   // } = this.props
-  const colourState = useSelector(selectColour)
   
     return (
       <TouchableOpacity
         style={styles.pdfTile}
         onPress={() => nav.navigate('PdfView', {text: {text}, name: {name}})}>
-        <View style={[styles.thumbnail_containter, {borderColor : colourState}]}>
+        <View style={[styles.thumbnail_containter, {borderColor : getColour}]}>
           <ImageBackground
             style={styles.pdfThumbnail}
             //thumbnailSource={thumbnailSource}

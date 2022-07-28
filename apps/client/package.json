@@ -34,7 +34,7 @@
     "react-native-share": "*",
     "react-native-restart": "*",
     "react-redux": "*",
-    "@apollo/client": "*"
+    "@apollo/client": "*",
     "lottie-react-native": "*"
   }
 }

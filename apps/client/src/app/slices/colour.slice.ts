@@ -7,6 +7,7 @@ import {
   PayloadAction,
   createAction
 } from '@reduxjs/toolkit';
+import { useSelector } from 'react-redux'
 
 export const COLOUR = 'colour';
 
@@ -15,7 +16,7 @@ const colourSlice = createSlice({
   name: COLOUR,
   initialState: {colour:"#3F89BE"},
   reducers: {
-    setColour: (state,action) => {state.colour = action.payload;return state}//use param in dispatch
+    setColour: (state,action) => {state.colour = action.payload;console.log(state.colour);return state}//use param in dispatch
   },
 });
 
@@ -28,5 +29,9 @@ export default reducer
 //Add selectors
 //get current colour
 export const selectColour = state => state.colour
-
+export const getColour = () =>{
+  var c = useSelector(selectColour)
+  console.log(c);
+  return c;
+}
 //Add subscribers
