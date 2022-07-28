@@ -449,8 +449,8 @@ exports[`Login snapshot 1`] = `
     onStartShouldSetResponder={[Function]}
     style={
       Object {
-        "backgroundColor": "#3f89beff",
-        "borderColor": "#3f89beff",
+        "backgroundColor": "#3F89BE",
+        "borderColor": "#3F89BE",
         "borderRadius": 8,
         "borderStyle": "solid",
         "borderWidth": 1,

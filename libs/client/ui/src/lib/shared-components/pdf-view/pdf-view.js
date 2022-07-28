@@ -16,10 +16,12 @@ import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
 import ModalDropdown from 'react-native-modal-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
+import { useSelector } from 'react-redux'
+import { selectColour } from '../../../../../../apps/client/src/app/slices/colour.slice';
 //import Share from 'react-native-share';
-import colour from '../colour/colour';
 
 export const PdfView = ({ route, navigation }) => {
+  const colourState = useSelector(selectColour).colour;
   const [moreVisible, setMoreVisible] = useState(false);
   const [renameVisible, setRenameVisible] = useState(false);
   const [deleteConfirmVisible, setDeleteConfirmVisible] = useState(false);
@@ -50,7 +52,7 @@ export const PdfView = ({ route, navigation }) => {
       }
     }
   `;
-
+ 
   return (
     <View style={styles.viewAllPage}>
       <View style={styles.viewAllTopBar}>
@@ -104,7 +106,7 @@ export const PdfView = ({ route, navigation }) => {
             <View style={styles.moreModalButtonContent}>
               <View style={styles.iconContainer}>
                 <Icon
-                  style={{ color: colour.state }}
+                  style={{ color: colourState }}
                   name="paper-plane-o"
                   size={18}
                 />
@@ -129,7 +131,7 @@ export const PdfView = ({ route, navigation }) => {
             <View style={styles.moreModalButtonContent}>
               <View style={styles.iconContainer}>
                 <Icon
-                  style={{ color: colour.state }}
+                  style={{ color: colourState }}
                   name="pencil-square-o"
                   size={20}
                 />
@@ -152,7 +154,7 @@ export const PdfView = ({ route, navigation }) => {
             <View style={styles.moreModalButtonContent}>
               <View style={styles.iconContainer}>
                 <Icon
-                  style={{ color: colour.state }}
+                  style={{ color: colourState }}
                   name="trash-o"
                   size={20}
                 />

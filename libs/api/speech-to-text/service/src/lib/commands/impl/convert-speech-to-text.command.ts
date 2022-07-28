@@ -1,5 +1,5 @@
 export class CovertSpeechCommand {
     constructor(
-      public readonly audio?: typeof Audio,
+      public readonly audio?: typeof AudioBuffer,
     ) {}
 }

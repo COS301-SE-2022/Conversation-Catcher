@@ -25,6 +25,62 @@ export class MongoDBAccess {
   private db = 'PDF';
 
   //Functions
+  async addPdf(mail: string, name: string, text: string) {
+    console.log('reached repository');
+    mail = mail + '';
+    name = name + '';
+    text = text + '';
+    this.action = 'insertOne';
+    const data3 = JSON.stringify({
+      collection: this.pdfCollection,
+      database: this.db,
+      dataSource: this.cluster,
+      document: { id: name, name: name, text: text, pdf: null },
+    });
+    
+    const result = await lastValueFrom(
+      this.httpService
+        .post(this.url + this.action, data3, this.config)
+        .pipe(map((res) => res.data.document))
+    );
+    
+    //First fetch the user
+    this.action = 'findOne';
+    const data = JSON.stringify({
+      collection: this.userCollection,
+      database: this.db,
+      dataSource: this.cluster,
+      filter: { email: mail },
+    });
+
+    const r = await lastValueFrom(
+      this.httpService
+        .post(this.url + this.action, data, this.config)
+        .pipe(map((res) => res.data))
+    );
+    
+    if (r.document == null) return null;
+    const arr = r.document.pdfs;
+    arr.push(name);
+
+    //Add elements to the correct user
+    const data2 = JSON.stringify({
+      collection: this.userCollection,
+      database: this.db,
+      dataSource: this.cluster,
+      filter: { email: mail},
+      update: { pdfs: arr }
+    });
+
+    const result2 = await lastValueFrom(
+      this.httpService
+        .post(this.url + this.action, data2, this.config)
+        .pipe(map((res) => res.data.document))
+    );
+
+    return result2;
+  }
+
   async getUserPdfs(userid: string) {
     //Add empty string to variable to force variable to be interpreted as a string in stead of an array of strings. The
     //same logic applies to all other similiar cases
