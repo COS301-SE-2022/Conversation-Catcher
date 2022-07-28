@@ -49,7 +49,6 @@ export const PdfView = ({ route, navigation }) => {
     }
   `;
 
-  
   return (
     <View style={styles.viewAllPage}>
       <View style={styles.viewAllTopBar}>
