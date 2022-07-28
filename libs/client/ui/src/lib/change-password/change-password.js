@@ -99,7 +99,7 @@ export const ChangePassword = ({ navigation }) =>  {
        </View>   
      </View>
      <TouchableOpacity
-       style={styles.logInButton}
+       style={[styles.logInButton,{backgroundColor : colourState}, {borderColor : colourState}]}
        onPress={() => setShowSuccessMessage(true)}>
        <View style={styles.logInButtonLabel_box}>
          <Text style={styles.logInButtonLabel}>
