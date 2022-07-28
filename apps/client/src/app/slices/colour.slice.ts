@@ -28,10 +28,6 @@ export default reducer
 
 //Add selectors
 //get current colour
-export const selectColour = state => state.colour
-export const getColour = () =>{
-  var c = useSelector(selectColour)
-  console.log(c);
-  return c;
-}
+export const selectColour = (state: { colour: string; }) => state.colour
+
 //Add subscribers

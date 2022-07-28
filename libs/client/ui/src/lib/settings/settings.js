@@ -14,7 +14,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { gql } from '@apollo/client';
 // import { WebSocketLink } from '@apollo/client/link/ws';
 import { useSelector } from 'react-redux';
-import { selectColour,getColour } from 'apps/client/src/app/slices/colour.slice';
+import { selectColour} from 'apps/client/src/app/slices/colour.slice';
 
 
 export const SettingsPage = ({ navigation }) => {
@@ -57,7 +57,7 @@ export const SettingsPage = ({ navigation }) => {
   //   alert(`Got Record of ${data.users.length} Users`);
   //   console.log('data', JSON.stringify(data));
   // };
-
+  const colourState = useSelector(selectColour);
   return (
     // <ApolloProvider client={client}>
     <View style={styles.settings}>
@@ -71,7 +71,7 @@ export const SettingsPage = ({ navigation }) => {
           <View style={styles.settingsButtonContent}>
             <View style={styles.iconContainer}>
               <Icon
-                style={[styles.settingsButtonIcon, { color: getColour }]}
+                style={[styles.settingsButtonIcon, { color: colourState }]}
                 name="envelope"
                 size={18}
               />
@@ -92,7 +92,7 @@ export const SettingsPage = ({ navigation }) => {
           <View style={styles.settingsButtonContent}>
             <View style={styles.iconContainer}>
               <Icon
-                style={{ color: getColour }}
+                style={{ color: colourState }}
                 name="lock"
                 size={20}
               />
@@ -112,7 +112,7 @@ export const SettingsPage = ({ navigation }) => {
           <View style={styles.settingsButtonContent}>
             <View style={styles.iconContainer}>
               <Icon
-                style={{ color: getColour }}
+                style={{ color: colourState }}
                 name="sliders"
                 size={20}
               />
@@ -132,7 +132,7 @@ export const SettingsPage = ({ navigation }) => {
           <View style={styles.settingsButtonContent}>
             <View style={styles.iconContainer}>
               <Icon
-                style={[styles.settingsButtonIcon, { color: getColour }]}
+                style={[styles.settingsButtonIcon, { color: colourState }]}
                 name="sign-out"
                 size={20}
               />
@@ -149,7 +149,7 @@ export const SettingsPage = ({ navigation }) => {
         onPress={() => navigation.navigate('Home')}>
           <Icon 
             name="angle-left"
-            color={getColour}
+            color={colourState}
             size={28}
           />
       </TouchableOpacity>
