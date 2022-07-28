@@ -5,6 +5,7 @@ import { create } from 'react-test-renderer';
 import { Provider } from 'react-redux';
 import reducer from '../../../../../../../apps/client/src/app/slices/colour.slice';
 import { configureStore } from '@reduxjs/toolkit';
+import reducer from '../../../../../../apps/client/src/app/slices/colour.slice';
 
 describe('PdfTile', () => {
   const store = configureStore({
