@@ -9,7 +9,7 @@ import { selectColour } from 'apps/client/src/app/slices/colour.slice';
 
 function DownloadButtonState(props){
   const [downloadState, setDownloadState] = React.useState(props.d);
-  const colourState = useSelector(selectColour);
+  const colourState = useSelector(selectColour).colour;
   if (downloadState) {
     return <Icon
               onPress={() => setDownloadState(!downloadState)}
@@ -27,7 +27,7 @@ function DownloadButtonState(props){
 }
 
 function DetermineTileCorner(props){
-  const colourState = useSelector(selectColour);
+  const colourState = useSelector(selectColour).colour;
   const [checkboxState, setCheckboxState] = React.useState(false);
   const c = props.c;
   if (c){
@@ -58,7 +58,7 @@ const PdfTile = ({id,name,date,thumbnailSource,downloaded,showCheck,pdfSource,na
   //   pdfSource,
   //   nav
   // } = this.props
-  const colourState = useSelector(selectColour);
+  const colourState = useSelector(selectColour).colour;
     return (
       <TouchableOpacity
         style={styles.pdfTile}

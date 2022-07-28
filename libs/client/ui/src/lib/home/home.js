@@ -24,7 +24,7 @@ import { connect, useSelector } from 'react-redux';
 import { selectColour } from '../../../../../../apps/client/src/app/slices/colour.slice';
 
 export const Home = ({ navigation }) => {
-  const colourState = useSelector(selectColour);
+  const colourState = useSelector(selectColour).colour;
   console.log("colour object")
   console.log(colourState)
   const [recordingStopVisible, setRecordingStopVisible] = useState(false);

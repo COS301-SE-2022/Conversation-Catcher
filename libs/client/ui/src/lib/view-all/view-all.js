@@ -22,7 +22,7 @@ import { selectColour } from '../../../../../../apps/client/src/app/slices/colou
 import Loading from '../shared-components/loading/loading.js';
 
 export const ViewAll = ({ navigation }) =>  {
-  const colourState = useSelector(selectColour);
+  const colourState = useSelector(selectColour).colour;
   const [moreVisible, setMoreVisible] = useState(false);
   const [selectMode, setSelectMode] = useState(false);
   const [bottomModalVisible, setBottomModalVisible] = useState(false);

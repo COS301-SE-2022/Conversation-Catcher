@@ -21,7 +21,7 @@ import { selectColour } from '../../../../../../apps/client/src/app/slices/colou
 //import Share from 'react-native-share';
 
 export const PdfView = ({ route, navigation }) => {
-  const colourState = useSelector(selectColour);
+  const colourState = useSelector(selectColour).colour;
   const [moreVisible, setMoreVisible] = useState(false);
 
   const {text, name} = route.params;

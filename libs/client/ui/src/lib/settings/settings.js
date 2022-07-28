@@ -14,7 +14,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { gql } from '@apollo/client';
 // import { WebSocketLink } from '@apollo/client/link/ws';
 import { useSelector } from 'react-redux';
-import { selectColour} from 'apps/client/src/app/slices/colour.slice';
+import { selectColour} from '../../../../../../apps/client/src/app/slices/colour.slice';
 
 
 export const SettingsPage = ({ navigation }) => {
@@ -57,7 +57,7 @@ export const SettingsPage = ({ navigation }) => {
   //   alert(`Got Record of ${data.users.length} Users`);
   //   console.log('data', JSON.stringify(data));
   // };
-  const colourState = useSelector(selectColour);
+  const colourState = useSelector(selectColour).colour;
   return (
     // <ApolloProvider client={client}>
     <View style={styles.settings}>
