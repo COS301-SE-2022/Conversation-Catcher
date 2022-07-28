@@ -56,7 +56,7 @@ const PdfTile = ({id,name,date,thumbnailSource,downloaded,showCheck,pdfSource,na
   //   pdfSource,
   //   nav
   // } = this.props
-  colourState = useSelector(selectColour)
+  const colourState = useSelector(selectColour)
   
     return (
       <TouchableOpacity

@@ -25,20 +25,6 @@ export const {setColour} = actions
 
 export default reducer
 
-// export default colourSlice.reducer;//Used in the main.tsx
-
-// //May not need
-// //Add action creators
-// //action to change the colour
-// export function changeColour(val:string){
-//   return{
-//     type:'setColour',
-//     payload:val
-//   }
-// }
-
-// export const Change = colourSlice.actions;
-
 //Add selectors
 //get current colour
 export const selectColour = state => state.colour
