@@ -1,8 +1,11 @@
-import { selectColour } from './colour.slice';
+import { selectColour, getColour } from './colour.slice';
 import { useSelector } from 'react-redux';
 
 describe('colour reducer', () => {
   it('retrieves stored colour',()=>{
-    expect(useSelector(selectColour)).toHaveReturned()
-  })
+    expect(getColour).toHaveReturned()
+  }),
+  it('returns a string containing #',() =>{
+    expect(getColour).toContain("#")
+  }),
 });
