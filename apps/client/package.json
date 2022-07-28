@@ -31,6 +31,8 @@
     "react-native-audio-record": "*",
     "react-native-document-picker": "*",
     "react-native-share": "*",
-    "react-native-restart": "*"
+    "react-native-restart": "*",
+    "@apollo/client": "*",
+    "lottie-react-native": "*"
   }
 }

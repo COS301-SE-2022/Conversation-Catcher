@@ -52,6 +52,7 @@ export default class PdfTile extends Component {
       date,
       thumbnailSource,
       downloaded,
+      text,
       showCheck,
       pdfSource,
       nav
@@ -60,7 +61,7 @@ export default class PdfTile extends Component {
     return (
       <TouchableOpacity
         style={styles.pdfTile}
-        onPress={() => nav.navigate('PdfView', {pdfSource: pdfSource})}>
+        onPress={() => nav.navigate('PdfView', {text: {text}, name: {name}})}>
         <View style={[styles.thumbnail_containter, {borderColor : colour.state}]}>
           <ImageBackground
             style={styles.pdfThumbnail}
@@ -81,7 +82,7 @@ export default class PdfTile extends Component {
             </View>
           </View>
           <View style={styles.download_button}>
-            <DetermineTileCorner 
+            <DetermineTileCorner
               d={downloaded}
               c={showCheck}/>
           </View>

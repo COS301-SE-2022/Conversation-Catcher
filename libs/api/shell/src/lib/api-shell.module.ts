@@ -3,6 +3,8 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ApiDatabaseManagerApiFeatureModule as DatabaseManager } from '@conversation-catcher/api/database-manager/api/feature';
 import { ApiStudentExploreApiFeatureModule as PdfManager } from '@conversation-catcher/api/pdf-manager/api/feature';
+import { ApiSummariseTextApiModule as Summariser} from '@conversation-catcher/api/summarise-text/api'
+import { ApiSpeechToTextApiModule as SpeechToText } from '@conversation-catcher/api/speech-to-text/api';
 
 @Module({
   controllers: [],
@@ -16,6 +18,8 @@ import { ApiStudentExploreApiFeatureModule as PdfManager } from '@conversation-c
     }),
     DatabaseManager,
     PdfManager,
+    Summariser,
+    SpeechToText
   ],
 })
 export class ApiShellModule {}

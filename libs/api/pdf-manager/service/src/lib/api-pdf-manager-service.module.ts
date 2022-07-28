@@ -16,6 +16,7 @@ import { PdfManagerRepositoryDataAccessModule } from '@conversation-catcher/api/
     CommandHandlers.SetDownloadedPdfHandler,
     CommandHandlers.SetNamePdfHandler,
     CommandHandlers.DeletePdfHandler,
+    CommandHandlers.AddPdfHandler,
     QueryHandlers.GetPdfByIdHandler,
     QueryHandlers.GetPdfsHandler,
   ],

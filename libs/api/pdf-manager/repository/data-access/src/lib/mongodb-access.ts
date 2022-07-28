@@ -25,6 +25,28 @@ export class MongoDBAccess {
   private db = 'PDF';
 
   //Functions
+  async addPdf(email: string, name: string, text: string) {
+    console.log('reached repository');
+    email = email + '';
+    name = name + '';
+    text = text + '';
+    this.action = 'insertOne';
+    const data = JSON.stringify({
+      collection: this.pdfCollection,
+      database: this.db,
+      dataSource: this.cluster,
+      document: { id: name, name: name, text: text, pdf: null },
+    });
+
+    //Add elements to the correct user
+
+    return await lastValueFrom(
+      this.httpService
+        .post(this.url + this.action, data, this.config)
+        .pipe(map((res) => res.data.document))
+    );
+  }
+
   async getUserPdfs(userid: string) {
     //Add empty string to variable to force variable to be interpreted as a string in stead of an array of strings. The
     //same logic applies to all other similiar cases
