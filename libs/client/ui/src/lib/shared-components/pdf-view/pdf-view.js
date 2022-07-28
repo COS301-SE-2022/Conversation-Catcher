@@ -9,99 +9,29 @@ import {
   Alert,
   ScrollView,
   TextInput,
+  Share
 } from 'react-native';
 import { gql, useQuery, useMutation } from '@apollo/client';
 import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
 import ModalDropdown from 'react-native-modal-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
-import Share from 'react-native-share';
+//import Share from 'react-native-share';
 import colour from '../colour/colour';
 
 export const PdfView = ({ route, navigation }) => {
   const [moreVisible, setMoreVisible] = useState(false);
-  const [selectMode, setSelectMode] = useState(false);
-  const [bottomModalVisible, setBottomModalVisible] = useState(false);
-  const [bottomModalType, setBottomModalType] = useState('none');
-  const [renameModalVisible, setRenameModalVisible] = useState(false);
-
-  const url = 'https://awesome.contents.com/';
-  const title = 'Awesome Contents';
-  const message = 'Please check this out.';
 
   const {text, name} = route.params;
-
-  const options = {
-    title,
-    url,
-    message,
-  };
-
-  const share = async (customOptions = options) => {
-    try {
-      await Share.open(customOptions);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  function BottomModalButton(props) {
-    if (props.type === 'share') {
-      return (
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={async () => {
-            await share({
-              title: 'Sharing pdf file from awesome share app',
-              message: 'Please take a look at this file',
-              url: '../assets/thereactnativebook-sample.pdf',
-            });
-            setSelectMode(false);
-            setBottomModalVisible(false);
-          }}
-        >
-          <Icon name="paper-plane-o" color="#ffffffff" size={22} />
-        </TouchableOpacity>
-      );
-    }
-    if (props.type === 'rename') {
-      return (
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => setBottomModalVisible(false)}
-        >
-          <Icon name="pencil-square-o" color="#ffffffff" size={22} />
-        </TouchableOpacity>
-      );
-    }
-    return (
-      <TouchableOpacity
-        style={styles.backButton}
-        onPress={() => {
-          setSelectMode(false);
-          setBottomModalVisible(false);
-        }}
-      >
-        <Icon name="trash-o" color="#ffffffff" size={22} />
-      </TouchableOpacity>
-    );
-  }
 
   const onShare = async () => {
     try {
       const result = await Share.share({
         message:
-          'React Native | A framework for building native apps using React',
+          text.text,
+        title: 
+          name.name
       });
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          // shared with activity type of result.activityType
-        } else {
-          // shared
-        }
-      } else if (result.action === Share.dismissedAction) {
-        // dismissed
-      }
     } catch (error) {
       alert(error.message);
     }
@@ -123,7 +53,7 @@ export const PdfView = ({ route, navigation }) => {
     <View style={styles.viewAllPage}>
       <View style={styles.viewAllTopBar}>
         <View style={styles.big_title_box}>
-          <Text style={styles.big_title}>{name}</Text>
+          <Text style={styles.big_title}>{name.name}</Text>
         </View>
         <TouchableOpacity
           style={styles.moreButton}
@@ -132,12 +62,13 @@ export const PdfView = ({ route, navigation }) => {
         >
           <Icon name="ellipsis-h" color="#344053ff" size={30} />
         </TouchableOpacity>
-        
       </View>
 
-      <Text>
-        {text}
-      </Text>
+      <View style={styles.pdfTextContainer}>
+        <Text style={styles.pdfText}>
+          {text.text}
+        </Text>
+      </View>
 
       <View style={styles.viewAllBottomBar}>
         
@@ -164,10 +95,8 @@ export const PdfView = ({ route, navigation }) => {
           <TouchableOpacity
             style={styles.moreModalButton}
             onPress={() => {
-              setBottomModalType('share');
-              setSelectMode(true);
-              setBottomModalVisible(true);
               setMoreVisible(false);
+              onShare();
             }}
           >
             <View style={styles.moreModalButtonContent}>
@@ -191,8 +120,6 @@ export const PdfView = ({ route, navigation }) => {
           <TouchableOpacity
             style={styles.moreModalButton}
             onPress={() => {
-              setBottomModalType('rename');
-              setBottomModalVisible(true);
               setMoreVisible(false);
             }}
           >
@@ -215,9 +142,6 @@ export const PdfView = ({ route, navigation }) => {
           <TouchableOpacity
             style={styles.moreModalButton}
             onPress={() => {
-              setBottomModalType('delete');
-              setBottomModalVisible(true);
-              setSelectMode(true);
               setMoreVisible(false);
             }}
           >
@@ -237,54 +161,6 @@ export const PdfView = ({ route, navigation }) => {
         </View>
       </Modal>
 
-      <Modal
-        isVisible={bottomModalVisible}
-        coverScreen={false}
-        hasBackdrop={false}
-        style={{
-          width: '100%',
-          height: '8%',
-          margin: 0,
-          justifyContent: 'flex-end',
-        }}
-      >
-        <View
-          style={[styles.modalBottomBar, { backgroundColor: colour.state }]}
-        >
-          <TouchableOpacity
-            style={styles.backButton}
-            onPress={() => {
-              setBottomModalVisible(false);
-              setSelectMode(false);
-            }}
-          >
-            <Icon name="angle-left" color="#ffffffff" size={30} />
-          </TouchableOpacity>
-
-          <BottomModalButton type={bottomModalType} />
-        </View>
-      </Modal>
-
-      <Modal
-        style={styles.renameModal}
-        isVisible={renameModalVisible}
-        avoidKeyboard={true}
-      >
-        <View style={styles.moreModalInner}>
-          <TextInput editable />
-          <TouchableOpacity
-            style={[styles.backButton, { backgroundColor: colour.state }]}
-            onPress={() => {
-              setBottomModalVisible(false);
-              setSelectMode(false);
-            }}
-          >
-            <Text>{'Rename file'}</Text>
-          </TouchableOpacity>
-
-          <BottomModalButton type={bottomModalType} />
-        </View>
-      </Modal>
     </View>
   );
 };
@@ -315,7 +191,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     top: 0,
     zIndex: 999,
-    minHeight: 88,
+    //minHeight: 88,
   },
   big_title: {
     color: '#344053ff',
@@ -330,18 +206,25 @@ const styles = StyleSheet.create({
   big_title_box: {
     alignItems: 'flex-start',
     justifyContent: 'center',
-    paddingLeft: 15,
-    paddingTop: 5,
-    height: '5%',
-    width: '50%',
+    padding: 15,
+    flexGrow: 1,
     minHeight: 28,
   },
-
-  recentPdfTiles: {
+  pdfTextContainer: {
     height: '70%',
-    paddingLeft: 15,
-    paddingRight: 15,
-    overflow: 'visible',
+    padding: 15,
+    overflow: 'scroll',
+  },
+  pdfText: {
+    color: '#344053ff',
+    textAlign: 'left',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 16,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+    paddingHorizontal: 0,
   },
   viewAllBottomBar: {
     width: '100%',
@@ -362,7 +245,9 @@ const styles = StyleSheet.create({
       height: 1,
     },
     justifyContent: 'center',
-    alignSelf: 'flex-end'
+    alignSelf: 'flex-end',
+    position: 'absolute',
+    bottom: 0,
   },
   backButton: {
     flexGrow: 1,
