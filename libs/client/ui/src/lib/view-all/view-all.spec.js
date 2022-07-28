@@ -3,6 +3,7 @@ import { render } from '@testing-library/react-native';
 import ViewAll from './view-all';
 import { create } from 'react-test-renderer';
 
+
 describe('ViewAll', () => {
   // const client = jest.fn();
   // ApolloClient.Link.HttpLink.HttpOptions.Js_.t_fetch = 'default';

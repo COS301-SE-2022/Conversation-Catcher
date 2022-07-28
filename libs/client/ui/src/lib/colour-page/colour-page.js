@@ -1,12 +1,16 @@
 import { render } from '@testing-library/react-native';
 import React, { useState } from 'react';
 import { View, StyleSheet, Text, Image, ImageBackground, Button, Alert, TouchableOpacity } from 'react-native';
-import colour from '../colour/colour';
 import BouncyCheckboxGroup, {ICheckboxButton,} from "react-native-bouncy-checkbox-group";
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { useDispatch } from 'react-redux'
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { setColour} from 'apps/client/src/app/slices/colour.slice'
 import RNRestart from 'react-native-restart';
 
+
 export const ColourPage = ({ navigation}) => {
+  const dispatch = useDispatch()
   return (
     <View style={styles.colourPage}>
       <View style={styles.big_title_box}>
@@ -27,9 +31,10 @@ export const ColourPage = ({ navigation}) => {
           <BouncyCheckboxGroup
             data={verticalStaticData}
             style={{ flexDirection: "column" }}
-            onChange={(selectedItem) => {
-              colour.state = selectedItem.fillColor;
-              RNRestart.Restart();
+            onChange={(selectedItem) => {//colourSlice.caseReducers.setColour(selectedItem.fillColor)
+              //{type:'colour/setColour',payload:selectedItem.fillColor}
+              dispatch(setColour(selectedItem.fillColor));//dispatches the setColour action with colour payload
+              //RNRestart.Restart();
             }}
           />
         </View>

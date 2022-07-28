@@ -16,10 +16,13 @@ import ModalDropdown from 'react-native-modal-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
 import Share from 'react-native-share';
-import colour from '../colour/colour';
+import { useSelector } from 'react-redux';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { selectColour } from 'apps/client/src/app/slices/colour.slice';
 import Loading from '../shared-components/loading/loading.js';
 
-export const ViewAll = ({ navigation }) => {
+export const ViewAll = ({ navigation }) =>  {
+  const colourState = useSelector(selectColour).colour;
   const [moreVisible, setMoreVisible] = useState(false);
   const [selectMode, setSelectMode] = useState(false);
   const [bottomModalVisible, setBottomModalVisible] = useState(false);
@@ -258,7 +261,7 @@ export const ViewAll = ({ navigation }) => {
             textStyle={styles.orderByDropdownText}
             dropdownStyle={styles.orderByDropdownStyle}
             dropdownTextStyle={styles.orderByDropdownTextStyle}
-            dropdownTextSelectHighlightStyle={{ color: colour.state }}
+            dropdownTextSelectHighlightStyle={{ color: colourState }}
           />
         </View>
       </View>
@@ -283,8 +286,8 @@ export const ViewAll = ({ navigation }) => {
           >
             <View style={styles.moreModalButtonContent}>
               <View style={styles.iconContainer}>
-                <Icon
-                  style={{ color: colour.state }}
+                <Icon 
+                  style={{color : colourState}}
                   name="paper-plane-o"
                   size={18}
                 />
@@ -309,8 +312,8 @@ export const ViewAll = ({ navigation }) => {
           >
             <View style={styles.moreModalButtonContent}>
               <View style={styles.iconContainer}>
-                <Icon
-                  style={{ color: colour.state }}
+                <Icon 
+                  style={{color : colourState}}
                   name="pencil-square-o"
                   size={20}
                 />
@@ -334,8 +337,8 @@ export const ViewAll = ({ navigation }) => {
           >
             <View style={styles.moreModalButtonContent}>
               <View style={styles.iconContainer}>
-                <Icon
-                  style={{ color: colour.state }}
+                <Icon 
+                  style={{color : colourState}}
                   name="trash-o"
                   size={20}
                 />
@@ -347,8 +350,7 @@ export const ViewAll = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </Modal>
-
-      <Modal
+      <Modal 
         isVisible={bottomModalVisible}
         coverScreen={false}
         hasBackdrop={false}
@@ -359,10 +361,8 @@ export const ViewAll = ({ navigation }) => {
           justifyContent: 'flex-end',
         }}
       >
-        <View
-          style={[styles.modalBottomBar, { backgroundColor: colour.state }]}
-        >
-          <TouchableOpacity
+        <View style={[styles.modalBottomBar, {backgroundColor : colourState}]}>
+          <TouchableOpacity 
             style={styles.backButton}
             onPress={() => {
               setBottomModalVisible(false);
@@ -384,7 +384,7 @@ export const ViewAll = ({ navigation }) => {
         <View style={styles.moreModalInner}>
           <TextInput editable />
           <TouchableOpacity
-            style={[styles.backButton, { backgroundColor: colour.state }]}
+            style={[styles.backButton, { backgroundColor: colourState }]}
             onPress={() => {
               setBottomModalVisible(false);
               setSelectMode(false);

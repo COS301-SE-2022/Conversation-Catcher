@@ -30,8 +30,10 @@
     "react-native-sound": "*",
     "react-native-audio-record": "*",
     "react-native-document-picker": "*",
+    "@reduxjs/toolkit": "*",
     "react-native-share": "*",
     "react-native-restart": "*",
+    "react-redux": "*",
     "@apollo/client": "*",
     "lottie-react-native": "*"
   }
