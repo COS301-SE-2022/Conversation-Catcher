@@ -31,8 +31,8 @@ export const ColourPage = ({ navigation}) => {
           <BouncyCheckboxGroup
             data={verticalStaticData}
             style={{ flexDirection: "column" }}
-            onChange={(selectedItem) => {
-              dispatch(colourSlice.caseReducers.setColour(selectedItem.fillColor));//dispatches the setColour action with colour payload
+            onChange={(selectedItem) => {//colourSlice.caseReducers.setColour(selectedItem.fillColor)
+              dispatch({type:'colour/setColour',payload:selectedItem.fillColor});//dispatches the setColour action with colour payload
               RNRestart.Restart();
             }}
           />
