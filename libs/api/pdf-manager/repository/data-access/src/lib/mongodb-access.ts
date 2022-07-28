@@ -46,7 +46,7 @@ export class MongoDBAccess {
 
     //Add elements to the correct user
     const data2 = JSON.stringify({
-      collection: this.pdfCollection,
+      collection: this.userCollection,
       database: this.db,
       dataSource: this.cluster,
       update: { $push: { pdfs: name } },
