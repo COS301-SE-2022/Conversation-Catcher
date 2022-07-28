@@ -437,6 +437,8 @@ const styles = StyleSheet.create({
     fontFamily: 'System' /* Inter */,
     backgroundColor: '#ffffffff',
     borderRadius: 8,
-    margin: 10
+    marginHorizontal: 10,
+    marginTop: 10,
+    height: 40
   }
 });
