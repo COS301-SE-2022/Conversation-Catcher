@@ -28,13 +28,15 @@ import ChangeEmail from '../../../../libs/client/ui/src/lib/change-email/change-
 import { Provider } from 'react-redux';
 import {reducer as colourReducer} from './slices/colour.slice';
 import {reducer as emailReducer} from './slices/email.slice';
+import {reducer as pdfReducer} from './slices/pdf.slice';
 import { configureStore } from '@reduxjs/toolkit';
 
 //configure the store
 const store = configureStore({
     reducer: {
         colour:colourReducer,
-        email:emailReducer
+        email:emailReducer,
+        pdf:pdfReducer
     }
 })
 
