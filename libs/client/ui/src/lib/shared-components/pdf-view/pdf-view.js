@@ -16,9 +16,12 @@ import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
 import ModalDropdown from 'react-native-modal-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
+import { useSelector } from 'react-redux'
+import { selectColour } from '../../../../../../apps/client/src/app/slices/colour.slice';
 //import Share from 'react-native-share';
 
 export const PdfView = ({ route, navigation }) => {
+  const colourState = useSelector(selectColour);
   const [moreVisible, setMoreVisible] = useState(false);
 
   const {text, name} = route.params;
@@ -47,7 +50,7 @@ export const PdfView = ({ route, navigation }) => {
       }
     }
   `;
-  const colourState = useSelector(selectColour);
+ 
   return (
     <View style={styles.viewAllPage}>
       <View style={styles.viewAllTopBar}>

@@ -4,6 +4,8 @@ import PdfView from './pdf-view';
 import { create } from 'react-test-renderer';
 import { configureStore } from '@reduxjs/toolkit';
 import reducer from '../../../../../../apps/client/src/app/slices/colour.slice';
+import { Provider } from 'react-redux';
+
 
 describe('PdfView', () => {
   const route =  { params: { name: 'a', text: 'b' } };
@@ -22,7 +24,7 @@ describe('PdfView', () => {
     expect(container).toBeTruthy();
   });
 
-  const tree = create(<PdfView route={route} />);
+  const tree = create(<TestComponent/>);
   test('snapshot', () => {
     expect(tree).toMatchSnapshot();
   });

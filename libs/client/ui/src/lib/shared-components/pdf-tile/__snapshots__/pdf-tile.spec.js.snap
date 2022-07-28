@@ -44,7 +44,9 @@ exports[`PdfTile snapshot 1`] = `
           "flex": 1,
         },
         Object {
-          "borderColor": [Function],
+          "borderColor": Object {
+            "colour": "#3F89BE",
+          },
         },
       ]
     }
@@ -176,7 +178,9 @@ exports[`PdfTile snapshot 1`] = `
         style={
           Array [
             Object {
-              "color": [Function],
+              "color": Object {
+                "colour": "#3F89BE",
+              },
               "fontSize": 20,
             },
             undefined,

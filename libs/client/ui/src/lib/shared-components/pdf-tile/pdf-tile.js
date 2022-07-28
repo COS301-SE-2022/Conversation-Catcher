@@ -9,6 +9,7 @@ import { selectColour } from 'apps/client/src/app/slices/colour.slice';
 
 function DownloadButtonState(props){
   const [downloadState, setDownloadState] = React.useState(props.d);
+  const colourState = useSelector(selectColour);
   if (downloadState) {
     return <Icon
               onPress={() => setDownloadState(!downloadState)}
@@ -56,7 +57,7 @@ const PdfTile = ({id,name,date,thumbnailSource,downloaded,showCheck,pdfSource,na
   //   pdfSource,
   //   nav
   // } = this.props
-  
+  const colourState = useSelector(selectColour);
     return (
       <TouchableOpacity
         style={styles.pdfTile}
