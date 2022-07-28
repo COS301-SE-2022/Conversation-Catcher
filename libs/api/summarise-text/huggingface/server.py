@@ -9,6 +9,10 @@ CORS(app)
 
 summariser = summarise_text()
 
+@app.route('/')
+def home():
+    return render_template('index.html')
+
 @app.route('/summarise', methods=['POST'])
 def summarise():
     non_summarised_text = request.form['text']
