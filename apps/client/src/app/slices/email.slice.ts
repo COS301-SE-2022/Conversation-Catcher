@@ -13,10 +13,10 @@ export const emailSlice = createSlice({
   },
 });
 
-const {actions, reducer} = emailSlice
+export const {actions, reducer} = emailSlice
 
 export const {setEmail} = actions
 
-export default reducer
+//export default reducer
 
 export const selectEmail = (state: {email: string;}) => state.email

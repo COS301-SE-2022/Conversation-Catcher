@@ -13,11 +13,11 @@ const colourSlice = createSlice({
   },
 });
 
-const {actions, reducer} = colourSlice
+export const {actions, reducer} = colourSlice
 
 export const {setColour} = actions
 
-export default reducer
+//export default reducer
 
 //Add selectors
 //get current colour
