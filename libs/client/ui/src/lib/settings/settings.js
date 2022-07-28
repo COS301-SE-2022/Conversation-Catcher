@@ -13,6 +13,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { gql } from '@apollo/client';
 // import { WebSocketLink } from '@apollo/client/link/ws';
 import { useSelector } from 'react-redux';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { selectColour} from 'apps/client/src/app/slices/colour.slice';
 
 

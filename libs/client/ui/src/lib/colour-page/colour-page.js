@@ -4,6 +4,7 @@ import { View, StyleSheet, Text, Image, ImageBackground, Button, Alert, Touchabl
 import BouncyCheckboxGroup, {ICheckboxButton,} from "react-native-bouncy-checkbox-group";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useDispatch } from 'react-redux'
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { setColour} from 'apps/client/src/app/slices/colour.slice'
 import RNRestart from 'react-native-restart';
 

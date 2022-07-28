@@ -3,6 +3,7 @@ import { View, StyleSheet, Text, ImageBackground, TouchableOpacity, Alert} from 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { useSelector } from 'react-redux'
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { selectColour } from 'apps/client/src/app/slices/colour.slice';
 //import FileViewer from "react-native-file-viewer";
 
@@ -47,16 +48,7 @@ const pdfthumbnailSource = {
   cache: true,
 };
 
-const PdfTile = ({id,name,date,thumbnailSource,downloaded,showCheck,pdfSource,nav}) => {//make into function component
-  // const {
-  //   name,
-  //   date,
-  //   thumbnailSource,
-  //   downloaded,
-  //   showCheck,
-  //   pdfSource,
-  //   nav
-  // } = this.props
+const PdfTile = ({id,name,date,thumbnailSource,downloaded,text,showCheck,pdfSource,nav}) => {
   const colourState = useSelector(selectColour);
   console.log(colourState)
     return (

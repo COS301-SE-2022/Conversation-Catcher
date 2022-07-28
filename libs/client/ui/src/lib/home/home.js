@@ -20,6 +20,7 @@ import { Buffer } from 'buffer';
 import AudioRecord from 'react-native-audio-record';
 import DocumentPicker, { types } from 'react-native-document-picker';
 import { connect, useSelector } from 'react-redux';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { selectColour } from 'apps/client/src/app/slices/colour.slice';
 
 export const Home = ({ navigation }) => {

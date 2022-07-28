@@ -3,6 +3,7 @@ import { render } from '@testing-library/react-native';
 import PdfTile from './pdf-tile';
 import { create } from 'react-test-renderer';
 import { Provider } from 'react-redux';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import {reducer} from 'apps/client/src/app/slices/colour.slice';
 import { configureStore } from '@reduxjs/toolkit';
 
