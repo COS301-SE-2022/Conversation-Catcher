@@ -12,7 +12,6 @@ import {
 import { gql, useQuery, useMutation } from '@apollo/client';
 import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import colour from '../colour/colour';
 import Modal from 'react-native-modal';
 import Loading from '../shared-components/loading/loading.js';
 import { Buffer } from 'buffer';
@@ -20,8 +19,12 @@ import { Buffer } from 'buffer';
 //import Sound from 'react-native-sound';
 import AudioRecord from 'react-native-audio-record';
 import DocumentPicker, { types } from 'react-native-document-picker';
+import { connect, useSelector } from 'react-redux';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { selectColour } from 'apps/client/src/app/slices/colour.slice';
 
 export const Home = ({ navigation }) => {
+  const colourState = useSelector(selectColour).colour;
   const [recordingStopVisible, setRecordingStopVisible] = useState(false);
   const [recordAudioState, setRecordAudioState] = useState(false);
   const [uploadVisible, setUploadVisible] = useState(false);
@@ -37,8 +40,8 @@ export const Home = ({ navigation }) => {
 
   //Graphql syntax trees
   const GET_USER_PDFS = gql`
-    query getForUser {
-      getPDFs(id: "John@test") {
+    query getForUser($email: String!) {
+      getPDFs(id: $email) {
         id
         name
         creationDate
@@ -83,7 +86,7 @@ export const Home = ({ navigation }) => {
         <TouchableOpacity
           style={[
             styles.recordAudioTouchableOpacity,
-            { backgroundColor: colour.state },
+            { backgroundColor: colourState },
           ]}
           onPress={() => {
             setRecordingStopVisible(true);
@@ -119,12 +122,12 @@ export const Home = ({ navigation }) => {
               style={styles.changeUploadModalButton}
               onPress={() => handleDocumentSelection()}>
               <Icon
-                style={{color : colour.state}}
+                style={{color : colourState}}
                 name="file-sound-o"
                 size={16}
               />
               {fileResponse.map((file, index) => (
-              <Text style={[styles.changeUploadModalButtonText, {color : colour.state}]}>
+              <Text style={[styles.changeUploadModalButtonText, {color : colourState}]}>
                 {file?.name}
               </Text>
               ))}
@@ -212,7 +215,7 @@ export const Home = ({ navigation }) => {
 
   function Pdfs() {
     // use redux to het email
-    const { data, loading, error } = useQuery(GET_USER_PDFS);
+    const { data, loading, error } = useQuery(GET_USER_PDFS, {variables: {email: 'John@test'}});
     // console.log(data);
     // console.log(loading);
     // console.log(error);
@@ -256,7 +259,6 @@ export const Home = ({ navigation }) => {
   }
 
   componentDidMount();
-
   return (
     <View style={styles.home}>
       <View style={styles.big_title_box}>
@@ -264,14 +266,12 @@ export const Home = ({ navigation }) => {
           {'Recents'}
         </Text>
       </View>
-
       <Pdfs />
-
       <View style={styles.viewAllTouchableOpacityFrame}>
         <TouchableOpacity
           style={[
             styles.viewAllTouchableOpacity,
-            { backgroundColor: colour.state },
+            { backgroundColor: colourState },
           ]}
           onPress={() => {
             navigation.navigate('ViewAll');
@@ -337,7 +337,7 @@ export const Home = ({ navigation }) => {
             <View style={styles.recordingStopModalButtonContent}>
               <View style={styles.iconContainer}>
                 <Icon
-                  style={{ color: colour.state }}
+                  style={{color : colourState}}
                   name="refresh"
                   size={18}
                 />
@@ -364,7 +364,7 @@ export const Home = ({ navigation }) => {
             <View style={styles.recordingStopModalButtonContent}>
               <View style={styles.iconContainer}>
                 <Icon
-                  style={{ color: colour.state }}
+                  style={{color : colourState}}
                   name="microphone"
                   size={20}
                 />
@@ -390,7 +390,7 @@ export const Home = ({ navigation }) => {
             <View style={styles.recordingStopModalButtonContent}>
               <View style={styles.iconContainer}>
                 <Icon
-                  style={{ color: colour.state }}
+                  style={{color : colourState}}
                   name="trash-o"
                   size={20}
                 />
@@ -419,7 +419,7 @@ export const Home = ({ navigation }) => {
           <UploadAudioCenter />
 
           <TouchableOpacity
-            style={[styles.uploadFileButton, { backgroundColor: colour.state }]}
+            style={[styles.uploadFileButton, {backgroundColor : colourState}]}
             state={null}
             onPress={() => {
               setUploadVisible(false);

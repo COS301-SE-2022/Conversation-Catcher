@@ -1,5 +1,6 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import {
+  AddPdfCommand,
   SetDownloadedPdfCommand,
   SetNamePdfCommand,
 } from '../impl/set-pdf-manager.command';
@@ -28,6 +29,16 @@ export class SetDownloadedPdfHandler
     // console.log('HAndling command setDownloadPDF with id ' + id);
     return await this.repository.changeDownloaded(id);
   }
+}
+
+@CommandHandler(AddPdfCommand)
+export class AddPdfHandler implements ICommandHandler<AddPdfCommand>{
+  constructor(
+    private repository: MongoDBAccess) {}
+    async execute({email, name, text}: AddPdfCommand): Promise<any> {
+        const newName = 'PDF-' + Math.round((Math.random())*10000)
+        return await this.repository.addPdf(email, newName, text);
+    }
 }
 
 // const url =

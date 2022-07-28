@@ -2,18 +2,33 @@ import React from 'react';
 import { render } from '@testing-library/react-native';
 import PdfView from './pdf-view';
 import { create } from 'react-test-renderer';
+import { configureStore } from '@reduxjs/toolkit';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import reducer from 'apps/client/src/app/slices/colour.slice';
+import { Provider } from 'react-redux';
+
+
 describe('PdfView', () => {
+  const route =  { params: { name: 'a', text: 'b' } };
+  const store = configureStore({
+    reducer: {
+        colour:reducer
+    }
+  })
+  const TestComponent = () => (
+    <Provider store = { store }>
+        <PdfView route={route} />
+    </Provider>
+)
   it('should render successfully', () => {
-    const { container } = render(<PdfView />);
+    const { container } = render(<TestComponent />);
     expect(container).toBeTruthy();
   });
 
-  
-  const tree = create(<PdfView />);
+  const tree = create(<TestComponent/>);
   test('snapshot', () => {
     expect(tree).toMatchSnapshot();
   });
-  
 });
 
 // describe('The actions that occur on button press', () => {
