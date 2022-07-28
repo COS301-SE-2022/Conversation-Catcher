@@ -152,7 +152,7 @@ export const ViewAll = ({ navigation }) =>  {
         case 'Date':
           var temp = objArr;
           temp.sort((a, b) => {
-            if (a.creationDate < b.creationDate) return -1;
+            if (new Date(a.creationDate) < new Date(b.creationDate)) return -1;
             return 1;
           });
           setObjArr(temp);
