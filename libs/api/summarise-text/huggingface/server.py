@@ -11,13 +11,8 @@ summariser = summarise_text()
 
 @app.route('/summarise', methods=['POST'])
 def summarise():
-    b64 = request.form['image'].encode('ascii')
-    img_name = "uploads/image."+request.form['extension']
-    with open(img_name, "wb") as new_file:
-        new_file.write(base64.decodebytes(b64))
-
-    text = summariser.summarise(img_name)
-    os.remove(img_name)
+    non_summarised_text = request.form['text']
+    text = summariser.summarise(non_summarised_text)
     summarised_text = { "summary": text }
     return jsonify(summarised_text)
 
