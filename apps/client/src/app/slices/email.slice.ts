@@ -7,7 +7,7 @@ export const EMAIL = 'email';
 
 export const emailSlice = createSlice({
   name: EMAIL,
-  initialState: {email:""},
+  initialState: {email:"John@test"},
   reducers: {
     setEmail: (state,action) => {state.email = action.payload;return state}
   },

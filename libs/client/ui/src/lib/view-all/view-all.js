@@ -19,6 +19,8 @@ import Share from 'react-native-share';
 import { useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { selectColour } from 'apps/client/src/app/slices/colour.slice';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { selectEmail } from 'apps/client/src/app/slices/email.slice';
 import Loading from '../shared-components/loading/loading.js';
 
 export const ViewAll = ({ navigation }) =>  {
@@ -166,8 +168,9 @@ export const ViewAll = ({ navigation }) =>  {
 
   function Pdfs() {
     // use redux to het email
+    const email = useSelector(selectEmail()).email;
     const { data, loading, error } = useQuery(GET_USER_PDFS, {
-      variables: { email: 'John@test' },
+      variables: { email: email },
     });
     console.log('GetPdfs');
     // console.log(data);
