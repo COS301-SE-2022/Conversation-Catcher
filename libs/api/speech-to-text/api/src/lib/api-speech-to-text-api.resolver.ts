@@ -7,9 +7,10 @@ export class ApiSpeechToTextApiResolver {
     constructor(private SpeechToTextService: ApiSpeechToTextServiceService) {}
 
     @Mutation(()=> String)
-  	async ConvertSpeech(@Args('audioFile', { type: () => [AudioBuffer] }) audioFile : typeof AudioBuffer) {
+  	async ConvertSpeech(/*@Args('audioFile', { type: () => [AudioBuffer] }) audioFile : typeof AudioBuffer*/) {
       console.log('Speech to text called');
-		return await this.SpeechToTextService.ConvertSpeech(audioFile);
+      // const audioFile = new Audio();
+		return await this.SpeechToTextService.ConvertSpeech(/*audioFile*/);
 		//const File = new Audio();
 	  // return "Executed";
 	}

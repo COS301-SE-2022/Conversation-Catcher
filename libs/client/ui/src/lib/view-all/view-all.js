@@ -28,6 +28,7 @@ export const ViewAll = ({ navigation }) =>  {
   const [bottomModalVisible, setBottomModalVisible] = useState(false);
   const [bottomModalType, setBottomModalType] = useState('none');
   const [renameModalVisible, setRenameModalVisible] = useState(false);
+  const [currOrderValue, setCurrOrderValue] = useState('Date');
   // const [refreshPage, setRefreshPage] = useState('');
 
   const url = 'https://awesome.contents.com/';
@@ -57,7 +58,6 @@ export const ViewAll = ({ navigation }) =>  {
   const [refresh, { d, l, e }] = useMutation(RELOAD);
   //variables for object sorting
   const [objArr, setObjArr] = useState([]);
-  let currOrderValue = 'Date';
 
   const options = {
     title,
@@ -137,9 +137,9 @@ export const ViewAll = ({ navigation }) =>  {
 
   function changeArray(index, itemValue) {
     if (currOrderValue !== itemValue) {
-      currOrderValue = itemValue;
+      setCurrOrderValue(itemValue);
       // Sort PDFs array according to currOrderValue
-      switch (currOrderValue) {
+      switch (itemValue) {
         case 'Name':
           var temp2 = objArr;
           temp2.sort((a, b) => {
@@ -152,7 +152,7 @@ export const ViewAll = ({ navigation }) =>  {
         case 'Date':
           var temp = objArr;
           temp.sort((a, b) => {
-            if (new Date(a.creationDate) < new Date(b.creationDate)) return -1;
+            if (new Date(a.creationDate) > new Date(b.creationDate)) return -1;
             return 1;
           });
           setObjArr(temp);

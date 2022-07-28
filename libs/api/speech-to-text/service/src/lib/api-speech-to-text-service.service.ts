@@ -9,8 +9,8 @@ import { CovertSpeechCommand } from "./commands/impl";
 export class ApiSpeechToTextServiceService {
     constructor(private commandBus: CommandBus, private queryBus: QueryBus) {}
 
-    async ConvertSpeech(audio : typeof AudioBuffer) {
+    async ConvertSpeech(/*audio : typeof AudioBuffer*/) {
         // return "Text";
-        return await this.commandBus.execute( new CovertSpeechCommand(audio))
+        return await this.commandBus.execute( new CovertSpeechCommand(/*audio*/))
     }
 }
