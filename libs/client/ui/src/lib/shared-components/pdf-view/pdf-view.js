@@ -23,6 +23,8 @@ import { selectColour } from '../../../../../../apps/client/src/app/slices/colou
 export const PdfView = ({ route, navigation }) => {
   const colourState = useSelector(selectColour).colour;
   const [moreVisible, setMoreVisible] = useState(false);
+  const [renameVisible, setRenameVisible] = useState(false);
+  const [deleteConfirmVisible, setDeleteConfirmVisible] = useState(false);
 
   const {text, name} = route.params;
 
@@ -123,6 +125,7 @@ export const PdfView = ({ route, navigation }) => {
             style={styles.moreModalButton}
             onPress={() => {
               setMoreVisible(false);
+              setRenameVisible(true);
             }}
           >
             <View style={styles.moreModalButtonContent}>
@@ -145,6 +148,7 @@ export const PdfView = ({ route, navigation }) => {
             style={styles.moreModalButton}
             onPress={() => {
               setMoreVisible(false);
+              setDeleteConfirmVisible(true);
             }}
           >
             <View style={styles.moreModalButtonContent}>
@@ -157,6 +161,74 @@ export const PdfView = ({ route, navigation }) => {
               </View>
               <View style={styles.moreModalButtonText_box}>
                 <Text style={styles.moreModalButtonText}>{'Delete'}</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </Modal>
+      <Modal
+        style={styles.modal}
+        isVisible={renameVisible}
+        hasBackdrop={true}
+        backdropColor="white"
+        onBackdropPress={() => setRenameVisible(false)}
+        //onModalHide={() => setFileSelected(false)}
+      >
+        <View style={styles.renameModalInner}>
+          
+          <TextInput style={styles.renameModalTextInput} defaultValue={name.name} />
+          <TouchableOpacity
+            style={[styles.renameFileButton, { backgroundColor: colourState }]}
+            state={null}
+            onPress={() => {
+              setRenameVisible(false);
+            }}
+          >
+            <View style={styles.renameModalButtonContent}>
+              <View style={styles.renameModalButtonText_box}>
+                <Text style={styles.renameModalButtonText}>{'Rename'}</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </Modal>
+      <Modal
+        style={styles.modal}
+        isVisible={deleteConfirmVisible}
+        hasBackdrop={true}
+        backdropColor="white"
+        onBackdropPress={() => setDeleteConfirmVisible(false)}
+        //onModalHide={() => setFileSelected(false)}
+      >
+        <View style={styles.renameModalInner}>
+          
+          <Text style={styles.modalTitle}>
+            {'Are you sure you want to delete ' + name.name + '?'}
+          </Text>
+          <TouchableOpacity
+            style={[styles.renameFileButton, { backgroundColor: colourState }]}
+            state={null}
+            onPress={() => {
+              setDeleteConfirmVisible(false);
+            }}
+          >
+            <View style={styles.renameModalButtonContent}>
+              <View style={styles.renameModalButtonText_box}>
+                <Text style={styles.renameModalButtonText}>{'Cancel'}</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.renameFileButton, { backgroundColor: colourState }]}
+            state={null}
+            onPress={() => {
+              setDeleteConfirmVisible(false);
+              navigation.goBack();
+            }}
+          >
+            <View style={styles.renameModalButtonContent}>
+              <View style={styles.renameModalButtonText_box}>
+                <Text style={styles.renameModalButtonText}>{'Delete'}</Text>
               </View>
             </View>
           </TouchableOpacity>
@@ -320,5 +392,110 @@ const styles = StyleSheet.create({
     //flexShrink: 1,
     justifyContent: 'center',
     //alignSelf: 'flex-end'
+  },
+  renameModalInner: {
+    width: '70%',
+    flexShrink: 1,
+    backgroundColor: '#d0d5ddff',
+    borderRadius: 7,
+    flexDirection: 'column',
+    borderWidth: 1,
+    borderColor: '#667084ff',
+  },
+  renameModalButton: {
+    flexGrow: 1,
+    height: '8%',
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  changerenameModalButton: {
+    flexGrow: 1,
+    height: '5%',
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginHorizontal: 10,
+    justifyContent: 'center',
+    alignContent: 'center',
+    flexShrink: 1,
+    backgroundColor: '#ffffffff',
+    borderRadius: 7,
+    borderWidth: 1,
+    borderColor: '#667084ff',
+  },
+  changerenameModalButtonText: {
+    textAlign: 'center',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 18,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+  },
+  renameFileButton: {
+    flexGrow: 1,
+    height: 40,
+    alignItems: 'center',
+    flexDirection: 'row',
+    margin: 10,
+    justifyContent: 'center',
+    alignContent: 'center',
+    borderRadius: 8,
+    elevation: 2,
+    shadowColor: '#000000',
+    shadowRadius: 2.621621621621622,
+    shadowOpacity: 0.2173913043478261,
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+  },
+  renameModalButtonContent: {
+    flexGrow: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    //padding: 5
+  },
+  renameModalButtonText: {
+    color: '#ffffffff',
+    textAlign: 'center',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 18,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+  },
+  renameModalButtonText_box: {
+    flexShrink: 1,
+  },
+  filerenameIconContainer: {
+    flexShrink: 1,
+  },
+  renameModalTextInput: {
+    flexShrink: 1,
+    textAlign: 'center',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 18,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+    backgroundColor: '#ffffffff',
+    borderRadius: 8,
+    marginHorizontal: 10,
+    marginTop: 10,
+    height: 40
+  },
+  modalTitle: {
+    color: '#344053ff',
+    textAlign: 'center',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 18,
+    fontWeight: '600',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+    padding: 15,
   },
 });
