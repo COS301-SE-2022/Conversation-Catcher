@@ -2,9 +2,21 @@ import React from 'react';
 import { render } from '@testing-library/react-native';
 import Settings from './settings';
 import { create } from 'react-test-renderer';
+import { configureStore } from '@reduxjs/toolkit';
+
 describe('Setup of settings', () => {
+  const store = configureStore({
+    reducer: {
+        colour:reducer
+    }
+  })
+  const TestComponent = () => (
+    <Provider store = { store }>
+        <Settings />
+    </Provider>
+)
   it('should render successfully', () => {
-    const { container } = render(<Settings />);
+    const { container } = render(<TestComponent />);
     expect(container).toBeTruthy();
   });
 

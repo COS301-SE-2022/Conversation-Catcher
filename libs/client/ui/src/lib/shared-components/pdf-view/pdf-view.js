@@ -17,7 +17,6 @@ import ModalDropdown from 'react-native-modal-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
 //import Share from 'react-native-share';
-import colour from '../colour/colour';
 
 export const PdfView = ({ route, navigation }) => {
   const [moreVisible, setMoreVisible] = useState(false);
@@ -48,7 +47,7 @@ export const PdfView = ({ route, navigation }) => {
       }
     }
   `;
-
+  const colourState = useSelector(selectColour);
   return (
     <View style={styles.viewAllPage}>
       <View style={styles.viewAllTopBar}>
@@ -102,7 +101,7 @@ export const PdfView = ({ route, navigation }) => {
             <View style={styles.moreModalButtonContent}>
               <View style={styles.iconContainer}>
                 <Icon
-                  style={{ color: colour.state }}
+                  style={{ color: colourState }}
                   name="paper-plane-o"
                   size={18}
                 />
@@ -126,7 +125,7 @@ export const PdfView = ({ route, navigation }) => {
             <View style={styles.moreModalButtonContent}>
               <View style={styles.iconContainer}>
                 <Icon
-                  style={{ color: colour.state }}
+                  style={{ color: colourState }}
                   name="pencil-square-o"
                   size={20}
                 />
@@ -148,7 +147,7 @@ export const PdfView = ({ route, navigation }) => {
             <View style={styles.moreModalButtonContent}>
               <View style={styles.iconContainer}>
                 <Icon
-                  style={{ color: colour.state }}
+                  style={{ color: colourState }}
                   name="trash-o"
                   size={20}
                 />
