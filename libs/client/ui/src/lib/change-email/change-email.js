@@ -1,9 +1,12 @@
 import React, {useState} from 'react';
 import { View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity, Alert, TextInput } from 'react-native';
-import colour from '../colour/colour';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { useSelector } from 'react-redux';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { selectColour} from 'apps/client/src/app/slices/colour.slice';
 
 export const ChangeEmail = ({ navigation }) =>  {
+  const colourState = useSelector(selectColour).colour;
  const [showMailHint, setShowMailHint] = useState(false);
  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
  function MailHint(){
@@ -48,7 +51,7 @@ export const ChangeEmail = ({ navigation }) =>  {
            <View style={styles.inputText_box}>
              <View style={styles.inputIcon}>
                <Icon 
-                 style={{color: colour.state}}
+                 style={{color: colourState}}
                  name="envelope"
                  size={15}
                />
@@ -82,7 +85,7 @@ export const ChangeEmail = ({ navigation }) =>  {
            <View style={styles.inputText_box}>
              <View style={styles.inputIcon}>
                <Icon 
-                 style={{color: colour.state}}
+                 style={{color: colourState}}
                  name="envelope"
                  size={15}
                />
@@ -110,7 +113,7 @@ export const ChangeEmail = ({ navigation }) =>  {
         onPress={() => navigation.goBack()}>
           <Icon 
             name="angle-left"
-            color={colour.state}
+            color={colourState}
             size={28}
           />
       </TouchableOpacity>
