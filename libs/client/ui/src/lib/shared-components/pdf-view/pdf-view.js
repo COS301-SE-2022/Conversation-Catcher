@@ -22,6 +22,7 @@ import colour from '../colour/colour';
 export const PdfView = ({ route, navigation }) => {
   const [moreVisible, setMoreVisible] = useState(false);
   const [renameVisible, setRenameVisible] = useState(false);
+  const [deleteConfirmVisible, setDeleteConfirmVisible] = useState(false);
 
   const {text, name} = route.params;
 
@@ -145,6 +146,7 @@ export const PdfView = ({ route, navigation }) => {
             style={styles.moreModalButton}
             onPress={() => {
               setMoreVisible(false);
+              setDeleteConfirmVisible(true);
             }}
           >
             <View style={styles.moreModalButtonContent}>
@@ -183,6 +185,47 @@ export const PdfView = ({ route, navigation }) => {
             <View style={styles.renameModalButtonContent}>
               <View style={styles.renameModalButtonText_box}>
                 <Text style={styles.renameModalButtonText}>{'Rename'}</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </Modal>
+      <Modal
+        style={styles.modal}
+        isVisible={deleteConfirmVisible}
+        hasBackdrop={true}
+        backdropColor="white"
+        onBackdropPress={() => setDeleteConfirmVisible(false)}
+        //onModalHide={() => setFileSelected(false)}
+      >
+        <View style={styles.renameModalInner}>
+          
+          <Text style={styles.modalTitle}>
+            {'Are you sure you want to delete ' + name.name + '?'}
+          </Text>
+          <TouchableOpacity
+            style={[styles.renameFileButton, { backgroundColor: colour.state }]}
+            state={null}
+            onPress={() => {
+              setDeleteConfirmVisible(false);
+            }}
+          >
+            <View style={styles.renameModalButtonContent}>
+              <View style={styles.renameModalButtonText_box}>
+                <Text style={styles.renameModalButtonText}>{'Cancel'}</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.renameFileButton, { backgroundColor: colour.state }]}
+            state={null}
+            onPress={() => {
+              setDeleteConfirmVisible(false);
+            }}
+          >
+            <View style={styles.renameModalButtonContent}>
+              <View style={styles.renameModalButtonText_box}>
+                <Text style={styles.renameModalButtonText}>{'Delete'}</Text>
               </View>
             </View>
           </TouchableOpacity>
@@ -440,5 +483,16 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     marginTop: 10,
     height: 40
-  }
+  },
+  modalTitle: {
+    color: '#344053ff',
+    textAlign: 'center',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 18,
+    fontWeight: '600',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+    padding: 15,
+  },
 });

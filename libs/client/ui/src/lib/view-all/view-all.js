@@ -25,6 +25,7 @@ export const ViewAll = ({ navigation }) => {
   const [bottomModalVisible, setBottomModalVisible] = useState(false);
   const [bottomModalType, setBottomModalType] = useState('none');
   const [renameModalVisible, setRenameModalVisible] = useState(false);
+  const [renameVisible, setRenameVisible] = useState(false);
   // const [refreshPage, setRefreshPage] = useState('');
 
   const url = 'https://awesome.contents.com/';
@@ -394,6 +395,33 @@ export const ViewAll = ({ navigation }) => {
           </TouchableOpacity>
 
           <BottomModalButton type={bottomModalType} />
+        </View>
+      </Modal>
+
+      <Modal
+        style={styles.modal}
+        isVisible={renameVisible}
+        hasBackdrop={true}
+        backdropColor="white"
+        onBackdropPress={() => setRenameVisible(false)}
+        //onModalHide={() => setFileSelected(false)}
+      >
+        <View style={styles.renameModalInner}>
+          
+          <TextInput style={styles.renameModalTextInput} defaultValue={"temp"} />
+          <TouchableOpacity
+            style={[styles.renameFileButton, { backgroundColor: colour.state }]}
+            state={null}
+            onPress={() => {
+              setRenameVisible(false);
+            }}
+          >
+            <View style={styles.renameModalButtonContent}>
+              <View style={styles.renameModalButtonText_box}>
+                <Text style={styles.renameModalButtonText}>{'Rename'}</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
         </View>
       </Modal>
     </View>
