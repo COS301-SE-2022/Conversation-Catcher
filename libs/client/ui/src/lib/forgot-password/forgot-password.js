@@ -1,9 +1,12 @@
 import React, {useState} from 'react';
 import { View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity, Alert, TextInput } from 'react-native';
-import colour from '../colour/colour';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { useSelector } from 'react-redux';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { selectColour} from 'apps/client/src/app/slices/colour.slice';
 
 export const ForgotPassword = ({ navigation }) =>  {
+  const colourState = useSelector(selectColour).colour;
  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
  function SuccessMessage(){
    if (showSuccessMessage)
@@ -28,7 +31,7 @@ export const ForgotPassword = ({ navigation }) =>  {
    else
    {
      return (<TouchableOpacity
-              style={styles.changeMailButton}
+              style={[styles.changeMailButton,{backgroundColor : colourState}, {borderColor : colourState}]}
               onPress={() => setShowSuccessMessage(true)}>
               <View style={styles.changeMailButtonLabel_box}>
                 <Text style={styles.changeMailButtonLabel}>
@@ -57,7 +60,7 @@ export const ForgotPassword = ({ navigation }) =>  {
           <View style={styles.inputText_box}>
             <View style={styles.inputIcon}>
               <Icon 
-                style={{color: colour.state}}
+                style={{color: colourState}}
                 name="envelope"
                 size={15}
               />
@@ -77,7 +80,7 @@ export const ForgotPassword = ({ navigation }) =>  {
         onPress={() => navigation.goBack()}>
           <Icon 
             name="angle-left"
-            color={colour.state}
+            color={colourState}
             size={28}
           />
       </TouchableOpacity >
