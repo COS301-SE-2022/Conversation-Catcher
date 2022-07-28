@@ -1,13 +1,6 @@
 import {
-  createAsyncThunk,
-  createEntityAdapter,
-  createSelector,
   createSlice,
-  EntityState,
-  PayloadAction,
-  createAction
 } from '@reduxjs/toolkit';
-import { useSelector } from 'react-redux'
 
 export const COLOUR = 'colour';
 
