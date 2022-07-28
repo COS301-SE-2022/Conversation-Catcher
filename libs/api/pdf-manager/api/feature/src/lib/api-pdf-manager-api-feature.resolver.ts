@@ -43,6 +43,10 @@ export class ApiPdfManagerApiFeatureResolver {
     return pdfObj;
   }
 
+  @Mutation(() => String)
+  async reload(){
+    return 'reloaded';
+  }
   // get a single pdf by its id
   @Query(() => PdfEntity)
   async getPDFById(@Args('id', { type: () => String }) id: string) {

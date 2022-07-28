@@ -45,6 +45,13 @@ export const ViewAll = ({ navigation }) => {
     }
   `;
 
+  const RELOAD = gql`
+    mutation reload {
+      reload
+    }
+  `;
+
+  const [refresh, { d, l, e }] = useMutation(RELOAD);
   //variables for object sorting
   const [objArr, setObjArr] = useState([]);
   let currOrderValue = 'Date';
@@ -126,38 +133,39 @@ export const ViewAll = ({ navigation }) => {
   };
 
   function changeArray(index, itemValue) {
-    if (currOrderValue === itemValue) return;
-    currOrderValue = itemValue;
-    // Sort PDFs array according to currOrderValue
-    switch (currOrderValue) {
-      case 'Name':
-        var temp2 = objArr;
-        temp2.sort((a, b) => {
-          if (a.name < b.name) return -1;
-          return 1;
-        });
-        setObjArr(temp2);
-        console.log(objArr);
-        break;
-      case 'Date':
-        var temp = objArr;
-        temp.sort((a, b) => {
-          if (a.creationDate < b.creationDate) return -1;
-          return 1;
-        });
-        setObjArr(temp);
-        console.log(objArr);
-        break;
+    if (currOrderValue !== itemValue) {
+      currOrderValue = itemValue;
+      // Sort PDFs array according to currOrderValue
+      switch (currOrderValue) {
+        case 'Name':
+          var temp2 = objArr;
+          temp2.sort((a, b) => {
+            if (a.name < b.name) return -1;
+            return 1;
+          });
+          setObjArr(temp2);
+          console.log(objArr);
+          break;
+        case 'Date':
+          var temp = objArr;
+          temp.sort((a, b) => {
+            if (a.creationDate < b.creationDate) return -1;
+            return 1;
+          });
+          setObjArr(temp);
+          console.log(objArr);
+          break;
+      }
     }
-    // setRefreshPage('refresh');
-    // objArr.sort((a,b) => {if (a.name < b.name) return -1; return 1})
-    // sortObjects(currOrderValue);
+    refresh();
     console.log(itemValue);
   }
 
   function Pdfs() {
     // use redux to het email
-    const { data, loading, error } = useQuery(GET_USER_PDFS, {variables: {email: 'John@test'}});
+    const { data, loading, error } = useQuery(GET_USER_PDFS, {
+      variables: { email: 'John@test' },
+    });
     console.log('GetPdfs');
     // console.log(data);
     // console.log(loading);
