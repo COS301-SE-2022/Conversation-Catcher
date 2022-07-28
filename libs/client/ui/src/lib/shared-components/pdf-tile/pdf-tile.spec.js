@@ -3,7 +3,7 @@ import { render } from '@testing-library/react-native';
 import PdfTile from './pdf-tile';
 import { create } from 'react-test-renderer';
 import { Provider } from 'react-redux';
-import {reducer} from '../../../../../../../apps/client/src/app/slices/colour.slice';
+import {reducer} from 'apps/client/src/app/slices/colour.slice';
 import { configureStore } from '@reduxjs/toolkit';
 
 describe('PdfTile', () => {

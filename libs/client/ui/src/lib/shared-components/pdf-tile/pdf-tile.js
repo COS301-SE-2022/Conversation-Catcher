@@ -2,14 +2,13 @@ import React, {Component} from 'react';
 import { View, StyleSheet, Text, ImageBackground, TouchableOpacity, Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
-//import colour from '../colour/colour';
 import { useSelector } from 'react-redux'
 import { selectColour } from 'apps/client/src/app/slices/colour.slice';
 //import FileViewer from "react-native-file-viewer";
 
 function DownloadButtonState(props){
+  const colourState = useSelector(selectColour);
   const [downloadState, setDownloadState] = React.useState(props.d);
-  const colourState = useSelector(selectColour).colour;
   if (downloadState) {
     return <Icon
               onPress={() => setDownloadState(!downloadState)}
@@ -27,7 +26,7 @@ function DownloadButtonState(props){
 }
 
 function DetermineTileCorner(props){
-  const colourState = useSelector(selectColour).colour;
+  const colourState = useSelector(selectColour);
   const [checkboxState, setCheckboxState] = React.useState(false);
   const c = props.c;
   if (c){
@@ -58,7 +57,8 @@ const PdfTile = ({id,name,date,thumbnailSource,downloaded,showCheck,pdfSource,na
   //   pdfSource,
   //   nav
   // } = this.props
-  const colourState = useSelector(selectColour).colour;
+  const colourState = useSelector(selectColour);
+  console.log(colourState)
     return (
       <TouchableOpacity
         style={styles.pdfTile}
