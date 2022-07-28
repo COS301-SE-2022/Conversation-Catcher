@@ -221,6 +221,7 @@ export const PdfView = ({ route, navigation }) => {
             state={null}
             onPress={() => {
               setDeleteConfirmVisible(false);
+              navigation.goBack();
             }}
           >
             <View style={styles.renameModalButtonContent}>
