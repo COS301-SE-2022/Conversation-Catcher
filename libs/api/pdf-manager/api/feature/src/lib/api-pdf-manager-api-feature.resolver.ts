@@ -3,6 +3,7 @@ import { Query, Args, Mutation } from '@nestjs/graphql';
 // import { ApiPdfManagerServiceFeatureService } from "@conversation-catcher/api/pdf-manager/service/feature";
 import { ApiPdfManagerServiceService } from '@conversation-catcher/api/pdf-manager/service';
 import { PdfEntity } from '@conversation-catcher/api/pdf-manager/api/data-access';
+import { text } from 'stream/consumers';
 //yarn nx run api-pdf-manager-api-feature:test
 
 @Resolver()
@@ -16,6 +17,7 @@ export class ApiPdfManagerApiFeatureResolver {
     this.errorObj.name = 'error';
     this.errorObj.pdf = null;
     this.errorObj.downloaded = false;
+    this.errorObj.text = null;
     this.errorObj.creationDate = null;
   }
   private errorObj;
@@ -37,6 +39,7 @@ export class ApiPdfManagerApiFeatureResolver {
     pdfObj.pdf = result.pdf.toString('ascii');
     pdfObj.creationDate = date.toUTCString();
     pdfObj.downloaded = result.downloaded;
+    pdfObj.text = result.text;
     return pdfObj;
   }
 
@@ -70,13 +73,22 @@ export class ApiPdfManagerApiFeatureResolver {
     return [this.errorObj];
   }
 
+  @Mutation(() => PdfEntity)
+  async addPDF(
+    @Args('email') email: string,
+    @Args('name') name: string,
+    @Args('text') text: string
+  ) {
+    return await this.pdfService.addPdf(email, name, text);
+  }
+
   // rename the pdf with this id
   @Mutation(() => PdfEntity)
   async renamePDF(
     @Args('id', { type: () => [String] }) id: string,
     @Args('name', { type: () => String }) name: string
   ) {
-    const pdfArr = await this.pdfService.SetNamePdf(id, name);
+    const pdfArr = await this.pdfService.setNamePdf(id, name);
 
     if (pdfArr != undefined) {
       return this.assignResult(pdfArr);
@@ -87,7 +99,7 @@ export class ApiPdfManagerApiFeatureResolver {
   // change if true to false and if false to true and change the file appropraitely
   @Mutation(() => PdfEntity)
   async downloadedPDF(@Args('id', { type: () => [String] }) id: string) {
-    const pdfArr = await this.pdfService.SetDownloadedPdf(id);
+    const pdfArr = await this.pdfService.setDownloadedPdf(id);
 
     if (pdfArr != undefined) {
       return this.assignResult(pdfArr);
@@ -98,7 +110,7 @@ export class ApiPdfManagerApiFeatureResolver {
   // delete pdf with this id from DB
   @Mutation(() => PdfEntity)
   async deletePDF(@Args('id', { type: () => [String] }) id: string) {
-    const pdfArr = await this.pdfService.DeletePdf(id);
+    const pdfArr = await this.pdfService.deletePdf(id);
 
     if (pdfArr != undefined) {
       return this.assignResult(pdfArr);

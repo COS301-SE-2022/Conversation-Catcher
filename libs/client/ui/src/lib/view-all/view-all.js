@@ -1,25 +1,56 @@
-import React, {useState} from 'react';
-import { View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity, Alert, ScrollView, TextInput} from 'react-native';
+import React, { useState } from 'react';
+import {
+  View,
+  StyleSheet,
+  Text,
+  Image,
+  ImageBackground,
+  TouchableOpacity,
+  Alert,
+  ScrollView,
+  TextInput,
+} from 'react-native';
+import { gql, useQuery, useMutation } from '@apollo/client';
 import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
 import ModalDropdown from 'react-native-modal-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
-import Share from "react-native-share";
+import Share from 'react-native-share';
 import colour from '../colour/colour';
 import { useSelector } from 'react-redux';
 import { selectColour } from '../../../../../../apps/client/src/app/slices/colour.slice';
+import Loading from '../shared-components/loading/loading.js';
 
 export const ViewAll = ({ navigation }) =>  {
   const colourState = useSelector(selectColour);
   const [moreVisible, setMoreVisible] = useState(false);
   const [selectMode, setSelectMode] = useState(false);
   const [bottomModalVisible, setBottomModalVisible] = useState(false);
-  const [bottomModalType, setBottomModalType] = useState("none");
+  const [bottomModalType, setBottomModalType] = useState('none');
   const [renameModalVisible, setRenameModalVisible] = useState(false);
+  // const [refreshPage, setRefreshPage] = useState('');
 
-  const url = "https://awesome.contents.com/";
-  const title = "Awesome Contents";
-  const message = "Please check this out.";
+  const url = 'https://awesome.contents.com/';
+  const title = 'Awesome Contents';
+  const message = 'Please check this out.';
+
+  //graphql syntax trees
+  const GET_USER_PDFS = gql`
+    query getForUser($email: String!) {
+      getPDFs(id: $email) {
+        id
+        name
+        creationDate
+        downloaded
+        #pdf
+        text
+      }
+    }
+  `;
+
+  //variables for object sorting
+  const [objArr, setObjArr] = useState([]);
+  let currOrderValue = 'Date';
 
   const options = {
     title,
@@ -35,52 +66,46 @@ export const ViewAll = ({ navigation }) =>  {
     }
   };
 
-
-  function BottomModalButton(props){
-  
-    if (props.type === "share") {
-      return <TouchableOpacity 
-              style={styles.backButton}
-              onPress={async () => {
-                await share({
-                  title: "Sharing pdf file from awesome share app",
-                  message: "Please take a look at this file",
-                  url: "../assets/thereactnativebook-sample.pdf",
-                });
-                setSelectMode(false);
-                setBottomModalVisible(false)}
-              }>
-              <Icon 
-                name="paper-plane-o"
-                color="#ffffffff"
-                size={22}
-              /> 
-            </TouchableOpacity>;
+  function BottomModalButton(props) {
+    if (props.type === 'share') {
+      return (
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={async () => {
+            await share({
+              title: 'Sharing pdf file from awesome share app',
+              message: 'Please take a look at this file',
+              url: '../assets/thereactnativebook-sample.pdf',
+            });
+            setSelectMode(false);
+            setBottomModalVisible(false);
+          }}
+        >
+          <Icon name="paper-plane-o" color="#ffffffff" size={22} />
+        </TouchableOpacity>
+      );
     }
-    if (props.type === "rename")
-    {
-      return <TouchableOpacity 
-              style={styles.backButton}
-              onPress={() => setBottomModalVisible(false)}>
-              <Icon 
-                name="pencil-square-o"
-                color="#ffffffff"
-                size={22}
-              /> 
-            </TouchableOpacity>;
+    if (props.type === 'rename') {
+      return (
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => setBottomModalVisible(false)}
+        >
+          <Icon name="pencil-square-o" color="#ffffffff" size={22} />
+        </TouchableOpacity>
+      );
     }
-    return <TouchableOpacity 
-            style={styles.backButton}
-            onPress={() => {
-              setSelectMode(false);
-              setBottomModalVisible(false);
-            }}>
-            <Icon 
-              name="trash-o"
-              color="#ffffffff"
-              size={22}
-            /> 
-          </TouchableOpacity>;
+    return (
+      <TouchableOpacity
+        style={styles.backButton}
+        onPress={() => {
+          setSelectMode(false);
+          setBottomModalVisible(false);
+        }}
+      >
+        <Icon name="trash-o" color="#ffffffff" size={22} />
+      </TouchableOpacity>
+    );
   }
 
   const onShare = async () => {
@@ -101,24 +126,103 @@ export const ViewAll = ({ navigation }) =>  {
     } catch (error) {
       alert(error.message);
     }
+  };
+
+  function changeArray(index, itemValue) {
+    if (currOrderValue === itemValue) return;
+    currOrderValue = itemValue;
+    // Sort PDFs array according to currOrderValue
+    switch (currOrderValue) {
+      case 'Name':
+        var temp2 = objArr;
+        temp2.sort((a, b) => {
+          if (a.name < b.name) return -1;
+          return 1;
+        });
+        setObjArr(temp2);
+        console.log(objArr);
+        break;
+      case 'Date':
+        var temp = objArr;
+        temp.sort((a, b) => {
+          if (a.creationDate < b.creationDate) return -1;
+          return 1;
+        });
+        setObjArr(temp);
+        console.log(objArr);
+        break;
+    }
+    // setRefreshPage('refresh');
+    // objArr.sort((a,b) => {if (a.name < b.name) return -1; return 1})
+    // sortObjects(currOrderValue);
+    console.log(itemValue);
+  }
+
+  function Pdfs() {
+    // use redux to het email
+    const { data, loading, error } = useQuery(GET_USER_PDFS, {variables: {email: 'John@test'}});
+    console.log('GetPdfs');
+    // console.log(data);
+    // console.log(loading);
+    // console.log(error);
+    if (loading)
+      return (
+        <ScrollView style={styles.recentPdfTiles}>
+          <Loading />
+        </ScrollView>
+      );
+
+    if (error)
+      return (
+        <ScrollView style={styles.recentPdfTiles}>
+          <Text>An error occured...</Text>
+          <Text>{error[0]}</Text>
+        </ScrollView>
+      );
+    if (objArr[0] === undefined) {
+      console.log('objArr');
+      // console.log(data.getPDFs);
+      for (let i = 0; i < data.getPDFs.length; i++) {
+        //create deep copy
+        objArr.push({
+          name: data.getPDFs[i].name,
+          creationDate: data.getPDFs[i].creationDate,
+          downloaded: data.getPDFs[i].downloaded,
+          pdf: data.getPDFs[i].pdf,
+          text: data.getPDFs[i].text,
+          id: data.getPDFs[i].id,
+        });
+      }
+    }
+    return (
+      <ScrollView style={styles.recentPdfTiles}>
+        {objArr.map((item, key) => (
+          <PdfTile
+            key={key}
+            name={item.name}
+            date={item.creationDate}
+            source={''}
+            text={item.text}
+            downloaded={item.downloaded}
+            showCheck={selectMode}
+            pdfSource=""
+            nav={navigation}
+          />
+        ))}
+      </ScrollView>
+    );
   }
 
   return (
     <View style={styles.viewAllPage}>
       <View style={styles.viewAllTopBar}>
         <View style={styles.big_title_box}>
-          <Text style={styles.big_title}>
-            {'PDFs'}
-          </Text>
+          <Text style={styles.big_title}>{'PDFs'}</Text>
         </View>
 
         <View style={styles.searchBarGroup}>
           <View style={styles.searchIconFrame}>
-            <Icon 
-              color="#667084ff"
-              name="search"
-              size={24}
-            />
+            <Icon color="#667084ff" name="search" size={24} />
           </View>
 
           <TextInput
@@ -129,119 +233,57 @@ export const ViewAll = ({ navigation }) =>  {
         </View>
       </View>
 
-      <ScrollView style={styles.recentPdfTiles}>
-        <PdfTile 
-          id = {1}
-          name = 'Bug introduction: a modification of code' 
-          date = '1 May 2022, 9:37' 
-          thumbnailSource = {"../assets/pdf-bug-intro.png"} 
-          downloaded = {true}
-          showCheck = {selectMode}
-          pdfSource = 'http://samples.leanpub.com/thereactnativebook-sample.pdf'
-          nav = {navigation}/>
-        <PdfTile 
-          id = {2}
-          name = 'Human-computer interaction' 
-          date = '21 Apr 2022, 14:18' 
-          thumbnailSource = {"../assets/pdf-human-computer.png"} 
-          downloaded = {false}
-          showCheck = {selectMode}
-          pdfSource = 'http://samples.leanpub.com/thereactnativebook-sample.pdf'
-          nav = {navigation}/>
-        <PdfTile 
-          id = {3}
-          name = 'The tropical plants of the Philippines' 
-          date = '13 Apr 2022, 11:53' 
-          thumbnailSource = {"../assets/pdf-tropical-plants.png"} 
-          downloaded = {true}
-          showCheck = {selectMode}
-          pdfSource = 'http://samples.leanpub.com/thereactnativebook-sample.pdf'
-          nav = {navigation}/>
-        <PdfTile 
-          id = {4}
-          name = 'Devin Brittain The snacks of the popcorn' 
-          date = '13 Apr 2022, 11:53' 
-          thumbnailSource = {"../assets/pdf-tropical-plants.png"} 
-          downloaded = {true}
-          showCheck = {selectMode}
-          pdfSource = 'http://samples.leanpub.com/thereactnativebook-sample.pdf'
-          nav = {navigation}/>
-        <PdfTile 
-          id = {5}
-          name = 'The tropical plants of the Philippines' 
-          date = '13 Apr 2022, 11:53' 
-          source = {"../assets/pdf-tropical-plants.png"} 
-          downloaded = {true}
-          showCheck = {selectMode}
-          pdfSource = 'http://samples.leanpub.com/thereactnativebook-sample.pdf'
-          nav = {navigation}/>
-        <PdfTile 
-          id = {6}
-          name = 'The tropical plants of the Philippines' 
-          date = '13 Apr 2022, 11:53' 
-          thumbnailSource = {"../assets/pdf-tropical-plants.png"} 
-          downloaded = {true}
-          showCheck = {selectMode}
-          pdfSource = 'http://samples.leanpub.com/thereactnativebook-sample.pdf'
-          nav = {navigation}/>
-      </ScrollView>
+      <Pdfs />
 
       <View style={styles.viewAllBottomBar}>
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.moreButton}
-          onPress={() => setMoreVisible(true)}>
-          <Icon 
-            name="ellipsis-h"
-            color="#344053ff"
-            size={30}
-          />   
+          onPress={() => setMoreVisible(true)}
+        >
+          <Icon name="ellipsis-h" color="#344053ff" size={30} />
         </TouchableOpacity>
 
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.backButton}
-          onPress={() => navigation.navigate('Home')}>
-          <Icon 
-            name="angle-left"
-            color="#344053ff"
-            size={30}
-          />     
+          onPress={() => navigation.navigate('Home')}
+        >
+          <Icon name="angle-left" color="#344053ff" size={30} />
         </TouchableOpacity>
 
-        <View
-          style={styles.orderByGroup}>
-          <Text style={styles.orderByLabel}>
-            {'Order by'}
-          </Text>
-          <ModalDropdown 
+        <View style={styles.orderByGroup}>
+          <Text style={styles.orderByLabel}>{'Order by'}</Text>
+          <ModalDropdown
             options={['Date', 'Name']}
             defaultIndex={0}
             defaultValue={'Date'}
+            onSelect={(index, itemValue) => changeArray(index, itemValue)}
             style={styles.orderByDropdown}
             textStyle={styles.orderByDropdownText}
             dropdownStyle={styles.orderByDropdownStyle}
             dropdownTextStyle={styles.orderByDropdownTextStyle}
-            dropdownTextSelectHighlightStyle={{color: colour.state}}/>
-        </View>     
+            dropdownTextSelectHighlightStyle={{ color: colour.state }}
+          />
+        </View>
       </View>
-
 
       <Modal
         style={styles.modal}
         isVisible={moreVisible}
         avoidKeyboard={true}
         hasBackdrop={true}
-        backdropColor='white'
+        backdropColor="white"
         onBackdropPress={() => setMoreVisible(false)}
       >
         <View style={styles.moreModalInner}>
           <TouchableOpacity
             style={styles.moreModalButton}
             onPress={() => {
-              setBottomModalType("share");
+              setBottomModalType('share');
               setSelectMode(true);
               setBottomModalVisible(true);
               setMoreVisible(false);
-            }}>
+            }}
+          >
             <View style={styles.moreModalButtonContent}>
               <View style={styles.iconContainer}>
                 <Icon 
@@ -255,18 +297,19 @@ export const ViewAll = ({ navigation }) =>  {
                   {'Share'}
                 </Text>
               </View>
-            </View>   
+            </View>
           </TouchableOpacity>
 
-          <View style={styles.moreModalButtonDivider} /> 
+          <View style={styles.moreModalButtonDivider} />
 
           <TouchableOpacity
             style={styles.moreModalButton}
             onPress={() => {
-              setBottomModalType("rename");
+              setBottomModalType('rename');
               setBottomModalVisible(true);
               setMoreVisible(false);
-            }}>
+            }}
+          >
             <View style={styles.moreModalButtonContent}>
               <View style={styles.iconContainer}>
                 <Icon 
@@ -276,23 +319,22 @@ export const ViewAll = ({ navigation }) =>  {
                 />
               </View>
               <View style={styles.moreModalButtonText_box}>
-                <Text style={styles.moreModalButtonText}>
-                  {'Rename'}
-                </Text>
+                <Text style={styles.moreModalButtonText}>{'Rename'}</Text>
               </View>
             </View>
           </TouchableOpacity>
 
-          <View style={styles.moreModalButtonDivider} /> 
+          <View style={styles.moreModalButtonDivider} />
 
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.moreModalButton}
             onPress={() => {
-              setBottomModalType("delete");
+              setBottomModalType('delete');
               setBottomModalVisible(true);
               setSelectMode(true);
               setMoreVisible(false);
-            }}>
+            }}
+          >
             <View style={styles.moreModalButtonContent}>
               <View style={styles.iconContainer}>
                 <Icon 
@@ -302,11 +344,9 @@ export const ViewAll = ({ navigation }) =>  {
                 />
               </View>
               <View style={styles.moreModalButtonText_box}>
-                <Text style={styles.moreModalButtonText}>
-                  {'Delete'}
-                </Text>
+                <Text style={styles.moreModalButtonText}>{'Delete'}</Text>
               </View>
-            </View> 
+            </View>
           </TouchableOpacity>
         </View>
       </Modal>
@@ -318,51 +358,47 @@ export const ViewAll = ({ navigation }) =>  {
           width: '100%',
           height: '8%',
           margin: 0,
-          justifyContent: 'flex-end',}}
-        >
+          justifyContent: 'flex-end',
+        }}
+      >
         <View style={[styles.modalBottomBar, {backgroundColor : colourState}]}>
           <TouchableOpacity 
             style={styles.backButton}
             onPress={() => {
               setBottomModalVisible(false);
               setSelectMode(false);
-            }}>
-            <Icon 
-              name="angle-left"
-              color="#ffffffff"
-              size={30}
-            /> 
+            }}
+          >
+            <Icon name="angle-left" color="#ffffffff" size={30} />
           </TouchableOpacity>
 
-          <BottomModalButton type={bottomModalType}/>
+          <BottomModalButton type={bottomModalType} />
         </View>
       </Modal>
 
-        <Modal 
-          style={styles.renameModal}
-          isVisible={renameModalVisible}
-          avoidKeyboard={true}
-        >
-          <View style={styles.moreModalInner}>
-            <TextInput
-              editable/>
-            <TouchableOpacity 
-              style={[styles.backButton, {backgroundColor : colourState}]}
-              onPress={() => {
-                setBottomModalVisible(false);
-                setSelectMode(false);
-              }}>
-                <Text>
-                  {'Rename file'}
-                </Text>
-            </TouchableOpacity>
+      <Modal
+        style={styles.renameModal}
+        isVisible={renameModalVisible}
+        avoidKeyboard={true}
+      >
+        <View style={styles.moreModalInner}>
+          <TextInput editable />
+          <TouchableOpacity
+            style={[styles.backButton, { backgroundColor: colourState }]}
+            onPress={() => {
+              setBottomModalVisible(false);
+              setSelectMode(false);
+            }}
+          >
+            <Text>{'Rename file'}</Text>
+          </TouchableOpacity>
 
-            <BottomModalButton type={bottomModalType}/>
-          </View>
-        </Modal>
-      </View>
+          <BottomModalButton type={bottomModalType} />
+        </View>
+      </Modal>
+    </View>
   );
-}
+};
 export default ViewAll;
 
 const styles = StyleSheet.create({
@@ -372,7 +408,7 @@ const styles = StyleSheet.create({
     marginBottom: 0,
     marginLeft: 0,
     flexGrow: 1,
-    marginRight: 0
+    marginRight: 0,
   },
   viewAllTopBar: {
     width: '100%',
@@ -384,13 +420,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2173913043478261,
     shadowOffset: {
       width: 0,
-      height: 1
+      height: 1,
     },
     alignItems: 'center',
     flexDirection: 'column',
     top: 0,
     zIndex: 999,
-    minHeight: 88
+    minHeight: 88,
   },
   big_title: {
     color: '#344053ff',
@@ -417,7 +453,7 @@ const styles = StyleSheet.create({
     margin: 10,
     flexDirection: 'row',
     alignItems: 'center',
-    minHeight: 38
+    minHeight: 38,
   },
   searchInput: {
     backgroundColor: '#ffffffff',
@@ -431,7 +467,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2173913043478261,
     shadowOffset: {
       width: 0,
-      height: 1
+      height: 1,
     },
     color: '#667084ff',
     textAlign: 'left',
@@ -442,11 +478,11 @@ const styles = StyleSheet.create({
     fontStyle: 'normal',
     fontFamily: 'System' /* Inter */,
     padding: 5,
-    flexGrow: 1
+    flexGrow: 1,
   },
   searchIconFrame: {
     resizeMode: 'contain',
-    marginHorizontal: 10
+    marginHorizontal: 10,
   },
   recentPdfTiles: {
     height: '70%',
@@ -470,9 +506,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2173913043478261,
     shadowOffset: {
       width: 0,
-      height: 1
+      height: 1,
     },
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   backButton: {
     flexGrow: 1,
@@ -502,8 +538,8 @@ const styles = StyleSheet.create({
     fontStyle: 'normal',
     fontFamily: 'System' /* Inter */,
     padding: 3,
-    flexShrink: 1, 
-    width: 50
+    flexShrink: 1,
+    width: 50,
   },
   orderByDropdown: {
     flexShrink: 1,
@@ -518,11 +554,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2173913043478261,
     shadowOffset: {
       width: 0,
-      height: 1
+      height: 1,
     },
     flexDirection: 'row',
     marginVertical: 5,
-    width: 65
+    width: 65,
   },
   orderByDropdownText: {
     color: '#667084ff',
@@ -533,18 +569,18 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     fontStyle: 'normal',
     fontFamily: 'System' /* Inter */,
-    padding: 10
+    padding: 10,
   },
   orderByDropDownText_box: {
     flexDirection: 'row',
     alignItems: 'flex-start',
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
   },
   orderByDropdownStyle: {
     justifyContent: 'center',
     alignItems: 'center',
     height: 80,
-    borderRadius: 8
+    borderRadius: 8,
   },
   orderByDropdownTextStyle: {
     color: '#667084ff',
@@ -555,11 +591,11 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     fontStyle: 'normal',
     fontFamily: 'System' /* Inter */,
-    padding: 10
+    padding: 10,
   },
   modal: {
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   moreModalInner: {
     width: '45%',
@@ -569,13 +605,13 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     borderWidth: 1,
     borderColor: '#667084ff',
-    opacity: 1
+    opacity: 1,
   },
   moreModalButton: {
     flexGrow: 1,
     height: '8%',
     alignItems: 'center',
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   moreModalButtonContent: {
     flexGrow: 1,
@@ -587,7 +623,7 @@ const styles = StyleSheet.create({
   iconContainer: {
     width: '40%',
     height: '100%',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   moreModalButtonText: {
     color: '#344053ff',
@@ -600,13 +636,13 @@ const styles = StyleSheet.create({
     fontFamily: 'System' /* Inter */,
   },
   moreModalButtonText_box: {
-    flexShrink: 1
+    flexShrink: 1,
   },
   moreModalButtonDivider: {
     backgroundColor: '#d0d5ddff',
     height: 1,
     width: '87%',
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
   modalBottomBar: {
     width: '100%',
