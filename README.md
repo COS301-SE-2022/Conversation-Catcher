@@ -10,6 +10,7 @@ Multiprocessing moguls - Conversation Catcher - The conversation catcher is used
 [Multiprocessing moguls - Demo 1 - link](https://drive.google.com/file/d/1WpsXG5zylm56bT9f_6F1-bOO9ZpunfR2/view?usp=sharing) <br>
 [Multiprocessing moguls - Demo 2 - link](https://drive.google.com/file/d/14bQFBt5VnbDpeEGc2W5Pa0BSND2wmY-c/view?usp=sharing) <br>
 [GitHub Project Board](https://github.com/COS301-SE-2022/Conversation-Catcher/projects/1) <br>
+[Wiki](https://github.com/COS301-SE-2022/Conversation-Catcher/wiki)<br>
 [Team member information](https://github.com/COS301-SE-2022/Conversation-Catcher/wiki/Team-Members) <br>
 [SRS documents](https://drive.google.com/file/d/1q1SWzmBlPTPwOcCV4Dr0Lc6OEitmOMhc/view?usp=sharing) <br>
 [User Manual](https://drive.google.com/file/d/1a9L8ZcMxCSpmwWx1TmK06K-LRSFI92XW/view?usp=sharing) <br>
