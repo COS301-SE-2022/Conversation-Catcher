@@ -11,13 +11,15 @@ export class SummariesHandler implements ICommandHandler<SummariseCommand> {
 
   async execute({ text }: SummariseCommand) {
 
-    //ajax({
-    //  type: "POST",
-    // url: "~/pythoncode.py",
-     // data: { param: text}
-   //}).done(function( o ) {
-    //  return 'summarised ' + text;
-    //});
-    return text
+    fetch('http://127.0.0.1:5000/summarise', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        text: text,
+      }),
+    }).then((response) => { return response; });
   }
 }
