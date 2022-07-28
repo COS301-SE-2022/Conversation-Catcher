@@ -24,20 +24,20 @@ import ForgotPassword from '../../../../libs/client/ui/src/lib/forgot-password/f
 import ChangePassword from '../../../../libs/client/ui/src/lib/change-password/change-password.js';
 import ChangeEmail from '../../../../libs/client/ui/src/lib/change-email/change-email.js';
 import { Provider } from 'react-redux';
-import { colourReducer } from './slices/colour.slice';
+import  reducer  from './slices/colour.slice';
 import { configureStore } from '@reduxjs/toolkit';
 
 //configure the store
 const store = configureStore({
     reducer: {
-        colour:colourReducer
+        colour:reducer
     }
 })
 
 const Stack = createNativeStackNavigator();
 
 export const App = () => {
-//
+  
   return (
     <Provider store = { store }>
       <NavigationContainer>

@@ -9,11 +9,13 @@ import { Buffer } from 'buffer';
 //import Sound from 'react-native-sound';
 import AudioRecord from 'react-native-audio-record';
 import DocumentPicker, { types } from 'react-native-document-picker';
-import { useSelector } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { selectColour } from '../../../../../../apps/client/src/app/slices/colour.slice';
 
 export const Home = ({ navigation }) => {
   const colourState = useSelector(selectColour);
+  console.log("colour object")
+  console.log(colourState)
   const [recordingStopVisible, setRecordingStopVisible] = useState(false);
   const [recordAudioState, setRecordAudioState] = useState(false);
   const [uploadVisible, setUploadVisible] = useState(false);
@@ -160,7 +162,6 @@ export const Home = ({ navigation }) => {
   };
 
   componentDidMount();
-
   return (
     <View style={styles.home}>
       <View style={styles.big_title_box}>

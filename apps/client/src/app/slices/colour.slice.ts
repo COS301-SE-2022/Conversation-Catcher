@@ -15,7 +15,7 @@ const colourSlice = createSlice({
   name: COLOUR,
   initialState: {colour:"#3F89BE"},
   reducers: {
-    setColour: (state,action) => {state.colour = action.payload; return state}//use param in dispatch
+    setColour: (state,action) => {state.colour = action.payload;return state}//use param in dispatch
   },
 });
 
