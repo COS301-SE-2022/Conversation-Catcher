@@ -37,8 +37,8 @@ export const Home = ({ navigation }) => {
 
   //Graphql syntax trees
   const GET_USER_PDFS = gql`
-    query getForUser {
-      getPDFs(id: "John@test") {
+    query getForUser($email: String!) {
+      getPDFs(id: $email) {
         id
         name
         creationDate
@@ -212,7 +212,7 @@ export const Home = ({ navigation }) => {
 
   function Pdfs() {
     // use redux to het email
-    const { data, loading, error } = useQuery(GET_USER_PDFS);
+    const { data, loading, error } = useQuery(GET_USER_PDFS, {variables: {email: 'John@test'}});
     // console.log(data);
     // console.log(loading);
     // console.log(error);

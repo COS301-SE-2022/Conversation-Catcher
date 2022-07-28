@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 // import * as CommandHandlers from './commands/handlers';
 import {
+  AddPdfCommand,
   SetDownloadedPdfCommand,
   SetNamePdfCommand,
 } from './commands/impl/set-pdf-manager.command';
@@ -13,14 +14,17 @@ export class ApiPdfManagerServiceService {
   constructor(private commandBus: CommandBus, private queryBus: QueryBus) {}
 
   //commands
-  async SetDownloadedPdf(id: string) {
+  async setDownloadedPdf(id: string) {
     return await this.commandBus.execute(new SetDownloadedPdfCommand(id));
   }
-  async SetNamePdf(id: string, name: string) {
+  async setNamePdf(id: string, name: string) {
     return await this.commandBus.execute(new SetNamePdfCommand(id, name));
   }
-  async DeletePdf(id: string) {
+  async deletePdf(id: string) {
     return await this.commandBus.execute(new DeletePdfCommand(id));
+  }
+  async addPdf(email: string, name: string, text: string) {
+    return await this.commandBus.execute(new AddPdfCommand(email, name, text))
   }
   
   //queries
