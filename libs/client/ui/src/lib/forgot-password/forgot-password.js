@@ -31,7 +31,7 @@ export const ForgotPassword = ({ navigation }) =>  {
    else
    {
      return (<TouchableOpacity
-              style={styles.changeMailButton}
+              style={[styles.changeMailButton,{backgroundColor : colourState}, {borderColor : colourState}]}
               onPress={() => setShowSuccessMessage(true)}>
               <View style={styles.changeMailButtonLabel_box}>
                 <Text style={styles.changeMailButtonLabel}>

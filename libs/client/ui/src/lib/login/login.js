@@ -114,7 +114,7 @@ import { selectColour} from 'apps/client/src/app/slices/colour.slice';
         </View>   
       </View>
       <TouchableOpacity
-        style={styles.logInButton}
+        style={[styles.logInButton,{backgroundColor : colourState}, {borderColor : colourState}]}
         onPress={() => {navigation.navigate('Home')}}>
         <View style={styles.logInButtonLabel_box}>
           <Text style={styles.logInButtonLabel}>

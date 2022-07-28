@@ -114,7 +114,7 @@ export const Register = ({ navigation }) =>  {
        </View>   
      </View>
      <TouchableOpacity
-       style={styles.registerButton}
+       style={[styles.registerButton,{backgroundColor : colourState}, {borderColor : colourState}]}
        onPress={() => {navigation.navigate('Home')}}>
        <View style={styles.registerButtonLabel_box}>
          <Text style={styles.registerButtonLabel}>
