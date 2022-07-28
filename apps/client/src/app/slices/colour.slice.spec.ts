@@ -1,4 +1,4 @@
-import { colourReducer, selectColour } from './colour.slice';
+import { selectColour } from './colour.slice';
 import { useSelector } from 'react-redux';
 
 describe('colour reducer', () => {

@@ -5,7 +5,7 @@ import { View, StyleSheet, Text, Image, ImageBackground, Button, Alert, Touchabl
 import BouncyCheckboxGroup, {ICheckboxButton,} from "react-native-bouncy-checkbox-group";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useDispatch } from 'react-redux'
-import {setColour} from '../../../../../../apps/client/src/app/slices/colour.slice'
+import {colourSlice} from '../../../../../../apps/client/src/app/slices/colour.slice'
 import RNRestart from 'react-native-restart';
 
 
@@ -32,7 +32,7 @@ export const ColourPage = ({ navigation}) => {
             data={verticalStaticData}
             style={{ flexDirection: "column" }}
             onChange={(selectedItem) => {
-              dispatch(setColour(selectedItem.fillColor));//dispatches the setColour action with colour payload
+              dispatch(colourSlice.caseReducers.setColour(selectedItem.fillColor));//dispatches the setColour action with colour payload
               RNRestart.Restart();
             }}
           />
