@@ -37,14 +37,29 @@ export class MongoDBAccess {
       dataSource: this.cluster,
       document: { id: name, name: name, text: text, pdf: null },
     });
-
-    //Add elements to the correct user
-
-    return await lastValueFrom(
+    
+    const result = await lastValueFrom(
       this.httpService
         .post(this.url + this.action, data, this.config)
         .pipe(map((res) => res.data.document))
     );
+
+    //Add elements to the correct user
+    const data2 = JSON.stringify({
+      collection: this.pdfCollection,
+      database: this.db,
+      dataSource: this.cluster,
+      update: { $push: { pdfs: name } },
+    });
+
+    const result2 = await lastValueFrom(
+      this.httpService
+        .post(this.url + this.action, data2, this.config)
+        .pipe(map((res) => res.data.document))
+    );
+
+    //change this
+    return result + result2;
   }
 
   async getUserPdfs(userid: string) {
