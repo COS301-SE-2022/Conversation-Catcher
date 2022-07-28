@@ -11,6 +11,7 @@ Multiprocessing moguls - Conversation Catcher - The conversation catcher is used
 [GitHub Project Board](https://github.com/COS301-SE-2022/Conversation-Catcher/projects/1) <br>
 [Team member information](https://github.com/COS301-SE-2022/Conversation-Catcher/wiki/Team-Members) <br>
 [User Manual](https://github.com/COS301-SE-2022/Conversation-Catcher/wiki/User-Manual) <br>
+[Technical installation manual](https://github.com/COS301-SE-2022/Conversation-Catcher/wiki/Technical-installation-manual)<br>
 
 
 
