@@ -54,7 +54,7 @@ const PdfTile = ({id,name,date,thumbnailSource,downloaded,text,showCheck,pdfSour
     return (
       <TouchableOpacity
         style={styles.pdfTile}
-        onPress={() => nav.navigate('PdfView', {text: {text}, name: {name}})}>
+        onPress={() => nav.navigate('PdfView', {id: {id}, text: {text}, name: {name}})}>
         <View style={[styles.thumbnail_containter, {borderColor : colourState}]}>
           <ImageBackground
             style={styles.pdfThumbnail}

@@ -31,22 +31,22 @@ export class MongoDBAccess {
     name = name + '';
     text = text + '';
     this.action = 'insertOne';
-    const data3 = JSON.stringify({
+    let data = JSON.stringify({
       collection: this.pdfCollection,
       database: this.db,
       dataSource: this.cluster,
       document: { id: name, name: name, text: text, pdf: null },
     });
-    
+
     const result = await lastValueFrom(
       this.httpService
-        .post(this.url + this.action, data3, this.config)
+        .post(this.url + this.action, data, this.config)
         .pipe(map((res) => res.data.document))
     );
-    
+
     //First fetch the user
     this.action = 'findOne';
-    const data = JSON.stringify({
+    data = JSON.stringify({
       collection: this.userCollection,
       database: this.db,
       dataSource: this.cluster,
@@ -58,27 +58,28 @@ export class MongoDBAccess {
         .post(this.url + this.action, data, this.config)
         .pipe(map((res) => res.data))
     );
-    
+
     if (r.document == null) return null;
     const arr = r.document.pdfs;
     arr.push(name);
 
     //Add elements to the correct user
-    const data2 = JSON.stringify({
+    this.action = 'updateOne';
+    data = JSON.stringify({
       collection: this.userCollection,
       database: this.db,
       dataSource: this.cluster,
-      filter: { email: mail},
-      update: { pdfs: arr }
+      filter: { email: mail },
+      update: {
+        $set: { pdfs: arr },
+      },
     });
-
     const result2 = await lastValueFrom(
       this.httpService
-        .post(this.url + this.action, data2, this.config)
-        .pipe(map((res) => res.data.document))
+        .post(this.url + this.action, data, this.config)
+        .pipe(map((res) => res.data))
     );
-
-    return result2;
+    return result;
   }
 
   async getUserPdfs(userid: string) {

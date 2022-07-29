@@ -89,8 +89,8 @@ export class ApiPdfManagerApiFeatureResolver {
   // rename the pdf with this id
   @Mutation(() => PdfEntity)
   async renamePDF(
-    @Args('id', { type: () => [String] }) id: string,
-    @Args('name', { type: () => String }) name: string
+    @Args('id') id: string,
+    @Args('name') name: string
   ) {
     const pdfArr = await this.pdfService.setNamePdf(id, name);
 
@@ -102,7 +102,7 @@ export class ApiPdfManagerApiFeatureResolver {
 
   // change if true to false and if false to true and change the file appropraitely
   @Mutation(() => PdfEntity)
-  async downloadedPDF(@Args('id', { type: () => [String] }) id: string) {
+  async downloadedPDF(@Args('id') id: string) {
     const pdfArr = await this.pdfService.setDownloadedPdf(id);
 
     if (pdfArr != undefined) {

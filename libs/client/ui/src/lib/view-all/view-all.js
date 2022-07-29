@@ -23,7 +23,7 @@ import { selectColour } from 'apps/client/src/app/slices/colour.slice';
 import { selectEmail } from 'apps/client/src/app/slices/email.slice';
 import Loading from '../shared-components/loading/loading.js';
 
-export const ViewAll = ({ navigation }) =>  {
+export const ViewAll = ({ navigation }) => {
   const colourState = useSelector(selectColour).colour;
   const [moreVisible, setMoreVisible] = useState(false);
   const [selectMode, setSelectMode] = useState(false);
@@ -167,13 +167,11 @@ export const ViewAll = ({ navigation }) =>  {
     console.log(itemValue);
   }
 
-  function filterPdf(text){
+  function filterPdf(text) {
     const temp = [];
-    for (let i=0; i<initialArr.length; i++)
-      objArr[i] = initialArr[i];
-    for (let i=0; i<objArr.length; i++){
-      if (objArr[i].name.indexOf(text) != -1)
-        temp.push(objArr[i]);
+    for (let i = 0; i < initialArr.length; i++) objArr[i] = initialArr[i];
+    for (let i = 0; i < objArr.length; i++) {
+      if (objArr[i].name.indexOf(text) != -1) temp.push(objArr[i]);
     }
     setObjArr(temp);
     refresh();
@@ -183,7 +181,7 @@ export const ViewAll = ({ navigation }) =>  {
     // use redux to het email
     // const email = useSelector(selectEmail()).email;
     const { data, loading, error } = useQuery(GET_USER_PDFS, {
-      variables: { email: "John@test" },
+      variables: { email: 'John@test' },
     });
     console.log('GetPdfs');
     // console.log(data);
@@ -217,13 +215,14 @@ export const ViewAll = ({ navigation }) =>  {
           id: data.getPDFs[i].id,
         });
       }
-      setObjArr(initialArr);
+      for (let i = 0; i < initialArr.length; i++) objArr[i] = initialArr[i];
     }
     return (
       <ScrollView style={styles.recentPdfTiles}>
         {objArr.map((item, key) => (
           <PdfTile
             key={key}
+            id={item.id}
             name={item.name}
             date={item.creationDate}
             source={''}
@@ -311,8 +310,8 @@ export const ViewAll = ({ navigation }) =>  {
           >
             <View style={styles.moreModalButtonContent}>
               <View style={styles.iconContainer}>
-                <Icon 
-                  style={{color : colourState}}
+                <Icon
+                  style={{ color: colourState }}
                   name="paper-plane-o"
                   size={18}
                 />
@@ -337,8 +336,8 @@ export const ViewAll = ({ navigation }) =>  {
           >
             <View style={styles.moreModalButtonContent}>
               <View style={styles.iconContainer}>
-                <Icon 
-                  style={{color : colourState}}
+                <Icon
+                  style={{ color: colourState }}
                   name="pencil-square-o"
                   size={20}
                 />
@@ -362,11 +361,7 @@ export const ViewAll = ({ navigation }) =>  {
           >
             <View style={styles.moreModalButtonContent}>
               <View style={styles.iconContainer}>
-                <Icon 
-                  style={{color : colourState}}
-                  name="trash-o"
-                  size={20}
-                />
+                <Icon style={{ color: colourState }} name="trash-o" size={20} />
               </View>
               <View style={styles.moreModalButtonText_box}>
                 <Text style={styles.moreModalButtonText}>{'Delete'}</Text>
@@ -375,7 +370,7 @@ export const ViewAll = ({ navigation }) =>  {
           </TouchableOpacity>
         </View>
       </Modal>
-      <Modal 
+      <Modal
         isVisible={bottomModalVisible}
         coverScreen={false}
         hasBackdrop={false}
@@ -386,8 +381,8 @@ export const ViewAll = ({ navigation }) =>  {
           justifyContent: 'flex-end',
         }}
       >
-        <View style={[styles.modalBottomBar, {backgroundColor : colourState}]}>
-          <TouchableOpacity 
+        <View style={[styles.modalBottomBar, { backgroundColor: colourState }]}>
+          <TouchableOpacity
             style={styles.backButton}
             onPress={() => {
               setBottomModalVisible(false);
