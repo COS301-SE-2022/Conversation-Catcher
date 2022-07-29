@@ -154,7 +154,7 @@ export const PdfView = ({ route, navigation }) => {
 
           <TouchableOpacity
             style={styles.moreModalButton}
-            onPress={() => {
+            onPress={async () => {
               setMoreVisible(false);
               console.log('delete');
               await delete({ variables: { id: id.id} });
