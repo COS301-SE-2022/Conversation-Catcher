@@ -60,6 +60,7 @@ export const ViewAll = ({ navigation }) =>  {
   const [refresh, { d, l, e }] = useMutation(RELOAD);
   //variables for object sorting
   const [objArr, setObjArr] = useState([]);
+  const [initialArr, setInitialArr] = useState([]);
 
   const options = {
     title,
@@ -166,11 +167,23 @@ export const ViewAll = ({ navigation }) =>  {
     console.log(itemValue);
   }
 
+  function filterPdf(text){
+    const temp = [];
+    for (let i=0; i<initialArr.length; i++)
+      objArr[i] = initialArr[i];
+    for (let i=0; i<objArr.length; i++){
+      if (objArr[i].name.indexOf(text) != -1)
+        temp.push(objArr[i]);
+    }
+    setObjArr(temp);
+    refresh();
+  }
+
   function Pdfs() {
     // use redux to het email
-    const email = useSelector(selectEmail()).email;
+    // const email = useSelector(selectEmail()).email;
     const { data, loading, error } = useQuery(GET_USER_PDFS, {
-      variables: { email: email },
+      variables: { email: "John@test" },
     });
     console.log('GetPdfs');
     // console.log(data);
@@ -195,7 +208,7 @@ export const ViewAll = ({ navigation }) =>  {
       // console.log(data.getPDFs);
       for (let i = 0; i < data.getPDFs.length; i++) {
         //create deep copy
-        objArr.push({
+        initialArr.push({
           name: data.getPDFs[i].name,
           creationDate: data.getPDFs[i].creationDate,
           downloaded: data.getPDFs[i].downloaded,
@@ -204,6 +217,7 @@ export const ViewAll = ({ navigation }) =>  {
           id: data.getPDFs[i].id,
         });
       }
+      setObjArr(initialArr);
     }
     return (
       <ScrollView style={styles.recentPdfTiles}>
@@ -239,7 +253,7 @@ export const ViewAll = ({ navigation }) =>  {
           <TextInput
             style={styles.searchInput}
             placeholder="Search"
-            onChangeText={() => Alert.alert('click')}
+            onChangeText={(text) => filterPdf(text)}
           />
         </View>
       </View>
