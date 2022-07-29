@@ -70,9 +70,7 @@ export class MongoDBAccess {
       database: this.db,
       dataSource: this.cluster,
       filter: { email: mail },
-      update: {
-        $set: { pdfs: arr },
-      },
+      update: {},
     });
     const result2 = await lastValueFrom(
       this.httpService
@@ -114,14 +112,13 @@ export class MongoDBAccess {
         dataSource: this.cluster,
         filter: { id: pdfID },
       });
-
-      object.push(
-        await lastValueFrom(
-          this.httpService
-            .post(this.url + this.action, data, this.config)
-            .pipe(map((res) => res.data.document))
-        )
+      const temp = await lastValueFrom(
+        this.httpService
+          .post(this.url + this.action, data, this.config)
+          .pipe(map((res) => res.data.document))
       );
+      console.log(temp);
+      if (temp != undefined) object.push(temp);
     }
     return object;
   }
@@ -159,7 +156,7 @@ export class MongoDBAccess {
         .pipe(map((res) => res.data.document))
     );
   }
-
+  //Jon
   async changeDownloaded(id: string) {
     id = id + '';
     this.action = 'findOne';

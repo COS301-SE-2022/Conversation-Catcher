@@ -36,15 +36,16 @@ export class ApiPdfManagerApiFeatureResolver {
     const pdfObj = new PdfEntity();
     pdfObj.id = result.id;
     pdfObj.name = result.name;
-    pdfObj.pdf = result.pdf.toString('ascii');
+    if (result.pdf != null) pdfObj.pdf = result.pdf.toString('ascii');
     pdfObj.creationDate = date.toUTCString();
-    pdfObj.downloaded = result.downloaded;
+    if (result.downloaded != null) pdfObj.downloaded = result.downloaded;
+    else pdfObj.downloaded = false;
     pdfObj.text = result.text;
     return pdfObj;
   }
 
   @Mutation(() => String)
-  async reload(){
+  async reload() {
     return 'reloaded';
   }
   // get a single pdf by its id
@@ -88,10 +89,7 @@ export class ApiPdfManagerApiFeatureResolver {
 
   // rename the pdf with this id
   @Mutation(() => PdfEntity)
-  async renamePDF(
-    @Args('id') id: string,
-    @Args('name') name: string
-  ) {
+  async renamePDF(@Args('id') id: string, @Args('name') name: string) {
     const pdfArr = await this.pdfService.setNamePdf(id, name);
 
     if (pdfArr != undefined) {

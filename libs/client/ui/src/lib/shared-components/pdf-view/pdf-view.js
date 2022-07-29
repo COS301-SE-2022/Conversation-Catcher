@@ -47,7 +47,18 @@ export const PdfView = ({ route, navigation }) => {
     }
   `;
 
+  const DELETE = gql`
+    mutation delete($id: String!) {
+      deletePDF(id: "PDF-2986") {
+        id
+        name
+        text
+      }
+    }
+  `;
+
   const [rename] = useMutation(RENAME);
+  const [delete_pdf] = useMutation(DELETE);
 
   return (
     <View style={styles.viewAllPage}>
@@ -119,7 +130,7 @@ export const PdfView = ({ route, navigation }) => {
               setMoreVisible(false);
               console.log(id);
               name.name = 'otherName';
-              await rename(({variables: {id: id.id, name: 'otherName'}}))
+              await rename({ variables: { id: id.id, name: 'otherName' } });
             }}
           >
             <View style={styles.moreModalButtonContent}>
@@ -143,6 +154,7 @@ export const PdfView = ({ route, navigation }) => {
             onPress={() => {
               setMoreVisible(false);
               console.log('delete');
+              await delete({ variables: { id: id.id} });
             }}
           >
             <View style={styles.moreModalButtonContent}>
