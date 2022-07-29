@@ -202,7 +202,7 @@ export const ViewAll = ({ navigation }) => {
           <Text>{error[0]}</Text>
         </ScrollView>
       );
-    if (objArr[0] === undefined) {
+    if (initialArr[0] === undefined) {
       console.log('objArr');
       // console.log(data.getPDFs);
       for (let i = 0; i < data.getPDFs.length; i++) {
