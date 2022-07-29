@@ -36,13 +36,18 @@ export class ApiPdfManagerApiFeatureResolver {
     const pdfObj = new PdfEntity();
     pdfObj.id = result.id;
     pdfObj.name = result.name;
-    pdfObj.pdf = result.pdf.toString('ascii');
+    if (result.pdf != null) pdfObj.pdf = result.pdf.toString('ascii');
     pdfObj.creationDate = date.toUTCString();
-    pdfObj.downloaded = result.downloaded;
+    if (result.downloaded != null) pdfObj.downloaded = result.downloaded;
+    else pdfObj.downloaded = false;
     pdfObj.text = result.text;
     return pdfObj;
   }
 
+  @Mutation(() => String)
+  async reload() {
+    return 'reloaded';
+  }
   // get a single pdf by its id
   @Query(() => PdfEntity)
   async getPDFById(@Args('id', { type: () => String }) id: string) {
@@ -84,10 +89,7 @@ export class ApiPdfManagerApiFeatureResolver {
 
   // rename the pdf with this id
   @Mutation(() => PdfEntity)
-  async renamePDF(
-    @Args('id', { type: () => [String] }) id: string,
-    @Args('name', { type: () => String }) name: string
-  ) {
+  async renamePDF(@Args('id') id: string, @Args('name') name: string) {
     const pdfArr = await this.pdfService.setNamePdf(id, name);
 
     if (pdfArr != undefined) {
@@ -98,7 +100,7 @@ export class ApiPdfManagerApiFeatureResolver {
 
   // change if true to false and if false to true and change the file appropraitely
   @Mutation(() => PdfEntity)
-  async downloadedPDF(@Args('id', { type: () => [String] }) id: string) {
+  async downloadedPDF(@Args('id') id: string) {
     const pdfArr = await this.pdfService.setDownloadedPdf(id);
 
     if (pdfArr != undefined) {

@@ -19,15 +19,18 @@ import Share from 'react-native-share';
 import { useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { selectColour } from 'apps/client/src/app/slices/colour.slice';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { selectEmail } from 'apps/client/src/app/slices/email.slice';
 import Loading from '../shared-components/loading/loading.js';
 
-export const ViewAll = ({ navigation }) =>  {
+export const ViewAll = ({ navigation }) => {
   const colourState = useSelector(selectColour).colour;
   const [moreVisible, setMoreVisible] = useState(false);
   const [selectMode, setSelectMode] = useState(false);
   const [bottomModalVisible, setBottomModalVisible] = useState(false);
   const [bottomModalType, setBottomModalType] = useState('none');
   const [renameModalVisible, setRenameModalVisible] = useState(false);
+  const [currOrderValue, setCurrOrderValue] = useState('Date');
   const [renameVisible, setRenameVisible] = useState(false);
   // const [refreshPage, setRefreshPage] = useState('');
 
@@ -49,9 +52,16 @@ export const ViewAll = ({ navigation }) =>  {
     }
   `;
 
+  const RELOAD = gql`
+    mutation reload {
+      reload
+    }
+  `;
+
+  const [refresh, { d, l, e }] = useMutation(RELOAD);
   //variables for object sorting
   const [objArr, setObjArr] = useState([]);
-  let currOrderValue = 'Date';
+  const [initialArr, setInitialArr] = useState([]);
 
   const options = {
     title,
@@ -130,38 +140,50 @@ export const ViewAll = ({ navigation }) =>  {
   };
 
   function changeArray(index, itemValue) {
-    if (currOrderValue === itemValue) return;
-    currOrderValue = itemValue;
-    // Sort PDFs array according to currOrderValue
-    switch (currOrderValue) {
-      case 'Name':
-        var temp2 = objArr;
-        temp2.sort((a, b) => {
-          if (a.name < b.name) return -1;
-          return 1;
-        });
-        setObjArr(temp2);
-        console.log(objArr);
-        break;
-      case 'Date':
-        var temp = objArr;
-        temp.sort((a, b) => {
-          if (a.creationDate < b.creationDate) return -1;
-          return 1;
-        });
-        setObjArr(temp);
-        console.log(objArr);
-        break;
+    if (currOrderValue !== itemValue) {
+      setCurrOrderValue(itemValue);
+      // Sort PDFs array according to currOrderValue
+      switch (itemValue) {
+        case 'Name':
+          var temp2 = objArr;
+          temp2.sort((a, b) => {
+            if (a.name < b.name) return -1;
+            return 1;
+          });
+          setObjArr(temp2);
+          console.log(objArr);
+          break;
+        case 'Date':
+          var temp = objArr;
+          temp.sort((a, b) => {
+            if (new Date(a.creationDate) > new Date(b.creationDate)) return -1;
+            return 1;
+          });
+          setObjArr(temp);
+          console.log(objArr);
+          break;
+      }
     }
-    // setRefreshPage('refresh');
-    // objArr.sort((a,b) => {if (a.name < b.name) return -1; return 1})
-    // sortObjects(currOrderValue);
+    refresh();
     console.log(itemValue);
+  }
+
+  function filterPdf(text) {
+    const temp = [];
+    for (let i = 0; i < initialArr.length; i++) objArr[i] = initialArr[i];
+    for (let i = 0; i < objArr.length; i++) {
+      if (objArr[i].name.indexOf(text) != -1) temp.push(objArr[i]);
+    }
+    setObjArr(temp);
+    refresh();
   }
 
   function Pdfs() {
     // use redux to het email
-    const { data, loading, error } = useQuery(GET_USER_PDFS, {variables: {email: 'John@test'}});
+    // const email = useSelector(selectEmail()).email;
+    const { data, loading, error } = useQuery(GET_USER_PDFS, {
+      variables: { email: 'John@test' },
+    });
     console.log('GetPdfs');
     // console.log(data);
     // console.log(loading);
@@ -180,12 +202,12 @@ export const ViewAll = ({ navigation }) =>  {
           <Text>{error[0]}</Text>
         </ScrollView>
       );
-    if (objArr[0] === undefined) {
+    if (initialArr[0] === undefined) {
       console.log('objArr');
       // console.log(data.getPDFs);
       for (let i = 0; i < data.getPDFs.length; i++) {
         //create deep copy
-        objArr.push({
+        initialArr.push({
           name: data.getPDFs[i].name,
           creationDate: data.getPDFs[i].creationDate,
           downloaded: data.getPDFs[i].downloaded,
@@ -194,12 +216,14 @@ export const ViewAll = ({ navigation }) =>  {
           id: data.getPDFs[i].id,
         });
       }
+      for (let i = 0; i < initialArr.length; i++) objArr[i] = initialArr[i];
     }
     return (
       <ScrollView style={styles.recentPdfTiles}>
         {objArr.map((item, key) => (
           <PdfTile
             key={key}
+            id={item.id}
             name={item.name}
             date={item.creationDate}
             source={''}
@@ -229,7 +253,7 @@ export const ViewAll = ({ navigation }) =>  {
           <TextInput
             style={styles.searchInput}
             placeholder="Search"
-            onChangeText={() => Alert.alert('click')}
+            onChangeText={(text) => filterPdf(text)}
           />
         </View>
       </View>
@@ -287,8 +311,8 @@ export const ViewAll = ({ navigation }) =>  {
           >
             <View style={styles.moreModalButtonContent}>
               <View style={styles.iconContainer}>
-                <Icon 
-                  style={{color : colourState}}
+                <Icon
+                  style={{ color: colourState }}
                   name="paper-plane-o"
                   size={18}
                 />
@@ -313,8 +337,8 @@ export const ViewAll = ({ navigation }) =>  {
           >
             <View style={styles.moreModalButtonContent}>
               <View style={styles.iconContainer}>
-                <Icon 
-                  style={{color : colourState}}
+                <Icon
+                  style={{ color: colourState }}
                   name="pencil-square-o"
                   size={20}
                 />
@@ -338,11 +362,7 @@ export const ViewAll = ({ navigation }) =>  {
           >
             <View style={styles.moreModalButtonContent}>
               <View style={styles.iconContainer}>
-                <Icon 
-                  style={{color : colourState}}
-                  name="trash-o"
-                  size={20}
-                />
+                <Icon style={{ color: colourState }} name="trash-o" size={20} />
               </View>
               <View style={styles.moreModalButtonText_box}>
                 <Text style={styles.moreModalButtonText}>{'Delete'}</Text>
@@ -351,7 +371,7 @@ export const ViewAll = ({ navigation }) =>  {
           </TouchableOpacity>
         </View>
       </Modal>
-      <Modal 
+      <Modal
         isVisible={bottomModalVisible}
         coverScreen={false}
         hasBackdrop={false}
@@ -362,8 +382,8 @@ export const ViewAll = ({ navigation }) =>  {
           justifyContent: 'flex-end',
         }}
       >
-        <View style={[styles.modalBottomBar, {backgroundColor : colourState}]}>
-          <TouchableOpacity 
+        <View style={[styles.modalBottomBar, { backgroundColor: colourState }]}>
+          <TouchableOpacity
             style={styles.backButton}
             onPress={() => {
               setBottomModalVisible(false);

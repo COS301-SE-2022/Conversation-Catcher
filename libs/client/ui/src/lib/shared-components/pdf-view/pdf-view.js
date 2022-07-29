@@ -9,14 +9,14 @@ import {
   Alert,
   ScrollView,
   TextInput,
-  Share
+  Share,
 } from 'react-native';
 import { gql, useQuery, useMutation } from '@apollo/client';
 import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
 import ModalDropdown from 'react-native-modal-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
 import { selectColour } from '../../../../../../apps/client/src/app/slices/colour.slice';
 //import Share from 'react-native-share';
 
@@ -26,33 +26,42 @@ export const PdfView = ({ route, navigation }) => {
   const [renameVisible, setRenameVisible] = useState(false);
   const [deleteConfirmVisible, setDeleteConfirmVisible] = useState(false);
 
-  const {text, name} = route.params;
+  const { text, name, id } = route.params;
 
   const onShare = async () => {
     try {
       const result = await Share.share({
-        message:
-          text.text,
-        title: 
-          name.name
+        message: text.text,
+        title: name.name,
       });
     } catch (error) {
       alert(error.message);
     }
   };
 
-  const GET_USER_PDFS = gql`
-    query getForUser {
-      getPDFs(id: "John@test") {
+  const RENAME = gql`
+    mutation setName($id: String!, $name: String!) {
+      renamePDF(id: $id, name: $name) {
         id
         name
-        # creationDate,
         downloaded
-        #pdf
       }
     }
   `;
- 
+
+  const DELETE = gql`
+    mutation delete($id: String!) {
+      deletePDF(id: "PDF-2986") {
+        id
+        name
+        text
+      }
+    }
+  `;
+
+  const [rename] = useMutation(RENAME);
+  const [delete_pdf] = useMutation(DELETE);
+
   return (
     <View style={styles.viewAllPage}>
       <View style={styles.viewAllTopBar}>
@@ -61,30 +70,26 @@ export const PdfView = ({ route, navigation }) => {
         </View>
         <TouchableOpacity
           style={styles.moreButton}
-          onPress={() => {setMoreVisible(true)
-            console.log(text);}}
+          onPress={() => {
+            setMoreVisible(true);
+            console.log(text);
+          }}
         >
           <Icon name="ellipsis-h" color="#344053ff" size={30} />
         </TouchableOpacity>
       </View>
 
       <View style={styles.pdfTextContainer}>
-        <Text style={styles.pdfText}>
-          {text.text}
-        </Text>
+        <Text style={styles.pdfText}>{text.text}</Text>
       </View>
 
       <View style={styles.viewAllBottomBar}>
-        
-
         <TouchableOpacity
           style={styles.backButton}
           onPress={() => navigation.goBack()}
         >
           <Icon name="angle-left" color="#344053ff" size={30} />
         </TouchableOpacity>
-
-      
       </View>
 
       <Modal
@@ -123,8 +128,11 @@ export const PdfView = ({ route, navigation }) => {
 
           <TouchableOpacity
             style={styles.moreModalButton}
-            onPress={() => {
+            onPress={async () => {
               setMoreVisible(false);
+              console.log(id);
+              name.name = 'otherName';
+              await rename({ variables: { id: id.id, name: 'otherName' } });
               setRenameVisible(true);
             }}
           >
@@ -146,18 +154,16 @@ export const PdfView = ({ route, navigation }) => {
 
           <TouchableOpacity
             style={styles.moreModalButton}
-            onPress={() => {
+            onPress={async () => {
               setMoreVisible(false);
+              console.log('delete');
+              await delete({ variables: { id: id.id} });
               setDeleteConfirmVisible(true);
             }}
           >
             <View style={styles.moreModalButtonContent}>
               <View style={styles.iconContainer}>
-                <Icon
-                  style={{ color: colourState }}
-                  name="trash-o"
-                  size={20}
-                />
+                <Icon style={{ color: colourState }} name="trash-o" size={20} />
               </View>
               <View style={styles.moreModalButtonText_box}>
                 <Text style={styles.moreModalButtonText}>{'Delete'}</Text>
@@ -327,7 +333,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 10
+    padding: 10,
   },
   moreButton: {
     flexGrow: 1,
