@@ -1,2 +1,2 @@
-export * from './lib/api-pdf-manager-service-feature.module';
-export * from './lib/api-pdf-manager-service-feature.service';
+export * from './lib/api-pdf-manager-service.service';
+export * from './lib/api-pdf-manager-service.module';

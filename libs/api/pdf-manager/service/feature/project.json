@@ -1,26 +1,20 @@
 {
-  "$schema": "..\\..\\..\\..\\..\\node_modules\\nx\\schemas\\project-schema.json",
-  "sourceRoot": "libs/api/pdf-manager/service/feature/src",
+  "$schema": "..\\..\\..\\..\\node_modules\\nx\\schemas\\project-schema.json",
+  "sourceRoot": "libs/api/pdf-manager/service/src",
   "projectType": "library",
   "targets": {
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
+      "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "libs/api/pdf-manager/service/feature/**/*.ts"
-        ]
+        "lintFilePatterns": ["libs/api/pdf-manager/service/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "coverage/libs/api/pdf-manager/service/feature"
-      ],
+      "outputs": ["coverage/libs/api/pdf-manager/service"],
       "options": {
-        "jestConfig": "libs/api/pdf-manager/service/feature/jest.config.ts",
+        "jestConfig": "libs/api/pdf-manager/service/jest.config.ts",
         "passWithNoTests": true
       }
     }

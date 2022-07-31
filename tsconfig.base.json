@@ -36,9 +36,6 @@
       "@conversation-catcher/api/pdf-manager/repository/data-access": [
         "libs/api/pdf-manager/repository/data-access/src/index.ts"
       ],
-      "@conversation-catcher/api/pdf-manager/service": [
-        "libs/api/pdf-manager/service/src/index.ts"
-      ],
       "@conversation-catcher/api/pdf-manager/service/feature": [
         "libs/api/pdf-manager/service/feature/src/index.ts"
       ],
