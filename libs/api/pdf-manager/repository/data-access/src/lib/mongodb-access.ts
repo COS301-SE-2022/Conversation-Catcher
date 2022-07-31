@@ -25,7 +25,7 @@ export class MongoDBAccess {
   private db = 'PDF';
 
   //Functions
-  async addPdf(mail: string, name: string, text: string) {
+  async addPdf(mail: string, name: string, text: string, date: Date) {
     console.log('reached repository');
     mail = mail + '';
     name = name + '';
@@ -35,7 +35,7 @@ export class MongoDBAccess {
       collection: this.pdfCollection,
       database: this.db,
       dataSource: this.cluster,
-      document: { id: name, name: name, text: text, pdf: null },
+      document: { id: name, name: name, creationDate: date, text: text, pdf: null, downloaded: false },
     });
 
     const result = await lastValueFrom(
