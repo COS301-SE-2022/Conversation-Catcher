@@ -1,7 +1,7 @@
 import { Resolver } from '@nestjs/graphql';
 import { Query, Args, Mutation } from '@nestjs/graphql';
 // import { ApiPdfManagerServiceFeatureService } from "@conversation-catcher/api/pdf-manager/service/feature";
-import { ApiPdfManagerServiceService } from '@conversation-catcher/api/pdf-manager/service';
+import { ApiPdfManagerServiceService } from '@conversation-catcher/api/pdf-manager/service/feature';
 import { PdfEntity } from '@conversation-catcher/api/pdf-manager/api/data-access';
 import { text } from 'stream/consumers';
 //yarn nx run api-pdf-manager-api-feature:test

@@ -1,7 +1,7 @@
 export class GetPdfByIdQuery {
-    constructor(public readonly id) {}
+  constructor(public readonly id) {}
 }
 
 export class GetPdfsQuery {
-    constructor(public readonly userid) {}
+  constructor(public readonly userid) {}
 }
