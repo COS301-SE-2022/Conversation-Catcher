@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ApiPdfManagerApiFeatureResolver } from './api-pdf-manager-api-feature.resolver';
-import { ApiPdfManagerServiceService } from '@conversation-catcher/api/pdf-manager/service';
+import { ApiPdfManagerServiceService } from '@conversation-catcher/api/pdf-manager/service/feature';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 
 describe('ApiPdfManagerApiFeatureResolver', () => {
