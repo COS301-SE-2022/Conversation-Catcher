@@ -13,6 +13,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { selectColour } from 'apps/client/src/app/slices/colour.slice';
+import auth from '@react-native-firebase/auth';
 
 export const Login = ({ navigation }) => {
   const colourState = useSelector(selectColour).colour;
@@ -128,16 +129,16 @@ export const Login = ({ navigation }) => {
           { borderColor: colourState },
         ]}
         onPress={() => {
-          // auth
-          //   .signInWithEmailAndPassword(email, password)
-          //   .then(() => navigation.navigate('Home'))
-          //   .catch((error) => {
-          //     if (error.code === 'auth/invalid-password') {
-          //       console.log('The provided password is invalid!');
-          //     }});
+          auth()
+            .signInWithEmailAndPassword(email, password)
+            .then(() => navigation.navigate('Home'))
+            .catch((error) => {
+              if (error.code === 'auth/invalid-password') {
+                console.log('The provided password is invalid!');
+              }});
           console.log(email);
           console.log(password);
-          navigation.navigate('Home');
+          // navigation.navigate('Home');
         }}
       >
         <View style={styles.logInButtonLabel_box}>
