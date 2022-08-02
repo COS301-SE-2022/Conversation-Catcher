@@ -35,6 +35,8 @@
     "react-native-restart": "*",
     "react-redux": "*",
     "@apollo/client": "*",
-    "lottie-react-native": "*"
+    "lottie-react-native": "*",
+    "@react-native-firebase/auth": "*",
+    "@react-native-firebase/app": "*"
   }
 }

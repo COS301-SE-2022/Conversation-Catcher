@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "309973698598",
+    "project_id": "conversation-catcher",
+    "storage_bucket": "conversation-catcher.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:309973698598:android:2057f28c108f158c68bee7",
+        "android_client_info": {
+          "package_name": "com.client"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "309973698598-jqq01ccgct3r7fp9splnvqgkpqms3iem.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBT9VnI1x1dsbbzDobIzqytIFOtMBin8S4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "309973698598-jqq01ccgct3r7fp9splnvqgkpqms3iem.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

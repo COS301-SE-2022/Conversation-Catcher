@@ -1,71 +1,81 @@
- import React, {useState} from 'react';
- import { View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity, Alert, TextInput } from 'react-native';
- import Icon from 'react-native-vector-icons/FontAwesome';
- import { useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import {
+  View,
+  StyleSheet,
+  Text,
+  Image,
+  ImageBackground,
+  TouchableOpacity,
+  Alert,
+  TextInput,
+} from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectColour} from 'apps/client/src/app/slices/colour.slice';
- 
- export const Login = ({ navigation }) =>  {
+import { selectColour } from 'apps/client/src/app/slices/colour.slice';
+import auth from '@react-native-firebase/auth';
+
+export const Login = ({ navigation }) => {
   const colourState = useSelector(selectColour).colour;
   const [showMailHint, setShowMailHint] = useState(false);
   const [showPasswordHint, setShowPasswordHint] = useState(false);
-  function MailHint(){
-    if (showMailHint)
-    {
-      return (<Text style={styles.hintText}>
-                {'This is an email hint text to help the user.'}
-              </Text>)
-    }
-    else
-    {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  function MailHint() {
+    if (showMailHint) {
+      return (
+        <Text style={styles.hintText}>
+          {'This is an email hint text to help the user.'}
+        </Text>
+      );
+    } else {
       return null;
     }
   }
-  function 
-  PasswordHint(){
-    if (showPasswordHint)
-    {
-      return (<Text style={styles.hintText}>
-                {'This is a password hint text to help the user.'}
-              </Text>)
-    }
-    else
-    {
+  function PasswordHint() {
+    if (showPasswordHint) {
+      return (
+        <Text style={styles.hintText}>
+          {'This is a password hint text to help the user.'}
+        </Text>
+      );
+    } else {
       return null;
     }
   }
   return (
     <View style={styles.logInPage}>
       <View style={styles.big_title_box}>
-        <Text style={styles.big_title}>
-          {'Log in to your account'}
-        </Text>
+        <Text style={styles.big_title}>{'Log in to your account'}</Text>
       </View>
       <View style={styles.inputsGroup}>
         <View style={styles.inputsItem}>
           <View style={styles.inputLabel_box}>
-            <Text style={styles.inputLabel}>
-              {'Email'}
-            </Text>
-          </View>  
+            <Text style={styles.inputLabel}>{'Email'}</Text>
+          </View>
           <View style={styles.inputField}>
             <View style={styles.inputText_box}>
               <View style={styles.inputIcon}>
-                <Icon 
-                  style={{color: colourState}}
+                <Icon
+                  style={{ color: colourState }}
                   name="envelope"
                   size={15}
                 />
               </View>
-              <TextInput style={styles.inputText}
-                placeholder='johnsmith@gmail.com'
+              <TextInput
+                style={styles.inputText}
+                placeholder="johnsmith@gmail.com"
                 underlineColorAndroid="transparent"
+                onChangeText={(text) => {
+                  setEmail(text);
+                }}
               />
-              <TouchableOpacity 
+              <TouchableOpacity
                 style={styles.helpIcon}
-                onPress={() => setShowMailHint(!showMailHint)}>
-                <Icon 
-                  style={{color: '#d0d5ddff'}}
+                onPress={() => setShowMailHint(!showMailHint)}
+              >
+                <Icon
+                  style={{ color: '#d0d5ddff' }}
                   name="question-circle-o"
                   size={17}
                 />
@@ -73,90 +83,105 @@ import { selectColour} from 'apps/client/src/app/slices/colour.slice';
             </View>
           </View>
           <View style={styles.hintText_box}>
-            <MailHint/>
+            <MailHint />
           </View>
         </View>
         <View style={styles.inputsItem}>
-        <View style={styles.inputLabel_box}>
-          <Text style={styles.inputLabel}>
-            {'Password'}
-          </Text>
-        </View> 
+          <View style={styles.inputLabel_box}>
+            <Text style={styles.inputLabel}>{'Password'}</Text>
+          </View>
           <View style={styles.inputField}>
             <View style={styles.inputText_box}>
               <View style={styles.inputIcon}>
-                <Icon 
-                  style={{color : colourState}}
-                  name="lock"
-                  size={21}
-                />
+                <Icon style={{ color: colourState }} name="lock" size={21} />
               </View>
-              <TextInput style={styles.inputText}
-                placeholder='*******************'
+              <TextInput
+                style={styles.inputText}
+                placeholder="*******************"
                 underlineColorAndroid="transparent"
+                onChangeText={(text) => {
+                  setPassword(text);
+                }}
               />
-              <TouchableOpacity 
+              <TouchableOpacity
                 style={styles.helpIcon}
-                onPress={() => setShowPasswordHint(!showPasswordHint)}>
-                <Icon 
-                  style={{color: '#d0d5ddff'}}
+                onPress={() => setShowPasswordHint(!showPasswordHint)}
+              >
+                <Icon
+                  style={{ color: '#d0d5ddff' }}
                   name="question-circle-o"
                   size={17}
                 />
               </TouchableOpacity>
             </View>
-          </View> 
+          </View>
           <View style={styles.hintText_box}>
             <Text style={styles.hintText}>
-              <PasswordHint/>
+              <PasswordHint />
             </Text>
           </View>
-        </View>   
+        </View>
       </View>
       <TouchableOpacity
-        style={[styles.logInButton,{backgroundColor : colourState}, {borderColor : colourState}]}
-        onPress={() => {navigation.navigate('Home')}}>
+        style={[
+          styles.logInButton,
+          { backgroundColor: colourState },
+          { borderColor: colourState },
+        ]}
+        onPress={() => {
+          auth()
+            .signInWithEmailAndPassword(email, password)
+            .then(() => navigation.navigate('Home'))
+            .catch((error) => {
+              if (error.code === 'auth/invalid-password') {
+                console.log('The provided password is invalid!');
+              }});
+          console.log(email);
+          console.log(password);
+          // navigation.navigate('Home');
+        }}
+      >
         <View style={styles.logInButtonLabel_box}>
-          <Text style={styles.logInButtonLabel}>
-            {'Log in'}
-          </Text>
+          <Text style={styles.logInButtonLabel}>{'Log in'}</Text>
         </View>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.smallGreyButton}
-        onPress={() => {navigation.navigate('ForgotPassword')}}>
+        onPress={() => {
+          navigation.navigate('ForgotPassword');
+        }}
+      >
         <View style={styles.smallGreyText_box}>
-          <Text style={styles.smallGreyText}>
-            {'Forgot your password?'}
-          </Text>
+          <Text style={styles.smallGreyText}>{'Forgot your password?'}</Text>
         </View>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.smallGreyButton}
-        onPress={() => {navigation.navigate('Register')}}>
+        onPress={() => {
+          navigation.navigate('Register');
+        }}
+      >
         <View style={styles.smallGreyText_box}>
-          <Text style={styles.smallGreyText}>
-            {"Don’t have an account?"}
-          </Text>
+          <Text style={styles.smallGreyText}>{'Don’t have an account?'}</Text>
         </View>
       </TouchableOpacity>
-     </View>
-   );
- }
+    </View>
+  );
+};
 
- export default Login;
- 
- Login.inStorybook = true;
- Login.fitScreen = false;
- //Login.scrollHeight = 844;
- 
- const styles = StyleSheet.create({
+export default Login;
+
+Login.inStorybook = true;
+Login.fitScreen = false;
+//Login.scrollHeight = 844;
+
+const styles = StyleSheet.create({
   logInPage: {
     backgroundColor: '#ffffffff',
     overflow: 'hidden',
     flexGrow: 1,
     flexDirection: 'column',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   big_title: {
     color: '#344053ff',
@@ -168,7 +193,7 @@ import { selectColour} from 'apps/client/src/app/slices/colour.slice';
     fontStyle: 'normal',
     fontFamily: 'System' /* Jaldi */,
     paddingHorizontal: 0,
-    paddingVertical: 0
+    paddingVertical: 0,
   },
   big_title_box: {
     alignItems: 'center',
@@ -177,13 +202,13 @@ import { selectColour} from 'apps/client/src/app/slices/colour.slice';
     height: '12%',
     minHeight: 28,
     width: '100%',
-    padding: 5
+    padding: 5,
   },
   inputsGroup: {
     width: '85%',
   },
   inputsItem: {
-    padding: 7
+    padding: 7,
   },
   inputLabel: {
     color: '#344053ff',
@@ -194,14 +219,14 @@ import { selectColour} from 'apps/client/src/app/slices/colour.slice';
     fontWeight: '500',
     fontStyle: 'normal',
     fontFamily: 'System' /* Inter */,
-    paddingBottom: 5
+    paddingBottom: 5,
   },
   inputLabel_box: {
     flexGrow: 1,
     flexDirection: 'row',
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
-    paddingBottom: 5
+    paddingBottom: 5,
   },
   inputField: {
     //flexGrow: 1,
@@ -217,7 +242,7 @@ import { selectColour} from 'apps/client/src/app/slices/colour.slice';
     shadowOpacity: 0.2173913043478261,
     shadowOffset: {
       width: 0,
-      height: 1
+      height: 1,
     },
     flexDirection: 'row',
     alignItems: 'center',
@@ -228,8 +253,8 @@ import { selectColour} from 'apps/client/src/app/slices/colour.slice';
     //flexShrink: 1,
     //aspectRatio: 1,
     justifyContent: 'center',
-    alignItems: 'center', 
-    paddingHorizontal: 10
+    alignItems: 'center',
+    paddingHorizontal: 10,
   },
   inputText: {
     color: '#344053ff',
@@ -249,7 +274,7 @@ import { selectColour} from 'apps/client/src/app/slices/colour.slice';
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    margin: 5
+    margin: 5,
   },
   helpIcon: {
     resizeMode: 'contain',
@@ -259,7 +284,7 @@ import { selectColour} from 'apps/client/src/app/slices/colour.slice';
     marginLeft: 0,
     width: 16,
     minWidth: 16,
-    marginRight: 5
+    marginRight: 5,
   },
   hintText: {
     color: '#667084ff',
@@ -276,7 +301,7 @@ import { selectColour} from 'apps/client/src/app/slices/colour.slice';
     flexDirection: 'row',
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
-    margin: 5
+    margin: 5,
   },
   logInButton: {
     width: '80%',
@@ -293,8 +318,8 @@ import { selectColour} from 'apps/client/src/app/slices/colour.slice';
     shadowOpacity: 0.2173913043478261,
     shadowOffset: {
       width: 0,
-      height: 1
-    }
+      height: 1,
+    },
   },
   logInButtonLabel: {
     color: '#ffffffff',
@@ -306,13 +331,13 @@ import { selectColour} from 'apps/client/src/app/slices/colour.slice';
     fontStyle: 'normal',
     fontFamily: 'System' /* Jaldi */,
     paddingHorizontal: 0,
-    paddingVertical: 0
+    paddingVertical: 0,
   },
   logInButtonLabel_box: {
     flexGrow: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   smallGreyButton: {
     backgroundColor: '#ffffffff',
@@ -333,7 +358,6 @@ import { selectColour} from 'apps/client/src/app/slices/colour.slice';
     flexDirection: 'row',
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
-    margin: 5
+    margin: 5,
   },
- });
- 
+});
