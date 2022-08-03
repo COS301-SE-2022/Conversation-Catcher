@@ -17,12 +17,16 @@ export const pdfSlice = createSlice({
         if (item === action.payload) state.splice(index,1)
       })
       return state;
+    },
+    clearPDFs: (state,action) => {
+      state = [];
+      return state;
     }
   },
 });
 
 export const {actions, reducer} = pdfSlice
 
-export const {addPDF, removePDF} = actions
+export const {addPDF, removePDF, clearPDFs} = actions
 
 export const selectPDFS = (state:[]) => state
