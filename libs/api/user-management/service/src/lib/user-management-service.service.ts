@@ -4,7 +4,7 @@ import { SignUpCommand } from "./commands/impl/sign-up.command";
 import { logInQuery } from "./queries/impl/log-in.query";
 
 @Injectable()
-export class ApiAuthenticationServiceService {
+export class UserManagementServiceService {
   constructor(private commandBus: CommandBus, private queryBus: QueryBus) {}
 
   //queries

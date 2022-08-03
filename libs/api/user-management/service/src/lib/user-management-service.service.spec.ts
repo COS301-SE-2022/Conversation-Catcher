@@ -1,31 +1,31 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ApiAuthenticationServiceService } from './api-authentication-service.service';
-import { ApiAuthenticationRepositoryDataAccessModule } from '@conversation-catcher/api/authentication/repository/data-access';
+import { UserManagementServiceService } from './user-management-service.service';
+import { UserManagementRepositoryDataAccessModule } from '@conversation-catcher/api/user-management/repository/data-access';
 import { CqrsModule } from '@nestjs/cqrs';
 import * as CommandHandlers from './commands/handlers';
 import * as QueryHandlers from './queries/handlers';
 
-describe('ApiAuthenticationServiceService', () => {
-  let service: ApiAuthenticationServiceService;
+describe('UserManagementServiceService', () => {
+  let service: UserManagementServiceService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
         CqrsModule,
-        ApiAuthenticationRepositoryDataAccessModule,
+        UserManagementRepositoryDataAccessModule,
       ],
       providers: [
-        ApiAuthenticationServiceService,
+        UserManagementServiceService,
         CommandHandlers.SignUpHandler,
         QueryHandlers.logInHandler,
       ],
       exports: [
-        ApiAuthenticationServiceService,
+        UserManagementServiceService,
       ],
     }).compile();
 
-    service = module.get<ApiAuthenticationServiceService>(
-      ApiAuthenticationServiceService
+    service = module.get<UserManagementServiceService>(
+      UserManagementServiceService
     );
   });
 

@@ -1,1 +1,1 @@
-export * from './lib/api-authentication-api-feature.module';
+export * from './lib/user-management-api-feature.module';

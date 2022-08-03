@@ -1,11 +1,11 @@
 import { Resolver } from '@nestjs/graphql';
 import { Query, Args, Mutation } from '@nestjs/graphql';
-import { ApiAuthenticationServiceService } from '@conversation-catcher/api/user-management/service';
+import { UserManagementServiceService } from '@conversation-catcher/api/user-management/service';
 
 @Resolver()
-export class ApiAuthenticationApiFeatureResolver {
+export class UserManagementApiFeatureResolver {
     constructor(
-        private authService: ApiAuthenticationServiceService
+        private authService: UserManagementServiceService
     ) {
         this.errorObj = '0';
     }

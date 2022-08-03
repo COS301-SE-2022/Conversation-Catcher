@@ -8,4 +8,4 @@ import { HttpModule } from '@nestjs/axios';
   exports: [MongoDBAccess],
   imports: [HttpModule]
 })
-export class ApiAuthenticationRepositoryDataAccessModule {}
+export class UserManagementRepositoryDataAccessModule {}

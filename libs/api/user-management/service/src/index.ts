@@ -1,2 +1,2 @@
-export * from './lib/api-authentication-service.module';
-export * from './lib/api-authentication-service.service';
+export * from './lib/user-management-service.module';
+export * from './lib/user-management-service.service';

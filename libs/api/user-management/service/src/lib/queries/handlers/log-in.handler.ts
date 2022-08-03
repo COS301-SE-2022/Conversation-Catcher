@@ -1,6 +1,6 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { logInQuery } from '../impl';
-import { MongoDBAccess } from '@conversation-catcher/api/authentication/repository/data-access';
+import { MongoDBAccess } from '@conversation-catcher/api/user-management/repository/data-access';
 
 @QueryHandler(logInQuery)
 export class logInHandler implements IQueryHandler<logInQuery> {
