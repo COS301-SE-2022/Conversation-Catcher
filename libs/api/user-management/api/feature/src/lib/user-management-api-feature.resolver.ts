@@ -13,8 +13,8 @@ export class UserManagementApiFeatureResolver {
   }
   private errorObj;
 
-  setUser(result){
-    const user = new UserEntity()
+  setUser(result) {
+    const user = new UserEntity();
     user.email = result.email;
     user.colour = result.colour;
     user.pdfs = result.pdfs;
@@ -22,7 +22,7 @@ export class UserManagementApiFeatureResolver {
   }
 
   @Query(() => UserEntity)
-  async getUser(@Args('email', { type: () => String }) email: string) {
+  async getUser(@Args('email') email: string) {
     const res = await this.authService.getUser(email);
     if (res != undefined) {
       return this.setUser(res);
@@ -31,11 +31,15 @@ export class UserManagementApiFeatureResolver {
   }
 
   @Mutation(() => UserEntity)
-  async addUser(@Args('email', { type: () => [String] }) email: string) {
-    const id = await this.authService.addUser(email);
-
-    if (id != undefined) {
-      return id;
+  async addUser(@Args('email') email: string) {
+    const res = await this.authService.addUser(email);
+    console.log(res);
+    if (res.insertedId != undefined) {
+      const user = new UserEntity();
+      user.email = email;
+      user.pdfs = [];
+      user.colour = '#3f89beff';
+      return user;
     }
     return this.errorObj;
   }

@@ -9,7 +9,6 @@ export class addUserHandler implements ICommandHandler<addUserCommand> {
   constructor(private repository: MongoDBAccess) {}
 
   async execute({ email }: addUserCommand) {
-    console.log('Running command for setname');
     return await this.repository.addUser(email);
   }
 }
