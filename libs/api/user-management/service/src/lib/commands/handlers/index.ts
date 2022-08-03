@@ -1,1 +1,1 @@
-export * from './sign-up.handler'
+export * from './add-user.handler'

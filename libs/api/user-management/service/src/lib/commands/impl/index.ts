@@ -1,1 +1,1 @@
-export * from './sign-up.command'
+export * from './add-user.command'

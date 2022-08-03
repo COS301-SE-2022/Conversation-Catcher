@@ -1,19 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { SignUpCommand } from "./commands/impl/sign-up.command";
-import { logInQuery } from "./queries/impl/log-in.query";
+import { addUserCommand } from "./commands/impl/add-user.command";
+import { getUserQuery } from "./queries/impl/get-user.query";
 
 @Injectable()
 export class UserManagementServiceService {
   constructor(private commandBus: CommandBus, private queryBus: QueryBus) {}
 
   //queries
-  async logIn(email: string) {
-    return await this.queryBus.execute(new logInQuery(email));
+  async getUser(email: string) {
+    return await this.queryBus.execute(new getUserQuery(email));
   }
 
   //commands
-  async signUp(email: string) {
-    return await this.commandBus.execute(new SignUpCommand(email));
+  async addUser(email: string) {
+    return await this.commandBus.execute(new addUserCommand(email));
   }
 }

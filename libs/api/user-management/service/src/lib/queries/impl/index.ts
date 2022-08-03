@@ -1,1 +1,1 @@
-export * from './log-in.query'
+export * from './get-user.query'

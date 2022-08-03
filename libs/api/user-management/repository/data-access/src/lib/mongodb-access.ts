@@ -24,12 +24,12 @@ export class MongoDBAccess {
 	private db = 'PDF';
 
 	//Functions
-	async logIn(email: string) {
+	async getUser(email: string) {
 		this.action = 'findOne';
 
 		const data = JSON.stringify({
 			//the data object passed to the http request which specifies what should be returned
-			collection: this.pdfCollection,
+			collection: this.userCollection,
 			database: this.db,
 			dataSource: this.cluster,
 			filter: { email: email },
@@ -38,36 +38,28 @@ export class MongoDBAccess {
 		//Returns the result of the httpRequest
 		return await lastValueFrom(
 			this.httpService.post(this.url + this.action, data, this.config).pipe(
-				tap((res) => console.log(res.status)),
 				map((res) => res.data.document)
 			)
 		);
 	}
 
-	async signUp(email: string) {
-		const url = 'https://data.mongodb-api.com/app/data-dtzbr/endpoint/data/v1/action/insertOne';
+	async addUser(email: string) {
+    this.action = 'insertOne'
 		const data = JSON.stringify({
-			collection: 'Users',
-			database: 'PDF',
-			dataSource: 'Cluster0',
+			collection: this.userCollection,
+			database: this.db,
+			dataSource: this.cluster,
 			document: {
 				email: email,
-				pdfs: ['id'],
+				pdfs: [],
+        colour: '#3f89beff'
 			},
 		});
 
-		const config = {
-			method: 'post',
-			headers: {
-				'Content-Type': 'application/json',
-				'Access-Control-Request-Headers': '*',
-				'api-key': GlobalKey.key,
-			},
-		};
 		return await lastValueFrom(
-			this.httpService.post(url, data, config).pipe(
+			this.httpService.post(this.url + this.action, data, this.config).pipe(
 				tap((res) => console.log(res.status)),
-				map((res) => res.data)
+				map((res) => res.data.document)
 			)
 		);
 	}

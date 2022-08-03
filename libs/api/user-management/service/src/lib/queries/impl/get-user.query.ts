@@ -1,4 +1,4 @@
-export class logInQuery {
+export class getUserQuery {
     constructor(
         public readonly email?: string,
       ) {}
