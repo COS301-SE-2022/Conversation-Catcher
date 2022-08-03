@@ -14,6 +14,7 @@ import { useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { selectColour } from 'apps/client/src/app/slices/colour.slice';
 import auth from '@react-native-firebase/auth';
+import { gql, useMutation } from '@apollo/client';
 
 export const Register = ({ navigation }) => {
   const colourState = useSelector(selectColour).colour;
@@ -21,6 +22,20 @@ export const Register = ({ navigation }) => {
   const [showPasswordHint, setShowPasswordHint] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  //graphql query tree
+  const ADDUSER = gql`
+    mutation addUser($email: String!) {
+      addUser(email: $email) {
+        email
+        colour
+        pdfs
+      }
+    }
+  `;
+
+  const [addUser, { data, loading, error }] = useMutation(ADDUSER);
+
   function MailHint() {
     if (showMailHint) {
       return (
@@ -131,7 +146,11 @@ export const Register = ({ navigation }) => {
         onPress={() => {
           auth()
             .createUserWithEmailAndPassword(email, password)
-            .then(() => navigation.navigate('Home'))
+            .then(() => {
+              //assign result to store
+              addUser({ variables: { email: email } });
+              navigation.navigate('Home');
+            })
             .catch((error) => {
               if (error.code === 'auth/email-already-in-use') {
                 console.log('That email address is already in use!');
