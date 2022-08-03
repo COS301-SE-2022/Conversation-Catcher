@@ -15,14 +15,14 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@conversation-catcher/api/authentication/api/feature": [
-        "libs/api/authentication/api/feature/src/index.ts"
+      "@conversation-catcher/api/user-management/api/feature": [
+        "libs/api/user-management/api/feature/src/index.ts"
       ],
-      "@conversation-catcher/api/authentication/repository/data-access": [
-        "libs/api/authentication/repository/data-access/src/index.ts"
+      "@conversation-catcher/api/user-management/repository/data-access": [
+        "libs/api/user-management/repository/data-access/src/index.ts"
       ],
-      "@conversation-catcher/api/authentication/service": [
-        "libs/api/authentication/service/src/index.ts"
+      "@conversation-catcher/api/user-management/service": [
+        "libs/api/user-management/service/src/index.ts"
       ],
       "@conversation-catcher/api/pdf-manager/api": [
         "libs/api/pdf-manager/api/src/index.ts"

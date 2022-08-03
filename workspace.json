@@ -2,9 +2,9 @@
   "version": 2,
   "projects": {
     "api": "apps/api",
-    "api-authentication-api-feature": "libs/api/authentication/api/feature",
-    "api-authentication-repository-data-access": "libs/api/authentication/repository/data-access",
-    "api-authentication-service": "libs/api/authentication/service",
+    "api-user-management-api-feature": "libs/api/user-management/api/feature",
+    "api-user-management-repository-data-access": "libs/api/user-management/repository/data-access",
+    "api-user-management-service": "libs/api/user-management/service",
     "api-pdf-manager-api-data-access": "libs/api/pdf-manager/api/data-access",
     "api-pdf-manager-api-feature": "libs/api/pdf-manager/api/feature",
     "api-pdf-manager-repository-data-access": "libs/api/pdf-manager/repository/data-access",

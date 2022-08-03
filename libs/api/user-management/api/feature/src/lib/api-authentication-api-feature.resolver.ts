@@ -1,6 +1,6 @@
 import { Resolver } from '@nestjs/graphql';
 import { Query, Args, Mutation } from '@nestjs/graphql';
-import { ApiAuthenticationServiceService } from '@conversation-catcher/api/authentication/service';
+import { ApiAuthenticationServiceService } from '@conversation-catcher/api/user-management/service';
 
 @Resolver()
 export class ApiAuthenticationApiFeatureResolver {
