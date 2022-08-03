@@ -35,7 +35,6 @@ import { configureStore } from '@reduxjs/toolkit';
 const store = configureStore({
     reducer: {
         colour:colourReducer,
-        email:emailReducer,
         pdf:pdfReducer
     }
 })
