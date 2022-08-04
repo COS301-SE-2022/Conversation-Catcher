@@ -149,7 +149,7 @@ export const Register = ({ navigation }) => {
         onPress={() => {
           auth()
             .createUserWithEmailAndPassword(email, password)
-            .then(() => {
+            .then(async () => {
               dispatch(setUser(await addUser({ variables: { email: email } })))
               navigation.navigate('Home');
             })

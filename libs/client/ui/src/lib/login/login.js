@@ -20,7 +20,8 @@ import { gql, useLazyQuery } from '@apollo/client';
 
 export const Login = ({ navigation }) => {
   const dispatch = useDispatch();
-  const colourState = useSelector(selectColour).colour;
+  const colourState = useSelector(selectColour);
+  console.log(colourState);
   const [showMailHint, setShowMailHint] = useState(false);
   const [showPasswordHint, setShowPasswordHint] = useState(false);
   const [email, setEmail] = useState('');
@@ -149,8 +150,8 @@ export const Login = ({ navigation }) => {
         onPress={() => {
           auth()
             .signInWithEmailAndPassword(email, password)
-            .then(() => {
-              dispatch(setUser(getUser({ variables: { email: email } })));
+            .then(async () => {
+              dispatch(setUser(await getUser({ variables: { email: email } })));
               navigation.navigate('Home');
             })
             .catch((error) => {
