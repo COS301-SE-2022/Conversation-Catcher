@@ -16,8 +16,8 @@ describe('UserManagementServiceService', () => {
       ],
       providers: [
         UserManagementServiceService,
-        CommandHandlers.SignUpHandler,
-        QueryHandlers.logInHandler,
+        CommandHandlers.addUserHandler,
+        QueryHandlers.getUserHandler,
       ],
       exports: [
         UserManagementServiceService,
