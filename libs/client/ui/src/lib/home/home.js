@@ -22,9 +22,12 @@ import DocumentPicker, { types } from 'react-native-document-picker';
 import { connect, useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { selectColour } from 'apps/client/src/app/slices/user.slice';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { selectEmail } from 'apps/client/src/app/slices/email.slice';
 
 export const Home = ({ navigation }) => {
   const colourState = useSelector(selectColour).colour;
+  const emailState = useSelector(selectEmail);
   const [recordingStopVisible, setRecordingStopVisible] = useState(false);
   const [recordAudioState, setRecordAudioState] = useState(false);
   const [uploadVisible, setUploadVisible] = useState(false);
@@ -215,6 +218,7 @@ export const Home = ({ navigation }) => {
 
   function Pdfs() {
     // use redux to het email
+    console.log(emailState);
     const { data, loading, error } = useQuery(GET_USER_PDFS, {variables: {email: 'John@test'}});
     // console.log(data);
     // console.log(loading);
