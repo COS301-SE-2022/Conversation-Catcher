@@ -1,8 +1,6 @@
 import {
   createSlice,
 } from '@reduxjs/toolkit';
-import { act } from '@testing-library/react-native';
-import { stat } from 'fs';
 
 export const USER = 'user';
 
