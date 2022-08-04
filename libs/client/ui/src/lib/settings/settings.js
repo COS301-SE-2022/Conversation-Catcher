@@ -15,6 +15,7 @@ import { gql } from '@apollo/client';
 import { useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { selectColour} from 'apps/client/src/app/slices/colour.slice';
+import auth from '@react-native-firebase/auth';
 
 
 export const SettingsPage = ({ navigation }) => {
@@ -127,7 +128,7 @@ export const SettingsPage = ({ navigation }) => {
 
         <TouchableOpacity
           style={styles.settingsButton}
-          onPress={() => navigation.navigate('Login')}
+          onPress={() => auth().signOut().then(() => navigation.navigate('Login')) }
         >
           <View style={styles.settingsButtonContent}>
             <View style={styles.iconContainer}>
@@ -144,10 +145,10 @@ export const SettingsPage = ({ navigation }) => {
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity  
-        style={styles.backButton} 
+      <TouchableOpacity
+        style={styles.backButton}
         onPress={() => navigation.navigate('Home')}>
-          <Icon 
+          <Icon
             name="angle-left"
             color={colourState}
             size={28}

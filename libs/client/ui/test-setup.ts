@@ -12,8 +12,8 @@ jest.mock('react-native-audio-record', () => {
   };
 });
 
-// jest.mock('@apollo/client', () => {
-//   return {
-//     open: jest.fn(),
-//   };
-// });
+jest.mock('@react-native-firebase/auth', () => {
+  return {
+    open: jest.fn(),
+  };
+});

@@ -4,6 +4,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ApiStudentExploreApiFeatureModule as PdfManager } from '@conversation-catcher/api/pdf-manager/api/feature';
 import { ApiSummariseTextApiModule as Summariser} from '@conversation-catcher/api/summarise-text/api'
 import { ApiSpeechToTextApiModule as SpeechToText } from '@conversation-catcher/api/speech-to-text/api';
+import { UserManagementApiFeatureModule as UserManagement } from '@conversation-catcher/api/user-management/api/feature'
 
 @Module({
   controllers: [],
@@ -17,7 +18,8 @@ import { ApiSpeechToTextApiModule as SpeechToText } from '@conversation-catcher/
     }),
     PdfManager,
     Summariser,
-    SpeechToText
+    SpeechToText,
+    UserManagement
   ],
 })
 export class ApiShellModule {}

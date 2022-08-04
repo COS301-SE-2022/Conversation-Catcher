@@ -2,9 +2,6 @@
   "version": 2,
   "projects": {
     "api": "apps/api",
-    "api-authentication-api-feature": "libs/api/authentication/api/feature",
-    "api-authentication-repository-data-access": "libs/api/authentication/repository/data-access",
-    "api-authentication-service": "libs/api/authentication/service",
     "api-pdf-manager-api-data-access": "libs/api/pdf-manager/api/data-access",
     "api-pdf-manager-api-feature": "libs/api/pdf-manager/api/feature",
     "api-pdf-manager-repository-data-access": "libs/api/pdf-manager/repository/data-access",
@@ -17,6 +14,10 @@
     "api-summarise-text-api": "libs/api/summarise-text/api",
     "api-summarise-text-repository": "libs/api/summarise-text/repository",
     "api-summarise-text-service": "libs/api/summarise-text/service",
+    "api-user-management-api-data-access": "libs/api/user-management/api/data-access",
+    "api-user-management-api-feature": "libs/api/user-management/api/feature",
+    "api-user-management-repository-data-access": "libs/api/user-management/repository/data-access",
+    "api-user-management-service": "libs/api/user-management/service",
     "client": "apps/client",
     "client-e2e": "apps/client-e2e",
     "client-ui": "libs/client/ui"
