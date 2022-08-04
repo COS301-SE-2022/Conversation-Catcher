@@ -57,10 +57,8 @@ export const App = () => {
       <ApolloProvider client={client}>
         <NavigationContainer>
           <Stack.Navigator>
-          <Stack.Screen name="Login" component={Login}/>
-            <Stack.Screen
-              name="Home"
-              component={Home}/>
+            <Stack.Screen name="Login" component={Login}/>
+            <Stack.Screen name="Home" component={Home}/>
             <Stack.Screen name="ViewAll" component={ViewAll}/>
             <Stack.Screen name="Settings" component={Settings}/>
             <Stack.Screen name="Colour" component={ChangeColour}/>
