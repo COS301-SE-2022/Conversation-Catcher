@@ -26,7 +26,6 @@ import ForgotPassword from '../../../../libs/client/ui/src/lib/forgot-password/f
 import ChangePassword from '../../../../libs/client/ui/src/lib/change-password/change-password.js';
 import ChangeEmail from '../../../../libs/client/ui/src/lib/change-email/change-email.js';
 import { Provider } from 'react-redux';
-import {reducer as colourReducer} from './slices/colour.slice';
 import {reducer as userReducer} from './slices/user.slice';
 import {reducer as pdfReducer} from './slices/pdf.slice';
 import { configureStore } from '@reduxjs/toolkit';
@@ -34,7 +33,6 @@ import { configureStore } from '@reduxjs/toolkit';
 //configure the store
 const store = configureStore({
     reducer: {
-        colour:colourReducer,
         pdf:pdfReducer,
         user:userReducer
     }
