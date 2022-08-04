@@ -2,14 +2,19 @@ import {
   createSlice,
 } from '@reduxjs/toolkit';
 import { act } from '@testing-library/react-native';
+import { stat } from 'fs';
 
 export const USER = 'user';
 
 export const userSlice = createSlice({
   name: USER,
-  initialState: {},
+  initialState: {
+    email:"",
+    colour:""
+  },
   reducers: {
-    setUser: (state,action) => {state = action.payload;return state}
+    setUser: (state,action) => {state = action.payload;return state},
+    setEmail: (state,action) => {state.email = action.payload;return state},
   },
 });
 
@@ -20,3 +25,5 @@ export const {setUser} = actions
 //export default reducer
 
 export const selectUser = (state: {}) => state
+export const selectUserColour = (state:{colour:string}) => state.colour
+export const selectEmail = (state:{email:string}) => state.email
