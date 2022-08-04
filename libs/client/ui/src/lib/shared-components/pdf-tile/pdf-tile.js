@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { useSelector } from 'react-redux'
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectColour } from 'apps/client/src/app/slices/colour.slice';
+import { selectColour } from 'apps/client/src/app/slices/user.slice';
 //import FileViewer from "react-native-file-viewer";
 
 function DownloadButtonState(props){
