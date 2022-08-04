@@ -70,7 +70,7 @@ export class MongoDBAccess {
       database: this.db,
       dataSource: this.cluster,
       filter: { email: mail },
-      update: {},
+      update: { pdfs: arr},
     });
     const result2 = await lastValueFrom(
       this.httpService

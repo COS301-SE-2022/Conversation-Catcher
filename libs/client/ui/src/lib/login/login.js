@@ -14,6 +14,7 @@ import { useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { selectColour } from 'apps/client/src/app/slices/colour.slice';
 import auth from '@react-native-firebase/auth';
+import { gql, useLazyQuery } from '@apollo/client';
 
 export const Login = ({ navigation }) => {
   const colourState = useSelector(selectColour).colour;
@@ -21,6 +22,20 @@ export const Login = ({ navigation }) => {
   const [showPasswordHint, setShowPasswordHint] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  //graphql query tree
+  const GET_USER = gql`
+    query getUser($email: String!) {
+      getUser(email: $email) {
+        email
+        pdfs
+        colour
+      }
+    }
+  `;
+
+  const [getUser, { loading, data }] = useLazyQuery(GET_USER);
+
   function MailHint() {
     if (showMailHint) {
       return (
@@ -131,11 +146,16 @@ export const Login = ({ navigation }) => {
         onPress={() => {
           auth()
             .signInWithEmailAndPassword(email, password)
-            .then(() => navigation.navigate('Home'))
+            .then(() => {
+              //Assign result to store
+              getUser({variables: {email: email}});
+              navigation.navigate('Home');
+            })
             .catch((error) => {
               if (error.code === 'auth/invalid-password') {
                 console.log('The provided password is invalid!');
-              }});
+              }
+            });
           console.log(email);
           console.log(password);
           // navigation.navigate('Home');

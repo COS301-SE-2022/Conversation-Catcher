@@ -1,15 +1,12 @@
 import { Resolver } from '@nestjs/graphql';
 import { Query, Args, Mutation } from '@nestjs/graphql';
-// import { ApiPdfManagerServiceFeatureService } from "@conversation-catcher/api/pdf-manager/service/feature";
 import { ApiPdfManagerServiceService } from '@conversation-catcher/api/pdf-manager/service/feature';
 import { PdfEntity } from '@conversation-catcher/api/pdf-manager/api/data-access';
-import { text } from 'stream/consumers';
-//yarn nx run api-pdf-manager-api-feature:test
+// import { text } from 'stream/consumers';
 
 @Resolver()
 export class ApiPdfManagerApiFeatureResolver {
   constructor(
-    // private otherService: ApiPdfManagerServiceFeatureService,
     private pdfService: ApiPdfManagerServiceService
   ) {
     this.errorObj = new PdfEntity();
@@ -44,10 +41,12 @@ export class ApiPdfManagerApiFeatureResolver {
     return pdfObj;
   }
 
+  //Used to force react-native components to refresh
   @Mutation(() => String)
   async reload() {
     return 'reloaded';
   }
+
   // get a single pdf by its id
   @Query(() => PdfEntity)
   async getPDFById(@Args('id', { type: () => String }) id: string) {
