@@ -1,6 +1,7 @@
 import {
   createSlice,
 } from '@reduxjs/toolkit';
+import { act } from '@testing-library/react-native';
 
 export const USER = 'user';
 
@@ -15,6 +16,13 @@ export const userSlice = createSlice({
     setUser: (state,action) => {state = action.payload;return state},
     setEmail: (state,action) => {state.email = action.payload;return state},
     setColour: (state,action) => {state.colour = action.payload;return state},
+    addDF: (state,action) => {state.pdfs.push(action.payload)},
+    removePDF: (state,action) => {
+      state.pdfs.forEach((item,index) => {
+        if (item === action.payload) state.pdfs.splice(index,1)
+      })
+      return state;
+    }
   },
 });
 
