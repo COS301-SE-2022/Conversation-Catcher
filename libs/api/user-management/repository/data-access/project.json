@@ -1,6 +1,6 @@
 {
   "$schema": "..\\..\\..\\..\\..\\node_modules\\nx\\schemas\\project-schema.json",
-  "sourceRoot": "libs/api/authentication/repository/data-access/src",
+  "sourceRoot": "libs/api/user-management/repository/data-access/src",
   "projectType": "library",
   "targets": {
     "lint": {
@@ -8,15 +8,15 @@
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": [
-          "libs/api/authentication/repository/data-access/**/*.ts"
+          "libs/api/user-management/repository/data-access/**/*.ts"
         ]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/api/authentication/repository/data-access"],
+      "outputs": ["coverage/libs/api/user-management/repository/data-access"],
       "options": {
-        "jestConfig": "libs/api/authentication/repository/data-access/jest.config.ts",
+        "jestConfig": "libs/api/user-management/repository/data-access/jest.config.ts",
         "passWithNoTests": true
       }
     }
