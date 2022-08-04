@@ -27,6 +27,8 @@ export const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  // dispatch(setUser({ colour: '#ffff', pdfs: [], email: '' }));
+
   //graphql query tree
   const GET_USER = gql`
     query getUser($email: String!) {
@@ -38,7 +40,7 @@ export const Login = ({ navigation }) => {
     }
   `;
 
-  const [getUser, { loading, data }] = useLazyQuery(GET_USER);
+  const [getUser] = useLazyQuery(GET_USER);
 
   function MailHint() {
     if (showMailHint) {
@@ -62,6 +64,7 @@ export const Login = ({ navigation }) => {
       return null;
     }
   }
+
   return (
     <View style={styles.logInPage}>
       <View style={styles.big_title_box}>
@@ -147,20 +150,25 @@ export const Login = ({ navigation }) => {
           { backgroundColor: colourState },
           { borderColor: colourState },
         ]}
-        onPress={() => {
-          auth()
-            .signInWithEmailAndPassword(email, password)
-            .then(async () => {
-              dispatch(setUser(await getUser({ variables: { email: email } })));
-              navigation.navigate('Home');
-            })
-            .catch((error) => {
-              if (error.code === 'auth/invalid-password') {
-                console.log('The provided password is invalid!');
-              }
-            });
-          console.log(email);
-          console.log(password);
+        onPress={async () => {
+          // auth()
+          //   .signInWithEmailAndPassword(email, password)
+          //   .then(() => {
+          //     navigation.navigate('Home');
+          //     console.log(getUser({ variables: { email: email } }));
+          //     dispatch(setUser({ colour: '#ffff', pdfs: [], email: '' }));
+          //   })
+          //   .catch((error) => {
+          //     if (error.code === 'auth/invalid-password') {
+          //       console.log('The provided password is invalid!');
+          //     }
+          //   });
+          // console.log(email);
+          // console.log(password);
+          var queryRes = (await getUser({ variables: { email: email } })).data
+            .getUser;
+          console.log(queryRes);
+          dispatch(setUser(queryRes));
           // navigation.navigate('Home');
         }}
       >
