@@ -37,7 +37,7 @@ export const Register = ({ navigation }) => {
     }
   `;
 
-  const [addUser, { data, loading, error }] = useMutation(ADDUSER);
+  const [addUser] = useMutation(ADDUSER);
 
   function MailHint() {
     if (showMailHint) {
@@ -150,7 +150,10 @@ export const Register = ({ navigation }) => {
           auth()
             .createUserWithEmailAndPassword(email, password)
             .then(async () => {
-              dispatch(setUser(await addUser({ variables: { email: email } })))
+              var queryRes = (await addUser({ variables: { email: email } }))
+                .data.addUser;
+              console.log(queryRes);
+              dispatch(setUser(queryRes));
               navigation.navigate('Home');
             })
             .catch((error) => {

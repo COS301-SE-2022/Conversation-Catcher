@@ -12,14 +12,14 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { gql } from '@apollo/client';
 // import { WebSocketLink } from '@apollo/client/link/ws';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectColour} from 'apps/client/src/app/slices/user.slice';
+import { selectColour, clearUser } from 'apps/client/src/app/slices/user.slice';
 import auth from '@react-native-firebase/auth';
-
 
 export const SettingsPage = ({ navigation }) => {
   const [user, setUser] = useState({});
+  const dispatch = useDispatch();
   // // Connection for the subscription
   // const wsLink = new WebSocketLink({
   //   uri: `ws://localhost:3333/graphql`,
@@ -68,7 +68,8 @@ export const SettingsPage = ({ navigation }) => {
       <View style={styles.settingsBody}>
         <TouchableOpacity
           style={styles.settingsButton}
-          onPress={() => navigation.navigate('ChangeEmail')}>
+          onPress={() => navigation.navigate('ChangeEmail')}
+        >
           <View style={styles.settingsButtonContent}>
             <View style={styles.iconContainer}>
               <Icon
@@ -89,14 +90,11 @@ export const SettingsPage = ({ navigation }) => {
 
         <TouchableOpacity
           style={styles.settingsButton}
-          onPress={() => navigation.navigate('ChangePassword')}>
+          onPress={() => navigation.navigate('ChangePassword')}
+        >
           <View style={styles.settingsButtonContent}>
             <View style={styles.iconContainer}>
-              <Icon
-                style={{ color: colourState }}
-                name="lock"
-                size={20}
-              />
+              <Icon style={{ color: colourState }} name="lock" size={20} />
             </View>
             <View style={styles.settingsButtonText_box}>
               <Text style={styles.settingsButtonText}>{'Change password'}</Text>
@@ -112,11 +110,7 @@ export const SettingsPage = ({ navigation }) => {
         >
           <View style={styles.settingsButtonContent}>
             <View style={styles.iconContainer}>
-              <Icon
-                style={{ color: colourState }}
-                name="sliders"
-                size={20}
-              />
+              <Icon style={{ color: colourState }} name="sliders" size={20} />
             </View>
             <View style={styles.settingsButtonText_box}>
               <Text style={styles.settingsButtonText}>{'Change colour'}</Text>
@@ -128,7 +122,14 @@ export const SettingsPage = ({ navigation }) => {
 
         <TouchableOpacity
           style={styles.settingsButton}
-          onPress={() => auth().signOut().then(() => navigation.navigate('Login')) }
+          onPress={() =>
+            auth()
+              .signOut()
+              .then(() => {
+                dispatch(clearUser)
+                navigation.navigate('Login');
+              })
+          }
         >
           <View style={styles.settingsButtonContent}>
             <View style={styles.iconContainer}>
@@ -147,14 +148,11 @@ export const SettingsPage = ({ navigation }) => {
 
       <TouchableOpacity
         style={styles.backButton}
-        onPress={() => navigation.navigate('Home')}>
-          <Icon
-            name="angle-left"
-            color={colourState}
-            size={28}
-          />
+        onPress={() => navigation.navigate('Home')}
+      >
+        <Icon name="angle-left" color={colourState} size={28} />
       </TouchableOpacity>
-    </ View>
+    </View>
   );
 };
 
