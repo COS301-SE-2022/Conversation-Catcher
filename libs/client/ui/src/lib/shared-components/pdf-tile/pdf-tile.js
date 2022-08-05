@@ -50,7 +50,7 @@ const pdfthumbnailSource = {
 
 const PdfTile = ({id,name,date,thumbnailSource,downloaded,text,showCheck,pdfSource,nav}) => {
   const colourState = useSelector(selectColour);
-  console.log(colourState)
+  console.log("PDF:"+colourState)
     return (
       <TouchableOpacity
         style={styles.pdfTile}
