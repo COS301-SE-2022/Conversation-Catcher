@@ -30,7 +30,7 @@ export const userSlice = createSlice({
 
 export const {actions, reducer} = userSlice
 
-export const {setUser} = actions
+export const {setUser,setEmail,setColour,addPDF,removePDF,clearUser} = actions
 
 //export default reducer
 
