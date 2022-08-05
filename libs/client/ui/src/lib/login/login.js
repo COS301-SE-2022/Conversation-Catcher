@@ -167,11 +167,11 @@ export const Login = ({ navigation }) => {
           //   });
           // console.log(email);
           // console.log(password);
-          var queryRes = (await getUser({ variables: { email: email } })).data
-            .getUser;
-          console.log(queryRes);
-          dispatch(setUser(queryRes));
-          // navigation.navigate('Home');
+          // var queryRes = (await getUser({ variables: { email: email } })).data
+          //   .getUser;
+          // console.log(queryRes);
+          // dispatch(setUser(queryRes));
+          navigation.navigate('Home');
         }}
       >
         <View style={styles.logInButtonLabel_box}>
