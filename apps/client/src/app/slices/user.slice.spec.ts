@@ -1,7 +1,8 @@
 import { selectPDFs} from './user.slice';
 
 describe('user slice', () => {
+  const testObj = {user:{email:"",colour:"",pdfs:[]}}
   it('returns an array',()=>{
-    expect(selectPDFs({user:{email:"",colour:"",pdfs:[]}}).length).toEqual(0)
+    expect(selectPDFs(testObj).length).toEqual(0)
   });
 })
