@@ -92,6 +92,9 @@ export const ChangeEmail = ({ navigation }) => {
                 style={styles.inputText}
                 placeholder="johnsmith@gmail.com"
                 underlineColorAndroid="transparent"
+                onChangeText={(text) => {
+                  setEmail(text);
+                }}
               />
               <TouchableOpacity
                 style={styles.helpIcon}
@@ -126,6 +129,9 @@ export const ChangeEmail = ({ navigation }) => {
                 style={styles.inputText}
                 placeholder="johnsmith@gmail.com"
                 underlineColorAndroid="transparent"
+                onChangeText={(text) => {
+                  setEmail(text);
+                }}
               />
             </View>
           </View>
@@ -147,6 +153,9 @@ export const ChangeEmail = ({ navigation }) => {
                 style={styles.inputText}
                 placeholder="*********"
                 underlineColorAndroid="transparent"
+                onChangeText={(text) => {
+                  setPassword(text);
+                }}
               />
             </View>
           </View>

@@ -31,7 +31,7 @@ export const ChangePassword = ({ navigation }) => {
           user
             .updatePassword(password)
             .then(() => {
-              setShowSuccessMessage(true)
+              setShowSuccessMessage(true);
               console.log('Password updated!');
             })
             .catch((error) => {
@@ -87,6 +87,9 @@ export const ChangePassword = ({ navigation }) => {
                 style={styles.inputText}
                 placeholder="*****************"
                 underlineColorAndroid="transparent"
+                onChangeText={(text) => {
+                  setPassword(text);
+                }}
               />
               <TouchableOpacity
                 style={styles.helpIcon}
@@ -117,6 +120,9 @@ export const ChangePassword = ({ navigation }) => {
                 style={styles.inputText}
                 placeholder="*****************"
                 underlineColorAndroid="transparent"
+                onChangeText={(text) => {
+                  setCheckPassword(text);
+                }}
               />
             </View>
           </View>
@@ -134,6 +140,9 @@ export const ChangePassword = ({ navigation }) => {
                 style={styles.inputText}
                 placeholder="*****************"
                 underlineColorAndroid="transparent"
+                onChangeText={(text) => {
+                  setOldPassword(text);
+                }}
               />
             </View>
           </View>
