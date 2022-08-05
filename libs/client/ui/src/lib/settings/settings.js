@@ -20,47 +20,8 @@ import auth from '@react-native-firebase/auth';
 export const SettingsPage = ({ navigation }) => {
   const [user, setUser] = useState({});
   const dispatch = useDispatch();
-  // // Connection for the subscription
-  // const wsLink = new WebSocketLink({
-  //   uri: `ws://localhost:3333/graphql`,
-  //   options: {
-  //     reconnect: true,
-  //   },
-  // });
-  // // Initialize Apollo Client
-  // const client = new ApolloClient({
-  //   uri: 'http://localhost:3333/graphql',
-  //   headers: {
-  //     // Header(if any)
-  //     authorization: 'a1b2c3d4-a1b2-a1b2c3d4e5f6',
-  //   },
-  //   cache: new InMemoryCache(),
-  //   // link WebSocketLink subscription
-  //   link: wsLink,
-  // });
-
-  // const simpleQuery = async () => {
-  //   // Calling Simple Graph Query
-  //   const { data, error } = await client.query({
-  //     query: gql`
-  //       query {
-  //         getAllPdfs
-  //       }
-  //     `,
-  //   });
-  //   console.log('simpleQuery called again!');
-  //   // In case Error in Response
-  //   if (error) {
-  //     alert(`error + ${JSON.stringify(error)}`);
-  //     console.log('error', JSON.stringify(error));
-  //     return;
-  //   }
-  //   alert(`Got Record of ${data.users.length} Users`);
-  //   console.log('data', JSON.stringify(data));
-  // };
   const colourState = useSelector(selectColour).colour;
   return (
-    // <ApolloProvider client={client}>
     <View style={styles.settings}>
       <View style={styles.big_title_box}>
         <Text style={styles.big_title}>{'Settings'}</Text>
