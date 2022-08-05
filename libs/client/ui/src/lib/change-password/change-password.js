@@ -24,7 +24,7 @@ export const ChangePassword = ({ navigation }) => {
   const [password, setPassword] = useState('');
 
   function changePassword() {
-    if (password === oldPassword) {
+    if (password === checkPassword) {
       this.reauthenticate(oldPassword)
         .then(() => {
           var user = auth().currentUser;
