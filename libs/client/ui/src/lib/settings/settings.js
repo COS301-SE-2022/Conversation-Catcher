@@ -21,6 +21,42 @@ export const SettingsPage = ({ navigation }) => {
   const [user, setUser] = useState({});
   const dispatch = useDispatch();
   const colourState = useSelector(selectColour).colour;
+
+  function changePassword(currentPassword, newPassword) {
+    this.reauthenticate(currentPassword)
+      .then(() => {
+        var user = auth().currentUser;
+        user
+          .updatePassword(newPassword)
+          .then(() => {
+            console.log('Password updated!');
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+  function changeEmail(currentPassword, newEmail) {
+    this.reauthenticate(currentPassword)
+      .then(() => {
+        var user = auth().currentUser;
+        user
+          .updateEmail(newEmail)
+          .then(() => {
+            console.log('Email updated!');
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   return (
     <View style={styles.settings}>
       <View style={styles.big_title_box}>
@@ -51,7 +87,9 @@ export const SettingsPage = ({ navigation }) => {
 
         <TouchableOpacity
           style={styles.settingsButton}
-          onPress={() => navigation.navigate('ChangePassword')}
+          onPress={() => {
+            navigation.navigate('ChangePassword');
+          }}
         >
           <View style={styles.settingsButtonContent}>
             <View style={styles.iconContainer}>
@@ -87,7 +125,7 @@ export const SettingsPage = ({ navigation }) => {
             auth()
               .signOut()
               .then(() => {
-                dispatch(clearUser)
+                dispatch(clearUser);
                 navigation.navigate('Login');
               })
           }
