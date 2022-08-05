@@ -10,7 +10,7 @@ import { configureStore } from '@reduxjs/toolkit';
 describe('PdfTile', () => {
   const store = configureStore({
     reducer: {
-        colour:reducer
+        user:reducer
     }
   })
   const TestComponent = () => (

@@ -9,7 +9,7 @@ import { configureStore } from '@reduxjs/toolkit';
 describe('ColourPage', () => {
   const store = configureStore({
     reducer: {
-        colour:reducer
+      user:reducer
     }
   })
   const TestComponent = () => (

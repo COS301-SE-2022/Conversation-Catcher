@@ -10,7 +10,7 @@ import { Provider } from 'react-redux';
 describe('Login', () => {
   const store = configureStore({
     reducer: {
-      colour: reducer,
+      user:reducer
     },
   });
   const TestComponent = () => (

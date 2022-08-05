@@ -9,7 +9,7 @@ import { Provider } from 'react-redux';
 describe('ChangeEmail', () => {
   const store = configureStore({
     reducer: {
-      colour: reducer,
+      user:reducer
     },
   });
   const TestComponent = () => (

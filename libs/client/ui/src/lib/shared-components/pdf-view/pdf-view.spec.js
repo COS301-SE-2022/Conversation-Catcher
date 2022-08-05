@@ -17,7 +17,7 @@ describe('PdfView', () => {
   // });
   const store = configureStore({
     reducer: {
-        colour:reducer
+        user:reducer
     }
   })
   const TestComponent = () => (
