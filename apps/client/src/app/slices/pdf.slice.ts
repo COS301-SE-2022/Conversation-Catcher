@@ -29,4 +29,4 @@ export const {actions, reducer} = pdfSlice
 
 export const {addPDF, removePDF, clearPDFs} = actions
 
-export const selectPDFS = (state:[]) => state
+export const selectPDFS = (state) => state.pdf

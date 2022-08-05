@@ -12,7 +12,7 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useDispatch, useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectColour } from 'apps/client/src/app/slices/user.slice';
+import { selectColour, selectUser } from 'apps/client/src/app/slices/user.slice';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { setUser } from 'apps/client/src/app/slices/user.slice';
 import auth from '@react-native-firebase/auth';
@@ -21,7 +21,7 @@ import { gql, useLazyQuery } from '@apollo/client';
 export const Login = ({ navigation }) => {
   const dispatch = useDispatch();
   const colourState = useSelector(selectColour);
-  console.log(colourState);
+  console.log("Colour:"+colourState);
   const [showMailHint, setShowMailHint] = useState(false);
   const [showPasswordHint, setShowPasswordHint] = useState(false);
   const [email, setEmail] = useState('');
@@ -64,6 +64,8 @@ export const Login = ({ navigation }) => {
       return null;
     }
   }
+
+  console.log(useSelector(selectUser))//test statement
 
   return (
     <View style={styles.logInPage}>

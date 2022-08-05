@@ -34,7 +34,7 @@ export const {setUser} = actions
 
 //export default reducer
 
-export const selectUser = (state: {email:string,colour:string,pdfs:[]}) => state
-export const selectColour = (state:{email:string,colour:string,pdfs:[]}) => state.colour
-export const selectEmail = (state:{email:string,colour:string,pdfs:[]}) => state.email
-export const selectPDFs = (state:{email:string,colour:string,pdfs:[]}) => state.pdfs
+export const selectUser = (state) => state.user
+export const selectColour = (state) => state.user.colour
+export const selectEmail = (state) => state.user.email
+export const selectPDFs = (state) => state.user.pdfs
