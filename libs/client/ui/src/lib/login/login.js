@@ -12,7 +12,10 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useDispatch, useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectColour, selectUser } from 'apps/client/src/app/slices/user.slice';
+import {
+  selectColour,
+  selectUser,
+} from 'apps/client/src/app/slices/user.slice';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { setUser } from 'apps/client/src/app/slices/user.slice';
 import auth from '@react-native-firebase/auth';
@@ -21,7 +24,7 @@ import { gql, useLazyQuery } from '@apollo/client';
 export const Login = ({ navigation }) => {
   const dispatch = useDispatch();
   const colourState = useSelector(selectColour);
-  console.log("Colour:"+colourState);
+  // console.log('Colour:' + colourState);
   const [showMailHint, setShowMailHint] = useState(false);
   const [showPasswordHint, setShowPasswordHint] = useState(false);
   const [email, setEmail] = useState('');
@@ -65,7 +68,7 @@ export const Login = ({ navigation }) => {
     }
   }
 
-  console.log(useSelector(selectUser))//test statement
+  // console.log(useSelector(selectUser)); //test statement
 
   return (
     <View style={styles.logInPage}>
@@ -152,26 +155,28 @@ export const Login = ({ navigation }) => {
           { backgroundColor: colourState },
           { borderColor: colourState },
         ]}
-        onPress={async () => {
-          // auth()
-          //   .signInWithEmailAndPassword(email, password)
-          //   .then(() => {
-          //     navigation.navigate('Home');
-          //     console.log(getUser({ variables: { email: email } }));
-          //     dispatch(setUser({ colour: '#ffff', pdfs: [], email: '' }));
-          //   })
-          //   .catch((error) => {
-          //     if (error.code === 'auth/invalid-password') {
-          //       console.log('The provided password is invalid!');
-          //     }
-          //   });
+        onPress={() => {
+          auth()
+            .signInWithEmailAndPassword(email, password)
+            .then(async () => {
+              navigation.navigate('Home');
+              var queryRes = (await getUser({ variables: { email: email } }))
+                .data.getUser;
+              console.log(queryRes);
+              dispatch(setUser(queryRes));
+            })
+            .catch((error) => {
+              if (error.code === 'auth/invalid-password') {
+                console.log('The provided password is invalid!');
+              }
+            });
           // console.log(email);
           // console.log(password);
           // var queryRes = (await getUser({ variables: { email: email } })).data
           //   .getUser;
           // console.log(queryRes);
           // dispatch(setUser(queryRes));
-          navigation.navigate('Home');
+          // navigation.navigate('Home');
         }}
       >
         <View style={styles.logInButtonLabel_box}>

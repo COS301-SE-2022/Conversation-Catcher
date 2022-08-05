@@ -25,8 +25,8 @@ export const ChangePassword = ({ navigation }) => {
 
   function changePassword() {
     if (password === checkPassword) {
-      this.reauthenticate(oldPassword)
-        .then(() => {
+      // auth().reauthenticate(oldPassword)
+      //   .then(() => {
           var user = auth().currentUser;
           user
             .updatePassword(password)
@@ -37,10 +37,10 @@ export const ChangePassword = ({ navigation }) => {
             .catch((error) => {
               console.log(error);
             });
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+        // })
+        // .catch((error) => {
+        //   console.log(error);
+        // });
     } else {
       console.log('Passwords do not match');
     }

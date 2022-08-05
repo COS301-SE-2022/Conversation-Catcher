@@ -24,9 +24,11 @@ export const ChangeEmail = ({ navigation }) => {
   const [password, setPassword] = useState('');
 
   function changeEmail() {
+    console.log(email);
+    console.log(checkEmail);
     if (email === checkEmail) {
-      this.reauthenticate(password)
-        .then(() => {
+      // auth().reauthenticate(password)
+      //   .then(() => {
           var user = auth().currentUser;
           user
             .updateEmail(email)
@@ -37,10 +39,10 @@ export const ChangeEmail = ({ navigation }) => {
             .catch((error) => {
               console.log(error);
             });
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+        // })
+        // .catch((error) => {
+        //   console.log(error);
+        // });
     }
     else {
       console.log("Emails do not match");
@@ -130,7 +132,7 @@ export const ChangeEmail = ({ navigation }) => {
                 placeholder="johnsmith@gmail.com"
                 underlineColorAndroid="transparent"
                 onChangeText={(text) => {
-                  setEmail(text);
+                  setCheckEmail(text);
                 }}
               />
             </View>
