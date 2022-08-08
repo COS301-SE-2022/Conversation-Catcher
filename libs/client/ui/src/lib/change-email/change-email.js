@@ -12,17 +12,36 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useDispatch, useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectColour, setEmail } from 'apps/client/src/app/slices/user.slice';
+import {
+  selectColour,
+  selectUser,
+  setEmail,
+} from 'apps/client/src/app/slices/user.slice';
 import auth from '@react-native-firebase/auth';
+import { gql, useMutation } from '@apollo/client';
 
 export const ChangeEmail = ({ navigation }) => {
   const colourState = useSelector(selectColour).colour;
+  const user = useSelector(selectUser);
   const [showMailHint, setShowMailHint] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [email, setNewEmail] = useState('');
   const [checkEmail, setCheckEmail] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
+
+  const SET_USER = gql`
+    mutation setUser(
+      $oldEmail: String!
+      $email: String!
+      $colour: String!
+      $pdfs: [String!]!
+    ) {
+      setUser(oldEmail: $oldEmail, email: $email, colour: $colour, pdfs: $pdfs)
+    }
+  `;
+
+  const [setUser] = useMutation(SET_USER);
 
   function changeEmail() {
     console.log(email);
@@ -35,6 +54,15 @@ export const ChangeEmail = ({ navigation }) => {
         .updateEmail(email)
         .then(() => {
           setShowSuccessMessage(true);
+          console.log(user);
+          setUser({
+            variables: {
+              oldEmail: user.email,
+              email: email,
+              colour: user.colour,
+              pdfs: user.pdfs,
+            },
+          });
           dispatch(setEmail(email));
           console.log('Email updated!');
         })
