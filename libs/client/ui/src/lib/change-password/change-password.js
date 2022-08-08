@@ -27,20 +27,20 @@ export const ChangePassword = ({ navigation }) => {
     if (password === checkPassword) {
       // auth().reauthenticate(oldPassword)
       //   .then(() => {
-          var user = auth().currentUser;
-          user
-            .updatePassword(password)
-            .then(() => {
-              setShowSuccessMessage(true);
-              console.log('Password updated!');
-            })
-            .catch((error) => {
-              console.log(error);
-            });
-        // })
-        // .catch((error) => {
-        //   console.log(error);
-        // });
+      var user = auth().currentUser;
+      user
+        .updatePassword(password)
+        .then(() => {
+          setShowSuccessMessage(true);
+          console.log('Password updated!');
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      // })
+      // .catch((error) => {
+      //   console.log(error);
+      // });
     } else {
       console.log('Passwords do not match');
     }

@@ -10,18 +10,19 @@ import {
   TextInput,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectColour } from 'apps/client/src/app/slices/user.slice';
+import { selectColour, setEmail } from 'apps/client/src/app/slices/user.slice';
 import auth from '@react-native-firebase/auth';
 
 export const ChangeEmail = ({ navigation }) => {
   const colourState = useSelector(selectColour).colour;
   const [showMailHint, setShowMailHint] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-  const [email, setEmail] = useState('');
+  const [email, setNewEmail] = useState('');
   const [checkEmail, setCheckEmail] = useState('');
   const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
 
   function changeEmail() {
     console.log(email);
@@ -29,23 +30,23 @@ export const ChangeEmail = ({ navigation }) => {
     if (email === checkEmail) {
       // auth().reauthenticate(password)
       //   .then(() => {
-          var user = auth().currentUser;
-          user
-            .updateEmail(email)
-            .then(() => {
-              setShowSuccessMessage(true)
-              console.log('Email updated!');
-            })
-            .catch((error) => {
-              console.log(error);
-            });
-        // })
-        // .catch((error) => {
-        //   console.log(error);
-        // });
-    }
-    else {
-      console.log("Emails do not match");
+      var user = auth().currentUser;
+      user
+        .updateEmail(email)
+        .then(() => {
+          setShowSuccessMessage(true);
+          dispatch(setEmail(email));
+          console.log('Email updated!');
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      // })
+      // .catch((error) => {
+      //   console.log(error);
+      // });
+    } else {
+      console.log('Emails do not match');
     }
   }
 
@@ -95,7 +96,7 @@ export const ChangeEmail = ({ navigation }) => {
                 placeholder="johnsmith@gmail.com"
                 underlineColorAndroid="transparent"
                 onChangeText={(text) => {
-                  setEmail(text);
+                  setNewEmail(text);
                 }}
               />
               <TouchableOpacity
