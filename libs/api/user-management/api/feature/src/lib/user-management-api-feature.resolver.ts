@@ -46,17 +46,14 @@ export class UserManagementApiFeatureResolver {
 
   @Mutation(() => Boolean)
   async setUser(
-    @Args('user') user: UserEntity,
-    @Args('oldEmail') oldEmail: string
+    @Args('oldEmail') oldEmail: string,
+    @Args('email') email: string,
+    @Args('colour') colour: string,
+    @Args('pdfs', { type: () => [String] }) pdfs: string[]
   ) {
-    const res = await this.authService.setUser(
-      oldEmail,
-      user.email,
-      user.colour,
-      user.pdfs
-    );
+    const res = await this.authService.setUser(oldEmail, email, colour, pdfs);
     console.log(res);
-    if (res != undefined) {
+    if (res.modifiedCount != 0) {
       return true;
     }
     return false;
