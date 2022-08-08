@@ -58,9 +58,31 @@ export class MongoDBAccess {
     });
 
     return await lastValueFrom(
-      this.httpService.post(this.url + this.action, data, this.config).pipe(
-        map((res) => res.data)
-      )
+      this.httpService
+        .post(this.url + this.action, data, this.config)
+        .pipe(map((res) => res.data))
+    );
+  }
+
+  async setUser(
+    oldEmail: string,
+    email: string,
+    colour: string,
+    pdfs: string[]
+  ) {
+    this.action = 'updateOne';
+    const data = JSON.stringify({
+      collection: this.userCollection,
+      database: this.db,
+      dataSource: this.cluster,
+      filter: { email: oldEmail },
+      update: { email: email, colour: colour, pdfs: pdfs },
+    });
+
+    return await lastValueFrom(
+      this.httpService
+        .post(this.url + this.action, data, this.config)
+        .pipe(map((res) => res.data))
     );
   }
 }

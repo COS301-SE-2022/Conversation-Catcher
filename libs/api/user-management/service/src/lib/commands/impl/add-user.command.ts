@@ -1,5 +1,12 @@
 export class addUserCommand {
-    constructor(
-      public readonly email?: string,
-    ) {}
-  }
+  constructor(public readonly email?: string) {}
+}
+
+export class setUserCommand {
+  constructor(
+    public readonly oldEmail?: string,
+    public readonly email?: string,
+    public readonly colour?: string,
+    public readonly pdfs?: string[]
+  ) {}
+}

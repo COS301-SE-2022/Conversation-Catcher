@@ -6,20 +6,14 @@ import * as CommandHandlers from './commands/handlers';
 import * as QueryHandlers from './queries/handlers';
 
 @Module({
-  controllers: [
-
-  ],
-  imports: [
-    CqrsModule,
-    UserManagementRepositoryDataAccessModule,
-  ],
+  controllers: [],
+  imports: [CqrsModule, UserManagementRepositoryDataAccessModule],
   providers: [
     UserManagementServiceService,
     CommandHandlers.addUserHandler,
+    CommandHandlers.setUserHandler,
     QueryHandlers.getUserHandler,
   ],
-  exports: [
-    UserManagementServiceService,
-  ],
+  exports: [UserManagementServiceService],
 })
 export class UserManagementServiceModule {}
