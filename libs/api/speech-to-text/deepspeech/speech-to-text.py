@@ -124,3 +124,9 @@ def main():
 
         if args.lm_alpha and args.lm_beta:
             ds.setScorerAlphaBeta(args.lm_alpha, args.lm_beta)
+
+    if args.hot_words:
+        print('Adding hot-words', file=sys.stderr)
+        for word_boost in args.hot_words.split(','):
+            word,boost = word_boost.split(':')
+            ds.addHotWord(word,float(boost))
