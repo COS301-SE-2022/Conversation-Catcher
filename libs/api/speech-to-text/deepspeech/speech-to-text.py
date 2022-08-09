@@ -109,3 +109,18 @@ def main():
     # sphinx-doc: python_ref_model_stop
     model_load_end = timer() - model_load_start
     print('Loaded model in {:.3}s.'.format(model_load_end), file=sys.stderr)
+
+    if args.beam_width:
+        ds.setBeamWidth(args.beam_width)
+
+    desired_sample_rate = ds.sampleRate()
+
+    if args.scorer:
+        print('Loading scorer from files {}'.format(args.scorer), file=sys.stderr)
+        scorer_load_start = timer()
+        ds.enableExternalScorer(args.scorer)
+        scorer_load_end = timer() - scorer_load_start
+        print('Loaded scorer in {:.3}s.'.format(scorer_load_end), file=sys.stderr)
+
+        if args.lm_alpha and args.lm_beta:
+            ds.setScorerAlphaBeta(args.lm_alpha, args.lm_beta)
