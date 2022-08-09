@@ -39,7 +39,7 @@ def words_from_candidate_transcript(metadata):
             if len(word) == 0:
                 # Log the start time of the new word
                 word_start_time = token.start_time
-                
+
             word = word + token.text
         # Word boundary is either a space or the last character in the array
         if token.text == " " or i == len(metadata.tokens) - 1:
@@ -59,3 +59,11 @@ def words_from_candidate_transcript(metadata):
             word_start_time = 0
 
     return word_list
+
+def metadata_json_output(metadata):
+    json_result = dict()
+    json_result["transcripts"] = [{
+        "confidence": transcript.confidence,
+        "words": words_from_candidate_transcript(transcript),
+    } for transcript in metadata.transcripts]
+    return json.dumps(json_result, indent=2)
