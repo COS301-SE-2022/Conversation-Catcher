@@ -24,3 +24,6 @@ def convert_samplerate(audio_path, desired_sample_rate):
         raise OSError(e.errno, 'SoX not found, use {}hz files or install it: {}'.format(desired_sample_rate, e.strerror))
 
     return desired_sample_rate, np.frombuffer(output, np.int16)
+
+def metadata_to_string(metadata):
+    return ''.join(token.text for token in metadata.tokens)
