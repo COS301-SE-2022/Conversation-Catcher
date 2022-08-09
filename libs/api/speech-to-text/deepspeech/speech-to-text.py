@@ -141,3 +141,16 @@ def main():
 
     audio_length = fin.getnframes() * (1/fs_orig)
     fin.close()
+
+    print('Running inference.', file=sys.stderr)
+    inference_start = timer()
+    # sphinx-doc: python_ref_inference_start
+    if args.extended:
+        print(metadata_to_string(ds.sttWithMetadata(audio, 1).transcripts[0]))
+    elif args.json:
+        print(metadata_json_output(ds.sttWithMetadata(audio, args.candidate_transcripts)))
+    else:
+        print(ds.stt(audio))
+    # sphinx-doc: python_ref_inference_stop
+    inference_end = timer() - inference_start
+    print('Inference took %0.3fs for %0.3fs audio file.' % (inference_end, audio_length), file=sys.stderr)
