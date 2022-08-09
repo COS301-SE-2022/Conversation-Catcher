@@ -27,3 +27,15 @@ def convert_samplerate(audio_path, desired_sample_rate):
 
 def metadata_to_string(metadata):
     return ''.join(token.text for token in metadata.tokens)
+
+def words_from_candidate_transcript(metadata):
+    word = ""
+    word_list = []
+    word_start_time = 0
+    # Loop through each character
+    for i, token in enumerate(metadata.tokens):
+        # Append character to word if it's not a space
+        if token.text != " ":
+            if len(word) == 0:
+                # Log the start time of the new word
+                word_start_time = token.start_time
