@@ -75,3 +75,37 @@ class VersionAction(argparse.Action):
     def __call__(self, *args, **kwargs):
         print('DeepSpeech ', version())
         exit(0)
+
+def main():
+    parser = argparse.ArgumentParser(description='Running DeepSpeech inference.')
+    parser.add_argument('--model', required=True,
+                        help='Path to the model (protocol buffer binary file)')
+    parser.add_argument('--scorer', required=False,
+                        help='Path to the external scorer file')
+    parser.add_argument('--audio', required=True,
+                        help='Path to the audio file to run (WAV format)')
+    parser.add_argument('--beam_width', type=int,
+                        help='Beam width for the CTC decoder')
+    parser.add_argument('--lm_alpha', type=float,
+                        help='Language model weight (lm_alpha). If not specified, use default from the scorer package.')
+    parser.add_argument('--lm_beta', type=float,
+                        help='Word insertion bonus (lm_beta). If not specified, use default from the scorer package.')
+    parser.add_argument('--version', action=VersionAction,
+                        help='Print version and exits')
+    parser.add_argument('--extended', required=False, action='store_true',
+                        help='Output string from extended metadata')
+    parser.add_argument('--json', required=False, action='store_true',
+                        help='Output json from metadata with timestamp of each word')
+    parser.add_argument('--candidate_transcripts', type=int, default=3,
+                        help='Number of candidate transcripts to include in JSON output')
+    parser.add_argument('--hot_words', type=str,
+                        help='Hot-words and their boosts.')
+    args = parser.parse_args()
+
+    print('Loading model from file {}'.format(args.model), file=sys.stderr)
+    model_load_start = timer()
+    # sphinx-doc: python_ref_model_start
+    ds = Model(args.model)
+    # sphinx-doc: python_ref_model_stop
+    model_load_end = timer() - model_load_start
+    print('Loaded model in {:.3}s.'.format(model_load_end), file=sys.stderr)
