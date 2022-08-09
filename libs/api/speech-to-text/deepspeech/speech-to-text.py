@@ -67,3 +67,11 @@ def metadata_json_output(metadata):
         "words": words_from_candidate_transcript(transcript),
     } for transcript in metadata.transcripts]
     return json.dumps(json_result, indent=2)
+
+class VersionAction(argparse.Action):
+    def __init__(self, *args, **kwargs):
+        super(VersionAction, self).__init__(nargs=0, *args, **kwargs)
+
+    def __call__(self, *args, **kwargs):
+        print('DeepSpeech ', version())
+        exit(0)
