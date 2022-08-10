@@ -49,13 +49,13 @@ export const ChangeEmail = ({ navigation }) => {
     if (email === checkEmail) {
       // auth().reauthenticate(password)
       //   .then(() => {
-      var user = auth().currentUser;
-      user
+      var currUser = auth().currentUser;
+      currUser
         .updateEmail(email)
-        .then(() => {
+        .then(async () => {
           setShowSuccessMessage(true);
           console.log(user);
-          setUser({
+          await setUser({
             variables: {
               oldEmail: user.email,
               email: email,
