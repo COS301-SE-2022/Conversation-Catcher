@@ -20,7 +20,7 @@ import auth from '@react-native-firebase/auth';
 export const SettingsPage = ({ navigation }) => {
   const [user, setUser] = useState({});
   const dispatch = useDispatch();
-  const colourState = useSelector(selectColour).colour;
+  const colourState = useSelector(selectColour);
 
   return (
     <View style={styles.settings}>
