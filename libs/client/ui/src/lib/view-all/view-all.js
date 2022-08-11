@@ -18,9 +18,7 @@ import Modal from 'react-native-modal';
 import Share from 'react-native-share';
 import { useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectColour } from 'apps/client/src/app/slices/colour.slice';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectEmail } from 'apps/client/src/app/slices/email.slice';
+import { selectEmail, selectColour } from 'apps/client/src/app/slices/user.slice';
 import Loading from '../shared-components/loading/loading.js';
 
 export const ViewAll = ({ navigation }) => {

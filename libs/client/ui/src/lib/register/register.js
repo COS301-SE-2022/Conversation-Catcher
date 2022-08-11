@@ -10,14 +10,17 @@ import {
   TextInput,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectColour } from 'apps/client/src/app/slices/colour.slice';
+import { selectColour } from 'apps/client/src/app/slices/user.slice';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { setUser } from 'apps/client/src/app/slices/user.slice';
 import auth from '@react-native-firebase/auth';
 import { gql, useMutation } from '@apollo/client';
 
 export const Register = ({ navigation }) => {
-  const colourState = useSelector(selectColour).colour;
+  const dispatch = useDispatch();
+  const colourState = useSelector(selectColour);
   const [showMailHint, setShowMailHint] = useState(false);
   const [showPasswordHint, setShowPasswordHint] = useState(false);
   const [email, setEmail] = useState('');
@@ -34,7 +37,7 @@ export const Register = ({ navigation }) => {
     }
   `;
 
-  const [addUser, { data, loading, error }] = useMutation(ADDUSER);
+  const [addUser] = useMutation(ADDUSER);
 
   function MailHint() {
     if (showMailHint) {
@@ -145,10 +148,12 @@ export const Register = ({ navigation }) => {
         ]}
         onPress={() => {
           auth()
-            .createUserWithEmailAndPassword(email, password)
-            .then(() => {
-              //assign result to store
-              addUser({ variables: { email: email } });
+            .createUserWithEmailAndPassword(email.trim().toLowerCase(), password.trim())
+            .then(async () => {
+              var queryRes = (await addUser({ variables: { email: email.trim().toLowerCase() } }))
+                .data.addUser;
+              console.log(queryRes);
+              dispatch(setUser(queryRes));
               navigation.navigate('Home');
             })
             .catch((error) => {

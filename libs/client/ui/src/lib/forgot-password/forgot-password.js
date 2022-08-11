@@ -3,10 +3,10 @@ import { View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity, Alert
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectColour} from 'apps/client/src/app/slices/colour.slice';
+import { selectColour} from 'apps/client/src/app/slices/user.slice';
 
 export const ForgotPassword = ({ navigation }) =>  {
-  const colourState = useSelector(selectColour).colour;
+  const colourState = useSelector(selectColour);
  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
  function SuccessMessage(){
    if (showSuccessMessage)

@@ -10,18 +10,27 @@ import {
   TextInput,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectColour } from 'apps/client/src/app/slices/colour.slice';
+import {
+  selectColour,
+  selectUser,
+} from 'apps/client/src/app/slices/user.slice';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { setUser } from 'apps/client/src/app/slices/user.slice';
 import auth from '@react-native-firebase/auth';
 import { gql, useLazyQuery } from '@apollo/client';
 
 export const Login = ({ navigation }) => {
-  const colourState = useSelector(selectColour).colour;
+  const dispatch = useDispatch();
+  const colourState = useSelector(selectColour);
+  // console.log('Colour:' + colourState);
   const [showMailHint, setShowMailHint] = useState(false);
   const [showPasswordHint, setShowPasswordHint] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  // dispatch(setUser({ colour: '#ffff', pdfs: [], email: '' }));
 
   //graphql query tree
   const GET_USER = gql`
@@ -34,7 +43,7 @@ export const Login = ({ navigation }) => {
     }
   `;
 
-  const [getUser, { loading, data }] = useLazyQuery(GET_USER);
+  const [getUser] = useLazyQuery(GET_USER);
 
   function MailHint() {
     if (showMailHint) {
@@ -58,6 +67,9 @@ export const Login = ({ navigation }) => {
       return null;
     }
   }
+
+  // console.log(useSelector(selectUser)); //test statement
+
   return (
     <View style={styles.logInPage}>
       <View style={styles.big_title_box}>
@@ -145,19 +157,25 @@ export const Login = ({ navigation }) => {
         ]}
         onPress={() => {
           auth()
-            .signInWithEmailAndPassword(email, password)
-            .then(() => {
-              //Assign result to store
-              getUser({variables: {email: email}});
+            .signInWithEmailAndPassword(email.trim().toLowerCase(), password.trim())
+            .then(async () => {
               navigation.navigate('Home');
+              var queryRes = (await getUser({ variables: { email: email.trim().toLowerCase() } }))
+                .data.getUser;
+              console.log(queryRes);
+              dispatch(setUser(queryRes));
             })
             .catch((error) => {
               if (error.code === 'auth/invalid-password') {
                 console.log('The provided password is invalid!');
               }
             });
-          console.log(email);
-          console.log(password);
+          // console.log(email);
+          // console.log(password);
+          // var queryRes = (await getUser({ variables: { email: email } })).data
+          //   .getUser;
+          // console.log(queryRes);
+          // dispatch(setUser(queryRes));
           // navigation.navigate('Home');
         }}
       >
