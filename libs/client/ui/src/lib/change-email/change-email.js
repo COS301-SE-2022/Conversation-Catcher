@@ -21,7 +21,7 @@ import auth from '@react-native-firebase/auth';
 import { gql, useMutation } from '@apollo/client';
 
 export const ChangeEmail = ({ navigation }) => {
-  const colourState = useSelector(selectColour).colour;
+  const colourState = useSelector(selectColour);
   const user = useSelector(selectUser);
   const [showMailHint, setShowMailHint] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);

@@ -16,7 +16,7 @@ import { selectColour } from 'apps/client/src/app/slices/user.slice';
 import auth from '@react-native-firebase/auth';
 
 export const ChangePassword = ({ navigation }) => {
-  const colourState = useSelector(selectColour).colour;
+  const colourState = useSelector(selectColour);
   const [showMailHint, setShowMailHint] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [oldPassword, setOldPassword] = useState('');

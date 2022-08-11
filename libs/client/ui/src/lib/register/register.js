@@ -20,7 +20,7 @@ import { gql, useMutation } from '@apollo/client';
 
 export const Register = ({ navigation }) => {
   const dispatch = useDispatch();
-  const colourState = useSelector(selectColour).colour;
+  const colourState = useSelector(selectColour);
   const [showMailHint, setShowMailHint] = useState(false);
   const [showPasswordHint, setShowPasswordHint] = useState(false);
   const [email, setEmail] = useState('');

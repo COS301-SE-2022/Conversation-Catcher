@@ -25,7 +25,7 @@ import { selectColour, selectEmail } from 'apps/client/src/app/slices/user.slice
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 
 export const Home = ({ navigation }) => {
-  const colourState = useSelector(selectColour).colour;
+  const colourState = useSelector(selectColour);
   const emailState = useSelector(selectEmail);
   const [recordingStopVisible, setRecordingStopVisible] = useState(false);
   const [recordAudioState, setRecordAudioState] = useState(false);
