@@ -44,26 +44,28 @@ export const ChangeEmail = ({ navigation }) => {
   const [setUser] = useMutation(SET_USER);
 
   function changeEmail() {
-    console.log(email);
-    console.log(checkEmail);
-    if (email === checkEmail) {
+    var tempEmail = email.trim().toLowerCase();
+    var tempCheckEmail = checkEmail.trim().toLowerCase();
+    console.log(tempEmail);
+    console.log(tempCheckEmail);
+    if (tempEmail === tempCheckEmail) {
       // auth().reauthenticate(password)
       //   .then(() => {
       var currUser = auth().currentUser;
       currUser
-        .updateEmail(email)
+        .updateEmail(tempEmail)
         .then(async () => {
           setShowSuccessMessage(true);
           console.log(user);
           await setUser({
             variables: {
               oldEmail: user.email,
-              email: email,
+              email: tempEmail,
               colour: user.colour,
               pdfs: user.pdfs,
             },
           });
-          dispatch(setEmail(email));
+          dispatch(setEmail(tempEmail));
           console.log('Email updated!');
         })
         .catch((error) => {
@@ -167,7 +169,7 @@ export const ChangeEmail = ({ navigation }) => {
             </View>
           </View>
         </View>
-        <View style={styles.inputsItem}>
+        {/* <View style={styles.inputsItem}>
           <View style={styles.inputLabel_box}>
             <Text style={styles.inputLabel}>{'Password'}</Text>
           </View>
@@ -190,7 +192,7 @@ export const ChangeEmail = ({ navigation }) => {
               />
             </View>
           </View>
-        </View>
+        </View> */}
       </View>
       <TouchableOpacity
         style={[

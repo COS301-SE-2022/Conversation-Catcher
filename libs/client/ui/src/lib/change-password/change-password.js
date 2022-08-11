@@ -29,7 +29,7 @@ export const ChangePassword = ({ navigation }) => {
       //   .then(() => {
       var user = auth().currentUser;
       user
-        .updatePassword(password)
+        .updatePassword(password.trim())
         .then(() => {
           setShowSuccessMessage(true);
           console.log('Password updated!');
@@ -127,7 +127,7 @@ export const ChangePassword = ({ navigation }) => {
             </View>
           </View>
         </View>
-        <View style={styles.inputsItem}>
+        {/* <View style={styles.inputsItem}>
           <View style={styles.inputLabel_box}>
             <Text style={styles.inputLabel}>{'Current password'}</Text>
           </View>
@@ -146,7 +146,7 @@ export const ChangePassword = ({ navigation }) => {
               />
             </View>
           </View>
-        </View>
+        </View> */}
       </View>
       <TouchableOpacity
         style={[

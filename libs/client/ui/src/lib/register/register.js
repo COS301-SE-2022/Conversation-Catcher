@@ -148,9 +148,9 @@ export const Register = ({ navigation }) => {
         ]}
         onPress={() => {
           auth()
-            .createUserWithEmailAndPassword(email, password)
+            .createUserWithEmailAndPassword(email.trim().toLowerCase(), password.trim())
             .then(async () => {
-              var queryRes = (await addUser({ variables: { email: email } }))
+              var queryRes = (await addUser({ variables: { email: email.trim().toLowerCase() } }))
                 .data.addUser;
               console.log(queryRes);
               dispatch(setUser(queryRes));

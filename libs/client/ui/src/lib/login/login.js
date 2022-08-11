@@ -157,10 +157,10 @@ export const Login = ({ navigation }) => {
         ]}
         onPress={() => {
           auth()
-            .signInWithEmailAndPassword(email, password)
+            .signInWithEmailAndPassword(email.trim().toLowerCase(), password.trim())
             .then(async () => {
               navigation.navigate('Home');
-              var queryRes = (await getUser({ variables: { email: email } }))
+              var queryRes = (await getUser({ variables: { email: email.trim().toLowerCase() } }))
                 .data.getUser;
               console.log(queryRes);
               dispatch(setUser(queryRes));
