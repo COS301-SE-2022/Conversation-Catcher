@@ -74,10 +74,16 @@ export const ChangeEmail = ({ navigation }) => {
         })
         .catch((error) => {
           //Check for other errors
-          console.log(error);
+          setFailedText(true);
+          if (error.code === 'auth/invalid-email')
+            setErrorMessage('The email address is badly formatted');
+          else {
+            setErrorMessage('An error has occurred');
+            console.log(error);
+          }
         });
     } else {
-      setFailedText(false);
+      setFailedText(true);
       setErrorMessage('Emails do not match');
     }
   }

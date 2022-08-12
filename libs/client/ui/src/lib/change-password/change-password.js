@@ -39,8 +39,13 @@ export const ChangePassword = ({ navigation }) => {
           setFailedText(false);
         })
         .catch((error) => {
-          //Check for other errors
-          console.log(error);
+          setFailedText(true);
+          if (error.code === 'auth/weak-password')
+            setErrorMessage('Password has to be at least 6 digits');
+          else {
+            setErrorMessage('An error has occurred');
+            console.log(error);
+          }
         });
     } else {
       setFailedText(true);

@@ -47,8 +47,13 @@ export const ForgotPassword = ({ navigation }) => {
                   setDisplayText('re-sent');
                 })
                 .catch((e) => {
-                  //Check for other errors
-                  console.log(e);
+                  setFailedText(true);
+                  if (e.code === 'auth/invalid-email')
+                    setErrorMessage('The email address is badly formatted');
+                  else {
+                    setErrorMessage('An error has occurred');
+                    console.log(e);
+                  }
                 });
             }}
           >
@@ -79,8 +84,13 @@ export const ForgotPassword = ({ navigation }) => {
                 setShowSuccessMessage(true);
               })
               .catch((e) => {
-                //Check for other errors
-                console.log(e);
+                setFailedText(true);
+                if (e.code === 'auth/invalid-email')
+                  setErrorMessage('The email address is badly formatted');
+                else {
+                  setErrorMessage('An error has occurred');
+                  console.log(e);
+                }
               });
           }}
         >
@@ -109,8 +119,8 @@ export const ForgotPassword = ({ navigation }) => {
         <Text style={styles.big_title}>{'Reset password'}</Text>
       </View>
       <View style={styles.inputsGroup}>
-        <ErrorMessage />
         <View style={styles.inputsItem}>
+          <ErrorMessage />
           <View style={styles.inputLabel_box}>
             <Text style={styles.inputLabel}>{'Email'}</Text>
           </View>
