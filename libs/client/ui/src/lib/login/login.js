@@ -71,7 +71,7 @@ export const Login = ({ navigation }) => {
     }
   }
 
-  function InvalidAuth() {
+  function InvalidDetails() {
     if (!failedLogin) return null;
     return (
       <View style={styles.hintText_box}>
@@ -86,7 +86,7 @@ export const Login = ({ navigation }) => {
         <Text style={styles.big_title}>{'Log in to your account'}</Text>
       </View>
       <View style={styles.inputsGroup}>
-        <InvalidAuth />
+        <InvalidDetails />
         <View style={styles.inputsItem}>
           <View style={styles.inputLabel_box}>
             <Text style={styles.inputLabel}>{'Email'}</Text>
