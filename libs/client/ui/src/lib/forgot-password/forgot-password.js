@@ -18,6 +18,8 @@ import auth from '@react-native-firebase/auth';
 export const ForgotPassword = ({ navigation }) => {
   const colourState = useSelector(selectColour);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [failedText, setFailedText] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const [email, setEmail] = useState('');
   const [displayText, setDisplayText] = useState('sent');
 
@@ -33,10 +35,19 @@ export const ForgotPassword = ({ navigation }) => {
           <TouchableOpacity
             style={styles.smallGreyButton}
             onPress={() => {
+              if (email === '') {
+                setFailedText(true);
+                setErrorMessage('Email is required');
+                return;
+              }
               auth()
                 .sendPasswordResetEmail(email)
-                .then(() => setDisplayText('re-sent'))
+                .then(() => {
+                  setFailedText(false);
+                  setDisplayText('re-sent');
+                })
                 .catch((e) => {
+                  //Check for other errors
                   console.log(e);
                 });
             }}
@@ -56,10 +67,19 @@ export const ForgotPassword = ({ navigation }) => {
             { borderColor: colourState },
           ]}
           onPress={() => {
+            if (email === '') {
+              setFailedText(true);
+              setErrorMessage('Email is required');
+              return;
+            }
             auth()
               .sendPasswordResetEmail(email)
-              .then(() => setShowSuccessMessage(true))
+              .then(() => {
+                setFailedText(false);
+                setShowSuccessMessage(true);
+              })
               .catch((e) => {
+                //Check for other errors
                 console.log(e);
               });
           }}
@@ -74,12 +94,22 @@ export const ForgotPassword = ({ navigation }) => {
     }
   }
 
+  function ErrorMessage() {
+    if (!failedText) return null;
+    return (
+      <View style={styles.hintText_box}>
+        <Text style={styles.errorText}>{errorMessage}</Text>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.logInPage}>
       <View style={styles.big_title_box}>
         <Text style={styles.big_title}>{'Reset password'}</Text>
       </View>
       <View style={styles.inputsGroup}>
+        <ErrorMessage />
         <View style={styles.inputsItem}>
           <View style={styles.inputLabel_box}>
             <Text style={styles.inputLabel}>{'Email'}</Text>
@@ -303,5 +333,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     position: 'absolute',
     bottom: 0,
+  },
+  errorText: {
+    color: '#e11e22',
+    textAlign: 'left',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 14,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
   },
 });

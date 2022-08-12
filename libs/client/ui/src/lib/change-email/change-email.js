@@ -25,9 +25,10 @@ export const ChangeEmail = ({ navigation }) => {
   const user = useSelector(selectUser);
   const [showMailHint, setShowMailHint] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [failedText, setFailedText] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const [email, setNewEmail] = useState('');
   const [checkEmail, setCheckEmail] = useState('');
-  const [password, setPassword] = useState('');
   const dispatch = useDispatch();
 
   const SET_USER = gql`
@@ -44,17 +45,21 @@ export const ChangeEmail = ({ navigation }) => {
   const [setUser] = useMutation(SET_USER);
 
   function changeEmail() {
+    if (email === '') {
+      setFailedText(true);
+      setErrorMessage('Email is required');
+      return;
+    }
     var tempEmail = email.trim().toLowerCase();
     var tempCheckEmail = checkEmail.trim().toLowerCase();
     console.log(tempEmail);
     console.log(tempCheckEmail);
     if (tempEmail === tempCheckEmail) {
-      // auth().reauthenticate(password)
-      //   .then(() => {
       var currUser = auth().currentUser;
       currUser
         .updateEmail(tempEmail)
         .then(async () => {
+          setFailedText(false);
           setShowSuccessMessage(true);
           console.log(user);
           await setUser({
@@ -66,17 +71,14 @@ export const ChangeEmail = ({ navigation }) => {
             },
           });
           dispatch(setEmail(tempEmail));
-          console.log('Email updated!');
         })
         .catch((error) => {
+          //Check for other errors
           console.log(error);
         });
-      // })
-      // .catch((error) => {
-      //   console.log(error);
-      // });
     } else {
-      console.log('Emails do not match');
+      setFailedText(false);
+      setErrorMessage('Emails do not match');
     }
   }
 
@@ -91,6 +93,7 @@ export const ChangeEmail = ({ navigation }) => {
       return null;
     }
   }
+
   function SuccessMessage() {
     if (showSuccessMessage) {
       return (
@@ -102,12 +105,23 @@ export const ChangeEmail = ({ navigation }) => {
       return null;
     }
   }
+
+  function ErrorMessage() {
+    if (!failedText) return null;
+    return (
+      <View style={styles.hintText_box}>
+        <Text style={styles.errorText}>{errorMessage}</Text>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.logInPage}>
       <View style={styles.big_title_box}>
         <Text style={styles.big_title}>{'Change your email'}</Text>
       </View>
       <View style={styles.inputsGroup}>
+        <ErrorMessage />
         <View style={styles.inputsItem}>
           <View style={styles.inputLabel_box}>
             <Text style={styles.inputLabel}>{'New email'}</Text>
@@ -415,5 +429,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     position: 'absolute',
     bottom: 0,
+  },
+  errorText: {
+    color: '#e11e22',
+    textAlign: 'left',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 14,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
   },
 });
