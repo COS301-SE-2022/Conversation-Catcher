@@ -18,8 +18,10 @@ import Modal from 'react-native-modal';
 import Share from 'react-native-share';
 import { useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectEmail, selectColour } from 'apps/client/src/app/slices/user.slice';
-import Loading from '../shared-components/loading/loading.js';
+import {
+  selectEmail,
+  selectColour,
+} from 'apps/client/src/app/slices/user.slice';
 
 export const ViewAll = ({ navigation }) => {
   const colourState = useSelector(selectColour).colour;
@@ -35,20 +37,6 @@ export const ViewAll = ({ navigation }) => {
   const url = 'https://awesome.contents.com/';
   const title = 'Awesome Contents';
   const message = 'Please check this out.';
-
-  //graphql syntax trees
-  const GET_USER_PDFS = gql`
-    query getForUser($email: String!) {
-      getPDFs(id: $email) {
-        id
-        name
-        creationDate
-        downloaded
-        #pdf
-        text
-      }
-    }
-  `;
 
   const RELOAD = gql`
     mutation reload {
@@ -174,66 +162,6 @@ export const ViewAll = ({ navigation }) => {
     }
     setObjArr(temp);
     refresh();
-  }
-
-  function Pdfs() {
-    // use redux to het email
-    // const email = useSelector(selectEmail()).email;
-    const { data, loading, error } = useQuery(GET_USER_PDFS, {
-      variables: { email: 'John@test' },
-    });
-    console.log('GetPdfs');
-    // console.log(data);
-    // console.log(loading);
-    // console.log(error);
-    if (loading)
-      return (
-        <ScrollView style={styles.recentPdfTiles}>
-          <Loading />
-        </ScrollView>
-      );
-
-    if (error)
-      return (
-        <ScrollView style={styles.recentPdfTiles}>
-          <Text>An error occured...</Text>
-          <Text>{error[0]}</Text>
-        </ScrollView>
-      );
-    if (initialArr[0] === undefined) {
-      console.log('objArr');
-      // console.log(data.getPDFs);
-      for (let i = 0; i < data.getPDFs.length; i++) {
-        //create deep copy
-        initialArr.push({
-          name: data.getPDFs[i].name,
-          creationDate: data.getPDFs[i].creationDate,
-          downloaded: data.getPDFs[i].downloaded,
-          pdf: data.getPDFs[i].pdf,
-          text: data.getPDFs[i].text,
-          id: data.getPDFs[i].id,
-        });
-      }
-      for (let i = 0; i < initialArr.length; i++) objArr[i] = initialArr[i];
-    }
-    return (
-      <ScrollView style={styles.recentPdfTiles}>
-        {objArr.map((item, key) => (
-          <PdfTile
-            key={key}
-            id={item.id}
-            name={item.name}
-            date={item.creationDate}
-            source={''}
-            text={item.text}
-            downloaded={item.downloaded}
-            showCheck={selectMode}
-            pdfSource=""
-            nav={navigation}
-          />
-        ))}
-      </ScrollView>
-    );
   }
 
   return (
@@ -425,8 +353,10 @@ export const ViewAll = ({ navigation }) => {
         //onModalHide={() => setFileSelected(false)}
       >
         <View style={styles.renameModalInner}>
-          
-          <TextInput style={styles.renameModalTextInput} defaultValue={"temp"} />
+          <TextInput
+            style={styles.renameModalTextInput}
+            defaultValue={'temp'}
+          />
           <TouchableOpacity
             style={[styles.renameFileButton, { backgroundColor: colourState }]}
             state={null}
@@ -790,6 +720,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginHorizontal: 10,
     marginTop: 10,
-    height: 40
-  }
+    height: 40,
+  },
 });
