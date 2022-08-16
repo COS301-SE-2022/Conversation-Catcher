@@ -1,4 +1,4 @@
-export class LocalPdfsAccess {
+class LocalPdfsAccess {
   pdfs;
   constructor() {
     this.pdfs = [];
@@ -10,7 +10,7 @@ export class LocalPdfsAccess {
     }
   }
 
-  addPds(newPdf) {
+  addPdf(newPdf) {
     this.pdfs.push(newPdf);
   }
 
@@ -18,9 +18,17 @@ export class LocalPdfsAccess {
     return this.pdfs;
   }
 
-  hasPdfs() {
-    if (this.pdfs[0] === undefined) return false;
-    return true;
+  getLength() {
+    if (this.pdfs[0] === undefined) return 0;
+    return this.pdfs.length;
+  }
+
+  get(i) {
+    return this.pdfs[i];
   }
 }
-export default LocalPdfsAccess;
+
+const pdfLocalAccess = new LocalPdfsAccess();
+Object.freeze(pdfLocalAccess);
+
+export default pdfLocalAccess;
