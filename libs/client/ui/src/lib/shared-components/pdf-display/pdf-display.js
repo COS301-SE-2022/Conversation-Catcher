@@ -1,9 +1,10 @@
 import { gql, useQuery } from '@apollo/client';
-import React from 'react';
-import { View, Text, ScrollView } from 'react-native';
+// import React from 'react';
+import { Text, ScrollView } from 'react-native';
 import Loading from '../loading/loading';
-import LocalPdfsAccess from '../local-pdfs-access/local-pdfs-access';
+// import LocalPdfsAccess from '../local-pdfs-access/local-pdfs-access';
 import PdfTile from '../pdf-tile/pdf-tile';
+import pdfLocalAccess from '../local-pdfs-access/local-pdfs-access';
 
 export function PdfDisplay({ navigation, selectMode }) {
   // const [selectMode, setSelectMode] = useState(false);
@@ -44,12 +45,12 @@ export function PdfDisplay({ navigation, selectMode }) {
         <Text>{error[0]}</Text>
       </ScrollView>
     );
-  if (LocalPdfsAccess.hasPdfs()) {
+  //If the pdf array is empty assign the result from the query
+  if (pdfLocalAccess.getLength() === 0) {
     console.log('objArr');
-    // console.log(data.getPDFs);
+    //create deep copy of the returned data
     for (let i = 0; i < data.getPDFs.length; i++) {
-      //create deep copy
-      LocalPdfsAccess.add({
+      pdfLocalAccess.add({
         name: data.getPDFs[i].name,
         creationDate: data.getPDFs[i].creationDate,
         downloaded: data.getPDFs[i].downloaded,
@@ -58,11 +59,10 @@ export function PdfDisplay({ navigation, selectMode }) {
         id: data.getPDFs[i].id,
       });
     }
-    // for (let i = 0; i < initialArr.length; i++) objArr[i] = initialArr[i];
   }
   return (
     <ScrollView style={styles.recentPdfTiles}>
-      {LocalPdfsAccess.getPDFs().map((item, key) => (
+      {pdfLocalAccess.getPDFs().map((item, key) => (
         <PdfTile
           key={key}
           id={item.id}

@@ -16,6 +16,8 @@ import ModalDropdown from 'react-native-modal-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
 import Share from 'react-native-share';
+import PdfDisplay from '../shared-components/pdf-display/pdf-display.js';
+import pdfLocalAccess from '../local-pdfs-access/local-pdfs-access';
 import { useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import {
@@ -47,7 +49,6 @@ export const ViewAll = ({ navigation }) => {
   const [refresh, { d, l, e }] = useMutation(RELOAD);
   //variables for object sorting
   const [objArr, setObjArr] = useState([]);
-  const [initialArr, setInitialArr] = useState([]);
 
   const options = {
     title,
@@ -156,7 +157,8 @@ export const ViewAll = ({ navigation }) => {
 
   function filterPdf(text) {
     const temp = [];
-    for (let i = 0; i < initialArr.length; i++) objArr[i] = initialArr[i];
+    for (let i = 0; i < pdfLocalAccess.getLength(); i++)
+      objArr[i] = pdfLocalAccess.get(i);
     for (let i = 0; i < objArr.length; i++) {
       if (objArr[i].name.indexOf(text) != -1) temp.push(objArr[i]);
     }
@@ -184,7 +186,7 @@ export const ViewAll = ({ navigation }) => {
         </View>
       </View>
 
-      <Pdfs />
+      <PdfDisplay navigation={navigation} selectMode={selectMode} />
 
       <View style={styles.viewAllBottomBar}>
         <TouchableOpacity
