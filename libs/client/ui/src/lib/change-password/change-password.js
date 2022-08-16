@@ -19,30 +19,37 @@ export const ChangePassword = ({ navigation }) => {
   const colourState = useSelector(selectColour);
   const [showMailHint, setShowMailHint] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-  const [oldPassword, setOldPassword] = useState('');
+  const [failedText, setFailedText] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const [checkPassword, setCheckPassword] = useState('');
   const [password, setPassword] = useState('');
 
   function changePassword() {
+    if (password === '') {
+      setFailedText(true);
+      setErrorMessage('Password is required');
+      return;
+    }
     if (password === checkPassword) {
-      // auth().reauthenticate(oldPassword)
-      //   .then(() => {
       var user = auth().currentUser;
       user
         .updatePassword(password.trim())
         .then(() => {
           setShowSuccessMessage(true);
-          console.log('Password updated!');
+          setFailedText(false);
         })
         .catch((error) => {
-          console.log(error);
+          setFailedText(true);
+          if (error.code === 'auth/weak-password')
+            setErrorMessage('Password has to be at least 6 digits');
+          else {
+            setErrorMessage('An error has occurred');
+            console.log(error);
+          }
         });
-      // })
-      // .catch((error) => {
-      //   console.log(error);
-      // });
     } else {
-      console.log('Passwords do not match');
+      setFailedText(true);
+      setErrorMessage('Passwords do not match');
     }
   }
 
@@ -57,6 +64,7 @@ export const ChangePassword = ({ navigation }) => {
       return null;
     }
   }
+
   function SuccessMessage() {
     if (showSuccessMessage) {
       return (
@@ -68,12 +76,23 @@ export const ChangePassword = ({ navigation }) => {
       return null;
     }
   }
+
+  function ErrorMessage() {
+    if (!failedText) return null;
+    return (
+      <View style={styles.hintText_box}>
+        <Text style={styles.errorText}>{errorMessage}</Text>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.logInPage}>
       <View style={styles.big_title_box}>
         <Text style={styles.big_title}>{'Change your password'}</Text>
       </View>
       <View style={styles.inputsGroup}>
+        <ErrorMessage />
         <View style={styles.inputsItem}>
           <View style={styles.inputLabel_box}>
             <Text style={styles.inputLabel}>{'New password'}</Text>
@@ -369,5 +388,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     position: 'absolute',
     bottom: 0,
+  },
+  errorText: {
+    color: '#e11e22',
+    textAlign: 'left',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 14,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
   },
 });

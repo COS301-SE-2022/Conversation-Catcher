@@ -23,8 +23,10 @@ export const Register = ({ navigation }) => {
   const colourState = useSelector(selectColour);
   const [showMailHint, setShowMailHint] = useState(false);
   const [showPasswordHint, setShowPasswordHint] = useState(false);
+  const [failedSignUp, setFailedSignUp] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('Invalid login details');
 
   //graphql query tree
   const ADDUSER = gql`
@@ -50,6 +52,7 @@ export const Register = ({ navigation }) => {
       return null;
     }
   }
+
   function PasswordHint() {
     if (showPasswordHint) {
       return (
@@ -61,12 +64,23 @@ export const Register = ({ navigation }) => {
       return null;
     }
   }
+
+  function InvalidDetails() {
+    if (!failedSignUp) return null;
+    return (
+      <View style={styles.hintText_box}>
+        <Text style={styles.errorText}>{errorMessage}</Text>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.registerPage}>
       <View style={styles.big_title_box}>
         <Text style={styles.big_title}>{'Create new account'}</Text>
       </View>
       <View style={styles.inputsGroup}>
+        <InvalidDetails />
         <View style={styles.inputsItem}>
           <View style={styles.inputLabel_box}>
             <Text style={styles.inputLabel}>{'Email'}</Text>
@@ -147,27 +161,44 @@ export const Register = ({ navigation }) => {
           { borderColor: colourState },
         ]}
         onPress={() => {
+          if (email === '') {
+            setFailedSignUp(true);
+            setErrorMessage('Email is required');
+            return;
+          }
+          if (password === '') {
+            setFailedSignUp(true);
+            setErrorMessage('Password is required');
+            return;
+          }
           auth()
-            .createUserWithEmailAndPassword(email.trim().toLowerCase(), password.trim())
+            .createUserWithEmailAndPassword(
+              email.trim().toLowerCase(),
+              password.trim()
+            )
             .then(async () => {
-              var queryRes = (await addUser({ variables: { email: email.trim().toLowerCase() } }))
-                .data.addUser;
-              console.log(queryRes);
+              //Succesful register: Add user to mongoDB and set the user object
+              setFailedSignUp(false);
+              var queryRes = (
+                await addUser({
+                  variables: { email: email.trim().toLowerCase() },
+                })
+              ).data.addUser;
               dispatch(setUser(queryRes));
               navigation.navigate('Home');
             })
             .catch((error) => {
-              if (error.code === 'auth/email-already-in-use') {
-                console.log('That email address is already in use!');
-              }
-
-              if (error.code === 'auth/invalid-email') {
-                console.log('That email address is invalid!');
-              }
-
-              console.error(error);
+              //If there is an error registering output a helpfull error message
+              console.log(error.code);
+              setFailedSignUp(true);
+              if (error.code === 'auth/email-already-in-use')
+                setErrorMessage('That email address is already in use!');
+              else if (error.code === 'auth/invalid-email')
+                setErrorMessage('That email address is invalid!');
+              else if (error.code === 'auth/weak-password')
+                setErrorMessage('Password should be at least 6 digits');
+              else setErrorMessage('Failed to create an account');
             });
-          // navigation.navigate('Home');
         }}
       >
         <View style={styles.registerButtonLabel_box}>
@@ -378,5 +409,15 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
     margin: 5,
+  },
+  errorText: {
+    color: '#e11e22',
+    textAlign: 'left',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 14,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
   },
 });
