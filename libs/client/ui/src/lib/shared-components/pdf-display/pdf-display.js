@@ -1,6 +1,6 @@
 import { gql, useQuery } from '@apollo/client';
 // import React from 'react';
-import { Text, ScrollView } from 'react-native';
+import { Text, ScrollView, StyleSheet } from 'react-native';
 import Loading from '../loading/loading';
 // import LocalPdfsAccess from '../local-pdfs-access/local-pdfs-access';
 import PdfTile from '../pdf-tile/pdf-tile';
