@@ -17,7 +17,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
 import Share from 'react-native-share';
 import PdfDisplay from '../shared-components/pdf-display/pdf-display.js';
-import pdfLocalAccess from '../local-pdfs-access/local-pdfs-access';
+import pdfLocalAccess from '../shared-components/local-pdfs-access/local-pdfs-access';
 import { useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import {
