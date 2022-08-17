@@ -26,6 +26,10 @@ class LocalPdfsAccess {
   get(i) {
     return this.pdfs[i];
   }
+
+  clearPdfs() {
+    this.pdfs.length = 0;
+  }
 }
 
 const pdfLocalAccess = new LocalPdfsAccess();

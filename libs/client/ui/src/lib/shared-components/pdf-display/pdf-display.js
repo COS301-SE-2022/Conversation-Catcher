@@ -12,6 +12,7 @@ import { useSelector } from 'react-redux';
 export function PdfDisplay({ navigation, selectMode }) {
   // const [selectMode, setSelectMode] = useState(false);
   const emailState = useSelector(selectEmail);
+  console.log(emailState);
 
   //graphql syntax trees
   const GET_USER_PDFS = gql`
@@ -30,7 +31,7 @@ export function PdfDisplay({ navigation, selectMode }) {
     variables: { email: emailState },
   });
   console.log('GetPdfs');
-  // console.log(data);
+  console.log(data);
   // console.log(loading);
   // console.log(error);
   if (loading)
@@ -48,20 +49,21 @@ export function PdfDisplay({ navigation, selectMode }) {
       </ScrollView>
     );
   //If the pdf array is empty assign the result from the query
-  if (pdfLocalAccess.getLength() === 0) {
-    console.log('objArr');
-    //create deep copy of the returned data
-    for (let i = 0; i < data.getPDFs.length; i++) {
-      pdfLocalAccess.addPdf({
-        name: data.getPDFs[i].name,
-        creationDate: data.getPDFs[i].creationDate,
-        downloaded: data.getPDFs[i].downloaded,
-        pdf: data.getPDFs[i].pdf,
-        text: data.getPDFs[i].text,
-        id: data.getPDFs[i].id,
-      });
-    }
+  // if (pdfLocalAccess.getLength() === 0) {
+  console.log('loading data');
+  //create deep copy of the returned data
+  pdfLocalAccess.clearPdfs();
+  for (let i = 0; i < data.getPDFs.length; i++) {
+    pdfLocalAccess.addPdf({
+      name: data.getPDFs[i].name,
+      creationDate: data.getPDFs[i].creationDate,
+      downloaded: data.getPDFs[i].downloaded,
+      pdf: data.getPDFs[i].pdf,
+      text: data.getPDFs[i].text,
+      id: data.getPDFs[i].id,
+    });
   }
+  // }
   return (
     <ScrollView style={styles.recentPdfTiles}>
       {pdfLocalAccess.getPdfs().map((item, key) => (
