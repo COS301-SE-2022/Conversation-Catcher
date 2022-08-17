@@ -20,13 +20,10 @@ import PdfDisplay from '../shared-components/pdf-display/pdf-display.js';
 import pdfLocalAccess from '../shared-components/local-pdfs-access/local-pdfs-access';
 import { useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import {
-  selectEmail,
-  selectColour,
-} from 'apps/client/src/app/slices/user.slice';
+import { selectColour } from 'apps/client/src/app/slices/user.slice';
 
 export const ViewAll = ({ navigation }) => {
-  const colourState = useSelector(selectColour).colour;
+  const colourState = useSelector(selectColour);
   const [moreVisible, setMoreVisible] = useState(false);
   const [selectMode, setSelectMode] = useState(false);
   const [bottomModalVisible, setBottomModalVisible] = useState(false);

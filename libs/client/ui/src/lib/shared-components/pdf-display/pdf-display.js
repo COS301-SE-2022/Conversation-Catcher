@@ -1,13 +1,17 @@
 import { gql, useQuery } from '@apollo/client';
-// import React from 'react';
+import React from 'react';
 import { Text, ScrollView, StyleSheet } from 'react-native';
 import Loading from '../loading/loading';
 // import LocalPdfsAccess from '../local-pdfs-access/local-pdfs-access';
 import PdfTile from '../pdf-tile/pdf-tile';
 import pdfLocalAccess from '../local-pdfs-access/local-pdfs-access';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { selectEmail } from 'apps/client/src/app/slices/user.slice';
+import { useSelector } from 'react-redux';
 
 export function PdfDisplay({ navigation, selectMode }) {
   // const [selectMode, setSelectMode] = useState(false);
+  const emailState = useSelector(selectEmail);
 
   //graphql syntax trees
   const GET_USER_PDFS = gql`
@@ -22,10 +26,8 @@ export function PdfDisplay({ navigation, selectMode }) {
       }
     }
   `;
-  // use redux to het email
-  // const email = useSelector(selectEmail()).email;
   const { data, loading, error } = useQuery(GET_USER_PDFS, {
-    variables: { email: 'John@test' },
+    variables: { email: emailState },
   });
   console.log('GetPdfs');
   // console.log(data);
@@ -50,7 +52,7 @@ export function PdfDisplay({ navigation, selectMode }) {
     console.log('objArr');
     //create deep copy of the returned data
     for (let i = 0; i < data.getPDFs.length; i++) {
-      pdfLocalAccess.add({
+      pdfLocalAccess.addPdf({
         name: data.getPDFs[i].name,
         creationDate: data.getPDFs[i].creationDate,
         downloaded: data.getPDFs[i].downloaded,
@@ -62,7 +64,7 @@ export function PdfDisplay({ navigation, selectMode }) {
   }
   return (
     <ScrollView style={styles.recentPdfTiles}>
-      {pdfLocalAccess.getPDFs().map((item, key) => (
+      {pdfLocalAccess.getPdfs().map((item, key) => (
         <PdfTile
           key={key}
           id={item.id}
