@@ -16,6 +16,7 @@ import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
 import ModalDropdown from 'react-native-modal-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
+import pdfLocalAccess from '../local-pdfs-access/local-pdfs-access.js';
 import { useSelector } from 'react-redux';
 import { selectColour } from '../../../../../../apps/client/src/app/slices/user.slice';
 //import Share from 'react-native-share';
@@ -25,6 +26,7 @@ export const PdfView = ({ route, navigation }) => {
   const [moreVisible, setMoreVisible] = useState(false);
   const [renameVisible, setRenameVisible] = useState(false);
   const [deleteConfirmVisible, setDeleteConfirmVisible] = useState(false);
+  const [newName, setNewName] = useState('');
 
   const { text, name, id } = route.params;
 
@@ -61,6 +63,21 @@ export const PdfView = ({ route, navigation }) => {
 
   const [rename] = useMutation(RENAME);
   const [delete_pdf] = useMutation(DELETE);
+
+  async function renamePdf() {
+    console.log(id);
+    name.name = newName;
+    console.log(pdfLocalAccess.getPdfs());
+    pdfLocalAccess.renamePdf(id.id, newName);
+    // await rename({ variables: { id: id.id, name: 'otherName' } });
+  }
+
+  async function deletePdf() {
+    console.log('delete pdf');
+    console.log('delete');
+    pdfLocalAccess.deletePdf(id.id);
+    // await delete_pdf({ variables: { id: id.id } });
+  }
 
   return (
     <View style={styles.viewAllPage}>
@@ -128,11 +145,8 @@ export const PdfView = ({ route, navigation }) => {
 
           <TouchableOpacity
             style={styles.moreModalButton}
-            onPress={async () => {
+            onPress={() => {
               setMoreVisible(false);
-              console.log(id);
-              name.name = 'otherName';
-              await rename({ variables: { id: id.id, name: 'otherName' } });
               setRenameVisible(true);
             }}
           >
@@ -156,8 +170,6 @@ export const PdfView = ({ route, navigation }) => {
             style={styles.moreModalButton}
             onPress={async () => {
               setMoreVisible(false);
-              console.log('delete');
-              await delete({ variables: { id: id.id} });
               setDeleteConfirmVisible(true);
             }}
           >
@@ -181,12 +193,19 @@ export const PdfView = ({ route, navigation }) => {
         //onModalHide={() => setFileSelected(false)}
       >
         <View style={styles.renameModalInner}>
-          
-          <TextInput style={styles.renameModalTextInput} defaultValue={name.name} />
+          <TextInput
+            style={styles.renameModalTextInput}
+            defaultValue={''}
+            onChangeText={(text) => {
+              setNewName(text);
+            }}
+          />
           <TouchableOpacity
             style={[styles.renameFileButton, { backgroundColor: colourState }]}
             state={null}
             onPress={() => {
+              console.log('renaming the pdf to ' + newName);
+              renamePdf();
               setRenameVisible(false);
             }}
           >
@@ -207,7 +226,6 @@ export const PdfView = ({ route, navigation }) => {
         //onModalHide={() => setFileSelected(false)}
       >
         <View style={styles.renameModalInner}>
-          
           <Text style={styles.modalTitle}>
             {'Are you sure you want to delete ' + name.name + '?'}
           </Text>
@@ -228,6 +246,8 @@ export const PdfView = ({ route, navigation }) => {
             style={[styles.renameFileButton, { backgroundColor: colourState }]}
             state={null}
             onPress={() => {
+              // Delete the pdf
+              deletePdf();
               setDeleteConfirmVisible(false);
               navigation.goBack();
             }}
@@ -240,7 +260,6 @@ export const PdfView = ({ route, navigation }) => {
           </TouchableOpacity>
         </View>
       </Modal>
-
     </View>
   );
 };
@@ -483,7 +502,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     letterSpacing: 0,
     lineHeight: 20,
-    fontSize: 18,
+    fontSize: 15,
+    color: 'black',
     fontWeight: '400',
     fontStyle: 'normal',
     fontFamily: 'System' /* Inter */,
@@ -491,7 +511,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginHorizontal: 10,
     marginTop: 10,
-    height: 40
+    height: 40,
   },
   modalTitle: {
     color: '#344053ff',

@@ -71,6 +71,23 @@ class LocalPdfsAccess {
         break;
     }
   }
+
+  //Search for pdf with id pdfId and change the name
+  renamePdf(pdfId, newName) {
+    for (let i = 0; i < this.allPdfs.length; i++) {
+      if (this.allPdfs[i].id === pdfId) this.allPdfs[i].name = newName;
+    }
+  }
+
+  //Remove pdf with certain id from the list
+  deletePdf(pdfId) {
+    var temp = [];
+    for (let i = 0; i < this.allPdfs.length; i++) {
+      if (this.allPdfs[i].id !== pdfId) temp.push(this.allPdfs[i]);
+    }
+    this.clearPdfs();
+    this.addPdfs(temp);
+  }
 }
 
 const pdfLocalAccess = new LocalPdfsAccess();
