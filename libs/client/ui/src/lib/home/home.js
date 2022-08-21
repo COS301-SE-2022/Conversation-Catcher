@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import {
   View,
   StyleSheet,
@@ -22,10 +22,14 @@ import AudioRecord from 'react-native-audio-record';
 import DocumentPicker, { types } from 'react-native-document-picker';
 import { connect, useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectColour, selectEmail } from 'apps/client/src/app/slices/user.slice';
+import {
+  selectColour,
+  selectEmail,
+} from 'apps/client/src/app/slices/user.slice';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 
 export const Home = ({ navigation }) => {
+  const pdfRef = useRef();
   const colourState = useSelector(selectColour);
   const emailState = useSelector(selectEmail);
   const [recordingStopVisible, setRecordingStopVisible] = useState(false);
@@ -121,20 +125,24 @@ export const Home = ({ navigation }) => {
 
   function UploadAudioCenter(props) {
     if (fileSelected) {
-      return <TouchableOpacity
-              style={styles.changeUploadModalButton}
-              onPress={() => handleDocumentSelection()}>
-              <Icon
-                style={{color : colourState}}
-                name="file-sound-o"
-                size={16}
-              />
-              {fileResponse.map((file, index) => (
-              <Text style={[styles.changeUploadModalButtonText, {color : colourState}]}>
-                {file?.name}
-              </Text>
-              ))}
-            </TouchableOpacity>
+      return (
+        <TouchableOpacity
+          style={styles.changeUploadModalButton}
+          onPress={() => handleDocumentSelection()}
+        >
+          <Icon style={{ color: colourState }} name="file-sound-o" size={16} />
+          {fileResponse.map((file, index) => (
+            <Text
+              style={[
+                styles.changeUploadModalButtonText,
+                { color: colourState },
+              ]}
+            >
+              {file?.name}
+            </Text>
+          ))}
+        </TouchableOpacity>
+      );
     }
     return (
       <TouchableOpacity
@@ -209,7 +217,11 @@ export const Home = ({ navigation }) => {
     console.log('stop record');
     state.audioFile = await AudioRecord.stop();
     //file containing audiofile
-    console.log(await summariseText({variables:{ text: (await speechToText()).data.ConvertSpeech}}));
+    console.log(
+      await summariseText({
+        variables: { text: (await speechToText()).data.ConvertSpeech },
+      })
+    );
     console.log('audioFile', state.audioFile);
     componentDidMount();
     state.audioFile = false;
@@ -218,8 +230,10 @@ export const Home = ({ navigation }) => {
 
   function Pdfs() {
     // use redux to het email
-    console.log(emailState);
-    const { data, loading, error } = useQuery(GET_USER_PDFS, {variables: {email: 'John@test'}});
+    // console.log(emailState);
+    const { data, loading, error } = useQuery(GET_USER_PDFS, {
+      variables: { email: 'John@test' },
+    });
     // console.log(data);
     // console.log(loading);
     // console.log(error);
@@ -270,7 +284,7 @@ export const Home = ({ navigation }) => {
           {'Recents'}
         </Text>
       </View>
-      <PdfDisplay navigation={navigation} selectMode={false}/>
+      <PdfDisplay navigation={navigation} selectMode={false} ref={pdfRef} />
       <View style={styles.viewAllTouchableOpacityFrame}>
         <TouchableOpacity
           style={[
@@ -340,11 +354,7 @@ export const Home = ({ navigation }) => {
           >
             <View style={styles.recordingStopModalButtonContent}>
               <View style={styles.iconContainer}>
-                <Icon
-                  style={{color : colourState}}
-                  name="refresh"
-                  size={18}
-                />
+                <Icon style={{ color: colourState }} name="refresh" size={18} />
               </View>
               <View style={styles.recordingStopModalButtonText_box}>
                 <Text
@@ -368,7 +378,7 @@ export const Home = ({ navigation }) => {
             <View style={styles.recordingStopModalButtonContent}>
               <View style={styles.iconContainer}>
                 <Icon
-                  style={{color : colourState}}
+                  style={{ color: colourState }}
                   name="microphone"
                   size={20}
                 />
@@ -393,11 +403,7 @@ export const Home = ({ navigation }) => {
           >
             <View style={styles.recordingStopModalButtonContent}>
               <View style={styles.iconContainer}>
-                <Icon
-                  style={{color : colourState}}
-                  name="trash-o"
-                  size={20}
-                />
+                <Icon style={{ color: colourState }} name="trash-o" size={20} />
               </View>
               <View style={styles.recordingStopModalButtonText_box}>
                 <Text style={styles.recordingStopModalButtonText}>
@@ -423,7 +429,7 @@ export const Home = ({ navigation }) => {
           <UploadAudioCenter />
 
           <TouchableOpacity
-            style={[styles.uploadFileButton, {backgroundColor : colourState}]}
+            style={[styles.uploadFileButton, { backgroundColor: colourState }]}
             state={null}
             onPress={() => {
               setUploadVisible(false);

@@ -56,22 +56,18 @@ class LocalPdfsAccess {
     // Sort PDFs array according to sortBy (Which is either Name or )
     switch (sortBy) {
       case 'Name':
-        // var temp2 = objArr;
         this.displayPdfs.sort((a, b) => {
           if (a.name < b.name) return -1;
           return 1;
         });
-        // setObjArr(temp2);
-        // console.log(objArr);
+        console.log(this.displayPdfs);
         break;
       case 'Date':
-        // var temp = objArr;
         this.displayPdfs.sort((a, b) => {
           if (new Date(a.creationDate) > new Date(b.creationDate)) return -1;
           return 1;
         });
-        // setObjArr(temp);
-        // console.log(objArr);
+        console.log(this.displayPdfs);
         break;
     }
   }

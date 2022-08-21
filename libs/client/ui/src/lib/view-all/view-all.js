@@ -23,6 +23,7 @@ import { useSelector } from 'react-redux';
 import { selectColour } from 'apps/client/src/app/slices/user.slice';
 
 export const ViewAll = ({ navigation }) => {
+  const pdfRef = useRef();
   const colourState = useSelector(selectColour);
   const [moreVisible, setMoreVisible] = useState(false);
   const [selectMode, setSelectMode] = useState(false);
@@ -173,13 +174,17 @@ export const ViewAll = ({ navigation }) => {
             placeholder="Search"
             onChangeText={(text) => {
               pdfLocalAccess.filterPdfs(text);
-              PdfDisplay.refresh();
+              pdfRef.current.refreshPfds();
             }}
           />
         </View>
       </View>
 
-      <PdfDisplay navigation={navigation} selectMode={selectMode} />
+      <PdfDisplay
+        navigation={navigation}
+        selectMode={selectMode}
+        ref={pdfRef}
+      />
 
       <View style={styles.viewAllBottomBar}>
         <TouchableOpacity
@@ -202,7 +207,10 @@ export const ViewAll = ({ navigation }) => {
             options={['Date', 'Name']}
             defaultIndex={0}
             defaultValue={'Date'}
-            onSelect={(index, itemValue) => pdfLocalAccess.sortPdfs(itemValue)}
+            onSelect={(index, itemValue) => {
+              pdfLocalAccess.sortPdfs(itemValue);
+              pdfRef.current.refreshPfds();
+            }}
             style={styles.orderByDropdown}
             textStyle={styles.orderByDropdownText}
             dropdownStyle={styles.orderByDropdownStyle}
