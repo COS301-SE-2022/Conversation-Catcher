@@ -9,14 +9,14 @@ import { Provider } from 'react-redux';
 describe('Register', () => {
   const store = configureStore({
     reducer: {
-      user:reducer
-    }
-  })
+      user: reducer,
+    },
+  });
   const TestComponent = () => (
-    <Provider store = { store }>
-        <Register />
+    <Provider store={store}>
+      <Register />
     </Provider>
-)
+  );
   it('should render successfully', () => {
     // const { container } = render(<TestComponent />);
     // expect(container).toBeTruthy();
