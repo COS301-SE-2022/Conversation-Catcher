@@ -14,6 +14,7 @@ import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
 import Loading from '../shared-components/loading/loading.js';
+import PdfDisplay from '../shared-components/pdf-display/pdf-display.js';
 import { Buffer } from 'buffer';
 //import Permissions from 'react-native-permissions';
 //import Sound from 'react-native-sound';
@@ -269,7 +270,7 @@ export const Home = ({ navigation }) => {
           {'Recents'}
         </Text>
       </View>
-      <Pdfs />
+      <PdfDisplay navigation={navigation} selectMode={false}/>
       <View style={styles.viewAllTouchableOpacityFrame}>
         <TouchableOpacity
           style={[

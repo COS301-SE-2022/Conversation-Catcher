@@ -31,9 +31,9 @@ export function PdfDisplay({ navigation, selectMode }) {
     variables: { email: emailState },
   });
   console.log('GetPdfs');
-  console.log(data);
+  // console.log(data);
   // console.log(loading);
-  // console.log(error);
+  console.log(error);
   if (loading)
     return (
       <ScrollView style={styles.recentPdfTiles}>
