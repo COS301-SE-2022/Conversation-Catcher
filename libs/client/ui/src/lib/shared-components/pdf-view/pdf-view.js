@@ -10,6 +10,8 @@ import {
   ScrollView,
   TextInput,
   Share,
+  DeviceEventEmitter,
+  NativeAppEventEmitter,
 } from 'react-native';
 import { gql, useQuery, useMutation } from '@apollo/client';
 import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
@@ -67,16 +69,13 @@ export const PdfView = ({ route, navigation }) => {
   async function renamePdf() {
     console.log(id);
     name.name = newName;
-    console.log(pdfLocalAccess.getPdfs());
     pdfLocalAccess.renamePdf(id.id, newName);
-    // await rename({ variables: { id: id.id, name: 'otherName' } });
+    await rename({ variables: { id: id.id, name: newName } });
   }
 
   async function deletePdf() {
-    console.log('delete pdf');
-    console.log('delete');
     pdfLocalAccess.deletePdf(id.id);
-    // await delete_pdf({ variables: { id: id.id } });
+    await delete_pdf({ variables: { id: id.id } });
   }
 
   return (
@@ -103,7 +102,10 @@ export const PdfView = ({ route, navigation }) => {
       <View style={styles.viewAllBottomBar}>
         <TouchableOpacity
           style={styles.backButton}
-          onPress={() => navigation.goBack()}
+          onPress={() => {
+            navigation.goBack();
+            NativeAppEventEmitter.emit('updatePage');
+          }}
         >
           <Icon name="angle-left" color="#344053ff" size={30} />
         </TouchableOpacity>
@@ -250,6 +252,7 @@ export const PdfView = ({ route, navigation }) => {
               deletePdf();
               setDeleteConfirmVisible(false);
               navigation.goBack();
+              NativeAppEventEmitter.emit('updatePage');
             }}
           >
             <View style={styles.renameModalButtonContent}>

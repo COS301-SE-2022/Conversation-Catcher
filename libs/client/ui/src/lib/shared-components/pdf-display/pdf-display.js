@@ -1,6 +1,6 @@
 import { gql, useMutation, useQuery } from '@apollo/client';
 import React, { useImperativeHandle, forwardRef, useState } from 'react';
-import { Text, ScrollView, StyleSheet, View } from 'react-native';
+import { Text, ScrollView, StyleSheet, DeviceEventEmitter } from 'react-native';
 import Loading from '../loading/loading';
 // import LocalPdfsAccess from '../local-pdfs-access/local-pdfs-access';
 import PdfTile from '../pdf-tile/pdf-tile';
@@ -23,6 +23,8 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
     },
   }));
 
+  //Listen to when to update page
+  DeviceEventEmitter.addListener('updatePage', () => setDidReload(!didReload));
   //graphql syntax trees
   const GET_USER_PDFS = gql`
     query getForUser($email: String!) {
@@ -90,6 +92,7 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
           showCheck={selectMode}
           pdfSource={'pdfRefresh'}
           nav={navigation}
+          refresh={setDidReload}
         />
       ))}
     </ScrollView>
