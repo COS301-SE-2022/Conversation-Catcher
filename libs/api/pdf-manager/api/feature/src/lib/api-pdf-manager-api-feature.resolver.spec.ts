@@ -27,6 +27,33 @@ PdfsMock[1] = PdfEntity2Mock;
 describe('ApiPdfManagerApiFeatureResolver', () => {
   let resolver: ApiPdfManagerApiFeatureResolver;
 
+  const MockPdfManagerService = {
+    getPdfById: jest.fn( (id: string) =>{
+      PdfEntityMock.id = id;
+      return PdfEntityMock;
+    }),
+    getPdfs: jest.fn((userid : string) => {
+      return PdfsMock;
+    }),
+    setDownloadedPdf: jest.fn( (id: string) =>{
+      PdfEntityMock.id = id;
+      return PdfEntityMock;
+    }),
+    setNamePdf: jest.fn((id : string) => {
+      PdfEntityMock.id = id;
+      return PdfEntityMock;
+    }),
+    deletePdf: jest.fn( (id: string) =>{
+      PdfEntityMock.id = id;
+      return PdfEntityMock;
+    }),
+    addPdf: jest.fn((email: string, name: string, text: string) => {
+      PdfEntityMock.name = name;
+      PdfEntityMock.text = text;
+      return PdfEntityMock;
+    }),
+  };
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
         imports: [CqrsModule, ApiPdfManagerServiceModule],
@@ -35,8 +62,8 @@ describe('ApiPdfManagerApiFeatureResolver', () => {
           ApiPdfManagerApiFeatureResolver,
         ],
     })
-    //.overrideProvider(ApiPdfManagerServiceFeatureService)
-    //.useValue(MockService)
+    .overrideProvider(ApiPdfManagerServiceModule)
+    .useValue(MockPdfManagerService)
     .compile();
 
     resolver = module.get<ApiPdfManagerApiFeatureResolver>(
