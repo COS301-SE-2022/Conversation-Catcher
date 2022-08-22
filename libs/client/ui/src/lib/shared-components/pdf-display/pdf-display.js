@@ -6,7 +6,9 @@ import Loading from '../loading/loading';
 import PdfTile from '../pdf-tile/pdf-tile';
 import pdfLocalAccess from '../local-pdfs-access/local-pdfs-access';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectEmail } from 'apps/client/src/app/slices/user.slice';
+import { selectEmail} from 'apps/client/src/app/slices/user.slice';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { selectPDFS } from 'apps/client/src/app/slices/pdf.slice';
 import { useSelector } from 'react-redux';
 
 export function PdfDisplay({ navigation, selectMode }, ref) {
@@ -14,6 +16,7 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
   const [didReload, setDidReload] = useState(true);
   const [isLoaded, setIsLoaded] = useState(false);
   const emailState = useSelector(selectEmail);
+  const localPDFs = useSelector(selectPDFS);
 
   //Expose refresh function to parent(View-all page)
   useImperativeHandle(ref, () => ({
@@ -48,6 +51,7 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
   if (loading)
     return (
       <ScrollView style={styles.recentPdfTiles}>
+        {/*Can put local pdfs here*/}
         <Loading />
       </ScrollView>
     );
@@ -60,9 +64,8 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
       </ScrollView>
     );
   //If the pdf array is empty assign the result from the query
-  // if (pdfLocalAccess.getLength() === 0) {
-  // console.log('loading data');
   //create deep copy of the returned data
+  //Data is here in data if returned
   if (!isLoaded) {
     pdfLocalAccess.clearPdfs();
     for (let i = 0; i < data.getPDFs.length; i++) {
