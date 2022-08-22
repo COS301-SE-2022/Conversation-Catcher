@@ -81,6 +81,10 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
     setIsLoaded(true);
   }
 
+  //Update local pdf storage
+  //array of pdfs stored locally, selected from data to overwrite the slice
+  //for...
+
   return (
     <ScrollView style={styles.recentPdfTiles}>
       {pdfLocalAccess.getPdfs().map((item, key) => (
