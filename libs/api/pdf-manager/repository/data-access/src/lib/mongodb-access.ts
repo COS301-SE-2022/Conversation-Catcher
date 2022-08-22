@@ -133,7 +133,7 @@ export class MongoDBAccess {
           .post(this.url + this.action, data, this.config)
           .pipe(map((res) => res.data.document))
       );
-      console.log(temp);
+      // console.log(temp);
       if (temp != undefined) object.push(temp);
     }
     return object;
