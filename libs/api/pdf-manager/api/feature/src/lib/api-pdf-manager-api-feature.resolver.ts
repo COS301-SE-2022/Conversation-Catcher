@@ -77,6 +77,7 @@ export class ApiPdfManagerApiFeatureResolver {
     return [this.errorObj];
   }
 
+  // add pdf to db connected to this user
   @Mutation(() => PdfEntity)
   async addPDF(
     @Args('email') email: string,
