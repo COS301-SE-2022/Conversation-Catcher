@@ -26,23 +26,35 @@ export class MongoDBAccess {
 
   //Functions
   async addPdf(mail: string, name: string, text: string, date: Date) {
-    console.log('reached repository');
-    mail = mail + '';
-    name = name + '';
-    text = text + '';
     this.action = 'insertOne';
     let data = JSON.stringify({
       collection: this.pdfCollection,
       database: this.db,
       dataSource: this.cluster,
-      document: { id: name, name: name, creationDate: date, text: text, pdf: null, downloaded: false },
+      document: {
+        name: name,
+        creationDate: date,
+        text: text,
+        pdf: null,
+        downloaded: false,
+      },
     });
 
     const result = await lastValueFrom(
       this.httpService
         .post(this.url + this.action, data, this.config)
-        .pipe(map((res) => res.data.document))
+        .pipe(map((res) => res.data))
     );
+
+    const newId = result.insertedId;
+    const newPdf = {
+      name: name,
+      _id: newId,
+      creationDate: date,
+      text: text,
+      pdf: null,
+      downloaded: false,
+    };
 
     //First fetch the user
     this.action = 'findOne';
@@ -61,7 +73,7 @@ export class MongoDBAccess {
 
     if (r.document == null) return null;
     const arr = r.document.pdfs;
-    arr.push(name);
+    arr.push(newId);
 
     //Add elements to the correct user
     this.action = 'updateOne';
@@ -70,14 +82,18 @@ export class MongoDBAccess {
       database: this.db,
       dataSource: this.cluster,
       filter: { email: mail },
-      update: { pdfs: arr},
+      update: {
+        email: mail,
+        pdfs: arr,
+        colour: r.document.colour,
+      },
     });
     const result2 = await lastValueFrom(
       this.httpService
         .post(this.url + this.action, data, this.config)
         .pipe(map((res) => res.data))
     );
-    return result;
+    return newPdf;
   }
 
   async getUserPdfs(userid: string) {
@@ -110,7 +126,7 @@ export class MongoDBAccess {
         collection: this.pdfCollection,
         database: this.db,
         dataSource: this.cluster,
-        filter: { id: pdfID },
+        filter: { _id: { $oid: pdfID } },
       });
       const temp = await lastValueFrom(
         this.httpService
@@ -130,7 +146,7 @@ export class MongoDBAccess {
       collection: this.pdfCollection,
       database: this.db,
       dataSource: this.cluster,
-      filter: { id: id },
+      filter: { _id: { $oid: id } },
     });
 
     return await lastValueFrom(
@@ -147,7 +163,7 @@ export class MongoDBAccess {
       collection: this.pdfCollection,
       database: this.db,
       dataSource: this.cluster,
-      filter: { id: id },
+      filter: { _id: { $oid: id } },
     });
 
     return await lastValueFrom(
@@ -164,7 +180,7 @@ export class MongoDBAccess {
       collection: this.pdfCollection,
       database: this.db,
       dataSource: this.cluster,
-      filter: { id: id },
+      filter: { _id: { $oid: id } },
     });
 
     const res = await lastValueFrom(
@@ -181,7 +197,7 @@ export class MongoDBAccess {
       collection: this.pdfCollection,
       database: this.db,
       dataSource: this.cluster,
-      filter: { id: id },
+      filter: { _id: { $oid: id } },
       update: {
         $set: { downloaded: !res.document.downloaded },
       },
@@ -200,7 +216,7 @@ export class MongoDBAccess {
       collection: this.pdfCollection,
       database: this.db,
       dataSource: this.cluster,
-      filter: { id: id },
+      filter: { _id: { $oid: id } },
     });
     return await lastValueFrom(
       this.httpService
@@ -217,7 +233,7 @@ export class MongoDBAccess {
       collection: this.pdfCollection,
       database: this.db,
       dataSource: this.cluster,
-      filter: { id: id },
+      filter: { _id: { $oid: id } },
       update: {
         $set: { name: name },
       },
@@ -236,7 +252,7 @@ export class MongoDBAccess {
       collection: this.pdfCollection,
       database: this.db,
       dataSource: this.cluster,
-      filter: { id: id },
+      filter: { _id: { $oid: id } },
     });
     return await lastValueFrom(
       this.httpService
