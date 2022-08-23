@@ -51,8 +51,22 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
   if (loading)
     return (
       <ScrollView style={styles.recentPdfTiles}>
-        {/*Can put local pdfs here*/}
-        <Loading />
+        {localPDFs.map((item, key) => (
+        <PdfTile
+          key={key}
+          id={item.id}
+          name={item.name}
+          date={item.creationDate}
+          source={''}
+          text={item.text}
+          downloaded={item.downloaded}
+          showCheck={selectMode}
+          pdfSource={'pdfRefresh'}
+          nav={navigation}
+          refresh={setDidReload}
+        />
+      ))}
+        {/*<Loading >*/}
       </ScrollView>
     );
 
@@ -79,7 +93,6 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
       });
     }
     setIsLoaded(true);
-
     //Update local pdf storage
     //array of pdfs stored locally, selected from data to overwrite the slice
     tempArray = [];
