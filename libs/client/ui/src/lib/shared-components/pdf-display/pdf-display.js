@@ -8,8 +8,8 @@ import pdfLocalAccess from '../local-pdfs-access/local-pdfs-access';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { selectEmail} from 'apps/client/src/app/slices/user.slice';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectPDFS } from 'apps/client/src/app/slices/pdf.slice';
-import { useSelector } from 'react-redux';
+import { selectPDFS, refillPDFs } from 'apps/client/src/app/slices/pdf.slice';
+import { useSelector, useDispatch } from 'react-redux';
 
 export function PdfDisplay({ navigation, selectMode }, ref) {
   // const [selectMode, setSelectMode] = useState(false);
@@ -17,7 +17,7 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
   const [isLoaded, setIsLoaded] = useState(false);
   const emailState = useSelector(selectEmail);
   const localPDFs = useSelector(selectPDFS);
-
+  const dispatch = useDispatch();
   //Expose refresh function to parent(View-all page)
   useImperativeHandle(ref, () => ({
     refreshPfds: () => {
@@ -81,11 +81,14 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
     setIsLoaded(true);
 
     //Update local pdf storage
-  //array of pdfs stored locally, selected from data to overwrite the slice
+    //array of pdfs stored locally, selected from data to overwrite the slice
     tempArray = [];
     for (p in pdfLocalAccess.getPdfs()){
-      
+      if (p.downloaded === true){
+        tempArray.push(p);
+      }
     }
+
   }
 
   

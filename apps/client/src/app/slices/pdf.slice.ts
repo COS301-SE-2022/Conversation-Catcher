@@ -21,12 +21,16 @@ export const pdfSlice = createSlice({
     clearPDFs: (state,action) => {
       state = [];
       return state;
+    },
+    refillPDFs: (state,action) => {
+      state = action.payload;
+      return state;
     }
   },
 });
 
 export const {actions, reducer} = pdfSlice
 
-export const {addPDF, removePDF, clearPDFs} = actions
+export const {addPDF, removePDF, clearPDFs, refillPDFs} = actions
 
 export const selectPDFS = (state) => state.pdf
