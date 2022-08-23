@@ -88,7 +88,7 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
         tempArray.push(p);
       }
     }
-
+    dispatch(refillPDFs,tempArray);
   }
 
   
