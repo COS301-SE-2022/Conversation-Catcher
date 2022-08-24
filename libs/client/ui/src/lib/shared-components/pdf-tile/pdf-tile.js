@@ -20,7 +20,15 @@ function DownloadButtonState(props) {
   if (downloadState) {
     return (
       <Icon
-        onPress={() => setDownloadState(!downloadState)}
+        onPress={
+          () => {
+            setDownloadState(!downloadState);
+            if (downloadState){
+              //dispatch to pdf slice
+              //graphql query
+            }
+          }
+        }
         color={colourState}
         name="save"
         size={20}
