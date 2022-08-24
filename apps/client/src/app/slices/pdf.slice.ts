@@ -25,7 +25,10 @@ export const pdfSlice = createSlice({
     refillPDFs: (state,action) => {
       state = action.payload;
       return state;
-    }
+    },
+    toggleDown: (state,action) => {for (let p of state){
+      if (p.key === action.payload) p.down = !p.down;
+    }}
   },
 });
 
