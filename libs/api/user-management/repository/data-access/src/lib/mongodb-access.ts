@@ -85,4 +85,36 @@ export class MongoDBAccess {
         .pipe(map((res) => res.data))
     );
   }
+
+  async requestJoinGroup(email: string, group_id: string) {
+    //Logic to request access to a group
+  }
+
+  async acceptJoinRequest(admin: string, user: string, group_id: string) {
+    //Logic to request access to a group
+  }
+
+  async leaveGroup(email: string, group_id: string) {
+    //Logic to request access to a group
+  }
+
+  async createGroup(admin: string, groupName: string) {
+    //Logic to request access to a group
+  }
+
+  async deleteGroup(group_id: string) {
+    // delete a group of which you are the admin
+  }
+
+  async renameGroup(group_id: string, newName: string) {
+    // delete a group of which you are the admin
+  }
+
+  async kickUser(email: string, group_id: string) {
+    //Logic to request access to a group
+  }
+
+  async sendInvite(fromUser: string, toUser: string, group_id: string) {
+    //Logic to request access to a group
+  }
 }
