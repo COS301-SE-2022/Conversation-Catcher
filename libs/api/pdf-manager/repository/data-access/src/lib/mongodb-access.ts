@@ -22,7 +22,7 @@ export class MongoDBAccess {
   private cluster = 'Cluster0';
   private userCollection = 'Users';
   private pdfCollection = 'PDF';
-  private db = 'PDF';
+  private db = 'Conversation-Catcher';
 
   //Functions
   async addPdf(mail: string, name: string, text: string, date: Date) {
