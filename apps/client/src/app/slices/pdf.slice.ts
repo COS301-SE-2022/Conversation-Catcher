@@ -26,10 +26,18 @@ export const pdfSlice = createSlice({
       state = action.payload;
       return state;
     },
-    toggleDown: (state,action) => {for (let p of state){
-      if (p.id === action.payload) //if in, remove, else add
-    }}
-  },
+    toggleDown: (state,action) => {
+      var notIn = true;
+      state.forEach((item,index) => {
+        if (item.id === action.payload.id){
+          state.splice(index,1);
+          notIn = false;
+        }
+      })
+      if (notIn) {
+        state.push({...action.payload,downloaded:{notIn}});
+      }
+  }},
 });
 
 export const {actions, reducer} = pdfSlice

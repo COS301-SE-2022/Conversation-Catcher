@@ -37,8 +37,8 @@ function DownloadButtonState(props) {
           () => {
             setDownloadState(!downloadState);
             if (downloadState){
-              dispatch(toggleDown(props.i));
-              changeDownloaded({ variables: { id: props.i }});
+              dispatch(toggleDown(props.a));
+              changeDownloaded({ variables: { id: props.a.id }});
             }
           }
         }
@@ -76,7 +76,7 @@ function DetermineTileCorner(props) {
       />
     );
   }
-  return <DownloadButtonState downloadState={props.downloaded} i={props.i}/>;
+  return <DownloadButtonState downloadState={props.downloaded} a={props.a}/>;
 }
 
 const pdfthumbnailSource = {
@@ -96,6 +96,9 @@ const PdfTile = ({
   nav,
 }) => {
   const colourState = useSelector(selectColour);
+  const buildPDF = () => {
+    return { id: { id }, text: { text }, name: { name }, downloaded: {downloaded}, date: {date} }
+  }
   // console.log("PDF:"+colourState)
   return (
     <TouchableOpacity
@@ -120,7 +123,7 @@ const PdfTile = ({
           </View>
         </View>
         <View style={styles.download_button}>
-          <DetermineTileCorner d={downloaded} c={showCheck} i={id}/>
+          <DetermineTileCorner d={downloaded} c={showCheck} a={buildPDF}/>
         </View>
       </View>
     </TouchableOpacity>
