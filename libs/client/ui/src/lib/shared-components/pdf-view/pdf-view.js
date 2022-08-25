@@ -55,7 +55,7 @@ export const PdfView = ({ route, navigation }) => {
 
   const DELETE = gql`
     mutation delete($id: String!) {
-      deletePDF(id: "PDF-2986") {
+      deletePDF(id: $id) {
         id
         name
         text

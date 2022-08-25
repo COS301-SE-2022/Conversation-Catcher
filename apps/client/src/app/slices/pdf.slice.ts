@@ -27,13 +27,13 @@ export const pdfSlice = createSlice({
       return state;
     },
     toggleDown: (state,action) => {for (let p of state){
-      if (p.key === action.payload) p.down = !p.down;
+      if (p.id === action.payload) //if in, remove, else add
     }}
   },
 });
 
 export const {actions, reducer} = pdfSlice
 
-export const {addPDF, removePDF, clearPDFs, refillPDFs} = actions
+export const {addPDF, removePDF, clearPDFs, refillPDFs, toggleDown} = actions
 
 export const selectPDFS = (state) => state.pdf

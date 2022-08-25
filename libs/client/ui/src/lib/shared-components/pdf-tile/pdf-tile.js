@@ -9,14 +9,27 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { selectColour } from 'apps/client/src/app/slices/user.slice';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { toggleDown } from 'apps/client/src/app/slices/pdf.slice';
+import { gql, useMutation } from '@apollo/client';
 //import FileViewer from "react-native-file-viewer";
 
 function DownloadButtonState(props) {
   const colourState = useSelector(selectColour);
   const [downloadState, setDownloadState] = React.useState(props.d);
+  const dispatch = useDispatch();
+  //graphql syntax trees
+  const CHANGE_DOWNLOADED = gql`
+    query toggleDownload($id: String!) {
+      downloadedPDF(id: $id) {
+        id
+      }
+    }
+  `;
+  const [changeDownloaded] = useMutation(GET_USER_PDFS);
   if (downloadState) {
     return (
       <Icon
@@ -24,8 +37,8 @@ function DownloadButtonState(props) {
           () => {
             setDownloadState(!downloadState);
             if (downloadState){
-              //dispatch to pdf slice
-              //graphql query
+              dispatch(toggleDown(props.i));
+              changeDownloaded({ variables: { id: props.i }});
             }
           }
         }
@@ -63,7 +76,7 @@ function DetermineTileCorner(props) {
       />
     );
   }
-  return <DownloadButtonState downloadState={props.downloaded} />;
+  return <DownloadButtonState downloadState={props.downloaded} i={props.i}/>;
 }
 
 const pdfthumbnailSource = {
@@ -107,7 +120,7 @@ const PdfTile = ({
           </View>
         </View>
         <View style={styles.download_button}>
-          <DetermineTileCorner d={downloaded} c={showCheck} />
+          <DetermineTileCorner d={downloaded} c={showCheck} i={id}/>
         </View>
       </View>
     </TouchableOpacity>
