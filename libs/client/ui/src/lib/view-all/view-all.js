@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   View,
   StyleSheet,
@@ -16,15 +16,15 @@ import ModalDropdown from 'react-native-modal-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
 import Share from 'react-native-share';
+import PdfDisplay from '../shared-components/pdf-display/pdf-display.js';
+import pdfLocalAccess from '../shared-components/local-pdfs-access/local-pdfs-access';
 import { useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectColour } from 'apps/client/src/app/slices/colour.slice';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectEmail } from 'apps/client/src/app/slices/email.slice';
-import Loading from '../shared-components/loading/loading.js';
+import { selectColour } from 'apps/client/src/app/slices/user.slice';
 
 export const ViewAll = ({ navigation }) => {
-  const colourState = useSelector(selectColour).colour;
+  const pdfRef = useRef();
+  const colourState = useSelector(selectColour);
   const [moreVisible, setMoreVisible] = useState(false);
   const [selectMode, setSelectMode] = useState(false);
   const [bottomModalVisible, setBottomModalVisible] = useState(false);
@@ -38,30 +38,8 @@ export const ViewAll = ({ navigation }) => {
   const title = 'Awesome Contents';
   const message = 'Please check this out.';
 
-  //graphql syntax trees
-  const GET_USER_PDFS = gql`
-    query getForUser($email: String!) {
-      getPDFs(id: $email) {
-        id
-        name
-        creationDate
-        downloaded
-        #pdf
-        text
-      }
-    }
-  `;
-
-  const RELOAD = gql`
-    mutation reload {
-      reload
-    }
-  `;
-
-  const [refresh, { d, l, e }] = useMutation(RELOAD);
   //variables for object sorting
   const [objArr, setObjArr] = useState([]);
-  const [initialArr, setInitialArr] = useState([]);
 
   const options = {
     title,
@@ -139,104 +117,45 @@ export const ViewAll = ({ navigation }) => {
     }
   };
 
-  function changeArray(index, itemValue) {
-    if (currOrderValue !== itemValue) {
-      setCurrOrderValue(itemValue);
-      // Sort PDFs array according to currOrderValue
-      switch (itemValue) {
-        case 'Name':
-          var temp2 = objArr;
-          temp2.sort((a, b) => {
-            if (a.name < b.name) return -1;
-            return 1;
-          });
-          setObjArr(temp2);
-          console.log(objArr);
-          break;
-        case 'Date':
-          var temp = objArr;
-          temp.sort((a, b) => {
-            if (new Date(a.creationDate) > new Date(b.creationDate)) return -1;
-            return 1;
-          });
-          setObjArr(temp);
-          console.log(objArr);
-          break;
-      }
-    }
-    refresh();
-    console.log(itemValue);
-  }
+  // function changeArray(index, itemValue) {
+  //   if (currOrderValue !== itemValue) {
+  //     setCurrOrderValue(itemValue);
+  //     // Sort PDFs array according to currOrderValue
+  //     switch (itemValue) {
+  //       case 'Name':
+  //         var temp2 = objArr;
+  //         temp2.sort((a, b) => {
+  //           if (a.name < b.name) return -1;
+  //           return 1;
+  //         });
+  //         setObjArr(temp2);
+  //         console.log(objArr);
+  //         break;
+  //       case 'Date':
+  //         var temp = objArr;
+  //         temp.sort((a, b) => {
+  //           if (new Date(a.creationDate) > new Date(b.creationDate)) return -1;
+  //           return 1;
+  //         });
+  //         setObjArr(temp);
+  //         console.log(objArr);
+  //         break;
+  //     }
+  //   }
+  //   refresh();
+  //   console.log(itemValue);
+  // }
 
-  function filterPdf(text) {
-    const temp = [];
-    for (let i = 0; i < initialArr.length; i++) objArr[i] = initialArr[i];
-    for (let i = 0; i < objArr.length; i++) {
-      if (objArr[i].name.indexOf(text) != -1) temp.push(objArr[i]);
-    }
-    setObjArr(temp);
-    refresh();
-  }
-
-  function Pdfs() {
-    // use redux to het email
-    // const email = useSelector(selectEmail()).email;
-    const { data, loading, error } = useQuery(GET_USER_PDFS, {
-      variables: { email: 'John@test' },
-    });
-    console.log('GetPdfs');
-    // console.log(data);
-    // console.log(loading);
-    // console.log(error);
-    if (loading)
-      return (
-        <ScrollView style={styles.recentPdfTiles}>
-          <Loading />
-        </ScrollView>
-      );
-
-    if (error)
-      return (
-        <ScrollView style={styles.recentPdfTiles}>
-          <Text>An error occured...</Text>
-          <Text>{error[0]}</Text>
-        </ScrollView>
-      );
-    if (initialArr[0] === undefined) {
-      console.log('objArr');
-      // console.log(data.getPDFs);
-      for (let i = 0; i < data.getPDFs.length; i++) {
-        //create deep copy
-        initialArr.push({
-          name: data.getPDFs[i].name,
-          creationDate: data.getPDFs[i].creationDate,
-          downloaded: data.getPDFs[i].downloaded,
-          pdf: data.getPDFs[i].pdf,
-          text: data.getPDFs[i].text,
-          id: data.getPDFs[i].id,
-        });
-      }
-      for (let i = 0; i < initialArr.length; i++) objArr[i] = initialArr[i];
-    }
-    return (
-      <ScrollView style={styles.recentPdfTiles}>
-        {objArr.map((item, key) => (
-          <PdfTile
-            key={key}
-            id={item.id}
-            name={item.name}
-            date={item.creationDate}
-            source={''}
-            text={item.text}
-            downloaded={item.downloaded}
-            showCheck={selectMode}
-            pdfSource=""
-            nav={navigation}
-          />
-        ))}
-      </ScrollView>
-    );
-  }
+  // function filterPdf(text) {
+  //   const temp = [];
+  //   for (let i = 0; i < pdfLocalAccess.getLength(); i++)
+  //     objArr[i] = pdfLocalAccess.get(i);
+  //   for (let i = 0; i < objArr.length; i++) {
+  //     if (objArr[i].name.indexOf(text) !== -1) temp.push(objArr[i]);
+  //   }
+  //   setObjArr(temp);
+  //   refresh();
+  // }
 
   return (
     <View style={styles.viewAllPage}>
@@ -253,12 +172,19 @@ export const ViewAll = ({ navigation }) => {
           <TextInput
             style={styles.searchInput}
             placeholder="Search"
-            onChangeText={(text) => filterPdf(text)}
+            onChangeText={(text) => {
+              pdfLocalAccess.filterPdfs(text);
+              pdfRef.current.refreshPfds();
+            }}
           />
         </View>
       </View>
 
-      <Pdfs />
+      <PdfDisplay
+        navigation={navigation}
+        selectMode={selectMode}
+        ref={pdfRef}
+      />
 
       <View style={styles.viewAllBottomBar}>
         <TouchableOpacity
@@ -281,7 +207,10 @@ export const ViewAll = ({ navigation }) => {
             options={['Date', 'Name']}
             defaultIndex={0}
             defaultValue={'Date'}
-            onSelect={(index, itemValue) => changeArray(index, itemValue)}
+            onSelect={(index, itemValue) => {
+              pdfLocalAccess.sortPdfs(itemValue);
+              pdfRef.current.refreshPfds();
+            }}
             style={styles.orderByDropdown}
             textStyle={styles.orderByDropdownText}
             dropdownStyle={styles.orderByDropdownStyle}
@@ -427,8 +356,10 @@ export const ViewAll = ({ navigation }) => {
         //onModalHide={() => setFileSelected(false)}
       >
         <View style={styles.renameModalInner}>
-          
-          <TextInput style={styles.renameModalTextInput} defaultValue={"temp"} />
+          <TextInput
+            style={styles.renameModalTextInput}
+            defaultValue={'temp'}
+          />
           <TouchableOpacity
             style={[styles.renameFileButton, { backgroundColor: colourState }]}
             state={null}
@@ -792,6 +723,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginHorizontal: 10,
     marginTop: 10,
-    height: 40
-  }
+    height: 40,
+  },
 });

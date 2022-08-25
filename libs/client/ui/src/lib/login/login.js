@@ -10,18 +10,29 @@ import {
   TextInput,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectColour } from 'apps/client/src/app/slices/colour.slice';
+import {
+  selectColour,
+  selectUser,
+} from 'apps/client/src/app/slices/user.slice';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { setUser } from 'apps/client/src/app/slices/user.slice';
 import auth from '@react-native-firebase/auth';
 import { gql, useLazyQuery } from '@apollo/client';
 
 export const Login = ({ navigation }) => {
-  const colourState = useSelector(selectColour).colour;
+  const dispatch = useDispatch();
+  const colourState = useSelector(selectColour);
+  // console.log('Colour:' + colourState);
   const [showMailHint, setShowMailHint] = useState(false);
   const [showPasswordHint, setShowPasswordHint] = useState(false);
+  const [failedLogin, setFailedLogin] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('Invalid login details');
+
+  // dispatch(setUser({ colour: '#ffff', pdfs: [], email: '' }));
 
   //graphql query tree
   const GET_USER = gql`
@@ -34,7 +45,7 @@ export const Login = ({ navigation }) => {
     }
   `;
 
-  const [getUser, { loading, data }] = useLazyQuery(GET_USER);
+  const [getUser] = useLazyQuery(GET_USER);
 
   function MailHint() {
     if (showMailHint) {
@@ -47,6 +58,7 @@ export const Login = ({ navigation }) => {
       return null;
     }
   }
+
   function PasswordHint() {
     if (showPasswordHint) {
       return (
@@ -58,12 +70,23 @@ export const Login = ({ navigation }) => {
       return null;
     }
   }
+
+  function InvalidDetails() {
+    if (!failedLogin) return null;
+    return (
+      <View style={styles.hintText_box}>
+        <Text style={styles.errorText}>{errorMessage}</Text>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.logInPage}>
       <View style={styles.big_title_box}>
         <Text style={styles.big_title}>{'Log in to your account'}</Text>
       </View>
       <View style={styles.inputsGroup}>
+        <InvalidDetails />
         <View style={styles.inputsItem}>
           <View style={styles.inputLabel_box}>
             <Text style={styles.inputLabel}>{'Email'}</Text>
@@ -81,6 +104,7 @@ export const Login = ({ navigation }) => {
                 style={styles.inputText}
                 placeholder="johnsmith@gmail.com"
                 underlineColorAndroid="transparent"
+                value={email}
                 onChangeText={(text) => {
                   setEmail(text);
                 }}
@@ -114,6 +138,7 @@ export const Login = ({ navigation }) => {
                 style={styles.inputText}
                 placeholder="*******************"
                 underlineColorAndroid="transparent"
+                value={password}
                 onChangeText={(text) => {
                   setPassword(text);
                 }}
@@ -144,21 +169,38 @@ export const Login = ({ navigation }) => {
           { borderColor: colourState },
         ]}
         onPress={() => {
+          //Check that email and password is not empty
+          if (email === '') {
+            setFailedLogin(true);
+            setErrorMessage('Email is required');
+            return;
+          }
+          if (password === '') {
+            setFailedLogin(true);
+            setErrorMessage('Password is required');
+            return;
+          }
           auth()
-            .signInWithEmailAndPassword(email, password)
-            .then(() => {
-              //Assign result to store
-              getUser({variables: {email: email}});
+            .signInWithEmailAndPassword(
+              email.trim().toLowerCase(),
+              password.trim()
+            )
+            .then(async () => {
+              setFailedLogin(false);
               navigation.navigate('Home');
+              var queryRes = (
+                await getUser({
+                  variables: { email: email.trim().toLowerCase() },
+                })
+              ).data.getUser;
+              console.log(queryRes);
+              dispatch(setUser(queryRes));
             })
             .catch((error) => {
-              if (error.code === 'auth/invalid-password') {
-                console.log('The provided password is invalid!');
-              }
+              setFailedLogin(true);
+              setErrorMessage('Invalid login details');
+              setPassword('');
             });
-          console.log(email);
-          console.log(password);
-          // navigation.navigate('Home');
         }}
       >
         <View style={styles.logInButtonLabel_box}>
@@ -379,5 +421,15 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
     margin: 5,
+  },
+  errorText: {
+    color: '#e11e22',
+    textAlign: 'left',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 14,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
   },
 });
