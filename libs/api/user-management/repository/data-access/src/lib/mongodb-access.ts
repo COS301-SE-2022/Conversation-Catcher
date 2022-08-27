@@ -117,4 +117,16 @@ export class MongoDBAccess {
   async sendInvite(fromUser: string, toUser: string, group_id: string) {
     //Logic to request access to a group
   }
+
+  async getGroupPdfs(group_id: string) {
+    //Logic to request access to a group
+  }
+
+  async getGroupsFor(email: string) {
+    //get all groups for a certain user
+  }
+
+  async getAllGroups() {
+    //Logic to request access to a group
+  }
 }
