@@ -4,7 +4,12 @@ import {
   addUserCommand,
   setUserCommand,
 } from './commands/impl/add-user.command';
-import { getUserQuery } from './queries/impl/get-user.query';
+import {
+  getAllGroupsQuery,
+  getGroupPdfsQuery,
+  getGroupsForQuery,
+  getUserQuery,
+} from './queries/impl/get-user.query';
 
 @Injectable()
 export class UserManagementServiceService {
@@ -13,6 +18,17 @@ export class UserManagementServiceService {
   //queries
   async getUser(email: string) {
     return await this.queryBus.execute(new getUserQuery(email));
+  }
+  async getGroupPdfs(group_id: string) {
+    return await this.queryBus.execute(new getGroupPdfsQuery(group_id));
+  }
+
+  async getGroupsFor(email: string) {
+    return await this.queryBus.execute(new getGroupsForQuery(email));
+  }
+
+  async getAllGroups() {
+    return await this.queryBus.execute(new getAllGroupsQuery());
   }
 
   //commands

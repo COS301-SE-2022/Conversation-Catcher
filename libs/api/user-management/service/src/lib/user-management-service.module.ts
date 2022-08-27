@@ -13,6 +13,9 @@ import * as QueryHandlers from './queries/handlers';
     CommandHandlers.addUserHandler,
     CommandHandlers.setUserHandler,
     QueryHandlers.getUserHandler,
+    QueryHandlers.getAllGroupsHandler,
+    QueryHandlers.getGroupPdfsHandler,
+    QueryHandlers.getGroupsForHandler,
   ],
   exports: [UserManagementServiceService],
 })
