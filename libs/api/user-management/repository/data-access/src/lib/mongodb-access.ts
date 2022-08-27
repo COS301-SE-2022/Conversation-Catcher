@@ -86,7 +86,7 @@ export class MongoDBAccess {
     );
   }
 
-  async requestJoinGroup(email: string, group_id: string) {
+  async requestJoin(email: string, group_id: string) {
     //Logic to request access to a group
   }
 
