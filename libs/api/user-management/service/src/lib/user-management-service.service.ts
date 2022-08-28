@@ -8,17 +8,15 @@ import {
   renameGroupCommand,
   requestJoinCommand,
   sendInviteCommand,
-} from './commands/impl';
-import {
   addUserCommand,
   setUserCommand,
-} from './commands/impl/add-user.command';
+} from './commands/impl';
 import {
   getAllGroupsQuery,
   getGroupPdfsQuery,
   getGroupsForQuery,
   getUserQuery,
-} from './queries/impl/get-user.query';
+} from './queries/impl';
 
 @Injectable()
 export class UserManagementServiceService {

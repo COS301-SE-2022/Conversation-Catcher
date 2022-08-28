@@ -1,5 +1,5 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { addUserCommand, setUserCommand } from '../impl/add-user.command';
+import { addUserCommand, setUserCommand } from '../impl';
 import { MongoDBAccess } from '@conversation-catcher/api/user-management/repository/data-access';
 
 @CommandHandler(addUserCommand)

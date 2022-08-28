@@ -7,7 +7,7 @@ import {
   deleteGroupCommand,
   renameGroupCommand,
   sendInviteCommand,
-} from '../impl/groups.command';
+} from '../impl';
 import { MongoDBAccess } from '@conversation-catcher/api/user-management/repository/data-access';
 
 @CommandHandler(requestJoinCommand)
