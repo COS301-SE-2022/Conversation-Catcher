@@ -8,6 +8,7 @@ import {
   renameGroupCommand,
   requestJoinCommand,
   sendInviteCommand,
+  setGroupPdfsCommand,
   addUserCommand,
   setUserCommand,
 } from './commands/impl';
@@ -60,6 +61,12 @@ export class UserManagementServiceService {
     );
   }
 
+  async sendInvite(fromUser: string, toUser: string, group_id: string) {
+    return await this.commandBus.execute(
+      new sendInviteCommand(fromUser, toUser, group_id)
+    );
+  }
+
   async addUserTo(user: string, group_id: string) {
     return await this.commandBus.execute(new addUserToCommand(user, group_id));
   }
@@ -86,9 +93,9 @@ export class UserManagementServiceService {
     );
   }
 
-  async sendInvite(fromUser: string, toUser: string, group_id: string) {
+  async setGroupPdfs(pdf_id: string, group_id: string) {
     return await this.commandBus.execute(
-      new sendInviteCommand(fromUser, toUser, group_id)
+      new setGroupPdfsCommand(pdf_id, group_id)
     );
   }
 }

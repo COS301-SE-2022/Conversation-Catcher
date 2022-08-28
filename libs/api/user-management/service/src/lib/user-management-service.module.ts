@@ -19,6 +19,7 @@ import * as QueryHandlers from './queries/handlers';
     CommandHandlers.renameGroupHandler,
     CommandHandlers.requestJoinGroupHandler,
     CommandHandlers.sendInviteHandler,
+    CommandHandlers.setGroupPdfsHandler,
     QueryHandlers.getUserHandler,
     QueryHandlers.getAllGroupsHandler,
     QueryHandlers.getGroupPdfsHandler,

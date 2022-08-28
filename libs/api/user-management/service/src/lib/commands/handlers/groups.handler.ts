@@ -7,6 +7,7 @@ import {
   deleteGroupCommand,
   renameGroupCommand,
   sendInviteCommand,
+  setGroupPdfsCommand,
 } from '../impl';
 import { MongoDBAccess } from '@conversation-catcher/api/user-management/repository/data-access';
 
@@ -74,5 +75,15 @@ export class sendInviteHandler implements ICommandHandler<sendInviteCommand> {
 
   async execute({ fromUser, group_id, toUser }: sendInviteCommand) {
     return await this.repository.sendInvite(fromUser, toUser, group_id);
+  }
+}
+
+export class setGroupPdfsHandler
+  implements ICommandHandler<setGroupPdfsCommand>
+{
+  constructor(private repository: MongoDBAccess) {}
+
+  async execute({ pdf_id, group_id }: setGroupPdfsCommand) {
+    return await this.repository.setGroupPdfs(pdf_id, group_id);
   }
 }
