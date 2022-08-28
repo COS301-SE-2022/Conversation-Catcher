@@ -1,11 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import {
-  acceptJoinRequestCommand,
+  addUserToCommand,
   createGroupCommand,
   deleteGroupCommand,
-  kickUserCommand,
-  leaveGroupCommand,
+  removeUserFromCommand,
   renameGroupCommand,
   requestJoinCommand,
   sendInviteCommand,
@@ -63,15 +62,13 @@ export class UserManagementServiceService {
     );
   }
 
-  async acceptJoinRequest(admin: string, user: string, group_id: string) {
-    return await this.commandBus.execute(
-      new acceptJoinRequestCommand(admin, user, group_id)
-    );
+  async addUserTo(user: string, group_id: string) {
+    return await this.commandBus.execute(new addUserToCommand(user, group_id));
   }
 
-  async leaveGroup(email: string, group_id: string) {
+  async removeUserFrom(email: string, group_id: string) {
     return await this.commandBus.execute(
-      new leaveGroupCommand(email, group_id)
+      new removeUserFromCommand(email, group_id)
     );
   }
 
@@ -89,10 +86,6 @@ export class UserManagementServiceService {
     return await this.commandBus.execute(
       new renameGroupCommand(group_id, newName)
     );
-  }
-
-  async kickUser(email: string, group_id: string) {
-    return await this.commandBus.execute(new kickUserCommand(email, group_id));
   }
 
   async sendInvite(fromUser: string, toUser: string, group_id: string) {

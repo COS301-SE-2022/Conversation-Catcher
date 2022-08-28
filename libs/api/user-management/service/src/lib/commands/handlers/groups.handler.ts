@@ -1,12 +1,11 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import {
   requestJoinCommand,
-  acceptJoinRequestCommand,
-  leaveGroupCommand,
+  addUserToCommand,
+  removeUserFromCommand,
   createGroupCommand,
   deleteGroupCommand,
   renameGroupCommand,
-  kickUserCommand,
   sendInviteCommand,
 } from '../impl/groups.command';
 import { MongoDBAccess } from '@conversation-catcher/api/user-management/repository/data-access';
@@ -22,23 +21,23 @@ export class requestJoinGroupHandler
   }
 }
 
-@CommandHandler(acceptJoinRequestCommand)
-export class acceptJoinRequestHandler
-  implements ICommandHandler<acceptJoinRequestCommand>
-{
+@CommandHandler(addUserToCommand)
+export class addUserToHandler implements ICommandHandler<addUserToCommand> {
   constructor(private repository: MongoDBAccess) {}
 
-  async execute({ admin, group_id, user }: acceptJoinRequestCommand) {
-    return await this.repository.acceptJoinRequest(admin, user, group_id);
+  async execute({ group_id, user }: addUserToCommand) {
+    return await this.repository.addUserTo(user, group_id);
   }
 }
 
-@CommandHandler(leaveGroupCommand)
-export class leaveGroupHandler implements ICommandHandler<leaveGroupCommand> {
+@CommandHandler(removeUserFromCommand)
+export class removeUserFromHandler
+  implements ICommandHandler<removeUserFromCommand>
+{
   constructor(private repository: MongoDBAccess) {}
 
-  async execute({ email, group_id }: leaveGroupCommand) {
-    return await this.repository.leaveGroup(email, group_id);
+  async execute({ email, group_id }: removeUserFromCommand) {
+    return await this.repository.removeUserFrom(email, group_id);
   }
 }
 
@@ -66,15 +65,6 @@ export class renameGroupHandler implements ICommandHandler<renameGroupCommand> {
 
   async execute({ group_id, newName }: renameGroupCommand) {
     return await this.repository.renameGroup(group_id, newName);
-  }
-}
-
-@CommandHandler(kickUserCommand)
-export class kickUserHandler implements ICommandHandler<kickUserCommand> {
-  constructor(private repository: MongoDBAccess) {}
-
-  async execute({ email, group_id }: kickUserCommand) {
-    return await this.repository.kickUser(email, group_id);
   }
 }
 

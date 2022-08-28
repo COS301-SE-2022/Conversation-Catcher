@@ -101,7 +101,7 @@ export class MongoDBAccess {
 
   //User will be added to the specified group and the group will be added to an array of groups in the user
   //Remove the invite/request from user/group
-  async addUserTo(user: string, group_id: string, isInvite: boolean) {
+  async addUserTo(user: string, group_id: string) {
     //Can check group and user to see if it was through request or invite
     //Final parameter might not be needed
     //Click accept

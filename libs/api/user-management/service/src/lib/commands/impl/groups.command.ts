@@ -5,15 +5,14 @@ export class requestJoinCommand {
   ) {}
 }
 
-export class acceptJoinRequestCommand {
+export class addUserToCommand {
   constructor(
-    public readonly admin: string,
     public readonly user: string,
     public readonly group_id: string
-  ) {}
+    ) {}
 }
 
-export class leaveGroupCommand {
+export class removeUserFromCommand {
   constructor(
     public readonly email: string,
     public readonly group_id: string
@@ -35,13 +34,6 @@ export class renameGroupCommand {
   constructor(
     public readonly group_id: string,
     public readonly newName: string
-  ) {}
-}
-
-export class kickUserCommand {
-  constructor(
-    public readonly email: string,
-    public readonly group_id: string
   ) {}
 }
 
