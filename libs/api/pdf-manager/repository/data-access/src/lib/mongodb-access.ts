@@ -24,7 +24,7 @@ export class MongoDBAccess {
   private pdfCollection = 'PDF';
   private db = 'Conversation-Catcher';
 
-  //Functions
+  //Create a new pdf and add it to the user with email specified in mail
   async addPdf(mail: string, name: string, text: string, date: Date) {
     this.action = 'insertOne';
     let data = JSON.stringify({
@@ -96,6 +96,7 @@ export class MongoDBAccess {
     return newPdf;
   }
 
+  //Retrieve all the pdfs for a certain user
   async getUserPdfs(userid: string) {
     //Add empty string to variable to force variable to be interpreted as a string in stead of an array of strings. The
     //same logic applies to all other similiar cases
@@ -139,6 +140,7 @@ export class MongoDBAccess {
     return object;
   }
 
+  // get a single pdf based on the pdf_id
   async getPDF(id: string) {
     id = id + '';
     this.action = 'findOne';
@@ -156,6 +158,7 @@ export class MongoDBAccess {
     );
   }
 
+  //Remove a pdf from the database
   async deletePDF(id: string) {
     id = id + '';
     this.action = 'deleteOne';
@@ -172,7 +175,8 @@ export class MongoDBAccess {
         .pipe(map((res) => res.data.document))
     );
   }
-  //Jon
+
+  //Change if the pdf is stored locally or only available online
   async changeDownloaded(id: string) {
     id = id + '';
     this.action = 'findOne';
@@ -225,6 +229,7 @@ export class MongoDBAccess {
     );
   }
 
+  // Rename a pdf
   async setPDFName(id: string, name: string) {
     id = id + '';
     name = name + '';
