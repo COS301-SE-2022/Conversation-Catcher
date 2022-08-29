@@ -16,6 +16,6 @@ export class setUserHandler implements ICommandHandler<setUserCommand> {
   constructor(private repository: MongoDBAccess) {}
 
   async execute({ oldEmail, email, colour, pdfs }: setUserCommand) {
-    return await this.repository.setUser(oldEmail, email, colour, pdfs);
+    return await this.repository.setUser(oldEmail, { email, colour, pdfs });
   }
 }

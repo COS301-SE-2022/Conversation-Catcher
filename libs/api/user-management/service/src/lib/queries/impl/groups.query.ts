@@ -1,5 +1,5 @@
 export class getGroupPdfsQuery {
-  constructor(public readonly group_id?: string) {}
+  constructor(public readonly groupName?: string) {}
 }
 
 export class getGroupsForQuery {
