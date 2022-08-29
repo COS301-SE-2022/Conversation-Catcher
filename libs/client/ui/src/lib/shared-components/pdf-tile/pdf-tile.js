@@ -30,16 +30,15 @@ function DownloadButtonState(props) {
     }
   `;
   const [changeDownloaded] = useLazyQuery(CHANGE_DOWNLOADED);
+  console.log(props);
   if (downloadState) {
     return (
       <Icon
         onPress={
           () => {
             setDownloadState(!downloadState);
-            if (downloadState){
-              dispatch(toggleDown(props.a));
-              changeDownloaded({ variables: { id: props.a.id }});
-            }
+            dispatch(toggleDown(props.a));
+            changeDownloaded({ variables: { id: props.a.id }});
           }
         }
         color={colourState}
@@ -51,7 +50,13 @@ function DownloadButtonState(props) {
   }
   return (
     <Icon
-      onPress={() => setDownloadState(!downloadState)}
+      onPress={
+        () => {
+          setDownloadState(!downloadState);
+          dispatch(toggleDown(props.a));
+          changeDownloaded({ variables: { id: props.a.id }});
+        }
+      }
       color={colourState}
       name="cloud"
       size={20}
@@ -76,7 +81,9 @@ function DetermineTileCorner(props) {
       />
     );
   }
-  return <DownloadButtonState downloadState={props.downloaded} a={props.a}/>;
+  // console.log("detTileCorner")
+  // console.log(props)
+  return <DownloadButtonState d={props.d} a={props.a}/>;
 }
 
 const pdfthumbnailSource = {
@@ -123,7 +130,7 @@ const PdfTile = ({
           </View>
         </View>
         <View style={styles.download_button}>
-          <DetermineTileCorner d={downloaded} c={showCheck} a={buildPDF}/>
+          <DetermineTileCorner d={downloaded} c={showCheck} a={buildPDF()}/>
         </View>
       </View>
     </TouchableOpacity>
