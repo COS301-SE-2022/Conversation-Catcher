@@ -21,6 +21,7 @@ export class MongoDBAccess {
   };
   private cluster = 'Cluster0';
   private userCollection = 'Users';
+  private groupCollection = 'Groups';
   private pdfCollection = 'PDF';
   private db = 'Conversation-Catcher';
 
@@ -88,7 +89,43 @@ export class MongoDBAccess {
     );
   }
 
-  //Creates a request for a specefic group
+  //Update the entire document with the document object
+  async updateGroups(document: any) {
+    this.action = 'updateOne';
+    const data = JSON.stringify({
+      collection: this.userCollection,
+      database: this.db,
+      dataSource: this.cluster,
+      filter: { _id: { $oid: '63063e721460d424280125b8' } },
+      update: document,
+    });
+
+    return await lastValueFrom(
+      this.httpService
+        .post(this.url + this.action, data, this.config)
+        .pipe(map((res) => res.data))
+    );
+  }
+
+  //Returns the document containing all the groups
+  async getGroups() {
+    this.action = 'findOne';
+    const data = JSON.stringify({
+      collection: this.groupCollection,
+      database: this.db,
+      dataSource: this.cluster,
+      filter: { _id: { $oid: '63063e721460d424280125b8' } },
+    });
+
+    return await lastValueFrom(
+      this.httpService
+        .post(this.url + this.action, data, this.config)
+        .pipe(map((res) => res.data))
+    );
+  }
+}
+/*
+//Creates a request for a specefic group
   //This request will be added to the admin of object as an attribute (requests [])
   async requestJoin(email: string, group_id: string) {
     //Logic to request access to a group
@@ -102,9 +139,10 @@ export class MongoDBAccess {
   //User will be added to the specified group and the group will be added to an array of groups in the user
   //Remove the invite/request from user/group
   async addUserTo(user: string, group_id: string) {
-    //Can check group and user to see if it was through request or invite
-    //Final parameter might not be needed
-    //Click accept
+    //Case 1: Created : No members in group
+    //Case 2: By invite : Invite on user
+    //Case 3: By request : Request on group
+    //Return the group
   }
 
   //Remove a certain user from a group and remove the group from the user
@@ -112,39 +150,63 @@ export class MongoDBAccess {
     //Logic to request access to a group
   }
 
-  //Create a new group, add the user that created the group as an admin in the group
-  //Add the group to the user
-  async createGroup(admin: string, groupName: string) {
-    //Logic to request access to a group
-  }
-
-  //Remove a specefic group from the database and remove group from all users
-  async deleteGroup(group_id: string) {
-    // delete a group of which you are the admin
-  }
-
-  //Update the name of a group
+//Update the name of a group
   async renameGroup(group_id: string, newName: string) {
     // delete a group of which you are the admin
   }
 
-  //Add a pdf to the group. This pdf is now viewed as public
+//Add a pdf to the group. This pdf is now viewed as public
   async setGroupPdfs(pdf_id: string, group_id: string) {
     //Logic to request access to a group
   }
 
+  //Retrieve group with specefic id
   //Return all the pdfs associated with a specefic group
   async getGroupPdfs(group_id: string) {
     //Logic to request access to a group
   }
 
-  //Get all groups associated with a specefic user
-  async getGroupsFor(email: string) {
-    //get all groups for a certain user
-  }
-
-  //Return all groups currently stored in the database
+//Return all groups currently stored in the database
   async getAllGroups() {
     //Logic to request access to a group
   }
-}
+
+  //Create a new group, add the user that created the group as an admin in the group
+  //Add the group to the user
+  async createGroup(admin: string, groupName: string) {
+    this.action = 'insertOne';
+    const data = JSON.stringify({
+      collection: this.groupCollection,
+      database: this.db,
+      dataSource: this.cluster,
+      document: {
+        name: groupName,
+        admin: admin,
+        users: [],
+        pdfs: [],
+      },
+    });
+
+    return await lastValueFrom(
+      this.httpService
+        .post(this.url + this.action, data, this.config)
+        .pipe(map((res) => res.data))
+    );
+  }
+
+  //Remove a specefic group from the database and remove group from all users
+  async deleteGroup(group_id: string) {
+    this.action = 'deleteOne';
+    const data = JSON.stringify({
+      collection: this.groupCollection,
+      database: this.db,
+      dataSource: this.cluster,
+      filter: { _id: { $oid: group_id } },
+    });
+
+    return await lastValueFrom(
+      this.httpService
+        .post(this.url + this.action, data, this.config)
+        .pipe(map((res) => res.data))
+    );
+  } */
