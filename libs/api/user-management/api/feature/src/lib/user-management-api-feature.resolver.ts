@@ -58,4 +58,20 @@ export class UserManagementApiFeatureResolver {
     }
     return false;
   }
+
+  //--------------------------------------------------------GROUPS-----------------------------------------------
+  @Mutation(() => String)
+  async createGroup() {
+    //
+  }
+
+  @Mutation(() => String)
+  async deleteGroup() {
+    //
+  }
+
+  @Mutation(() => String)
+  async renameGroup() {
+    //
+  }
 }
