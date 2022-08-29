@@ -10,7 +10,7 @@ from deepspeech import Model, version
 from timeit import default_timer as timer
 
 try:
-    from shhlex import quote
+    from shlex import quote
 except ImportError:
     from pipes import quote
 
@@ -154,3 +154,6 @@ def main():
     # sphinx-doc: python_ref_inference_stop
     inference_end = timer() - inference_start
     print('Inference took %0.3fs for %0.3fs audio file.' % (inference_end, audio_length), file=sys.stderr)
+
+if __name__ == '__main__':
+    main()
