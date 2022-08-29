@@ -67,19 +67,14 @@ export class MongoDBAccess {
   }
 
   //Updates the given users data in the database
-  async setUser(
-    oldEmail: string,
-    email: string,
-    colour: string,
-    pdfs: string[]
-  ) {
+  async setUser(oldEmail: string, document: any) {
     this.action = 'updateOne';
     const data = JSON.stringify({
       collection: this.userCollection,
       database: this.db,
       dataSource: this.cluster,
       filter: { email: oldEmail },
-      update: { email: email, colour: colour, pdfs: pdfs },
+      update: document,
     });
 
     return await lastValueFrom(

@@ -60,6 +60,21 @@ export class UserManagementApiFeatureResolver {
   }
 
   //--------------------------------------------------------GROUPS-----------------------------------------------
+  @Query(() => String)
+  async getAllGroups() {
+    //
+  }
+
+  @Query(() => String)
+  async getGroupsFor() {
+    //
+  }
+
+  @Query(() => String)
+  async getGroupPdfs() {
+    //
+  }
+
   @Mutation(() => String)
   async createGroup() {
     //
