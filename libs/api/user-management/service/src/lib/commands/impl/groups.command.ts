@@ -6,7 +6,10 @@ export class requestJoinCommand {
 }
 
 export class addUserToCommand {
-  constructor(public readonly user: string, public readonly groupName: string) {}
+  constructor(
+    public readonly user: string,
+    public readonly groupName: string
+  ) {}
 }
 
 export class removeUserFromCommand {
@@ -42,7 +45,14 @@ export class sendInviteCommand {
   ) {}
 }
 
-export class setGroupPdfsCommand {
+export class addGroupPdfCommand {
+  constructor(
+    public readonly pdf_id: string,
+    public readonly groupName: string
+  ) {}
+}
+
+export class removeGroupPdfCommand {
   constructor(
     public readonly pdf_id: string,
     public readonly groupName: string

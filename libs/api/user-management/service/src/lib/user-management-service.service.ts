@@ -8,7 +8,8 @@ import {
   renameGroupCommand,
   requestJoinCommand,
   sendInviteCommand,
-  setGroupPdfsCommand,
+  addGroupPdfCommand,
+  removeGroupPdfCommand,
   addUserCommand,
   setUserCommand,
 } from './commands/impl';
@@ -93,9 +94,15 @@ export class UserManagementServiceService {
     );
   }
 
-  async setGroupPdfs(pdf_id: string, group_id: string) {
+  async addGroupPdf(pdf_id: string, group_id: string) {
     return await this.commandBus.execute(
-      new setGroupPdfsCommand(pdf_id, group_id)
+      new addGroupPdfCommand(pdf_id, group_id)
+    );
+  }
+
+  async removeGroupPdf(pdf_id: string, group_id: string) {
+    return await this.commandBus.execute(
+      new removeGroupPdfCommand(pdf_id, group_id)
     );
   }
 }

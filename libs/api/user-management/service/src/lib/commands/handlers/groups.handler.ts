@@ -7,7 +7,8 @@ import {
   deleteGroupCommand,
   renameGroupCommand,
   sendInviteCommand,
-  addGroupPdfsCommand,
+  addGroupPdfCommand,
+  removeGroupPdfCommand,
 } from '../impl';
 import { MongoDBAccess } from '@conversation-catcher/api/user-management/repository/data-access';
 
@@ -22,7 +23,17 @@ export class requestJoinGroupHandler
     //Get all groups
     //Get the user
     //Add the attribute
-    return await this.repository.requestJoin(email, groupName);
+    return ' not implemented';
+  }
+}
+
+@CommandHandler(sendInviteCommand)
+export class sendInviteHandler implements ICommandHandler<sendInviteCommand> {
+  constructor(private repository: MongoDBAccess) {}
+
+  //Add group invite to a specefic user
+  async execute({ fromUser, groupName, toUser }: sendInviteCommand) {
+    return 'Not implemented';
   }
 }
 
@@ -37,7 +48,7 @@ export class addUserToHandler implements ICommandHandler<addUserToCommand> {
     //Case 2: By invite : Invite on user
     //Case 3: By request : Request on group
     //Return the group
-    return await this.repository.addUserTo(user, groupName);
+    return 'Not implemented';
   }
 }
 
@@ -49,7 +60,7 @@ export class removeUserFromHandler
 
   //Remove a certain user from a group and remove the group from the user
   async execute({ email, groupName }: removeUserFromCommand) {
-    return await this.repository.removeUserFrom(email, groupName);
+    return 'not implemented';
   }
 }
 
@@ -105,41 +116,27 @@ export class renameGroupHandler implements ICommandHandler<renameGroupCommand> {
   }
 }
 
-@CommandHandler(sendInviteCommand)
-export class sendInviteHandler implements ICommandHandler<sendInviteCommand> {
-  constructor(private repository: MongoDBAccess) {}
-
-  //Add group invite to a specefic user
-  async execute({ fromUser, groupName, toUser }: sendInviteCommand) {
-    return await this.repository.sendInvite(fromUser, toUser, groupName);
-  }
-}
-
-export class addGroupPdfsHandler
-  implements ICommandHandler<addGroupPdfsCommand>
-{
+export class addGroupPdfHandler implements ICommandHandler<addGroupPdfCommand> {
   constructor(private repository: MongoDBAccess) {}
 
   //Add a pdf to the group. This pdf is now viewed as public
-  async execute({ pdf_id, groupName }: addGroupPdfsCommand) {
+  async execute({ pdf_id, groupName }: addGroupPdfCommand) {
     const groups = await this.repository.getGroups(); //Fetch all groups
-    groups[newName] = groups[groupName];
-    delete groups[groupName];
+
     this.repository.updateGroups(groups); //Update the database
     return 'Pdf added to group';
   }
 }
 
-export class removeGroupPdfsHandler
-  implements ICommandHandler<removeGroupPdfsCommand>
+export class removeGroupPdfHandler
+  implements ICommandHandler<removeGroupPdfCommand>
 {
   constructor(private repository: MongoDBAccess) {}
 
   //Add a pdf to the group. This pdf is now viewed as public
-  async execute({ pdf_id, groupName }: removeGroupPdfsCommand) {
+  async execute({ pdf_id, groupName }: removeGroupPdfCommand) {
     const groups = await this.repository.getGroups(); //Fetch all groups
-    groups[newName] = groups[groupName];
-    delete groups[groupName];
+
     this.repository.updateGroups(groups); //Update the database
     return 'Pdf added to group';
   }
