@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectColour } from 'apps/client/src/app/slices/user.slice';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { toggleDown } from 'apps/client/src/app/slices/pdf.slice';
-import { gql, useMutation } from '@apollo/client';
+import { gql, useLazyQuery, useMutation } from '@apollo/client';
 //import FileViewer from "react-native-file-viewer";
 
 function DownloadButtonState(props) {
@@ -29,7 +29,7 @@ function DownloadButtonState(props) {
       }
     }
   `;
-  const [changeDownloaded] = useMutation(GET_USER_PDFS);
+  const [changeDownloaded] = useLazyQuery(CHANGE_DOWNLOADED);
   if (downloadState) {
     return (
       <Icon
