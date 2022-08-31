@@ -49,6 +49,12 @@ export class getAllGroupsHandler implements IQueryHandler<getAllGroupsQuery> {
   constructor(private repository: userMongoAccess) {}
 
   async execute(getAllGroupsQuery): Promise<any> {
-    return 'not implemented';
+    const groups = this.repository.getGroups();
+    const result = [];
+    Object.values(groups).forEach((group) => {
+      result.push(group);
+    });
+    console.log(result);
+    return result;
   }
 }
