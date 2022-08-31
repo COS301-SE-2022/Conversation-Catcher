@@ -19,7 +19,7 @@ import { gql, useLazyQuery, useMutation } from '@apollo/client';
 
 function DownloadButtonState(props) {
   const colourState = useSelector(selectColour);
-  const [downloadState, setDownloadState] = React.useState(props.d);
+  const [downloadState, setDownloadState] = React.useState(props.d.notIn);
   const dispatch = useDispatch();
   //graphql syntax trees
   const CHANGE_DOWNLOADED = gql`
@@ -30,15 +30,16 @@ function DownloadButtonState(props) {
     }
   `;
   const [changeDownloaded] = useLazyQuery(CHANGE_DOWNLOADED);
-  console.log(props);
   if (downloadState) {
     return (
       <Icon
         onPress={
-          () => {
+          async () => {
             setDownloadState(!downloadState);
+            //console.log("On");
             dispatch(toggleDown(props.a));
-            changeDownloaded({ variables: { id: props.a.id }});
+            var res = await changeDownloaded({ variables: { id: props.a.id }});
+            console.log(res.error);
           }
         }
         color={colourState}
@@ -51,10 +52,12 @@ function DownloadButtonState(props) {
   return (
     <Icon
       onPress={
-        () => {
+        async () => {
           setDownloadState(!downloadState);
+          //console.log("Off");
           dispatch(toggleDown(props.a));
-          changeDownloaded({ variables: { id: props.a.id }});
+          var res = await changeDownloaded({ variables: { id: props.a.id }});
+            console.log(res.error);
         }
       }
       color={colourState}
@@ -104,9 +107,8 @@ const PdfTile = ({
 }) => {
   const colourState = useSelector(selectColour);
   const buildPDF = () => {
-    return { id: { id }, text: { text }, name: { name }, downloaded: {downloaded}, date: {date} }
+    return { id: id, text: text , name: name , downloaded: downloaded, date: date }
   }
-  // console.log("PDF:"+colourState)
   return (
     <TouchableOpacity
       style={styles.pdfTile}
