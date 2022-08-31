@@ -18,12 +18,12 @@ export class requestJoinGroupHandler
 {
   constructor(private repository: MongoDBAccess) {}
 
-  //This request will be added to the admin of object as an attribute (requests [])
+  //This request will be added to the group as an attribute (requests [])
   async execute({ email, groupName }: requestJoinCommand) {
-    //Get all groups
-    //Get the user
-    //Add the attribute
-    return ' not implemented';
+    const groups = await this.repository.getGroups();
+    groups[groupName].requests.push(email);
+    this.repository.updateGroups(groups);
+    return 'Request sent to ' + groupName;
   }
 }
 
@@ -33,7 +33,11 @@ export class sendInviteHandler implements ICommandHandler<sendInviteCommand> {
 
   //Add group invite to a specefic user
   async execute({ fromUser, groupName, toUser }: sendInviteCommand) {
-    return 'Not implemented';
+    //Invite property on user
+    const user = await this.repository.getUser(toUser);
+    user.invites.push({ from: fromUser, group: groupName });
+    this.repository.setUser(toUser, user);
+    return 'Invite sent to ' + toUser;
   }
 }
 
@@ -44,11 +48,29 @@ export class addUserToHandler implements ICommandHandler<addUserToCommand> {
   //User will be added to the specified group and the group will be added to an array of groups in the user
   //Remove the invite/request from user/group
   async execute({ groupName, user }: addUserToCommand) {
-    //Case 1: Created : No members in group
-    //Case 2: By invite : Invite on user
-    //Case 3: By request : Request on group
-    //Return the group
-    return 'Not implemented';
+    const groups = await this.repository.getGroups(); //Fetch all groups
+    const usr = await this.repository.getUser(user);
+    groups[groupName].users.push(user);
+    usr.groups.push(groupName);
+
+    let wasInvite = false;
+    //Case 1: By invite : Invite on user
+    usr.invites.forEach((element, index) => {
+      if (groupName === element.group) {
+        usr.invites.splice(index, 1);
+        wasInvite = true;
+      }
+    });
+    //Case 2: By request : Request on group
+    if (!wasInvite) {
+      groups[groupName].requests.forEach((item, index) => {
+        if (user === item) groups[groupName].requests.splice(index, 1);
+      });
+    }
+
+    this.repository.setUser(user, usr);
+    this.repository.updateGroups(groups); //Update the database
+    return groups[groupName];
   }
 }
 
@@ -60,7 +82,20 @@ export class removeUserFromHandler
 
   //Remove a certain user from a group and remove the group from the user
   async execute({ email, groupName }: removeUserFromCommand) {
-    return 'not implemented';
+    const user = await this.repository.getUser(email);
+    const groups = await this.repository.getGroups();
+    //Remove user from group
+    groups[groupName].users.forEach((item, index) => {
+      if (item === email) groups[groupName].splice(index, 1);
+    });
+    //Remove group from user
+    user.groups.forEach((item, index) => {
+      if (item === groupName) user.groups.splice(index, 1);
+    });
+
+    this.repository.setUser(email, user);
+    this.repository.updateGroups(groups);
+    return 'User with email ' + email + ' removed from ' + groupName;
   }
 }
 
@@ -71,13 +106,18 @@ export class createGroupHandler implements ICommandHandler<createGroupCommand> {
   //Create the new group and add the admin to the group
   async execute({ admin, groupName }: createGroupCommand) {
     const groups = await this.repository.getGroups(); //Fetch all groups
+    const user = await this.repository.getUser(admin);
     const newGroup = {
+      name: groupName,
       admin: admin,
       users: [admin],
       pdfs: [],
+      requests: [],
     };
+    user.groups.push(groupName);
     groups[groupName] = newGroup;
     this.repository.updateGroups(groups); //Update the database
+    this.repository.setUser(admin, user);
     return newGroup;
   }
 }
@@ -122,9 +162,9 @@ export class addGroupPdfHandler implements ICommandHandler<addGroupPdfCommand> {
   //Add a pdf to the group. This pdf is now viewed as public
   async execute({ pdf_id, groupName }: addGroupPdfCommand) {
     const groups = await this.repository.getGroups(); //Fetch all groups
-
+    groups[groupName].pdfs.push(pdf_id);
     this.repository.updateGroups(groups); //Update the database
-    return 'Pdf added to group';
+    return 'pdf added to group';
   }
 }
 
@@ -136,8 +176,10 @@ export class removeGroupPdfHandler
   //Add a pdf to the group. This pdf is now viewed as public
   async execute({ pdf_id, groupName }: removeGroupPdfCommand) {
     const groups = await this.repository.getGroups(); //Fetch all groups
-
+    groups[groupName].pdfs.forEach((item, index) => {
+      if (item === pdf_id) groups[groupName].pdfs.splice(index, 1);
+    });
     this.repository.updateGroups(groups); //Update the database
-    return 'Pdf added to group';
+    return 'pdf removed from group';
   }
 }
