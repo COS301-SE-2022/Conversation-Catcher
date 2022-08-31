@@ -23,23 +23,21 @@ function DownloadButtonState(props) {
   const dispatch = useDispatch();
   //graphql syntax trees
   const CHANGE_DOWNLOADED = gql`
-    query toggleDownload($id: String!) {
+    mutation toggleDownload($id: String!) {
       downloadedPDF(id: $id) {
         id
       }
     }
   `;
-  const [changeDownloaded] = useLazyQuery(CHANGE_DOWNLOADED);
+  const [changeDownloaded] = useMutation(CHANGE_DOWNLOADED);
   if (downloadState) {
     return (
       <Icon
         onPress={
           async () => {
             setDownloadState(!downloadState);
-            //console.log("On");
             dispatch(toggleDown(props.a));
             var res = await changeDownloaded({ variables: { id: props.a.id }});
-            console.log(res.error);
           }
         }
         color={colourState}
@@ -54,10 +52,8 @@ function DownloadButtonState(props) {
       onPress={
         async () => {
           setDownloadState(!downloadState);
-          //console.log("Off");
           dispatch(toggleDown(props.a));
           var res = await changeDownloaded({ variables: { id: props.a.id }});
-            console.log(res.error);
         }
       }
       color={colourState}
