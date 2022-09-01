@@ -98,8 +98,8 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
     if (data.getPDFs[0].name !== "error"){
       tempArray = [];
       for (p in pdfLocalAccess.getPdfs()){
-        if (p.downloaded === true){
-          tempArray.push(p);
+        if (data.getPDFs[p].downloaded === true){
+          tempArray.push(data.getPDFs[p]);
         }
       }
       dispatch(refillPDFs(tempArray));
