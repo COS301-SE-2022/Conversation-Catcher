@@ -1,11 +1,15 @@
 import { Resolver } from '@nestjs/graphql';
 import { Query, Args, Mutation } from '@nestjs/graphql';
 import { UserManagementServiceService } from '@conversation-catcher/api/user-management/service';
-import { UserEntity } from '@conversation-catcher/api/user-management/api/data-access';
+import {
+  UserEntity,
+  GroupEntity,
+} from '@conversation-catcher/api/user-management/api/data-access';
+import { PdfEntity } from '@conversation-catcher/api/pdf-manager/api/data-access';
 
 @Resolver()
 export class UserManagementApiFeatureResolver {
-  constructor(private authService: UserManagementServiceService) {
+  constructor(private userService: UserManagementServiceService) {
     this.errorObj = new UserEntity();
     this.errorObj.email = 'error';
     this.errorObj.pdfs = [];
@@ -23,7 +27,7 @@ export class UserManagementApiFeatureResolver {
 
   @Query(() => UserEntity)
   async getUser(@Args('email') email: string) {
-    const res = await this.authService.getUser(email);
+    const res = await this.userService.getUser(email);
     if (res != undefined) {
       return this.setResult(res);
     }
@@ -32,7 +36,7 @@ export class UserManagementApiFeatureResolver {
 
   @Mutation(() => UserEntity)
   async addUser(@Args('email') email: string) {
-    const res = await this.authService.addUser(email);
+    const res = await this.userService.addUser(email);
     // console.log(res);
     if (res.insertedId != undefined) {
       const user = new UserEntity();
@@ -51,7 +55,7 @@ export class UserManagementApiFeatureResolver {
     @Args('colour') colour: string,
     @Args('pdfs', { type: () => [String] }) pdfs: string[]
   ) {
-    const res = await this.authService.setUser(oldEmail, email, colour, pdfs);
+    const res = await this.userService.setUser(oldEmail, email, colour, pdfs);
     console.log(res);
     if (res.modifiedCount != 0) {
       return true;
@@ -60,22 +64,22 @@ export class UserManagementApiFeatureResolver {
   }
 
   //--------------------------------------------------------GROUPS-----------------------------------------------
-  @Query(() => String)
+  @Query(() => [GroupEntity])
   async getAllGroups() {
     //
   }
 
-  @Query(() => String)
+  @Query(() => [GroupEntity])
   async getGroupsFor() {
     //
   }
 
-  @Query(() => String)
+  @Query(() => [PdfEntity])
   async getGroupPdfs() {
     //
   }
 
-  @Mutation(() => String)
+  @Mutation(() => GroupEntity)
   async createGroup() {
     //
   }
@@ -87,6 +91,46 @@ export class UserManagementApiFeatureResolver {
 
   @Mutation(() => String)
   async renameGroup() {
+    //
+  }
+
+  @Mutation(() => GroupEntity)
+  async addUserTo() {
+    //
+  }
+
+  @Mutation(() => String)
+  async removeUserFrom() {
+    //
+  }
+
+  @Mutation(() => String)
+  async sendInvite() {
+    //
+  }
+
+  @Mutation(() => String)
+  async removeInvite() {
+    //
+  }
+
+  @Mutation(() => String)
+  async requestToJoin() {
+    //
+  }
+
+  @Mutation(() => String)
+  async declineRequest() {
+    //
+  }
+
+  @Mutation(() => String)
+  async addPdfTo() {
+    //
+  }
+
+  @Mutation(() => String)
+  async removePdfFrom() {
     //
   }
 }
