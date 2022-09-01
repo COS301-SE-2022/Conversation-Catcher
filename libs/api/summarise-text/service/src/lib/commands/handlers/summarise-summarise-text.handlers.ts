@@ -18,6 +18,21 @@ export class SummariesHandler implements ICommandHandler<SummariseCommand> {
    //}).done(function( o ) {
     //  return 'summarised ' + text;
     //});
-    return text
+    //return text
+
+    const headersList = {
+    "Accept": "*/*",
+      }
+
+    const bodyContent = new FormData();
+    bodyContent.append("text", text);
+
+    return fetch("http://localhost:5000/summarise", {
+      method: "POST",
+      body: bodyContent,
+      headers: headersList
+    }).then(function(response) {
+      return response.text();
+    });
   }
 }
