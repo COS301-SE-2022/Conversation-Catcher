@@ -95,13 +95,15 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
     setIsLoaded(true);
     //Update local pdf storage
     //array of pdfs stored locally, selected from data to overwrite the slice
-    tempArray = [];
-    for (p in pdfLocalAccess.getPdfs()){
-      if (p.downloaded === true){
-        tempArray.push(p);
+    if (data.getPDFs[0].name !== "error"){
+      tempArray = [];
+      for (p in pdfLocalAccess.getPdfs()){
+        if (p.downloaded === true){
+          tempArray.push(p);
+        }
       }
+      dispatch(refillPDFs(tempArray));
     }
-    dispatch(refillPDFs(tempArray));
   }
 
   
