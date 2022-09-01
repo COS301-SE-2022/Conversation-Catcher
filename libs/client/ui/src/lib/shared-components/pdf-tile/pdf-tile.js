@@ -19,7 +19,7 @@ import { gql, useLazyQuery, useMutation } from '@apollo/client';
 
 function DownloadButtonState(props) {
   const colourState = useSelector(selectColour);
-  const [downloadState, setDownloadState] = React.useState(props.d.notIn);
+  const [downloadState, setDownloadState] = React.useState(props.d);
   const dispatch = useDispatch();
   //graphql syntax trees
   const CHANGE_DOWNLOADED = gql`
