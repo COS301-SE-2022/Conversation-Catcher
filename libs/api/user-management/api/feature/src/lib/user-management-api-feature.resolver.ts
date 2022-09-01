@@ -66,71 +66,96 @@ export class UserManagementApiFeatureResolver {
   //--------------------------------------------------------GROUPS-----------------------------------------------
   @Query(() => [GroupEntity])
   async getAllGroups() {
-    //
+    return await this.userService.getAllGroups();
   }
 
   @Query(() => [GroupEntity])
-  async getGroupsFor() {
-    //
+  async getGroupsFor(@Args('email') email: string) {
+    return await this.userService.getGroupsFor(email);
   }
 
   @Query(() => [PdfEntity])
-  async getGroupPdfs() {
-    //
+  async getGroupPdfs(@Args('groupName') groupName: string) {
+    return await this.userService.getGroupPdfs(groupName);
   }
 
   @Mutation(() => GroupEntity)
-  async createGroup() {
-    //
+  async createGroup(
+    @Args('email') email: string,
+    @Args('groupName') groupName: string
+  ) {
+    return await this.userService.createGroup(email, groupName);
   }
 
   @Mutation(() => String)
-  async deleteGroup() {
-    //
+  async deleteGroup(@Args('groupName') groupName: string) {
+    return await this.userService.deleteGroup(groupName);
   }
 
   @Mutation(() => String)
-  async renameGroup() {
-    //
+  async renameGroup(
+    @Args('groupName') groupName: string,
+    @Args('newName') newName: string
+  ) {
+    return await this.userService.renameGroup(groupName, newName);
   }
 
   @Mutation(() => GroupEntity)
-  async addUserTo() {
-    //
+  async addUserTo(
+    @Args('user') user: string,
+    @Args('groupName') groupName: string
+  ) {
+    return await this.userService.addUserTo(user, groupName);
   }
 
   @Mutation(() => String)
-  async removeUserFrom() {
-    //
+  async removeUserFrom(
+    @Args('user') user: string,
+    @Args('groupName') groupName: string
+  ) {
+    return await this.userService.removeUserFrom(user, groupName);
   }
 
   @Mutation(() => String)
-  async sendInvite() {
-    //
+  async sendInvite(
+    @Args('fromUser') fromUser: string,
+    @Args('toUser') toUser: string,
+    @Args('groupName') groupName: string
+  ) {
+    return await this.userService.sendInvite(fromUser, toUser, groupName);
   }
 
   @Mutation(() => String)
   async removeInvite() {
-    //
+    // return await this.userService.
   }
 
   @Mutation(() => String)
-  async requestToJoin() {
-    //
+  async requestToJoin(
+    @Args('user') user: string,
+    @Args('groupName') groupName: string
+  ) {
+    return await this.userService.requestJoin(user, groupName);
   }
 
   @Mutation(() => String)
   async declineRequest() {
-    //
+    // return await this.userService.
   }
 
   @Mutation(() => String)
-  async addPdfTo() {
-    //
+  async addPdfTo(
+    @Args('pdfId') pdfId: string,
+    @Args('groupName') groupName: string
+  ) {
+    return await this.userService.addGroupPdf(pdfId, groupName);
   }
 
   @Mutation(() => String)
-  async removePdfFrom() {
-    //
+  async removePdfFrom(
+    @Args('pdfId') pdfId: string,
+    @Args('groupName') groupName: string
+  ) {
+    return await this.userService.removeGroupPdf(pdfId, groupName);
   }
 }

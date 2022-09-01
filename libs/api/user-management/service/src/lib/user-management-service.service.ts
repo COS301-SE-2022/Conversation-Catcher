@@ -28,8 +28,8 @@ export class UserManagementServiceService {
   async getUser(email: string) {
     return await this.queryBus.execute(new getUserQuery(email));
   }
-  async getGroupPdfs(group_id: string) {
-    return await this.queryBus.execute(new getGroupPdfsQuery(group_id));
+  async getGroupPdfs(groupName: string) {
+    return await this.queryBus.execute(new getGroupPdfsQuery(groupName));
   }
 
   async getGroupsFor(email: string) {
@@ -56,25 +56,25 @@ export class UserManagementServiceService {
     );
   }
 
-  async requestJoin(email: string, group_id: string) {
+  async requestJoin(email: string, groupName: string) {
     return await this.commandBus.execute(
-      new requestJoinCommand(email, group_id)
+      new requestJoinCommand(email, groupName)
     );
   }
 
-  async sendInvite(fromUser: string, toUser: string, group_id: string) {
+  async sendInvite(fromUser: string, toUser: string, groupName: string) {
     return await this.commandBus.execute(
-      new sendInviteCommand(fromUser, toUser, group_id)
+      new sendInviteCommand(fromUser, toUser, groupName)
     );
   }
 
-  async addUserTo(user: string, group_id: string) {
-    return await this.commandBus.execute(new addUserToCommand(user, group_id));
+  async addUserTo(user: string, groupName: string) {
+    return await this.commandBus.execute(new addUserToCommand(user, groupName));
   }
 
-  async removeUserFrom(email: string, group_id: string) {
+  async removeUserFrom(email: string, groupName: string) {
     return await this.commandBus.execute(
-      new removeUserFromCommand(email, group_id)
+      new removeUserFromCommand(email, groupName)
     );
   }
 
@@ -84,25 +84,25 @@ export class UserManagementServiceService {
     );
   }
 
-  async deleteGroup(group_id: string) {
-    return await this.commandBus.execute(new deleteGroupCommand(group_id));
+  async deleteGroup(groupName: string) {
+    return await this.commandBus.execute(new deleteGroupCommand(groupName));
   }
 
-  async renameGroup(group_id: string, newName: string) {
+  async renameGroup(groupName: string, newName: string) {
     return await this.commandBus.execute(
-      new renameGroupCommand(group_id, newName)
+      new renameGroupCommand(groupName, newName)
     );
   }
 
-  async addGroupPdf(pdf_id: string, group_id: string) {
+  async addGroupPdf(pdfId: string, groupName: string) {
     return await this.commandBus.execute(
-      new addGroupPdfCommand(pdf_id, group_id)
+      new addGroupPdfCommand(pdfId, groupName)
     );
   }
 
-  async removeGroupPdf(pdf_id: string, group_id: string) {
+  async removeGroupPdf(pdfId: string, groupName: string) {
     return await this.commandBus.execute(
-      new removeGroupPdfCommand(pdf_id, group_id)
+      new removeGroupPdfCommand(pdfId, groupName)
     );
   }
 }
