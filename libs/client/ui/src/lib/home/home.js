@@ -433,6 +433,22 @@ export const Home = ({ navigation }) => {
             state={null}
             onPress={() => {
               setUploadVisible(false);
+              console.log(
+                await summariseText({
+                  variables: { text: (await speechToText()).data.ConvertSpeech },
+                })
+              );
+              const res = await fetch('http://192.168.0.125:5050/stt', {
+                      method: 'POST',
+                      headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                      },
+                      body: JSON.stringify({
+                        audio_path: 'Path'
+                      })
+                    });
+              console.log(res);
             }}
           >
             <View style={styles.uploadModalButtonContent}>
