@@ -10,4 +10,10 @@ export class UserEntity {
 
   @Field(() => [String], {nullable: 'items'})
   pdfs: string[];
+
+  @Field(() => [String], {nullable: 'items'})
+  groups: string[];
+
+  @Field(() => [String], {nullable: 'items'})
+  invites: string[];
 }

@@ -14,6 +14,8 @@ export class UserManagementApiFeatureResolver {
     this.errorObj.email = 'error';
     this.errorObj.pdfs = [];
     this.errorObj.colour = '#ff0000';
+    this.errorObj.groups = [];
+    this.errorObj.invites = [];
   }
   private errorObj;
 
@@ -22,12 +24,15 @@ export class UserManagementApiFeatureResolver {
     user.email = result.email;
     user.colour = result.colour;
     user.pdfs = result.pdfs;
+    user.groups = result.groups;
+    user.invites = result.invites;
     return user;
   }
 
   @Query(() => UserEntity)
   async getUser(@Args('email') email: string) {
     const res = await this.userService.getUser(email);
+    console.log(res);
     if (res != undefined) {
       return this.setResult(res);
     }
@@ -42,6 +47,8 @@ export class UserManagementApiFeatureResolver {
       const user = new UserEntity();
       user.email = email;
       user.pdfs = [];
+      user.groups = [];
+      user.invites = [];
       user.colour = '#3f89beff';
       return user;
     }
