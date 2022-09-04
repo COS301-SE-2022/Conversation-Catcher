@@ -71,22 +71,40 @@ export class UserManagementApiFeatureResolver {
   }
 
   //--------------------------------------------------------GROUPS-----------------------------------------------
-  @Query(() => [GroupEntity])
+  //Assign results to pdf object
+  assignResult(result) {
+    const resArr = [];
+    for (const pdf of result) {
+      const date = new Date(pdf.creationDate);
+      const pdfObj = new PdfEntity();
+      pdfObj.id = pdf._id;
+      pdfObj.name = pdf.name;
+      if (pdf.pdf != null) pdfObj.pdf = pdf.pdf.toString('ascii');
+      pdfObj.creationDate = date.toUTCString();
+      if (pdf.downloaded != null) pdfObj.downloaded = pdf.downloaded;
+      else pdfObj.downloaded = false;
+      pdfObj.text = pdf.text;
+      resArr.push(pdfObj);
+    }
+    return resArr;
+  }
+
+  @Query(() => [GroupEntity]) //checked
   async getAllGroups() {
     return await this.userService.getAllGroups();
   }
 
-  @Query(() => [GroupEntity])
+  @Query(() => [GroupEntity]) //checked
   async getGroupsFor(@Args('email') email: string) {
     return await this.userService.getGroupsFor(email);
   }
 
-  @Query(() => [PdfEntity])
+  @Query(() => [PdfEntity]) //checked
   async getGroupPdfs(@Args('groupName') groupName: string) {
-    return await this.userService.getGroupPdfs(groupName);
+    return this.assignResult(await this.userService.getGroupPdfs(groupName));
   }
 
-  @Mutation(() => GroupEntity)
+  @Mutation(() => GroupEntity) //checked
   async createGroup(
     @Args('email') email: string,
     @Args('groupName') groupName: string
@@ -99,7 +117,7 @@ export class UserManagementApiFeatureResolver {
     return await this.userService.deleteGroup(groupName);
   }
 
-  @Mutation(() => String)
+  @Mutation(() => String) //checked
   async renameGroup(
     @Args('groupName') groupName: string,
     @Args('newName') newName: string
@@ -107,7 +125,7 @@ export class UserManagementApiFeatureResolver {
     return await this.userService.renameGroup(groupName, newName);
   }
 
-  @Mutation(() => GroupEntity)
+  @Mutation(() => GroupEntity) //checked
   async addUserTo(
     @Args('user') user: string,
     @Args('groupName') groupName: string
@@ -123,7 +141,7 @@ export class UserManagementApiFeatureResolver {
     return await this.userService.removeUserFrom(user, groupName);
   }
 
-  @Mutation(() => String)
+  @Mutation(() => String) //checked
   async sendInvite(
     @Args('fromUser') fromUser: string,
     @Args('toUser') toUser: string,
@@ -137,7 +155,7 @@ export class UserManagementApiFeatureResolver {
     // return await this.userService.
   }
 
-  @Mutation(() => String)
+  @Mutation(() => String) //checked
   async requestToJoin(
     @Args('user') user: string,
     @Args('groupName') groupName: string
@@ -150,7 +168,7 @@ export class UserManagementApiFeatureResolver {
     // return await this.userService.
   }
 
-  @Mutation(() => String)
+  @Mutation(() => String) //checked
   async addPdfTo(
     @Args('pdfId') pdfId: string,
     @Args('groupName') groupName: string
@@ -158,7 +176,7 @@ export class UserManagementApiFeatureResolver {
     return await this.userService.addGroupPdf(pdfId, groupName);
   }
 
-  @Mutation(() => String)
+  @Mutation(() => String) //checked
   async removePdfFrom(
     @Args('pdfId') pdfId: string,
     @Args('groupName') groupName: string

@@ -90,7 +90,7 @@ export class MongoDBAccess {
   async updateGroups(document: any) {
     this.action = 'updateOne';
     const data = JSON.stringify({
-      collection: this.userCollection,
+      collection: this.groupCollection,
       database: this.db,
       dataSource: this.cluster,
       filter: { _id: { $oid: '63063e721460d424280125b8' } },
@@ -117,7 +117,7 @@ export class MongoDBAccess {
     return await lastValueFrom(
       this.httpService
         .post(this.url + this.action, data, this.config)
-        .pipe(map((res) => res.data))
+        .pipe(map((res) => res.data.document))
     );
   }
 }

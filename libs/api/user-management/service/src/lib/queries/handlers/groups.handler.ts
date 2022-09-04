@@ -22,7 +22,6 @@ export class getGroupPdfsHandler implements IQueryHandler<getGroupPdfsQuery> {
     for (const pdf of pdfs) {
       result.push(await this.pdfRepository.getPDF(pdf));
     }
-    console.log(result);
     return result;
   }
 }
@@ -39,7 +38,6 @@ export class getGroupsForHandler implements IQueryHandler<getGroupsForQuery> {
     for (const group of user.groups) {
       result.push(groups[group]);
     }
-    console.log(result);
     return result;
   }
 }
@@ -49,12 +47,11 @@ export class getAllGroupsHandler implements IQueryHandler<getAllGroupsQuery> {
   constructor(private repository: userMongoAccess) {}
 
   async execute(getAllGroupsQuery): Promise<any> {
-    const groups = this.repository.getGroups();
+    const groups = await this.repository.getGroups();
     const result = [];
     Object.values(groups).forEach((group) => {
-      result.push(group);
+      if (group !== '63063e721460d424280125b8') result.push(group);
     });
-    console.log(result);
     return result;
   }
 }
