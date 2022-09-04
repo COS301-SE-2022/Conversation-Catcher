@@ -58,3 +58,17 @@ export class removeGroupPdfCommand {
     public readonly groupName: string
   ) {}
 }
+
+export class removeInviteCommand {
+  constructor(
+    public readonly user: string,
+    public readonly groupName: string
+  ) {}
+}
+
+export class removeRequestCommand {
+  constructor(
+    public readonly user: string,
+    public readonly groupName: string
+  ) {}
+}

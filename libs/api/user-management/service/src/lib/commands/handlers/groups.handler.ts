@@ -9,6 +9,8 @@ import {
   sendInviteCommand,
   addGroupPdfCommand,
   removeGroupPdfCommand,
+  removeInviteCommand,
+  removeRequestCommand,
 } from '../impl';
 import { MongoDBAccess } from '@conversation-catcher/api/user-management/repository/data-access';
 
@@ -21,8 +23,13 @@ export class requestJoinGroupHandler
   //This request will be added to the group as an attribute (requests [])
   async execute({ email, groupName }: requestJoinCommand) {
     const groups = await this.repository.getGroups();
+    //Error checking
     if (groups[groupName] === undefined)
       return 'Group ' + groupName + ' does not exist';
+    if (groups[groupName].users.indexOf(email) !== -1)
+      return 'You are already in the group: ' + groupName;
+    if (groups[groupName].requests.indexOf(email) !== -1)
+      return 'You have already requested to join the group: ' + groupName;
     groups[groupName].requests.push(email);
     delete groups._id;
     this.repository.updateGroups(groups);
@@ -38,8 +45,10 @@ export class sendInviteHandler implements ICommandHandler<sendInviteCommand> {
   async execute({ fromUser, groupName, toUser }: sendInviteCommand) {
     if (fromUser === toUser) return 'Cannot send an invite to yourself';
     const user = await this.repository.getUser(toUser);
+    //Error checking to prevent duplicate requests
     if (user === null) return 'User ' + toUser + ' not found';
-    //Check that invite has not already been sent
+    if (user.groups.indexOf(groupName) !== -1)
+      return 'The user ' + toUser + ' is already in the group: ' + groupName;
     user.invites.forEach((element) => {
       if (groupName === element.group)
         return 'Invite has already been sent to ' + toUser;
@@ -232,5 +241,45 @@ export class removeGroupPdfHandler
     delete groups._id;
     this.repository.updateGroups(groups); //Update the database
     return 'pdf removed from group';
+  }
+}
+
+@CommandHandler(removeInviteCommand)
+export class removeInviteHandler
+  implements ICommandHandler<removeInviteCommand>
+{
+  constructor(private repository: MongoDBAccess) {}
+
+  //Remove an invite from a user
+  async execute({ user, groupName }: removeInviteCommand) {
+    const usr = await this.repository.getUser(user);
+    usr.invites.forEach((element, index) => {
+      if (groupName === element.group) usr.invites.splice(index, 1);
+    });
+    delete usr._id;
+    this.repository.setUser(user,usr);
+    return 'Invite for ' + groupName + ' cancelled';
+  }
+}
+
+@CommandHandler(removeRequestCommand)
+export class removeRequestHandler
+  implements ICommandHandler<removeRequestCommand>
+{
+  constructor(private repository: MongoDBAccess) {}
+
+  //Remove request to join from group (reject request)
+  async execute({ user, groupName }: removeRequestCommand) {
+    const groups = await this.repository.getGroups();
+    if (groups[groupName] === undefined)
+      return 'Group ' + groupName + ' does not exist';
+    const index = groups[groupName].requests.indexOf(user);
+    if (index !== -1) {
+      groups[groupName].requests.splice(index, 1);
+      delete groups._id;
+      this.repository.updateGroups(groups);
+      return 'Request for ' + user + ' has been removed from ' + groupName;
+    }
+    return 'Error: Request for ' + user + ' not found in group ' + groupName;
   }
 }

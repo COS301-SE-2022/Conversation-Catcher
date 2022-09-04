@@ -12,6 +12,8 @@ import {
   removeGroupPdfCommand,
   addUserCommand,
   setUserCommand,
+  removeInviteCommand,
+  removeRequestCommand,
 } from './commands/impl';
 import {
   getAllGroupsQuery,
@@ -103,6 +105,18 @@ export class UserManagementServiceService {
   async removeGroupPdf(pdfId: string, groupName: string) {
     return await this.commandBus.execute(
       new removeGroupPdfCommand(pdfId, groupName)
+    );
+  }
+
+  async removeInvite(user: string, groupName: string) {
+    return await this.commandBus.execute(
+      new removeInviteCommand(user, groupName)
+    );
+  }
+
+  async removeRequest(user: string, groupName: string) {
+    return await this.commandBus.execute(
+      new removeRequestCommand(user, groupName)
     );
   }
 }

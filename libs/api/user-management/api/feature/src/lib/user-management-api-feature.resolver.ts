@@ -1,4 +1,4 @@
-import { Resolver } from '@nestjs/graphql';
+import { ResolveField, Resolver } from '@nestjs/graphql';
 import { Query, Args, Mutation } from '@nestjs/graphql';
 import { UserManagementServiceService } from '@conversation-catcher/api/user-management/service';
 import {
@@ -20,19 +20,22 @@ export class UserManagementApiFeatureResolver {
   private errorObj;
 
   setResult(result) {
+    console.log(result);
     const user = new UserEntity();
     user.email = result.email;
     user.colour = result.colour;
     user.pdfs = result.pdfs;
     user.groups = result.groups;
-    user.invites = result.invites;
+    user.invites = [];
+    for (const invite of result.invites){
+      user.invites.push(invite.group + ' : ' + invite.from);
+    }
     return user;
   }
 
   @Query(() => UserEntity)
   async getUser(@Args('email') email: string) {
     const res = await this.userService.getUser(email);
-    console.log(res);
     if (res != undefined) {
       return this.setResult(res);
     }
@@ -151,8 +154,11 @@ export class UserManagementApiFeatureResolver {
   }
 
   @Mutation(() => String)
-  async removeInvite() {
-    // return await this.userService.
+  async removeInvite(
+    @Args('user') user: string,
+    @Args('groupName') groupName: string
+  ) {
+    return await this.userService.removeInvite(user, groupName);
   }
 
   @Mutation(() => String) //checked
@@ -164,8 +170,11 @@ export class UserManagementApiFeatureResolver {
   }
 
   @Mutation(() => String)
-  async declineRequest() {
-    // return await this.userService.
+  async declineRequest(
+    @Args('user') user: string,
+    @Args('groupName') groupName: string
+  ) {
+    return await this.userService.removeRequest(user, groupName);
   }
 
   @Mutation(() => String) //checked
