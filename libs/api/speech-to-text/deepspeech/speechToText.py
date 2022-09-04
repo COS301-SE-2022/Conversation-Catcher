@@ -8,6 +8,7 @@ import json
 
 from deepspeech import Model, version
 from timeit import default_timer as timer
+from textPunctuator import textPunctuator
 
 class speechToText:
 
@@ -20,4 +21,7 @@ class speechToText:
         except OSError as e:
             raise OSError(e.errno, 'SoX not found, use hz files or install it: {}'.format(e.strerror))
 
-        return output
+        punctuator = textPunctuator()
+        result = punctuator.punctuateStt(output.decode())
+
+        return result
