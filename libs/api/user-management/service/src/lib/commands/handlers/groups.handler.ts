@@ -14,6 +14,13 @@ import {
 } from '../impl';
 import { MongoDBAccess } from '@conversation-catcher/api/user-management/repository/data-access';
 
+type Group = {
+  name: string;
+  admin: string;
+  users: string[];
+  pdfs: string[];
+  requests: string[];
+};
 @CommandHandler(requestJoinCommand)
 export class requestJoinGroupHandler
   implements ICommandHandler<requestJoinCommand>
@@ -85,7 +92,14 @@ export class addUserToHandler implements ICommandHandler<addUserToCommand> {
         validated = true;
       }
     });
-    if (!validated) return null; //If the user did not have a join request or an invite don't add them to the group
+    const errGroup = {
+      admin: '',
+      name: 'Error: User to be added did not have an invite or request',
+      pdfs: [],
+      requests: [],
+      users: [],
+    } as Group;
+    if (!validated) return errGroup; //If the user did not have a join request or an invite don't add them to the group
 
     //set the user and the group
     groups[groupName].users.push(user);
@@ -110,9 +124,12 @@ export class removeUserFromHandler
   async execute({ email, groupName }: removeUserFromCommand) {
     const user = await this.repository.getUser(email);
     const groups = await this.repository.getGroups();
+    //Check that admin cannot be removed
+    if (groups[groupName].admin === email)
+      return 'Cannot remove admin of the group';
     //Remove user from group
     groups[groupName].users.forEach((item, index) => {
-      if (item === email) groups[groupName].splice(index, 1);
+      if (item === email) groups[groupName].users.splice(index, 1);
     });
     //Remove group from user
     user.groups.forEach((item, index) => {
@@ -159,11 +176,12 @@ export class deleteGroupHandler implements ICommandHandler<deleteGroupCommand> {
   async execute({ groupName }: deleteGroupCommand) {
     const groups = await this.repository.getGroups(); //Fetch all groups
     for (const email of groups[groupName].users) {
-      console.log(email);
       const user = await this.repository.getUser(email);
       user.groups.forEach((item, index) => {
         if (item === groupName) user.groups.splice(index, 1);
       });
+      delete user._id;
+      this.repository.setUser(email,user);
     }
     delete groups[groupName];
     delete groups._id;
@@ -257,7 +275,7 @@ export class removeInviteHandler
       if (groupName === element.group) usr.invites.splice(index, 1);
     });
     delete usr._id;
-    this.repository.setUser(user,usr);
+    this.repository.setUser(user, usr);
     return 'Invite for ' + groupName + ' cancelled';
   }
 }

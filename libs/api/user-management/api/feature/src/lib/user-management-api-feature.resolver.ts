@@ -115,7 +115,7 @@ export class UserManagementApiFeatureResolver {
     return await this.userService.createGroup(email, groupName);
   }
 
-  @Mutation(() => String)
+  @Mutation(() => String) //checked
   async deleteGroup(@Args('groupName') groupName: string) {
     return await this.userService.deleteGroup(groupName);
   }
@@ -136,7 +136,7 @@ export class UserManagementApiFeatureResolver {
     return await this.userService.addUserTo(user, groupName);
   }
 
-  @Mutation(() => String)
+  @Mutation(() => String) //checked
   async removeUserFrom(
     @Args('user') user: string,
     @Args('groupName') groupName: string
@@ -153,7 +153,7 @@ export class UserManagementApiFeatureResolver {
     return await this.userService.sendInvite(fromUser, toUser, groupName);
   }
 
-  @Mutation(() => String)
+  @Mutation(() => String) //checked
   async removeInvite(
     @Args('user') user: string,
     @Args('groupName') groupName: string
@@ -169,7 +169,7 @@ export class UserManagementApiFeatureResolver {
     return await this.userService.requestJoin(user, groupName);
   }
 
-  @Mutation(() => String)
+  @Mutation(() => String)// checked
   async declineRequest(
     @Args('user') user: string,
     @Args('groupName') groupName: string
