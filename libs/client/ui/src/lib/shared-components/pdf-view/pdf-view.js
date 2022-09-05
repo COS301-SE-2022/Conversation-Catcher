@@ -71,6 +71,7 @@ export const PdfView = ({ route, navigation }) => {
     name.name = newName;
     pdfLocalAccess.renamePdf(id.id, newName);
     await rename({ variables: { id: id.id, name: newName } });
+    //Add mutateState for pdf name
   }
 
   async function deletePdf() {
@@ -197,7 +198,7 @@ export const PdfView = ({ route, navigation }) => {
         <View style={styles.renameModalInner}>
           <TextInput
             style={styles.renameModalTextInput}
-            defaultValue={''}
+            defaultValue={name}
             onChangeText={(text) => {
               setNewName(text);
             }}

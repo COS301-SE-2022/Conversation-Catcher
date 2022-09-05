@@ -37,6 +37,7 @@
     "@apollo/client": "*",
     "lottie-react-native": "*",
     "@react-native-firebase/auth": "*",
-    "@react-native-firebase/app": "*"
+    "@react-native-firebase/app": "*",
+    "redux-persist": "*"
   }
 }
