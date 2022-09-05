@@ -80,8 +80,6 @@ function DetermineTileCorner(props) {
       />
     );
   }
-  // console.log("detTileCorner")
-  // console.log(props)
   return <DownloadButtonState d={props.d} a={props.a}/>;
 }
 
