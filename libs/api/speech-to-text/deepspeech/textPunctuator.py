@@ -74,7 +74,7 @@ class textPunctuator:
     def predict(x, model):
         return tf.nn.softmax(net(x))
 
-    def punctuateStt(text):
+    def punctuateStt(self, text):
         model_file = "Demo-Europarl-EN.pcl"
 
         vocab_len = len(data.read_vocabulary(data.WORD_VOCAB_FILE))
