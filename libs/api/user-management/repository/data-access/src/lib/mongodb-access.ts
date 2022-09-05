@@ -68,6 +68,23 @@ export class MongoDBAccess {
     );
   }
 
+  //Remove a user from a database
+  async deleteUser(email: string) {
+    this.action = 'deleteOne';
+    const data = JSON.stringify({
+      collection: this.userCollection,
+      database: this.db,
+      dataSource: this.cluster,
+      filter: { email: email },
+    });
+
+    return await lastValueFrom(
+      this.httpService
+        .post(this.url + this.action, data, this.config)
+        .pipe(map((res) => res.data))
+    );
+  }
+
   //Updates the given users data in the database
   async setUser(oldEmail: string, document: any) {
     this.action = 'updateOne';

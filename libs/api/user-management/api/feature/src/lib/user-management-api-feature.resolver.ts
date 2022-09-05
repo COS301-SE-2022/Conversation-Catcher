@@ -27,7 +27,7 @@ export class UserManagementApiFeatureResolver {
     user.pdfs = result.pdfs;
     user.groups = result.groups;
     user.invites = [];
-    for (const invite of result.invites){
+    for (const invite of result.invites) {
       user.invites.push(invite.group + ' : ' + invite.from);
     }
     return user;
@@ -40,6 +40,12 @@ export class UserManagementApiFeatureResolver {
       return this.setResult(res);
     }
     return this.errorObj;
+  }
+
+  @Mutation(() => String)
+  async deleteUser(@Args('email') email: string) {
+    const res = await this.userService.deleteUser(email);
+    // console.log(res);
   }
 
   @Mutation(() => UserEntity)
@@ -169,7 +175,7 @@ export class UserManagementApiFeatureResolver {
     return await this.userService.requestJoin(user, groupName);
   }
 
-  @Mutation(() => String)// checked
+  @Mutation(() => String) // checked
   async declineRequest(
     @Args('user') user: string,
     @Args('groupName') groupName: string

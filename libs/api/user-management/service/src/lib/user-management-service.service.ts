@@ -11,6 +11,7 @@ import {
   addGroupPdfCommand,
   removeGroupPdfCommand,
   addUserCommand,
+  deleteUserCommand,
   setUserCommand,
   removeInviteCommand,
   removeRequestCommand,
@@ -45,6 +46,10 @@ export class UserManagementServiceService {
   //commands
   async addUser(email: string) {
     return await this.commandBus.execute(new addUserCommand(email));
+  }
+
+  async deleteUser(email: string) {
+    return await this.commandBus.execute(new deleteUserCommand(email));
   }
 
   async setUser(

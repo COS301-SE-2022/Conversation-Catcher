@@ -18,6 +18,7 @@ import * as QueryHandlers from './queries/handlers';
     CommandHandlers.addUserHandler,
     CommandHandlers.setUserHandler,
     CommandHandlers.addUserToHandler,
+    CommandHandlers.deleteUserHandler,
     CommandHandlers.createGroupHandler,
     CommandHandlers.deleteGroupHandler,
     CommandHandlers.removeUserFromHandler,
