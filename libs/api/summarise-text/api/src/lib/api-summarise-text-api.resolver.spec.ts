@@ -10,7 +10,7 @@ describe('ApiSummariseTextApiResolver', () => {
 
   const MockSummariseTextService = {
     Summarise: jest.fn( (text: string) =>{
-      return String;
+      return 'Summary';
     }),
   };
 
