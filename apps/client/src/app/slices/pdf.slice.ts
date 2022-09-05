@@ -14,7 +14,7 @@ export const pdfSlice = createSlice({
     },
     removePDF: (state,action) => {
       state.forEach((item,index) => {
-        if (item === action.payload) state.splice(index,1)
+        if (item.id === action.payload.id) state.splice(index,1)
       })
       return state;
     },
@@ -36,12 +36,22 @@ export const pdfSlice = createSlice({
       })
       if (notIn) {
         state.push({...action.payload,downloaded:{notIn}});
-      }
-  }},
+      };
+      return state;
+    },
+    changeName: (state,action) => {
+      state.forEach((item,index) => {
+        if (item.id === action.payload.id){
+          state[index].name = action.payload.name;
+        }
+      })
+      return state;
+    }
+  },
 });
 
 export const {actions, reducer} = pdfSlice
 
-export const {addPDF, removePDF, clearPDFs, refillPDFs, toggleDown} = actions
+export const {addPDF, removePDF, clearPDFs, refillPDFs, toggleDown, changeName} = actions
 
 export const selectPDFS = (state) => state.pdf
