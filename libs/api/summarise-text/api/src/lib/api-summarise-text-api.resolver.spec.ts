@@ -8,6 +8,12 @@ const summaryMock = 'Summary';
 describe('ApiSummariseTextApiResolver', () => {
   let resolver: ApiSummariseTextApiResolver;
 
+  const MockSummariseTextService = {
+    Summarise: jest.fn( (text: string) =>{
+      return String;
+    }),
+  };
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -15,7 +21,10 @@ describe('ApiSummariseTextApiResolver', () => {
       ],
       exports: [ApiSummariseTextApiResolver],
       imports: [ApiSummariseTextServiceModule]
-    }).compile();
+    })
+    .overrideProvider(ApiSummariseTextApiResolver)
+    .useValue(MockSummariseTextService)
+    .compile();
 
     resolver = module.get<ApiSummariseTextApiResolver>(
       ApiSummariseTextApiResolver
