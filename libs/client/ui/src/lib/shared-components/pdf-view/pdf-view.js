@@ -201,7 +201,7 @@ export const PdfView = ({ route, navigation }) => {
         <View style={styles.renameModalInner}>
           <TextInput
             style={styles.renameModalTextInput}
-            defaultValue={name}
+            defaultValue={name.name}
             onChangeText={(text) => {
               setNewName(text);
             }}
