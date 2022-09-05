@@ -28,16 +28,30 @@ import ChangeEmail from '../../../../libs/client/ui/src/lib/change-email/change-
 import { Provider } from 'react-redux';
 import {reducer as userReducer} from './slices/user.slice';
 import {reducer as pdfReducer} from './slices/pdf.slice';
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
+//configure local storage
+const persistConfig = {
+  key: 'root',
+  storage: AsyncStorage,
+};
+//Combine reducers
+const rootReducer = combineReducers({
+  pdf:pdfReducer,
+  user:userReducer
+});
+//Add reducer to persist
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 //configure the store
 const store = configureStore({
-    reducer: {
-        pdf:pdfReducer,
-        user:userReducer
-    }
-})
-
+    reducer: persistedReducer
+});
+//Initialize persistor with store
+export const persistor = persistStore(store);
+//Create stack navigator
 const Stack = createNativeStackNavigator();
 
 export const App = () => {
@@ -72,5 +86,5 @@ export const App = () => {
       </ApolloProvider>
     </Provider>
   )
-  }
+  };
 export default App;
