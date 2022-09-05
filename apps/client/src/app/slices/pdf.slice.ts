@@ -27,7 +27,7 @@ export const pdfSlice = createSlice({
       return state;
     },
     toggleDown: (state,action) => {
-      var notIn = true;
+      let notIn = true;
       state.forEach((item,index) => {
         if (item.id === action.payload.id){
           state.splice(index,1);
