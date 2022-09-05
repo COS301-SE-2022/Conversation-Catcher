@@ -28,16 +28,31 @@ import ChangeEmail from '../../../../libs/client/ui/src/lib/change-email/change-
 import { Provider } from 'react-redux';
 import {reducer as userReducer} from './slices/user.slice';
 import {reducer as pdfReducer} from './slices/pdf.slice';
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import { PersistGate } from 'redux-persist/integration/react';
 
+//configure local storage
+const persistConfig = {
+  key: 'root',
+  storage: AsyncStorage,
+};
+//Combine reducers
+const rootReducer = combineReducers({
+  pdf:pdfReducer,
+  user:userReducer
+});
+//Add reducer to persist
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 //configure the store
 const store = configureStore({
-    reducer: {
-        pdf:pdfReducer,
-        user:userReducer
-    }
-})
-
+    reducer: persistedReducer
+});
+//Initialize persistor with store
+export const persistor = persistStore(store);
+//Create stack navigator
 const Stack = createNativeStackNavigator();
 
 export const App = () => {
@@ -54,23 +69,25 @@ export const App = () => {
 
   return (
     <Provider store = { store }>
-      <ApolloProvider client={client}>
-        <NavigationContainer>
-          <Stack.Navigator>
-            <Stack.Screen name="Login" component={Login}/>
-            <Stack.Screen name="Home" component={Home}/>
-            <Stack.Screen name="ViewAll" component={ViewAll}/>
-            <Stack.Screen name="Settings" component={Settings}/>
-            <Stack.Screen name="Colour" component={ChangeColour}/>
-            <Stack.Screen name="Register" component={Register}/>
-            <Stack.Screen name="PdfView" component={PdfView}/>
-            <Stack.Screen name="ForgotPassword" component={ForgotPassword}/>
-            <Stack.Screen name="ChangePassword" component={ChangePassword}/>
-            <Stack.Screen name="ChangeEmail" component={ChangeEmail}/>
-          </Stack.Navigator>
-        </NavigationContainer>
-      </ApolloProvider>
+      <PersistGate loading={null} persistor={persistor}>
+        <ApolloProvider client={client}>
+          <NavigationContainer>
+            <Stack.Navigator>
+              <Stack.Screen name="Login" component={Login}/>
+              <Stack.Screen name="Home" component={Home}/>
+              <Stack.Screen name="ViewAll" component={ViewAll}/>
+              <Stack.Screen name="Settings" component={Settings}/>
+              <Stack.Screen name="Colour" component={ChangeColour}/>
+              <Stack.Screen name="Register" component={Register}/>
+              <Stack.Screen name="PdfView" component={PdfView}/>
+              <Stack.Screen name="ForgotPassword" component={ForgotPassword}/>
+              <Stack.Screen name="ChangePassword" component={ChangePassword}/>
+              <Stack.Screen name="ChangeEmail" component={ChangeEmail}/>
+            </Stack.Navigator>
+          </NavigationContainer>
+        </ApolloProvider>
+      </PersistGate>
     </Provider>
   )
-  }
+  };
 export default App;
