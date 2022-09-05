@@ -6,9 +6,7 @@ import { PdfEntity } from '@conversation-catcher/api/pdf-manager/api/data-access
 
 @Resolver()
 export class ApiPdfManagerApiFeatureResolver {
-  constructor(
-    private pdfService: ApiPdfManagerServiceService
-  ) {
+  constructor(private pdfService: ApiPdfManagerServiceService) {
     this.errorObj = new PdfEntity();
     this.errorObj.id = 'error';
     this.errorObj.name = 'error';
@@ -31,7 +29,7 @@ export class ApiPdfManagerApiFeatureResolver {
   assignResult(result) {
     const date = new Date(result.creationDate);
     const pdfObj = new PdfEntity();
-    pdfObj.id = result.id;
+    pdfObj.id = result._id;
     pdfObj.name = result.name;
     if (result.pdf != null) pdfObj.pdf = result.pdf.toString('ascii');
     pdfObj.creationDate = date.toUTCString();
@@ -84,9 +82,13 @@ export class ApiPdfManagerApiFeatureResolver {
     @Args('name') name: string,
     @Args('text') text: string
   ) {
-    return await this.pdfService.addPdf(email, name, text);
+    const pdfArr = await this.pdfService.addPdf(email, name, text);
+    if (pdfArr != undefined) {
+      return this.assignResult(pdfArr);
+    }
+    this.errorObj.name = 'Could not find user with email ' + email;
+    return this.errorObj;
   }
-
   // rename the pdf with this id
   @Mutation(() => PdfEntity)
   async renamePDF(@Args('id') id: string, @Args('name') name: string) {
@@ -111,7 +113,7 @@ export class ApiPdfManagerApiFeatureResolver {
 
   // delete pdf with this id from DB
   @Mutation(() => PdfEntity)
-  async deletePDF(@Args('id', { type: () => [String] }) id: string) {
+  async deletePDF(@Args('id', { type: () => String }) id: string) {
     const pdfArr = await this.pdfService.deletePdf(id);
 
     if (pdfArr != undefined) {

@@ -22,8 +22,7 @@ export class SetDownloadedPdfHandler
   implements ICommandHandler<SetDownloadedPdfCommand>
 {
   constructor(
-    private repository: MongoDBAccess,
-    // private httpService: HttpService
+    private repository: MongoDBAccess // private httpService: HttpService
   ) {}
   async execute({ id }: SetDownloadedPdfCommand): Promise<any> {
     // console.log('HAndling command setDownloadPDF with id ' + id);
@@ -32,12 +31,13 @@ export class SetDownloadedPdfHandler
 }
 
 @CommandHandler(AddPdfCommand)
-export class AddPdfHandler implements ICommandHandler<AddPdfCommand>{
-  constructor(
-    private repository: MongoDBAccess) {}
-    async execute({email, name, text}: AddPdfCommand): Promise<any> {
-        const newName = 'PDF-' + Math.round((Math.random())*10000)
-        const date = new Date();
-        return await this.repository.addPdf(email, newName, text, date);
-    }
+export class AddPdfHandler implements ICommandHandler<AddPdfCommand> {
+  constructor(private repository: MongoDBAccess) {}
+  async execute({ email, name, text }: AddPdfCommand): Promise<any> {
+    const newName = 'PDF-' + Math.round(Math.random() * 10000);
+    const date = new Date();
+    if (name === '')
+      return await this.repository.addPdf(email, newName, text, date);
+    return await this.repository.addPdf(email, name, text, date);
+  }
 }
