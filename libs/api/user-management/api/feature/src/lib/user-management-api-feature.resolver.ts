@@ -1,4 +1,4 @@
-import { ResolveField, Resolver } from '@nestjs/graphql';
+import { Resolver } from '@nestjs/graphql';
 import { Query, Args, Mutation } from '@nestjs/graphql';
 import { UserManagementServiceService } from '@conversation-catcher/api/user-management/service';
 import {
@@ -11,7 +11,7 @@ import { PdfEntity } from '@conversation-catcher/api/pdf-manager/api/data-access
 export class UserManagementApiFeatureResolver {
   constructor(private userService: UserManagementServiceService) {
     this.errorObj = new UserEntity();
-    this.errorObj.email = 'error';
+    this.errorObj.email = 'error: The provided user does not exist';
     this.errorObj.pdfs = [];
     this.errorObj.colour = '#ff0000';
     this.errorObj.groups = [];
@@ -42,10 +42,14 @@ export class UserManagementApiFeatureResolver {
     return this.errorObj;
   }
 
-  @Mutation(() => String)
+  @Mutation(() => Boolean)
   async deleteUser(@Args('email') email: string) {
     const res = await this.userService.deleteUser(email);
-    // console.log(res);
+    console.log(res);
+    if (res.deletedCount != 0) {
+      return true;
+    }
+    return false;
   }
 
   @Mutation(() => UserEntity)
@@ -72,7 +76,6 @@ export class UserManagementApiFeatureResolver {
     @Args('pdfs', { type: () => [String] }) pdfs: string[]
   ) {
     const res = await this.userService.setUser(oldEmail, email, colour, pdfs);
-    console.log(res);
     if (res.modifiedCount != 0) {
       return true;
     }
