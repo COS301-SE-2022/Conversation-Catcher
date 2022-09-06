@@ -26,8 +26,6 @@ export const userSlice = createSlice({
     },
     clearUser: (state,action) => {
       state = initState;
-      console.log("User Store:");
-      console.log(state);
       return state;
     },                                                                         //reset the store back to its default
   },

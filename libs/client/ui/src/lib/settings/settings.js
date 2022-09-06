@@ -92,8 +92,8 @@ export const SettingsPage = ({ navigation }) => {
             auth()
               .signOut()
               .then(() => {
-                dispatch(clearUser);
-                dispatch(clearPDFs);
+                dispatch(clearUser());
+                dispatch(clearPDFs());
                 navigation.navigate('Login');
               })
           }
