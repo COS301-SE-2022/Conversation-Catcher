@@ -39,6 +39,7 @@
     "react-native-sound": "^0.11.2",
     "react-native-vector-icons": "^9.1.0",
     "react-redux": "^8.0.2",
+    "redux-persist": "^6.0.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.0.0",
     "tslib": "^2.3.0"
@@ -63,7 +64,7 @@
     "@nrwl/react-native": "14.2.2",
     "@nrwl/web": "14.2.2",
     "@nrwl/workspace": "14.2.2",
-    "@react-native-async-storage/async-storage": "1.16.3",
+    "@react-native-async-storage/async-storage": "^1.17.10",
     "@react-native-community/cli": "7.0.3",
     "@react-native-community/cli-platform-android": "7.0.1",
     "@react-native-community/cli-platform-ios": "7.0.1",
