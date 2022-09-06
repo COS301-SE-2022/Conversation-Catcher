@@ -50,8 +50,8 @@ export const pdfSlice = createSlice({
   },
 });
 
-export const {actions, reducer} = pdfSlice
+export const {actions, reducer} = pdfSlice;
 
-export const {addPDF, removePDF, clearPDFs, refillPDFs, toggleDown, changeName} = actions
+export const {addPDF, removePDF, clearPDFs, refillPDFs, toggleDown, changeName} = actions;
 
-export const selectPDFS = (state) => state.pdf
+export const selectPDFS = (state) => state.pdf;
