@@ -42,14 +42,14 @@ export class UserManagementApiFeatureResolver {
     return this.errorObj;
   }
 
-  @Mutation(() => Boolean)
+  @Mutation(() => String)
   async deleteUser(@Args('email') email: string) {
     const res = await this.userService.deleteUser(email);
     console.log(res);
     if (res.deletedCount != 0) {
-      return true;
+      return 'User succesfully deleted';
     }
-    return false;
+    return res;
   }
 
   @Mutation(() => UserEntity)

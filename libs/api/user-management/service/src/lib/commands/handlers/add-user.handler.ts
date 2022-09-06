@@ -1,10 +1,11 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { addUserCommand, setUserCommand, deleteUserCommand } from '../impl';
-import { MongoDBAccess } from '@conversation-catcher/api/user-management/repository/data-access';
+import { MongoDBAccess as userMongoAccess } from '@conversation-catcher/api/user-management/repository/data-access';
+// import { MongoDBAccess as pdfMongoAccess } from '@conversation-catcher/api/pdf-manager/repository/data-access';
 
 @CommandHandler(addUserCommand)
 export class addUserHandler implements ICommandHandler<addUserCommand> {
-  constructor(private repository: MongoDBAccess) {}
+  constructor(private repository: userMongoAccess) {}
 
   async execute({ email }: addUserCommand) {
     return await this.repository.addUser(email);
@@ -13,7 +14,7 @@ export class addUserHandler implements ICommandHandler<addUserCommand> {
 
 @CommandHandler(setUserCommand)
 export class setUserHandler implements ICommandHandler<setUserCommand> {
-  constructor(private repository: MongoDBAccess) {}
+  constructor(private repository: userMongoAccess) {}
 
   async execute({ oldEmail, email, colour, pdfs }: setUserCommand) {
     if (oldEmail !== email) {
@@ -36,9 +37,25 @@ export class setUserHandler implements ICommandHandler<setUserCommand> {
 
 @CommandHandler(deleteUserCommand)
 export class deleteUserHandler implements ICommandHandler<deleteUserCommand> {
-  constructor(private repository: MongoDBAccess) {}
+  constructor(private repository: userMongoAccess) {}
 
   async execute({ email }: deleteUserCommand) {
+    const user = await this.repository.getUser(email);
+    if (user.groups[0] != undefined) {
+      const groups = await this.repository.getGroups();
+      for (const group of user.groups) {
+        if (groups[group].admin === email) return 'Cannot delete user who is the admin of a group';
+        const i = groups[group].users.indexOf(email);
+        if (i !== -1) {
+          groups[group].users.splice(i, 1);
+        }
+      }
+      delete groups._id;
+      this.repository.updateGroups(groups);
+    }
+    if (user.pdfs[0] != undefined) {
+      //Delete all the user's pdfs
+    }
     return await this.repository.deleteUser(email);
   }
 }

@@ -20,8 +20,15 @@ export class getGroupPdfsHandler implements IQueryHandler<getGroupPdfsQuery> {
     const pdfs = groups[groupName].pdfs;
     const result = [];
     for (const pdf of pdfs) {
-      result.push(await this.pdfRepository.getPDF(pdf));
+      const res = await this.pdfRepository.getPDF(pdf);
+      //clear the pdf from the group if it is not available
+      if (res !== null)
+        result.push(res);
+      else
+        groups[groupName].pdfs.splice(groups[groupName].pdfs.indexOf(pdf),1);
     }
+    delete groups._id;
+    this.userRepository.updateGroups(groups);
     return result;
   }
 }
