@@ -19,12 +19,16 @@ import ModalDropdown from 'react-native-modal-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
 import pdfLocalAccess from '../local-pdfs-access/local-pdfs-access.js';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { selectColour } from '../../../../../../apps/client/src/app/slices/user.slice';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { changeName, removePDF} from '../../../../../../../apps/client/src/app/slices/pdf.slice';
 //import Share from 'react-native-share';
 
 export const PdfView = ({ route, navigation }) => {
   const colourState = useSelector(selectColour);
+  const dispatch = useDispatch();
   const [moreVisible, setMoreVisible] = useState(false);
   const [renameVisible, setRenameVisible] = useState(false);
   const [deleteConfirmVisible, setDeleteConfirmVisible] = useState(false);
@@ -55,7 +59,7 @@ export const PdfView = ({ route, navigation }) => {
 
   const DELETE = gql`
     mutation delete($id: String!) {
-      deletePDF(id: "PDF-2986") {
+      deletePDF(id: $id) {
         id
         name
         text
@@ -71,11 +75,13 @@ export const PdfView = ({ route, navigation }) => {
     name.name = newName;
     pdfLocalAccess.renamePdf(id.id, newName);
     await rename({ variables: { id: id.id, name: newName } });
+    dispatch(changeName({ id: id.id, name: newName }));
   }
 
   async function deletePdf() {
     pdfLocalAccess.deletePdf(id.id);
     await delete_pdf({ variables: { id: id.id } });
+    dispatch(removePDF({ id: id.id }));
   }
 
   return (
@@ -197,7 +203,7 @@ export const PdfView = ({ route, navigation }) => {
         <View style={styles.renameModalInner}>
           <TextInput
             style={styles.renameModalTextInput}
-            defaultValue={''}
+            defaultValue={name.name}
             onChangeText={(text) => {
               setNewName(text);
             }}
