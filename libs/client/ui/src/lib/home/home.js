@@ -218,7 +218,7 @@ export const Home = ({ navigation }) => {
     state.audioFile = await AudioRecord.stop();
     //file containing audiofile
     console.log(
-      await summariseText({
+      summariseText({
         variables: { text: (await speechToText()).data.ConvertSpeech },
       })
     );
@@ -434,11 +434,11 @@ export const Home = ({ navigation }) => {
             onPress={() => {
               setUploadVisible(false);
               console.log(
-                await summariseText({
+                summariseText({
                   variables: { text: (await speechToText()).data.ConvertSpeech },
                 })
               );
-              const res = await fetch('http://192.168.0.125:5050/stt', {
+              const res = fetch('http://192.168.0.125:5050/stt', {
                       method: 'POST',
                       headers: {
                         Accept: 'application/json',
