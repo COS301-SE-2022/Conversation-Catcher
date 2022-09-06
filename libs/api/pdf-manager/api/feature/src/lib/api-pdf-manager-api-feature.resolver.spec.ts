@@ -85,7 +85,7 @@ describe('ApiPdfManagerApiFeatureResolver', () => {
       .spyOn(resolver, 'getPDFById')
       .mockImplementation((): Promise<PdfEntity[]> => Promise.resolve(result));
      
-      expect(await resolver.getPDFById('1')).toMatchObject(PdfEntityMock);
+      expect(await resolver.getPDFById('1')).toMatchObject([PdfEntityMock]);
       // TO DO: Add in valid pdfid
     });
     it('should return null', async () => {
@@ -105,7 +105,7 @@ describe('ApiPdfManagerApiFeatureResolver', () => {
       .spyOn(resolver, 'getPDFs')
       .mockImplementation((): Promise<PdfEntity[][]> => Promise.resolve(result));
      
-      expect(await resolver.getPDFs('1')).toMatchObject(PdfsMock);
+      expect(await resolver.getPDFs('1')).toMatchObject([PdfsMock]);
       // TO DO: Add in valid userid
     });
     it('should return null', async () => {
@@ -126,7 +126,7 @@ describe('ApiPdfManagerApiFeatureResolver', () => {
       .spyOn(resolver, 'addPDF')
       .mockImplementation((): Promise<PdfEntity[]> => Promise.resolve(result));
      
-      expect(await resolver.addPDF('johndoe@gmail.com','Dogs vs cats','sajgbfufgweugvewfgy')).toMatchObject(PdfEntityMock);
+      expect(await resolver.addPDF('johndoe@gmail.com','Dogs vs cats','sajgbfufgweugvewfgy')).toMatchObject([PdfEntityMock]);
       // TO DO: Add in valid pdfid
     });
     it('should return null', async () => {
@@ -147,7 +147,7 @@ describe('ApiPdfManagerApiFeatureResolver', () => {
       .spyOn(resolver, 'renamePDF')
       .mockImplementation((): Promise<PdfEntity[]> => Promise.resolve(result));
      
-      expect(await resolver.renamePDF('1', "new name")).toMatchObject(PdfEntityMock);
+      expect(await resolver.renamePDF('1', "new name")).toMatchObject([PdfEntityMock]);
       // TO DO: Add in valid pdfid
     });
     it('should return null', async () => {
@@ -168,7 +168,7 @@ describe('ApiPdfManagerApiFeatureResolver', () => {
       .spyOn(resolver, 'downloadedPDF')
       .mockImplementation((): Promise<PdfEntity[]> => Promise.resolve(result));
      
-      expect(await resolver.downloadedPDF('1')).toMatchObject(PdfEntityMock);
+      expect(await resolver.downloadedPDF('1')).toMatchObject([PdfEntityMock]);
       // TO DO: Add in valid pdfid
     });
     it('should return null', async () => {
@@ -189,7 +189,7 @@ describe('ApiPdfManagerApiFeatureResolver', () => {
       .spyOn(resolver, 'deletePDF')
       .mockImplementation((): Promise<PdfEntity[]> => Promise.resolve(result));
      
-      expect(await resolver.deletePDF('1')).toMatchObject(PdfEntityMock);
+      expect(await resolver.deletePDF('1')).toMatchObject([PdfEntityMock]);
       // TO DO: Add in valid pdfid
     });
     it('should return null', async () => {
