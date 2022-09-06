@@ -19,7 +19,7 @@ export class PdfEntity {
   pdf?: string;
 
   @Field({nullable: true})
-  text?: string
+  text?: string;
   
   @Field({nullable : true})
   creationDate: string;
