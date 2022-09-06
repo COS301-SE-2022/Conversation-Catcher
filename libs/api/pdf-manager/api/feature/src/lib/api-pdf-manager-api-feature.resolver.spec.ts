@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { ApiPdfManagerApiFeatureResolver } from './api-pdf-manager-api-feature.resolver';
 import { CqrsModule } from '@nestjs/cqrs';
 import { ApiPdfManagerServiceModule } from '@conversation-catcher/api/pdf-manager/service/feature';
-import { PdfEntity } from '../../../data-access/src/lib/pdf.entity';
+import { PdfEntity } from '@conversation-catcher/api/pdf-manager/api/data-access';
 //yarn nx run api-pdf-manager-api-feature:test
 
 //jest.mock('@graduates/api/PDF-manager/api/data-access');

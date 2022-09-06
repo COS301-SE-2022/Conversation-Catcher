@@ -3,6 +3,7 @@ import { ApiSummariseTextServiceService } from './api-summarise-text-service.ser
 import { QueryBus, CommandBus } from '@nestjs/cqrs'
 import { CqrsModule } from '@nestjs/cqrs';
 import * as CommandHandlers from './commands/handlers';
+//yarn nx run api-summarise-text-service:test
 
 describe('ApiSummariseTextServiceService', () => {
   let service: ApiSummariseTextServiceService;
