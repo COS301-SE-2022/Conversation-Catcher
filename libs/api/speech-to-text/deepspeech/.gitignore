@@ -1,0 +1,7 @@
+#Gitignore to ignore the auto generated deepspeech environment
+Lib
+Scripts
+Include
+*.pbmm
+*.scorer
+*.cfg
