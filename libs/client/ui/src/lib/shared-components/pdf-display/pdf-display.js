@@ -6,15 +6,18 @@ import Loading from '../loading/loading';
 import PdfTile from '../pdf-tile/pdf-tile';
 import pdfLocalAccess from '../local-pdfs-access/local-pdfs-access';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectEmail } from 'apps/client/src/app/slices/user.slice';
-import { useSelector } from 'react-redux';
+import { selectEmail} from 'apps/client/src/app/slices/user.slice';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { selectPDFS, refillPDFs } from 'apps/client/src/app/slices/pdf.slice';
+import { useSelector, useDispatch } from 'react-redux';
 
 export function PdfDisplay({ navigation, selectMode }, ref) {
   // const [selectMode, setSelectMode] = useState(false);
   const [didReload, setDidReload] = useState(true);
   const [isLoaded, setIsLoaded] = useState(false);
   const emailState = useSelector(selectEmail);
-
+  const localPDFs = useSelector(selectPDFS);
+  const dispatch = useDispatch();
   //Expose refresh function to parent(View-all page)
   useImperativeHandle(ref, () => ({
     refreshPfds: () => {
@@ -48,7 +51,22 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
   if (loading)
     return (
       <ScrollView style={styles.recentPdfTiles}>
-        <Loading />
+        {localPDFs.map((item, key) => (
+        <PdfTile
+          key={key}
+          id={item.id}
+          name={item.name}
+          date={item.creationDate}
+          source={''}
+          text={item.text}
+          downloaded={item.downloaded}
+          showCheck={selectMode}
+          pdfSource={'pdfRefresh'}
+          nav={navigation}
+          refresh={setDidReload}
+        />
+      ))}
+        {/*<Loading >*/}
       </ScrollView>
     );
 
@@ -60,9 +78,8 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
       </ScrollView>
     );
   //If the pdf array is empty assign the result from the query
-  // if (pdfLocalAccess.getLength() === 0) {
-  // console.log('loading data');
   //create deep copy of the returned data
+  //Data is here in data if returned
   if (!isLoaded) {
     pdfLocalAccess.clearPdfs();
     for (let i = 0; i < data.getPDFs.length; i++) {
@@ -76,7 +93,21 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
       });
     }
     setIsLoaded(true);
+    //Update local pdf storage
+    //array of pdfs stored locally, selected from data to overwrite the slice
+    if (data.getPDFs[0].name !== "error"){
+      let tempArray = [];
+      var p;
+      for (p in pdfLocalAccess.getPdfs()){
+        if (data.getPDFs[p].downloaded === true){
+          tempArray.push(data.getPDFs[p]);
+        }
+      }
+      dispatch(refillPDFs(tempArray));
+    }
   }
+
+  
 
   return (
     <ScrollView style={styles.recentPdfTiles}>

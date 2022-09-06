@@ -24,7 +24,7 @@ export const userSlice = createSlice({
       })
       return state;
     },
-    clearUser: (state,action) => {state = initState}                          //reset the store back to its default
+    clearUser: (state,action) => {state = initState},                          //reset the store back to its default
   },
 });
 
