@@ -71,9 +71,22 @@ export const Home = ({ navigation }) => {
     }
   `;
 
+  const ADD_PDF = gql`
+  mutation addPDF($email: String!,$name: String!, $text: String!) {
+    addPDF(email:$email,name:$name, text: $text){
+      name,
+      id,
+      text,
+      downloaded,
+      creationDate
+    }
+  }
+  `;
+
   //Mutations to be used in the creation of new PDFs
   const [summariseText, { data, loading, error }] = useMutation(SUMMARISE_TEXT);
   const [speechToText, { d, l, e }] = useMutation(CONVERT_SPEECH);
+  const [addPdf] = useMutation(ADD_PDF);
 
   const handleDocumentSelection = useCallback(async () => {
     try {
@@ -222,7 +235,12 @@ export const Home = ({ navigation }) => {
         variables: { text: (await speechToText()).data.ConvertSpeech },
       })
     );
-    console.log('audioFile', state.audioFile); */
+    addPdf({
+      variables: { email: "",name: "", $text: "" }
+      //add new pdf to all pdfs
+    })
+    console.log('audioFile', state.audioFile);
+    */
     componentDidMount();
     state.audioFile = false;
     state.recording = false;
