@@ -47,7 +47,7 @@ export class ApiPdfManagerApiFeatureResolver {
 
   // get a single pdf by its id
   @Query(() => PdfEntity)
-  async getPDFById(@Args('id', { type: () => String }) id: string) {
+  async getPDFById(@Args('id') id: string) {
     const pdfArr = await this.pdfService.getPdfById(id);
 
     if (pdfArr != undefined) {
@@ -58,7 +58,7 @@ export class ApiPdfManagerApiFeatureResolver {
 
   // get all of the user's pdfs
   @Query(() => [PdfEntity], { nullable: true })
-  async getPDFs(@Args('id', { type: () => String }) userid: string) {
+  async getPDFs(@Args('id') userid: string) {
     const pdfsArr = await this.pdfService.getPdfs(userid);
 
     if (pdfsArr != undefined) {
@@ -113,7 +113,7 @@ export class ApiPdfManagerApiFeatureResolver {
 
   // delete pdf with this id from DB
   @Mutation(() => PdfEntity)
-  async deletePDF(@Args('id', { type: () => String }) id: string) {
+  async deletePDF(@Args('id') id: string) {
     const pdfArr = await this.pdfService.deletePdf(id);
 
     if (pdfArr != undefined) {

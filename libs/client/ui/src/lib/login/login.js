@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Alert,
   TextInput,
+  DeviceEventEmitter
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useDispatch, useSelector } from 'react-redux';
@@ -35,7 +36,10 @@ export const Login = ({ navigation }) => {
   if (userPresent.email !== ""){
     navigation.navigate("Home");
   }
-
+  DeviceEventEmitter.addListener('logout', () => {
+    setEmail('');
+    setPassword('');
+  });
   //graphql query tree
   const GET_USER = gql`
     query getUser($email: String!) {

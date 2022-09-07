@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
   Alert,
   SafeAreaView,
+  DeviceEventEmitter,
+  NativeAppEventEmitter,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
@@ -18,6 +20,7 @@ import { selectColour, clearUser } from 'apps/client/src/app/slices/user.slice';
 import auth from '@react-native-firebase/auth';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { clearPDFs } from 'apps/client/src/app/slices/pdf.slice';
+import pdfLocalAccess from '../shared-components/local-pdfs-access/local-pdfs-access';
 
 export const SettingsPage = ({ navigation }) => {
   const [user, setUser] = useState({});
@@ -94,6 +97,8 @@ export const SettingsPage = ({ navigation }) => {
               .then(() => {
                 dispatch(clearUser());
                 dispatch(clearPDFs());
+                pdfLocalAccess.clearPdfs();
+                NativeAppEventEmitter.emit('logout');
                 navigation.navigate('Login');
               })
           }
