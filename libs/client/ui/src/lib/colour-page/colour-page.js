@@ -3,14 +3,26 @@ import React, { useState } from 'react';
 import { View, StyleSheet, Text, Image, ImageBackground, Button, Alert, TouchableOpacity } from 'react-native';
 import BouncyCheckboxGroup, {ICheckboxButton,} from "react-native-bouncy-checkbox-group";
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { setColour} from 'apps/client/src/app/slices/user.slice'
-import RNRestart from 'react-native-restart';
-
+import { setColour, selectUser} from 'apps/client/src/app/slices/user.slice'
+//import RNRestart from 'react-native-restart';
+import { gql, useMutation } from '@apollo/client';
 
 export const ColourPage = ({ navigation}) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+  const SET_USER = gql`
+    mutation setUser(
+      $oldEmail: String!
+      $email: String!
+      $colour: String!
+      $pdfs: [String!]!
+    ) {
+      setUser(oldEmail: $oldEmail, email: $email, colour: $colour, pdfs: $pdfs)
+    }
+  `;
+  const [setUser] = useMutation(SET_USER);
   return (
     <View style={styles.colourPage}>
       <View style={styles.big_title_box}>
@@ -31,9 +43,19 @@ export const ColourPage = ({ navigation}) => {
           <BouncyCheckboxGroup
             data={verticalStaticData}
             style={{ flexDirection: "column" }}
-            onChange={(selectedItem) => {
-              dispatch(setColour(selectedItem.fillColor));//dispatches the setColour action with colour payload
+            onChange={async (selectedItem) => {
               //Add call to update colour
+              await setUser({
+                variables: {
+                  oldEmail: user.email,
+                  email: user.email,
+                  colour: selectedItem.fillColor,
+                  pdfs: user.pdfs,
+                },
+              }).then(()=>
+              //dispatches the setColour action with colour payload
+              dispatch(setColour(selectedItem.fillColor))
+              );
             }}
           />
         </View>
