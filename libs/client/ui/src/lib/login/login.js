@@ -34,7 +34,6 @@ export const Login = ({ navigation }) => {
 
   if (userPresent.email !== ""){
     navigation.navigate("Home");
-    //Add extra code to notify firebase and retrieve pdfs
   }
 
   //graphql query tree
