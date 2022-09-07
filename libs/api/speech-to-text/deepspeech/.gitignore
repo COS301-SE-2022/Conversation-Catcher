@@ -1,8 +1,0 @@
-#Gitignore to ignore the auto generated deepspeech environment
-Lib
-Scripts
-__pycache__
-Include
-*.pbmm
-*.scorer
-*.cfg

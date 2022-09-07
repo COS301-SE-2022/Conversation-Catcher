@@ -10,7 +10,3 @@ export class setUserCommand {
     public readonly pdfs?: string[]
   ) {}
 }
-
-export class deleteUserCommand {
-  constructor(public readonly email?: string) {}
-}
