@@ -217,12 +217,12 @@ export const Home = ({ navigation }) => {
     console.log('stop record');
     state.audioFile = await AudioRecord.stop();
     //file containing audiofile
-    console.log(
+    /* console.log(
       summariseText({
         variables: { text: (await speechToText()).data.ConvertSpeech },
       })
     );
-    console.log('audioFile', state.audioFile);
+    console.log('audioFile', state.audioFile); */
     componentDidMount();
     state.audioFile = false;
     state.recording = false;
@@ -433,11 +433,11 @@ export const Home = ({ navigation }) => {
             state={null}
             onPress={() => {
               setUploadVisible(false);
-              console.log(
+              /* console.log(
                 summariseText({
                   variables: { text: (await speechToText()).data.ConvertSpeech },
                 })
-              );
+              ); */
               const res = fetch('http://192.168.0.125:5050/stt', {
                       method: 'POST',
                       headers: {
