@@ -189,7 +189,6 @@ export const Login = ({ navigation }) => {
             )
             .then(async () => {
               setFailedLogin(false);
-              navigation.navigate('Home');
               var queryRes = (
                 await getUser({
                   variables: { email: email.trim().toLowerCase() },
@@ -197,6 +196,7 @@ export const Login = ({ navigation }) => {
               ).data.getUser;
               console.log(queryRes);
               dispatch(setUser(queryRes));
+              navigation.navigate('Home');
             })
             .catch((error) => {
               setFailedLogin(true);
