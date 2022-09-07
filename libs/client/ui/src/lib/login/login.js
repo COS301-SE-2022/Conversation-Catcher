@@ -24,7 +24,7 @@ import { gql, useLazyQuery } from '@apollo/client';
 export const Login = ({ navigation }) => {
   const dispatch = useDispatch();
   const colourState = useSelector(selectColour);
-  // console.log('Colour:' + colourState);
+  const userPresent = useSelector(selectUser);
   const [showMailHint, setShowMailHint] = useState(false);
   const [showPasswordHint, setShowPasswordHint] = useState(false);
   const [failedLogin, setFailedLogin] = useState(false);
@@ -32,7 +32,9 @@ export const Login = ({ navigation }) => {
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('Invalid login details');
 
-  // dispatch(setUser({ colour: '#ffff', pdfs: [], email: '' }));
+  if (userPresent.email !== ""){
+    navigation.navigate("Home");
+  }
 
   //graphql query tree
   const GET_USER = gql`

@@ -16,6 +16,8 @@ import { useDispatch, useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { selectColour, clearUser } from 'apps/client/src/app/slices/user.slice';
 import auth from '@react-native-firebase/auth';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { clearPDFs } from 'apps/client/src/app/slices/pdf.slice';
 
 export const SettingsPage = ({ navigation }) => {
   const [user, setUser] = useState({});
@@ -90,7 +92,8 @@ export const SettingsPage = ({ navigation }) => {
             auth()
               .signOut()
               .then(() => {
-                dispatch(clearUser);
+                dispatch(clearUser());
+                dispatch(clearPDFs());
                 navigation.navigate('Login');
               })
           }
