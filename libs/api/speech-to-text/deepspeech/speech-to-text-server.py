@@ -15,7 +15,9 @@ def home():
 @app.route('/stt', methods=['POST'])
 def stt():
     input_audio = request.form['audio_path']
-    converted_text = sttConverter.stt(input_audio).decode()
+    converted_text = sttConverter.stt(input_audio)
+    print(converted_text)
+    print(type(converted_text))
     converted_text_object = { "converted_text": converted_text }
     return jsonify(converted_text_object)
 

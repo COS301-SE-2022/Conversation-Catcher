@@ -5,6 +5,7 @@ import subprocess
 import sys
 import wave
 import json
+import requests
 
 from deepspeech import Model, version
 from timeit import default_timer as timer
@@ -20,4 +21,11 @@ class speechToText:
         except OSError as e:
             raise OSError(e.errno, 'SoX not found, use hz files or install it: {}'.format(e.strerror))
 
-        return output
+        punctuator = textPunctuator()
+        url = "http://bark.phon.ioc.ee/punctuator"
+        obj = {'text' : output.decode()}
+        print("output: " + output.decode())
+        result = requests.post(url, obj).text
+        print(result)
+
+        return result
