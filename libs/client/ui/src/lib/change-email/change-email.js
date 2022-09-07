@@ -29,6 +29,7 @@ export const ChangeEmail = ({ navigation }) => {
   const [errorMessage, setErrorMessage] = useState('');
   const [email, setNewEmail] = useState('');
   const [checkEmail, setCheckEmail] = useState('');
+  const [password, setPassword] = useState('');
   const dispatch = useDispatch();
 
   const SET_USER = gql`
@@ -189,7 +190,7 @@ export const ChangeEmail = ({ navigation }) => {
             </View>
           </View>
         </View>
-        {/* <View style={styles.inputsItem}>
+        <View style={styles.inputsItem}>
           <View style={styles.inputLabel_box}>
             <Text style={styles.inputLabel}>{'Password'}</Text>
           </View>
@@ -212,7 +213,7 @@ export const ChangeEmail = ({ navigation }) => {
               />
             </View>
           </View>
-        </View> */}
+        </View>
       </View>
       <TouchableOpacity
         style={[

@@ -23,6 +23,7 @@ export const ChangePassword = ({ navigation }) => {
   const [errorMessage, setErrorMessage] = useState('');
   const [checkPassword, setCheckPassword] = useState('');
   const [password, setPassword] = useState('');
+  const [oldPassword, setOldPassword] = useState('');
 
   function changePassword() {
     if (password === '') {
@@ -146,7 +147,7 @@ export const ChangePassword = ({ navigation }) => {
             </View>
           </View>
         </View>
-        {/* <View style={styles.inputsItem}>
+        <View style={styles.inputsItem}>
           <View style={styles.inputLabel_box}>
             <Text style={styles.inputLabel}>{'Current password'}</Text>
           </View>
@@ -165,7 +166,7 @@ export const ChangePassword = ({ navigation }) => {
               />
             </View>
           </View>
-        </View> */}
+        </View>
       </View>
       <TouchableOpacity
         style={[
