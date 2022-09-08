@@ -73,7 +73,7 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
     );
     else return(
       <ScrollView style={styles.recentPdfTiles}>
-        <Text>No Documents Locally</Text>
+        <Text>No Documents Stored Locally</Text>
       </ScrollView>
     );
   if (error){
