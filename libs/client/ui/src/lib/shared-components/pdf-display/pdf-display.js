@@ -46,9 +46,11 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
   });
   // console.log('GetPdfs');
   // console.log(data);
-  // console.log(loading);
+  console.log(loading);
   // console.log(error);
+  //console.log(localPDFs);
   if (loading)
+    if (localPDFs.length !== 0)
     return (
       <ScrollView style={styles.recentPdfTiles}>
         {localPDFs.map((item, key) => (
@@ -69,19 +71,46 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
         {/*<Loading >*/}
       </ScrollView>
     );
-
-  if (error)
-    return (
+    else return(
       <ScrollView style={styles.recentPdfTiles}>
-        <Text>An error occured...</Text>
-        <Text>{error[0]}</Text>
+        <Text>No Documents Locally</Text>
       </ScrollView>
     );
+  if (error){
+    if (localPDFs.length !== 0)
+    return (
+      <ScrollView style={styles.recentPdfTiles}>
+        <Text>No connection</Text>
+        <Text>{error[0]}</Text>
+        {localPDFs.map((item, key) => (
+        <PdfTile
+          key={key}
+          id={item.id}
+          name={item.name}
+          date={item.creationDate}
+          source={''}
+          text={item.text}
+          downloaded={item.downloaded}
+          showCheck={selectMode}
+          pdfSource={'pdfRefresh'}
+          nav={navigation}
+          refresh={setDidReload}
+        />
+      ))}
+      </ScrollView>
+    );
+    else return(
+      <ScrollView style={styles.recentPdfTiles}>
+        <Text>No Documents Locally</Text>
+      </ScrollView>
+    );
+  }
   //If the pdf array is empty assign the result from the query
   //create deep copy of the returned data
   //Data is here in data if returned
   if (!isLoaded) {
     pdfLocalAccess.clearPdfs();
+    //let tempArray = [];
     for (let i = 0; i < data.getPDFs.length; i++) {
       pdfLocalAccess.addPdf({
         name: data.getPDFs[i].name,
@@ -91,11 +120,15 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
         text: data.getPDFs[i].text,
         id: data.getPDFs[i].id,
       });
+      // if (data.getPDFs[i].downloaded === true){
+      //   tempArray.push(data.getPDFs[i]);
+      // }
     }
+    // dispatch(refillPDFs(tempArray));
     setIsLoaded(true);
     //Update local pdf storage
     //array of pdfs stored locally, selected from data to overwrite the slice
-    if (data.getPDFs[0].name !== "error"){
+    if ( data.getPDFs[0] !== undefined && data.getPDFs[0].name !== "error"){
       let tempArray = [];
       var p;
       for (p in pdfLocalAccess.getPdfs()){
@@ -104,11 +137,8 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
         }
       }
       dispatch(refillPDFs(tempArray));
-    }
-  }
-
-  
-
+    } 
+  } 
   return (
     <ScrollView style={styles.recentPdfTiles}>
       {pdfLocalAccess.getPdfs().map((item, key) => (

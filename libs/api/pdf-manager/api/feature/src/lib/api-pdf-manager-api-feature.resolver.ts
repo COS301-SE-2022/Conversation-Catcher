@@ -106,6 +106,7 @@ export class ApiPdfManagerApiFeatureResolver {
     const pdfArr = await this.pdfService.setDownloadedPdf(id);
 
     if (pdfArr != undefined) {
+      console.log("test");
       return this.assignResult(pdfArr);
     }
     return this.errorObj;
