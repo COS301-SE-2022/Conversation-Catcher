@@ -47,6 +47,10 @@ export class AddPdfHandler implements ICommandHandler<AddPdfCommand> {
 export class UpdateTagsHandler implements ICommandHandler<UpdateTagsCommand> {
   constructor(private repository: MongoDBAccess) {}
   async execute({ id, tags }: UpdateTagsCommand): Promise<any> {
-    return 'Not implemented'
+    const res = await this.repository.updateTags(id,tags);
+    console.log(res);
+    if (res !== null)
+      return 'Tags have been added';
+    return 'Error: tags have not been added';
   }
 }

@@ -81,7 +81,7 @@ export class ApiPdfManagerApiFeatureResolver {
     @Args('id') id: string,
     @Args('tags', { type: () => [String] }) tags: string[]
   ) {
-    // this.pdfService.updateTags
+    return await this.pdfService.updateTags(id, tags);
   }
 
   // add pdf to db connected to this user

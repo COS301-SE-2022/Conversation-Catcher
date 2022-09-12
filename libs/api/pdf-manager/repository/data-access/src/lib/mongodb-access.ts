@@ -37,6 +37,7 @@ export class MongoDBAccess {
         text: text,
         pdf: null,
         downloaded: false,
+        tags: [],
       },
     });
 
@@ -263,6 +264,27 @@ export class MongoDBAccess {
       this.httpService
         .post(this.url + this.action, data, this.config)
         .pipe(map((res) => res.data.document))
+    );
+  }
+
+  // Rename a pdf
+  async updateTags(id: string, tags: string[]) {
+    this.action = 'updateOne';
+    const data = JSON.stringify({
+      collection: this.pdfCollection,
+      database: this.db,
+      dataSource: this.cluster,
+      filter: { _id: { $oid: id } },
+      update: {
+        $set: { tags: tags },
+      },
+    });
+
+    //Updates the tags
+    return await lastValueFrom(
+      this.httpService
+        .post(this.url + this.action, data, this.config)
+        .pipe(map((res) => res.data))
     );
   }
 }
