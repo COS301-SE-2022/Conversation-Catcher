@@ -3,6 +3,7 @@ import {
   AddPdfCommand,
   SetDownloadedPdfCommand,
   SetNamePdfCommand,
+  UpdateTagsCommand,
 } from '../impl/set-pdf-manager.command';
 import { MongoDBAccess } from '@conversation-catcher/api/pdf-manager/repository/data-access';
 // import { HttpService } from '@nestjs/axios';
@@ -39,5 +40,13 @@ export class AddPdfHandler implements ICommandHandler<AddPdfCommand> {
     if (name === '')
       return await this.repository.addPdf(email, newName, text, date);
     return await this.repository.addPdf(email, name, text, date);
+  }
+}
+
+@CommandHandler(UpdateTagsCommand)
+export class UpdateTagsHandler implements ICommandHandler<UpdateTagsCommand> {
+  constructor(private repository: MongoDBAccess) {}
+  async execute({ id, tags }: UpdateTagsCommand): Promise<any> {
+    return 'Not implemented'
   }
 }
