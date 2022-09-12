@@ -56,16 +56,18 @@ describe('ApiPdfManagerServiceService', () => {
         CommandHandlers.SetNamePdfHandler,
         CommandHandlers.DeletePdfHandler,
         CommandHandlers.AddPdfHandler,
+        CommandHandlers.AddTagsHandler,
+        CommandHandlers.DeleteTagsHandler,
         QueryHandlers.GetPdfByIdHandler,
         QueryHandlers.GetPdfsHandler,
       ],
       exports: [
         ApiPdfManagerServiceService
       ],
-      
+
     }).compile();
 
-    
+
     await module.init();
     queryBus = module.get<QueryBus>(QueryBus);
     commandBus = module.get<CommandBus>(CommandBus);
@@ -126,7 +128,25 @@ describe('ApiPdfManagerServiceService', () => {
     })
   });
 
-    
+  // async addTags(id: string, tags: string[]) {
+  //   return await this.commandBus.execute(new AddTagsCommand(id, tags));
+  // }
+  describe('addTags', () => {
+    it('should add a tag to the pdf', async () => {
+      const result = "2";
+      expect(result).toEqual(PdfEntityMock);
+    })
+  });
+  // async removeTags(id: string, tags: string[]) {
+  //   return await this.commandBus.execute(new DeleteTagsCommand(id, tags));
+  // }
+  describe('removeTags', () => {
+    it('should remove a tag from the pdf', async () => {
+      const result = "2";
+      expect(result).toEqual(PdfEntityMock);
+    })
+  });
+
   //queries
   /*async getPdfById(id: string) {
     return await this.queryBus.execute(new GetPdfByIdQuery(id));
