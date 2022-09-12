@@ -14,6 +14,7 @@ export class ApiPdfManagerApiFeatureResolver {
     this.errorObj.downloaded = false;
     this.errorObj.text = null;
     this.errorObj.creationDate = null;
+    this.errorObj.tags = null;
   }
   private errorObj;
 
@@ -73,6 +74,14 @@ export class ApiPdfManagerApiFeatureResolver {
       return arrOfPDFs;
     }
     return [this.errorObj];
+  }
+
+  @Mutation(() => String)
+  async updateTags(
+    @Args('id') id: string,
+    @Args('tags', { type: () => [String] }) tags: string[]
+  ) {
+    // this.pdfService.updateTags
   }
 
   // add pdf to db connected to this user
