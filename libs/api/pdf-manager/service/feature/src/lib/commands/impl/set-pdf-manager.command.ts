@@ -14,6 +14,10 @@ export class AddPdfCommand {
   ) {}
 }
 
-export class UpdateTagsCommand {
+export class AddTagsCommand {
+  constructor(public readonly id?: string, public readonly tags?: string[]) {}
+}
+
+export class DeleteTagsCommand {
   constructor(public readonly id?: string, public readonly tags?: string[]) {}
 }
