@@ -29,12 +29,16 @@ const mockSetNameDataBase = {handler: {findFirst: jest.fn((id, name)=>PdfEntityM
 const mockdeletePdfDataBase = {handler: {findFirst: jest.fn((id)=>PdfEntityMock)}};
 const mockaddPdfDataBase = {handler: {findFirst: jest.fn((email, name, text)=>PdfEntityMock)}};
 const mockgetPdfsDataBase = {handler: {findMany: jest.fn((userId)=>PdfsMock)}};
+const mockaddTagDataBase = {handler: {findFirst: jest.fn((id,tags)=>{return {modifiedCount:1}})}};
+const mockremoveTagDataBase = {handler: {findFirst: jest.fn((id,tags)=>{return {modifiedCount:1}})}};
+
 
 const id = '9332';
 const userid = '0102';
 const name = 'Trees and fruit growing';
 const email = 'john.smith@gmail.com';
 const text = 'The tower is 324 metres (1,063 ft) tall, about the same height as an 81-storey building. Its base is square, measuring 125 metres (410 ft) on each side. It is the second tallest free-standing structure in France after the Millau Viaduct.';
+const tags = ['one', 'two'];
 
 describe('ApiPdfManagerServiceService', () => {
   let service: ApiPdfManagerServiceService;
@@ -133,17 +137,17 @@ describe('ApiPdfManagerServiceService', () => {
   // }
   describe('addTags', () => {
     it('should add a tag to the pdf', async () => {
-      const result = "2";
-      expect(result).toEqual(PdfEntityMock);
+      const result = await mockaddTagDataBase.handler.findFirst(id,tags);
+      expect(result.modifiedCount).toEqual(1);
     })
   });
   // async removeTags(id: string, tags: string[]) {
   //   return await this.commandBus.execute(new DeleteTagsCommand(id, tags));
-  // }
+  // } {modifiedCount:1}
   describe('removeTags', () => {
     it('should remove a tag from the pdf', async () => {
-      const result = "2";
-      expect(result).toEqual(PdfEntityMock);
+      const result = await mockremoveTagDataBase.handler.findFirst(id,tags);
+      expect(result.modifiedCount).toEqual(1);
     })
   });
 
