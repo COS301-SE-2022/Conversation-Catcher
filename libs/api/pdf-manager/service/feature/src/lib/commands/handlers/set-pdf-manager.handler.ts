@@ -49,8 +49,9 @@ export class AddTagsHandler implements ICommandHandler<AddTagsCommand> {
   constructor(private repository: MongoDBAccess) {}
   async execute({ id, tags }: AddTagsCommand): Promise<any> {
     const pdf = await this.repository.getPDF(id);
-    console.log(pdf);
-    tags.push(pdf.tags);
+    pdf.tags.forEach((tag) => {
+      if (tags.indexOf(tag) !== -1) tags.push(tag);
+    });
     const res = await this.repository.updateTags(id, tags);
     if (res !== null && res.modifiedCount === 1) return 'Tags have been added';
     return 'Error: tags have not been added';
