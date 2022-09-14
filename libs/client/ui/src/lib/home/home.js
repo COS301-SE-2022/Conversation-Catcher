@@ -9,12 +9,13 @@ import {
   Alert,
   PermissionsAndroid,
 } from 'react-native';
-import { gql, useQuery, useMutation } from '@apollo/client';
+import { gql, useMutation, useLazyQuery, useQuery } from '@apollo/client';
 import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
 import Loading from '../shared-components/loading/loading.js';
 import PdfDisplay from '../shared-components/pdf-display/pdf-display.js';
+import pdfLocalAccess from '..../shared-components/local-pdfs-access/local-pdfs-access';
 import { Buffer } from 'buffer';
 //import Permissions from 'react-native-permissions';
 //import Sound from 'react-native-sound';
@@ -72,21 +73,21 @@ export const Home = ({ navigation }) => {
   `;
 
   const ADD_PDF = gql`
-  mutation addPdf {
-    addPDF($email: String!, $name:String!, $text: String!){
-      name,
-      id,
-      text,
-      downloaded,
-      creationDate
+    mutation addPdf($email: String!, $name: String!, $text: String!) {
+      addPDF(email: $email, name: $name, text: $text) {
+        name
+        id
+        text
+        downloaded
+        creationDate
+      }
     }
-  }
   `;
 
   //Mutations to be used in the creation of new PDFs
   const [summariseText, { data, loading, error }] = useMutation(SUMMARISE_TEXT);
   const [speechToText, { d, l, e }] = useMutation(CONVERT_SPEECH);
-  const [addPdf,] = useMutation(ADD_PDF);
+  const [addPdf] = useMutation(ADD_PDF);
 
   const handleDocumentSelection = useCallback(async () => {
     try {
@@ -228,20 +229,46 @@ export const Home = ({ navigation }) => {
     console.log(state.recording);
     if (!state.recording) return;
     console.log('stop record');
-    state.audioFile = await AudioRecord.stop();
+    // state.audioFile = await AudioRecord.stop();
     //file containing audiofile
-    console.log(
-      await summariseText({
-        variables: { text: (await speechToText()).data.ConvertSpeech },
-      })
-    );
-    /*
-    addPdf({
-      variables: { email: "",name: "", $text: "" }
-      //add new pdf to all pdfs
+    // console.log(
+    //   await summariseText({
+    //     variables: { text: (await speechToText()).data.ConvertSpeech },
+    //   })
+    // );
+
+    fetch('http://localhost:5050/stt', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      },
+      body: JSON.stringify({ audio_path: '../huggingface/input-audio.wav' }),
     })
-    */
-    console.log('audioFile', state.audioFile);
+      .then(async (res) => {
+        if (res.ok) {
+          const result = await res.json();
+          console.log(result);
+          //const newPdf = await addPdf({
+          //   variables: { email: emailState, name: '', text: result.text },
+          //   //add new pdf to all pdfs
+          // });
+          //console.log(newPdf);
+          //recall api
+          // pdfLocalAccess.addPdf({
+          //   name: newPdf.name,
+          //   creationDate: newPdf.creationDate,
+          //   downloaded: newPdf.downloaded,
+          //   pdf: newPdf.pdf,
+          //   text: newPdf.text,
+          //   id: newPdf.id,
+          // });
+          console.log(emailState);
+        } else console.log('Connection error: internet connection is required');
+      })
+      .catch((e) => console.log(e));
+    // console.log('audioFile', state.audioFile);
     componentDidMount();
     state.audioFile = false;
     state.recording = false;
@@ -272,9 +299,9 @@ export const Home = ({ navigation }) => {
         </View>
       );
 
-    for (let i = 0; i < 3; i++) {
-      if (data.getPDFs[i] !== undefined) newArr.push(data.getPDFs[i]);
-    }
+    // for (let i = 0; i < 3; i++) {
+    //   if (newPdf !== undefined) newArr.push(newPdf);
+    // }
 
     return (
       <View style={styles.recentPdfTiles}>

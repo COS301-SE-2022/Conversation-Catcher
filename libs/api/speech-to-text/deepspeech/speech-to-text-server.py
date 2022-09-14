@@ -14,7 +14,10 @@ def home():
 
 @app.route('/stt', methods=['POST'])
 def stt():
-    input_audio = request.form['audio_path']
+    if request.form:
+      input_audio = request.form['audio_path']
+    else:
+      input_audio = request.get_json()['audio_path']
     converted_text = sttConverter.stt(input_audio)
     print(converted_text)
     print(type(converted_text))
