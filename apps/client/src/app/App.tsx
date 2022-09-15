@@ -73,16 +73,16 @@ export const App = () => {
         <ApolloProvider client={client}>
           <NavigationContainer>
             <Stack.Navigator>
-              <Stack.Screen name="Login" component={Login}/>
-              <Stack.Screen name="Home" component={Home}/>
-              <Stack.Screen name="ViewAll" component={ViewAll}/>
-              <Stack.Screen name="Settings" component={Settings}/>
-              <Stack.Screen name="Colour" component={ChangeColour}/>
-              <Stack.Screen name="Register" component={Register}/>
-              <Stack.Screen name="PdfView" component={PdfView}/>
-              <Stack.Screen name="ForgotPassword" component={ForgotPassword}/>
-              <Stack.Screen name="ChangePassword" component={ChangePassword}/>
-              <Stack.Screen name="ChangeEmail" component={ChangeEmail}/>
+              <Stack.Screen name="Login" component={Login} options={{ headerShown: false }}/>
+              <Stack.Screen name="Home" component={Home} options={{ headerShown: false }}/>
+              <Stack.Screen name="ViewAll" component={ViewAll} options={{ headerShown: false }}/>
+              <Stack.Screen name="Settings" component={Settings} options={{ headerShown: false }}/>
+              <Stack.Screen name="Colour" component={ChangeColour} options={{ headerShown: false }}/>
+              <Stack.Screen name="Register" component={Register} options={{ headerShown: false }}/>
+              <Stack.Screen name="PdfView" component={PdfView} options={{ headerShown: false }}/>
+              <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{ headerShown: false }}/>
+              <Stack.Screen name="ChangePassword" component={ChangePassword} options={{ headerShown: false }}/>
+              <Stack.Screen name="ChangeEmail" component={ChangeEmail} options={{ headerShown: false }}/>
             </Stack.Navigator>
           </NavigationContainer>
         </ApolloProvider>
