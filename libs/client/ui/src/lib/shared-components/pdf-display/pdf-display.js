@@ -53,7 +53,7 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
     if (localPDFs.length !== 0)
     return (
       <ScrollView style={styles.recentPdfTiles}>
-        <loading width={250} height={250}/>
+        <Loading width={250} height={250}/>
         {localPDFs.map((item, key) => (
         <PdfTile
           key={key}
@@ -73,7 +73,7 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
     );
     else return(
       <ScrollView style={styles.recentPdfTiles}>
-        <loading width={250} height={250}/>
+        <Loading width={250} height={250}/>
         <Text>No Documents Stored Locally</Text>
       </ScrollView>
     );
