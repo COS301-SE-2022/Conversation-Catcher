@@ -69,11 +69,11 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
           refresh={setDidReload}
         />
       ))}
-        {/*<Loading >*/}
       </ScrollView>
     );
     else return(
       <ScrollView style={styles.recentPdfTiles}>
+        <loading width={250} height={250}/>
         <Text>No Documents Stored Locally</Text>
       </ScrollView>
     );
