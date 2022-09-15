@@ -15,7 +15,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
 import Loading from '../shared-components/loading/loading.js';
 import PdfDisplay from '../shared-components/pdf-display/pdf-display.js';
-import pdfLocalAccess from '..../shared-components/local-pdfs-access/local-pdfs-access';
+import pdfLocalAccess from '../shared-components/local-pdfs-access/local-pdfs-access';
 import { Buffer } from 'buffer';
 //import Permissions from 'react-native-permissions';
 //import Sound from 'react-native-sound';
@@ -249,7 +249,7 @@ export const Home = ({ navigation }) => {
       .then(async (res) => {
         if (res.ok) {
           const result = await res.json();
-          console.log(result);
+          console.log(result.converted_text);
           //const newPdf = await addPdf({
           //   variables: { email: emailState, name: '', text: result.text },
           //   //add new pdf to all pdfs
