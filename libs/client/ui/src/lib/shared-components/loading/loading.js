@@ -7,18 +7,18 @@ export function Loading(props) {
       <Text style={styles.text}>Fetching your pdfs</Text>
       <LottieView
         source={require("../../assets/loading-circle.json")}
-        style={styles.animation}
+        style={{width: props.width, height: props.height, alignSelf: 'center'}}
         autoPlay
       />
     </View>
   );
 }
 const styles = StyleSheet.create({
-  animation: {
-    width: 250,
-    height: 250,
-    alignSelf: 'center'
-  },
+  // animation: {
+  //   width: 250,
+  //   height: 250,
+  //   alignSelf: 'center'
+  // },
   text: {
     fontSize: 24,
     textAlign: 'center'
