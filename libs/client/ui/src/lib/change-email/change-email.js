@@ -53,40 +53,53 @@ export const ChangeEmail = ({ navigation }) => {
     }
     var tempEmail = email.trim().toLowerCase();
     var tempCheckEmail = checkEmail.trim().toLowerCase();
-    console.log(tempEmail);
-    console.log(tempCheckEmail);
-    if (tempEmail === tempCheckEmail) {
-      var currUser = auth().currentUser;
-      currUser
-        .updateEmail(tempEmail)
-        .then(async () => {
-          setFailedText(false);
-          setShowSuccessMessage(true);
-          console.log(user);
-          await setUser({
-            variables: {
-              oldEmail: user.email,
-              email: tempEmail,
-              colour: user.colour,
-              pdfs: user.pdfs,
-            },
-          });
-          dispatch(setEmail(tempEmail));
-        })
-        .catch((error) => {
-          //Check for other errors
-          setFailedText(true);
-          if (error.code === 'auth/invalid-email')
-            setErrorMessage('The email address is badly formatted');
-          else {
-            setErrorMessage('An error has occurred');
-            console.log(error);
-          }
-        });
-    } else {
+    if (tempEmail !== tempCheckEmail) {
       setFailedText(true);
       setErrorMessage('Emails do not match');
+      return;
     }
+    if (password === '') {
+      setFailedText(true);
+      setErrorMessage('Password is required to reauthenticate');
+      return;
+    }
+    auth()
+      .signInWithEmailAndPassword(user.email, password.trim())
+      .then(async () => {
+        const currUser = auth().currentUser;
+        currUser
+          .updateEmail(tempEmail)
+          .then(async () => {
+            setFailedText(false);
+            setShowSuccessMessage(true);
+            dispatch(setEmail(tempEmail));
+            setUser({
+              variables: {
+                oldEmail: user.email,
+                email: tempEmail,
+                colour: user.colour,
+                pdfs: user.pdfs,
+              },
+            });
+          })
+          .catch((error) => {
+            //Check for other errors
+            setFailedText(true);
+            if (error.code === 'auth/invalid-email')
+              setErrorMessage('The email address is badly formatted');
+            else {
+              setErrorMessage('An error has occurred');
+              console.log(error);
+            }
+          });
+      })
+      .catch((error) => {
+        setFailedText(true);
+        setErrorMessage(
+          'Cannot re-authenticate: incorrect username or password'
+        );
+        return;
+      });
   }
 
   function MailHint() {
