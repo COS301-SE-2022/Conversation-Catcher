@@ -95,6 +95,11 @@ export const SettingsPage = ({ navigation }) => {
                 dispatch(clearUser());
                 dispatch(clearPDFs());
                 navigation.navigate('Login');
+              }).catch((e)=>{
+                console.log(e);
+                dispatch(clearUser());
+                dispatch(clearPDFs());
+                navigation.navigate('Login');
               })
           }
         >
