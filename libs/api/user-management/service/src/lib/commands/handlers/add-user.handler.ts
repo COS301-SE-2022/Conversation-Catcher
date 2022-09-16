@@ -29,7 +29,6 @@ export class setUserHandler implements ICommandHandler<setUserCommand> {
           groups[group].users.splice(i, 1, email);
         }
       }
-      console.log(groups);
       delete groups._id;
       this.repository.updateGroups(groups);
     }
