@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Alert,
   PermissionsAndroid,
+  NativeAppEventEmitter,
 } from 'react-native';
 import { gql, useMutation, useLazyQuery, useQuery } from '@apollo/client';
 import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
@@ -21,18 +22,22 @@ import { Buffer } from 'buffer';
 //import Sound from 'react-native-sound';
 import AudioRecord from 'react-native-audio-record';
 import DocumentPicker, { types } from 'react-native-document-picker';
-import { connect, useSelector } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import {
   selectColour,
   selectEmail,
+  addPDF,
+  selectUser,
 } from 'apps/client/src/app/slices/user.slice';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 
 export const Home = ({ navigation }) => {
+  const dispatch = useDispatch();
   const pdfRef = useRef();
   const colourState = useSelector(selectColour);
   const emailState = useSelector(selectEmail);
+  const userState = useSelector(selectUser);
   const [recordingStopVisible, setRecordingStopVisible] = useState(false);
   const [recordAudioState, setRecordAudioState] = useState(false);
   const [uploadVisible, setUploadVisible] = useState(false);
@@ -249,22 +254,20 @@ export const Home = ({ navigation }) => {
       .then(async (res) => {
         if (res.ok) {
           const result = await res.json();
-          console.log(result.converted_text);
-          //const newPdf = await addPdf({
-          //   variables: { email: emailState, name: '', text: result.text },
-          //   //add new pdf to all pdfs
-          // });
-          //console.log(newPdf);
-          //recall api
-          // pdfLocalAccess.addPdf({
-          //   name: newPdf.name,
-          //   creationDate: newPdf.creationDate,
-          //   downloaded: newPdf.downloaded,
-          //   pdf: newPdf.pdf,
-          //   text: newPdf.text,
-          //   id: newPdf.id,
-          // });
-          console.log(emailState);
+          const newPdf = await addPdf({
+            variables: { email: emailState, name: '', text: result.converted_text },
+          });
+          pdfLocalAccess.addPdf({
+            name: newPdf.data.addPDF.name,
+            creationDate: newPdf.data.addPDF.creationDate,
+            downloaded: newPdf.data.addPDF.downloaded,
+            pdf: newPdf.data.addPDF.pdf,
+            text: newPdf.data.addPDF.text,
+            id: newPdf.data.addPDF.id,
+          });
+          NativeAppEventEmitter.emit('updatePage');
+          dispatch(addPDF(newPdf.data.addPDF.id));
+
         } else console.log('Connection error: internet connection is required');
       })
       .catch((e) => console.log(e));
@@ -273,54 +276,6 @@ export const Home = ({ navigation }) => {
     state.audioFile = false;
     state.recording = false;
   };
-
-  function Pdfs() {
-    // use redux to het email
-    // console.log(emailState);
-    const { data, loading, error } = useQuery(GET_USER_PDFS, {
-      variables: { email: 'John@test' },
-    });
-    // console.log(data);
-    // console.log(loading);
-    // console.log(error);
-    const newArr = [];
-
-    if (loading)
-      return (
-        <View style={styles.recentPdfTiles}>
-          <Loading />
-        </View>
-      );
-
-    if (error)
-      return (
-        <View style={styles.recentPdfTiles}>
-          <Text>An error occured...</Text>
-        </View>
-      );
-
-    // for (let i = 0; i < 3; i++) {
-    //   if (newPdf !== undefined) newArr.push(newPdf);
-    // }
-
-    return (
-      <View style={styles.recentPdfTiles}>
-        {newArr.map((item, key) => (
-          <PdfTile
-            // id= {key + 1}
-            key={key}
-            name={item.name}
-            date={item.creationDate}
-            thumbnailSource={''}
-            text={item.text}
-            downloaded={item.downloaded}
-            pdfSource=""
-            nav={navigation}
-          />
-        ))}
-      </View>
-    );
-  }
 
   componentDidMount();
   return (
