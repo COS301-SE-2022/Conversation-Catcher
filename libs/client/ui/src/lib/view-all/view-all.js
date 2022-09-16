@@ -165,10 +165,6 @@ export const ViewAll = ({ navigation }) => {
         </View>
 
         <View style={styles.searchBarGroup}>
-          <View style={styles.searchIconFrame}>
-            <Icon color="#667084ff" name="search" size={24} />
-          </View>
-
           <TextInput
             style={styles.searchInput}
             placeholder="Search"
@@ -177,6 +173,9 @@ export const ViewAll = ({ navigation }) => {
               pdfRef.current.refreshPfds();
             }}
           />
+          <View style={styles.searchIconFrame}>
+            <Icon color="#667084ff" name="search" size={24} />
+          </View>
         </View>
       </View>
 
@@ -392,6 +391,7 @@ const styles = StyleSheet.create({
   viewAllTopBar: {
     width: '100%',
     flexShrink: 1,
+    resizeMode: 'contain',
     backgroundColor: '#c4c4c4ff',
     elevation: 2,
     shadowColor: '#000000',
@@ -405,7 +405,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     top: 0,
     zIndex: 999,
-    minHeight: 88,
+    minHeight: 112,
   },
   big_title: {
     color: '#344053ff',
@@ -421,20 +421,18 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'center',
     paddingLeft: 15,
-    paddingTop: 5,
     height: '5%',
     width: '100%',
     minHeight: 28,
+    paddingTop: 5
   },
   searchBarGroup: {
     width: '85%',
     flexShrink: 1,
-    margin: 10,
+    marginVertical: 20,
     flexDirection: 'row',
     alignItems: 'center',
     minHeight: 38,
-  },
-  searchInput: {
     backgroundColor: '#ffffffff',
     borderRadius: 8,
     borderStyle: 'solid',
@@ -442,12 +440,16 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     elevation: 2,
     shadowColor: '#000000',
-    shadowRadius: 2.621621621621622,
-    shadowOpacity: 0.2173913043478261,
+    shadowRadius: 2.5,
+    shadowOpacity: 0.2,
     shadowOffset: {
       width: 0,
       height: 1,
     },
+  },
+  searchInput: {
+    backgroundColor: '#ffffffff',
+    borderRadius: 8,
     color: '#667084ff',
     textAlign: 'left',
     letterSpacing: 0,
@@ -461,7 +463,8 @@ const styles = StyleSheet.create({
   },
   searchIconFrame: {
     resizeMode: 'contain',
-    marginHorizontal: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 5
   },
   recentPdfTiles: {
     height: '70%',
@@ -495,17 +498,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   moreButton: {
-    flexGrow: 1,
+    flexShrink: 1,
+    width: '40%',
     alignItems: 'center',
     justifyContent: 'center',
   },
   orderByGroup: {
-    flexGrow: 1,
+    flexShrink: 1,
+    width: '40%',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     alignSelf: 'flex-end',
     marginVertical: 5,
+    paddingHorizontal: 7
   },
   orderByLabel: {
     color: '#344053ff',
@@ -625,7 +631,7 @@ const styles = StyleSheet.create({
   },
   modalBottomBar: {
     width: '100%',
-    height: '13%',
+    height: '10%',
     flexDirection: 'row',
     //flexShrink: 1,
     justifyContent: 'center',
