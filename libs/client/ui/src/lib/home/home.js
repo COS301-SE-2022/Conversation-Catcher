@@ -480,7 +480,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'center',
     paddingLeft: 15,
-    height: '5%',
+    height: '7%',
     //width: '100%',
     minHeight: 28,
   },
@@ -492,7 +492,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   viewAllTouchableOpacityFrame: {
-    //height: '10%'
+    height: '10%',
     flexGrow: 1,
     justifyContent: 'center',
     marginTop: 20,
@@ -530,21 +530,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  homeDiv: {
-    backgroundColor: '#d0d5ddff',
-    borderRadius: 0.5,
-    overflow: 'hidden' /* for borderRadius */,
-    elevation: 2,
-    shadowColor: '#000000',
-    shadowRadius: 2.621621621621622,
-    shadowOpacity: 0.2173913043478261,
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    height: 1,
-    flexShrink: 1,
   },
   settingsTouchableOpacityFrame: {
     height: '10%',
