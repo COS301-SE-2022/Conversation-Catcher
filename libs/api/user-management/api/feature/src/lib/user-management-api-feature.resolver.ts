@@ -27,9 +27,10 @@ export class UserManagementApiFeatureResolver {
     user.pdfs = result.pdfs;
     user.groups = result.groups;
     user.invites = [];
-    for (const invite of result.invites) {
-      user.invites.push(invite.group + ' : ' + invite.from);
-    }
+    if (result.invites !== undefined)
+      for (const invite of result.invites) {
+        user.invites.push(invite.group + ' : ' + invite.from);
+      }
     return user;
   }
 
