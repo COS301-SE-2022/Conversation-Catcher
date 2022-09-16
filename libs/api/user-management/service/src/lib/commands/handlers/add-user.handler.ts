@@ -21,6 +21,7 @@ export class setUserHandler implements ICommandHandler<setUserCommand> {
       //Update email in all groups
       const user = await this.repository.getUser(oldEmail);
       const groups = await this.repository.getGroups();
+      if (user.groups === undefined) user.groups = [];
       for (const group of user.groups) {
         if (groups[group].admin === oldEmail) groups[group].admin = email;
         const i = groups[group].users.indexOf(oldEmail);
@@ -28,6 +29,7 @@ export class setUserHandler implements ICommandHandler<setUserCommand> {
           groups[group].users.splice(i, 1, email);
         }
       }
+      console.log(groups);
       delete groups._id;
       this.repository.updateGroups(groups);
     }
@@ -41,10 +43,12 @@ export class deleteUserHandler implements ICommandHandler<deleteUserCommand> {
 
   async execute({ email }: deleteUserCommand) {
     const user = await this.repository.getUser(email);
+    if (user.groups === undefined) user.groups = [];
     if (user.groups[0] != undefined) {
       const groups = await this.repository.getGroups();
       for (const group of user.groups) {
-        if (groups[group].admin === email) return 'Cannot delete user who is the admin of a group';
+        if (groups[group].admin === email)
+          return 'Cannot delete user who is the admin of a group';
         const i = groups[group].users.indexOf(email);
         if (i !== -1) {
           groups[group].users.splice(i, 1);

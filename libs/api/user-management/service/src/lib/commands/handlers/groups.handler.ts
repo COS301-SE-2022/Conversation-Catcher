@@ -54,8 +54,11 @@ export class sendInviteHandler implements ICommandHandler<sendInviteCommand> {
     const user = await this.repository.getUser(toUser);
     //Error checking to prevent duplicate requests
     if (user === null) return 'User ' + toUser + ' not found';
+    if (user.groups === undefined) user.groups = [];
     if (user.groups.indexOf(groupName) !== -1)
       return 'The user ' + toUser + ' is already in the group: ' + groupName;
+
+    if (user.invites === undefined) user.invites = [];
     user.invites.forEach((element) => {
       if (groupName === element.group)
         return 'Invite has already been sent to ' + toUser;
@@ -103,6 +106,7 @@ export class addUserToHandler implements ICommandHandler<addUserToCommand> {
 
     //set the user and the group
     groups[groupName].users.push(user);
+    if (usr.groups === undefined) usr.groups = [];
     usr.groups.push(groupName);
 
     //Update the database
@@ -158,6 +162,7 @@ export class createGroupHandler implements ICommandHandler<createGroupCommand> {
       pdfs: [],
       requests: [],
     };
+    if (user.groups === undefined) user.groups = [];
     user.groups.push(groupName);
     groups[groupName] = newGroup;
     delete user._id;
@@ -181,7 +186,7 @@ export class deleteGroupHandler implements ICommandHandler<deleteGroupCommand> {
         if (item === groupName) user.groups.splice(index, 1);
       });
       delete user._id;
-      this.repository.setUser(email,user);
+      this.repository.setUser(email, user);
     }
     delete groups[groupName];
     delete groups._id;
