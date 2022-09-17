@@ -56,12 +56,8 @@ export function GroupDisplay({ navigation, selectMode }, ref) {
           key={key}
           id={item.id}
           name={item.name}
-          date={item.creationDate}
-          source={''}
           text={item.text}
-          downloaded={item.downloaded}
-          showCheck={selectMode}
-          groupSource={'groupRefresh'}
+          thumbnailSource={'groupRefresh'}
           nav={navigation}
           refresh={setDidReload}
         />
@@ -116,12 +112,8 @@ export function GroupDisplay({ navigation, selectMode }, ref) {
           key={key}
           id={item.id}
           name={item.name}
-          date={item.creationDate}
-          source={''}
           text={item.text}
-          downloaded={item.downloaded}
-          showCheck={selectMode}
-          groupSource={'groupRefresh'}
+          thumbnailSource={'groupRefresh'}
           nav={navigation}
           refresh={setDidReload}
         />
