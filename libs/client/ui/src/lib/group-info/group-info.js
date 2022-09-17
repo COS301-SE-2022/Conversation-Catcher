@@ -16,8 +16,11 @@ import Modal from 'react-native-modal';
 import Share from 'react-native-share';
 import { useSelector } from 'react-redux';
 import { selectColour } from 'apps/client/src/app/slices/user.slice';
+import MemberTile from '../shared-components/member-tile/member-tile.js';
 
 export const GroupInfo = ({ navigation }) => {
+
+    const [selectMode, setSelectMode] = useState(false);
 
   return (
     <View style={styles.groupPage}>
@@ -77,9 +80,26 @@ export const GroupInfo = ({ navigation }) => {
                 </View>
             </View>
 
-            <View style={styles.groupMembersBox}>
-
-            </View>
+            <ScrollView style={styles.groupMembersBox}>
+                <MemberTile
+                    key={''}
+                    id={'1'}
+                    name={'member1@gmail.com'}
+                    showCheck={selectMode}
+                />
+                <MemberTile
+                    key={''}
+                    id={'2'}
+                    name={'member2@gmail.com'}
+                    showCheck={selectMode}
+                />
+                <MemberTile
+                    key={''}
+                    id={'3'}
+                    name={'member3@gmail.com'}
+                    showCheck={selectMode}
+                />
+            </ScrollView>
         </View>
       
     </View>
