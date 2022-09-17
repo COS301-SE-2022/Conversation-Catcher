@@ -1,10 +1,10 @@
-import { selectPDFS,addPDF,removePDF} from './pdf.slice';
+import { selectGroups,addGroup,removeGroup} from './group.slice';
 
-describe('pdf reducer', () => {
+describe('group reducer', () => {
   it('returns an array',()=>{
-    expect(selectPDFS({pdf:[]}).length).toEqual(0)
+    expect(selectGroups({group:[]}).length).toEqual(0)
   });
-  it('adds a pdf',()=>{
-    expect(addPDF({name:"Bob"}).payload.name).toContain("Bob")
+  it('adds a group',()=>{
+    expect(addGroup({name:"Bob"}).payload.name).toContain("Bob")
   });
 })
