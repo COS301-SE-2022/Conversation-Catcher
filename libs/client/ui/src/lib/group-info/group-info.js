@@ -21,6 +21,47 @@ export const GroupInfo = ({ navigation }) => {
 
     const [selectMode, setSelectMode] = useState(false);
     const colourState = useSelector(selectColour);
+    const [adminState, setAdminState] = useState(true);
+
+    function AdminGroupButtons(){
+        if(adminState){
+            return (
+                <View style={styles.buttonsGroup}>
+                    <View style={styles.leaveButtonBox}>
+                        <TouchableOpacity style={styles.leaveButton}>
+                            <Text style={styles.leaveButtonText}>Leave Group</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.deleteButtonBox}>
+                        <TouchableOpacity style={styles.deleteButton}>
+                            <Text style={styles.deleteButtonText}>Delete Group</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            )
+        }
+        return null;
+    }
+
+    function AdminMemberButtons(){
+        if(adminState){
+            return (
+                <View style={styles.membersButtonsGroup}> 
+                    <View style={styles.inviteButtonBox}>
+                        <TouchableOpacity style={styles.invitebutton}>
+                            <Icon name="plus" size={30} color={colourState} />
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.removeButtonBox}>
+                        <TouchableOpacity style={styles.removeButton}>
+                            <Icon name="minus" size={30} color={colourState} />
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            )
+        }
+        return null;
+    }
 
   return (
     <View style={styles.groupPage}>
@@ -44,36 +85,14 @@ export const GroupInfo = ({ navigation }) => {
             </View>
         </View>
 
-        <View style={styles.buttonsGroup}>
-            <View style={styles.leaveButtonBox}>
-                <TouchableOpacity style={styles.leaveButton}>
-                    
-                </TouchableOpacity>
-            </View>
-            <View style={styles.deleteButtonBox}>
-                <TouchableOpacity style={styles.deleteButton}>
-                    <Icon name="trash" size={20} color={colourState} />
-                </TouchableOpacity>
-            </View>
-        </View>
+        <AdminGroupButtons/>
 
         <View style={styles.membersSection}>
             <View style={styles.membersSectionHeader}>
                 <View style={styles.membersTitleBox}>
                     <Text style={styles.membersTitle}>{'Members'}</Text>
                 </View>
-                <View style={styles.membersButtonsGroup}> 
-                    <View style={styles.inviteButtonBox}>
-                        <TouchableOpacity style={styles.invitebutton}>
-                            <Icon name="plus" size={30} color={colourState} />
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.removeButtonBox}>
-                        <TouchableOpacity style={styles.removeButton}>
-                            <Icon name="minus" size={30} color={colourState} />
-                        </TouchableOpacity>
-                    </View>
-                </View>
+                <AdminMemberButtons/>
             </View>
 
             <View style={styles.searchBarGroup}>
@@ -184,11 +203,17 @@ const styles = StyleSheet.create({
   leaveButton: {
 
   },
+  leaveButtonText: {
+    color: 'red',
+  },
   deleteButtonBox: {
 
   },
   deleteButton: {
 
+  },
+  deleteButtonText: {
+    color: 'red',
   },
   membersSection: {
     
