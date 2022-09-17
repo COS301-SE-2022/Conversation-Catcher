@@ -18,6 +18,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from '../../../../libs/client/ui/src/lib/home/home.js';
 import ViewAll from '../../../../libs/client/ui/src/lib/view-all/view-all.js';
 import Groups from '../../../../libs/client/ui/src/lib/groups/groups.js';
+import GroupInfo from '../../../../libs/client/ui/src/lib/group-info/group-info.js';
 import Settings from '../../../../libs/client/ui/src/lib/settings/settings.js';
 import ChangeColour from '../../../../libs/client/ui/src/lib/colour-page/colour-page.js';
 import Login from '../../../../libs/client/ui/src/lib/login/login.js';
@@ -78,6 +79,7 @@ export const App = () => {
               <Stack.Screen name="Home" component={Home} options={{ headerShown: false }}/>
               <Stack.Screen name="ViewAll" component={ViewAll} options={{ headerShown: false }}/>
               <Stack.Screen name="Groups" component={Groups} options={{ headerShown: false }}/>
+              <Stack.Screen name="GroupInfo" component={GroupInfo} options={{ headerShown: false }}/>
               <Stack.Screen name="Settings" component={Settings} options={{ headerShown: false }}/>
               <Stack.Screen name="Colour" component={ChangeColour} options={{ headerShown: false }}/>
               <Stack.Screen name="Register" component={Register} options={{ headerShown: false }}/>
