@@ -11,12 +11,12 @@ import {
   TextInput,
 } from 'react-native';
 import { gql, useQuery, useMutation } from '@apollo/client';
-import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
+import GroupTile from '../shared-components/group-tile/group-tile.js';
 import ModalDropdown from 'react-native-modal-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
 import Share from 'react-native-share';
-import PdfDisplay from '../shared-components/pdf-display/pdf-display.js';
+import GroupDisplay from '../shared-components/group-display/group-display.js';
 import pdfLocalAccess from '../shared-components/local-pdfs-access/local-pdfs-access';
 import { useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
