@@ -32,7 +32,7 @@ function DetermineTileCorner(props) {
       />
     );
   }
-  return <DownloadButtonState d={props.d} a={props.a}/>;
+  return null;
 }
 
 const groupthumbnailSource = {
