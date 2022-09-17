@@ -29,7 +29,7 @@ export function GroupDisplay({ navigation, selectMode }, ref) {
   //Listen to when to update page
   DeviceEventEmitter.addListener('updatePage', () => setDidReload(!didReload));
   //graphql syntax trees
-  const GET_USER_GroupS = gql`
+  const GET_USER_GROUPS = gql`
     query getForUser($email: String!) {
       getGroups(id: $email) {
         id
@@ -41,7 +41,7 @@ export function GroupDisplay({ navigation, selectMode }, ref) {
       }
     }
   `;
-  const { data, loading, error } = useQuery(GET_USER_GroupS, {
+  const { data, loading, error } = useQuery(GET_USER_GROUPS, {
     variables: { email: emailState },
   });
   // console.log('GetGroups');
