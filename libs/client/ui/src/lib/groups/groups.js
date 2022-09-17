@@ -17,13 +17,13 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
 import Share from 'react-native-share';
 import GroupDisplay from '../shared-components/group-display/group-display.js';
-import pdfLocalAccess from '../shared-components/local-pdfs-access/local-pdfs-access';
+import groupLocalAccess from '../shared-components/local-groups-access/local-groups-access';
 import { useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { selectColour } from 'apps/client/src/app/slices/user.slice';
 
 export const Groups = ({ navigation }) => {
-  const pdfRef = useRef();
+  const groupRef = useRef();
   const colourState = useSelector(selectColour);
   const [moreVisible, setMoreVisible] = useState(false);
   const [selectMode, setSelectMode] = useState(false);
@@ -62,9 +62,9 @@ export const Groups = ({ navigation }) => {
           style={styles.backButton}
           onPress={async () => {
             await share({
-              title: 'Sharing pdf file from awesome share app',
+              title: 'Sharing group file from awesome share app',
               message: 'Please take a look at this file',
-              url: '../assets/thereactnativebook-sample.pdf',
+              url: '../assets/thereactnativebook-sample.group',
             });
             setSelectMode(false);
             setBottomModalVisible(false);
@@ -146,10 +146,10 @@ export const Groups = ({ navigation }) => {
   //   console.log(itemValue);
   // }
 
-  // function filterPdf(text) {
+  // function filterGroup(text) {
   //   const temp = [];
-  //   for (let i = 0; i < pdfLocalAccess.getLength(); i++)
-  //     objArr[i] = pdfLocalAccess.get(i);
+  //   for (let i = 0; i < groupLocalAccess.getLength(); i++)
+  //     objArr[i] = groupLocalAccess.get(i);
   //   for (let i = 0; i < objArr.length; i++) {
   //     if (objArr[i].name.indexOf(text) !== -1) temp.push(objArr[i]);
   //   }
@@ -169,8 +169,8 @@ export const Groups = ({ navigation }) => {
             style={styles.searchInput}
             placeholder="Search"
             onChangeText={(text) => {
-              pdfLocalAccess.filterPdfs(text);
-              pdfRef.current.refreshPfds();
+              groupLocalAccess.filterGroups(text);
+              groupRef.current.refreshPfds();
             }}
           />
           <View style={styles.searchIconFrame}>
@@ -179,10 +179,10 @@ export const Groups = ({ navigation }) => {
         </View>
       </View>
 
-      <PdfDisplay
+      <GroupDisplay
         navigation={navigation}
         selectMode={selectMode}
-        ref={pdfRef}
+        ref={groupRef}
       />
 
       <View style={styles.viewAllBottomBar}>
@@ -207,8 +207,8 @@ export const Groups = ({ navigation }) => {
             defaultIndex={0}
             defaultValue={'Date'}
             onSelect={(index, itemValue) => {
-              pdfLocalAccess.sortPdfs(itemValue);
-              pdfRef.current.refreshPfds();
+              groupLocalAccess.sortGroups(itemValue);
+              groupRef.current.refreshPfds();
             }}
             style={styles.orderByDropdown}
             textStyle={styles.orderByDropdownText}
@@ -377,7 +377,7 @@ export const Groups = ({ navigation }) => {
     </View>
   );
 };
-export default ViewAll;
+export default Groups;
 
 const styles = StyleSheet.create({
   groupsPage: {
@@ -466,7 +466,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 5
   },
-  recentPdfTiles: {
+  recentGroupTiles: {
     height: '70%',
     paddingLeft: 15,
     paddingRight: 15,
