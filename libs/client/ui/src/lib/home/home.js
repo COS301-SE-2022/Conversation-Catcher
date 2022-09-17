@@ -285,22 +285,42 @@ export const Home = ({ navigation }) => {
         </Text>
       </View>
       <PdfDisplay navigation={navigation} selectMode={false} ref={pdfRef} />
-      <View style={styles.viewAllTouchableOpacityFrame}>
+      <View style={styles.viewPdfsTouchableOpacityFrame}>
         <TouchableOpacity
           style={[
-            styles.viewAllTouchableOpacity,
+            styles.viewPdfsTouchableOpacity,
             { backgroundColor: colourState },
           ]}
           onPress={() => {
             navigation.navigate('ViewAll');
           }}
         >
-          <View style={styles.viewAllTouchableOpacityLabel_box}>
+          <View style={styles.viewPdfsTouchableOpacityLabel_box}>
             <Text
-              style={styles.viewAllTouchableOpacityLabel}
+              style={styles.viewPdfsTouchableOpacityLabel}
               ellipsizeMode={'clip'}
             >
-              {'View all PDFs'}
+              {'My PDFs'}
+            </Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.viewPdfsTouchableOpacityFrame}>
+        <TouchableOpacity
+          style={[
+            styles.viewPdfsTouchableOpacity,
+            { backgroundColor: colourState },
+          ]}
+          onPress={() => {
+            navigation.navigate('Groups');
+          }}
+        >
+          <View style={styles.viewPdfsTouchableOpacityLabel_box}>
+            <Text
+              style={styles.viewPdfsTouchableOpacityLabel}
+              ellipsizeMode={'clip'}
+            >
+              {'Groups'}
             </Text>
           </View>
         </TouchableOpacity>
@@ -309,12 +329,10 @@ export const Home = ({ navigation }) => {
         style={styles.settingsTouchableOpacityFrame}
         onPress={() => navigation.navigate('Settings')}
       >
-        <View style={styles.settingTouchableOpacity}>
-          <View style={styles.settingsText_box}>
-            <Text style={styles.settingsText} ellipsizeMode={'clip'}>
-              {'Settings'}
-            </Text>
-          </View>
+        <View style={styles.settingsIconBox}>
+          <Icon style={styles.settingsIcon}>
+            <Icon name="cog" size={20} color="#667084ff" />
+          </Icon>
         </View>
       </TouchableOpacity>
       <View style={styles.audioTouchableOpacityGroup}>
@@ -491,13 +509,13 @@ const styles = StyleSheet.create({
     paddingRight: 15,
     justifyContent: 'space-between',
   },
-  viewAllTouchableOpacityFrame: {
+  viewPdfsTouchableOpacityFrame: {
     height: '10%',
     flexGrow: 1,
     justifyContent: 'center',
     marginTop: 20,
   },
-  viewAllTouchableOpacity: {
+  viewPdfsTouchableOpacity: {
     flexGrow: 1,
     marginTop: 5,
     marginBottom: 5,
@@ -515,7 +533,7 @@ const styles = StyleSheet.create({
       height: 1,
     },
   },
-  viewAllTouchableOpacityLabel: {
+  viewPdfsTouchableOpacityLabel: {
     color: '#ffffffff',
     textAlign: 'center',
     letterSpacing: 0,
@@ -526,7 +544,7 @@ const styles = StyleSheet.create({
     fontFamily: 'System' /* Jaldi */,
     padding: 10,
   },
-  viewAllTouchableOpacityLabel_box: {
+  viewPdfsTouchableOpacityLabel_box: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -559,7 +577,7 @@ const styles = StyleSheet.create({
       height: 1,
     },
   },
-  settingsIcon_frame: {
+  settingsIconBox: {
     justifyContent: 'center',
     alignContent: 'flex-start',
     paddingHorizontal: 7,
