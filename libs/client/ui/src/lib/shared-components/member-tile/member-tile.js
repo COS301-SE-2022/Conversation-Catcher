@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { selectColour } from 'apps/client/src/app/slices/user.slice';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { toggleDown } from 'apps/client/src/app/slices/group.slice';
+import { toggleDown } from 'apps/client/src/app/slices/member.slice';
 import { gql, useLazyQuery, useMutation } from '@apollo/client';
 //import FileViewer from "react-native-file-viewer";
 
@@ -35,12 +35,12 @@ function DetermineTileCorner(props) {
   return null;
 }
 
-const groupthumbnailSource = {
+const memberthumbnailSource = {
   uri: 'http://samples.leanpub.com/thereactnativebook-sample.pdf',
   cache: true,
 };
 
-const GroupTile = ({
+const MemberTile = ({
   id,
   name,
   date,
@@ -50,43 +50,43 @@ const GroupTile = ({
   nav,
 }) => {
   const colourState = useSelector(selectColour);
-  const buildGroup = () => {
+  const buildMember = () => {
     return { id: id, text: text , name: name , date: date }
   }
   return (
     <TouchableOpacity
-      style={styles.groupTile}
+      style={styles.memberTile}
       onPress={() =>
         nav.navigate('ViewPdfs', { id: { id }, text: { text }, name: { name } })
       }
     >
       <View style={[styles.thumbnail_containter, { borderColor: colourState }]}>
         <ImageBackground
-          style={styles.groupThumbnail}
+          style={styles.memberThumbnail}
           //thumbnailSource={thumbnailSource}
         />
       </View>
-      <View style={styles.groupTile_contents_not_thumbnail}>
-        <View style={styles.groupTile_contents_not_thumbnail_inner}>
-          <View style={styles.groupName_box}>
-            <Text style={styles.groupName}>{name}</Text>
+      <View style={styles.memberTile_contents_not_thumbnail}>
+        <View style={styles.memberTile_contents_not_thumbnail_inner}>
+          <View style={styles.memberName_box}>
+            <Text style={styles.memberName}>{name}</Text>
           </View>
-          <View style={styles.groupDate_box}>
-            <Text style={styles.groupDate}>{date}</Text>
+          <View style={styles.memberDate_box}>
+            <Text style={styles.memberDate}>{date}</Text>
           </View>
         </View>
         <View style={styles.corner_button}>
-          <DetermineTileCorner c={showCheck} a={buildGroup()}/>
+          <DetermineTileCorner c={showCheck} a={buildMember()}/>
         </View>
       </View>
     </TouchableOpacity>
   );
 };
 
-export default GroupTile;
+export default MemberTile;
 
 const styles = StyleSheet.create({
-  groupTile: {
+  memberTile: {
     flexGrow: 1,
     borderRadius: 5,
     borderStyle: 'solid',
@@ -110,26 +110,26 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     aspectRatio: 1 / 1.4142,
   },
-  groupThumbnail: {
+  memberThumbnail: {
     resizeMode: 'contain',
     borderRadius: 5,
   },
-  groupTileInfo: {
+  memberTileInfo: {
     flexGrow: 1,
     flexDirection: 'row',
   },
-  groupTileInfo_item: {
+  memberTileInfo_item: {
     flexGrow: 0,
     flexShrink: 1,
   },
-  groupTileText: {
+  memberTileText: {
     flexGrow: 1,
   },
-  groupTileText_item: {
+  memberTileText_item: {
     flexGrow: 0,
     flexShrink: 1,
   },
-  groupName: {
+  memberName: {
     color: '#344053ff',
     textAlign: 'left',
     letterSpacing: 0,
@@ -140,13 +140,13 @@ const styles = StyleSheet.create({
     fontFamily: 'System' /* Inter */,
     paddingHorizontal: 0,
   },
-  groupName_box: {
+  memberName_box: {
     flexGrow: 1,
     resizeMode: 'contain',
     justifyContent: 'center',
     paddingTop: 15,
   },
-  groupDate: {
+  memberDate: {
     color: '#667084ff',
     textAlign: 'left',
     letterSpacing: 0,
@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0,
     paddingVertical: 0,
   },
-  groupDate_box: {
+  memberDate_box: {
     flexGrow: 1,
     resizeMode: 'contain',
     justifyContent: 'center',
@@ -168,12 +168,12 @@ const styles = StyleSheet.create({
     padding: 10,
     flex: 1,
   },
-  groupTile_contents_not_thumbnail: {
+  memberTile_contents_not_thumbnail: {
     flex: 4,
     justifyContent: 'center',
     flexDirection: 'row',
   },
-  groupTile_contents_not_thumbnail_inner: {
+  memberTile_contents_not_thumbnail_inner: {
     marginTop: 0,
     marginBottom: 0,
     marginLeft: 5,
