@@ -5,7 +5,6 @@ import {
   Text,
   ImageBackground,
   TouchableOpacity,
-  Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
