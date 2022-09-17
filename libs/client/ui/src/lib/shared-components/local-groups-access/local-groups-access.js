@@ -15,10 +15,10 @@ class LocalGroupsAccess {
     }
   }
 
-  //Add shallow copy of pdf into both arrays
-  addPdf(newPdf) {
-    this.displayGroups.push(newPdf);
-    this.allGroups.push(newPdf);
+  //Add shallow copy of group into both arrays
+  addGroup(newGroup) {
+    this.displayGroups.push(newGroup);
+    this.allGroups.push(newGroup);
   }
 
   //Return groups to be displayed by the component
@@ -32,7 +32,7 @@ class LocalGroupsAccess {
     return this.displayGroups.length;
   }
 
-  //Return a specefic element of the pdf
+  //Return a specefic element of the group
   // get(i) {
   //   return this.displayGroups[i];
   // }
@@ -72,24 +72,24 @@ class LocalGroupsAccess {
     }
   }
 
-  //Search for pdf with id pdfId and change the name
-  renamePdf(pdfId, newName) {
+  //Search for group with id groupId and change the name
+  renameGroup(groupId, newName) {
     for (let i = 0; i < this.allGroups.length; i++) {
-      if (this.allGroups[i].id === pdfId) this.allGroups[i].name = newName;
+      if (this.allGroups[i].id === groupId) this.allGroups[i].name = newName;
     }
   }
 
-  //Remove pdf with certain id from the list
-  deletePdf(pdfId) {
+  //Remove group with certain id from the list
+  deleteGroup(groupId) {
     var temp = [];
     for (let i = 0; i < this.allGroups.length; i++) {
-      if (this.allGroups[i].id !== pdfId) temp.push(this.allGroups[i]);
+      if (this.allGroups[i].id !== groupId) temp.push(this.allGroups[i]);
     }
     this.clearGroups();
     this.addGroups(temp);
   }
 }
 
-const pdfLocalAccess = new LocalGroupsAccess();
-Object.freeze(pdfLocalAccess);
-export default pdfLocalAccess;
+const groupLocalAccess = new LocalGroupsAccess();
+Object.freeze(groupLocalAccess);
+export default groupLocalAccess;
