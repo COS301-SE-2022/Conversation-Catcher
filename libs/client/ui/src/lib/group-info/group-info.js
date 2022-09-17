@@ -24,15 +24,17 @@ export const GroupInfo = ({ navigation }) => {
 
   return (
     <View style={styles.groupPage}>
-        <View style={styles.groupThumbnailBox}>
-            <Image
-                style={styles.groupThumbnail}
-                source=''
-            />
-        </View>
+        <View style={styles.groupPageHeaderGroup}>
+            <View style={styles.groupThumbnailBox}>
+                <Image
+                    style={styles.groupThumbnail}
+                    source=''
+                />
+            </View>
 
-        <View style={styles.groupNameBox}>
-            <Text style={styles.groupName}>{'Group Name'}</Text>
+            <View style={styles.groupNameBox}>
+                <Text style={styles.groupName}>{'Group Name'}</Text>
+            </View>
         </View>
 
         <View style={styles.buttonsGroup}>
@@ -116,17 +118,33 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     marginRight: 0,
   },
+  groupPageHeaderGroup: {
+    flexGrow: 1,
+    height: '30%',
+  },
   groupThumbnailBox: {
-
+    borderRadius: 100,
+    backgroundColor: '#667084ff',
+    aspectRatio: 1,
   },
   groupThumbnail: {
-
+    resizeMode: 'contain',
+    borderRadius: 100,
   },
   groupNameBox: {
-
+    alignContent: 'center',
+    alignItems: 'center',
+    height: '15%',
   },
   groupName: {
-
+    color: '#344053ff',
+    textAlign: 'center',
+    letterSpacing: 0,
+    lineHeight: 28,
+    fontSize: 24,
+    fontWeight: '700',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Jaldi */,
   },
   buttonsGroup: {
 
@@ -205,7 +223,6 @@ const styles = StyleSheet.create({
     paddingVertical: 5
   },
   groupMembersBox: {
-
+    flexGrow: 1,
   },
-  
 });
