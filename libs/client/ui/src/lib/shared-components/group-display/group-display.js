@@ -16,7 +16,7 @@ export function GroupDisplay({ navigation, selectMode }, ref) {
   const [didReload, setDidReload] = useState(true);
   const [isLoaded, setIsLoaded] = useState(false);
   const emailState = useSelector(selectEmail);
-  const localgroups = useSelector(selectGroups);
+  const localGroups = useSelector(selectGroups);
   const dispatch = useDispatch();
   //Expose refresh function to parent(View-all page)
   useImperativeHandle(ref, () => ({
@@ -29,9 +29,9 @@ export function GroupDisplay({ navigation, selectMode }, ref) {
   //Listen to when to update page
   DeviceEventEmitter.addListener('updatePage', () => setDidReload(!didReload));
   //graphql syntax trees
-  const GET_USER_groupS = gql`
+  const GET_USER_GroupS = gql`
     query getForUser($email: String!) {
-      getgroups(id: $email) {
+      getGroups(id: $email) {
         id
         name
         creationDate
@@ -41,7 +41,7 @@ export function GroupDisplay({ navigation, selectMode }, ref) {
       }
     }
   `;
-  const { data, loading, error } = useQuery(GET_USER_groupS, {
+  const { data, loading, error } = useQuery(GET_USER_GroupS, {
     variables: { email: emailState },
   });
   // console.log('GetGroups');
@@ -51,7 +51,7 @@ export function GroupDisplay({ navigation, selectMode }, ref) {
   if (loading)
     return (
       <ScrollView style={styles.recentGroupTiles}>
-        {localgroups.map((item, key) => (
+        {localGroups.map((item, key) => (
         <GroupTile
           key={key}
           id={item.id}
@@ -82,25 +82,25 @@ export function GroupDisplay({ navigation, selectMode }, ref) {
   //Data is here in data if returned
   if (!isLoaded) {
     groupLocalAccess.clearGroups();
-    for (let i = 0; i < data.getgroups.length; i++) {
+    for (let i = 0; i < data.getGroups.length; i++) {
       groupLocalAccess.addGroup({
-        name: data.getgroups[i].name,
-        creationDate: data.getgroups[i].creationDate,
-        downloaded: data.getgroups[i].downloaded,
-        group: data.getgroups[i].group,
-        text: data.getgroups[i].text,
-        id: data.getgroups[i].id,
+        name: data.getGroups[i].name,
+        creationDate: data.getGroups[i].creationDate,
+        downloaded: data.getGroups[i].downloaded,
+        group: data.getGroups[i].group,
+        text: data.getGroups[i].text,
+        id: data.getGroups[i].id,
       });
     }
     setIsLoaded(true);
     //Update local group storage
     //array of groups stored locally, selected from data to overwrite the slice
-    if (data.getgroups[0].name !== "error"){
+    if (data.getGroups[0].name !== "error"){
       let tempArray = [];
       var p;
       for (p in groupLocalAccess.getGroups()){
-        if (data.getgroups[p].downloaded === true){
-          tempArray.push(data.getgroups[p]);
+        if (data.getGroups[p].downloaded === true){
+          tempArray.push(data.getGroups[p]);
         }
       }
       dispatch(refillGroups(tempArray));
