@@ -17,6 +17,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 //import { ViewAll, Home} from '@conversation-catcher/client/ui';
 import Home from '../../../../libs/client/ui/src/lib/home/home.js';
 import ViewAll from '../../../../libs/client/ui/src/lib/view-all/view-all.js';
+import Groups from '../../../../libs/client/ui/src/lib/groups/groups.js';
 import Settings from '../../../../libs/client/ui/src/lib/settings/settings.js';
 import ChangeColour from '../../../../libs/client/ui/src/lib/colour-page/colour-page.js';
 import Login from '../../../../libs/client/ui/src/lib/login/login.js';
@@ -57,7 +58,7 @@ const Stack = createNativeStackNavigator();
 
 export const App = () => {
     const client = new ApolloClient({
-    uri: 'http://10.0.2.2:3333/graphql',
+    uri: 'http://10.0.2.2:8081/graphql',
     // headers: {
     //   // Header(if any)
     //   // authorization: 'a1b2c3d4-a1b2-a1b2c3d4e5f6',
@@ -76,6 +77,7 @@ export const App = () => {
               <Stack.Screen name="Login" component={Login} options={{ headerShown: false }}/>
               <Stack.Screen name="Home" component={Home} options={{ headerShown: false }}/>
               <Stack.Screen name="ViewAll" component={ViewAll} options={{ headerShown: false }}/>
+              <Stack.Screen name="Groups" component={Groups} options={{ headerShown: false }}/>
               <Stack.Screen name="Settings" component={Settings} options={{ headerShown: false }}/>
               <Stack.Screen name="Colour" component={ChangeColour} options={{ headerShown: false }}/>
               <Stack.Screen name="Register" component={Register} options={{ headerShown: false }}/>
