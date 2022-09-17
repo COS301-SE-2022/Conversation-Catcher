@@ -20,7 +20,17 @@ import { selectColour } from 'apps/client/src/app/slices/user.slice';
 export const GroupInfo = ({ navigation }) => {
 
   return (
-    <View style={styles.groupsPage}>
+    <View style={styles.groupPage}>
+        <View style={styles.groupThumbnailContainer}>
+            <Image
+                style={styles.groupThumbnail}
+                source=''
+            />
+        </View>
+
+        <View style={styles.groupNameContainer}>
+            <Text style={styles.groupName}>{'Group Name'}</Text>
+        </View>
       
     </View>
   );
@@ -28,13 +38,25 @@ export const GroupInfo = ({ navigation }) => {
 export default GroupInfo;
 
 const styles = StyleSheet.create({
-  groupsPage: {
+  groupPage: {
     backgroundColor: '#ffffffff',
     marginTop: 0,
     marginBottom: 0,
     marginLeft: 0,
     flexGrow: 1,
     marginRight: 0,
+  },
+  groupThumbnailContainer: {
+
+  },
+  groupThumbnail: {
+
+  },
+  groupNameContainer: {
+
+  },
+  groupName: {
+
   },
   
 });
