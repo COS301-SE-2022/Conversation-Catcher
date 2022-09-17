@@ -36,7 +36,7 @@ const GroupTile = ({
     <TouchableOpacity
       style={styles.groupTile}
       onPress={() =>
-        nav.navigate('ViewPdfs', { id: { id }, text: { text }, name: { name } })
+        nav.navigate('GroupInfo', { id: { id }, text: { text }, name: { name } })
       }
     >
       <View style={[styles.thumbnail_containter, { borderColor: colourState }]}>
