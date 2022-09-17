@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
     color: 'red',
   },
   membersSection: {
-    
+    alignItems: 'center',
   },
   membersSectionHeader: {
     flexDirection: 'row',
@@ -291,6 +291,6 @@ const styles = StyleSheet.create({
     paddingVertical: 5
   },
   groupMembersBox: {
-    flexGrow: 1,
+    width: '85%',
   },
 });
