@@ -33,20 +33,32 @@ export const GroupInfo = ({ navigation }) => {
         </View>
 
         <View style={styles.buttonsGroup}>
+            <View style={styles.leaveButtonBox}>
+                <TouchableOpacity style={styles.leaveButton}>
 
+                </TouchableOpacity>
+            </View>
+            <View style={styles.deleteButtonBox}>
+                <TouchableOpacity style={styles.deleteButton}>
+                    
+                </TouchableOpacity>
+            </View>
         </View>
 
         <View style={styles.membersSection}>
-            <View style={styles.inviteButtonBox}>
-                <TouchableOpacity style={styles.invitebutton}>
+            <View style={styles.membersButtonsGroup}>
+                <View style={styles.inviteButtonBox}>
+                    <TouchableOpacity style={styles.invitebutton}>
 
-                </TouchableOpacity>
-            </View>
-            <View style={styles.removeButtonBox}>
-                <TouchableOpacity style={styles.removeButton}>
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.removeButtonBox}>
+                    <TouchableOpacity style={styles.removeButton}>
 
-                </TouchableOpacity>
+                    </TouchableOpacity>
+                </View>
             </View>
+            
             <View style={styles.searchBarGroup}>
                 <TextInput
                     style={styles.searchInput}
@@ -60,6 +72,7 @@ export const GroupInfo = ({ navigation }) => {
                     <Icon color="#667084ff" name="search" size={24} />
                 </View>
             </View>
+
             <View style={styles.membersTitleBox}>
                 <Text style={styles.membersTitle}>{'Members'}</Text>
             </View>
