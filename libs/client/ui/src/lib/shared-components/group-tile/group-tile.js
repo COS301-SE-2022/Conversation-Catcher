@@ -16,25 +16,6 @@ import { toggleDown } from 'apps/client/src/app/slices/group.slice';
 import { gql, useLazyQuery, useMutation } from '@apollo/client';
 //import FileViewer from "react-native-file-viewer";
 
-function DetermineTileCorner(props) {
-  const colourState = useSelector(selectColour);
-  const [checkboxState, setCheckboxState] = React.useState(false);
-  const c = props.c;
-  if (c) {
-    return (
-      <BouncyCheckbox
-        size={20}
-        fillColor={colourState}
-        unfillColor="#FFFFFF"
-        iconStyle={{ borderColor: colourState }}
-        isChecked={checkboxState}
-        onPress={() => setCheckboxState(!checkboxState)}
-      />
-    );
-  }
-  return null;
-}
-
 const groupthumbnailSource = {
   uri: 'http://samples.leanpub.com/thereactnativebook-sample.pdf',
   cache: true,
@@ -43,7 +24,6 @@ const groupthumbnailSource = {
 const GroupTile = ({
   id,
   name,
-  date,
   thumbnailSource,
   text,
   showCheck,
@@ -51,7 +31,7 @@ const GroupTile = ({
 }) => {
   const colourState = useSelector(selectColour);
   const buildGroup = () => {
-    return { id: id, text: text , name: name , date: date }
+    return { id: id, text: text , name: name }
   }
   return (
     <TouchableOpacity
@@ -71,12 +51,6 @@ const GroupTile = ({
           <View style={styles.groupName_box}>
             <Text style={styles.groupName}>{name}</Text>
           </View>
-          <View style={styles.groupDate_box}>
-            <Text style={styles.groupDate}>{date}</Text>
-          </View>
-        </View>
-        <View style={styles.corner_button}>
-          <DetermineTileCorner c={showCheck} a={buildGroup()}/>
         </View>
       </View>
     </TouchableOpacity>
@@ -145,28 +119,6 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     justifyContent: 'center',
     paddingTop: 15,
-  },
-  groupDate: {
-    color: '#667084ff',
-    textAlign: 'left',
-    letterSpacing: 0,
-    lineHeight: 20,
-    fontSize: 14,
-    fontWeight: '400',
-    fontStyle: 'normal',
-    fontFamily: 'System' /* Inter */,
-    paddingHorizontal: 0,
-    paddingVertical: 0,
-  },
-  groupDate_box: {
-    flexGrow: 1,
-    resizeMode: 'contain',
-    justifyContent: 'center',
-    paddingBottom: 15,
-  },
-  corner_button: {
-    padding: 10,
-    flex: 1,
   },
   groupTile_contents_not_thumbnail: {
     flex: 4,
