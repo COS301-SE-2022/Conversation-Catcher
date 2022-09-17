@@ -4,7 +4,6 @@ import {
   StyleSheet,
   Text,
   Image,
-  ImageBackground,
   TouchableOpacity,
   Alert,
   ScrollView,
@@ -21,6 +20,7 @@ import MemberTile from '../shared-components/member-tile/member-tile.js';
 export const GroupInfo = ({ navigation }) => {
 
     const [selectMode, setSelectMode] = useState(false);
+    const colourState = useSelector(selectColour);
 
   return (
     <View style={styles.groupPage}>
@@ -28,46 +28,54 @@ export const GroupInfo = ({ navigation }) => {
             <View style={styles.groupThumbnailBox}>
                 <Image
                     style={styles.groupThumbnail}
-                    source=''
+                    source={{
+                        uri:
+                        'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg',
+                    }}
                 />
             </View>
 
             <View style={styles.groupNameBox}>
                 <Text style={styles.groupName}>{'Group Name'}</Text>
             </View>
+
+            <View style={styles.groupTextBox}>
+                <Text style={styles.groupText}>{'Group Description'}</Text>
+            </View>
         </View>
 
         <View style={styles.buttonsGroup}>
             <View style={styles.leaveButtonBox}>
                 <TouchableOpacity style={styles.leaveButton}>
-
+                    
                 </TouchableOpacity>
             </View>
             <View style={styles.deleteButtonBox}>
                 <TouchableOpacity style={styles.deleteButton}>
-
+                    <Icon name="trash" size={20} color={colourState} />
                 </TouchableOpacity>
             </View>
         </View>
 
         <View style={styles.membersSection}>
-            <View style={styles.membersButtonsGroup}>
-                <View style={styles.inviteButtonBox}>
-                    <TouchableOpacity style={styles.invitebutton}>
-
-                    </TouchableOpacity>
+            <View style={styles.membersSectionHeader}>
+                <View style={styles.membersTitleBox}>
+                    <Text style={styles.membersTitle}>{'Members'}</Text>
                 </View>
-                <View style={styles.removeButtonBox}>
-                    <TouchableOpacity style={styles.removeButton}>
-
-                    </TouchableOpacity>
+                <View style={styles.membersButtonsGroup}> 
+                    <View style={styles.inviteButtonBox}>
+                        <TouchableOpacity style={styles.invitebutton}>
+                            <Icon name="plus" size={30} color={colourState} />
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.removeButtonBox}>
+                        <TouchableOpacity style={styles.removeButton}>
+                            <Icon name="minus" size={30} color={colourState} />
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </View>
 
-            <View style={styles.membersTitleBox}>
-                <Text style={styles.membersTitle}>{'Members'}</Text>
-            </View>
-            
             <View style={styles.searchBarGroup}>
                 <TextInput
                     style={styles.searchInput}
@@ -117,19 +125,25 @@ const styles = StyleSheet.create({
     marginLeft: 0,
     flexGrow: 1,
     marginRight: 0,
+    alignItems: 'center',
   },
   groupPageHeaderGroup: {
     flexGrow: 1,
     height: '30%',
+    padding: 15,
+    alignItems: 'center',
   },
   groupThumbnailBox: {
-    borderRadius: 100,
+    borderRadius: 180,
     backgroundColor: '#667084ff',
     aspectRatio: 1,
+    width: '25%',
+    margin: 10,
   },
   groupThumbnail: {
-    resizeMode: 'contain',
-    borderRadius: 100,
+    flexGrow: 1,
+    resizeMode: 'center',
+    borderRadius: 180,
   },
   groupNameBox: {
     alignContent: 'center',
@@ -146,8 +160,23 @@ const styles = StyleSheet.create({
     fontStyle: 'normal',
     fontFamily: 'System' /* Jaldi */,
   },
+  groupTextBox: {
+    alignContent: 'center',
+  },
+  groupText: {
+    color: '#667084ff',
+    textAlign: 'left',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 14,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+    paddingHorizontal: 0,
+    paddingVertical: 0,
+  },
   buttonsGroup: {
-
+    flexDirection: 'row',
   },
   leaveButtonBox: {
 
@@ -162,24 +191,38 @@ const styles = StyleSheet.create({
 
   },
   membersSection: {
+    
+  },
+  membersSectionHeader: {
+    flexDirection: 'row',
+    height: '10%',
+    width: '100%',
+  },
+  membersTitleBox: {
+    flexGrow: 1,
+    padding: 10,
+    alignContent: 'center',
+    alignItems: 'flex-start',
+  },
+  membersTitle: {
 
   },
+  membersButtonsGroup: {
+    flexShrink: 1,
+    flexDirection: 'row',
+    alignContent: 'center',
+    alignItems: 'center',
+  },
   inviteButtonBox: {
-
+    padding: 10,
   },
   invitebutton: {
 
   },
   removeButtonBox: {
-
+    padding: 10,
   },
   removeButton: {
-
-  },
-  membersTitleBox: {
-
-  },
-  membersTitle: {
 
   },
   searchBarGroup: {
