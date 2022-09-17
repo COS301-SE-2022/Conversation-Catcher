@@ -178,12 +178,31 @@ export const Groups = ({ navigation }) => {
           </View>
         </View>
       </View>
-
+{/* 
       <GroupDisplay
         navigation={navigation}
         selectMode={selectMode}
         ref={groupRef}
-      />
+      /> */}
+      <View style={styles.groupTiles}>
+        <GroupTile
+          key={'1'}
+          id={'1'}
+          name={'Group1'}
+          text={'test'}
+          groupSource={'groupRefresh'}
+          nav={navigation}
+        />
+        <GroupTile
+          key={'2'}
+          id={'2'}
+          name={'Group2'}
+          text={'blah'}
+          groupSource={'groupRefresh'}
+          nav={navigation}
+        />
+      </View>
+
 
       <View style={styles.viewAllBottomBar}>
         <TouchableOpacity
@@ -466,7 +485,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 5
   },
-  recentGroupTiles: {
+  groupTiles: {
     height: '70%',
     paddingLeft: 15,
     paddingRight: 15,
