@@ -12,56 +12,9 @@ import { useDispatch, useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { selectColour } from 'apps/client/src/app/slices/user.slice';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { toggleDown } from 'apps/client/src/app/slices/pdf.slice';
+import { toggleDown } from 'apps/client/src/app/slices/group.slice';
 import { gql, useLazyQuery, useMutation } from '@apollo/client';
 //import FileViewer from "react-native-file-viewer";
-
-function DownloadButtonState(props) {
-  const colourState = useSelector(selectColour);
-  const [downloadState, setDownloadState] = React.useState(props.d);
-  const dispatch = useDispatch();
-  //graphql syntax trees
-  const CHANGE_DOWNLOADED = gql`
-    mutation toggleDownload($id: String!) {
-      downloadedPDF(id: $id) {
-        id
-      }
-    }
-  `;
-  const [changeDownloaded] = useMutation(CHANGE_DOWNLOADED);
-  if (downloadState) {
-    return (
-      <Icon
-        onPress={
-          async () => {
-            setDownloadState(!downloadState);
-            dispatch(toggleDown(props.a));
-            var res = await changeDownloaded({ variables: { id: props.a.id }});
-          }
-        }
-        color={colourState}
-        name="save"
-        size={20}
-        container={TouchableOpacity}
-      />
-    );
-  }
-  return (
-    <Icon
-      onPress={
-        async () => {
-          setDownloadState(!downloadState);
-          dispatch(toggleDown(props.a));
-          var res = await changeDownloaded({ variables: { id: props.a.id }});
-        }
-      }
-      color={colourState}
-      name="cloud"
-      size={20}
-      container={TouchableOpacity}
-    />
-  );
-}
 
 function DetermineTileCorner(props) {
   const colourState = useSelector(selectColour);
@@ -92,14 +45,13 @@ const GroupTile = ({
   name,
   date,
   thumbnailSource,
-  downloaded,
   text,
   showCheck,
   nav,
 }) => {
   const colourState = useSelector(selectColour);
-  const buildPDF = () => {
-    return { id: id, text: text , name: name , downloaded: downloaded, date: date }
+  const buildGroup = () => {
+    return { id: id, text: text , name: name , date: date }
   }
   return (
     <TouchableOpacity
@@ -123,8 +75,8 @@ const GroupTile = ({
             <Text style={styles.groupDate}>{date}</Text>
           </View>
         </View>
-        <View style={styles.download_button}>
-          <DetermineTileCorner d={downloaded} c={showCheck} a={buildPDF()}/>
+        <View style={styles.corner_button}>
+          <DetermineTileCorner c={showCheck} a={buildGroup()}/>
         </View>
       </View>
     </TouchableOpacity>
@@ -212,7 +164,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingBottom: 15,
   },
-  download_button: {
+  corner_button: {
     padding: 10,
     flex: 1,
   },
