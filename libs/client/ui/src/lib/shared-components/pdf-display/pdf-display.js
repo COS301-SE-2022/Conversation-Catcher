@@ -53,7 +53,7 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
     if (localPDFs.length !== 0)
     return (
       <ScrollView style={styles.recentPdfTiles}>
-        <Loading width={250} height={250}/>
+        <Loading width={100} height={100}/>
         {localPDFs.map((item, key) => (
         <PdfTile
           key={key}
@@ -73,7 +73,7 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
     );
     else return(
       <ScrollView style={styles.recentPdfTiles}>
-        <Loading width={250} height={250}/>
+        <Loading width={100} height={100}/>
         <Text>No Documents Stored Locally</Text>
       </ScrollView>
     );
@@ -139,7 +139,8 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
       }
       dispatch(refillPDFs(tempArray));
     } 
-  } 
+  }
+  if (data.getPDFs.length !== 0)
   return (
     <ScrollView style={styles.recentPdfTiles}>
       {pdfLocalAccess.getPdfs().map((item, key) => (
@@ -158,6 +159,11 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
         />
       ))}
     </ScrollView>
+  );
+  else return(
+    <ScrollView style={styles.recentPdfTiles}>
+        <Text>This account has no documents yet!</Text>
+      </ScrollView>
   );
 }
 export default forwardRef(PdfDisplay);
