@@ -161,7 +161,7 @@ export const Groups = ({ navigation }) => {
     <View style={styles.groupsPage}>
       <View style={styles.groupsTopBar}>
         <View style={styles.big_title_box}>
-          <Text style={styles.big_title}>{'PDFs'}</Text>
+          <Text style={styles.big_title}>{'Groups'}</Text>
         </View>
 
         <View style={styles.searchBarGroup}>
