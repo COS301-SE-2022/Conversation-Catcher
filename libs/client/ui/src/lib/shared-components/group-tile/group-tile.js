@@ -83,12 +83,12 @@ function DetermineTileCorner(props) {
   return <DownloadButtonState d={props.d} a={props.a}/>;
 }
 
-const pdfthumbnailSource = {
+const groupthumbnailSource = {
   uri: 'http://samples.leanpub.com/thereactnativebook-sample.pdf',
   cache: true,
 };
 
-const PdfTile = ({
+const GroupTile = ({
   id,
   name,
   date,
@@ -96,7 +96,6 @@ const PdfTile = ({
   downloaded,
   text,
   showCheck,
-  pdfSource,
   nav,
 }) => {
   const colourState = useSelector(selectColour);
@@ -105,24 +104,24 @@ const PdfTile = ({
   }
   return (
     <TouchableOpacity
-      style={styles.pdfTile}
+      style={styles.groupTile}
       onPress={() =>
-        nav.navigate('PdfView', { id: { id }, text: { text }, name: { name } })
+        nav.navigate('GroupPdfView', { id: { id }, text: { text }, name: { name } })
       }
     >
       <View style={[styles.thumbnail_containter, { borderColor: colourState }]}>
         <ImageBackground
-          style={styles.pdfThumbnail}
+          style={styles.groupThumbnail}
           //thumbnailSource={thumbnailSource}
         />
       </View>
-      <View style={styles.pdfTile_contents_not_thumbnail}>
-        <View style={styles.pdfTile_contents_not_thumbnail_inner}>
-          <View style={styles.pdfName_box}>
-            <Text style={styles.pdfName}>{name}</Text>
+      <View style={styles.groupTile_contents_not_thumbnail}>
+        <View style={styles.groupTile_contents_not_thumbnail_inner}>
+          <View style={styles.groupName_box}>
+            <Text style={styles.groupName}>{name}</Text>
           </View>
-          <View style={styles.pdfDate_box}>
-            <Text style={styles.pdfDate}>{date}</Text>
+          <View style={styles.groupDate_box}>
+            <Text style={styles.groupDate}>{date}</Text>
           </View>
         </View>
         <View style={styles.download_button}>
@@ -133,10 +132,10 @@ const PdfTile = ({
   );
 };
 
-export default PdfTile;
+export default GroupTile;
 
 const styles = StyleSheet.create({
-  pdfTile: {
+  groupTile: {
     flexGrow: 1,
     borderRadius: 5,
     borderStyle: 'solid',
@@ -160,26 +159,26 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     aspectRatio: 1 / 1.4142,
   },
-  pdfThumbnail: {
+  groupThumbnail: {
     resizeMode: 'contain',
     borderRadius: 5,
   },
-  pdfTileInfo: {
+  groupTileInfo: {
     flexGrow: 1,
     flexDirection: 'row',
   },
-  pdfTileInfo_item: {
+  groupTileInfo_item: {
     flexGrow: 0,
     flexShrink: 1,
   },
-  pdfTileText: {
+  groupTileText: {
     flexGrow: 1,
   },
-  pdfTileText_item: {
+  groupTileText_item: {
     flexGrow: 0,
     flexShrink: 1,
   },
-  pdfName: {
+  groupName: {
     color: '#344053ff',
     textAlign: 'left',
     letterSpacing: 0,
@@ -190,13 +189,13 @@ const styles = StyleSheet.create({
     fontFamily: 'System' /* Inter */,
     paddingHorizontal: 0,
   },
-  pdfName_box: {
+  groupName_box: {
     flexGrow: 1,
     resizeMode: 'contain',
     justifyContent: 'center',
     paddingTop: 15,
   },
-  pdfDate: {
+  groupDate: {
     color: '#667084ff',
     textAlign: 'left',
     letterSpacing: 0,
@@ -208,7 +207,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0,
     paddingVertical: 0,
   },
-  pdfDate_box: {
+  groupDate_box: {
     flexGrow: 1,
     resizeMode: 'contain',
     justifyContent: 'center',
@@ -218,12 +217,12 @@ const styles = StyleSheet.create({
     padding: 10,
     flex: 1,
   },
-  pdfTile_contents_not_thumbnail: {
+  groupTile_contents_not_thumbnail: {
     flex: 4,
     justifyContent: 'center',
     flexDirection: 'row',
   },
-  pdfTile_contents_not_thumbnail_inner: {
+  groupTile_contents_not_thumbnail_inner: {
     marginTop: 0,
     marginBottom: 0,
     marginLeft: 5,
