@@ -21,15 +21,48 @@ export const GroupInfo = ({ navigation }) => {
 
   return (
     <View style={styles.groupPage}>
-        <View style={styles.groupThumbnailContainer}>
+        <View style={styles.groupThumbnailBox}>
             <Image
                 style={styles.groupThumbnail}
                 source=''
             />
         </View>
 
-        <View style={styles.groupNameContainer}>
+        <View style={styles.groupNameBox}>
             <Text style={styles.groupName}>{'Group Name'}</Text>
+        </View>
+
+        <View style={styles.buttonsGroup}>
+
+        </View>
+
+        <View style={styles.membersSection}>
+            <View style={styles.inviteButtonBox}>
+                <TouchableOpacity style={styles.invitebutton}>
+
+                </TouchableOpacity>
+            </View>
+            <View style={styles.removeButtonBox}>
+                <TouchableOpacity style={styles.removeButton}>
+
+                </TouchableOpacity>
+            </View>
+            <View style={styles.searchBarGroup}>
+                <TextInput
+                    style={styles.searchInput}
+                    placeholder="Search"
+                    onChangeText={(text) => {
+                    //groupLocalAccess.filterGroups(text);
+                    //groupRef.current.refreshPfds();
+                    }}
+                />
+                <View style={styles.searchIconFrame}>
+                    <Icon color="#667084ff" name="search" size={24} />
+                </View>
+            </View>
+            <View style={styles.membersTitleBox}>
+                <Text style={styles.membersTitle}>{'Members'}</Text>
+            </View>
         </View>
       
     </View>
@@ -46,17 +79,94 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     marginRight: 0,
   },
-  groupThumbnailContainer: {
+  groupThumbnailBox: {
 
   },
   groupThumbnail: {
 
   },
-  groupNameContainer: {
+  groupNameBox: {
 
   },
   groupName: {
 
   },
+  buttonsGroup: {
+
+  },
+  leaveButtonBox: {
+
+  },
+  leaveButton: {
+
+  },
+  deleteButtonBox: {
+
+  },
+  deleteButton: {
+
+  },
+  membersSection: {
+
+  },
+  inviteButtonBox: {
+
+  },
+  invitebutton: {
+
+  },
+  removeButtonBox: {
+
+  },
+  removeButton: {
+
+  },
+  membersTitleBox: {
+
+  },
+  membersTitle: {
+
+  },
+  searchBarGroup: {
+    width: '85%',
+    flexShrink: 1,
+    marginVertical: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    minHeight: 38,
+    backgroundColor: '#ffffffff',
+    borderRadius: 8,
+    borderStyle: 'solid',
+    borderColor: '#d0d5ddff',
+    borderWidth: 1,
+    elevation: 2,
+    shadowColor: '#000000',
+    shadowRadius: 2.5,
+    shadowOpacity: 0.2,
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+  },
+  searchInput: {
+    backgroundColor: '#ffffffff',
+    borderRadius: 8,
+    color: '#667084ff',
+    textAlign: 'left',
+    letterSpacing: 0,
+    lineHeight: 24,
+    fontSize: 16,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+    padding: 5,
+    flexGrow: 1,
+  },
+  searchIconFrame: {
+    resizeMode: 'contain',
+    paddingHorizontal: 10,
+    paddingVertical: 5
+  },
+  
   
 });
