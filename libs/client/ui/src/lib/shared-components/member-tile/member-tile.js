@@ -35,44 +35,27 @@ function DetermineTileCorner(props) {
   return null;
 }
 
-const memberthumbnailSource = {
-  uri: 'http://samples.leanpub.com/thereactnativebook-sample.pdf',
-  cache: true,
-};
-
 const MemberTile = ({
   id,
   name,
-  date,
-  thumbnailSource,
-  text,
   showCheck,
   nav,
 }) => {
   const colourState = useSelector(selectColour);
   const buildMember = () => {
-    return { id: id, text: text , name: name , date: date }
+    return { id: id, name: name }
   }
   return (
     <TouchableOpacity
       style={styles.memberTile}
       onPress={() =>
-        nav.navigate('ViewPdfs', { id: { id }, text: { text }, name: { name } })
+        nav.navigate('ViewPdfs', { id: { id }, name: { name } })
       }
     >
-      <View style={[styles.thumbnail_containter, { borderColor: colourState }]}>
-        <ImageBackground
-          style={styles.memberThumbnail}
-          //thumbnailSource={thumbnailSource}
-        />
-      </View>
       <View style={styles.memberTile_contents_not_thumbnail}>
         <View style={styles.memberTile_contents_not_thumbnail_inner}>
           <View style={styles.memberName_box}>
             <Text style={styles.memberName}>{name}</Text>
-          </View>
-          <View style={styles.memberDate_box}>
-            <Text style={styles.memberDate}>{date}</Text>
           </View>
         </View>
         <View style={styles.corner_button}>
@@ -145,24 +128,6 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     justifyContent: 'center',
     paddingTop: 15,
-  },
-  memberDate: {
-    color: '#667084ff',
-    textAlign: 'left',
-    letterSpacing: 0,
-    lineHeight: 20,
-    fontSize: 14,
-    fontWeight: '400',
-    fontStyle: 'normal',
-    fontFamily: 'System' /* Inter */,
-    paddingHorizontal: 0,
-    paddingVertical: 0,
-  },
-  memberDate_box: {
-    flexGrow: 1,
-    resizeMode: 'contain',
-    justifyContent: 'center',
-    paddingBottom: 15,
   },
   corner_button: {
     padding: 10,
