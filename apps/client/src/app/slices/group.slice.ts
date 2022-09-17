@@ -2,27 +2,27 @@ import {
   createSlice,
 } from '@reduxjs/toolkit';
 
-export const PDF = 'pdf';
+export const Group = 'group';
 
-export const pdfSlice = createSlice({
-  name: PDF,
+export const groupSlice = createSlice({
+  name: Group,
   initialState: [],
   reducers: {
-    addPDF: (state,action) => {
+    addGroup: (state,action) => {
       state.push(action.payload);
       return state;
     },
-    removePDF: (state,action) => {
+    removeGroup: (state,action) => {
       state.forEach((item,index) => {
         if (item.id === action.payload.id) state.splice(index,1)
       })
       return state;
     },
-    clearPDFs: (state,action) => {
+    clearGroups: (state,action) => {
       state = [];
       return state;
     },
-    refillPDFs: (state,action) => {
+    refillGroups: (state,action) => {
       state = action.payload;
       return state;
     },
@@ -50,8 +50,8 @@ export const pdfSlice = createSlice({
   },
 });
 
-export const {actions, reducer} = pdfSlice;
+export const {actions, reducer} = groupSlice;
 
-export const {addPDF, removePDF, clearPDFs, refillPDFs, toggleDown, changeName} = actions;
+export const {addGroup, removeGroup, clearGroups, refillGroups, toggleDown, changeName} = actions;
 
-export const selectPDFS = (state) => state.pdf;
+export const selectGroupS = (state) => state.group;
