@@ -20,7 +20,6 @@ export class UserManagementApiFeatureResolver {
   private errorObj;
 
   setResult(result) {
-    console.log(result);
     const user = new UserEntity();
     user.email = result.email;
     user.colour = result.colour;

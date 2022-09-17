@@ -234,14 +234,20 @@ export const Home = ({ navigation }) => {
     console.log(state.recording);
     if (!state.recording) return;
     console.log('stop record');
-    // state.audioFile = await AudioRecord.stop();
     //file containing audiofile
-    // console.log(
-    //   await summariseText({
-    //     variables: { text: (await speechToText()).data.ConvertSpeech },
-    //   })
-    // );
+    componentDidMount();
+    state.audioFile = false;
+    state.recording = false;
+    AudioRecord.stop().then((res) => {
+      console.log(res);
+      convertSpeech(res);
+    }).catch((error) => {
+      console.log(error);
+    })
+  };
 
+  const convertSpeech = (audio_path) => {
+    console.log("starting", audio_path);
     fetch('http://localhost:5050/stt', {
       method: 'POST',
       headers: {
@@ -249,13 +255,18 @@ export const Home = ({ navigation }) => {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
       },
-      body: JSON.stringify({ audio_path: '../huggingface/input-audio.wav' }),
+      body: JSON.stringify({ audio_path: audio_path }),
     })
       .then(async (res) => {
+        console.log(await res.json());
         if (res.ok) {
           const result = await res.json();
           const newPdf = await addPdf({
-            variables: { email: emailState, name: '', text: result.converted_text },
+            variables: {
+              email: emailState,
+              name: '',
+              text: result.converted_text,
+            },
           });
           pdfLocalAccess.addPdf({
             name: newPdf.data.addPDF.name,
@@ -267,14 +278,9 @@ export const Home = ({ navigation }) => {
           });
           NativeAppEventEmitter.emit('updatePage');
           dispatch(addPDF(newPdf.data.addPDF.id));
-
         } else console.log('Connection error: internet connection is required');
       })
       .catch((e) => console.log(e));
-    // console.log('audioFile', state.audioFile);
-    componentDidMount();
-    state.audioFile = false;
-    state.recording = false;
   };
 
   componentDidMount();
@@ -347,7 +353,7 @@ export const Home = ({ navigation }) => {
           <TouchableOpacity
             style={styles.recordingStopModalButton}
             onPress={async () => {
-              console.log('pressed');
+              // Convert speech to text
               stop();
               setRecordAudioState(false);
               setRecordingStopVisible(false);
@@ -397,6 +403,7 @@ export const Home = ({ navigation }) => {
           <TouchableOpacity
             style={styles.recordingStopModalButton}
             onPress={() => {
+              // Discard recording
               stop();
               setRecordAudioState(false);
               setRecordingStopVisible(false);
