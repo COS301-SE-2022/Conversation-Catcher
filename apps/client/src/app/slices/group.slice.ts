@@ -54,4 +54,4 @@ export const {actions, reducer} = groupSlice;
 
 export const {addGroup, removeGroup, clearGroups, refillGroups, toggleDown, changeName} = actions;
 
-export const selectGroupS = (state) => state.group;
+export const selectGroups = (state) => state.group;
