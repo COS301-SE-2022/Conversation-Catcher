@@ -40,7 +40,7 @@ export const GroupInfo = ({ navigation }) => {
             </View>
             <View style={styles.deleteButtonBox}>
                 <TouchableOpacity style={styles.deleteButton}>
-                    
+
                 </TouchableOpacity>
             </View>
         </View>
@@ -58,6 +58,10 @@ export const GroupInfo = ({ navigation }) => {
                     </TouchableOpacity>
                 </View>
             </View>
+
+            <View style={styles.membersTitleBox}>
+                <Text style={styles.membersTitle}>{'Members'}</Text>
+            </View>
             
             <View style={styles.searchBarGroup}>
                 <TextInput
@@ -73,8 +77,8 @@ export const GroupInfo = ({ navigation }) => {
                 </View>
             </View>
 
-            <View style={styles.membersTitleBox}>
-                <Text style={styles.membersTitle}>{'Members'}</Text>
+            <View style={styles.groupMembersBox}>
+
             </View>
         </View>
       
@@ -180,6 +184,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 5
   },
-  
+  groupMembersBox: {
+
+  },
   
 });
