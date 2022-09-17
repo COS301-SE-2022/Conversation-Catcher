@@ -22,7 +22,7 @@ import { useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { selectColour } from 'apps/client/src/app/slices/user.slice';
 
-export const ViewAll = ({ navigation }) => {
+export const Groups = ({ navigation }) => {
   const pdfRef = useRef();
   const colourState = useSelector(selectColour);
   const [moreVisible, setMoreVisible] = useState(false);
@@ -158,8 +158,8 @@ export const ViewAll = ({ navigation }) => {
   // }
 
   return (
-    <View style={styles.viewAllPage}>
-      <View style={styles.viewAllTopBar}>
+    <View style={styles.groupsPage}>
+      <View style={styles.groupsTopBar}>
         <View style={styles.big_title_box}>
           <Text style={styles.big_title}>{'PDFs'}</Text>
         </View>
@@ -380,7 +380,7 @@ export const ViewAll = ({ navigation }) => {
 export default ViewAll;
 
 const styles = StyleSheet.create({
-  viewAllPage: {
+  groupsPage: {
     backgroundColor: '#ffffffff',
     marginTop: 0,
     marginBottom: 0,
@@ -388,7 +388,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     marginRight: 0,
   },
-  viewAllTopBar: {
+  groupsTopBar: {
     width: '100%',
     flexShrink: 1,
     resizeMode: 'contain',
