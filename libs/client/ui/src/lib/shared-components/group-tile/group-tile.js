@@ -26,7 +26,6 @@ const GroupTile = ({
   name,
   thumbnailSource,
   text,
-  showCheck,
   nav,
 }) => {
   const colourState = useSelector(selectColour);
