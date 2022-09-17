@@ -3,7 +3,7 @@ import React, { useImperativeHandle, forwardRef, useState } from 'react';
 import { Text, ScrollView, StyleSheet, DeviceEventEmitter } from 'react-native';
 import Loading from '../loading/loading';
 // import LocalPdfsAccess from '../local-pdfs-access/local-pdfs-access';
-import PdfTile from '../pdf-tile/pdf-tile';
+import GroupTile from '../group-tile/group-tile';
 import pdfLocalAccess from '../local-pdfs-access/local-pdfs-access';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { selectEmail} from 'apps/client/src/app/slices/user.slice';
@@ -11,7 +11,7 @@ import { selectEmail} from 'apps/client/src/app/slices/user.slice';
 import { selectPDFS, refillPDFs } from 'apps/client/src/app/slices/pdf.slice';
 import { useSelector, useDispatch } from 'react-redux';
 
-export function PdfDisplay({ navigation, selectMode }, ref) {
+export function GroupDisplay({ navigation, selectMode }, ref) {
   // const [selectMode, setSelectMode] = useState(false);
   const [didReload, setDidReload] = useState(true);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -52,7 +52,7 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
     return (
       <ScrollView style={styles.recentPdfTiles}>
         {localPDFs.map((item, key) => (
-        <PdfTile
+        <GroupTile
           key={key}
           id={item.id}
           name={item.name}
@@ -112,7 +112,7 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
   return (
     <ScrollView style={styles.recentPdfTiles}>
       {pdfLocalAccess.getPdfs().map((item, key) => (
-        <PdfTile
+        <GroupTile
           key={key}
           id={item.id}
           name={item.name}
@@ -129,7 +129,7 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
     </ScrollView>
   );
 }
-export default forwardRef(PdfDisplay);
+export default forwardRef(GroupDisplay);
 
 const styles = StyleSheet.create({
   recentPdfTiles: {
