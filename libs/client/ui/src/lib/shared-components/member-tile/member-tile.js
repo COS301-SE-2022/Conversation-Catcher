@@ -49,7 +49,7 @@ const MemberTile = ({
     <TouchableOpacity
       style={styles.memberTile}
       onPress={() =>
-        nav.navigate('ViewPdfs', { id: { id }, name: { name } })
+        nav.navigate('GroupInfo', { id: { id }, name: { name } })
       }
     >
       <View style={styles.memberTile_contents_not_thumbnail}>
