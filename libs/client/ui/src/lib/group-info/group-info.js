@@ -84,19 +84,19 @@ export const GroupInfo = ({ navigation }) => {
 
             <ScrollView style={styles.groupMembersBox}>
                 <MemberTile
-                    key={''}
+                    key={'1'}
                     id={'1'}
                     name={'member1@gmail.com'}
                     showCheck={selectMode}
                 />
                 <MemberTile
-                    key={''}
+                    key={'2'}
                     id={'2'}
                     name={'member2@gmail.com'}
                     showCheck={selectMode}
                 />
                 <MemberTile
-                    key={''}
+                    key={'3'}
                     id={'3'}
                     name={'member3@gmail.com'}
                     showCheck={selectMode}
