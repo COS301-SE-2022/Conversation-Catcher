@@ -43,7 +43,7 @@ export const Home = ({ navigation }) => {
   const [uploadVisible, setUploadVisible] = useState(false);
   const [fileSelected, setFileSelected] = useState(false);
   const [state, setState] = useState({
-    audioFile: '',
+    chunks: [],
     recording: false,
     loaded: false,
     paused: true,
@@ -197,9 +197,7 @@ export const Home = ({ navigation }) => {
     AudioRecord.init(options);
 
     AudioRecord.on('data', (data) => {
-      const chunk = Buffer.from(data, 'base64');
-      console.log('chunk size', chunk.byteLength);
-      // do something with audio chunk
+      state.chunks.push(data);
     });
   };
 
@@ -222,12 +220,19 @@ export const Home = ({ navigation }) => {
   //var sound = null;
 
   const start = () => {
-    console.log('start record');
-    state.audioFile = '';
-    state.recording = true;
-    state.loaded = false;
-    console.log(state.recording);
-    AudioRecord.start();
+    state.chunks.length = 0;
+    componentDidMount()
+      .then(() => {
+        console.log('start record');
+        state.audioFile = '';
+        state.recording = true;
+        state.loaded = false;
+        console.log(state.recording);
+        AudioRecord.start();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const stop = async () => {
@@ -235,19 +240,12 @@ export const Home = ({ navigation }) => {
     if (!state.recording) return;
     console.log('stop record');
     //file containing audiofile
-    componentDidMount();
     state.audioFile = false;
     state.recording = false;
-    AudioRecord.stop().then((res) => {
-      console.log(res);
-      convertSpeech(res);
-    }).catch((error) => {
-      console.log(error);
-    })
+    AudioRecord.stop();
   };
 
-  const convertSpeech = (audio_path) => {
-    console.log("starting", audio_path);
+  const convertSpeech = () => {
     fetch('http://localhost:5050/stt', {
       method: 'POST',
       headers: {
@@ -255,35 +253,38 @@ export const Home = ({ navigation }) => {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
       },
-      body: JSON.stringify({ audio_path: audio_path }),
+      body: JSON.stringify({
+        audio_path: 'audio_path',
+        audio_chunks: state.chunks,
+      }),
     })
       .then(async (res) => {
-        console.log(await res.json());
         if (res.ok) {
           const result = await res.json();
-          const newPdf = await addPdf({
-            variables: {
-              email: emailState,
-              name: '',
-              text: result.converted_text,
-            },
-          });
-          pdfLocalAccess.addPdf({
-            name: newPdf.data.addPDF.name,
-            creationDate: newPdf.data.addPDF.creationDate,
-            downloaded: newPdf.data.addPDF.downloaded,
-            pdf: newPdf.data.addPDF.pdf,
-            text: newPdf.data.addPDF.text,
-            id: newPdf.data.addPDF.id,
-          });
-          NativeAppEventEmitter.emit('updatePage');
-          dispatch(addPDF(newPdf.data.addPDF.id));
+          console.log(result);
+          // const newPdf = await addPdf({
+          //   variables: {
+          //     email: emailState,
+          //     name: '',
+          //     text: result.converted_text,
+          //   },
+          // });
+          // pdfLocalAccess.addPdf({
+          //   name: newPdf.data.addPDF.name,
+          //   creationDate: newPdf.data.addPDF.creationDate,
+          //   downloaded: newPdf.data.addPDF.downloaded,
+          //   pdf: newPdf.data.addPDF.pdf,
+          //   text: newPdf.data.addPDF.text,
+          //   id: newPdf.data.addPDF.id,
+          // });
+          // NativeAppEventEmitter.emit('updatePage');
+          // dispatch(addPDF(newPdf.data.addPDF.id));
         } else console.log('Connection error: internet connection is required');
       })
       .catch((e) => console.log(e));
   };
 
-  componentDidMount();
+  // componentDidMount();
   return (
     <View style={styles.home}>
       <View style={styles.big_title_box}>
@@ -355,6 +356,7 @@ export const Home = ({ navigation }) => {
             onPress={async () => {
               // Convert speech to text
               stop();
+              convertSpeech();
               setRecordAudioState(false);
               setRecordingStopVisible(false);
             }}
