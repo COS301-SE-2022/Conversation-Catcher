@@ -223,11 +223,11 @@ export const Home = ({ navigation }) => {
     state.chunks.length = 0;
     componentDidMount()
       .then(() => {
-        console.log('start record');
+        // console.log('start record');
         state.audioFile = '';
         state.recording = true;
         state.loaded = false;
-        console.log(state.recording);
+        // console.log(state.recording);
         AudioRecord.start();
       })
       .catch((error) => {
@@ -236,9 +236,9 @@ export const Home = ({ navigation }) => {
   };
 
   const stop = async () => {
-    console.log(state.recording);
+    // console.log(state.recording);
     if (!state.recording) return;
-    console.log('stop record');
+    // console.log('stop record');
     //file containing audiofile
     state.audioFile = false;
     state.recording = false;
@@ -262,23 +262,23 @@ export const Home = ({ navigation }) => {
         if (res.ok) {
           const result = await res.json();
           console.log(result);
-          // const newPdf = await addPdf({
-          //   variables: {
-          //     email: emailState,
-          //     name: '',
-          //     text: result.converted_text,
-          //   },
-          // });
-          // pdfLocalAccess.addPdf({
-          //   name: newPdf.data.addPDF.name,
-          //   creationDate: newPdf.data.addPDF.creationDate,
-          //   downloaded: newPdf.data.addPDF.downloaded,
-          //   pdf: newPdf.data.addPDF.pdf,
-          //   text: newPdf.data.addPDF.text,
-          //   id: newPdf.data.addPDF.id,
-          // });
-          // NativeAppEventEmitter.emit('updatePage');
-          // dispatch(addPDF(newPdf.data.addPDF.id));
+          const newPdf = await addPdf({
+            variables: {
+              email: emailState,
+              name: '',
+              text: result.converted_text,
+            },
+          });
+          pdfLocalAccess.addPdf({
+            name: newPdf.data.addPDF.name,
+            creationDate: newPdf.data.addPDF.creationDate,
+            downloaded: newPdf.data.addPDF.downloaded,
+            pdf: newPdf.data.addPDF.pdf,
+            text: newPdf.data.addPDF.text,
+            id: newPdf.data.addPDF.id,
+          });
+          NativeAppEventEmitter.emit('updatePage');
+          dispatch(addPDF(newPdf.data.addPDF.id));
         } else console.log('Connection error: internet connection is required');
       })
       .catch((e) => console.log(e));
