@@ -1,10 +1,8 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
 export function Document(props) {
   return (
-    <View>
-      <Text>Welcome to Document!</Text>
-    </View>
+
   );
 }
 export default Document;
