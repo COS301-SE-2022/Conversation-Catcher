@@ -26,8 +26,25 @@ export class MongoDBAccess {
 
   //Create a new pdf and add it to the user with email specified in mail
   async addPdf(mail: string, name: string, text: string, date: Date) {
-    this.action = 'insertOne';
+    //First fetch the user
+    this.action = 'findOne';
     let data = JSON.stringify({
+      collection: this.userCollection,
+      database: this.db,
+      dataSource: this.cluster,
+      filter: { email: mail },
+    });
+
+    const r = await lastValueFrom(
+      this.httpService
+        .post(this.url + this.action, data, this.config)
+        .pipe(map((res) => res.data))
+    );
+
+    if (r.document == null) return null;
+
+    this.action = 'insertOne';
+    data = JSON.stringify({
       collection: this.pdfCollection,
       database: this.db,
       dataSource: this.cluster,
@@ -37,6 +54,7 @@ export class MongoDBAccess {
         text: text,
         pdf: null,
         downloaded: false,
+        tags: [],
       },
     });
 
@@ -56,22 +74,6 @@ export class MongoDBAccess {
       downloaded: false,
     };
 
-    //First fetch the user
-    this.action = 'findOne';
-    data = JSON.stringify({
-      collection: this.userCollection,
-      database: this.db,
-      dataSource: this.cluster,
-      filter: { email: mail },
-    });
-
-    const r = await lastValueFrom(
-      this.httpService
-        .post(this.url + this.action, data, this.config)
-        .pipe(map((res) => res.data))
-    );
-
-    if (r.document == null) return null;
     const arr = r.document.pdfs;
     arr.push(newId);
 
@@ -263,6 +265,27 @@ export class MongoDBAccess {
       this.httpService
         .post(this.url + this.action, data, this.config)
         .pipe(map((res) => res.data.document))
+    );
+  }
+
+  // Rename a pdf
+  async updateTags(id: string, tags: string[]) {
+    this.action = 'updateOne';
+    const data = JSON.stringify({
+      collection: this.pdfCollection,
+      database: this.db,
+      dataSource: this.cluster,
+      filter: { _id: { $oid: id } },
+      update: {
+        $set: { tags: tags },
+      },
+    });
+
+    //Updates the tags
+    return await lastValueFrom(
+      this.httpService
+        .post(this.url + this.action, data, this.config)
+        .pipe(map((res) => res.data))
     );
   }
 }

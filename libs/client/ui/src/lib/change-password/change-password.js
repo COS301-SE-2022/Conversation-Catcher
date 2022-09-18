@@ -12,11 +12,12 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectColour } from 'apps/client/src/app/slices/user.slice';
+import { selectColour, selectEmail } from 'apps/client/src/app/slices/user.slice';
 import auth from '@react-native-firebase/auth';
 
 export const ChangePassword = ({ navigation }) => {
   const colourState = useSelector(selectColour);
+  const emailState = useSelector(selectEmail);
   const [showMailHint, setShowMailHint] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [failedText, setFailedText] = useState(false);
@@ -31,27 +32,43 @@ export const ChangePassword = ({ navigation }) => {
       setErrorMessage('Password is required');
       return;
     }
-    if (password === checkPassword) {
-      var user = auth().currentUser;
-      user
-        .updatePassword(password.trim())
-        .then(() => {
-          setShowSuccessMessage(true);
-          setFailedText(false);
-        })
-        .catch((error) => {
-          setFailedText(true);
-          if (error.code === 'auth/weak-password')
-            setErrorMessage('Password has to be at least 6 digits');
-          else {
-            setErrorMessage('An error has occurred');
-            console.log(error);
-          }
-        });
-    } else {
+    if (password !== checkPassword) {
       setFailedText(true);
       setErrorMessage('Passwords do not match');
+      return;
     }
+    if (oldPassword === '') {
+      setFailedText(true);
+      setErrorMessage('Password is required to reauthenticate');
+      return;
+    }
+    auth()
+      .signInWithEmailAndPassword(emailState, password.trim())
+      .then(async () => {
+        const user = auth().currentUser;
+        user
+          .updatePassword(password.trim())
+          .then(() => {
+            setShowSuccessMessage(true);
+            setFailedText(false);
+          })
+          .catch((error) => {
+            setFailedText(true);
+            if (error.code === 'auth/weak-password')
+              setErrorMessage('Password has to be at least 6 digits');
+            else {
+              setErrorMessage('An error has occurred');
+              console.log(error);
+            }
+          });
+      })
+      .catch((error) => {
+        setFailedText(true);
+        setErrorMessage(
+          'Cannot re-authenticate: incorrect username or password'
+        );
+        return;
+      });
   }
 
   function MailHint() {
