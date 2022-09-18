@@ -5,10 +5,10 @@ import {
   Text,
   Image,
   TouchableOpacity,
-  Alert,
   ScrollView,
   TextInput,
 } from 'react-native';
+import { gql, useQuery, useMutation } from '@apollo/client';
 import ModalDropdown from 'react-native-modal-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
@@ -16,12 +16,53 @@ import Share from 'react-native-share';
 import { useSelector } from 'react-redux';
 import { selectColour } from 'apps/client/src/app/slices/user.slice';
 import MemberTile from '../shared-components/member-tile/member-tile.js';
+import groupsLocalAccess from '../shared-components/local-groups-access/local-groups-access';
 
 export const GroupInfo = ({ navigation }) => {
 
     const [selectMode, setSelectMode] = useState(false);
     const colourState = useSelector(selectColour);
     const [adminState, setAdminState] = useState(true);
+    const [renameVisible, setRenameVisible] = useState(false);
+    const [deleteConfirmVisible, setDeleteConfirmVisible] = useState(false);
+    const [newName, setNewName] = useState('');
+
+    const RENAME = gql`
+    mutation setName($id: String!, $name: String!) {
+      renameGroup(id: $id, name: $name) {
+        id
+        name
+        downloaded
+      }
+    }
+  `;
+
+  const DELETE = gql`
+    mutation delete($id: String!) {
+      deleteGroup(id: $id) {
+        id
+        name
+        text
+      }
+    }
+  `;
+
+  const [rename] = useMutation(RENAME);
+  const [delete_group] = useMutation(DELETE);
+
+  async function renamePdf() {
+    console.log(id);
+    name.name = newName;
+    groupLocalAccess.renamePdf(id.id, newName);
+    await rename({ variables: { id: id.id, name: newName } });
+    dispatch(changeName({ id: id.id, name: newName }));
+  }
+
+  async function deletePdf() {
+    groupLocalAccess.deletePdf(id.id);
+    await delete_group({ variables: { id: id.id } });
+    dispatch(removeGroup({ id: id.id }));
+  }
 
     function AdminGroupButtons(){
         if(adminState){
@@ -63,6 +104,26 @@ export const GroupInfo = ({ navigation }) => {
         return null;
     }
 
+    function ConditionalGroupName(){
+      if(adminState){
+        return (
+          <TouchableOpacity 
+            style={styles.groupNameBox}
+            onPress={() => {
+
+            }}
+          >
+              <Text style={styles.groupName}>{'Group Name'}</Text>
+          </TouchableOpacity>
+        )
+      }
+      return (
+        <View style={styles.groupNameBox}>
+            <Text style={styles.groupName}>{'Group Name'}</Text>
+        </View>
+      )
+    }
+
   return (
     <View style={styles.groupPage}>
         <View style={styles.groupPageHeaderGroup}>
@@ -76,12 +137,10 @@ export const GroupInfo = ({ navigation }) => {
                 />
             </View>
 
-            <View style={styles.groupNameBox}>
-                <Text style={styles.groupName}>{'Group Name'}</Text>
-            </View>
+            <ConditionalGroupName/>
 
             <View style={styles.groupTextBox}>
-                <Text style={styles.groupText}>{'Group Description'}</Text>
+                <Text style={styles.groupText} numberOfLines={2}>{'Group Description'}</Text>
             </View>
         </View>
 
@@ -130,6 +189,15 @@ export const GroupInfo = ({ navigation }) => {
                 />
             </ScrollView>
         </View>
+
+        <View style={styles.groupPageFooter}>
+            <TouchableOpacity
+                style={styles.backButton}
+                onPress={() => navigation.navigate('Groups')}
+            >
+                <Icon name="angle-left" color={colourState} size={30}/>
+            </TouchableOpacity>
+        </View>
       
     </View>
   );
@@ -148,7 +216,7 @@ const styles = StyleSheet.create({
   },
   groupPageHeaderGroup: {
     flexGrow: 1,
-    height: '30%',
+    height: '25%',
     padding: 15,
     alignItems: 'center',
   },
@@ -216,16 +284,16 @@ const styles = StyleSheet.create({
     color: 'red',
   },
   membersSection: {
-    alignItems: 'center',
+    
   },
   membersSectionHeader: {
     flexDirection: 'row',
-    height: '10%',
+    flexShrink: 1,
     width: '100%',
   },
   membersTitleBox: {
     flexGrow: 1,
-    padding: 10,
+    margin: 10,
     alignContent: 'center',
     alignItems: 'flex-start',
   },
@@ -291,6 +359,20 @@ const styles = StyleSheet.create({
     paddingVertical: 5
   },
   groupMembersBox: {
-    width: '85%',
+    flexGrow: 1,
+    
   },
+  groupPageFooter: {
+    width: '100%',
+    flexShrink: 1,
+    alignContent: 'center',
+    alignItems: 'center',
+    height: '10%',
+    minHeight: 50,
+  },
+  backButton: {
+    alignContent: 'center',
+    alignItems: 'center',
+    flexShrink: 1,
+  }
 });
