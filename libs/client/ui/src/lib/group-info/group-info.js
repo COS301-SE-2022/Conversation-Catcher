@@ -13,10 +13,12 @@ import ModalDropdown from 'react-native-modal-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
 import Share from 'react-native-share';
-import { useSelector } from 'react-redux';
-import { selectColour } from 'apps/client/src/app/slices/user.slice';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectColour } from '../../../../../../../apps/client/src/app/slices/user.slice';
+import { changeName, removeGroup} from '../../../../../../../apps/client/src/app/slices/group.slice';
 import MemberTile from '../shared-components/member-tile/member-tile.js';
 import groupsLocalAccess from '../shared-components/local-groups-access/local-groups-access';
+
 
 export const GroupInfo = ({ navigation }) => {
 
@@ -26,6 +28,8 @@ export const GroupInfo = ({ navigation }) => {
     const [renameVisible, setRenameVisible] = useState(false);
     const [deleteConfirmVisible, setDeleteConfirmVisible] = useState(false);
     const [newName, setNewName] = useState('');
+    const dispatch = useDispatch();
+    
 
     const RENAME = gql`
     mutation setName($id: String!, $name: String!) {
@@ -50,16 +54,16 @@ export const GroupInfo = ({ navigation }) => {
   const [rename] = useMutation(RENAME);
   const [delete_group] = useMutation(DELETE);
 
-  async function renamePdf() {
+  async function renameGroup() {
     console.log(id);
     name.name = newName;
-    groupLocalAccess.renamePdf(id.id, newName);
+    groupsLocalAccess.renameGroup(id.id, newName);
     await rename({ variables: { id: id.id, name: newName } });
     dispatch(changeName({ id: id.id, name: newName }));
   }
 
-  async function deletePdf() {
-    groupLocalAccess.deletePdf(id.id);
+  async function deleteGroup() {
+    groupsLocalAccess.deleteGroup(id.id);
     await delete_group({ variables: { id: id.id } });
     dispatch(removeGroup({ id: id.id }));
   }
