@@ -26,6 +26,7 @@ export const GroupInfo = ({ route, navigation }) => {
     const [adminState, setAdminState] = useState(true);
     const [renameVisible, setRenameVisible] = useState(false);
     const [deleteConfirmVisible, setDeleteConfirmVisible] = useState(false);
+    const [leaveConfirmVisible, setLeaveConfirmVisible] = useState(false);
     const [newName, setNewName] = useState('');
     const dispatch = useDispatch();
 
@@ -73,12 +74,22 @@ export const GroupInfo = ({ route, navigation }) => {
             return (
                 <View style={styles.buttonsGroup}>
                     <View style={styles.leaveButtonBox}>
-                        <TouchableOpacity style={styles.leaveButton}>
+                        <TouchableOpacity 
+                          style={styles.leaveButton}
+                          onPress={() => {
+                            setLeaveConfirmVisible(true);
+                          }} 
+                        >
                             <Text style={styles.leaveButtonText}>Leave Group</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.deleteButtonBox}>
-                        <TouchableOpacity style={styles.deleteButton}>
+                        <TouchableOpacity 
+                          style={styles.deleteButton}
+                          onPress={() => {
+                            setDeleteConfirmVisible(true);
+                          }} 
+                        >
                             <Text style={styles.deleteButtonText}>Delete Group</Text>
                         </TouchableOpacity>
                     </View>
@@ -114,7 +125,7 @@ export const GroupInfo = ({ route, navigation }) => {
           <TouchableOpacity 
             style={styles.groupNameBox}
             onPress={() => {
-
+              setRenameVisible(true);
             }}
           >
               <Text style={styles.groupName} numberOfLines={1}>{name}</Text>
@@ -275,7 +286,51 @@ export const GroupInfo = ({ route, navigation }) => {
           >
             <View style={styles.renameModalButtonContent}>
               <View style={styles.renameModalButtonText_box}>
-                <Text style={styles.renameModalButtonText}>{'Delete'}</Text>
+                <Text style={styles.renameModalButtonText}>{'Delete Group'}</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </Modal>
+
+      <Modal
+        style={styles.modal}
+        isVisible={leaveConfirmVisible}
+        hasBackdrop={true}
+        backdropColor="white"
+        onBackdropPress={() => setLeaveConfirmVisible(false)}
+      >
+        <View style={styles.renameModalInner}>
+          <Text style={styles.modalTitle}>
+            {'Are you sure you want to leave ' + name.name + '?'}
+          </Text>
+          <TouchableOpacity
+            style={[styles.renameFileButton, { backgroundColor: colourState }]}
+            state={null}
+            onPress={() => {
+              setLeaveConfirmVisible(false);
+            }}
+          >
+            <View style={styles.renameModalButtonContent}>
+              <View style={styles.renameModalButtonText_box}>
+                <Text style={styles.renameModalButtonText}>{'Cancel'}</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.renameFileButton, { backgroundColor: colourState }]}
+            state={null}
+            onPress={() => {
+              // Delete the pdf
+              deletePdf();
+              setLeaveConfirmVisible(false);
+              navigation.goBack();
+              NativeAppEventEmitter.emit('updatePage');
+            }}
+          >
+            <View style={styles.renameModalButtonContent}>
+              <View style={styles.renameModalButtonText_box}>
+                <Text style={styles.renameModalButtonText}>{'Leave Group'}</Text>
               </View>
             </View>
           </TouchableOpacity>
