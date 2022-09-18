@@ -52,8 +52,19 @@ export const GroupInfo = ({ route, navigation }) => {
     }
   `;
 
+  const LEAVE = gql`
+    mutation leave($id: String!) {
+      leaveGroup(id: $id) {
+        id
+        name
+        text
+      }
+    }
+  `;
+
   const [rename] = useMutation(RENAME);
   const [delete_group] = useMutation(DELETE);
+  const [leave_group] = useMutation(LEAVE);
 
   async function renameGroup() {
     console.log(id);
@@ -69,54 +80,73 @@ export const GroupInfo = ({ route, navigation }) => {
     dispatch(removeGroup({ id: id.id }));
   }
 
+  async function leaveGroup() {
+    groupsLocalAccess.leaveGroup(id.id);
+    await leave_group({ variables: { id: id.id } });
+    dispatch(leaveGroup({ id: id.id }));
+  }
+
     function AdminGroupButtons(){
-        if(adminState){
-            return (
-                <View style={styles.buttonsGroup}>
-                    <View style={styles.leaveButtonBox}>
-                        <TouchableOpacity 
-                          style={styles.leaveButton}
-                          onPress={() => {
-                            setLeaveConfirmVisible(true);
-                          }} 
-                        >
-                            <Text style={styles.leaveButtonText}>Leave Group</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.deleteButtonBox}>
-                        <TouchableOpacity 
-                          style={styles.deleteButton}
-                          onPress={() => {
-                            setDeleteConfirmVisible(true);
-                          }} 
-                        >
-                            <Text style={styles.deleteButtonText}>Delete Group</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            )
-        }
-        return null;
+      if(adminState){
+        return (
+          <View style={styles.buttonsGroup}>
+            <View style={styles.leaveButtonBox}>
+              <TouchableOpacity 
+                style={styles.leaveButton}
+                onPress={() => {
+                  setLeaveConfirmVisible(true);
+                }} 
+              >
+                <Text style={styles.leaveButtonText}>Leave Group</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.deleteButtonBox}>
+              <TouchableOpacity 
+                style={styles.deleteButton}
+                onPress={() => {
+                  setDeleteConfirmVisible(true);
+                }} 
+              >
+                <Text style={styles.deleteButtonText}>Delete Group</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        )
+      }
+      return (
+        <View style={styles.buttonsGroup}>
+          <View style={styles.leaveButtonBox}>
+            <TouchableOpacity 
+              style={styles.leaveButton}
+              onPress={() => {
+                setLeaveConfirmVisible(true);
+              }} 
+            >
+              <Text style={styles.leaveButtonText}>Leave Group</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      )
     }
 
     function AdminMemberButtons(){
-        if(adminState){
-            return (
-                <View style={styles.membersButtonsGroup}> 
-                    <View style={styles.inviteButtonBox}>
-                        <TouchableOpacity style={styles.invitebutton}>
-                            <Icon name="plus" size={30} color={colourState} />
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.removeButtonBox}>
-                        <TouchableOpacity style={styles.removeButton}>
-                            <Icon name="minus" size={30} color={colourState} />
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            )
-        }
-        return null;
+      if(adminState){
+        return (
+          <View style={styles.membersButtonsGroup}> 
+            <View style={styles.inviteButtonBox}>
+              <TouchableOpacity style={styles.invitebutton}>
+                <Icon name="plus" size={30} color={colourState} />
+              </TouchableOpacity>
+            </View>
+            <View style={styles.removeButtonBox}>
+              <TouchableOpacity style={styles.removeButton}>
+                <Icon name="minus" size={30} color={colourState} />
+              </TouchableOpacity>
+            </View>
+          </View>
+        )
+      }
+      return null;
     }
 
     function ConditionalGroupName(){
@@ -128,13 +158,13 @@ export const GroupInfo = ({ route, navigation }) => {
               setRenameVisible(true);
             }}
           >
-              <Text style={styles.groupName} numberOfLines={1}>{name}</Text>
+              <Text style={styles.groupName} numberOfLines={1}>{name.name}</Text>
           </TouchableOpacity>
         )
       }
       return (
         <View style={styles.groupNameBox}>
-            <Text style={styles.groupName} numberOfLines={1}>{name}</Text>
+            <Text style={styles.groupName} numberOfLines={1}>{name.name}</Text>
         </View>
       )
     }
@@ -155,7 +185,7 @@ export const GroupInfo = ({ route, navigation }) => {
         <ConditionalGroupName/>
 
         <View style={styles.groupTextBox}>
-          <Text style={styles.groupText} numberOfLines={2}>{text}</Text>
+          <Text style={styles.groupText} numberOfLines={2}>{text.text}</Text>
         </View>
       </View>
 
@@ -222,26 +252,26 @@ export const GroupInfo = ({ route, navigation }) => {
         onBackdropPress={() => setRenameVisible(false)}
         //onModalHide={() => setFileSelected(false)}
       >
-        <View style={styles.renameModalInner}>
+        <View style={styles.actionModalInner}>
           <TextInput
-            style={styles.renameModalTextInput}
+            style={styles.actionModalTextInput}
             defaultValue={name.name}
             onChangeText={(text) => {
               setNewName(text);
             }}
           />
           <TouchableOpacity
-            style={[styles.renameFileButton, { backgroundColor: colourState }]}
+            style={[styles.actionFileButton, { backgroundColor: colourState }]}
             state={null}
             onPress={() => {
               console.log('renaming the pdf to ' + newName);
-              renamePdf();
+              renameGroup();
               setRenameVisible(false);
             }}
           >
-            <View style={styles.renameModalButtonContent}>
-              <View style={styles.renameModalButtonText_box}>
-                <Text style={styles.renameModalButtonText}>{'Rename'}</Text>
+            <View style={styles.actionModalButtonContent}>
+              <View style={styles.actionModalButtonText_box}>
+                <Text style={styles.actionModalButtonText}>{'Rename'}</Text>
               </View>
             </View>
           </TouchableOpacity>
@@ -256,37 +286,37 @@ export const GroupInfo = ({ route, navigation }) => {
         onBackdropPress={() => setDeleteConfirmVisible(false)}
         //onModalHide={() => setFileSelected(false)}
       >
-        <View style={styles.renameModalInner}>
+        <View style={styles.actionModalInner}>
           <Text style={styles.modalTitle}>
             {'Are you sure you want to delete ' + name.name + '?'}
           </Text>
           <TouchableOpacity
-            style={[styles.renameFileButton, { backgroundColor: colourState }]}
+            style={[styles.actionFileButton, { backgroundColor: colourState }]}
             state={null}
             onPress={() => {
               setDeleteConfirmVisible(false);
             }}
           >
-            <View style={styles.renameModalButtonContent}>
-              <View style={styles.renameModalButtonText_box}>
-                <Text style={styles.renameModalButtonText}>{'Cancel'}</Text>
+            <View style={styles.actionModalButtonContent}>
+              <View style={styles.actionModalButtonText_box}>
+                <Text style={styles.actionModalButtonText}>{'Cancel'}</Text>
               </View>
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.renameFileButton, { backgroundColor: colourState }]}
+            style={[styles.actionFileButton, { backgroundColor: colourState }]}
             state={null}
             onPress={() => {
               // Delete the pdf
-              deletePdf();
+              deleteGroup();
               setDeleteConfirmVisible(false);
               navigation.goBack();
               NativeAppEventEmitter.emit('updatePage');
             }}
           >
-            <View style={styles.renameModalButtonContent}>
-              <View style={styles.renameModalButtonText_box}>
-                <Text style={styles.renameModalButtonText}>{'Delete Group'}</Text>
+            <View style={styles.actionModalButtonContent}>
+              <View style={styles.actionModalButtonText_box}>
+                <Text style={styles.actionModalButtonText}>{'Delete Group'}</Text>
               </View>
             </View>
           </TouchableOpacity>
@@ -300,37 +330,37 @@ export const GroupInfo = ({ route, navigation }) => {
         backdropColor="white"
         onBackdropPress={() => setLeaveConfirmVisible(false)}
       >
-        <View style={styles.renameModalInner}>
+        <View style={styles.actionModalInner}>
           <Text style={styles.modalTitle}>
             {'Are you sure you want to leave ' + name.name + '?'}
           </Text>
           <TouchableOpacity
-            style={[styles.renameFileButton, { backgroundColor: colourState }]}
+            style={[styles.actionFileButton, { backgroundColor: colourState }]}
             state={null}
             onPress={() => {
               setLeaveConfirmVisible(false);
             }}
           >
-            <View style={styles.renameModalButtonContent}>
-              <View style={styles.renameModalButtonText_box}>
-                <Text style={styles.renameModalButtonText}>{'Cancel'}</Text>
+            <View style={styles.actionModalButtonContent}>
+              <View style={styles.actionModalButtonText_box}>
+                <Text style={styles.actionModalButtonText}>{'Cancel'}</Text>
               </View>
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.renameFileButton, { backgroundColor: colourState }]}
+            style={[styles.actionFileButton, { backgroundColor: colourState }]}
             state={null}
             onPress={() => {
               // Delete the pdf
-              deletePdf();
+              leaveGroup();
               setLeaveConfirmVisible(false);
               navigation.goBack();
               NativeAppEventEmitter.emit('updatePage');
             }}
           >
-            <View style={styles.renameModalButtonContent}>
-              <View style={styles.renameModalButtonText_box}>
-                <Text style={styles.renameModalButtonText}>{'Leave Group'}</Text>
+            <View style={styles.actionModalButtonContent}>
+              <View style={styles.actionModalButtonText_box}>
+                <Text style={styles.actionModalButtonText}>{'Leave Group'}</Text>
               </View>
             </View>
           </TouchableOpacity>
@@ -512,5 +542,111 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     alignItems: 'center',
     flexShrink: 1,
-  }
+  },
+  actionModalInner: {
+    width: '70%',
+    flexShrink: 1,
+    backgroundColor: '#d0d5ddff',
+    borderRadius: 7,
+    flexDirection: 'column',
+    borderWidth: 1,
+    borderColor: '#667084ff',
+  },
+  actionModalButton: {
+    flexGrow: 1,
+    height: '8%',
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  changeactionModalButton: {
+    flexGrow: 1,
+    height: '5%',
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginHorizontal: 10,
+    justifyContent: 'center',
+    alignContent: 'center',
+    flexShrink: 1,
+    backgroundColor: '#ffffffff',
+    borderRadius: 7,
+    borderWidth: 1,
+    borderColor: '#667084ff',
+  },
+  changeactionModalButtonText: {
+    textAlign: 'center',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 18,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+  },
+  actionFileButton: {
+    flexGrow: 1,
+    height: 40,
+    alignItems: 'center',
+    flexDirection: 'row',
+    margin: 10,
+    justifyContent: 'center',
+    alignContent: 'center',
+    borderRadius: 8,
+    elevation: 2,
+    shadowColor: '#000000',
+    shadowRadius: 2.621621621621622,
+    shadowOpacity: 0.2173913043478261,
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+  },
+  actionModalButtonContent: {
+    flexGrow: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    //padding: 5
+  },
+  actionModalButtonText: {
+    color: '#ffffffff',
+    textAlign: 'center',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 18,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+  },
+  actionModalButtonText_box: {
+    flexShrink: 1,
+  },
+  fileactionIconContainer: {
+    flexShrink: 1,
+  },
+  actionModalTextInput: {
+    flexShrink: 1,
+    textAlign: 'center',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 15,
+    color: 'black',
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+    backgroundColor: '#ffffffff',
+    borderRadius: 8,
+    marginHorizontal: 10,
+    marginTop: 10,
+    height: 40,
+  },
+  modalTitle: {
+    color: '#344053ff',
+    textAlign: 'center',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 18,
+    fontWeight: '600',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+    padding: 15,
+  },
 });
