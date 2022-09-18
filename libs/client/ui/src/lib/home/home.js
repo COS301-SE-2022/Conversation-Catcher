@@ -8,36 +8,42 @@ import {
   TouchableOpacity,
   Alert,
   PermissionsAndroid,
+  NativeAppEventEmitter,
 } from 'react-native';
-import { gql, useQuery, useMutation } from '@apollo/client';
+import { gql, useMutation, useLazyQuery, useQuery } from '@apollo/client';
 import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
 import Loading from '../shared-components/loading/loading.js';
 import PdfDisplay from '../shared-components/pdf-display/pdf-display.js';
+import pdfLocalAccess from '../shared-components/local-pdfs-access/local-pdfs-access';
 import { Buffer } from 'buffer';
 //import Permissions from 'react-native-permissions';
 //import Sound from 'react-native-sound';
 import AudioRecord from 'react-native-audio-record';
 import DocumentPicker, { types } from 'react-native-document-picker';
-import { connect, useSelector } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import {
   selectColour,
   selectEmail,
+  addPDF,
+  selectUser,
 } from 'apps/client/src/app/slices/user.slice';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 
 export const Home = ({ navigation }) => {
+  const dispatch = useDispatch();
   const pdfRef = useRef();
   const colourState = useSelector(selectColour);
   const emailState = useSelector(selectEmail);
+  const userState = useSelector(selectUser);
   const [recordingStopVisible, setRecordingStopVisible] = useState(false);
   const [recordAudioState, setRecordAudioState] = useState(false);
   const [uploadVisible, setUploadVisible] = useState(false);
   const [fileSelected, setFileSelected] = useState(false);
   const [state, setState] = useState({
-    audioFile: '',
+    chunks: [],
     recording: false,
     loaded: false,
     paused: true,
@@ -71,9 +77,22 @@ export const Home = ({ navigation }) => {
     }
   `;
 
+  const ADD_PDF = gql`
+    mutation addPdf($email: String!, $name: String!, $text: String!) {
+      addPDF(email: $email, name: $name, text: $text) {
+        name
+        id
+        text
+        downloaded
+        creationDate
+      }
+    }
+  `;
+
   //Mutations to be used in the creation of new PDFs
   const [summariseText, { data, loading, error }] = useMutation(SUMMARISE_TEXT);
   const [speechToText, { d, l, e }] = useMutation(CONVERT_SPEECH);
+  const [addPdf] = useMutation(ADD_PDF);
 
   const handleDocumentSelection = useCallback(async () => {
     try {
@@ -178,9 +197,7 @@ export const Home = ({ navigation }) => {
     AudioRecord.init(options);
 
     AudioRecord.on('data', (data) => {
-      const chunk = Buffer.from(data, 'base64');
-      console.log('chunk size', chunk.byteLength);
-      // do something with audio chunk
+      state.chunks.push(data);
     });
   };
 
@@ -203,80 +220,71 @@ export const Home = ({ navigation }) => {
   //var sound = null;
 
   const start = () => {
-    console.log('start record');
-    state.audioFile = '';
-    state.recording = true;
-    state.loaded = false;
-    console.log(state.recording);
-    AudioRecord.start();
+    state.chunks.length = 0;
+    componentDidMount()
+      .then(() => {
+        // console.log('start record');
+        state.audioFile = '';
+        state.recording = true;
+        state.loaded = false;
+        // console.log(state.recording);
+        AudioRecord.start();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const stop = async () => {
-    console.log(state.recording);
+    // console.log(state.recording);
     if (!state.recording) return;
-    console.log('stop record');
-    state.audioFile = await AudioRecord.stop();
+    // console.log('stop record');
     //file containing audiofile
-    console.log(
-      await summariseText({
-        variables: { text: (await speechToText()).data.ConvertSpeech },
-      })
-    );
-    console.log('audioFile', state.audioFile);
-    componentDidMount();
     state.audioFile = false;
     state.recording = false;
+    AudioRecord.stop();
   };
 
-  function Pdfs() {
-    // use redux to het email
-    // console.log(emailState);
-    const { data, loading, error } = useQuery(GET_USER_PDFS, {
-      variables: { email: 'John@test' },
-    });
-    // console.log(data);
-    // console.log(loading);
-    // console.log(error);
-    const newArr = [];
+  const convertSpeech = () => {
+    fetch('http://localhost:5050/stt', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      },
+      body: JSON.stringify({
+        audio_path: 'audio_path',
+        audio_chunks: state.chunks,
+      }),
+    })
+      .then(async (res) => {
+        if (res.ok) {
+          const result = await res.json();
+          console.log(result);
+          const newPdf = await addPdf({
+            variables: {
+              email: emailState,
+              name: '',
+              text: result.converted_text,
+            },
+          });
+          pdfLocalAccess.addPdf({
+            name: newPdf.data.addPDF.name,
+            creationDate: newPdf.data.addPDF.creationDate,
+            downloaded: newPdf.data.addPDF.downloaded,
+            pdf: newPdf.data.addPDF.pdf,
+            text: newPdf.data.addPDF.text,
+            id: newPdf.data.addPDF.id,
+          });
+          NativeAppEventEmitter.emit('updatePage');
+          dispatch(addPDF(newPdf.data.addPDF.id));
+        } else console.log('Connection error: internet connection is required');
+      })
+      .catch((e) => console.log(e));
+  };
 
-    if (loading)
-      return (
-        <View style={styles.recentPdfTiles}>
-          <Loading />
-        </View>
-      );
-
-    if (error)
-      return (
-        <View style={styles.recentPdfTiles}>
-          <Text>An error occured...</Text>
-        </View>
-      );
-
-    for (let i = 0; i < 3; i++) {
-      if (data.getPDFs[i] !== undefined) newArr.push(data.getPDFs[i]);
-    }
-
-    return (
-      <View style={styles.recentPdfTiles}>
-        {newArr.map((item, key) => (
-          <PdfTile
-            // id= {key + 1}
-            key={key}
-            name={item.name}
-            date={item.creationDate}
-            thumbnailSource={''}
-            text={item.text}
-            downloaded={item.downloaded}
-            pdfSource=""
-            nav={navigation}
-          />
-        ))}
-      </View>
-    );
-  }
-
-  componentDidMount();
+  // componentDidMount();
   return (
     <View style={styles.home}>
       <View style={styles.big_title_box}>
@@ -346,8 +354,9 @@ export const Home = ({ navigation }) => {
           <TouchableOpacity
             style={styles.recordingStopModalButton}
             onPress={async () => {
-              console.log('pressed');
+              // Convert speech to text
               stop();
+              convertSpeech();
               setRecordAudioState(false);
               setRecordingStopVisible(false);
             }}
@@ -396,6 +405,7 @@ export const Home = ({ navigation }) => {
           <TouchableOpacity
             style={styles.recordingStopModalButton}
             onPress={() => {
+              // Discard recording
               stop();
               setRecordAudioState(false);
               setRecordingStopVisible(false);

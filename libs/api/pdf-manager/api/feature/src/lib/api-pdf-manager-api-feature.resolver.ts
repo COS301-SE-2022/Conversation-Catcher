@@ -14,6 +14,7 @@ export class ApiPdfManagerApiFeatureResolver {
     this.errorObj.downloaded = false;
     this.errorObj.text = null;
     this.errorObj.creationDate = null;
+    this.errorObj.tags = null;
   }
   private errorObj;
 
@@ -73,6 +74,25 @@ export class ApiPdfManagerApiFeatureResolver {
       return arrOfPDFs;
     }
     return [this.errorObj];
+  }
+
+  //Append the passed in array of tags to the current tags in the array
+  //Does not push duplicate tags
+  @Mutation(() => String)
+  async addTags(
+    @Args('id') id: string,
+    @Args('tags', { type: () => [String] }) tags: string[]
+  ) {
+    return await this.pdfService.addTags(id, tags);
+  }
+
+  //Remove the tags specified in the tag array from the pdf
+  @Mutation(() => String)
+  async removeTags(
+    @Args('id') id: string,
+    @Args('tags', { type: () => [String] }) tags: string[]
+  ) {
+    return await this.pdfService.removeTags(id, tags);
   }
 
   // add pdf to db connected to this user

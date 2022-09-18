@@ -100,6 +100,11 @@ export const SettingsPage = ({ navigation }) => {
                 pdfLocalAccess.clearPdfs();
                 NativeAppEventEmitter.emit('logout');
                 navigation.navigate('Login');
+              }).catch((e)=>{
+                console.log(e);
+                dispatch(clearUser());
+                dispatch(clearPDFs());
+                navigation.navigate('Login');
               })
           }
         >

@@ -5,6 +5,8 @@ import {
   AddPdfCommand,
   SetDownloadedPdfCommand,
   SetNamePdfCommand,
+  AddTagsCommand,
+  DeleteTagsCommand,
 } from './commands/impl/set-pdf-manager.command';
 import { DeletePdfCommand } from './commands/impl/delete-pdf-manager.command';
 import { GetPdfByIdQuery, GetPdfsQuery } from './queries/impl';
@@ -24,9 +26,15 @@ export class ApiPdfManagerServiceService {
     return await this.commandBus.execute(new DeletePdfCommand(id));
   }
   async addPdf(email: string, name: string, text: string) {
-    return await this.commandBus.execute(new AddPdfCommand(email, name, text))
+    return await this.commandBus.execute(new AddPdfCommand(email, name, text));
   }
-  
+  async addTags(id: string, tags: string[]) {
+    return await this.commandBus.execute(new AddTagsCommand(id, tags));
+  }
+  async removeTags(id: string, tags: string[]) {
+    return await this.commandBus.execute(new DeleteTagsCommand(id, tags));
+  }
+
   //queries
   async getPdfById(id: string) {
     return await this.queryBus.execute(new GetPdfByIdQuery(id));
