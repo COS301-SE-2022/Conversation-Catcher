@@ -7,12 +7,11 @@ import {
   TouchableOpacity,
   ScrollView,
   TextInput,
+  NativeAppEventEmitter,
 } from 'react-native';
 import { gql, useQuery, useMutation } from '@apollo/client';
-import ModalDropdown from 'react-native-modal-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
-import Share from 'react-native-share';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectColour } from '../../../../../../../apps/client/src/app/slices/user.slice';
 import { changeName, removeGroup} from '../../../../../../../apps/client/src/app/slices/group.slice';
@@ -20,7 +19,7 @@ import MemberTile from '../shared-components/member-tile/member-tile.js';
 import groupsLocalAccess from '../shared-components/local-groups-access/local-groups-access';
 
 
-export const GroupInfo = ({ navigation }) => {
+export const GroupInfo = ({ route, navigation }) => {
 
     const [selectMode, setSelectMode] = useState(false);
     const colourState = useSelector(selectColour);
@@ -29,7 +28,8 @@ export const GroupInfo = ({ navigation }) => {
     const [deleteConfirmVisible, setDeleteConfirmVisible] = useState(false);
     const [newName, setNewName] = useState('');
     const dispatch = useDispatch();
-    
+
+    const { id, text, name } = route.params;
 
     const RENAME = gql`
     mutation setName($id: String!, $name: String!) {
@@ -117,91 +117,170 @@ export const GroupInfo = ({ navigation }) => {
 
             }}
           >
-              <Text style={styles.groupName}>{'Group Name'}</Text>
+              <Text style={styles.groupName} numberOfLines={1}>{name}</Text>
           </TouchableOpacity>
         )
       }
       return (
         <View style={styles.groupNameBox}>
-            <Text style={styles.groupName}>{'Group Name'}</Text>
+            <Text style={styles.groupName} numberOfLines={1}>{name}</Text>
         </View>
       )
     }
 
   return (
     <View style={styles.groupPage}>
-        <View style={styles.groupPageHeaderGroup}>
-            <View style={styles.groupThumbnailBox}>
-                <Image
-                    style={styles.groupThumbnail}
-                    source={{
-                        uri:
-                        'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg',
-                    }}
-                />
-            </View>
-
-            <ConditionalGroupName/>
-
-            <View style={styles.groupTextBox}>
-                <Text style={styles.groupText} numberOfLines={2}>{'Group Description'}</Text>
-            </View>
+      <View style={styles.groupPageHeaderGroup}>
+        <View style={styles.groupThumbnailBox}>
+          <Image
+            style={styles.groupThumbnail}
+            source={{
+              uri:
+              'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg',
+            }}
+          />
         </View>
 
-        <AdminGroupButtons/>
+        <ConditionalGroupName/>
 
-        <View style={styles.membersSection}>
-            <View style={styles.membersSectionHeader}>
-                <View style={styles.membersTitleBox}>
-                    <Text style={styles.membersTitle}>{'Members'}</Text>
-                </View>
-                <AdminMemberButtons/>
-            </View>
+        <View style={styles.groupTextBox}>
+          <Text style={styles.groupText} numberOfLines={2}>{text}</Text>
+        </View>
+      </View>
 
-            <View style={styles.searchBarGroup}>
-                <TextInput
-                    style={styles.searchInput}
-                    placeholder="Search"
-                    onChangeText={(text) => {
-                    //groupLocalAccess.filterGroups(text);
-                    //groupRef.current.refreshPfds();
-                    }}
-                />
-                <View style={styles.searchIconFrame}>
-                    <Icon color="#667084ff" name="search" size={24} />
-                </View>
-            </View>
+      <AdminGroupButtons/>
 
-            <ScrollView style={styles.groupMembersBox}>
-                <MemberTile
-                    key={'1'}
-                    id={'1'}
-                    name={'member1@gmail.com'}
-                    showCheck={selectMode}
-                />
-                <MemberTile
-                    key={'2'}
-                    id={'2'}
-                    name={'member2@gmail.com'}
-                    showCheck={selectMode}
-                />
-                <MemberTile
-                    key={'3'}
-                    id={'3'}
-                    name={'member3@gmail.com'}
-                    showCheck={selectMode}
-                />
-            </ScrollView>
+      <View style={styles.membersSection}>
+        <View style={styles.membersSectionHeader}>
+          <View style={styles.membersTitleBox}>
+            <Text style={styles.membersTitle}>{'Members'}</Text>
+          </View>
+          <AdminMemberButtons/>
         </View>
 
-        <View style={styles.groupPageFooter}>
-            <TouchableOpacity
-                style={styles.backButton}
-                onPress={() => navigation.navigate('Groups')}
-            >
-                <Icon name="angle-left" color={colourState} size={30}/>
-            </TouchableOpacity>
+        <View style={styles.searchBarGroup}>
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Search"
+            onChangeText={(text) => {
+            //groupLocalAccess.filterGroups(text);
+            //groupRef.current.refreshPfds();
+            }}
+          />
+          <View style={styles.searchIconFrame}>
+            <Icon color="#667084ff" name="search" size={24} />
+          </View>
         </View>
+
+        <ScrollView style={styles.groupMembersBox}>
+            <MemberTile
+                key={'1'}
+                id={'1'}
+                name={'member1@gmail.com'}
+                showCheck={selectMode}
+            />
+            <MemberTile
+                key={'2'}
+                id={'2'}
+                name={'member2@gmail.com'}
+                showCheck={selectMode}
+            />
+            <MemberTile
+                key={'3'}
+                id={'3'}
+                name={'member3@gmail.com'}
+                showCheck={selectMode}
+            />
+        </ScrollView>
+      </View>
+
+      <View style={styles.groupPageFooter}>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigation.navigate('Groups')}
+        >
+          <Icon name="angle-left" color={colourState} size={30}/>
+        </TouchableOpacity>
+      </View>
+
+      <Modal
+        style={styles.modal}
+        isVisible={renameVisible}
+        hasBackdrop={true}
+        backdropColor="white"
+        onBackdropPress={() => setRenameVisible(false)}
+        //onModalHide={() => setFileSelected(false)}
+      >
+        <View style={styles.renameModalInner}>
+          <TextInput
+            style={styles.renameModalTextInput}
+            defaultValue={name.name}
+            onChangeText={(text) => {
+              setNewName(text);
+            }}
+          />
+          <TouchableOpacity
+            style={[styles.renameFileButton, { backgroundColor: colourState }]}
+            state={null}
+            onPress={() => {
+              console.log('renaming the pdf to ' + newName);
+              renamePdf();
+              setRenameVisible(false);
+            }}
+          >
+            <View style={styles.renameModalButtonContent}>
+              <View style={styles.renameModalButtonText_box}>
+                <Text style={styles.renameModalButtonText}>{'Rename'}</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </Modal>
+
+      <Modal
+        style={styles.modal}
+        isVisible={deleteConfirmVisible}
+        hasBackdrop={true}
+        backdropColor="white"
+        onBackdropPress={() => setDeleteConfirmVisible(false)}
+        //onModalHide={() => setFileSelected(false)}
+      >
+        <View style={styles.renameModalInner}>
+          <Text style={styles.modalTitle}>
+            {'Are you sure you want to delete ' + name.name + '?'}
+          </Text>
+          <TouchableOpacity
+            style={[styles.renameFileButton, { backgroundColor: colourState }]}
+            state={null}
+            onPress={() => {
+              setDeleteConfirmVisible(false);
+            }}
+          >
+            <View style={styles.renameModalButtonContent}>
+              <View style={styles.renameModalButtonText_box}>
+                <Text style={styles.renameModalButtonText}>{'Cancel'}</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.renameFileButton, { backgroundColor: colourState }]}
+            state={null}
+            onPress={() => {
+              // Delete the pdf
+              deletePdf();
+              setDeleteConfirmVisible(false);
+              navigation.goBack();
+              NativeAppEventEmitter.emit('updatePage');
+            }}
+          >
+            <View style={styles.renameModalButtonContent}>
+              <View style={styles.renameModalButtonText_box}>
+                <Text style={styles.renameModalButtonText}>{'Delete'}</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </Modal>
       
     </View>
   );
