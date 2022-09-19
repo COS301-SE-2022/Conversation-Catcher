@@ -88,7 +88,7 @@ export const PdfView = ({ route, navigation }) => {
     <View style={styles.viewAllPage}>
       <View style={styles.viewAllTopBar}>
         <View style={styles.big_title_box}>
-          <Text style={styles.big_title}>{name.name}</Text>
+          <Text style={styles.big_title} numberOfLines={1}>{name.name}</Text>
         </View>
         <TouchableOpacity
           style={styles.moreButton}
