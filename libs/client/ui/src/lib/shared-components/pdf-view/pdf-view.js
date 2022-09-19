@@ -35,8 +35,7 @@ export const PdfView = ({ route, navigation }) => {
   const [deleteConfirmVisible, setDeleteConfirmVisible] = useState(false);
   const [newName, setNewName] = useState('');
 
-  const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+  
 
   const { text, name, id } = route.params;
 
@@ -94,20 +93,7 @@ export const PdfView = ({ route, navigation }) => {
         <View style={styles.big_title_box}>
           <Text style={styles.big_title} numberOfLines={1}>{name.name}</Text>
         </View>
-        <View style={styles.summarisedSwitchGroup}>
-          <View style={styles.summarisedLabelBox}>
-            <Text style={styles.summarisedLabel}>Summarised</Text>
-          </View>
-          <View style={styles.summarisedSwitchBox}>
-          <Switch
-            trackColor={{ false: "#ffffff", true: colourState }}
-            thumbColor={isEnabled ? "#ffffff" : colourState}
-            ios_backgroundColor="#3e3e3e"
-            onValueChange={toggleSwitch}
-            value={isEnabled}
-          />
-          </View>
-        </View>
+        
       </View>
 
       <View style={styles.pdfTextContainer}>
@@ -348,7 +334,16 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   summarisedLabel: {
-
+    color: '#344053ff',
+    textAlign: 'left',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 14,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+    paddingHorizontal: 0,
+    paddingVertical: 0,
   },
   summarisedLabelBox: {
 
