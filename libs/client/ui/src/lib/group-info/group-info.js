@@ -30,7 +30,7 @@ export const GroupInfo = ({ route, navigation }) => {
     const [newName, setNewName] = useState('');
     const dispatch = useDispatch();
 
-    const { id, text, name } = route.params;
+    const { id, text, name, thumbnailSource } = route.params;
 
     const RENAME = gql`
     mutation setName($id: String!, $name: String!) {
