@@ -21,7 +21,6 @@ class speechToText:
         except OSError as e:
             raise OSError(e.errno, 'SoX not found, use hz files or install it: {}'.format(e.strerror))
 
-        punctuator = textPunctuator()
         url = "http://bark.phon.ioc.ee/punctuator"
         obj = {'text' : output.decode()}
         print("output: " + output.decode())

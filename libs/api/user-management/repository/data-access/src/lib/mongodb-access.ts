@@ -56,8 +56,6 @@ export class MongoDBAccess {
         email: email,
         pdfs: [],
         colour: '#3f89beff',
-        invites: [],
-        groups: [],
       },
     });
 

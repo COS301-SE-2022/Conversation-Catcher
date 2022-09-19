@@ -22,6 +22,7 @@ export const ColourPage = ({ navigation}) => {
       setUser(oldEmail: $oldEmail, email: $email, colour: $colour, pdfs: $pdfs)
     }
   `;
+
   const [setUser] = useMutation(SET_USER);
 
   const [isEnabled, setIsEnabled] = useState(false);
@@ -51,8 +52,11 @@ export const ColourPage = ({ navigation}) => {
             data={verticalStaticData}
             style={{ flexDirection: "column" }}
             onChange={async (selectedItem) => {
-              //Add call to update colour
-              await setUser({
+              //Add call to update colour and remove null values in pdf array
+              user.pdfs.forEach((element,index) => {
+                if (element === null) user.pdfs.splice(index,1);
+              });
+              setUser({
                 variables: {
                   oldEmail: user.email,
                   email: user.email,
@@ -62,7 +66,9 @@ export const ColourPage = ({ navigation}) => {
               }).then(()=>
               //dispatches the setColour action with colour payload
               dispatch(setColour(selectedItem.fillColor))
-              );
+              ).catch((error) => {
+                console.log(error);
+              });
             }}
           />
         </View>
@@ -86,7 +92,7 @@ export const ColourPage = ({ navigation}) => {
       <TouchableOpacity  
         style={styles.backButton} 
         onPress={() => navigation.goBack()}>
-          <Icon 
+          <Icon
             name="angle-left"
             color="#344053ff"
             size={28}
@@ -94,7 +100,7 @@ export const ColourPage = ({ navigation}) => {
       </TouchableOpacity >
     </View>
 
-    
+
   );
 };
 export default ColourPage;
@@ -191,8 +197,8 @@ const styles = StyleSheet.create({
   verticalStyle: { margin: 10 },
   textStyle: { textDecorationLine: "none" },
   iconImageStyle: { height: 15, width: 15 },
-  
-  
+
+
 });
 
 const _iconStyle = (borderColor) => ({

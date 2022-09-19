@@ -3,6 +3,8 @@ import {
   AddPdfCommand,
   SetDownloadedPdfCommand,
   SetNamePdfCommand,
+  AddTagsCommand,
+  DeleteTagsCommand,
 } from '../impl/set-pdf-manager.command';
 import { MongoDBAccess } from '@conversation-catcher/api/pdf-manager/repository/data-access';
 // import { HttpService } from '@nestjs/axios';
@@ -39,5 +41,36 @@ export class AddPdfHandler implements ICommandHandler<AddPdfCommand> {
     if (name === '')
       return await this.repository.addPdf(email, newName, text, date);
     return await this.repository.addPdf(email, name, text, date);
+  }
+}
+
+@CommandHandler(AddTagsCommand)
+export class AddTagsHandler implements ICommandHandler<AddTagsCommand> {
+  constructor(private repository: MongoDBAccess) {}
+  async execute({ id, tags }: AddTagsCommand): Promise<any> {
+    const pdf = await this.repository.getPDF(id);
+    pdf.tags.forEach((tag) => {
+      if (tags.indexOf(tag) !== -1) tags.push(tag);
+    });
+    const res = await this.repository.updateTags(id, tags);
+    if (res !== null && res.modifiedCount === 1) return 'Tags have been added';
+    return 'Error: tags have not been added';
+  }
+}
+
+@CommandHandler(DeleteTagsCommand)
+export class DeleteTagsHandler implements ICommandHandler<DeleteTagsCommand> {
+  constructor(private repository: MongoDBAccess) {}
+  async execute({ id, tags }: DeleteTagsCommand): Promise<any> {
+    const pdf = await this.repository.getPDF(id);
+    console.log(pdf);
+    tags.forEach((tag) => {
+      pdf.tags.forEach((item, index) => {
+        if (item === tag) pdf.tags.splice(index, 1);
+      });
+    });
+    const res = await this.repository.updateTags(id, tags);
+    if (res !== null && res.modifiedCount === 1) return 'Tags have been added';
+    return 'Error: tags have not been added';
   }
 }

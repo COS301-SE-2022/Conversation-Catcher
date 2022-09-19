@@ -20,10 +20,13 @@ export class PdfEntity {
 
   @Field({nullable: true})
   text?: string;
-  
+
   @Field({nullable : true})
   creationDate: string;
 
   @Field()
   downloaded: boolean;
+
+  @Field(()=> [String],{nullable:'itemsAndList'})
+  tags?: string[];
 }

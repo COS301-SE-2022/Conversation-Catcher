@@ -20,16 +20,16 @@ export class UserManagementApiFeatureResolver {
   private errorObj;
 
   setResult(result) {
-    console.log(result);
     const user = new UserEntity();
     user.email = result.email;
     user.colour = result.colour;
     user.pdfs = result.pdfs;
     user.groups = result.groups;
     user.invites = [];
-    for (const invite of result.invites) {
-      user.invites.push(invite.group + ' : ' + invite.from);
-    }
+    if (result.invites !== undefined)
+      for (const invite of result.invites) {
+        user.invites.push(invite.group + ' : ' + invite.from);
+      }
     return user;
   }
 
