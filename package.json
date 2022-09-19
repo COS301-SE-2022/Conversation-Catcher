@@ -32,6 +32,7 @@
     "react-native-file-viewer": "^2.1.5",
     "react-native-modal": "^13.0.1",
     "react-native-modal-dropdown": "^1.0.2",
+    "react-native-pager-view": "^6.0.0",
     "react-native-pdf": "^6.5.0",
     "react-native-permissions": "^3.3.1",
     "react-native-restart": "^0.0.24",
