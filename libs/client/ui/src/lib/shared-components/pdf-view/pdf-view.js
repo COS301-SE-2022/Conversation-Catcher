@@ -325,32 +325,6 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     minHeight: 28,
   },
-  summarisedSwitchGroup: {
-    flexDirection: 'row',
-    paddingHorizontal: 15,
-    flexGrow: 1,
-    alignContent: 'center',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-  },
-  summarisedLabel: {
-    color: '#344053ff',
-    textAlign: 'left',
-    letterSpacing: 0,
-    lineHeight: 20,
-    fontSize: 14,
-    fontWeight: '400',
-    fontStyle: 'normal',
-    fontFamily: 'System' /* Inter */,
-    paddingHorizontal: 0,
-    paddingVertical: 0,
-  },
-  summarisedLabelBox: {
-
-  },
-  summarisedSwitchBox: {
-    
-  },
   pdfTextContainer: {
     height: '70%',
     padding: 15,
