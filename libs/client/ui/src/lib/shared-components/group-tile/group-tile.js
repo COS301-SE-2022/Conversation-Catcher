@@ -3,7 +3,7 @@ import {
   View,
   StyleSheet,
   Text,
-  ImageBackground,
+  Image,
   TouchableOpacity,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -15,11 +15,6 @@ import { selectColour } from 'apps/client/src/app/slices/user.slice';
 import { toggleDown } from 'apps/client/src/app/slices/group.slice';
 import { gql, useLazyQuery, useMutation } from '@apollo/client';
 //import FileViewer from "react-native-file-viewer";
-
-const groupthumbnailSource = {
-  uri: 'http://samples.leanpub.com/thereactnativebook-sample.pdf',
-  cache: true,
-};
 
 const GroupTile = ({
   id,
@@ -40,9 +35,9 @@ const GroupTile = ({
       }
     >
       <View style={[styles.groupThumbnailBox, { borderColor: colourState }]}>
-        <ImageBackground
+        <Image
           style={styles.groupThumbnail}
-          //thumbnailSource={thumbnailSource}
+          source={thumbnailSource}
         />
       </View>
       <View style={styles.groupTile_contents_not_thumbnail}>
@@ -60,7 +55,7 @@ export default GroupTile;
 
 const styles = StyleSheet.create({
   groupTile: {
-    flexGrow: 1,
+    flexShrink: 1,
     borderRadius: 5,
     borderStyle: 'solid',
     borderColor: '#c4c4c4ff',
@@ -74,13 +69,13 @@ const styles = StyleSheet.create({
       height: 2,
     },
     flexDirection: 'row',
-    margin: 5,
+   
   },
   groupThumbnailBox: {
     borderRadius: 180,
     backgroundColor: '#667084ff',
     aspectRatio: 1,
-    width: '25%',
+    width: '20%',
     margin: 10,
   },
   groupThumbnail: {
@@ -107,8 +102,8 @@ const styles = StyleSheet.create({
     color: '#344053ff',
     textAlign: 'left',
     letterSpacing: 0,
-    lineHeight: 20,
-    fontSize: 16,
+    lineHeight: 22,
+    fontSize: 18,
     fontWeight: '400',
     fontStyle: 'normal',
     fontFamily: 'System' /* Inter */,
