@@ -326,6 +326,8 @@ export const Home = ({ navigation }) => {
         </TouchableOpacity>
       </View>
       <View style={styles.bottomGroup}>  
+        <View style={styles.bottomGroupSideSpacing}>
+        </View>
         <View style={styles.audioTouchableOpacityGroup}>
           <RecordAudioButtonState />
           <TouchableOpacity
@@ -337,16 +339,18 @@ export const Home = ({ navigation }) => {
             </View>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity
-          style={styles.settingsTouchableOpacityFrame}
-          onPress={() => navigation.navigate('Settings')}
-        >
-          <View style={styles.settingsIconBox}>
-            <Icon style={styles.settingsIcon}>
-              <Icon name="cog" size={20} color="#667084ff" />
-            </Icon>
-          </View>
-        </TouchableOpacity>
+        <View style={styles.bottomGroupSideSpacing}>
+          <TouchableOpacity
+            style={styles.settingsTouchableOpacityFrame}
+            onPress={() => navigation.navigate('Settings')}
+          >
+            <View style={styles.settingsIconBox}>
+              <Icon style={styles.settingsIcon}>
+                <Icon name="cog" size={25} color="#667084ff" />
+              </Icon>
+            </View>
+          </TouchableOpacity>
+        </View>
       </View>
       
 
@@ -516,7 +520,7 @@ const styles = StyleSheet.create({
     height: '10%',
     flexGrow: 1,
     justifyContent: 'center',
-    marginTop: 20,
+    marginVertical: 5,
   },
   viewPdfsTouchableOpacity: {
     flexGrow: 1,
@@ -553,63 +557,28 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   bottomGroup: {
-    height: '20%',
+    height: '15%',
     flexDirection: 'row',
+    alignContent: 'center',
+    alignItems: 'center',
+  },
+  bottomGroupSideSpacing: {
+    width: '30%',
+    alignItems: 'center'
   },
   settingsTouchableOpacityFrame: {
-    height: '10%',
+    flexShrink: 1,
     marginVertical: 5,
-  },
-  settingTouchableOpacity: {
-    marginTop: 5,
-    marginBottom: 5,
-    marginLeft: 30,
-    marginRight: 30,
-    backgroundColor: '#d0d5ddff',
-    borderRadius: 8,
-    justifyContent: 'center',
-    alignContent: 'center',
-    flexDirection: 'row',
-    flexGrow: 1,
-    overflow: 'hidden',
-    borderStyle: 'solid',
-    borderColor: '#d0d5ddff',
-    borderWidth: 1,
-    elevation: 2,
-    shadowColor: '#000000',
-    shadowRadius: 2.621621621621622,
-    shadowOpacity: 0.2173913043478261,
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
   },
   settingsIconBox: {
     justifyContent: 'center',
     alignContent: 'flex-start',
-    paddingHorizontal: 7,
-  },
-  settingsText: {
-    color: '#344053ff',
-    textAlign: 'center',
-    letterSpacing: 0,
-    lineHeight: 22,
-    fontSize: 18,
-    fontWeight: '400',
-    fontStyle: 'normal',
-    fontFamily: 'System' /* Jaldi */,
-    paddingHorizontal: 0,
-    paddingVertical: 0,
-  },
-  settingsText_box: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexShrink: 1,
+    margin: 10,
   },
   audioTouchableOpacityGroup: {
     borderRadius: 8,
     flexDirection: 'row',
-    height: '17%',
+    height: '70%',
     width: '40%',
     justifyContent: 'center',
     alignItems: 'center',
@@ -626,7 +595,7 @@ const styles = StyleSheet.create({
   },
   recordAudioTouchableOpacity: {
     width: '50%',
-    flexGrow: 1,
+    flexShrink: 1,
     borderTopLeftRadius: 8,
     borderBottomLeftRadius: 8,
     overflow: 'hidden',
@@ -636,12 +605,11 @@ const styles = StyleSheet.create({
     borderRightWidth: 1,
   },
   recordAudioIcon: {
-    resizeMode: 'contain',
     padding: 10,
   },
   uploadAudioTouchableOpacity: {
     width: '50%',
-    flexGrow: 1,
+    flexShrink: 1,
     backgroundColor: '#d0d5ddff',
     borderTopRightRadius: 8,
     borderBottomRightRadius: 8,
@@ -652,7 +620,6 @@ const styles = StyleSheet.create({
     borderLeftWidth: 1,
   },
   uploadAudioIcon: {
-    resizeMode: 'contain',
     padding: 10,
   },
   modal: {
