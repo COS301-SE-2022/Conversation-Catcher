@@ -217,7 +217,7 @@ export const Groups = ({ navigation }) => {
           style={styles.moreButton}
           onPress={() => setMoreVisible(true)}
         >
-          <Icon name="ellipsis-h" color="#344053ff" size={30} />
+          <Icon name="plus" color={colourState} size={30} />
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -258,23 +258,14 @@ export const Groups = ({ navigation }) => {
           <TouchableOpacity
             style={styles.moreModalButton}
             onPress={() => {
-              setBottomModalType('share');
-              setSelectMode(true);
-              setBottomModalVisible(true);
+              //navigate to new group-info page
               setMoreVisible(false);
             }}
           >
             <View style={styles.moreModalButtonContent}>
-              <View style={styles.iconContainer}>
-                <Icon
-                  style={{ color: colourState }}
-                  name="paper-plane-o"
-                  size={18}
-                />
-              </View>
               <View style={styles.moreModalButtonText_box}>
                 <Text style={styles.moreModalButtonText} ellipsizeMode={'clip'}>
-                  {'Share'}
+                  {'Create Group'}
                 </Text>
               </View>
             </View>
@@ -285,45 +276,17 @@ export const Groups = ({ navigation }) => {
           <TouchableOpacity
             style={styles.moreModalButton}
             onPress={() => {
-              setBottomModalType('rename');
-              setBottomModalVisible(true);
+              //navigate to view all groups page
               setMoreVisible(false);
             }}
           >
             <View style={styles.moreModalButtonContent}>
-              <View style={styles.iconContainer}>
-                <Icon
-                  style={{ color: colourState }}
-                  name="pencil-square-o"
-                  size={20}
-                />
-              </View>
               <View style={styles.moreModalButtonText_box}>
-                <Text style={styles.moreModalButtonText}>{'Rename'}</Text>
+                <Text style={styles.moreModalButtonText}>{'Join Group'}</Text>
               </View>
             </View>
           </TouchableOpacity>
 
-          <View style={styles.moreModalButtonDivider} />
-
-          <TouchableOpacity
-            style={styles.moreModalButton}
-            onPress={() => {
-              setBottomModalType('delete');
-              setBottomModalVisible(true);
-              setSelectMode(true);
-              setMoreVisible(false);
-            }}
-          >
-            <View style={styles.moreModalButtonContent}>
-              <View style={styles.iconContainer}>
-                <Icon style={{ color: colourState }} name="trash-o" size={20} />
-              </View>
-              <View style={styles.moreModalButtonText_box}>
-                <Text style={styles.moreModalButtonText}>{'Delete'}</Text>
-              </View>
-            </View>
-          </TouchableOpacity>
         </View>
       </Modal>
       <Modal
@@ -627,13 +590,8 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     //padding: 5
-  },
-  iconContainer: {
-    width: '40%',
-    height: '100%',
-    alignItems: 'center',
   },
   moreModalButtonText: {
     color: '#344053ff',
