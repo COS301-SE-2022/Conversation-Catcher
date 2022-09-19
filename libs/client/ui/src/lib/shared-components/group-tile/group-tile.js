@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     borderRadius: 180,
     backgroundColor: '#667084ff',
     aspectRatio: 1,
-    width: '20%',
+    width: '15%',
     margin: 10,
   },
   groupThumbnail: {
@@ -91,8 +91,8 @@ const styles = StyleSheet.create({
   groupName: {
     color: '#344053ff',
     letterSpacing: 0,
-    lineHeight: 24,
-    fontSize: 24,
+    lineHeight: 20,
+    fontSize: 20,
     fontWeight: '700',
     fontStyle: 'normal',
     fontFamily: 'System' /* Jaldi */,
