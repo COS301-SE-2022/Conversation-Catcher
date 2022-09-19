@@ -19,6 +19,7 @@ import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
 import ModalDropdown from 'react-native-modal-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
+import { TabView, SceneMap } from 'react-native-tab-view';
 import pdfLocalAccess from '../local-pdfs-access/local-pdfs-access.js';
 import { useSelector, useDispatch } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
