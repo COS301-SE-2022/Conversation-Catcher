@@ -175,10 +175,7 @@ export const GroupInfo = ({ route, navigation }) => {
         <View style={styles.groupThumbnailBox}>
           <Image
             style={styles.groupThumbnail}
-            source={{
-              uri:
-              'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg',
-            }}
+            source={thumbnailSource.thumbnailSource}
           />
         </View>
 
@@ -417,6 +414,7 @@ const styles = StyleSheet.create({
   },
   groupTextBox: {
     alignContent: 'center',
+    padding: 10
   },
   groupText: {
     color: '#667084ff',
@@ -431,7 +429,7 @@ const styles = StyleSheet.create({
     paddingVertical: 0,
   },
   buttonsGroup: {
-    flexDirection: 'row',
+
   },
   leaveButtonBox: {
 
@@ -527,7 +525,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5
   },
   groupMembersBox: {
-    flexGrow: 1,
+    flexShrink: 1,
     
   },
   groupPageFooter: {
@@ -535,13 +533,12 @@ const styles = StyleSheet.create({
     flexShrink: 1,
     alignContent: 'center',
     alignItems: 'center',
-    height: '10%',
-    minHeight: 50,
   },
   backButton: {
     alignContent: 'center',
     alignItems: 'center',
     flexShrink: 1,
+    padding: 10,
   },
   actionModalInner: {
     width: '70%',
