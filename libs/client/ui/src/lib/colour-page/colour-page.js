@@ -68,14 +68,14 @@ export const ColourPage = ({ navigation}) => {
         </View>
       </View>
 
-      <View style={styles.summarisedSwitchGroup}>
-        <View style={styles.summarisedLabelBox}>
-          <Text style={styles.summarisedLabel}>Summarised</Text>
+      <View style={styles.darkSwitchGroup}>
+        <View style={styles.darkLabelBox}>
+          <Text style={styles.darkLabel}>Dark Mode</Text>
         </View>
-        <View style={styles.summarisedSwitchBox}>
+        <View style={styles.darkSwitchBox}>
         <Switch
-          trackColor={{ false: "#ffffff", true: colourState }}
-          thumbColor={isEnabled ? "#ffffff" : colourState}
+          trackColor={{ false: "#f5f5f5ff", true: "#f5f5f5ff" }}
+          thumbColor={isEnabled ? "#3e3e3e" : "#3e3e3e"}
           ios_backgroundColor="#3e3e3e"
           onValueChange={toggleSwitch}
           value={isEnabled}
@@ -129,6 +129,32 @@ const styles = StyleSheet.create({
     height: '10%',
     width: '100%',
     minHeight: 28
+  },
+  darkSwitchGroup: {
+    flexDirection: 'row',
+    paddingHorizontal: 15,
+    flexGrow: 1,
+    alignContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+  },
+  darkLabel: {
+    color: '#344053ff',
+    textAlign: 'left',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 14,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+    paddingHorizontal: 0,
+    paddingVertical: 0,
+  },
+  darkLabelBox: {
+
+  },
+  darkSwitchBox: {
+    
   },
   colourOptionsBackground: {
     width: '80%',
