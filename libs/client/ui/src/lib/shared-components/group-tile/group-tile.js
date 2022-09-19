@@ -39,7 +39,7 @@ const GroupTile = ({
         nav.navigate('GroupInfo', { id: { id }, text: { text }, name: { name }, thumbnailSource: { thumbnailSource } })
       }
     >
-      <View style={[styles.thumbnail_containter, { borderColor: colourState }]}>
+      <View style={[styles.groupThumbnailBox, { borderColor: colourState }]}>
         <ImageBackground
           style={styles.groupThumbnail}
           //thumbnailSource={thumbnailSource}
@@ -76,16 +76,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     margin: 5,
   },
-  thumbnail_containter: {
-    flex: 1,
-    borderRadius: 5,
-    borderStyle: 'solid',
-    borderWidth: 1,
-    aspectRatio: 1 / 1.4142,
+  groupThumbnailBox: {
+    borderRadius: 180,
+    backgroundColor: '#667084ff',
+    aspectRatio: 1,
+    width: '25%',
+    margin: 10,
   },
   groupThumbnail: {
-    resizeMode: 'contain',
-    borderRadius: 5,
+    flexGrow: 1,
+    resizeMode: 'center',
+    borderRadius: 180,
   },
   groupTileInfo: {
     flexGrow: 1,
