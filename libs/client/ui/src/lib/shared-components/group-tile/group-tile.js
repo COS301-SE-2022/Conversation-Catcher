@@ -41,10 +41,11 @@ const GroupTile = ({
         />
       </View>
       <View style={styles.groupTile_contents_not_thumbnail}>
-        <View style={styles.groupTile_contents_not_thumbnail_inner}>
-          <View style={styles.groupName_box}>
-            <Text style={styles.groupName}>{name}</Text>
-          </View>
+        <View style={styles.groupNameBox}>
+          <Text style={styles.groupName} numberOfLines={1}>{name}</Text>
+        </View>
+        <View style={styles.groupDescriptionBox}>
+          <Text style={styles.groupDescription} numberOfLines={1}>{text}</Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -69,7 +70,7 @@ const styles = StyleSheet.create({
       height: 2,
     },
     flexDirection: 'row',
-   
+    
   },
   groupThumbnailBox: {
     borderRadius: 180,
@@ -83,52 +84,40 @@ const styles = StyleSheet.create({
     resizeMode: 'center',
     borderRadius: 180,
   },
-  groupTileInfo: {
+  groupTile_contents_not_thumbnail: {
     flexGrow: 1,
-    flexDirection: 'row',
-  },
-  groupTileInfo_item: {
-    flexGrow: 0,
-    flexShrink: 1,
-  },
-  groupTileText: {
-    flexGrow: 1,
-  },
-  groupTileText_item: {
-    flexGrow: 0,
-    flexShrink: 1,
+    justifyContent: 'center',
   },
   groupName: {
     color: '#344053ff',
+    letterSpacing: 0,
+    lineHeight: 24,
+    fontSize: 24,
+    fontWeight: '700',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Jaldi */,
+  },
+  groupNameBox: {
+    flexShrink: 1,
+    width: '80%',
+    resizeMode: 'contain',
+    justifyContent: 'center',
+    paddingVertical: 5,
+  },
+  groupDescription: {
+    color: '#344053ff',
     textAlign: 'left',
     letterSpacing: 0,
-    lineHeight: 22,
-    fontSize: 18,
+    lineHeight: 20,
+    fontSize: 16,
     fontWeight: '400',
     fontStyle: 'normal',
     fontFamily: 'System' /* Inter */,
     paddingHorizontal: 0,
   },
-  groupName_box: {
-    flexGrow: 1,
-    resizeMode: 'contain',
-    justifyContent: 'center',
-    paddingTop: 15,
-  },
-  groupTile_contents_not_thumbnail: {
-    flex: 4,
-    justifyContent: 'center',
-    flexDirection: 'row',
-  },
-  groupTile_contents_not_thumbnail_inner: {
-    marginTop: 0,
-    marginBottom: 0,
-    marginLeft: 5,
-    //flexGrow: 1, //flexgrow: 0
-    marginRight: 0,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    paddingLeft: 10,
-    flex: 10,
+  groupDescriptionBox: {
+    flexShrink: 1,
+    width: '80%',
+    paddingHorizontal: 5,
   },
 });
