@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import {
   View,
   StyleSheet,
@@ -12,6 +12,7 @@ import {
 import { gql, useQuery, useMutation } from '@apollo/client';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
+import DocumentPicker, { types } from 'react-native-document-picker';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectColour } from '../../../../../../../apps/client/src/app/slices/user.slice';
 import { changeName, removeGroup} from '../../../../../../../apps/client/src/app/slices/group.slice';
@@ -28,6 +29,7 @@ export const GroupInfo = ({ route, navigation }) => {
     const [renameVisible, setRenameVisible] = useState(false);
     const [deleteConfirmVisible, setDeleteConfirmVisible] = useState(false);
     const [leaveConfirmVisible, setLeaveConfirmVisible] = useState(false);
+    const [fileResponse, setFileResponse] = useState([]);
     const [newName, setNewName] = useState('');
     const dispatch = useDispatch();
 
@@ -86,6 +88,18 @@ export const GroupInfo = ({ route, navigation }) => {
     await leave_group({ variables: { id: id.id } });
     dispatch(leaveGroup({ id: id.id }));
   }
+
+  const handleDocumentSelection = useCallback(async () => {
+    try {
+      const response = await DocumentPicker.pick({
+        presentationStyle: 'fullScreen',
+        type: [types.audio],
+      });
+      setFileResponse(response);
+    } catch (err) {
+      console.warn(err);
+    }
+  }, []);
 
     function AdminGroupButtons(){
       if(adminState){
@@ -161,42 +175,63 @@ export const GroupInfo = ({ route, navigation }) => {
       return null;
     }
 
-    function ConditionalGroupName(){
+    function ConditionalGroupHeader(){
       if(adminState){
         return (
-          <TouchableOpacity 
-            style={styles.groupNameBox}
-            onPress={() => {
-              setRenameVisible(true);
-            }}
-          >
-              <Text style={styles.groupName} numberOfLines={1}>{name.name}</Text>
-          </TouchableOpacity>
+          <View style={styles.groupPageHeaderGroup}>
+            <TouchableOpacity 
+              style={styles.groupThumbnailBox}
+              onPress={() => {
+                handleDocumentSelection();
+              }}
+            >
+              <Image
+                style={styles.groupThumbnail}
+                source={thumbnailSource.thumbnailSource}
+              />
+            </TouchableOpacity>
+
+            <TouchableOpacity 
+              style={styles.groupNameBox}
+              onPress={() => {
+                setRenameVisible(true);
+              }}
+            >
+                <Text style={styles.groupName} numberOfLines={1}>{name.name}</Text>
+            </TouchableOpacity>
+
+            <View style={styles.groupTextBox}>
+              <Text style={styles.groupText} numberOfLines={2}>{text.text}</Text>
+            </View>
+          </View>
+          
         )
       }
       return (
-        <View style={styles.groupNameBox}>
+        <View style={styles.groupPageHeaderGroup}>
+          <View style={styles.groupThumbnailBox}>
+            <Image
+              style={styles.groupThumbnail}
+              source={thumbnailSource.thumbnailSource}
+            />
+          </View>
+
+          <View style={styles.groupNameBox}>
             <Text style={styles.groupName} numberOfLines={1}>{name.name}</Text>
+          </View>
+
+          <View style={styles.groupTextBox}>
+            <Text style={styles.groupText} numberOfLines={2}>{text.text}</Text>
+          </View>
         </View>
+        
       )
     }
 
   return (
     <View style={styles.groupPage}>
-      <View style={styles.groupPageHeaderGroup}>
-        <View style={styles.groupThumbnailBox}>
-          <Image
-            style={styles.groupThumbnail}
-            source={thumbnailSource.thumbnailSource}
-          />
-        </View>
-
-        <ConditionalGroupName/>
-
-        <View style={styles.groupTextBox}>
-          <Text style={styles.groupText} numberOfLines={2}>{text.text}</Text>
-        </View>
-      </View>
+      
+      <ConditionalGroupHeader/>
 
       <AdminGroupButtons/>
 
