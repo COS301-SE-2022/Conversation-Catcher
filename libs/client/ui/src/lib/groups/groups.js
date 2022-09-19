@@ -495,8 +495,6 @@ const styles = StyleSheet.create({
   },
   groupTiles: {
     flexGrow: 1,
-    paddingLeft: 15,
-    paddingRight: 15,
     overflow: 'visible',
   },
   viewAllBottomBar: {
