@@ -59,7 +59,7 @@ const Stack = createNativeStackNavigator();
 
 export const App = () => {
     const client = new ApolloClient({
-    uri: 'http://10.0.2.2:8081/graphql',
+    uri: 'http://10.0.2.2:3333/graphql',
     // headers: {
     //   // Header(if any)
     //   // authorization: 'a1b2c3d4-a1b2-a1b2c3d4e5f6',
