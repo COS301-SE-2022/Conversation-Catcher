@@ -23,6 +23,7 @@ export const GroupInfo = ({ route, navigation }) => {
 
     const [selectMode, setSelectMode] = useState(false);
     const colourState = useSelector(selectColour);
+    const [bottomModalVisible, setBottomModalVisible] = useState(false);
     const [adminState, setAdminState] = useState(true);
     const [renameVisible, setRenameVisible] = useState(false);
     const [deleteConfirmVisible, setDeleteConfirmVisible] = useState(false);
@@ -139,7 +140,18 @@ export const GroupInfo = ({ route, navigation }) => {
               </TouchableOpacity>
             </View>
             <View style={styles.removeButtonBox}>
-              <TouchableOpacity style={styles.removeButton}>
+              <TouchableOpacity 
+                style={styles.removeButton}
+                onPress={() => {
+                  if (selectMode) {
+                    setSelectMode(false);
+                    setBottomModalVisible(false);
+                  } else {
+                    setSelectMode(true);
+                    setBottomModalVisible(true);
+                  }
+                }}
+              >
                 <Icon name="minus" size={30} color={colourState} />
               </TouchableOpacity>
             </View>
@@ -363,6 +375,37 @@ export const GroupInfo = ({ route, navigation }) => {
           </TouchableOpacity>
         </View>
       </Modal>
+
+      <Modal
+        isVisible={bottomModalVisible}
+        coverScreen={false}
+        hasBackdrop={false}
+        style={{
+          width: '100%',
+          height: '8%',
+          margin: 0,
+          justifyContent: 'flex-end',
+        }}
+      >
+        <View style={[styles.modalBottomBar, { backgroundColor: colourState }]}>
+          <TouchableOpacity
+            style={styles.backButton}
+            onPress={() => {
+              setBottomModalVisible(false);
+              setSelectMode(false);
+            }}
+          >
+            <Icon name="angle-left" color="#ffffffff" size={30} />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.backButton}
+            onPress={() => setBottomModalVisible(false)}
+          >
+            <Icon name="pencil-square-o" color="#ffffffff" size={22} />
+          </TouchableOpacity>
+        </View>
+      </Modal>
       
     </View>
   );
@@ -378,6 +421,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     marginRight: 0,
     alignItems: 'center',
+    alignContent: 'center',
   },
   groupPageHeaderGroup: {
     flexGrow: 1,
@@ -450,7 +494,7 @@ const styles = StyleSheet.create({
     color: 'red',
   },
   membersSection: {
-    
+    //alignItems: 'center',
   },
   membersSectionHeader: {
     flexDirection: 'row',
@@ -530,9 +574,7 @@ const styles = StyleSheet.create({
   },
   groupPageFooter: {
     width: '100%',
-    flexShrink: 1,
-    alignContent: 'center',
-    alignItems: 'center',
+    flexGrow: 1,
   },
   backButton: {
     alignContent: 'center',
@@ -645,5 +687,13 @@ const styles = StyleSheet.create({
     fontStyle: 'normal',
     fontFamily: 'System' /* Inter */,
     padding: 15,
+  },
+  modalBottomBar: {
+    width: '100%',
+    height: '10%',
+    flexDirection: 'row',
+    //flexShrink: 1,
+    justifyContent: 'center',
+    //alignSelf: 'flex-end'
   },
 });
