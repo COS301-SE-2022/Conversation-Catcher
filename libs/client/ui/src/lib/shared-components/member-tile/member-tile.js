@@ -48,9 +48,6 @@ const MemberTile = ({
   return (
     <TouchableOpacity
       style={styles.memberTile}
-      onPress={() =>
-        nav.navigate('GroupInfo', { id: { id }, name: { name } })
-      }
     >
       <View style={styles.memberTile_contents_not_thumbnail}>
         <View style={styles.memberTile_contents_not_thumbnail_inner}>
