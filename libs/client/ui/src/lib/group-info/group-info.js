@@ -450,6 +450,8 @@ export default GroupInfo;
 const styles = StyleSheet.create({
   groupPage: {
     backgroundColor: '#ffffffff',
+    justifyContent: 'space-between',
+    flexDirection: 'column',
     flexGrow: 1,
   },
   groupPageHeaderGroup: {
@@ -477,16 +479,15 @@ const styles = StyleSheet.create({
     color: '#344053ff',
     textAlign: 'center',
     letterSpacing: 0,
-    lineHeight: 28,
+    lineHeight: 24,
     fontSize: 24,
     fontWeight: '700',
     fontStyle: 'normal',
     fontFamily: 'System' /* Jaldi */,
   },
   groupTextBox: {
-    width: '100%',
-    padding: 5,
-    height: '15%'
+    width: '80%',
+    flexShrink: 1,
   },
   groupText: {
     color: '#667084ff',
@@ -497,18 +498,16 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     fontStyle: 'normal',
     fontFamily: 'System' /* Inter */,
-    paddingHorizontal: 0,
-    paddingVertical: 0,
   },
   buttonsGroup: {
     flexShrink: 1,
     flexDirection: 'row',
     justifyContent: 'center',
-
+    alignItems: 'center',
   },
   leaveButtonBox: {
     flexShrink: 1,
-   
+    width: '50%',
   },
   leaveButton: {
 
@@ -525,7 +524,7 @@ const styles = StyleSheet.create({
   },
   deleteButtonBox: {
     flexShrink: 1,
-
+    width: '50%',
   },
   deleteButton: {
 
@@ -544,7 +543,6 @@ const styles = StyleSheet.create({
   membersSection: {
     //alignItems: 'center',
     justifyContent: 'center',
-    
   },
   membersSectionHeader: {
     flexDirection: 'row',
@@ -584,7 +582,6 @@ const styles = StyleSheet.create({
     marginVertical: 15,
     flexDirection: 'row',
     alignItems: 'center',
-    minHeight: 38,
     backgroundColor: '#ffffffff',
     borderRadius: 8,
     borderStyle: 'solid',
@@ -598,6 +595,7 @@ const styles = StyleSheet.create({
       width: 0,
       height: 1,
     },
+    alignSelf: 'center',
   },
   searchInput: {
     backgroundColor: '#ffffffff',
