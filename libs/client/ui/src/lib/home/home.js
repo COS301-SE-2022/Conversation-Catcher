@@ -325,27 +325,30 @@ export const Home = ({ navigation }) => {
           </View>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity
-        style={styles.settingsTouchableOpacityFrame}
-        onPress={() => navigation.navigate('Settings')}
-      >
-        <View style={styles.settingsIconBox}>
-          <Icon style={styles.settingsIcon}>
-            <Icon name="cog" size={20} color="#667084ff" />
-          </Icon>
+      <View style={styles.bottomGroup}>  
+        <View style={styles.audioTouchableOpacityGroup}>
+          <RecordAudioButtonState />
+          <TouchableOpacity
+            style={styles.uploadAudioTouchableOpacity}
+            onPress={() => setUploadVisible(true)}
+          >
+            <View style={styles.uploadAudioIcon}>
+              <Icon color="#667084ff" name="upload" size={40} />
+            </View>
+          </TouchableOpacity>
         </View>
-      </TouchableOpacity>
-      <View style={styles.audioTouchableOpacityGroup}>
-        <RecordAudioButtonState />
         <TouchableOpacity
-          style={styles.uploadAudioTouchableOpacity}
-          onPress={() => setUploadVisible(true)}
+          style={styles.settingsTouchableOpacityFrame}
+          onPress={() => navigation.navigate('Settings')}
         >
-          <View style={styles.uploadAudioIcon}>
-            <Icon color="#667084ff" name="upload" size={40} />
+          <View style={styles.settingsIconBox}>
+            <Icon style={styles.settingsIcon}>
+              <Icon name="cog" size={20} color="#667084ff" />
+            </Icon>
           </View>
         </TouchableOpacity>
       </View>
+      
 
       <Modal
         style={styles.modal}
@@ -548,6 +551,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  bottomGroup: {
+    height: '20%',
+    flexDirection: 'row',
   },
   settingsTouchableOpacityFrame: {
     height: '10%',
