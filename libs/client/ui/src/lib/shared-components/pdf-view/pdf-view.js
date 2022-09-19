@@ -12,7 +12,7 @@ import {
   Share,
   DeviceEventEmitter,
   NativeAppEventEmitter,
-  Switch,
+  useWindowDimensions,
 } from 'react-native';
 import { gql, useQuery, useMutation } from '@apollo/client';
 import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
@@ -35,8 +35,6 @@ export const PdfView = ({ route, navigation }) => {
   const [renameVisible, setRenameVisible] = useState(false);
   const [deleteConfirmVisible, setDeleteConfirmVisible] = useState(false);
   const [newName, setNewName] = useState('');
-
-  
 
   const { text, name, id } = route.params;
 
@@ -88,18 +86,46 @@ export const PdfView = ({ route, navigation }) => {
     dispatch(removePDF({ id: id.id }));
   }
 
+  const FirstRoute = () => (
+    <View style={styles.pdfTextContainer}>
+      <Text style={styles.pdfText}>{text.text}</Text>
+    </View>
+  );
+  
+  const SecondRoute = () => (
+    <View style={styles.pdfTextContainer}>
+      <Text style={styles.pdfText}>{text.text}</Text>
+    </View>
+  );
+  
+  const renderScene = SceneMap({
+    first: FirstRoute,
+    second: SecondRoute,
+  });
+
+  const layout = useWindowDimensions();
+
+  const [index, setIndex] = React.useState(0);
+  const [routes] = React.useState([
+    { key: 'first', title: 'First' },
+    { key: 'second', title: 'Second' },
+  ]);
+
   return (
     <View style={styles.viewAllPage}>
       <View style={styles.viewAllTopBar}>
         <View style={styles.big_title_box}>
           <Text style={styles.big_title} numberOfLines={1}>{name.name}</Text>
         </View>
-        
       </View>
-
-      <View style={styles.pdfTextContainer}>
-        <Text style={styles.pdfText}>{text.text}</Text>
-      </View>
+      <TabView
+        style={styles.textTabView}
+        navigationState={{ index, routes }}
+        renderScene={renderScene}
+        onIndexChange={setIndex}
+        initialLayout={{ width: layout.width }}
+      />
+      
 
       <View style={styles.bottomBar}>
         <View style={styles.bottomBarSideSpacing} />
@@ -325,6 +351,9 @@ const styles = StyleSheet.create({
     padding: 15,
     flexGrow: 1,
     minHeight: 28,
+  },
+  textTabView: {
+    flexGrow: 1,
   },
   pdfTextContainer: {
     height: '70%',
