@@ -146,7 +146,7 @@ export const PdfView = ({ route, navigation }) => {
               </View>
               <View style={styles.moreModalButtonText_box}>
                 <Text style={styles.moreModalButtonText} ellipsizeMode={'clip'}>
-                  {'Share'}
+                  {'Export'}
                 </Text>
               </View>
             </View>
