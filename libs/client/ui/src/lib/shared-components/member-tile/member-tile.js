@@ -68,31 +68,10 @@ export default MemberTile;
 const styles = StyleSheet.create({
   memberTile: {
     flexGrow: 1,
-    borderRadius: 5,
     borderStyle: 'solid',
     borderColor: '#c4c4c4ff',
     borderWidth: 1,
-    elevation: 1,
-    shadowColor: '#c4c4c4ff',
-    shadowRadius: 5,
-    shadowOpacity: 0.1,
-    shadowOffset: {
-      width: 2,
-      height: 2,
-    },
     flexDirection: 'row',
-    margin: 5,
-  },
-  thumbnail_containter: {
-    flex: 1,
-    borderRadius: 5,
-    borderStyle: 'solid',
-    borderWidth: 1,
-    aspectRatio: 1 / 1.4142,
-  },
-  memberThumbnail: {
-    resizeMode: 'contain',
-    borderRadius: 5,
   },
   memberTileInfo: {
     flexGrow: 1,
@@ -124,7 +103,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     resizeMode: 'contain',
     justifyContent: 'center',
-    paddingTop: 15,
+    padding: 15,
   },
   corner_button: {
     padding: 10,
