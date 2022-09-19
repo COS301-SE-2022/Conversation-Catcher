@@ -450,18 +450,11 @@ export default GroupInfo;
 const styles = StyleSheet.create({
   groupPage: {
     backgroundColor: '#ffffffff',
-    marginTop: 0,
-    marginBottom: 0,
-    marginLeft: 0,
     flexGrow: 1,
-    marginRight: 0,
-    alignItems: 'center',
-    alignContent: 'center',
   },
   groupPageHeaderGroup: {
-    flexGrow: 1,
-    height: '25%',
-    padding: 15,
+    flexShrink: 1,
+    padding: 10,
     alignItems: 'center',
   },
   groupThumbnailBox: {
@@ -477,8 +470,7 @@ const styles = StyleSheet.create({
     borderRadius: 180,
   },
   groupNameBox: {
-    alignContent: 'center',
-    alignItems: 'center',
+    flexShrink: 1,
     height: '15%',
   },
   groupName: {
@@ -492,14 +484,15 @@ const styles = StyleSheet.create({
     fontFamily: 'System' /* Jaldi */,
   },
   groupTextBox: {
-    alignContent: 'center',
-    padding: 10
+    width: '100%',
+    padding: 5,
+    height: '15%'
   },
   groupText: {
     color: '#667084ff',
-    textAlign: 'left',
+    textAlign: 'center',
     letterSpacing: 0,
-    lineHeight: 20,
+    lineHeight: 18,
     fontSize: 14,
     fontWeight: '400',
     fontStyle: 'normal',
@@ -508,18 +501,30 @@ const styles = StyleSheet.create({
     paddingVertical: 0,
   },
   buttonsGroup: {
+    flexShrink: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
 
   },
   leaveButtonBox: {
-
+    flexShrink: 1,
+   
   },
   leaveButton: {
 
   },
   leaveButtonText: {
     color: 'red',
+    textAlign: 'center',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 16,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
   },
   deleteButtonBox: {
+    flexShrink: 1,
 
   },
   deleteButton: {
@@ -527,9 +532,19 @@ const styles = StyleSheet.create({
   },
   deleteButtonText: {
     color: 'red',
+    textAlign: 'center',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 16,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+
   },
   membersSection: {
     //alignItems: 'center',
+    justifyContent: 'center',
+    
   },
   membersSectionHeader: {
     flexDirection: 'row',
@@ -552,13 +567,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   inviteButtonBox: {
-    padding: 10,
+    paddingHorizontal: 10,
   },
   invitebutton: {
 
   },
   removeButtonBox: {
-    padding: 10,
+    paddingHorizontal: 10,
   },
   removeButton: {
 
@@ -566,7 +581,7 @@ const styles = StyleSheet.create({
   searchBarGroup: {
     width: '85%',
     flexShrink: 1,
-    marginVertical: 20,
+    marginVertical: 15,
     flexDirection: 'row',
     alignItems: 'center',
     minHeight: 38,
@@ -604,12 +619,29 @@ const styles = StyleSheet.create({
     paddingVertical: 5
   },
   groupMembersBox: {
-    flexShrink: 1,
+    flexGrow: 1,
+    overflow: 'visible',
     
   },
   groupPageFooter: {
     width: '100%',
-    flexGrow: 1,
+    flexDirection: 'row',
+    flexShrink: 1,
+    backgroundColor: '#c4c4c4ff',
+    //shadowColor: 'transparent' /* cannot find mapping from CSS: 0px -4px 4px 0px rgba(0,0,0,0.09803921568627451), https://ethercreative.github.io/react-native-shadow-generator/ */
+    borderRadius: 5,
+    borderStyle: 'solid',
+    borderColor: '#d0d5ddff',
+    borderWidth: 1,
+    elevation: 2,
+    shadowColor: '#000000',
+    shadowRadius: 2.621621621621622,
+    shadowOpacity: 0.2173913043478261,
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    justifyContent: 'center',
   },
   backButton: {
     alignContent: 'center',
