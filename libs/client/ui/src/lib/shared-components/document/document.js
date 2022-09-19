@@ -4,10 +4,10 @@ export const document = (props) => {
   <Document>
     <Page size="A4" style={styles.page}>
       <View style={styles.section}>
-        <Text>Section #1</Text>
+        <Text style={styles.title}>{props.n}</Text>
       </View>
       <View style={styles.section}>
-        <Text>Section #2</Text>
+        <Text>{props.t}</Text>
       </View>
     </Page>
   </Document>
@@ -24,5 +24,10 @@ const styles = StyleSheet.create({
     margin: 10,
     padding: 10,
     flexGrow: 1
+  },
+  title: {
+    textAlign: 'center',
+    fontSize: 18,
+    marginBottom: 10,
   }
 });
