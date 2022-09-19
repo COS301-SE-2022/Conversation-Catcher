@@ -12,14 +12,13 @@ import {
   Share,
   DeviceEventEmitter,
   NativeAppEventEmitter,
-  useWindowDimensions,
+  Switch,
 } from 'react-native';
 import { gql, useQuery, useMutation } from '@apollo/client';
 import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
 import ModalDropdown from 'react-native-modal-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
-import { TabView, SceneMap } from 'react-native-tab-view';
 import pdfLocalAccess from '../local-pdfs-access/local-pdfs-access.js';
 import { useSelector, useDispatch } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
@@ -35,6 +34,12 @@ export const PdfView = ({ route, navigation }) => {
   const [renameVisible, setRenameVisible] = useState(false);
   const [deleteConfirmVisible, setDeleteConfirmVisible] = useState(false);
   const [newName, setNewName] = useState('');
+
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => {
+    setIsEnabled(previousState => !previousState);
+    //change
+  };
 
   const { text, name, id } = route.params;
 
@@ -86,46 +91,31 @@ export const PdfView = ({ route, navigation }) => {
     dispatch(removePDF({ id: id.id }));
   }
 
-  const FirstRoute = () => (
-    <View style={styles.pdfTextContainer}>
-      <Text style={styles.pdfText}>{text.text}</Text>
-    </View>
-  );
-  
-  const SecondRoute = () => (
-    <View style={styles.pdfTextContainer}>
-      <Text style={styles.pdfText}>{text.text}</Text>
-    </View>
-  );
-  
-  const renderScene = SceneMap({
-    first: FirstRoute,
-    second: SecondRoute,
-  });
-
-  const layout = useWindowDimensions();
-
-  const [index, setIndex] = React.useState(0);
-  const [routes] = React.useState([
-    { key: 'first', title: 'First' },
-    { key: 'second', title: 'Second' },
-  ]);
-
   return (
     <View style={styles.viewAllPage}>
       <View style={styles.viewAllTopBar}>
         <View style={styles.big_title_box}>
           <Text style={styles.big_title} numberOfLines={1}>{name.name}</Text>
         </View>
+        <View style={styles.summarisedSwitchGroup}>
+          <View style={styles.summarisedLabelBox}>
+            <Text style={styles.summarisedLabel}>Summarised</Text>
+          </View>
+          <View style={styles.summarisedSwitchBox}>
+          <Switch
+            trackColor={{ false: "#ffffff", true: colourState }}
+            thumbColor={isEnabled ? "#ffffff" : colourState}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={toggleSwitch}
+            value={isEnabled}
+          />
+          </View>
+        </View>
       </View>
-      <TabView
-        style={styles.textTabView}
-        navigationState={{ index, routes }}
-        renderScene={renderScene}
-        onIndexChange={setIndex}
-        initialLayout={{ width: layout.width }}
-      />
-      
+
+      <View style={styles.pdfTextContainer}>
+        <Text style={styles.pdfText}>{text.text}</Text>
+      </View>
 
       <View style={styles.bottomBar}>
         <View style={styles.bottomBarSideSpacing} />
@@ -352,8 +342,31 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     minHeight: 28,
   },
-  textTabView: {
+  summarisedSwitchGroup: {
+    flexDirection: 'row',
+    paddingHorizontal: 15,
     flexGrow: 1,
+    alignContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+  },
+  summarisedLabel: {
+    color: '#344053ff',
+    textAlign: 'left',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 14,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+    paddingHorizontal: 0,
+    paddingVertical: 0,
+  },
+  summarisedLabelBox: {
+
+  },
+  summarisedSwitchBox: {
+    
   },
   pdfTextContainer: {
     height: '70%',
