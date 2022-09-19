@@ -119,7 +119,7 @@ const PdfTile = ({
       <View style={styles.pdfTile_contents_not_thumbnail}>
         <View style={styles.pdfTile_contents_not_thumbnail_inner}>
           <View style={styles.pdfName_box}>
-            <Text style={styles.pdfName}>{name}</Text>
+            <Text style={styles.pdfName} numberOfLines={2}>{name}</Text>
           </View>
           <View style={styles.pdfDate_box}>
             <Text style={styles.pdfDate}>{date}</Text>
