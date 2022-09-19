@@ -189,6 +189,10 @@ export const Groups = ({ navigation }) => {
           key={'1'}
           id={'1'}
           name={'Group1'}
+          thumbnailSource={{
+            uri:
+            'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg',
+          }}
           text={'test'}
           groupSource={'groupRefresh'}
           nav={navigation}
@@ -197,6 +201,10 @@ export const Groups = ({ navigation }) => {
           key={'2'}
           id={'2'}
           name={'Group2'}
+          thumbnailSource={{
+            uri:
+            'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg',
+          }}
           text={'blah'}
           groupSource={'groupRefresh'}
           nav={navigation}
@@ -486,7 +494,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5
   },
   groupTiles: {
-    height: '70%',
+    flexGrow: 1,
     paddingLeft: 15,
     paddingRight: 15,
     overflow: 'visible',
