@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react-native';
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, Image, ImageBackground, Button, Alert, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, Switch } from 'react-native';
 import BouncyCheckboxGroup, {ICheckboxButton,} from "react-native-bouncy-checkbox-group";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useDispatch, useSelector } from 'react-redux'
@@ -23,6 +23,13 @@ export const ColourPage = ({ navigation}) => {
     }
   `;
   const [setUser] = useMutation(SET_USER);
+
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => {
+    setIsEnabled(previousState => !previousState);
+    //change text shown
+  };
+
   return (
     <View style={styles.colourPage}>
       <View style={styles.big_title_box}>
@@ -58,6 +65,21 @@ export const ColourPage = ({ navigation}) => {
               );
             }}
           />
+        </View>
+      </View>
+
+      <View style={styles.summarisedSwitchGroup}>
+        <View style={styles.summarisedLabelBox}>
+          <Text style={styles.summarisedLabel}>Summarised</Text>
+        </View>
+        <View style={styles.summarisedSwitchBox}>
+        <Switch
+          trackColor={{ false: "#ffffff", true: colourState }}
+          thumbColor={isEnabled ? "#ffffff" : colourState}
+          ios_backgroundColor="#3e3e3e"
+          onValueChange={toggleSwitch}
+          value={isEnabled}
+        />
         </View>
       </View>
 
