@@ -11,18 +11,19 @@ import {
   TextInput,
 } from 'react-native';
 import { gql, useQuery, useMutation } from '@apollo/client';
+import GroupTile from '../shared-components/group-tile/group-tile.js';
 import ModalDropdown from 'react-native-modal-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
 import Share from 'react-native-share';
-import PdfDisplay from '../shared-components/pdf-display/pdf-display.js';
-import pdfLocalAccess from '../shared-components/local-pdfs-access/local-pdfs-access';
+import GroupDisplay from '../shared-components/group-display/group-display.js';
+import groupLocalAccess from '../shared-components/local-groups-access/local-groups-access';
 import { useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { selectColour } from 'apps/client/src/app/slices/user.slice';
 
-export const ViewAll = ({ navigation }) => {
-  const pdfRef = useRef();
+export const Groups = ({ navigation }) => {
+  const groupRef = useRef();
   const colourState = useSelector(selectColour);
   const [moreVisible, setMoreVisible] = useState(false);
   const [selectMode, setSelectMode] = useState(false);
@@ -61,9 +62,9 @@ export const ViewAll = ({ navigation }) => {
           style={styles.backButton}
           onPress={async () => {
             await share({
-              title: 'Sharing pdf file from awesome share app',
+              title: 'Sharing group file from awesome share app',
               message: 'Please take a look at this file',
-              url: '../assets/thereactnativebook-sample.pdf',
+              url: '../assets/thereactnativebook-sample.group',
             });
             setSelectMode(false);
             setBottomModalVisible(false);
@@ -145,10 +146,10 @@ export const ViewAll = ({ navigation }) => {
   //   console.log(itemValue);
   // }
 
-  // function filterPdf(text) {
+  // function filterGroup(text) {
   //   const temp = [];
-  //   for (let i = 0; i < pdfLocalAccess.getLength(); i++)
-  //     objArr[i] = pdfLocalAccess.get(i);
+  //   for (let i = 0; i < groupLocalAccess.getLength(); i++)
+  //     objArr[i] = groupLocalAccess.get(i);
   //   for (let i = 0; i < objArr.length; i++) {
   //     if (objArr[i].name.indexOf(text) !== -1) temp.push(objArr[i]);
   //   }
@@ -157,10 +158,10 @@ export const ViewAll = ({ navigation }) => {
   // }
 
   return (
-    <View style={styles.viewAllPage}>
-      <View style={styles.viewAllTopBar}>
+    <View style={styles.groupsPage}>
+      <View style={styles.groupsTopBar}>
         <View style={styles.big_title_box}>
-          <Text style={styles.big_title}>{'PDFs'}</Text>
+          <Text style={styles.big_title}>{'Groups'}</Text>
         </View>
 
         <View style={styles.searchBarGroup}>
@@ -168,8 +169,8 @@ export const ViewAll = ({ navigation }) => {
             style={styles.searchInput}
             placeholder="Search"
             onChangeText={(text) => {
-              pdfLocalAccess.filterPdfs(text);
-              pdfRef.current.refreshPfds();
+              groupLocalAccess.filterGroups(text);
+              groupRef.current.refreshPfds();
             }}
           />
           <View style={styles.searchIconFrame}>
@@ -177,19 +178,46 @@ export const ViewAll = ({ navigation }) => {
           </View>
         </View>
       </View>
-
-      <PdfDisplay
+{/* 
+      <GroupDisplay
         navigation={navigation}
         selectMode={selectMode}
-        ref={pdfRef}
-      />
+        ref={groupRef}
+      /> */}
+      <View style={styles.groupTiles}>
+        <GroupTile
+          key={'1'}
+          id={'1'}
+          name={'Group1'}
+          thumbnailSource={{
+            uri:
+            'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg',
+          }}
+          text={'test'}
+          groupSource={'groupRefresh'}
+          nav={navigation}
+        />
+        <GroupTile
+          key={'2'}
+          id={'2'}
+          name={'Group2'}
+          thumbnailSource={{
+            uri:
+            'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg',
+          }}
+          text={'blah'}
+          groupSource={'groupRefresh'}
+          nav={navigation}
+        />
+      </View>
+
 
       <View style={styles.viewAllBottomBar}>
         <TouchableOpacity
           style={styles.moreButton}
           onPress={() => setMoreVisible(true)}
         >
-          <Icon name="ellipsis-h" color="#344053ff" size={30} />
+          <Icon name="plus" color={colourState} size={30} />
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -206,8 +234,8 @@ export const ViewAll = ({ navigation }) => {
             defaultIndex={0}
             defaultValue={'Date'}
             onSelect={(index, itemValue) => {
-              pdfLocalAccess.sortPdfs(itemValue);
-              pdfRef.current.refreshPfds();
+              groupLocalAccess.sortGroups(itemValue);
+              groupRef.current.refreshPfds();
             }}
             style={styles.orderByDropdown}
             textStyle={styles.orderByDropdownText}
@@ -230,23 +258,14 @@ export const ViewAll = ({ navigation }) => {
           <TouchableOpacity
             style={styles.moreModalButton}
             onPress={() => {
-              setBottomModalType('share');
-              setSelectMode(true);
-              setBottomModalVisible(true);
+              //navigate to new group-info page
               setMoreVisible(false);
             }}
           >
             <View style={styles.moreModalButtonContent}>
-              <View style={styles.iconContainer}>
-                <Icon
-                  style={{ color: colourState }}
-                  name="paper-plane-o"
-                  size={18}
-                />
-              </View>
               <View style={styles.moreModalButtonText_box}>
                 <Text style={styles.moreModalButtonText} ellipsizeMode={'clip'}>
-                  {'Share'}
+                  {'Create Group'}
                 </Text>
               </View>
             </View>
@@ -257,45 +276,17 @@ export const ViewAll = ({ navigation }) => {
           <TouchableOpacity
             style={styles.moreModalButton}
             onPress={() => {
-              setBottomModalType('rename');
-              setBottomModalVisible(true);
+              //navigate to view all groups page
               setMoreVisible(false);
             }}
           >
             <View style={styles.moreModalButtonContent}>
-              <View style={styles.iconContainer}>
-                <Icon
-                  style={{ color: colourState }}
-                  name="pencil-square-o"
-                  size={20}
-                />
-              </View>
               <View style={styles.moreModalButtonText_box}>
-                <Text style={styles.moreModalButtonText}>{'Rename'}</Text>
+                <Text style={styles.moreModalButtonText}>{'Join Group'}</Text>
               </View>
             </View>
           </TouchableOpacity>
 
-          <View style={styles.moreModalButtonDivider} />
-
-          <TouchableOpacity
-            style={styles.moreModalButton}
-            onPress={() => {
-              setBottomModalType('delete');
-              setBottomModalVisible(true);
-              setSelectMode(true);
-              setMoreVisible(false);
-            }}
-          >
-            <View style={styles.moreModalButtonContent}>
-              <View style={styles.iconContainer}>
-                <Icon style={{ color: colourState }} name="trash-o" size={20} />
-              </View>
-              <View style={styles.moreModalButtonText_box}>
-                <Text style={styles.moreModalButtonText}>{'Delete'}</Text>
-              </View>
-            </View>
-          </TouchableOpacity>
         </View>
       </Modal>
       <Modal
@@ -376,10 +367,10 @@ export const ViewAll = ({ navigation }) => {
     </View>
   );
 };
-export default ViewAll;
+export default Groups;
 
 const styles = StyleSheet.create({
-  viewAllPage: {
+  groupsPage: {
     backgroundColor: '#ffffffff',
     marginTop: 0,
     marginBottom: 0,
@@ -387,7 +378,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     marginRight: 0,
   },
-  viewAllTopBar: {
+  groupsTopBar: {
     width: '100%',
     flexShrink: 1,
     resizeMode: 'contain',
@@ -465,10 +456,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 5
   },
-  recentPdfTiles: {
-    height: '70%',
-    paddingLeft: 15,
-    paddingRight: 15,
+  groupTiles: {
+    flexGrow: 1,
     overflow: 'visible',
   },
   viewAllBottomBar: {
@@ -601,13 +590,8 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     //padding: 5
-  },
-  iconContainer: {
-    width: '40%',
-    height: '100%',
-    alignItems: 'center',
   },
   moreModalButtonText: {
     color: '#344053ff',
