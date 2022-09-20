@@ -14,7 +14,7 @@ import { useSelector, useDispatch } from 'react-redux';
 export function PdfDisplay({ navigation, selectMode }, ref) {
   // const [selectMode, setSelectMode] = useState(false);
   const [didReload, setDidReload] = useState(true);
-  const [refreshing, setRefreshing] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const emailState = useSelector(selectEmail);
   const localPDFs = useSelector(selectPDFS);
