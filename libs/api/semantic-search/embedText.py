@@ -1,4 +1,5 @@
 from sentence_transformers import SentenceTransformer, util
+import requests
 
 class embedText:
 
@@ -17,7 +18,13 @@ class embedText:
         embedder = SentenceTransformer('all-MiniLM-L6-v2')
         top_k = 10
 
-        # corpus_embeddings = *Get dataset of all of user's pdfs
+        url = "http://10.0.2.2:3333/graphql/getforuser"
+        obj = {'email' : user}
+
+        result = requests.post(url, obj)
+        print(result)
+
+        corpus_embeddings = '' # Get dataset of all of user's pdfs
 
         query_embedding = embedder.encode(query, convert_to_tensor=True)
         hits = util.semantic_search(query_embedding, corpus_embeddings, top_k=top_k)
@@ -28,4 +35,6 @@ class embedText:
             article_data = df.iloc[hit_id]
             title = article_data["title"]
             print("-", title, "(Score: {:.4f})".format(hit['score']))
+
+        return hits
         
