@@ -38,6 +38,7 @@
     "lottie-react-native": "*",
     "@react-native-firebase/auth": "*",
     "@react-native-firebase/app": "*",
-    "redux-persist": "*"
+    "redux-persist": "*",
+    "@react-pdf/renderer": "*"
   }
 }

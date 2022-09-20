@@ -26,7 +26,10 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
       setDidReload(!didReload);
     },
   }));
-  const reloadData = () => {return}
+  const reloadData = () => {
+    setRefreshing(false);
+    console.log("test")
+  }
   //Listen to when to update page
   DeviceEventEmitter.addListener('updatePage', () => setDidReload(!didReload));
   //graphql syntax trees
@@ -53,7 +56,10 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
   if (loading)
     if (localPDFs.length !== 0)
     return (
-      <ScrollView style={styles.recentPdfTiles}>
+      <ScrollView style={styles.recentPdfTiles}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={reloadData} />
+      }>
         <Loading width={100} height={100}/>
         {localPDFs.map((item, key) => (
         <PdfTile
@@ -68,15 +74,15 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
           pdfSource={'pdfRefresh'}
           nav={navigation}
           refresh={setDidReload}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={reloadData} />
-          }
         />
       ))}
       </ScrollView>
     );
     else return(
-      <ScrollView style={styles.recentPdfTiles}>
+      <ScrollView style={styles.recentPdfTiles}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={reloadData} />
+      }>
         <Loading width={100} height={100}/>
         <Text>No Documents Stored Locally</Text>
       </ScrollView>
@@ -84,7 +90,10 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
   if (error){
     if (localPDFs.length !== 0)
     return (
-      <ScrollView style={styles.recentPdfTiles}>
+      <ScrollView style={styles.recentPdfTiles}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={reloadData} />
+      }>
         <Text>No connection</Text>
         <Text>{error[0]}</Text>
         {localPDFs.map((item, key) => (
@@ -105,7 +114,10 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
       </ScrollView>
     );
     else return(
-      <ScrollView style={styles.recentPdfTiles}>
+      <ScrollView style={styles.recentPdfTiles}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={reloadData} />
+      }>
         <Text>No Documents Locally</Text>
       </ScrollView>
     );
@@ -146,7 +158,10 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
   }
   if (data.getPDFs.length !== 0)
   return (
-    <ScrollView style={styles.recentPdfTiles}>
+    <ScrollView style={styles.recentPdfTiles}
+    refreshControl={
+      <RefreshControl refreshing={refreshing} onRefresh={reloadData} />
+    }>
       {pdfLocalAccess.getPdfs().map((item, key) => (
         <PdfTile
           key={key}
@@ -165,7 +180,10 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
     </ScrollView>
   );
   else return(
-    <ScrollView style={styles.recentPdfTiles}>
+    <ScrollView style={styles.recentPdfTiles}
+    refreshControl={
+      <RefreshControl refreshing={refreshing} onRefresh={reloadData} />
+    }>
         <Text>This account has no documents yet!</Text>
       </ScrollView>
   );
