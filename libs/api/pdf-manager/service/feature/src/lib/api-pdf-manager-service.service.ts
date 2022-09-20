@@ -7,6 +7,8 @@ import {
   SetNamePdfCommand,
   AddTagsCommand,
   DeleteTagsCommand,
+  SetEmbeddingsCommand,
+  SetSummarizedCommand,
 } from './commands/impl/set-pdf-manager.command';
 import { DeletePdfCommand } from './commands/impl/delete-pdf-manager.command';
 import { GetPdfByIdQuery, GetPdfsQuery } from './queries/impl';
@@ -33,6 +35,14 @@ export class ApiPdfManagerServiceService {
   }
   async removeTags(id: string, tags: string[]) {
     return await this.commandBus.execute(new DeleteTagsCommand(id, tags));
+  }
+  async setSumarry(id: string, summary: string) {
+    return await this.commandBus.execute(new SetSummarizedCommand(id, summary));
+  }
+  async setEmbeddings(id: string, embeddings: string) {
+    return await this.commandBus.execute(
+      new SetEmbeddingsCommand(id, embeddings)
+    );
   }
 
   //queries

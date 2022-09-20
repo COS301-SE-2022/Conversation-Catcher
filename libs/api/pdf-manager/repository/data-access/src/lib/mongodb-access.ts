@@ -258,7 +258,7 @@ export class MongoDBAccess {
   }
 
   // Update the embeddings for a pdf
-  async updateEmbeddings(id: string, embeddings: string[]) {
+  async updateEmbeddings(id: string, embeddings: string) {
     this.action = 'updateOne';
     const data = JSON.stringify({
       collection: this.pdfCollection,
@@ -279,7 +279,7 @@ export class MongoDBAccess {
   }
 
   // Update summarized text of a pdf after it has been summarized
-  async updateSummarized(id: string, summarized: string[]) {
+  async updateSummarized(id: string, summarized: string) {
     this.action = 'updateOne';
     const data = JSON.stringify({
       collection: this.pdfCollection,
