@@ -26,6 +26,14 @@ class LocalPdfsAccess {
     return this.displayPdfs;
   }
 
+  getPdfIds() {
+    const id_array = [];
+    this.allPdfs.forEach((pdf) => {
+      id_array.push(pdf.id);
+    });
+    return id_array;
+  }
+
   //Return the size of the displayPdfs array
   getLength() {
     if (this.displayPdfs[0] === undefined) return 0;
