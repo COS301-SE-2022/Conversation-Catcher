@@ -91,11 +91,12 @@ export class UserManagementApiFeatureResolver {
       const pdfObj = new PdfEntity();
       pdfObj.id = pdf._id;
       pdfObj.name = pdf.name;
-      if (pdf.pdf != null) pdfObj.pdf = pdf.pdf.toString('ascii');
       pdfObj.creationDate = date.toUTCString();
       if (pdf.downloaded != null) pdfObj.downloaded = pdf.downloaded;
       else pdfObj.downloaded = false;
       pdfObj.text = pdf.text;
+      pdfObj.summarized = pdf.summarized;
+      pdfObj.embeddings = pdf.embeddings;
       resArr.push(pdfObj);
     }
     return resArr;
