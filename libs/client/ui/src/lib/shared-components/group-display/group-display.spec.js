@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
-import GroupDisplay from './group -display';
+import GroupDisplay from './group-display';
 import { create } from 'react-test-renderer';
 import { Provider } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
