@@ -13,28 +13,22 @@ class embedText:
 
         return embeddings
 
-    def search(self, query, user):
+    def search(self, query, df):
 
         embedder = SentenceTransformer('all-MiniLM-L6-v2')
         top_k = 10
 
-        url = "http://10.0.2.2:3333/graphql/getforuser"
-        obj = {'email' : user}
-
-        result = requests.post(url, obj)
-        print(result)
-
-        corpus_embeddings = '' # Get dataset of all of user's pdfs
+        corpus_embeddings = df['id','embeddings']
 
         query_embedding = embedder.encode(query, convert_to_tensor=True)
         hits = util.semantic_search(query_embedding, corpus_embeddings, top_k=top_k)
         hits = hits[0] # Get the hits for the first query
 
         for hit in hits:
-            hit_id = hit['corpus_id']
-            article_data = df.iloc[hit_id]
-            title = article_data["title"]
-            print("-", title, "(Score: {:.4f})".format(hit['score']))
+            hit_id = hit['id']
+            pdf_data = df.iloc[hit_id]
+            name = df["name"]
+            print("-", name, "(Score: {:.4f})".format(hit['score']))
 
         return hits
         
