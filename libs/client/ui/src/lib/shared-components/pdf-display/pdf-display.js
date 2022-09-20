@@ -1,6 +1,6 @@
 import { gql, useMutation, useQuery } from '@apollo/client';
 import React, { useImperativeHandle, forwardRef, useState } from 'react';
-import { Text, ScrollView, StyleSheet, DeviceEventEmitter } from 'react-native';
+import { Text, ScrollView, StyleSheet, DeviceEventEmitter, RefreshControl } from 'react-native';
 import Loading from '../loading/loading';
 // import LocalPdfsAccess from '../local-pdfs-access/local-pdfs-access';
 import PdfTile from '../pdf-tile/pdf-tile';
@@ -14,6 +14,7 @@ import { useSelector, useDispatch } from 'react-redux';
 export function PdfDisplay({ navigation, selectMode }, ref) {
   // const [selectMode, setSelectMode] = useState(false);
   const [didReload, setDidReload] = useState(true);
+  const [refreshing, setRefreshing] = useState(true);
   const [isLoaded, setIsLoaded] = useState(false);
   const emailState = useSelector(selectEmail);
   const localPDFs = useSelector(selectPDFS);
@@ -25,7 +26,7 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
       setDidReload(!didReload);
     },
   }));
-
+  const reloadData = () => {return}
   //Listen to when to update page
   DeviceEventEmitter.addListener('updatePage', () => setDidReload(!didReload));
   //graphql syntax trees
@@ -67,6 +68,9 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
           pdfSource={'pdfRefresh'}
           nav={navigation}
           refresh={setDidReload}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={reloadData} />
+          }
         />
       ))}
       </ScrollView>
