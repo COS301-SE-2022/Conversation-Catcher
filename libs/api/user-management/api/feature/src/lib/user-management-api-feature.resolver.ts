@@ -5,7 +5,7 @@ import {
   UserEntity,
   GroupEntity,
 } from '@conversation-catcher/api/user-management/api/data-access';
-import { PdfEntity } from '@conversation-catcher/api/pdf-manager/api/data-access';
+// import { PdfEntity } from '@conversation-catcher/api/pdf-manager/api/data-access';
 
 @Resolver()
 export class UserManagementApiFeatureResolver {
@@ -84,23 +84,23 @@ export class UserManagementApiFeatureResolver {
 
   //--------------------------------------------------------GROUPS-----------------------------------------------
   //Assign results to pdf object
-  assignResult(result) {
-    const resArr = [];
-    for (const pdf of result) {
-      const date = new Date(pdf.creationDate);
-      const pdfObj = new PdfEntity();
-      pdfObj.id = pdf._id;
-      pdfObj.name = pdf.name;
-      pdfObj.creationDate = date.toUTCString();
-      if (pdf.downloaded != null) pdfObj.downloaded = pdf.downloaded;
-      else pdfObj.downloaded = false;
-      pdfObj.text = pdf.text;
-      pdfObj.summarized = pdf.summarized;
-      pdfObj.embeddings = pdf.embeddings;
-      resArr.push(pdfObj);
-    }
-    return resArr;
-  }
+  // assignResult(result) {
+  //   const resArr = [];
+  //   for (const pdf of result) {
+  //     const date = new Date(pdf.creationDate);
+  //     const pdfObj = new PdfEntity();
+  //     pdfObj.id = pdf._id;
+  //     pdfObj.name = pdf.name;
+  //     pdfObj.creationDate = date.toUTCString();
+  //     if (pdf.downloaded != null) pdfObj.downloaded = pdf.downloaded;
+  //     else pdfObj.downloaded = false;
+  //     pdfObj.text = pdf.text;
+  //     pdfObj.summarized = pdf.summarized;
+  //     pdfObj.embeddings = pdf.embeddings;
+  //     resArr.push(pdfObj);
+  //   }
+  //   return resArr;
+  // }
 
   @Query(() => [GroupEntity]) //checked
   async getAllGroups() {
@@ -112,10 +112,11 @@ export class UserManagementApiFeatureResolver {
     return await this.userService.getGroupsFor(email);
   }
 
-  @Query(() => [PdfEntity]) //checked
-  async getGroupPdfs(@Args('groupName') groupName: string) {
-    return this.assignResult(await this.userService.getGroupPdfs(groupName));
-  }
+  //Breaks the rules of inter module dependencies -> To be removed
+  // @Query(() => [PdfEntity]) //checked
+  // async getGroupPdfs(@Args('groupName') groupName: string) {
+  //   return this.assignResult(await this.userService.getGroupPdfs(groupName));
+  // }
 
   @Mutation(() => GroupEntity) //checked
   async createGroup(
