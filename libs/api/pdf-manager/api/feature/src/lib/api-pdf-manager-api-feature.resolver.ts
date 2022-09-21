@@ -35,7 +35,7 @@ export class ApiPdfManagerApiFeatureResolver {
     if (result.downloaded != null) pdfObj.downloaded = result.downloaded;
     else pdfObj.downloaded = false;
     pdfObj.text = result.text;
-    pdfObj.summarized = result.summarized;
+    pdfObj.summarised = result.summarised;
     pdfObj.embeddings = result.embeddings;
     return pdfObj;
   }

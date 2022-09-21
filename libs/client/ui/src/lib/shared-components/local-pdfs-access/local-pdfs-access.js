@@ -50,6 +50,13 @@ class LocalPdfsAccess {
   //   return this.displayPdfs[i];
   // }
 
+  //Changes the summary of the pdf
+  addSummary(id, summary) {
+    this.allPdfs.forEach((pdf) => {
+      if (pdf.id === id) pdf.summarised = summary
+    });
+  }
+
   //Resets both arrays of pdfs to be empty
   clearPdfs() {
     this.displayPdfs.length = 0;

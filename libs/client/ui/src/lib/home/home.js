@@ -52,28 +52,15 @@ export const Home = ({ navigation }) => {
   const [fileResponse, setFileResponse] = useState([]);
 
   //Graphql syntax trees
-  const GET_USER_PDFS = gql`
-    query getForUser($email: String!) {
-      getPDFs(id: $email) {
-        id
-        name
-        creationDate
-        downloaded
-        #pdf
-        text
-      }
+  const SET_SUMMARISED = gql`
+    mutation setSummarized($id: String!, $summary: String!) {
+      setSummarized(id: $id, summary: $summary)
     }
   `;
 
   const SUMMARISE_TEXT = gql`
     mutation summariseText($text: String!) {
       Summarise(text: $text)
-    }
-  `;
-
-  const CONVERT_SPEECH = gql`
-    mutation speechToText {
-      ConvertSpeech
     }
   `;
 
@@ -90,8 +77,8 @@ export const Home = ({ navigation }) => {
   `;
 
   //Mutations to be used in the creation of new PDFs
-  const [summariseText, { data, loading, error }] = useMutation(SUMMARISE_TEXT);
-  const [speechToText, { d, l, e }] = useMutation(CONVERT_SPEECH);
+  const [summariseText] = useMutation(SUMMARISE_TEXT);
+  const [setSummarisedText] = useMutation(SET_SUMMARISED);
   const [addPdf] = useMutation(ADD_PDF);
 
   const handleDocumentSelection = useCallback(async () => {
@@ -273,12 +260,30 @@ export const Home = ({ navigation }) => {
             name: newPdf.data.addPDF.name,
             creationDate: newPdf.data.addPDF.creationDate,
             downloaded: newPdf.data.addPDF.downloaded,
-            pdf: newPdf.data.addPDF.pdf,
             text: newPdf.data.addPDF.text,
             id: newPdf.data.addPDF.id,
+            summarised: newPdf.data.addPDF.summarised,
+            embeddings: newPdf.data.addPDF.embeddings,
           });
           NativeAppEventEmitter.emit('updatePage');
           dispatch(addPDF(newPdf.data.addPDF.id));
+        } else console.log('Connection error: internet connection is required');
+      })
+      .catch((e) => console.log(e));
+  };
+
+  const summarise = (text, id) => {
+    summariseText({ variables: { text: text } })
+      .then(async (res) => {
+        if (res.ok) {
+          const result = await res.json();
+          console.log(result);
+          //return wether successfull or not
+          setSummarisedText({
+            variables: { id: id, summary: result },
+          });
+          pdfLocalAccess.addSummary(id, result);
+          NativeAppEventEmitter.emit('updatePage');
         } else console.log('Connection error: internet connection is required');
       })
       .catch((e) => console.log(e));
@@ -333,9 +338,8 @@ export const Home = ({ navigation }) => {
           </View>
         </TouchableOpacity>
       </View>
-      <View style={styles.bottomGroup}>  
-        <View style={styles.bottomGroupSideSpacing}>
-        </View>
+      <View style={styles.bottomGroup}>
+        <View style={styles.bottomGroupSideSpacing}></View>
         <View style={styles.audioTouchableOpacityGroup}>
           <RecordAudioButtonState />
           <TouchableOpacity
@@ -360,7 +364,6 @@ export const Home = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </View>
-      
 
       <Modal
         style={styles.modal}
@@ -574,7 +577,7 @@ const styles = StyleSheet.create({
   },
   bottomGroupSideSpacing: {
     width: '30%',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   settingsTouchableOpacityFrame: {
     flexShrink: 1,

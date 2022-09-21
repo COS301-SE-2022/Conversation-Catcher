@@ -100,9 +100,10 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
         name: data.getPDFs[i].name,
         creationDate: data.getPDFs[i].creationDate,
         downloaded: data.getPDFs[i].downloaded,
-        pdf: data.getPDFs[i].pdf,
         text: data.getPDFs[i].text,
         id: data.getPDFs[i].id,
+        summarised: data.getPDFs[i].summarised,
+        embeddings: data.getPDFs[i].embeddings,
       });
     }
     //Update the user pdfs array to ensure that deleted pdfs are removed

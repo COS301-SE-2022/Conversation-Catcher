@@ -5,7 +5,7 @@ import {
   SetNamePdfCommand,
   AddTagsCommand,
   DeleteTagsCommand,
-  SetSummarizedCommand,
+  SetSummarisedCommand,
   SetEmbeddingsCommand,
 } from '../impl/set-pdf-manager.command';
 import { MongoDBAccess } from '@conversation-catcher/api/pdf-manager/repository/data-access';
@@ -75,13 +75,13 @@ export class DeleteTagsHandler implements ICommandHandler<DeleteTagsCommand> {
     return 'Error: tags have not been added';
   }
 }
-@CommandHandler(SetSummarizedCommand)
-export class SetSummarizedHandler
-  implements ICommandHandler<SetSummarizedCommand>
+@CommandHandler(SetSummarisedCommand)
+export class SetSummarisedHandler
+  implements ICommandHandler<SetSummarisedCommand>
 {
   constructor(private repository: MongoDBAccess) {}
-  async execute({ id, summarized }: SetSummarizedCommand): Promise<any> {
-    const res = await this.repository.updateSummarized(id, summarized);
+  async execute({ id, summarised }: SetSummarisedCommand): Promise<any> {
+    const res = await this.repository.updateSummarised(id, summarised);
     if (res !== null && res.modifiedCount === 1)
       return 'Summary has been added';
     return 'Error: failed to add summary';
@@ -94,7 +94,7 @@ export class SetEmbeddingsHandler
 {
   constructor(private repository: MongoDBAccess) {}
   async execute({ id, embeddings }: SetEmbeddingsCommand): Promise<any> {
-    const res = await this.repository.updateSummarized(id, embeddings);
+    const res = await this.repository.updateSummarised(id, embeddings);
     if (res !== null && res.modifiedCount === 1)
       return 'Embeddings has been added';
     return 'Error: failed to add embeddings';
