@@ -86,9 +86,18 @@ export class ApiPdfManagerApiFeatureResolver {
     return await this.pdfService.addTags(id, tags);
   }
 
+  //Remove the tags if they are present
+  @Mutation(() => String)
+  async removeTags(
+    @Args('id') id: string,
+    @Args('tags', { type: () => [String] }) tags: string[]
+  ) {
+    return await this.pdfService.removeTags(id, tags);
+  }
+
   //Add a summary of the text to the pdf
   @Mutation(() => String)
-  async removeTags(@Args('id') id: string, @Args('summary') summary: string) {
+  async setSummarized(@Args('id') id: string, @Args('summary') summary: string) {
     return await this.pdfService.setSumarry(id, summary);
   }
 
