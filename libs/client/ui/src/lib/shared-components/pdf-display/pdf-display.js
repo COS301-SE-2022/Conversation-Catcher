@@ -26,6 +26,41 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
       setDidReload(!didReload);
     },
   }));
+
+  const ScrollDisplay = (props) => {
+    if (props.arr.length !== 0)
+    return (
+      <ScrollView style={styles.recentPdfTiles}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={reloadData} />
+      }>
+        {props.arr.map((item, key) => (
+          <PdfTile
+            key={key}
+            id={item.id}
+            name={item.name}
+            date={item.creationDate}
+            source={''}
+            text={item.text}
+            downloaded={item.downloaded}
+            showCheck={selectMode}
+            pdfSource={'pdfRefresh'}
+            nav={navigation}
+            refresh={setDidReload}
+          />
+        ))}
+      </ScrollView>
+    );
+    else return(
+      <ScrollView style={styles.recentPdfTiles}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={reloadData} />
+      }>
+          <Text>{props.text}</Text>
+        </ScrollView>
+    );
+  }
+
   const reloadData = () => {
     setRefreshing(false);
     console.log("test")
@@ -54,73 +89,9 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
   // console.log(error);
   //console.log(localPDFs);
   if (loading)
-    if (localPDFs.length !== 0)
-    return (
-      <ScrollView style={styles.recentPdfTiles}
-      refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={reloadData} />
-      }>
-        <Loading width={100} height={100}/>
-        {localPDFs.map((item, key) => (
-        <PdfTile
-          key={key}
-          id={item.id}
-          name={item.name}
-          date={item.creationDate}
-          source={''}
-          text={item.text}
-          downloaded={item.downloaded}
-          showCheck={selectMode}
-          pdfSource={'pdfRefresh'}
-          nav={navigation}
-          refresh={setDidReload}
-        />
-      ))}
-      </ScrollView>
-    );
-    else return(
-      <ScrollView style={styles.recentPdfTiles}
-      refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={reloadData} />
-      }>
-        <Loading width={100} height={100}/>
-        <Text>No Documents Stored Locally</Text>
-      </ScrollView>
-    );
+    return <ScrollDisplay arr={localPDFs} text={"No Documents Stored Locally"}/>
   if (error){
-    if (localPDFs.length !== 0)
-    return (
-      <ScrollView style={styles.recentPdfTiles}
-      refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={reloadData} />
-      }>
-        <Text>No connection</Text>
-        <Text>{error[0]}</Text>
-        {localPDFs.map((item, key) => (
-        <PdfTile
-          key={key}
-          id={item.id}
-          name={item.name}
-          date={item.creationDate}
-          source={''}
-          text={item.text}
-          downloaded={item.downloaded}
-          showCheck={selectMode}
-          pdfSource={'pdfRefresh'}
-          nav={navigation}
-          refresh={setDidReload}
-        />
-      ))}
-      </ScrollView>
-    );
-    else return(
-      <ScrollView style={styles.recentPdfTiles}
-      refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={reloadData} />
-      }>
-        <Text>No Documents Locally</Text>
-      </ScrollView>
-    );
+    return <ScrollDisplay arr={localPDFs} text={"No Documents Locally"}/>
   }
   //If the pdf array is empty assign the result from the query
   //create deep copy of the returned data
@@ -157,36 +128,7 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
     } 
   }
   if (data.getPDFs.length !== 0)
-  return (
-    <ScrollView style={styles.recentPdfTiles}
-    refreshControl={
-      <RefreshControl refreshing={refreshing} onRefresh={reloadData} />
-    }>
-      {pdfLocalAccess.getPdfs().map((item, key) => (
-        <PdfTile
-          key={key}
-          id={item.id}
-          name={item.name}
-          date={item.creationDate}
-          source={''}
-          text={item.text}
-          downloaded={item.downloaded}
-          showCheck={selectMode}
-          pdfSource={'pdfRefresh'}
-          nav={navigation}
-          refresh={setDidReload}
-        />
-      ))}
-    </ScrollView>
-  );
-  else return(
-    <ScrollView style={styles.recentPdfTiles}
-    refreshControl={
-      <RefreshControl refreshing={refreshing} onRefresh={reloadData} />
-    }>
-        <Text>This account has no documents yet!</Text>
-      </ScrollView>
-  );
+  return <ScrollDisplay arr={pdfLocalAccess.getPdfs()} text={"This account has no documents yet!"}/>
 }
 export default forwardRef(PdfDisplay);
 
