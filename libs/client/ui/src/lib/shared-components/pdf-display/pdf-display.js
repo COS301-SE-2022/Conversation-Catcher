@@ -105,7 +105,7 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
   if (loading)
     return <ScrollDisplay arr={localPDFs} text={"No Documents Stored Locally"} load={true}/>
   if (error){
-    return <ScrollDisplay arr={localPDFs} text={"No Documents Locally"} load={true}/>
+    return <ScrollDisplay arr={localPDFs} text={"No Documents Locally"} load={false}/>
   }
   //If the pdf array is empty assign the result from the query
   //create deep copy of the returned data
