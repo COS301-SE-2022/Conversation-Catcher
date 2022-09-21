@@ -34,7 +34,7 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={reloadData} />
       }>
-        <Loading width={250} height={250} load={props.load}/>
+        <Loading width={100} height={100} load={props.load}/>
         {props.arr.map((item, key) => (
           <PdfTile
             key={key}
@@ -57,8 +57,8 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={reloadData} />
       }>
-        <Loading width={250} height={250} load={props.load}/>
-        <Text>{props.text}</Text>
+        <Loading width={100} height={100} load={props.load}/>
+        <Text style={{textAlign: 'center'}}>{props.text}</Text>
       </ScrollView>
     );
   }
@@ -87,7 +87,7 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
   });
   // console.log('GetPdfs');
   // console.log(data);
-  console.log(loading);
+  //console.log(loading);
   // console.log(error);
   //console.log(localPDFs);
   if (loading)
@@ -124,7 +124,6 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
       dispatch(refillPDFs(tempArray));
     } 
   }
-  if (data.getPDFs.length !== 0)
   return <ScrollDisplay arr={pdfLocalAccess.getPdfs()} text={"This account has no documents yet!"} load={false}/>
 }
 export default forwardRef(PdfDisplay);

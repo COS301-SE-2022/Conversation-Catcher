@@ -101,9 +101,12 @@ export const SettingsPage = ({ navigation }) => {
                 NativeAppEventEmitter.emit('logout');
                 navigation.navigate('Login');
               }).catch((e)=>{
+                console.log("not logged in:")
                 console.log(e);
                 dispatch(clearUser());
                 dispatch(clearPDFs());
+                NativeAppEventEmitter.emit('logout');
+                pdfLocalAccess.clearPdfs();
                 navigation.navigate('Login');
               })
           }
