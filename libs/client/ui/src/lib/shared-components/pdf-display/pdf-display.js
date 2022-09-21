@@ -1,6 +1,6 @@
-import { gql, useMutation, useQuery } from '@apollo/client';
+import { gql, useMutation, useQuery, useLazyQuery } from '@apollo/client';
 import React, { useImperativeHandle, forwardRef, useState } from 'react';
-import { Text, ScrollView, StyleSheet, DeviceEventEmitter } from 'react-native';
+import { Text, ScrollView, StyleSheet, DeviceEventEmitter, RefreshControl } from 'react-native';
 import Loading from '../loading/loading';
 // import LocalPdfsAccess from '../local-pdfs-access/local-pdfs-access';
 import PdfTile from '../pdf-tile/pdf-tile';
@@ -14,6 +14,7 @@ import { useSelector, useDispatch } from 'react-redux';
 export function PdfDisplay({ navigation, selectMode }, ref) {
   // const [selectMode, setSelectMode] = useState(false);
   const [didReload, setDidReload] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const emailState = useSelector(selectEmail);
   const localPDFs = useSelector(selectPDFS);
   const dispatch = useDispatch();
@@ -25,45 +26,15 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
   //   },
   // }));
 
-  //Listen to when to update page
-  DeviceEventEmitter.addListener('updatePage', () => setDidReload(!didReload));
-  //graphql syntax trees
-  const SET_USER = gql`
-    mutation setUser(
-      $oldEmail: String!
-      $email: String!
-      $colour: String!
-      $pdfs: [String!]!
-    ) {
-      setUser(oldEmail: $oldEmail, email: $email, colour: $colour, pdfs: $pdfs)
-    }
-  `;
-
-  const GET_USER_PDFS = gql`
-    query getForUser($email: String!) {
-      getPDFs(id: $email) {
-        id
-        name
-        creationDate
-        downloaded
-        #pdf
-        text
-      }
-    }
-  `;
-
-  const [setUser] = useMutation(SET_USER);
-  const { data, loading, error } = useQuery(GET_USER_PDFS, {
-    variables: { email: emailState },
-  });
-  // console.log('GetPdfs');
-  // console.log(data);
-  // console.log(loading);
-  // console.log(error);
-  if (loading)
+  const ScrollDisplay = (props) => {
+    if (props.arr.length !== 0)
     return (
-      <ScrollView style={styles.recentPdfTiles}>
-        {localPDFs.map((item, key) => (
+      <ScrollView style={styles.recentPdfTiles}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={ReloadData} />
+      }>
+        <Loading width={100} height={100} load={props.load}/>
+        {props.arr.map((item, key) => (
           <PdfTile
             key={key}
             id={item.id}
@@ -78,17 +49,79 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
             refresh={setDidReload}
           />
         ))}
-        {/*<Loading >*/}
       </ScrollView>
     );
+    else return(
+      <ScrollView style={styles.recentPdfTiles}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={ReloadData} />
+      }>
+        <Loading width={100} height={100} load={props.load}/>
+        <Text style={{textAlign: 'center'}}>{props.text}</Text>
+      </ScrollView>
+    );
+  }
 
-  if (error)
-    return (
-      <ScrollView style={styles.recentPdfTiles}>
-        <Text>An error occured...</Text>
-        <Text>{error[0]}</Text>
-      </ScrollView>
-    );
+  //Listen to when to update page
+  DeviceEventEmitter.addListener('updatePage', () => setDidReload(!didReload));
+  //graphql syntax trees
+  const SET_USER = gql`
+  mutation setUser(
+    $oldEmail: String!
+    $email: String!
+    $colour: String!
+    $pdfs: [String!]!
+    ) {
+      setUser(oldEmail: $oldEmail, email: $email, colour: $colour, pdfs: $pdfs)
+    }
+    `;
+    
+    const GET_USER_PDFS = gql`
+    query getForUser($email: String!) {
+      getPDFs(id: $email) {
+        id
+        name
+        creationDate
+        downloaded
+        #pdf
+        text
+      }
+    }
+    `;
+    
+    const [setUser] = useMutation(SET_USER);
+    let { data, loading, error } = useQuery(GET_USER_PDFS, {
+      variables: { email: emailState },
+    });
+    const [fetchDocs] = useLazyQuery(GET_USER_PDFS);
+    // console.log('GetPdfs');
+    // console.log(data);
+    //console.log(loading);
+    // console.log(error);
+    //console.log(localPDFs);
+    const ReloadData = () => {
+      setRefreshing(false);
+      fetchDocs({
+        variables:{
+          email: emailState
+        }}).then((d)=>{
+          data = d.data;
+          loading = d.loading;
+          error = d.error;
+          pdfLocalAccess.clearPdfs();
+          setDidReload(!didReload);
+        }).catch((e)=>{
+          console.log(e);
+          pdfLocalAccess.clearPdfs();
+          setDidReload(!didReload);
+        });
+    }
+
+  if (loading)
+    return <ScrollDisplay arr={localPDFs} text={"No Documents Stored Locally"} load={true}/>
+  if (error){
+    return <ScrollDisplay arr={localPDFs} text={"No Documents Locally"} load={false}/>
+  }
   //If the pdf array is empty assign the result from the query
   //create deep copy of the returned data
   //Data is here in data if returned
@@ -129,28 +162,9 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
         }
       }
       dispatch(refillPDFs(tempArray));
-    }
+    } 
   }
-
-  return (
-    <ScrollView style={styles.recentPdfTiles}>
-      {pdfLocalAccess.getPdfs().map((item, key) => (
-        <PdfTile
-          key={key}
-          id={item.id}
-          name={item.name}
-          date={item.creationDate}
-          source={''}
-          text={item.text}
-          downloaded={item.downloaded}
-          showCheck={selectMode}
-          pdfSource={'pdfRefresh'}
-          nav={navigation}
-          // refresh={setDidReload}
-        />
-      ))}
-    </ScrollView>
-  );
+  return <ScrollDisplay arr={pdfLocalAccess.getPdfs()} text={"This account has no documents yet!"} load={false}/>
 }
 export default forwardRef(PdfDisplay);
 

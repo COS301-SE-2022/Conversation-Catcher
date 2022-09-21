@@ -26,6 +26,8 @@ import { selectColour } from '../../../../../../apps/client/src/app/slices/user.
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { changeName, removePDF} from '../../../../../../../apps/client/src/app/slices/pdf.slice';
 //import Share from 'react-native-share';
+//import ReactPDF from '@react-pdf/renderer';
+import {document} from '../document/document'
 
 export const PdfView = ({ route, navigation }) => {
   const colourState = useSelector(selectColour);
@@ -45,10 +47,11 @@ export const PdfView = ({ route, navigation }) => {
 
   const onShare = async () => {
     try {
-      const result = await Share.share({
-        message: text.text,
-        title: name.name,
-      });
+      // const result = await Share.share({
+      //   message: text.text,
+      //   title: name.name,
+      // });
+      //ReactPDF.render(<document t={text.text} n={name.name}/>, `${__dirname}/`+name.name+`.pdf`);
     } catch (error) {
       alert(error.message);
     }
@@ -167,7 +170,7 @@ export const PdfView = ({ route, navigation }) => {
               </View>
               <View style={styles.moreModalButtonText_box}>
                 <Text style={styles.moreModalButtonText} ellipsizeMode={'clip'}>
-                  {'Share'}
+                  {'Export'}
                 </Text>
               </View>
             </View>

@@ -39,6 +39,7 @@
     "@react-native-firebase/auth": "*",
     "@react-native-firebase/app": "*",
     "redux-persist": "*",
+    "@react-pdf/renderer": "*",
     "react-native-tab-view": "*"
   }
 }
