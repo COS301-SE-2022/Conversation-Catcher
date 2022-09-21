@@ -14,10 +14,10 @@ import { gql } from '@apollo/client';
 // import { WebSocketLink } from '@apollo/client/link/ws';
 import { useDispatch, useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectColour, clearUser } from 'apps/client/src/app/slices/user.slice';
+import { selectColour, clearUser } from '../../../../../../../apps/client/src/app/slices/user.slice';
 import auth from '@react-native-firebase/auth';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { clearPDFs } from 'apps/client/src/app/slices/pdf.slice';
+import { clearPDFs } from '../../../../../../../apps/client/src/app/slices/pdf.slice';
 
 export const SettingsPage = ({ navigation }) => {
   const [user, setUser] = useState({});

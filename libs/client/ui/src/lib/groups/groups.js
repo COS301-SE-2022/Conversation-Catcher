@@ -20,7 +20,7 @@ import GroupDisplay from '../shared-components/group-display/group-display.js';
 import groupLocalAccess from '../shared-components/local-groups-access/local-groups-access';
 import { useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectColour } from 'apps/client/src/app/slices/user.slice';
+import { selectColour } from '../../../../../../../apps/client/src/app/slices/user.slice';
 
 export const Groups = ({ navigation }) => {
   const groupRef = useRef();

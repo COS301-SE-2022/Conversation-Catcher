@@ -15,9 +15,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   selectColour,
   selectUser,
-} from 'apps/client/src/app/slices/user.slice';
+} from '../../../../../../../apps/client/src/app/slices/user.slice';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { setUser } from 'apps/client/src/app/slices/user.slice';
+import { setUser } from '../../../../../../../apps/client/src/app/slices/user.slice';
 import auth from '@react-native-firebase/auth';
 import { gql, useLazyQuery } from '@apollo/client';
 

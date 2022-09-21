@@ -29,7 +29,7 @@ import {
   selectEmail,
   addPDF,
   selectUser,
-} from 'apps/client/src/app/slices/user.slice';
+} from '../../../../../../../apps/client/src/app/slices/user.slice';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 
 export const Home = ({ navigation }) => {

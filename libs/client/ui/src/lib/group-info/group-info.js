@@ -14,11 +14,11 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
 import DocumentPicker, { types } from 'react-native-document-picker';
 import { useSelector, useDispatch } from 'react-redux';
-//import { selectColour } from '../../../../../../../apps/client/src/app/slices/user.slice';
+import { selectColour } from '../../../../../../../apps/client/src/app/slices/user.slice';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectColour } from 'apps/client/src/app/slices/user.slice';
+//import { selectColour } from 'apps/client/src/app/slices/user.slice';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { changeName, removeGroup} from 'apps/client/src/app/slices/group.slice';
+import { changeName, removeGroup} from '../../../../../../../apps/client/src/app/slices/group.slice';
 import MemberTile from '../shared-components/member-tile/member-tile.js';
 import groupsLocalAccess from '../shared-components/local-groups-access/local-groups-access';
 

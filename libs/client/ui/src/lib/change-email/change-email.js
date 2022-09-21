@@ -16,7 +16,7 @@ import {
   selectColour,
   selectUser,
   setEmail,
-} from 'apps/client/src/app/slices/user.slice';
+} from '../../../../../../../apps/client/src/app/slices/user.slice';
 import auth from '@react-native-firebase/auth';
 import { gql, useMutation } from '@apollo/client';
 
