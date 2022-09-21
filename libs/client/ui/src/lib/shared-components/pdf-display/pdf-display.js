@@ -101,14 +101,14 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
     //console.log(localPDFs);
     const ReloadData = () => {
       setRefreshing(false);
-      console.log("test");
       fetchDocs({
         variables:{
           email: emailState
         }}).then((d)=>{
-          data = d;
+          data = d.data;
+          loading = d.loading;
+          error = d.error;
           pdfLocalAccess.clearPdfs();
-          //console.log(d);
           setDidReload(!didReload);
         }).catch((e)=>{
           console.log(e);
