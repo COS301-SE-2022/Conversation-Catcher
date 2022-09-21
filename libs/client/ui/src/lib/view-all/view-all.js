@@ -117,46 +117,6 @@ export const ViewAll = ({ navigation }) => {
     }
   };
 
-  // function changeArray(index, itemValue) {
-  //   if (currOrderValue !== itemValue) {
-  //     setCurrOrderValue(itemValue);
-  //     // Sort PDFs array according to currOrderValue
-  //     switch (itemValue) {
-  //       case 'Name':
-  //         var temp2 = objArr;
-  //         temp2.sort((a, b) => {
-  //           if (a.name < b.name) return -1;
-  //           return 1;
-  //         });
-  //         setObjArr(temp2);
-  //         console.log(objArr);
-  //         break;
-  //       case 'Date':
-  //         var temp = objArr;
-  //         temp.sort((a, b) => {
-  //           if (new Date(a.creationDate) > new Date(b.creationDate)) return -1;
-  //           return 1;
-  //         });
-  //         setObjArr(temp);
-  //         console.log(objArr);
-  //         break;
-  //     }
-  //   }
-  //   refresh();
-  //   console.log(itemValue);
-  // }
-
-  // function filterPdf(text) {
-  //   const temp = [];
-  //   for (let i = 0; i < pdfLocalAccess.getLength(); i++)
-  //     objArr[i] = pdfLocalAccess.get(i);
-  //   for (let i = 0; i < objArr.length; i++) {
-  //     if (objArr[i].name.indexOf(text) !== -1) temp.push(objArr[i]);
-  //   }
-  //   setObjArr(temp);
-  //   refresh();
-  // }
-
   return (
     <View style={styles.viewAllPage}>
       <View style={styles.viewAllTopBar}>

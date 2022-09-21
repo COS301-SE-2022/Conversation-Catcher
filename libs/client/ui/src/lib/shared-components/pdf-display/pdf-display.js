@@ -146,7 +146,7 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
           showCheck={selectMode}
           pdfSource={'pdfRefresh'}
           nav={navigation}
-          refresh={setDidReload}
+          // refresh={setDidReload}
         />
       ))}
     </ScrollView>
