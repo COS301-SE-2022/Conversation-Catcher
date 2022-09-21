@@ -18,7 +18,7 @@ import {
 } from './commands/impl';
 import {
   getAllGroupsQuery,
-  getGroupPdfsQuery,
+  // getGroupPdfsQuery,
   getGroupsForQuery,
   getUserQuery,
 } from './queries/impl';
@@ -31,9 +31,9 @@ export class UserManagementServiceService {
   async getUser(email: string) {
     return await this.queryBus.execute(new getUserQuery(email));
   }
-  async getGroupPdfs(groupName: string) {
-    return await this.queryBus.execute(new getGroupPdfsQuery(groupName));
-  }
+  // async getGroupPdfs(groupName: string) {
+  //   return await this.queryBus.execute(new getGroupPdfsQuery(groupName));
+  // }
 
   async getGroupsFor(email: string) {
     return await this.queryBus.execute(new getGroupsForQuery(email));

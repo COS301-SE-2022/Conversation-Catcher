@@ -16,10 +16,13 @@ export class PdfEntity {
   name: string;
 
   @Field({nullable: true})
-  pdf?: string;
+  summarized?: string;
 
   @Field({nullable: true})
   text?: string;
+
+  @Field({nullable: true})
+  embeddings?: string;
 
   @Field({nullable : true})
   creationDate: string;

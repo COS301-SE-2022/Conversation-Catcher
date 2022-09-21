@@ -17,9 +17,9 @@ export class setUserHandler implements ICommandHandler<setUserCommand> {
   constructor(private repository: userMongoAccess) {}
 
   async execute({ oldEmail, email, colour, pdfs }: setUserCommand) {
+    const user = await this.repository.getUser(oldEmail);
     if (oldEmail !== email) {
       //Update email in all groups
-      const user = await this.repository.getUser(oldEmail);
       const groups = await this.repository.getGroups();
       if (user.groups === undefined) user.groups = [];
       for (const group of user.groups) {
@@ -32,7 +32,11 @@ export class setUserHandler implements ICommandHandler<setUserCommand> {
       delete groups._id;
       this.repository.updateGroups(groups);
     }
-    return await this.repository.setUser(oldEmail, { email, colour, pdfs });
+    delete user._id;
+    user.email = email;
+    if (colour !== '') user.colour = colour;
+    user.pdfs = pdfs;
+    return await this.repository.setUser(oldEmail, user);
   }
 }
 
