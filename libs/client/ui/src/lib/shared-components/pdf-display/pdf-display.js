@@ -113,9 +113,12 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
         oldEmail: emailState,
         email: emailState,
         colour: '',
-        pdfs: pdfLocalAccess.getPdfIds,
+        pdfs: pdfLocalAccess.getPdfIds(),
       },
-    })
+    }).catch((e) => {
+      console.log('error in delete of pdf in pdf array');
+      console.log(e);
+    });
 
     //Update local pdf storage
     //array of pdfs stored locally, selected from data to overwrite the slice

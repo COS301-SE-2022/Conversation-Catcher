@@ -22,7 +22,6 @@ export class setUserHandler implements ICommandHandler<setUserCommand> {
       //Update email in all groups
       const groups = await this.repository.getGroups();
       if (user.groups === undefined) user.groups = [];
-      if (colour === '') colour = user.colour;
       for (const group of user.groups) {
         if (groups[group].admin === oldEmail) groups[group].admin = email;
         const i = groups[group].users.indexOf(oldEmail);
@@ -35,7 +34,7 @@ export class setUserHandler implements ICommandHandler<setUserCommand> {
     }
     delete user._id;
     user.email = email;
-    user.colour = colour;
+    if (colour !== '') user.colour = colour;
     user.pdfs = pdfs;
     return await this.repository.setUser(oldEmail, user);
   }
