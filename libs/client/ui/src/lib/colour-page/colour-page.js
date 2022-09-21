@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react-native';
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, Image, ImageBackground, Button, Alert, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, Switch } from 'react-native';
 import BouncyCheckboxGroup, {ICheckboxButton,} from "react-native-bouncy-checkbox-group";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useDispatch, useSelector } from 'react-redux'
@@ -24,6 +24,13 @@ export const ColourPage = ({ navigation}) => {
   `;
 
   const [setUser] = useMutation(SET_USER);
+
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => {
+    setIsEnabled(previousState => !previousState);
+    //change text shown
+  };
+
   return (
     <View style={styles.colourPage}>
       <View style={styles.big_title_box}>
@@ -67,8 +74,23 @@ export const ColourPage = ({ navigation}) => {
         </View>
       </View>
 
-      <TouchableOpacity
-        style={styles.backButton}
+      <View style={styles.darkSwitchGroup}>
+        <View style={styles.darkLabelBox}>
+          <Text style={styles.darkLabel}>Dark Mode</Text>
+        </View>
+        <View style={styles.darkSwitchBox}>
+        <Switch
+          trackColor={{ false: "#f5f5f5ff", true: "#f5f5f5ff" }}
+          thumbColor={isEnabled ? "#3e3e3e" : "#3e3e3e"}
+          ios_backgroundColor="#3e3e3e"
+          onValueChange={toggleSwitch}
+          value={isEnabled}
+        />
+        </View>
+      </View>
+
+      <TouchableOpacity  
+        style={styles.backButton} 
         onPress={() => navigation.goBack()}>
           <Icon
             name="angle-left"
@@ -113,6 +135,32 @@ const styles = StyleSheet.create({
     height: '10%',
     width: '100%',
     minHeight: 28
+  },
+  darkSwitchGroup: {
+    flexDirection: 'row',
+    paddingHorizontal: 15,
+    flexGrow: 1,
+    alignContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+  },
+  darkLabel: {
+    color: '#344053ff',
+    textAlign: 'left',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 14,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+    paddingHorizontal: 0,
+    paddingVertical: 0,
+  },
+  darkLabelBox: {
+
+  },
+  darkSwitchBox: {
+    
   },
   colourOptionsBackground: {
     width: '80%',

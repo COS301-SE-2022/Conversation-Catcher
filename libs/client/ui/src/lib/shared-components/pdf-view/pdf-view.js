@@ -12,6 +12,7 @@ import {
   Share,
   DeviceEventEmitter,
   NativeAppEventEmitter,
+  Switch,
 } from 'react-native';
 import { gql, useQuery, useMutation } from '@apollo/client';
 import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
@@ -35,6 +36,12 @@ export const PdfView = ({ route, navigation }) => {
   const [renameVisible, setRenameVisible] = useState(false);
   const [deleteConfirmVisible, setDeleteConfirmVisible] = useState(false);
   const [newName, setNewName] = useState('');
+
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => {
+    setIsEnabled(previousState => !previousState);
+    //change
+  };
 
   const { text, name, id } = route.params;
 
@@ -91,24 +98,30 @@ export const PdfView = ({ route, navigation }) => {
     <View style={styles.viewAllPage}>
       <View style={styles.viewAllTopBar}>
         <View style={styles.big_title_box}>
-          <Text style={styles.big_title}>{name.name}</Text>
+          <Text style={styles.big_title} numberOfLines={1}>{name.name}</Text>
         </View>
-        <TouchableOpacity
-          style={styles.moreButton}
-          onPress={() => {
-            setMoreVisible(true);
-            console.log(text);
-          }}
-        >
-          <Icon name="ellipsis-h" color="#344053ff" size={30} />
-        </TouchableOpacity>
+        <View style={styles.summarisedSwitchGroup}>
+          <View style={styles.summarisedLabelBox}>
+            <Text style={styles.summarisedLabel}>Summarised</Text>
+          </View>
+          <View style={styles.summarisedSwitchBox}>
+          <Switch
+            trackColor={{ false: "#ffffff", true: colourState }}
+            thumbColor={isEnabled ? "#ffffff" : colourState}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={toggleSwitch}
+            value={isEnabled}
+          />
+          </View>
+        </View>
       </View>
 
       <View style={styles.pdfTextContainer}>
         <Text style={styles.pdfText}>{text.text}</Text>
       </View>
 
-      <View style={styles.viewAllBottomBar}>
+      <View style={styles.bottomBar}>
+        <View style={styles.bottomBarSideSpacing} />
         <TouchableOpacity
           style={styles.backButton}
           onPress={() => {
@@ -118,6 +131,17 @@ export const PdfView = ({ route, navigation }) => {
         >
           <Icon name="angle-left" color="#344053ff" size={30} />
         </TouchableOpacity>
+        <View style={styles.bottomBarSideSpacing}>
+          <TouchableOpacity
+            style={styles.moreButton}
+            onPress={() => {
+              setMoreVisible(true);
+              console.log(text);
+            }}
+          >
+            <Icon name="ellipsis-h" color="#344053ff" size={30} />
+          </TouchableOpacity>
+        </View>
       </View>
 
       <Modal
@@ -321,6 +345,32 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     minHeight: 28,
   },
+  summarisedSwitchGroup: {
+    flexDirection: 'row',
+    paddingHorizontal: 15,
+    flexGrow: 1,
+    alignContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+  },
+  summarisedLabel: {
+    color: '#344053ff',
+    textAlign: 'left',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 14,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+    paddingHorizontal: 0,
+    paddingVertical: 0,
+  },
+  summarisedLabelBox: {
+
+  },
+  summarisedSwitchBox: {
+    
+  },
   pdfTextContainer: {
     height: '70%',
     padding: 15,
@@ -337,7 +387,7 @@ const styles = StyleSheet.create({
     fontFamily: 'System' /* Inter */,
     paddingHorizontal: 0,
   },
-  viewAllBottomBar: {
+  bottomBar: {
     width: '100%',
     flexDirection: 'row',
     flexShrink: 1,
@@ -359,6 +409,10 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     position: 'absolute',
     bottom: 0,
+  },
+  bottomBarSideSpacing: {
+    width: '30%',
+    alignContent: 'center',
   },
   backButton: {
     flexGrow: 1,

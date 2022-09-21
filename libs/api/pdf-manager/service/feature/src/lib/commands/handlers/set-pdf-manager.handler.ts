@@ -5,6 +5,8 @@ import {
   SetNamePdfCommand,
   AddTagsCommand,
   DeleteTagsCommand,
+  SetSummarizedCommand,
+  SetEmbeddingsCommand,
 } from '../impl/set-pdf-manager.command';
 import { MongoDBAccess } from '@conversation-catcher/api/pdf-manager/repository/data-access';
 // import { HttpService } from '@nestjs/axios';
@@ -63,7 +65,6 @@ export class DeleteTagsHandler implements ICommandHandler<DeleteTagsCommand> {
   constructor(private repository: MongoDBAccess) {}
   async execute({ id, tags }: DeleteTagsCommand): Promise<any> {
     const pdf = await this.repository.getPDF(id);
-    console.log(pdf);
     tags.forEach((tag) => {
       pdf.tags.forEach((item, index) => {
         if (item === tag) pdf.tags.splice(index, 1);
@@ -72,5 +73,30 @@ export class DeleteTagsHandler implements ICommandHandler<DeleteTagsCommand> {
     const res = await this.repository.updateTags(id, tags);
     if (res !== null && res.modifiedCount === 1) return 'Tags have been added';
     return 'Error: tags have not been added';
+  }
+}
+@CommandHandler(SetSummarizedCommand)
+export class SetSummarizedHandler
+  implements ICommandHandler<SetSummarizedCommand>
+{
+  constructor(private repository: MongoDBAccess) {}
+  async execute({ id, summarized }: SetSummarizedCommand): Promise<any> {
+    const res = await this.repository.updateSummarized(id, summarized);
+    if (res !== null && res.modifiedCount === 1)
+      return 'Summary has been added';
+    return 'Error: failed to add summary';
+  }
+}
+
+@CommandHandler(SetEmbeddingsCommand)
+export class SetEmbeddingsHandler
+  implements ICommandHandler<SetEmbeddingsCommand>
+{
+  constructor(private repository: MongoDBAccess) {}
+  async execute({ id, embeddings }: SetEmbeddingsCommand): Promise<any> {
+    const res = await this.repository.updateSummarized(id, embeddings);
+    if (res !== null && res.modifiedCount === 1)
+      return 'Embeddings has been added';
+    return 'Error: failed to add embeddings';
   }
 }

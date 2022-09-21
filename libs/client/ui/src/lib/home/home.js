@@ -293,49 +293,74 @@ export const Home = ({ navigation }) => {
         </Text>
       </View>
       <PdfDisplay navigation={navigation} selectMode={false} ref={pdfRef} />
-      <View style={styles.viewAllTouchableOpacityFrame}>
+      <View style={styles.viewPdfsTouchableOpacityFrame}>
         <TouchableOpacity
           style={[
-            styles.viewAllTouchableOpacity,
+            styles.viewPdfsTouchableOpacity,
             { backgroundColor: colourState },
           ]}
           onPress={() => {
             navigation.navigate('ViewAll');
           }}
         >
-          <View style={styles.viewAllTouchableOpacityLabel_box}>
+          <View style={styles.viewPdfsTouchableOpacityLabel_box}>
             <Text
-              style={styles.viewAllTouchableOpacityLabel}
+              style={styles.viewPdfsTouchableOpacityLabel}
               ellipsizeMode={'clip'}
             >
-              {'View all PDFs'}
+              {'My PDFs'}
             </Text>
           </View>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity
-        style={styles.settingsTouchableOpacityFrame}
-        onPress={() => navigation.navigate('Settings')}
-      >
-        <View style={styles.settingTouchableOpacity}>
-          <View style={styles.settingsText_box}>
-            <Text style={styles.settingsText} ellipsizeMode={'clip'}>
-              {'Settings'}
-            </Text>
-          </View>
-        </View>
-      </TouchableOpacity>
-      <View style={styles.audioTouchableOpacityGroup}>
-        <RecordAudioButtonState />
+      <View style={styles.viewPdfsTouchableOpacityFrame}>
         <TouchableOpacity
-          style={styles.uploadAudioTouchableOpacity}
-          onPress={() => setUploadVisible(true)}
+          style={[
+            styles.viewPdfsTouchableOpacity,
+            { backgroundColor: colourState },
+          ]}
+          onPress={() => {
+            navigation.navigate('Groups');
+          }}
         >
-          <View style={styles.uploadAudioIcon}>
-            <Icon color="#667084ff" name="upload" size={40} />
+          <View style={styles.viewPdfsTouchableOpacityLabel_box}>
+            <Text
+              style={styles.viewPdfsTouchableOpacityLabel}
+              ellipsizeMode={'clip'}
+            >
+              {'Groups'}
+            </Text>
           </View>
         </TouchableOpacity>
       </View>
+      <View style={styles.bottomGroup}>  
+        <View style={styles.bottomGroupSideSpacing}>
+        </View>
+        <View style={styles.audioTouchableOpacityGroup}>
+          <RecordAudioButtonState />
+          <TouchableOpacity
+            style={styles.uploadAudioTouchableOpacity}
+            onPress={() => setUploadVisible(true)}
+          >
+            <View style={styles.uploadAudioIcon}>
+              <Icon color="#667084ff" name="upload" size={40} />
+            </View>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.bottomGroupSideSpacing}>
+          <TouchableOpacity
+            style={styles.settingsTouchableOpacityFrame}
+            onPress={() => navigation.navigate('Settings')}
+          >
+            <View style={styles.settingsIconBox}>
+              <Icon style={styles.settingsIcon}>
+                <Icon name="cog" size={25} color="#667084ff" />
+              </Icon>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </View>
+      
 
       <Modal
         style={styles.modal}
@@ -490,7 +515,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'center',
     paddingLeft: 15,
-    height: '5%',
+    height: '7%',
     //width: '100%',
     minHeight: 28,
   },
@@ -501,13 +526,13 @@ const styles = StyleSheet.create({
     paddingRight: 15,
     justifyContent: 'space-between',
   },
-  viewAllTouchableOpacityFrame: {
-    //height: '10%'
+  viewPdfsTouchableOpacityFrame: {
+    height: '10%',
     flexGrow: 1,
     justifyContent: 'center',
-    marginTop: 20,
+    marginVertical: 5,
   },
-  viewAllTouchableOpacity: {
+  viewPdfsTouchableOpacity: {
     flexGrow: 1,
     marginTop: 5,
     marginBottom: 5,
@@ -525,7 +550,7 @@ const styles = StyleSheet.create({
       height: 1,
     },
   },
-  viewAllTouchableOpacityLabel: {
+  viewPdfsTouchableOpacityLabel: {
     color: '#ffffffff',
     textAlign: 'center',
     letterSpacing: 0,
@@ -536,80 +561,34 @@ const styles = StyleSheet.create({
     fontFamily: 'System' /* Jaldi */,
     padding: 10,
   },
-  viewAllTouchableOpacityLabel_box: {
+  viewPdfsTouchableOpacityLabel_box: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  homeDiv: {
-    backgroundColor: '#d0d5ddff',
-    borderRadius: 0.5,
-    overflow: 'hidden' /* for borderRadius */,
-    elevation: 2,
-    shadowColor: '#000000',
-    shadowRadius: 2.621621621621622,
-    shadowOpacity: 0.2173913043478261,
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    height: 1,
-    flexShrink: 1,
+  bottomGroup: {
+    height: '15%',
+    flexDirection: 'row',
+    alignContent: 'center',
+    alignItems: 'center',
+  },
+  bottomGroupSideSpacing: {
+    width: '30%',
+    alignItems: 'center'
   },
   settingsTouchableOpacityFrame: {
-    height: '10%',
+    flexShrink: 1,
     marginVertical: 5,
   },
-  settingTouchableOpacity: {
-    marginTop: 5,
-    marginBottom: 5,
-    marginLeft: 30,
-    marginRight: 30,
-    backgroundColor: '#d0d5ddff',
-    borderRadius: 8,
-    justifyContent: 'center',
-    alignContent: 'center',
-    flexDirection: 'row',
-    flexGrow: 1,
-    overflow: 'hidden',
-    borderStyle: 'solid',
-    borderColor: '#d0d5ddff',
-    borderWidth: 1,
-    elevation: 2,
-    shadowColor: '#000000',
-    shadowRadius: 2.621621621621622,
-    shadowOpacity: 0.2173913043478261,
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-  },
-  settingsIcon_frame: {
+  settingsIconBox: {
     justifyContent: 'center',
     alignContent: 'flex-start',
-    paddingHorizontal: 7,
-  },
-  settingsText: {
-    color: '#344053ff',
-    textAlign: 'center',
-    letterSpacing: 0,
-    lineHeight: 22,
-    fontSize: 18,
-    fontWeight: '400',
-    fontStyle: 'normal',
-    fontFamily: 'System' /* Jaldi */,
-    paddingHorizontal: 0,
-    paddingVertical: 0,
-  },
-  settingsText_box: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexShrink: 1,
+    margin: 10,
   },
   audioTouchableOpacityGroup: {
     borderRadius: 8,
     flexDirection: 'row',
-    height: '17%',
+    height: '70%',
     width: '40%',
     justifyContent: 'center',
     alignItems: 'center',
@@ -626,7 +605,7 @@ const styles = StyleSheet.create({
   },
   recordAudioTouchableOpacity: {
     width: '50%',
-    flexGrow: 1,
+    flexShrink: 1,
     borderTopLeftRadius: 8,
     borderBottomLeftRadius: 8,
     overflow: 'hidden',
@@ -636,12 +615,11 @@ const styles = StyleSheet.create({
     borderRightWidth: 1,
   },
   recordAudioIcon: {
-    resizeMode: 'contain',
     padding: 10,
   },
   uploadAudioTouchableOpacity: {
     width: '50%',
-    flexGrow: 1,
+    flexShrink: 1,
     backgroundColor: '#d0d5ddff',
     borderTopRightRadius: 8,
     borderBottomRightRadius: 8,
@@ -652,7 +630,6 @@ const styles = StyleSheet.create({
     borderLeftWidth: 1,
   },
   uploadAudioIcon: {
-    resizeMode: 'contain',
     padding: 10,
   },
   modal: {

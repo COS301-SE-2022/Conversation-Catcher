@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -35,13 +35,16 @@ export const Login = ({ navigation }) => {
   const [errorMessage, setErrorMessage] = useState('Invalid login details');
   const [loadingIcon,setLoad] = useState(false);
 
-  if (userPresent.email !== ""){
-    navigation.navigate("Home");
-  }
   DeviceEventEmitter.addListener('logout', () => {
     setEmail('');
     setPassword('');
   });
+  useEffect(() => {
+    if (userPresent.email !== '') {
+      navigation.navigate('Home');
+    }
+  });
+
   //graphql query tree
   const GET_USER = gql`
     query getUser($email: String!) {
