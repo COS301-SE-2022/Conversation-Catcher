@@ -1,6 +1,6 @@
 import React from 'react';
 import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
-export const document = (props) => {
+export const document = (props) => {return(
   <Document>
     <Page size="A4" style={styles.page}>
       <View style={styles.section}>
@@ -11,7 +11,7 @@ export const document = (props) => {
       </View>
     </Page>
   </Document>
-}
+)};
 
 export default document;
 
