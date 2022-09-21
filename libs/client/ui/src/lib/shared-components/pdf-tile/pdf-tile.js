@@ -96,7 +96,7 @@ const PdfTile = ({
   downloaded,
   text,
   showCheck,
-  pdfSource,
+  summarised,
   nav,
 }) => {
   const colourState = useSelector(selectColour);
@@ -107,7 +107,7 @@ const PdfTile = ({
     <TouchableOpacity
       style={styles.pdfTile}
       onPress={() =>
-        nav.navigate('PdfView', { id: { id }, text: { text }, name: { name } })
+        nav.navigate('PdfView', { id: { id }, text: { text }, name: { name }, summarised: { summarised } })
       }
     >
       <View style={[styles.thumbnail_containter, { borderColor: colourState }]}>

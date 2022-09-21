@@ -41,7 +41,7 @@ export const PdfView = ({ route, navigation }) => {
     //change
   };
 
-  const { text, name, id } = route.params;
+  const { text, name, id, summarised } = route.params;
 
   const onShare = async () => {
     try {
@@ -91,6 +91,21 @@ export const PdfView = ({ route, navigation }) => {
     dispatch(removePDF({ id: id.id }));
   }
 
+  const TextArea = () =>{
+    //isEnabled == false => unsummarised version
+    if (!isEnabled)
+      return (
+        <View style={styles.pdfTextContainer}>
+          <Text style={styles.pdfText}>{text.text}</Text>
+        </View>
+      )
+    return (
+      <View style={styles.pdfTextContainer}>
+        <Text style={styles.pdfText}>{summarised.summarised}</Text>
+      </View>
+    )
+  }
+
   return (
     <View style={styles.viewAllPage}>
       <View style={styles.viewAllTopBar}>
@@ -113,9 +128,7 @@ export const PdfView = ({ route, navigation }) => {
         </View>
       </View>
 
-      <View style={styles.pdfTextContainer}>
-        <Text style={styles.pdfText}>{text.text}</Text>
-      </View>
+      <TextArea/>
 
       <View style={styles.bottomBar}>
         <View style={styles.bottomBarSideSpacing} />
@@ -366,7 +379,7 @@ const styles = StyleSheet.create({
 
   },
   summarisedSwitchBox: {
-    
+
   },
   pdfTextContainer: {
     height: '70%',
