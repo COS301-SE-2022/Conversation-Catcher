@@ -6,6 +6,17 @@ import { configureStore } from '@reduxjs/toolkit';
 import reducer from 'apps/client/src/app/slices/user.slice';
 import { Provider } from 'react-redux';
 
+const onChangeMock = jest.fn();
+const eventData = {
+  nativeEvent: {
+    password: '',
+    oldPassword: '',
+  },
+};
+
+//const colourState = useSelector(selectColour);
+//const emailState = useSelector(selectEmail);
+
 describe('ChangePassword', () => {
   const store = configureStore({
     reducer: {
