@@ -34,6 +34,7 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={reloadData} />
       }>
+        <Loading width={250} height={250} load={props.load}/>
         {props.arr.map((item, key) => (
           <PdfTile
             key={key}
@@ -56,8 +57,9 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={reloadData} />
       }>
-          <Text>{props.text}</Text>
-        </ScrollView>
+        <Loading width={250} height={250} load={props.load}/>
+        <Text>{props.text}</Text>
+      </ScrollView>
     );
   }
 
@@ -89,16 +91,15 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
   // console.log(error);
   //console.log(localPDFs);
   if (loading)
-    return <ScrollDisplay arr={localPDFs} text={"No Documents Stored Locally"}/>
+    return <ScrollDisplay arr={localPDFs} text={"No Documents Stored Locally"} load={true}/>
   if (error){
-    return <ScrollDisplay arr={localPDFs} text={"No Documents Locally"}/>
+    return <ScrollDisplay arr={localPDFs} text={"No Documents Locally"} load={true}/>
   }
   //If the pdf array is empty assign the result from the query
   //create deep copy of the returned data
   //Data is here in data if returned
   if (!isLoaded) {
     pdfLocalAccess.clearPdfs();
-    //let tempArray = [];
     for (let i = 0; i < data.getPDFs.length; i++) {
       pdfLocalAccess.addPdf({
         name: data.getPDFs[i].name,
@@ -108,11 +109,7 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
         text: data.getPDFs[i].text,
         id: data.getPDFs[i].id,
       });
-      // if (data.getPDFs[i].downloaded === true){
-      //   tempArray.push(data.getPDFs[i]);
-      // }
     }
-    // dispatch(refillPDFs(tempArray));
     setIsLoaded(true);
     //Update local pdf storage
     //array of pdfs stored locally, selected from data to overwrite the slice
@@ -128,7 +125,7 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
     } 
   }
   if (data.getPDFs.length !== 0)
-  return <ScrollDisplay arr={pdfLocalAccess.getPdfs()} text={"This account has no documents yet!"}/>
+  return <ScrollDisplay arr={pdfLocalAccess.getPdfs()} text={"This account has no documents yet!"} load={false}/>
 }
 export default forwardRef(PdfDisplay);
 

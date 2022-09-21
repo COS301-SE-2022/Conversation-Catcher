@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import LottieView from "lottie-react-native";
 export function Loading(props) {
+  if (props.load)
   return (
     <View style = {styles.view}>
       <Text style={styles.text}>Fetching your pdfs</Text>
@@ -12,6 +13,7 @@ export function Loading(props) {
       />
     </View>
   );
+  else return(null);
 }
 const styles = StyleSheet.create({
   // animation: {
