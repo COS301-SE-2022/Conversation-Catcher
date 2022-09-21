@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -32,9 +32,11 @@ export const Login = ({ navigation }) => {
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('Invalid login details');
 
-  if (userPresent.email !== ""){
-    navigation.navigate("Home");
-  }
+  useEffect(() => {
+    if (userPresent.email !== '') {
+      navigation.navigate('Home');
+    }
+  });
 
   //graphql query tree
   const GET_USER = gql`
@@ -193,10 +195,10 @@ export const Login = ({ navigation }) => {
                 await getUser({
                   variables: { email: email.trim().toLowerCase() },
                 })
-                ).data.getUser;
-                console.log(queryRes);
-                dispatch(setUser(queryRes));
-                navigation.navigate('Home');
+              ).data.getUser;
+              console.log(queryRes);
+              dispatch(setUser(queryRes));
+              navigation.navigate('Home');
             })
             .catch((error) => {
               setFailedLogin(true);
