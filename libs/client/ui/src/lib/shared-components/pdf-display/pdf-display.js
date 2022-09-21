@@ -14,17 +14,16 @@ import { useSelector, useDispatch } from 'react-redux';
 export function PdfDisplay({ navigation, selectMode }, ref) {
   // const [selectMode, setSelectMode] = useState(false);
   const [didReload, setDidReload] = useState(true);
-  const [isLoaded, setIsLoaded] = useState(false);
   const emailState = useSelector(selectEmail);
   const localPDFs = useSelector(selectPDFS);
   const dispatch = useDispatch();
   //Expose refresh function to parent(View-all page)
-  useImperativeHandle(ref, () => ({
-    refreshPfds: () => {
-      // console.log('refreshing');
-      setDidReload(!didReload);
-    },
-  }));
+  // useImperativeHandle(ref, () => ({
+  //   refreshPfds: () => {
+  //     // console.log('refreshing');
+  //     setDidReload(!didReload);
+  //   },
+  // }));
 
   //Listen to when to update page
   DeviceEventEmitter.addListener('updatePage', () => setDidReload(!didReload));
@@ -93,7 +92,7 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
   //If the pdf array is empty assign the result from the query
   //create deep copy of the returned data
   //Data is here in data if returned
-  if (!isLoaded) {
+  if (!pdfLocalAccess.isLoaded()) {
     console.log('Loading from query');
     pdfLocalAccess.clearPdfs();
     for (let i = 0; i < data.getPDFs.length; i++) {
@@ -106,7 +105,6 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
         id: data.getPDFs[i].id,
       });
     }
-    setIsLoaded(true);
     //Update the user pdfs array to ensure that deleted pdfs are removed
     setUser({
       variables: {

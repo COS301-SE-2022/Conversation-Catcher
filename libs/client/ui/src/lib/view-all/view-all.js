@@ -9,6 +9,7 @@ import {
   Alert,
   ScrollView,
   TextInput,
+  NativeAppEventEmitter,
 } from 'react-native';
 import { gql, useQuery, useMutation } from '@apollo/client';
 import ModalDropdown from 'react-native-modal-dropdown';
@@ -169,7 +170,8 @@ export const ViewAll = ({ navigation }) => {
             placeholder="Search"
             onChangeText={(text) => {
               pdfLocalAccess.filterPdfs(text);
-              pdfRef.current.refreshPfds();
+              // pdfRef.current.refreshPfds();
+              NativeAppEventEmitter.emit('updatePage');
             }}
           />
           <View style={styles.searchIconFrame}>
@@ -207,7 +209,8 @@ export const ViewAll = ({ navigation }) => {
             defaultValue={'Date'}
             onSelect={(index, itemValue) => {
               pdfLocalAccess.sortPdfs(itemValue);
-              pdfRef.current.refreshPfds();
+              // pdfRef.current.refreshPfds();
+              NativeAppEventEmitter.emit('updatePage');
             }}
             style={styles.orderByDropdown}
             textStyle={styles.orderByDropdownText}
