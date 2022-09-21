@@ -51,7 +51,7 @@ export const Home = ({ navigation }) => {
 
   const [fileResponse, setFileResponse] = useState([]);
 
-  //Graphql syntax trees
+  //Graphql syntax trees for the queries and mutations
   const SET_SUMMARISED = gql`
     mutation setSummarized($id: String!, $summary: String!) {
       setSummarized(id: $id, summary: $summary)
@@ -204,17 +204,14 @@ export const Home = ({ navigation }) => {
     // console.log('permission request', p);
   };
 
-  //var sound = null;
-
+  //Start the audio recording and initialise the event to create an array of chunks
   const start = () => {
     state.chunks.length = 0;
     componentDidMount()
       .then(() => {
-        // console.log('start record');
         state.audioFile = '';
         state.recording = true;
         state.loaded = false;
-        // console.log(state.recording);
         AudioRecord.start();
       })
       .catch((error) => {
@@ -222,16 +219,15 @@ export const Home = ({ navigation }) => {
       });
   };
 
+  //Stop the audio recording if it is busy recording
   const stop = async () => {
-    // console.log(state.recording);
     if (!state.recording) return;
-    // console.log('stop record');
-    //file containing audiofile
     state.audioFile = false;
     state.recording = false;
     AudioRecord.stop();
   };
 
+  // Send the audio stream to the server and receive the converted text
   const convertSpeech = () => {
     fetch('http://localhost:5050/stt', {
       method: 'POST',
@@ -267,24 +263,21 @@ export const Home = ({ navigation }) => {
           });
           NativeAppEventEmitter.emit('updatePage');
           dispatch(addPDF(newPdf.data.addPDF.id));
+          summarise(newPdf.data.addPDF.id, newPdf.data.addPDF.text);
         } else console.log('Connection error: internet connection is required');
       })
       .catch((e) => console.log(e));
   };
 
-  const summarise = (text, id) => {
+  //summarise the text and populate the required fields
+  const summarise = (id, text) => {
     summariseText({ variables: { text: text } })
       .then(async (res) => {
-        if (res.ok) {
-          const result = await res.json();
-          console.log(result);
-          //return wether successfull or not
-          setSummarisedText({
-            variables: { id: id, summary: result },
-          });
-          pdfLocalAccess.addSummary(id, result);
-          NativeAppEventEmitter.emit('updatePage');
-        } else console.log('Connection error: internet connection is required');
+        console.log(res);
+        setSummarisedText({
+          variables: { id: id, summary: res },
+        });
+        pdfLocalAccess.addSummary(id, res);
       })
       .catch((e) => console.log(e));
   };
