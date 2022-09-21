@@ -8,8 +8,10 @@ import {
   TouchableOpacity,
   Alert,
   TextInput,
+  DeviceEventEmitter
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Loading from '../shared-components/loading/loading';
 import { useDispatch, useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import {
@@ -31,7 +33,12 @@ export const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('Invalid login details');
+  const [loadingIcon,setLoad] = useState(false);
 
+  DeviceEventEmitter.addListener('logout', () => {
+    setEmail('');
+    setPassword('');
+  });
   useEffect(() => {
     if (userPresent.email !== '') {
       navigation.navigate('Home');
@@ -84,11 +91,21 @@ export const Login = ({ navigation }) => {
     );
   }
 
+  function ShowLoading(){
+    if (!loadingIcon) return null;
+    return (
+      <View>
+        <Loading width={50} height={50}/>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.logInPage}>
       <View style={styles.big_title_box}>
         <Text style={styles.big_title}>{'Log in to your account'}</Text>
       </View>
+      <ShowLoading/>
       <View style={styles.inputsGroup}>
         <InvalidDetails />
         <View style={styles.inputsItem}>
@@ -184,6 +201,7 @@ export const Login = ({ navigation }) => {
             setErrorMessage('Password is required');
             return;
           }
+          setLoad(true);
           auth()
             .signInWithEmailAndPassword(
               email.trim().toLowerCase(),
@@ -198,12 +216,14 @@ export const Login = ({ navigation }) => {
               ).data.getUser;
               console.log(queryRes);
               dispatch(setUser(queryRes));
+              setLoad(false);
               navigation.navigate('Home');
             })
             .catch((error) => {
               setFailedLogin(true);
               setErrorMessage('Invalid login details');
               setPassword('');
+              setLoad(false);
             });
         }}
       >

@@ -99,6 +99,13 @@ class LocalPdfsAccess {
     }
   }
 
+  //Search for pdf with id pdfId and change the name
+  toggleDownloaded(pdfId) {
+    for (let i = 0; i < this.allPdfs.length; i++) {
+      if (this.allPdfs[i].id === pdfId) this.allPdfs[i].downloaded = !this.allPdfs[i].downloaded;
+    }
+  }
+
   //Remove pdf with certain id from the list
   deletePdf(pdfId) {
     var temp = [];
