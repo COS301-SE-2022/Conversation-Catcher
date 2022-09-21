@@ -44,7 +44,7 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
             text={item.text}
             downloaded={item.downloaded}
             showCheck={selectMode}
-            pdfSource={'pdfRefresh'}
+            summarised={item.summarised}
             nav={navigation}
             refresh={setDidReload}
           />
@@ -75,7 +75,7 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
       setUser(oldEmail: $oldEmail, email: $email, colour: $colour, pdfs: $pdfs)
     }
     `;
-    
+
     const GET_USER_PDFS = gql`
     query getForUser($email: String!) {
       getPDFs(id: $email) {
@@ -88,7 +88,7 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
       }
     }
     `;
-    
+
     const [setUser] = useMutation(SET_USER);
     let { data, loading, error } = useQuery(GET_USER_PDFS, {
       variables: { email: emailState },
@@ -163,7 +163,7 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
         }
       }
       dispatch(refillPDFs(tempArray));
-    } 
+    }
   }
   return <ScrollDisplay arr={pdfLocalAccess.getPdfs()} text={"This account has no documents yet!"} load={false}/>
 }
