@@ -19,6 +19,7 @@ import { selectColour, clearUser } from '../../../../../../apps/client/src/app/s
 import auth from '@react-native-firebase/auth';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { clearPDFs } from '../../../../../../apps/client/src/app/slices/pdf.slice';
+import pdfLocalAccess from '../shared-components/local-pdfs-access/local-pdfs-access';
 
 export const SettingsPage = ({ navigation }) => {
   const [user, setUser] = useState({});
