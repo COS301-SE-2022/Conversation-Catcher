@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
     fontWeight: '300',
     fontStyle: 'normal',
     fontFamily: 'System',
-    paddingHorizontal: 0,
+    paddingHorizontal: 5,
   },
   pdfThumbnail: {
     resizeMode: 'contain',
