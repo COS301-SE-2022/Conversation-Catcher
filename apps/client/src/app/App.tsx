@@ -36,6 +36,9 @@ import { persistStore, persistReducer } from 'redux-persist';
 //import storage from 'redux-persist/lib/storage';
 import { PersistGate } from 'redux-persist/integration/react';
 
+//console.disableYellowBox = true;//Uncomment to hide warnings
+//console.reportErrorsAsExceptions = false;//Uncomment to hide errors, not tested
+
 //configure local storage
 const persistConfig = {
   key: 'root',
