@@ -1,6 +1,7 @@
 class LocalPdfsAccess {
   displayPdfs; //The pdfs that get displayed
   allPdfs; //All the pdfs loaded from the api call
+  summariseListener = ['false']; //Checks if the summarise listener has been defined
 
   constructor() {
     this.displayPdfs = [];
@@ -49,6 +50,13 @@ class LocalPdfsAccess {
   // get(i) {
   //   return this.displayPdfs[i];
   // }
+
+  //Changes the summary of the pdf
+  addSummary(id, summary) {
+    this.allPdfs.forEach((pdf) => {
+      if (pdf.id === id) pdf.summarised = summary
+    });
+  }
 
   //Resets both arrays of pdfs to be empty
   clearPdfs() {

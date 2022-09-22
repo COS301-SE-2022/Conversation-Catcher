@@ -16,7 +16,7 @@ export class PdfEntity {
   name: string;
 
   @Field({nullable: true})
-  summarized?: string;
+  summarised?: string;
 
   @Field({nullable: true})
   text?: string;

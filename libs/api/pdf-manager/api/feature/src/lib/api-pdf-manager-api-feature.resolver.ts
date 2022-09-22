@@ -35,7 +35,7 @@ export class ApiPdfManagerApiFeatureResolver {
     if (result.downloaded != null) pdfObj.downloaded = result.downloaded;
     else pdfObj.downloaded = false;
     pdfObj.text = result.text;
-    pdfObj.summarized = result.summarized;
+    pdfObj.summarised = result.summarised;
     pdfObj.embeddings = result.embeddings;
     return pdfObj;
   }
@@ -86,9 +86,18 @@ export class ApiPdfManagerApiFeatureResolver {
     return await this.pdfService.addTags(id, tags);
   }
 
+  //Remove the tags if they are present
+  @Mutation(() => String)
+  async removeTags(
+    @Args('id') id: string,
+    @Args('tags', { type: () => [String] }) tags: string[]
+  ) {
+    return await this.pdfService.removeTags(id, tags);
+  }
+
   //Add a summary of the text to the pdf
   @Mutation(() => String)
-  async removeTags(@Args('id') id: string, @Args('summary') summary: string) {
+  async setSummarized(@Args('id') id: string, @Args('summary') summary: string) {
     return await this.pdfService.setSumarry(id, summary);
   }
 
@@ -116,14 +125,13 @@ export class ApiPdfManagerApiFeatureResolver {
     return this.errorObj;
   }
   // rename the pdf with this id
-  @Mutation(() => PdfEntity)
+  @Mutation(() => String)
   async renamePDF(@Args('id') id: string, @Args('name') name: string) {
     const pdfArr = await this.pdfService.setNamePdf(id, name);
-
-    if (pdfArr != undefined) {
-      return this.assignResult(pdfArr);
+    if (pdfArr.modifiedCount === 1) {
+      return 'success'
     }
-    return this.errorObj;
+    return 'Failed to rename the pdf';
   }
 
   // change if true to false and if false to true and change the file appropraitely

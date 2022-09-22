@@ -22,10 +22,10 @@ export class DeleteTagsCommand {
   constructor(public readonly id?: string, public readonly tags?: string[]) {}
 }
 
-export class SetSummarizedCommand {
+export class SetSummarisedCommand {
   constructor(
     public readonly id?: string,
-    public readonly summarized?: string
+    public readonly summarised?: string
   ) {}
 }
 
