@@ -17,6 +17,7 @@ import {
 import { gql, useQuery, useMutation } from '@apollo/client';
 import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
 import ModalDropdown from 'react-native-modal-dropdown';
+import Loading from '../loading/loading';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
 import pdfLocalAccess from '../local-pdfs-access/local-pdfs-access.js';
@@ -24,10 +25,13 @@ import { useSelector, useDispatch } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { selectColour } from '../../../../../../apps/client/src/app/slices/user.slice';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { changeName, removePDF} from '../../../../../../../apps/client/src/app/slices/pdf.slice';
+import {
+  changeName,
+  removePDF,
+} from '../../../../../../../apps/client/src/app/slices/pdf.slice';
 //import Share from 'react-native-share';
 //import ReactPDF from '@react-pdf/renderer';
-import {document} from '../document/document'
+import { document } from '../document/document';
 
 export const PdfView = ({ route, navigation }) => {
   const colourState = useSelector(selectColour);
@@ -39,7 +43,7 @@ export const PdfView = ({ route, navigation }) => {
 
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => {
-    setIsEnabled(previousState => !previousState);
+    setIsEnabled((previousState) => !previousState);
     //change
   };
 
@@ -59,11 +63,7 @@ export const PdfView = ({ route, navigation }) => {
 
   const RENAME = gql`
     mutation setName($id: String!, $name: String!) {
-      renamePDF(id: $id, name: $name) {
-        id
-        name
-        downloaded
-      }
+      renamePDF(id: $id, name: $name)
     }
   `;
 
@@ -84,54 +84,89 @@ export const PdfView = ({ route, navigation }) => {
     console.log(id);
     name.name = newName;
     pdfLocalAccess.renamePdf(id.id, newName);
-    await rename({ variables: { id: id.id, name: newName } });
+    rename({ variables: { id: id.id, name: newName } }).catch((error) => {
+      console.log(error);
+    });
     dispatch(changeName({ id: id.id, name: newName }));
   }
 
   async function deletePdf() {
     pdfLocalAccess.deletePdf(id.id);
-    await delete_pdf({ variables: { id: id.id } });
+    delete_pdf({ variables: { id: id.id } }).catch((error) => {
+      console.log(error);
+    });
     dispatch(removePDF({ id: id.id }));
   }
 
-  const TextArea = () =>{
+  const TextArea = () => {
     //isEnabled == false => unsummarised version
+    // console.log(summarised);
     if (!isEnabled)
       return (
         <View style={styles.pdfTextContainer}>
           <Text style={styles.pdfText}>{text.text}</Text>
         </View>
-      )
+      );
+    if (
+      summarised.summarised === 'loading' ||
+      summarised.summarised === undefined
+    )
+      return (
+        <View style={styles.pdfTextContainer}>
+          <Loading width={100} height={100} load={true} />
+          <Text style={styles.modalTitle}>Summarising in progress</Text>
+        </View>
+      );
+    if (summarised.summarised === 'error')
+      return (
+        <View style={styles.pdfTextContainer}>
+          <Text style={styles.modalTitle}>An error has occured</Text>
+          <TouchableOpacity
+            style={[
+              styles.retrySummaryContainer,
+              { backgroundColor: colourState },
+            ]}
+            onPress={async () => {
+              console.log('Retry');
+              NativeAppEventEmitter.emit('summarise', id.id, text.text);
+            }}
+          >
+            <Text style={styles.retrySummaryText}>Retry</Text>
+          </TouchableOpacity>
+        </View>
+      );
     return (
       <View style={styles.pdfTextContainer}>
         <Text style={styles.pdfText}>{summarised.summarised}</Text>
       </View>
-    )
-  }
+    );
+  };
 
   return (
     <View style={styles.viewAllPage}>
       <View style={styles.viewAllTopBar}>
         <View style={styles.big_title_box}>
-          <Text style={styles.big_title} numberOfLines={1}>{name.name}</Text>
+          <Text style={styles.big_title} numberOfLines={1}>
+            {name.name}
+          </Text>
         </View>
         <View style={styles.summarisedSwitchGroup}>
           <View style={styles.summarisedLabelBox}>
             <Text style={styles.summarisedLabel}>Summarised</Text>
           </View>
           <View style={styles.summarisedSwitchBox}>
-          <Switch
-            trackColor={{ false: "#ffffff", true: colourState }}
-            thumbColor={isEnabled ? "#ffffff" : colourState}
-            ios_backgroundColor="#3e3e3e"
-            onValueChange={toggleSwitch}
-            value={isEnabled}
-          />
+            <Switch
+              trackColor={{ false: '#ffffff', true: colourState }}
+              thumbColor={isEnabled ? '#ffffff' : colourState}
+              ios_backgroundColor="#3e3e3e"
+              onValueChange={toggleSwitch}
+              value={isEnabled}
+            />
           </View>
         </View>
       </View>
 
-      <TextArea/>
+      <TextArea />
 
       <View style={styles.bottomBar}>
         <View style={styles.bottomBarSideSpacing} />
@@ -315,6 +350,39 @@ export const PdfView = ({ route, navigation }) => {
 export default PdfView;
 
 const styles = StyleSheet.create({
+  retrySummaryContainer: {
+    // flexGrow: 1,
+    marginTop: 10,
+    // marginBottom: 5,
+    marginLeft: 100,
+    marginRight: 100,
+    height: 50,
+    justifyContent: 'center',
+    alignContent: 'center',
+    borderRadius: 8,
+    elevation: 2,
+    shadowColor: '#000000',
+    shadowRadius: 2.621621621621622,
+    shadowOpacity: 0.2173913043478261,
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+  },
+  retrySummaryText: {
+    // borderWidth: 1,
+    // padding: 25,
+    // borderColor: 'black',
+    color: '#ffffffff',
+    textAlign: 'center',
+    letterSpacing: 0,
+    lineHeight: 22,
+    fontSize: 18,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Jaldi */,
+    // padding: 10
+  },
   viewAllPage: {
     backgroundColor: '#ffffffff',
     marginTop: 0,
@@ -378,12 +446,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0,
     paddingVertical: 0,
   },
-  summarisedLabelBox: {
-
-  },
-  summarisedSwitchBox: {
-
-  },
+  summarisedLabelBox: {},
+  summarisedSwitchBox: {},
   pdfTextContainer: {
     height: '70%',
     padding: 15,

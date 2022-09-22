@@ -156,13 +156,13 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
   //create deep copy of the returned data
   //Data is here in data if returned
   if (!pdfLocalAccess.isLoaded()) {
-    console.log('Loading from query');
+    // console.log('Loading from query');
     pdfLocalAccess.clearPdfs();
-    console.log(data);
+    // console.log(data);
     setData(data);
     //Update the user pdfs array to ensure that deleted pdfs are removed
     if (pdfLocalAccess.isLoaded()) {
-      console.log('setting pdf');
+      // console.log('setting pdf');
       setUser({
         variables: {
           oldEmail: emailState,
@@ -171,7 +171,7 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
           pdfs: pdfLocalAccess.getPdfIds(),
         },
       }).catch((e) => {
-        console.log('error in delete of pdf in pdf array');
+        // console.log('error in delete of pdf in pdf array');
         console.log(e);
       });
     }

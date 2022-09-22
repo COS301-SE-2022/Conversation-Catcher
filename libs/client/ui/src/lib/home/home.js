@@ -9,6 +9,7 @@ import {
   Alert,
   PermissionsAndroid,
   NativeAppEventEmitter,
+  DeviceEventEmitter,
 } from 'react-native';
 import { gql, useMutation, useLazyQuery, useQuery } from '@apollo/client';
 import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
@@ -50,6 +51,13 @@ export const Home = ({ navigation }) => {
   });
 
   const [fileResponse, setFileResponse] = useState([]);
+
+  DeviceEventEmitter.addListener('summarise', (id, text) =>{
+    console.log(id);
+    console.log(text);
+    summarise(id, text)
+  }
+  );
 
   //Graphql syntax trees for the queries and mutations
   const SET_SUMMARISED = gql`
