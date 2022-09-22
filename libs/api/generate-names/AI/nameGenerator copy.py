@@ -9,7 +9,6 @@ from keras_preprocessing.sequence import pad_sequences
 from nltk.corpus import stopwords
 from tensorflow.keras.layers import Input, LSTM, Embedding, Dense, Concatenate, TimeDistributed
 from tensorflow.keras.models import Model
-from tensorflow.keras.callbacks import EarlyStopping
 import tensorflow_cloud as tfc
 import tensorflow as tf
 from tensorflow import keras

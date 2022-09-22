@@ -15,7 +15,7 @@ def home():
 @app.route('/gennames', methods=['POST'])
 def summarise():
     input_text = request.form['text']
-    generated_name = generator.generateNames(input_text)
+    generated_name = generator.generateName(input_text)
     generated_name_object = { "generated_name": generated_name }
     return jsonify(generated_name_object)
 
