@@ -248,7 +248,7 @@ export const Home = ({ navigation }) => {
           const newPdf = await addPdf({
             variables: {
               email: emailState,
-              name: '',
+              name: '', //await generateName({variables: {text: result.converted_text}})
               text: result.converted_text,
             },
           });
@@ -271,13 +271,15 @@ export const Home = ({ navigation }) => {
 
   //summarise the text and populate the required fields
   const summarise = (id, text) => {
+    console.log('starting summarisation');
     summariseText({ variables: { text: text } })
       .then(async (res) => {
         console.log(res);
         setSummarisedText({
-          variables: { id: id, summary: res },
-        });
-        pdfLocalAccess.addSummary(id, res);
+          variables: { id: id, summary: res.data.Summarise },
+        }).catch((e) => console.log(e));
+        pdfLocalAccess.addSummary(id, res.data.Summarise);
+        console.log('summary added');
       })
       .catch((e) => console.log(e));
   };
