@@ -5,7 +5,6 @@ import {
   Text,
   ImageBackground,
   TouchableOpacity,
-  Alert,
   SafeAreaView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -25,7 +24,7 @@ export const SettingsPage = ({ navigation }) => {
   const colourState = useSelector(selectColour);
 
   return (
-    <View style={styles.settings}>
+    <SafeAreaView style={styles.settings}>
       <View style={styles.big_title_box}>
         <Text style={styles.big_title}>{'Settings'}</Text>
       </View>
@@ -124,7 +123,7 @@ export const SettingsPage = ({ navigation }) => {
       >
         <Icon name="angle-left" color={colourState} size={28} />
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 };
 

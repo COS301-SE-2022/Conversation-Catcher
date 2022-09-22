@@ -6,7 +6,7 @@ import {
   Image,
   ImageBackground,
   TouchableOpacity,
-  Alert,
+  SafeAreaView,
   ScrollView,
   TextInput,
 } from 'react-native';
@@ -157,7 +157,7 @@ export const ViewAll = ({ navigation }) => {
   // }
 
   return (
-    <View style={styles.viewAllPage}>
+    <SafeAreaView style={styles.viewAllPage}>
       <View style={styles.viewAllTopBar}>
         <View style={styles.big_title_box}>
           <Text style={styles.big_title}>{'PDFs'}</Text>
@@ -373,7 +373,7 @@ export const ViewAll = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </Modal>
-    </View>
+    </SafeAreaView>
   );
 };
 export default ViewAll;
@@ -384,7 +384,7 @@ const styles = StyleSheet.create({
     marginTop: 0,
     marginBottom: 0,
     marginLeft: 0,
-    flexGrow: 1,
+    flex: 1,
     marginRight: 0,
   },
   viewAllTopBar: {

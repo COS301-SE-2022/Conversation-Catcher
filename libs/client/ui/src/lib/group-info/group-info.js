@@ -8,6 +8,7 @@ import {
   ScrollView,
   TextInput,
   NativeAppEventEmitter,
+  SafeAreaView,
 } from 'react-native';
 import { gql, useQuery, useMutation } from '@apollo/client';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -233,7 +234,7 @@ export const GroupInfo = ({ route, navigation }) => {
     }
 
   return (
-    <View style={styles.groupPage}>
+    <SafeAreaView style={styles.groupPage}>
       
       <ConditionalGroupHeader/>
 
@@ -446,7 +447,7 @@ export const GroupInfo = ({ route, navigation }) => {
         </View>
       </Modal>
       
-    </View>
+    </SafeAreaView>
   );
 };
 export default GroupInfo;
@@ -456,7 +457,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffffff',
     justifyContent: 'space-between',
     flexDirection: 'column',
-    flexGrow: 1,
+    flex: 1,
   },
   groupPageHeaderGroup: {
     flexShrink: 1,

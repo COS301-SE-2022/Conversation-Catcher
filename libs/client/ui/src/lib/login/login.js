@@ -6,7 +6,7 @@ import {
   Image,
   ImageBackground,
   TouchableOpacity,
-  Alert,
+  SafeAreaView,
   TextInput,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -83,7 +83,7 @@ export const Login = ({ navigation }) => {
   }
 
   return (
-    <View style={styles.logInPage}>
+    <SafeAreaView style={styles.logInPage}>
       <View style={styles.big_title_box}>
         <Text style={styles.big_title}>{'Log in to your account'}</Text>
       </View>
@@ -229,7 +229,7 @@ export const Login = ({ navigation }) => {
           <Text style={styles.smallGreyText}>{'Don’t have an account?'}</Text>
         </View>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -243,7 +243,7 @@ const styles = StyleSheet.create({
   logInPage: {
     backgroundColor: '#ffffffff',
     overflow: 'hidden',
-    flexGrow: 1,
+    flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
   },

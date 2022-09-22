@@ -6,7 +6,7 @@ import {
   Image,
   ImageBackground,
   TouchableOpacity,
-  Alert,
+  SafeAreaView,
   ScrollView,
   TextInput,
   Share,
@@ -90,7 +90,7 @@ export const PdfView = ({ route, navigation }) => {
   }
 
   return (
-    <View style={styles.viewAllPage}>
+    <SafeAreaView style={styles.viewAllPage}>
       <View style={styles.viewAllTopBar}>
         <View style={styles.big_title_box}>
           <Text style={styles.big_title} numberOfLines={1}>{name.name}</Text>
@@ -291,7 +291,7 @@ export const PdfView = ({ route, navigation }) => {
           </TouchableOpacity>
         </View>
       </Modal>
-    </View>
+    </SafeAreaView>
   );
 };
 export default PdfView;
@@ -302,7 +302,7 @@ const styles = StyleSheet.create({
     marginTop: 0,
     marginBottom: 0,
     marginLeft: 0,
-    flexGrow: 1,
+    flex: 1,
     marginRight: 0,
   },
   viewAllTopBar: {

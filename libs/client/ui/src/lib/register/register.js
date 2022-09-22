@@ -6,7 +6,7 @@ import {
   Image,
   ImageBackground,
   TouchableOpacity,
-  Alert,
+  SafeAreaView,
   TextInput,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -75,7 +75,7 @@ export const Register = ({ navigation }) => {
   }
 
   return (
-    <View style={styles.registerPage}>
+    <SafeAreaView style={styles.registerPage}>
       <View style={styles.big_title_box}>
         <Text style={styles.big_title}>{'Create new account'}</Text>
       </View>
@@ -215,7 +215,7 @@ export const Register = ({ navigation }) => {
           <Text style={styles.smallGreyText}>{'Already a user?'}</Text>
         </View>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -229,7 +229,7 @@ const styles = StyleSheet.create({
   registerPage: {
     backgroundColor: '#ffffffff',
     overflow: 'hidden',
-    flexGrow: 1,
+    flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
   },

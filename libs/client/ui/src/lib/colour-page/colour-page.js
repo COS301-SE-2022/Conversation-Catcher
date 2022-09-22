@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react-native';
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, TouchableOpacity, Switch } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, Switch, SafeAreaView } from 'react-native';
 import BouncyCheckboxGroup, {ICheckboxButton,} from "react-native-bouncy-checkbox-group";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useDispatch, useSelector } from 'react-redux'
@@ -32,7 +32,7 @@ export const ColourPage = ({ navigation}) => {
   };
 
   return (
-    <View style={styles.colourPage}>
+    <SafeAreaView style={styles.colourPage}>
       <View style={styles.big_title_box}>
         <Text style={styles.big_title}>
           {'Change colour'}
@@ -98,7 +98,7 @@ export const ColourPage = ({ navigation}) => {
             size={28}
           />
       </TouchableOpacity >
-    </View>
+    </SafeAreaView>
 
 
   );

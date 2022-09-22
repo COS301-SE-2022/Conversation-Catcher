@@ -6,7 +6,7 @@ import {
   Image,
   ImageBackground,
   TouchableOpacity,
-  Alert,
+  SafeAreaView,
   PermissionsAndroid,
   NativeAppEventEmitter,
 } from 'react-native';
@@ -286,7 +286,7 @@ export const Home = ({ navigation }) => {
 
   // componentDidMount();
   return (
-    <View style={styles.home}>
+    <SafeAreaView style={styles.home}>
       <View style={styles.big_title_box}>
         <Text style={styles.big_title} ellipsizeMode={'clip'}>
           {'Recents'}
@@ -478,7 +478,7 @@ export const Home = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </Modal>
-    </View>
+    </SafeAreaView>
   );
 };
 export default Home;
@@ -492,7 +492,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffffff',
     overflow: 'hidden',
     //flexShrink: 1,
-    //flex: 1,
+    flex: 1,
     //flexShrink: 0,
     flexDirection: 'column',
     width: '100%',

@@ -3,10 +3,8 @@ import {
   View,
   StyleSheet,
   Text,
-  Image,
-  ImageBackground,
   TouchableOpacity,
-  Alert,
+  SafeAreaView,
   TextInput,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -114,7 +112,7 @@ export const ForgotPassword = ({ navigation }) => {
   }
 
   return (
-    <View style={styles.logInPage}>
+    <SafeAreaView style={styles.logInPage}>
       <View style={styles.big_title_box}>
         <Text style={styles.big_title}>{'Reset password'}</Text>
       </View>
@@ -151,7 +149,7 @@ export const ForgotPassword = ({ navigation }) => {
       >
         <Icon name="angle-left" color={colourState} size={28} />
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -165,7 +163,7 @@ const styles = StyleSheet.create({
   logInPage: {
     backgroundColor: '#ffffffff',
     overflow: 'hidden',
-    flexGrow: 1,
+    flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
   },
