@@ -119,7 +119,9 @@ const PdfTile = ({
         <ImageBackground
           style={styles.pdfThumbnail}
           //thumbnailSource={thumbnailSource}
-        />
+          >
+            <Text style={styles.thumbnailContent}>{text}</Text>
+        </ImageBackground>
       </View>
       <View style={styles.pdfTile_contents_not_thumbnail}>
         <View style={styles.pdfTile_contents_not_thumbnail_inner}>
@@ -164,6 +166,17 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderWidth: 1,
     aspectRatio: 1 / 1.4142,
+  },
+  thumbnailContent: {
+    color: '#344053ff',
+    textAlign: 'left',
+    letterSpacing: 0,
+    lineHeight: 5,
+    fontSize: 6,
+    fontWeight: '300',
+    fontStyle: 'normal',
+    fontFamily: 'System',
+    paddingHorizontal: 0,
   },
   pdfThumbnail: {
     resizeMode: 'contain',
