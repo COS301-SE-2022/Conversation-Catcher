@@ -79,6 +79,7 @@ export const PdfView = ({ route, navigation }) => {
 
   const [rename] = useMutation(RENAME);
   const [delete_pdf] = useMutation(DELETE);
+  const [load, setLoad] = useState(true);
 
   async function renamePdf() {
     console.log(id);
@@ -126,8 +127,11 @@ export const PdfView = ({ route, navigation }) => {
               styles.retrySummaryContainer,
               { backgroundColor: colourState },
             ]}
-            onPress={async () => {
+            onPress={() => {
               console.log('Retry');
+              pdfLocalAccess.addSummary(id, 'loading');
+              summarised.summarised = 'loading';
+              setLoad(!load);
               NativeAppEventEmitter.emit('summarise', id.id, text.text);
             }}
           >

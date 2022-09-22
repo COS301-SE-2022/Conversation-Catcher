@@ -52,12 +52,15 @@ export const Home = ({ navigation }) => {
 
   const [fileResponse, setFileResponse] = useState([]);
 
-  DeviceEventEmitter.addListener('summarise', (id, text) =>{
-    console.log(id);
-    console.log(text);
-    summarise(id, text)
+  if (pdfLocalAccess.summariseListener.length !== 0) {
+    console.log('adding listener');
+    DeviceEventEmitter.addListener('summarise', (id, text) => {
+      console.log(id);
+      console.log(text);
+      summarise(id, text);
+    });
+    pdfLocalAccess.summariseListener.length = 0;
   }
-  );
 
   //Graphql syntax trees for the queries and mutations
   const SET_SUMMARISED = gql`
@@ -281,11 +284,15 @@ export const Home = ({ navigation }) => {
   const summarise = (id, text) => {
     console.log('starting summarisation');
     summariseText({ variables: { text: text } })
-      .then(async (res) => {
+      .then((res) => {
         console.log(res);
         setSummarisedText({
           variables: { id: id, summary: res.data.Summarise },
-        }).catch((e) => console.log(e));
+        }).catch((e) => {
+          console.log(e);
+          pdfLocalAccess.addSummary(id, 'error');
+          return;
+        });
         pdfLocalAccess.addSummary(id, res.data.Summarise);
         console.log('summary added');
       })

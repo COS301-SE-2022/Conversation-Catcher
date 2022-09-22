@@ -1,6 +1,7 @@
 class LocalPdfsAccess {
   displayPdfs; //The pdfs that get displayed
   allPdfs; //All the pdfs loaded from the api call
+  summariseListener = ['false']; //Checks if the summarise listener has been defined
 
   constructor() {
     this.displayPdfs = [];
