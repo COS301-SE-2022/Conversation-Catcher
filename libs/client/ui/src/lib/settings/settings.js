@@ -6,6 +6,8 @@ import {
   ImageBackground,
   TouchableOpacity,
   SafeAreaView,
+  DeviceEventEmitter,
+  NativeAppEventEmitter,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
@@ -93,11 +95,16 @@ export const SettingsPage = ({ navigation }) => {
               .then(() => {
                 dispatch(clearUser());
                 dispatch(clearPDFs());
+                pdfLocalAccess.clearPdfs();
+                NativeAppEventEmitter.emit('logout');
                 navigation.navigate('Login');
               }).catch((e)=>{
+                console.log("not logged in:")
                 console.log(e);
                 dispatch(clearUser());
                 dispatch(clearPDFs());
+                NativeAppEventEmitter.emit('logout');
+                pdfLocalAccess.clearPdfs();
                 navigation.navigate('Login');
               })
           }

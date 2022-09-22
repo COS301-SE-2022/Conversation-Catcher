@@ -31,7 +31,7 @@ import * as QueryHandlers from './queries/handlers';
     CommandHandlers.removeRequestHandler,
     QueryHandlers.getUserHandler,
     QueryHandlers.getAllGroupsHandler,
-    QueryHandlers.getGroupPdfsHandler,
+    // QueryHandlers.getGroupPdfsHandler,
     QueryHandlers.getGroupsForHandler,
   ],
   exports: [UserManagementServiceService],

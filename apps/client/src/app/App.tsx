@@ -50,7 +50,10 @@ const rootReducer = combineReducers({
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 //configure the store
 const store = configureStore({
-    reducer: persistedReducer
+    reducer: persistedReducer,
+    middleware: getDefaultMiddleware => getDefaultMiddleware({
+      serializableCheck: false
+    })
 });
 //Initialize persistor with store
 export const persistor = persistStore(store);
@@ -68,7 +71,7 @@ export const App = () => {
     // link WebSocketLink subscription
     // link: wsLink,
   });
-
+  //Returns the complete project including wrappers for persistence, redux, navigation and API requests
   return (
     <Provider store = { store }>
       <PersistGate loading={null} persistor={persistor}>
