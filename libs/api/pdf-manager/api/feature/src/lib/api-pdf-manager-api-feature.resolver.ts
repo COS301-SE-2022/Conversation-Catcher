@@ -125,14 +125,13 @@ export class ApiPdfManagerApiFeatureResolver {
     return this.errorObj;
   }
   // rename the pdf with this id
-  @Mutation(() => PdfEntity)
+  @Mutation(() => String)
   async renamePDF(@Args('id') id: string, @Args('name') name: string) {
     const pdfArr = await this.pdfService.setNamePdf(id, name);
-
-    if (pdfArr != undefined) {
-      return this.assignResult(pdfArr);
+    if (pdfArr.modifiedCount === 1) {
+      return 'success'
     }
-    return this.errorObj;
+    return 'Failed to rename the pdf';
   }
 
   // change if true to false and if false to true and change the file appropraitely

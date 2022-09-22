@@ -17,7 +17,6 @@ export class ApiSummariseTextApiResolver {
   @Mutation(() => String)
   async Summarise(@Args('text') text: string) {
     const res = await this.service.Summarise(text);
-    console.log(res);
     if (res !== null) return res.summarised_text[0].summary_text;
     return 'error';
   }
