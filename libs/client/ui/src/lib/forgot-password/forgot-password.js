@@ -12,7 +12,7 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectColour } from '../../../../../../../apps/client/src/app/slices/user.slice';
+import { selectColour } from '../../../../../../apps/client/src/app/slices/user.slice';
 import auth from '@react-native-firebase/auth';
 
 export const ForgotPassword = ({ navigation }) => {

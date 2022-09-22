@@ -15,8 +15,6 @@ import {
   Switch,
 } from 'react-native';
 import { gql, useQuery, useMutation } from '@apollo/client';
-import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
-import ModalDropdown from 'react-native-modal-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
 import pdfLocalAccess from '../local-pdfs-access/local-pdfs-access.js';

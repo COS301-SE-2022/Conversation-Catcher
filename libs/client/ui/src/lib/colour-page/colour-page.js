@@ -5,7 +5,7 @@ import BouncyCheckboxGroup, {ICheckboxButton,} from "react-native-bouncy-checkbo
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useDispatch, useSelector } from 'react-redux'
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { setColour, selectUser} from '../../../../../../../apps/client/src/app/slices/user.slice'
+import { setColour, selectUser} from '../../../../../../apps/client/src/app/slices/user.slice'
 //import RNRestart from 'react-native-restart';
 import { gql, useMutation } from '@apollo/client';
 
