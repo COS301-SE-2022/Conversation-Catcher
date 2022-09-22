@@ -83,8 +83,9 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
         name
         creationDate
         downloaded
-        #pdf
         text
+        summarised
+        embeddings
       }
     }
     `;
