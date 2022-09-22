@@ -41,7 +41,7 @@ describe('ApiPdfManagerApiFeatureResolver', () => {
     }),
     setNamePdf: jest.fn((id : string) => {
       PdfEntityMock.id = id;
-      return PdfEntityMock;
+      return "success";
     }),
     deletePdf: jest.fn( (id: string) =>{
       PdfEntityMock.id = id;
@@ -84,13 +84,13 @@ describe('ApiPdfManagerApiFeatureResolver', () => {
     jest
       .spyOn(resolver, 'getPDFById')
       .mockImplementation((): Promise<PdfEntity[]> => Promise.resolve(result));
-     
+
       expect(await resolver.getPDFById('1')).toMatchObject([PdfEntityMock]);
       // TO DO: Add in valid pdfid
     });
     it('should return null', async () => {
       jest.spyOn(resolver, 'getPDFById').mockResolvedValue(null);
-    
+
       expect(await resolver.getPDFById('1')).toEqual(null);
     });
   });
@@ -104,13 +104,13 @@ describe('ApiPdfManagerApiFeatureResolver', () => {
     jest
       .spyOn(resolver, 'getPDFs')
       .mockImplementation((): Promise<PdfEntity[][]> => Promise.resolve(result));
-     
+
       expect(await resolver.getPDFs('1')).toMatchObject([PdfsMock]);
       // TO DO: Add in valid userid
     });
     it('should return null', async () => {
       jest.spyOn(resolver, 'getPDFs').mockResolvedValue(null);
-    
+
       expect(await resolver.getPDFs('1')).toEqual(null);
     });
   });
@@ -125,13 +125,13 @@ describe('ApiPdfManagerApiFeatureResolver', () => {
     jest
       .spyOn(resolver, 'addPDF')
       .mockImplementation((): Promise<PdfEntity[]> => Promise.resolve(result));
-     
+
       expect(await resolver.addPDF('johndoe@gmail.com','Dogs vs cats','sajgbfufgweugvewfgy')).toMatchObject([PdfEntityMock]);
       // TO DO: Add in valid pdfid
     });
     it('should return null', async () => {
       jest.spyOn(resolver, 'addPDF').mockResolvedValue(null);
-    
+
       expect(await resolver.addPDF('johndoe@gmail.com','Dogs vs cats','sajgbfufgweugvewfgy')).toEqual(null);
     });
   });
@@ -141,18 +141,18 @@ describe('ApiPdfManagerApiFeatureResolver', () => {
   * rename the pdf with this id
   */
    describe('renamePDF', () => {
-    const result = [PdfEntityMock];
-    it('should return a pdf', async () => {
+    const result = 'success';
+    it('should return a string', async () => {
     jest
       .spyOn(resolver, 'renamePDF')
-      .mockImplementation((): Promise<PdfEntity[]> => Promise.resolve(result));
-     
-      expect(await resolver.renamePDF('1', "new name")).toMatchObject([PdfEntityMock]);
+      .mockImplementation((): Promise<"success" | "Failed to rename the pdf"> => Promise.resolve(result));
+
+      expect(await resolver.renamePDF('1', "new name")).toEqual("success");
       // TO DO: Add in valid pdfid
     });
     it('should return null', async () => {
       jest.spyOn(resolver, 'renamePDF').mockResolvedValue(null);
-    
+
       expect(await resolver.renamePDF('1', "new name")).toEqual(null);
     });
   });
@@ -167,13 +167,13 @@ describe('ApiPdfManagerApiFeatureResolver', () => {
     jest
       .spyOn(resolver, 'downloadedPDF')
       .mockImplementation((): Promise<PdfEntity[]> => Promise.resolve(result));
-     
+
       expect(await resolver.downloadedPDF('1')).toMatchObject([PdfEntityMock]);
       // TO DO: Add in valid pdfid
     });
     it('should return null', async () => {
       jest.spyOn(resolver, 'downloadedPDF').mockResolvedValue(null);
-    
+
       expect(await resolver.downloadedPDF('1')).toEqual(null);
     });
   });
@@ -188,13 +188,13 @@ describe('ApiPdfManagerApiFeatureResolver', () => {
     jest
       .spyOn(resolver, 'deletePDF')
       .mockImplementation((): Promise<PdfEntity[]> => Promise.resolve(result));
-     
+
       expect(await resolver.deletePDF('1')).toMatchObject([PdfEntityMock]);
       // TO DO: Add in valid pdfid
     });
     it('should return null', async () => {
       jest.spyOn(resolver, 'deletePDF').mockResolvedValue(null);
-    
+
       expect(await resolver.deletePDF('1')).toEqual(null);
     });
   });
