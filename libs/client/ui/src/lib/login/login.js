@@ -97,7 +97,7 @@ export const Login = ({ navigation }) => {
       <View style={styles.big_title_box}>
         <Text style={styles.big_title}>{'Log in to your account'}</Text>
       </View>
-      <Loading width={50} height={50} load={loadingIcon}/>
+      <Loading width={100} height={100} load={loadingIcon}/>
       <View style={styles.inputsGroup}>
         <InvalidDetails />
         <View style={styles.inputsItem}>
