@@ -52,6 +52,7 @@ export const PdfView = ({ route, navigation }) => {
       //   title: name.name,
       // });
       //ReactPDF.render(<Doc t={text.text} n={name.name}/>, `${__dirname}/`+name.name+`.pdf`);
+      console.log("Export");
     } catch (error) {
       alert(error.message);
     }
