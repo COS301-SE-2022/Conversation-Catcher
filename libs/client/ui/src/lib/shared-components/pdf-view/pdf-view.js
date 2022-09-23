@@ -48,16 +48,12 @@ export const PdfView = ({ route, navigation }) => {
 
   const onShare = async () => {
     try {
-      // const result = await Share.share({
-      //   message: text.text,
-      //   title: name.name,
-      // });
-      //ReactPDF.render(<Doc t={text.text} n={name.name}/>, `${__dirname}/`+name.name+`.pdf`);
+      const htmlPDF = '<h1>'+name.name+'</h1>'+text.text;//Add check to output summerized text when toggled
       console.log("Export");
       let options = {
-        html:'<h1>PDF</h1>',
+        html: htmlPDF,
         fileName: name.name,
-        directory: ''//'Documents'
+        directory: ''//'Documents'//may be broken on IOS, may need to use Project.OS to set different destinations
       };
       let file = await RNHTMLtoPDF.convert(options);
       console.log(file.filePath);
