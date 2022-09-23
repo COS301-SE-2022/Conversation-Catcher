@@ -1,0 +1,18 @@
+diff --git a/node_modules/react-native-html-to-pdf/android/src/main/java/com/christopherdro/htmltopdf/RNHTMLtoPDFModule.java b/node_modules/react-native-html-to-pdf/android/src/main/java/com/christopherdro/htmltopdf/RNHTMLtoPDFModule.java
+index 7e33b16..4601333 100644
+--- a/node_modules/react-native-html-to-pdf/android/src/main/java/com/christopherdro/htmltopdf/RNHTMLtoPDFModule.java
++++ b/node_modules/react-native-html-to-pdf/android/src/main/java/com/christopherdro/htmltopdf/RNHTMLtoPDFModule.java
+@@ -64,9 +64,10 @@ public class RNHTMLtoPDFModule extends ReactContextBaseJavaModule {
+ 
+       if (options.hasKey(DIRECTORY)) {
+         String state = Environment.getExternalStorageState();
+-        File path = (Environment.MEDIA_MOUNTED.equals(state)) ?
+-          new File(mReactContext.getExternalFilesDir(null), options.getString(DIRECTORY)) :
+-          new File(mReactContext.getFilesDir(), options.getString(DIRECTORY));
++        // File path = (Environment.MEDIA_MOUNTED.equals(state)) ?
++        //   new File(mReactContext.getExternalFilesDir(null), options.getString(DIRECTORY)) :
++        //   new File(mReactContext.getFilesDir(), options.getString(DIRECTORY));
++        File path = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), options.getString(DIRECTORY));
+         
+         if (!path.exists()) {
+           if (!path.mkdirs()) {

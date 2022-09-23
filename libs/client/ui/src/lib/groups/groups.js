@@ -170,7 +170,7 @@ export const Groups = ({ navigation }) => {
             placeholder="Search"
             onChangeText={(text) => {
               groupLocalAccess.filterGroups(text);
-              groupRef.current.refreshPfds();
+              groupRef.current.refreshPfds();//TypeError: undefined is not an object (evaluating 'groupRef.current.refreshPfds')
             }}
           />
           <View style={styles.searchIconFrame}>
@@ -414,7 +414,7 @@ const styles = StyleSheet.create({
     height: '5%',
     width: '100%',
     minHeight: 28,
-    paddingTop: 5
+    paddingTop: 5,
   },
   searchBarGroup: {
     width: '85%',
