@@ -2,7 +2,7 @@ import time
 from flask import Flask, jsonify, render_template, request
 from flask_cors import CORS
 import os
-from speechToText import speechToText
+# from speechToText import speechToText
 # from pydub import AudioSegment
 # from pydub.playback import play
 import base64
@@ -11,8 +11,6 @@ import azure.cognitiveservices.speech as speechsdk
 
 app = Flask(__name__)
 CORS(app)
-
-sttConverter = speechToText()
 
 @app.route('/')
 def home():
