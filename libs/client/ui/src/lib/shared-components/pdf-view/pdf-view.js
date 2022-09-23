@@ -26,8 +26,6 @@ import { selectColour } from '../../../../../../apps/client/src/app/slices/user.
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { changeName, removePDF} from '../../../../../../../apps/client/src/app/slices/pdf.slice';
 //import Share from 'react-native-share';
-//import ReactPDF from '@react-pdf/renderer';
-//import {Doc} from '../document/document';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
 
 export const PdfView = ({ route, navigation }) => {
