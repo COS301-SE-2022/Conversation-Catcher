@@ -1,4 +1,3 @@
-from asyncio.windows_events import NULL
 from flask import Flask, jsonify, render_template, request
 from flask_cors import CORS
 import os
@@ -11,7 +10,7 @@ summariser = summariseText()
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return ('<!DOCTYPE html><html><body><h1>My First Heading</h1><p>My first paragraph.</p></body></html>')
 
 @app.route('/summarise', methods=['POST'])
 def summarise():
