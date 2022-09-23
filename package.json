@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nx serve",
     "build": "nx build",
-    "test": "nx test"
+    "test": "nx test",
+    "postinstall": "patch-package"
   },
   "private": true,
   "dependencies": {
@@ -24,6 +25,8 @@
     "jquery": "^3.6.0",
     "lottie-ios": "3.2.3",
     "lottie-react-native": "^5.1.3",
+    "patch-package": "^6.4.7",
+    "postinstall-postinstall": "^2.1.0",
     "react": "17",
     "react-native": "0.68.2",
     "react-native-audio-record": "^0.2.2",

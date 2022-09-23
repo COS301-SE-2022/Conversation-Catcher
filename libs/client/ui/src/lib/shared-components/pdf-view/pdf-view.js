@@ -56,8 +56,8 @@ export const PdfView = ({ route, navigation }) => {
       console.log("Export");
       let options = {
         html:'<h1>PDF</h1>',
-        filename: 'test',
-        directory: 'Documents'
+        fileName: name.name,
+        directory: ''//'Documents'
       };
       let file = await RNHTMLtoPDF.convert(options);
       console.log(file.filePath);
