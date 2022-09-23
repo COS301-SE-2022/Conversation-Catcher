@@ -317,7 +317,7 @@ export const GroupInfo = ({ route, navigation }) => {
             }}
           />
           <TouchableOpacity
-            style={[styles.actionFileButton, { backgroundColor: colourState }]}
+            style={[styles.actionButton, { backgroundColor: colourState }]}
             state={null}
             onPress={() => {
               console.log('renaming the pdf to ' + newName);
@@ -350,9 +350,10 @@ export const GroupInfo = ({ route, navigation }) => {
               //setNewDescription(text);
             }}
             numberOfLines={4}
+            multiline={true}
           />
           <TouchableOpacity
-            style={[styles.actionFileButton, { backgroundColor: colourState }]}
+            style={[styles.actionButton, { backgroundColor: colourState }]}
             state={null}
             onPress={() => {
               //console.log('renaming the pdf to ' + newName);
@@ -382,7 +383,7 @@ export const GroupInfo = ({ route, navigation }) => {
             {'Are you sure you want to delete ' + name.name + '?'}
           </Text>
           <TouchableOpacity
-            style={[styles.actionFileButton, { backgroundColor: colourState }]}
+            style={[styles.actionButton, { backgroundColor: colourState }]}
             state={null}
             onPress={() => {
               setDeleteConfirmVisible(false);
@@ -395,7 +396,7 @@ export const GroupInfo = ({ route, navigation }) => {
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.actionFileButton, { backgroundColor: colourState }]}
+            style={[styles.actionButton, { backgroundColor: colourState }]}
             state={null}
             onPress={() => {
               // Delete the pdf
@@ -426,7 +427,7 @@ export const GroupInfo = ({ route, navigation }) => {
             {'Are you sure you want to leave ' + name.name + '?'}
           </Text>
           <TouchableOpacity
-            style={[styles.actionFileButton, { backgroundColor: colourState }]}
+            style={[styles.actionButton, { backgroundColor: colourState }]}
             state={null}
             onPress={() => {
               setLeaveConfirmVisible(false);
@@ -439,7 +440,7 @@ export const GroupInfo = ({ route, navigation }) => {
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.actionFileButton, { backgroundColor: colourState }]}
+            style={[styles.actionButton, { backgroundColor: colourState }]}
             state={null}
             onPress={() => {
               // Delete the pdf
@@ -482,7 +483,11 @@ export const GroupInfo = ({ route, navigation }) => {
 
           <TouchableOpacity
             style={styles.backButton}
-            onPress={() => setBottomModalVisible(false)}
+            onPress={() => {
+              setBottomModalVisible(false)
+              setSelectMode(false)
+              setRemoveConfirmVisible(true)
+            }}
           >
             <Icon name="trash-o" color="#ffffffff" size={25} />
           </TouchableOpacity>
@@ -497,26 +502,26 @@ export const GroupInfo = ({ route, navigation }) => {
         onBackdropPress={() => setRemoveConfirmVisible(false)}
         //onModalHide={() => setFileSelected(false)}
       >
-        <View style={styles.renameModalInner}>
+        <View style={styles.actionModalInner}>
           <Text style={styles.modalTitle}>
             {'Are you sure you want to remove * members?'}
           </Text>
           <TouchableOpacity
-            style={[styles.renameFileButton, { backgroundColor: colourState }]}
+            style={[styles.actionButton, { backgroundColor: colourState }]}
             state={null}
             onPress={() => {
               setRemoveConfirmVisible(false);
               setSelectMode(false);
             }}
           >
-            <View style={styles.renameModalButtonContent}>
-              <View style={styles.renameModalButtonText_box}>
-                <Text style={styles.renameModalButtonText}>{'Cancel'}</Text>
+            <View style={styles.actionModalButtonContent}>
+              <View style={styles.actionModalButtonText_box}>
+                <Text style={styles.actionModalButtonText}>{'Cancel'}</Text>
               </View>
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.renameFileButton, { backgroundColor: colourState }]}
+            style={[styles.actionButton, { backgroundColor: colourState }]}
             state={null}
             onPress={() => {
               // Delete the pdf
@@ -525,9 +530,9 @@ export const GroupInfo = ({ route, navigation }) => {
               setSelectMode(false);
             }}
           >
-            <View style={styles.renameModalButtonContent}>
-              <View style={styles.renameModalButtonText_box}>
-                <Text style={styles.renameModalButtonText}>{'Remove'}</Text>
+            <View style={styles.actionModalButtonContent}>
+              <View style={styles.actionModalButtonText_box}>
+                <Text style={styles.actionModalButtonText}>{'Remove'}</Text>
               </View>
             </View>
           </TouchableOpacity>
@@ -779,7 +784,7 @@ const styles = StyleSheet.create({
     fontStyle: 'normal',
     fontFamily: 'System' /* Inter */,
   },
-  actionFileButton: {
+  actionButton: {
     flexGrow: 1,
     height: 40,
     alignItems: 'center',
@@ -802,7 +807,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     //padding: 5
-    height: '20%',
   },
   actionModalButtonText: {
     color: '#ffffffff',
@@ -839,6 +843,7 @@ const styles = StyleSheet.create({
   actionModalLargeTextInput: {
     flexShrink: 1,
     textAlign: 'center',
+    textAlignVertical: "top",
     letterSpacing: 0,
     lineHeight: 20,
     fontSize: 15,
