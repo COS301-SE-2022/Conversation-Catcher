@@ -32,7 +32,9 @@ export const GroupInfo = ({ route, navigation }) => {
     const [bottomModalVisible, setBottomModalVisible] = useState(false);
     const [adminState, setAdminState] = useState(true);
     const [renameVisible, setRenameVisible] = useState(false);
+    const [editDescriptionVisible, setEditDescriptionVisible] = useState(false);
     const [deleteConfirmVisible, setDeleteConfirmVisible] = useState(false);
+    const [removeConfirmVisible, setRemoveConfirmVisible] = useState(false);
     const [leaveConfirmVisible, setLeaveConfirmVisible] = useState(false);
     const [fileResponse, setFileResponse] = useState([]);
     const [newName, setNewName] = useState('');
@@ -205,9 +207,14 @@ export const GroupInfo = ({ route, navigation }) => {
                 <Text style={styles.groupName} numberOfLines={1}>{name.name}</Text>
             </TouchableOpacity>
 
-            <View style={styles.groupTextBox}>
+            <TouchableOpacity 
+              style={styles.groupTextBox}
+              onPress={() => {
+                setEditDescriptionVisible(true);
+              }}
+            >
               <Text style={styles.groupText} numberOfLines={2}>{text.text}</Text>
-            </View>
+            </TouchableOpacity>
           </View>
           
         )
@@ -329,6 +336,41 @@ export const GroupInfo = ({ route, navigation }) => {
 
       <Modal
         style={styles.modal}
+        isVisible={editDescriptionVisible}
+        hasBackdrop={true}
+        backdropColor="white"
+        onBackdropPress={() => setEditDescriptionVisible(false)}
+        //onModalHide={() => setFileSelected(false)}
+      >
+        <View style={styles.actionModalInner}>
+          <TextInput
+            style={styles.actionModalLargeTextInput}
+            defaultValue={name.name}
+            onChangeText={(text) => {
+              //setNewDescription(text);
+            }}
+            numberOfLines={4}
+          />
+          <TouchableOpacity
+            style={[styles.actionFileButton, { backgroundColor: colourState }]}
+            state={null}
+            onPress={() => {
+              //console.log('renaming the pdf to ' + newName);
+              //editDescription();
+              setEditDescriptionVisible(false);
+            }}
+          >
+            <View style={styles.actionModalButtonContent}>
+              <View style={styles.actionModalButtonText_box}>
+                <Text style={styles.actionModalButtonText}>{'Save'}</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </Modal>
+
+      <Modal
+        style={styles.modal}
         isVisible={deleteConfirmVisible}
         hasBackdrop={true}
         backdropColor="white"
@@ -442,7 +484,52 @@ export const GroupInfo = ({ route, navigation }) => {
             style={styles.backButton}
             onPress={() => setBottomModalVisible(false)}
           >
-            <Icon name="pencil-square-o" color="#ffffffff" size={22} />
+            <Icon name="trash-o" color="#ffffffff" size={25} />
+          </TouchableOpacity>
+        </View>
+      </Modal>
+
+      <Modal
+        style={styles.modal}
+        isVisible={removeConfirmVisible}
+        hasBackdrop={true}
+        backdropColor="white"
+        onBackdropPress={() => setRemoveConfirmVisible(false)}
+        //onModalHide={() => setFileSelected(false)}
+      >
+        <View style={styles.renameModalInner}>
+          <Text style={styles.modalTitle}>
+            {'Are you sure you want to remove * members?'}
+          </Text>
+          <TouchableOpacity
+            style={[styles.renameFileButton, { backgroundColor: colourState }]}
+            state={null}
+            onPress={() => {
+              setRemoveConfirmVisible(false);
+              setSelectMode(false);
+            }}
+          >
+            <View style={styles.renameModalButtonContent}>
+              <View style={styles.renameModalButtonText_box}>
+                <Text style={styles.renameModalButtonText}>{'Cancel'}</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.renameFileButton, { backgroundColor: colourState }]}
+            state={null}
+            onPress={() => {
+              // Delete the pdf
+              //deletePdf();
+              setRemoveConfirmVisible(false);
+              setSelectMode(false);
+            }}
+          >
+            <View style={styles.renameModalButtonContent}>
+              <View style={styles.renameModalButtonText_box}>
+                <Text style={styles.renameModalButtonText}>{'Remove'}</Text>
+              </View>
+            </View>
           </TouchableOpacity>
         </View>
       </Modal>
@@ -649,11 +736,13 @@ const styles = StyleSheet.create({
   backButton: {
     alignContent: 'center',
     alignItems: 'center',
-    flexShrink: 1,
+    justifyContent: 'center',
+    flexGrow: 1,
     padding: 10,
+
   },
   actionModalInner: {
-    width: '70%',
+    width: '85%',
     flexShrink: 1,
     backgroundColor: '#d0d5ddff',
     borderRadius: 7,
@@ -709,11 +798,11 @@ const styles = StyleSheet.create({
     },
   },
   actionModalButtonContent: {
-    flexGrow: 1,
-    flexDirection: 'row',
+    flexShrink: 1,
     alignItems: 'center',
     justifyContent: 'center',
     //padding: 5
+    height: '20%',
   },
   actionModalButtonText: {
     color: '#ffffffff',
@@ -746,6 +835,23 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     marginTop: 10,
     height: 40,
+  },
+  actionModalLargeTextInput: {
+    flexShrink: 1,
+    textAlign: 'center',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 15,
+    color: 'black',
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+    backgroundColor: '#ffffffff',
+    borderRadius: 8,
+    marginHorizontal: 10,
+    marginTop: 10,
+    height: '50%',
+    flexWrap: 'wrap',
   },
   modalTitle: {
     color: '#344053ff',
