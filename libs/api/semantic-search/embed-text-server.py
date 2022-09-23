@@ -23,8 +23,8 @@ def embed():
 @app.route('/semanticsearch', methods=['POST'])
 def embed():
     query = request.get_json()['query']
-    user = request.get_json()['user']
-    results = embedder.search(query, user)
+    docs = request.get_json()['docs']
+    results = embedder.search(query, docs)
     results_object = { "results": results }
     return jsonify(results_object)
 
