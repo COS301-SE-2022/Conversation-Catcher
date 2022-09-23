@@ -27,7 +27,8 @@ import { selectColour } from '../../../../../../apps/client/src/app/slices/user.
 import { changeName, removePDF} from '../../../../../../../apps/client/src/app/slices/pdf.slice';
 //import Share from 'react-native-share';
 //import ReactPDF from '@react-pdf/renderer';
-import {Doc} from '../document/document'
+//import {Doc} from '../document/document';
+import RNHTMLtoPDF from 'react-native-html-to-pdf';
 
 export const PdfView = ({ route, navigation }) => {
   const colourState = useSelector(selectColour);
@@ -53,6 +54,13 @@ export const PdfView = ({ route, navigation }) => {
       // });
       //ReactPDF.render(<Doc t={text.text} n={name.name}/>, `${__dirname}/`+name.name+`.pdf`);
       console.log("Export");
+      let options = {
+        html:'<h1>PDF</h1>',
+        filename: 'test',
+        directory: 'Documents'
+      };
+      let file = await RNHTMLtoPDF.convert(options);
+      console.log(file.filePath);
     } catch (error) {
       alert(error.message);
     }

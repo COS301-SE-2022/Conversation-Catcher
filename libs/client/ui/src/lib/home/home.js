@@ -186,7 +186,8 @@ export const Home = ({ navigation }) => {
 
   const componentDidMount = async () => {
     await checkPermission();
-
+    await checkPermissionWrite();
+    
     const options = {
       sampleRate: 16000,
       channels: 1,
@@ -209,10 +210,24 @@ export const Home = ({ navigation }) => {
     if (p === 'authorized') return;
     return requestPermission();
   };
+  const checkPermissionWrite = async () => {
+    const p = await PermissionsAndroid.check(
+      PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
+    );
+    // console.log('permission check', p);
+    if (p === 'authorized') return;
+    return requestPermission();
+  };
 
   const requestPermission = async () => {
     const p = await PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.RECORD_AUDIO
+    );
+    // console.log('permission request', p);
+  };
+  const requestPermissionWrite = async () => {
+    const p = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
     );
     // console.log('permission request', p);
   };
