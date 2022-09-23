@@ -25,8 +25,8 @@ class nameGenerator:
     reverse_source_word_index=x_tokenizer.index_word
     target_word_index=y_tokenizer.word_index
 
-    encoder_model = keras.models.load_model('./models/breed_classifier_model.h5')
-    decoder_model = keras.models.load_model('./models/breed_classifier_model.h5')
+    encoder_model = keras.models.load_model('models/encoder.h5')
+    decoder_model = keras.models.load_model('models/decoder.h5')
     def decode_sequence(input_seq):
         # Encode the input as state vectors.
         e_out, e_h, e_c = encoder_model.predict(input_seq)

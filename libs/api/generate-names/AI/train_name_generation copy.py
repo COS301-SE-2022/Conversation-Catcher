@@ -356,20 +356,23 @@ model.compile(optimizer='rmsprop', loss='sparse_categorical_crossentropy')
 # Training will stop once the validation loss increases
 
 # Train on batch of 128
-
-epochs = 100
-callbacks = callbacks
-batch_size = 100000
-
+if tfc.remote():
+    epochs = 100
+    callbacks = callbacks
+    batch_size = 100000
+else:
+    epochs = 5
+    batch_size = 64
+    callbacks = None
 history=model.fit([x_tr,y_tr[:,:-1]], y_tr.reshape(y_tr.shape[0],y_tr.shape[1], 1)[:,1:] ,epochs=epochs,callbacks=callbacks,batch_size=batch_size, validation_data=([x_val,y_val[:,:-1]], y_val.reshape(y_val.shape[0],y_val.shape[1], 1)[:,1:]))
 
 save_path = os.path.join("gs://", gcp_bucket, "convcatch.h5")
 
-
-model.save(save_path)
-model.save("model/convcatch.h5")
+if tfc.remote():
+    model.save(save_path)
 # Dictionary for converting the index to word
 
+tfc.run()
 
 reverse_target_word_index=y_tokenizer.index_word
 reverse_source_word_index=x_tokenizer.index_word
