@@ -32,6 +32,7 @@ export const GroupInfo = ({ route, navigation }) => {
     const [bottomModalVisible, setBottomModalVisible] = useState(false);
     const [adminState, setAdminState] = useState(true);
     const [renameVisible, setRenameVisible] = useState(false);
+    const [inviteVisible, setInviteVisible] = useState(false);
     const [editDescriptionVisible, setEditDescriptionVisible] = useState(false);
     const [deleteConfirmVisible, setDeleteConfirmVisible] = useState(false);
     const [removeConfirmVisible, setRemoveConfirmVisible] = useState(false);
@@ -156,7 +157,12 @@ export const GroupInfo = ({ route, navigation }) => {
         return (
           <View style={styles.membersButtonsGroup}> 
             <View style={styles.inviteButtonBox}>
-              <TouchableOpacity style={styles.invitebutton}>
+              <TouchableOpacity 
+                style={styles.invitebutton}
+                onPress={() => {
+                  setInviteVisible(true);
+                }}
+              >
                 <Icon name="plus" size={30} color={colourState} />
               </TouchableOpacity>
             </View>
@@ -496,6 +502,45 @@ export const GroupInfo = ({ route, navigation }) => {
 
       <Modal
         style={styles.modal}
+        isVisible={inviteVisible}
+        hasBackdrop={true}
+        backdropColor="white"
+        onBackdropPress={() => setInviteVisible(false)}
+        //onModalHide={() => setFileSelected(false)}
+      >
+        <View style={styles.actionModalInner}>
+          <View style={styles.actionModalTextInputGroup}>
+            <View style={styles.mailIconContainer}>
+              <Icon
+                style={{ color: colourState }}
+                name="envelope"
+                size={20}
+              />
+            </View>
+            <TextInput
+              style={styles.inviteTextInput}
+            />
+          </View>
+          <TouchableOpacity
+            style={[styles.actionButton, { backgroundColor: colourState }]}
+            state={null}
+            onPress={() => {
+              //console.log('iinviting ' + newName);
+              //invite();
+              setInviteVisible(false);
+            }}
+          >
+            <View style={styles.actionModalButtonContent}>
+              <View style={styles.actionModalButtonText_box}>
+                <Text style={styles.actionModalButtonText}>{'Invite'}</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </Modal>
+
+      <Modal
+        style={styles.modal}
         isVisible={removeConfirmVisible}
         hasBackdrop={true}
         backdropColor="white"
@@ -550,6 +595,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     flexDirection: 'column',
     flex: 1,
+    
   },
   groupPageHeaderGroup: {
     flexShrink: 1,
@@ -746,8 +792,11 @@ const styles = StyleSheet.create({
     padding: 10,
 
   },
+  modal: {
+    alignSelf: 'center',
+  },
   actionModalInner: {
-    width: '85%',
+    width: '90%',
     flexShrink: 1,
     backgroundColor: '#d0d5ddff',
     borderRadius: 7,
@@ -824,6 +873,36 @@ const styles = StyleSheet.create({
   fileactionIconContainer: {
     flexShrink: 1,
   },
+  mailIconContainer: {
+    flexGrow: 1,
+    alignContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: 7,
+  },
+  actionModalTextInputGroup: {
+    flexShrink: 1,
+    backgroundColor: '#ffffffff',
+    borderRadius: 8,
+    marginHorizontal: 10,
+    marginTop: 10,
+    flexDirection: 'row',
+  },
+  inviteTextInput: {
+    flexShrink: 1,
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 15,
+    color: 'black',
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+    backgroundColor: '#ffffffff',
+    borderRadius: 8,
+    marginHorizontal: 10,
+    height: 40,
+    width: '80%',
+  },
   actionModalTextInput: {
     flexShrink: 1,
     textAlign: 'center',
@@ -839,6 +918,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     marginTop: 10,
     height: 40,
+    width: '80%',
   },
   actionModalLargeTextInput: {
     flexShrink: 1,
