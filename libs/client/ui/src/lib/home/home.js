@@ -9,6 +9,7 @@ import {
   SafeAreaView,
   PermissionsAndroid,
   NativeAppEventEmitter,
+  DeviceEventEmitter,
 } from 'react-native';
 import { gql, useMutation, useLazyQuery, useQuery } from '@apollo/client';
 import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
@@ -51,29 +52,26 @@ export const Home = ({ navigation }) => {
 
   const [fileResponse, setFileResponse] = useState([]);
 
-  //Graphql syntax trees
-  const GET_USER_PDFS = gql`
-    query getForUser($email: String!) {
-      getPDFs(id: $email) {
-        id
-        name
-        creationDate
-        downloaded
-        #pdf
-        text
-      }
+  if (pdfLocalAccess.summariseListener.length !== 0) {
+    console.log('adding listener');
+    DeviceEventEmitter.addListener('summarise', (id, text) => {
+      console.log(id);
+      console.log(text);
+      summarise(id, text);
+    });
+    pdfLocalAccess.summariseListener.length = 0;
+  }
+
+  //Graphql syntax trees for the queries and mutations
+  const SET_SUMMARISED = gql`
+    mutation setSummarized($id: String!, $summary: String!) {
+      setSummarized(id: $id, summary: $summary)
     }
   `;
 
   const SUMMARISE_TEXT = gql`
     mutation summariseText($text: String!) {
       Summarise(text: $text)
-    }
-  `;
-
-  const CONVERT_SPEECH = gql`
-    mutation speechToText {
-      ConvertSpeech
     }
   `;
 
@@ -90,8 +88,8 @@ export const Home = ({ navigation }) => {
   `;
 
   //Mutations to be used in the creation of new PDFs
-  const [summariseText, { data, loading, error }] = useMutation(SUMMARISE_TEXT);
-  const [speechToText, { d, l, e }] = useMutation(CONVERT_SPEECH);
+  const [summariseText] = useMutation(SUMMARISE_TEXT);
+  const [setSummarisedText] = useMutation(SET_SUMMARISED);
   const [addPdf] = useMutation(ADD_PDF);
 
   const handleDocumentSelection = useCallback(async () => {
@@ -186,7 +184,8 @@ export const Home = ({ navigation }) => {
 
   const componentDidMount = async () => {
     await checkPermission();
-
+    await checkPermissionWrite();
+    
     const options = {
       sampleRate: 16000,
       channels: 1,
@@ -209,6 +208,14 @@ export const Home = ({ navigation }) => {
     if (p === 'authorized') return;
     return requestPermission();
   };
+  const checkPermissionWrite = async () => {
+    const p = await PermissionsAndroid.check(
+      PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
+    );
+    // console.log('permission check', p);
+    if (p === 'authorized') return;
+    return requestPermission();
+  };
 
   const requestPermission = async () => {
     const p = await PermissionsAndroid.request(
@@ -216,18 +223,21 @@ export const Home = ({ navigation }) => {
     );
     // console.log('permission request', p);
   };
+  const requestPermissionWrite = async () => {
+    const p = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
+    );
+    // console.log('permission request', p);
+  };
 
-  //var sound = null;
-
+  //Start the audio recording and initialise the event to create an array of chunks
   const start = () => {
     state.chunks.length = 0;
     componentDidMount()
       .then(() => {
-        // console.log('start record');
         state.audioFile = '';
         state.recording = true;
         state.loaded = false;
-        // console.log(state.recording);
         AudioRecord.start();
       })
       .catch((error) => {
@@ -235,16 +245,15 @@ export const Home = ({ navigation }) => {
       });
   };
 
+  //Stop the audio recording if it is busy recording
   const stop = async () => {
-    // console.log(state.recording);
     if (!state.recording) return;
-    // console.log('stop record');
-    //file containing audiofile
     state.audioFile = false;
     state.recording = false;
     AudioRecord.stop();
   };
 
+  // Send the audio stream to the server and receive the converted text
   const convertSpeech = () => {
     fetch('http://localhost:5050/stt', {
       method: 'POST',
@@ -265,7 +274,7 @@ export const Home = ({ navigation }) => {
           const newPdf = await addPdf({
             variables: {
               email: emailState,
-              name: '',
+              name: '', //await generateName({variables: {text: result.converted_text}})
               text: result.converted_text,
             },
           });
@@ -273,13 +282,34 @@ export const Home = ({ navigation }) => {
             name: newPdf.data.addPDF.name,
             creationDate: newPdf.data.addPDF.creationDate,
             downloaded: newPdf.data.addPDF.downloaded,
-            pdf: newPdf.data.addPDF.pdf,
             text: newPdf.data.addPDF.text,
             id: newPdf.data.addPDF.id,
+            summarised: newPdf.data.addPDF.summarised,
+            embeddings: newPdf.data.addPDF.embeddings,
           });
           NativeAppEventEmitter.emit('updatePage');
           dispatch(addPDF(newPdf.data.addPDF.id));
+          summarise(newPdf.data.addPDF.id, newPdf.data.addPDF.text);
         } else console.log('Connection error: internet connection is required');
+      })
+      .catch((e) => console.log(e));
+  };
+
+  //summarise the text and populate the required fields
+  const summarise = (id, text) => {
+    console.log('starting summarisation');
+    summariseText({ variables: { text: text } })
+      .then((res) => {
+        console.log(res);
+        setSummarisedText({
+          variables: { id: id, summary: res.data.Summarise },
+        }).catch((e) => {
+          console.log(e);
+          pdfLocalAccess.addSummary(id, 'error');
+          return;
+        });
+        pdfLocalAccess.addSummary(id, res.data.Summarise);
+        console.log('summary added');
       })
       .catch((e) => console.log(e));
   };
@@ -333,9 +363,8 @@ export const Home = ({ navigation }) => {
           </View>
         </TouchableOpacity>
       </View>
-      <View style={styles.bottomGroup}>  
-        <View style={styles.bottomGroupSideSpacing}>
-        </View>
+      <View style={styles.bottomGroup}>
+        <View style={styles.bottomGroupSideSpacing}></View>
         <View style={styles.audioTouchableOpacityGroup}>
           <RecordAudioButtonState />
           <TouchableOpacity
@@ -360,7 +389,6 @@ export const Home = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </View>
-      
 
       <Modal
         style={styles.modal}
@@ -574,7 +602,7 @@ const styles = StyleSheet.create({
   },
   bottomGroupSideSpacing: {
     width: '30%',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   settingsTouchableOpacityFrame: {
     flexShrink: 1,

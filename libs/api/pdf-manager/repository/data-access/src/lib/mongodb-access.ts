@@ -54,7 +54,7 @@ export class MongoDBAccess {
         name: name,
         creationDate: date,
         text: text,
-        summarized: 'loading',
+        summarised: 'loading',
         downloaded: false,
         embeddings: '',
         tags: [],
@@ -279,7 +279,7 @@ export class MongoDBAccess {
   }
 
   // Update summarized text of a pdf after it has been summarized
-  async updateSummarized(id: string, summarized: string) {
+  async updateSummarised(id: string, summarised: string) {
     this.action = 'updateOne';
     const data = JSON.stringify({
       collection: this.pdfCollection,
@@ -287,7 +287,7 @@ export class MongoDBAccess {
       dataSource: this.cluster,
       filter: { _id: { $oid: id } },
       update: {
-        $set: { summarized: summarized },
+        $set: { summarised: summarised },
       },
     });
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
-import PdfView from './pdf-view';
+//import PdfView from './pdf-view';
 import { create } from 'react-test-renderer';
 import { configureStore } from '@reduxjs/toolkit';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
@@ -20,13 +20,13 @@ describe('PdfView', () => {
         user:reducer
     }
   })
-  const TestComponent = () => (
-    // <ApolloProvider client = {client}>
-    <Provider store = { store }>
-        <PdfView route={route} />
-    </Provider>
-    // </ApolloProvider>
-)
+//   const TestComponent = () => (
+//     // <ApolloProvider client = {client}>
+//     <Provider store = { store }>
+//         <PdfView route={route} />
+//     </Provider>
+//     // </ApolloProvider>
+// )
   it('should render successfully', () => {
     // const { container } = render(<TestComponent />);
     // expect(container).toBeTruthy();

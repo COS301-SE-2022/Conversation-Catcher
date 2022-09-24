@@ -33,8 +33,11 @@ import {reducer as pdfReducer} from './slices/pdf.slice';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
+//import storage from 'redux-persist/lib/storage';
 import { PersistGate } from 'redux-persist/integration/react';
+
+//console.disableYellowBox = true;//Uncomment to hide warnings
+//console.reportErrorsAsExceptions = false;//Uncomment to hide errors, not tested
 
 //configure local storage
 const persistConfig = {

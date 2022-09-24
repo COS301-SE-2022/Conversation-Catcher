@@ -101,7 +101,7 @@ const PdfTile = ({
   downloaded,
   text,
   showCheck,
-  pdfSource,
+  summarised,
   nav,
 }) => {
   const colourState = useSelector(selectColour);
@@ -112,14 +112,16 @@ const PdfTile = ({
     <TouchableOpacity
       style={styles.pdfTile}
       onPress={() =>
-        nav.navigate('PdfView', { id: { id }, text: { text }, name: { name } })
+        nav.navigate('PdfView', { id: { id }, text: { text }, name: { name }, summarised: { summarised } })
       }
     >
       <View style={[styles.thumbnail_containter, { borderColor: colourState }]}>
         <ImageBackground
           style={styles.pdfThumbnail}
           //thumbnailSource={thumbnailSource}
-        />
+          >
+            <Text style={styles.thumbnailContent}>{text}</Text>
+        </ImageBackground>
       </View>
       <View style={styles.pdfTile_contents_not_thumbnail}>
         <View style={styles.pdfTile_contents_not_thumbnail_inner}>
@@ -164,6 +166,17 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderWidth: 1,
     aspectRatio: 1 / 1.4142,
+  },
+  thumbnailContent: {
+    color: '#344053ff',
+    textAlign: 'left',
+    letterSpacing: 0,
+    lineHeight: 5,
+    fontSize: 6,
+    fontWeight: '300',
+    fontStyle: 'normal',
+    fontFamily: 'System',
+    paddingHorizontal: 5,
   },
   pdfThumbnail: {
     resizeMode: 'contain',
