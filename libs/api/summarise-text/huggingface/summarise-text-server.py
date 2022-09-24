@@ -12,6 +12,10 @@ summariser = summariseText()
 def home():
     return render_template('index.html')
 
+@app.route('/test', methods=['POST'])
+def test():
+    return {"result":"success"}
+
 @app.route('/summarise', methods=['POST'])
 def summarise():
     # if request.form['text'] != NULL:

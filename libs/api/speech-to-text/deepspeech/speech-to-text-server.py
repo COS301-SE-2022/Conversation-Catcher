@@ -8,8 +8,8 @@ import os
 import base64
 import wave
 import azure.cognitiveservices.speech as speechsdk
-from azure.identity import DefaultAzureCredential
-from azure.keyvault.secrets import SecretClient
+# from azure.identity import DefaultAzureCredential
+# from azure.keyvault.secrets import SecretClient
 
 app = Flask(__name__)
 CORS(app)
