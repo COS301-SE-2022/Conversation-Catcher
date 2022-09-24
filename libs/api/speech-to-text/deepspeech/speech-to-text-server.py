@@ -8,6 +8,8 @@ import os
 import base64
 import wave
 import azure.cognitiveservices.speech as speechsdk
+from azure.identity import DefaultAzureCredential
+from azure.keyvault.secrets import SecretClient
 
 app = Flask(__name__)
 CORS(app)
@@ -16,8 +18,21 @@ CORS(app)
 def home():
     return render_template('index.html')
 
+@app.route('/test', methods=['POST'])
+def test():
+  return { "'result'": "success" }
+
 @app.route('/stt', methods=['POST'])
 def stt():
+
+    # credential = DefaultAzureCredential()
+    # client = SecretClient(
+    #     vault_url="https://conversationcatcher.vault.azure.net/",
+    #     credential=credential
+    # )
+    # secret = client.get_secret("speech-to-text")
+    # print(f"Secret value is {secret.value}")
+    # return { "converted_text": secret.value }
     #Set the wav parameters and create the wav file
     nchannels = 1
     sampwidth = 2
@@ -36,7 +51,7 @@ def stt():
 
     #Speech to text
     #Setup connection with Azure speech-to-text
-    speech_config = speechsdk.SpeechConfig(subscription="f7ecbe8953cf40d9a1df8f053b46ae5a", region="southafricanorth")
+    speech_config = speechsdk.SpeechConfig(subscription="10ea50633a724339a33810ab17329c37", region="southafricanorth")
     speech_config.speech_recognition_language="en-ZA"
 
     #Get the audio file that was created
@@ -74,8 +89,6 @@ def stt():
       full_text += ' ' + text
 
     # converted_text = sttConverter.stt("Temp.wav")
-    # print(converted_text)
-    # print(type(converted_text))
     converted_text_object = { "converted_text": full_text }
     return jsonify(converted_text_object)
 
