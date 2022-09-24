@@ -53,10 +53,8 @@ export const Home = ({ navigation }) => {
   const [fileResponse, setFileResponse] = useState([]);
 
   if (pdfLocalAccess.summariseListener.length !== 0) {
-    console.log('adding listener');
+    //If statement to ensure that only one listener is created for the summarise command
     DeviceEventEmitter.addListener('summarise', (id, text) => {
-      console.log(id);
-      console.log(text);
       summarise(id, text);
     });
     pdfLocalAccess.summariseListener.length = 0;
@@ -87,10 +85,17 @@ export const Home = ({ navigation }) => {
     }
   `;
 
+  const GENERATE_NAME = gql`
+    mutation generateName($text: String!) {
+      generateName(text: $text)
+    }
+  `;
+
   //Mutations to be used in the creation of new PDFs
   const [summariseText] = useMutation(SUMMARISE_TEXT);
   const [setSummarisedText] = useMutation(SET_SUMMARISED);
   const [addPdf] = useMutation(ADD_PDF);
+  const [generateName] = useMutation(GENERATE_NAME);
 
   const handleDocumentSelection = useCallback(async () => {
     try {
@@ -185,7 +190,7 @@ export const Home = ({ navigation }) => {
   const componentDidMount = async () => {
     await checkPermission();
     await checkPermissionWrite();
-    
+
     const options = {
       sampleRate: 16000,
       channels: 1,
@@ -274,7 +279,9 @@ export const Home = ({ navigation }) => {
           const newPdf = await addPdf({
             variables: {
               email: emailState,
-              name: '', //await generateName({variables: {text: result.converted_text}})
+              name: await generateName({
+                variables: { text: result.converted_text },
+              }),
               text: result.converted_text,
             },
           });
