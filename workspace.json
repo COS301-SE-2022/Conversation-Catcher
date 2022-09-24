@@ -1,6 +1,8 @@
 {
   "version": 2,
   "projects": {
+    "-api-generate-names-api-data-access": "libs/api/generate-names/api/data-access",
+    "-api-generate-names-api-feature": "libs/api/generate-names/api/feature",
     "api": "apps/api",
     "api-pdf-manager-api-data-access": "libs/api/pdf-manager/api/data-access",
     "api-pdf-manager-api-feature": "libs/api/pdf-manager/api/feature",
