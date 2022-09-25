@@ -7982,11 +7982,6 @@ invariant@*, invariant@^2.2.2, invariant@^2.2.4:
   dependencies:
     loose-envify "^1.0.0"
 
-ios-deploy@^1.11.4:
-  version "1.11.4"
-  resolved "https://registry.yarnpkg.com/ios-deploy/-/ios-deploy-1.11.4.tgz#d1813b11c9f292d757be33fa63399b510a64980a"
-  integrity sha512-NZ96/s7klyWySKTI8rTU+vXEIxIMrv6K+7j5VMcqUVShaAUdDX+Ov4nVdSStYOAGFVpl8q56SpAwjEDIvBrswQ==
-
 ip@^1.1.5:
   version "1.1.8"
   resolved "https://registry.yarnpkg.com/ip/-/ip-1.1.8.tgz#ae05948f6b075435ed3307acce04629da8cdbf48"
@@ -11765,6 +11760,16 @@ react-proxy@^1.1.7:
   dependencies:
     lodash "^4.6.1"
     react-deep-force-update "^1.0.0"
+
+react-reconciler@^0.23.0:
+  version "0.23.0"
+  resolved "https://registry.yarnpkg.com/react-reconciler/-/react-reconciler-0.23.0.tgz#5f0bfc35dda030b0220c07de11f93131c5d6db63"
+  integrity sha512-vV0KlLimP9a/NuRcM6GRVakkmT6MKSzhfo8K72fjHMnlXMOhz9GlPe+/tCp5CWBkg+lsMUt/CR1nypJBTPfwuw==
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.2"
+    scheduler "^0.17.0"
 
 react-redux@^8.0.2:
   version "8.0.2"
