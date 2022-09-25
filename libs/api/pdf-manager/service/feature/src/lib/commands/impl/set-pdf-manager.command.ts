@@ -32,6 +32,7 @@ export class SetSummarisedCommand {
 export class SetEmbeddingsCommand {
   constructor(
     public readonly id?: string,
-    public readonly embeddings?: string
+    public readonly name?: string,
+    public readonly text?: string
   ) {}
 }

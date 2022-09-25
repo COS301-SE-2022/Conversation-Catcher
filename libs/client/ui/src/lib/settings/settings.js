@@ -5,7 +5,6 @@ import {
   Text,
   ImageBackground,
   TouchableOpacity,
-  Alert,
   SafeAreaView,
   DeviceEventEmitter,
   NativeAppEventEmitter,
@@ -16,10 +15,10 @@ import { gql } from '@apollo/client';
 // import { WebSocketLink } from '@apollo/client/link/ws';
 import { useDispatch, useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectColour, clearUser } from 'apps/client/src/app/slices/user.slice';
+import { selectColour, clearUser } from '../../../../../../apps/client/src/app/slices/user.slice';
 import auth from '@react-native-firebase/auth';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { clearPDFs } from 'apps/client/src/app/slices/pdf.slice';
+import { clearPDFs } from '../../../../../../apps/client/src/app/slices/pdf.slice';
 import pdfLocalAccess from '../shared-components/local-pdfs-access/local-pdfs-access';
 
 export const SettingsPage = ({ navigation }) => {
@@ -28,7 +27,7 @@ export const SettingsPage = ({ navigation }) => {
   const colourState = useSelector(selectColour);
 
   return (
-    <View style={styles.settings}>
+    <SafeAreaView style={styles.settings}>
       <View style={styles.big_title_box}>
         <Text style={styles.big_title}>{'Settings'}</Text>
       </View>
@@ -132,7 +131,7 @@ export const SettingsPage = ({ navigation }) => {
       >
         <Icon name="angle-left" color={colourState} size={28} />
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 };
 

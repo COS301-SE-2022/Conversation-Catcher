@@ -6,7 +6,7 @@ import {
   Image,
   ImageBackground,
   TouchableOpacity,
-  Alert,
+  SafeAreaView,
   ScrollView,
   TextInput,
   NativeAppEventEmitter,
@@ -20,7 +20,7 @@ import PdfDisplay from '../shared-components/pdf-display/pdf-display.js';
 import pdfLocalAccess from '../shared-components/local-pdfs-access/local-pdfs-access';
 import { useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectColour } from 'apps/client/src/app/slices/user.slice';
+import { selectColour } from '../../../../../../apps/client/src/app/slices/user.slice';
 
 export const ViewAll = ({ navigation }) => {
   const pdfRef = useRef();
@@ -118,7 +118,7 @@ export const ViewAll = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.viewAllPage}>
+    <SafeAreaView style={styles.viewAllPage}>
       <View style={styles.viewAllTopBar}>
         <View style={styles.big_title_box}>
           <Text style={styles.big_title}>{'PDFs'}</Text>
@@ -336,7 +336,7 @@ export const ViewAll = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </Modal>
-    </View>
+    </SafeAreaView>
   );
 };
 export default ViewAll;
@@ -347,7 +347,7 @@ const styles = StyleSheet.create({
     marginTop: 0,
     marginBottom: 0,
     marginLeft: 0,
-    flexGrow: 1,
+    flex: 1,
     marginRight: 0,
   },
   viewAllTopBar: {

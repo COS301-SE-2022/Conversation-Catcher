@@ -12,9 +12,9 @@ import Loading from '../loading/loading';
 import PdfTile from '../pdf-tile/pdf-tile';
 import pdfLocalAccess from '../local-pdfs-access/local-pdfs-access';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectEmail } from 'apps/client/src/app/slices/user.slice';
+import { selectEmail} from '../../../../../../../apps/client/src/app/slices/user.slice';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectPDFS, refillPDFs } from 'apps/client/src/app/slices/pdf.slice';
+import { selectPDFS, refillPDFs } from '../../../../../../../apps/client/src/app/slices/pdf.slice';
 import { useSelector, useDispatch } from 'react-redux';
 
 export function PdfDisplay({ navigation, selectMode }, ref) {

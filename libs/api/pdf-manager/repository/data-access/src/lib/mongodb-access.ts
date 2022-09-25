@@ -258,7 +258,7 @@ export class MongoDBAccess {
   }
 
   // Update the embeddings for a pdf
-  async updateEmbeddings(id: string, embeddings: string) {
+  async updateEmbeddings(id: string, embeddings: any) {
     this.action = 'updateOne';
     const data = JSON.stringify({
       collection: this.pdfCollection,

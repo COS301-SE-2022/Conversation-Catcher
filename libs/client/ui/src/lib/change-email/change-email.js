@@ -3,10 +3,8 @@ import {
   View,
   StyleSheet,
   Text,
-  Image,
-  ImageBackground,
   TouchableOpacity,
-  Alert,
+  SafeAreaView,
   TextInput,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -16,7 +14,7 @@ import {
   selectColour,
   selectUser,
   setEmail,
-} from 'apps/client/src/app/slices/user.slice';
+} from '../../../../../../apps/client/src/app/slices/user.slice';
 import auth from '@react-native-firebase/auth';
 import { gql, useMutation } from '@apollo/client';
 
@@ -136,7 +134,7 @@ export const ChangeEmail = ({ navigation }) => {
   }
 
   return (
-    <View style={styles.logInPage}>
+    <SafeAreaView style={styles.logInPage}>
       <View style={styles.big_title_box}>
         <Text style={styles.big_title}>{'Change your email'}</Text>
       </View>
@@ -247,7 +245,7 @@ export const ChangeEmail = ({ navigation }) => {
       >
         <Icon name="angle-left" color={colourState} size={28} />
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -261,7 +259,7 @@ const styles = StyleSheet.create({
   logInPage: {
     backgroundColor: '#ffffffff',
     overflow: 'hidden',
-    flexGrow: 1,
+    flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
   },

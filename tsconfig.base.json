@@ -15,6 +15,15 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@conversation-catcher/api/generate-names/api/data-access": [
+        "libs/api/generate-names/api/data-access/src/index.ts"
+      ],
+      "@conversation-catcher/api/generate-names/api/feature": [
+        "libs/api/generate-names/api/feature/src/index.ts"
+      ],
+      "@conversation-catcher/api/generate-names/service": [
+        "libs/api/generate-names/service/src/index.ts"
+      ],
       "@conversation-catcher/api/pdf-manager/api": [
         "libs/api/pdf-manager/api/src/index.ts"
       ],

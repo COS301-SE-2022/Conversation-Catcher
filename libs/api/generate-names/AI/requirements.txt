@@ -1,0 +1,7 @@
+numpy
+pandas
+bs4
+nltk
+warnings
+datetime
+os
