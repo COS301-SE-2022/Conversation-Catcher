@@ -6,15 +6,15 @@ import {
   Image,
   ImageBackground,
   TouchableOpacity,
-  Alert,
+  SafeAreaView,
   TextInput,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useDispatch, useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectColour } from 'apps/client/src/app/slices/user.slice';
+import { selectColour } from '../../../../../../apps/client/src/app/slices/user.slice';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { setUser } from 'apps/client/src/app/slices/user.slice';
+import { setUser } from '../../../../../../apps/client/src/app/slices/user.slice';
 import auth from '@react-native-firebase/auth';
 import { gql, useMutation } from '@apollo/client';
 import Loading from '../shared-components/loading/loading';
@@ -86,7 +86,7 @@ export const Register = ({ navigation }) => {
   }
   
   return (
-    <View style={styles.registerPage}>
+    <SafeAreaView style={styles.registerPage}>
       <View style={styles.big_title_box}>
         <Text style={styles.big_title}>{'Create new account'}</Text>
       </View>
@@ -230,7 +230,7 @@ export const Register = ({ navigation }) => {
           <Text style={styles.smallGreyText}>{'Already a user?'}</Text>
         </View>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
   registerPage: {
     backgroundColor: '#ffffffff',
     overflow: 'hidden',
-    flexGrow: 1,
+    flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
   },

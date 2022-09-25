@@ -6,7 +6,7 @@ import {
   Image,
   ImageBackground,
   TouchableOpacity,
-  Alert,
+  SafeAreaView,
   ScrollView,
   TextInput,
   Share,
@@ -15,8 +15,6 @@ import {
   Switch,
 } from 'react-native';
 import { gql, useQuery, useMutation } from '@apollo/client';
-import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
-import ModalDropdown from 'react-native-modal-dropdown';
 import Loading from '../loading/loading';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
@@ -30,8 +28,7 @@ import {
   removePDF,
 } from '../../../../../../../apps/client/src/app/slices/pdf.slice';
 //import Share from 'react-native-share';
-//import ReactPDF from '@react-pdf/renderer';
-import { document } from '../document/document';
+import RNHTMLtoPDF from 'react-native-html-to-pdf';
 
 export const PdfView = ({ route, navigation }) => {
   const colourState = useSelector(selectColour);
@@ -51,11 +48,15 @@ export const PdfView = ({ route, navigation }) => {
 
   const onShare = async () => {
     try {
-      // const result = await Share.share({
-      //   message: text.text,
-      //   title: name.name,
-      // });
-      //ReactPDF.render(<document t={text.text} n={name.name}/>, `${__dirname}/`+name.name+`.pdf`);
+      const htmlPDF = '<h1>'+name.name+'</h1>'+text.text;//Add check to output summerized text when toggled
+      console.log("Export");
+      let options = {
+        html: htmlPDF,
+        fileName: name.name,
+        directory: ''//'Documents'//may be broken on IOS, may need to use Project.OS to set different destinations
+      };
+      let file = await RNHTMLtoPDF.convert(options);
+      console.log(file.filePath);
     } catch (error) {
       alert(error.message);
     }
@@ -147,7 +148,7 @@ export const PdfView = ({ route, navigation }) => {
   };
 
   return (
-    <View style={styles.viewAllPage}>
+    <SafeAreaView style={styles.viewAllPage}>
       <View style={styles.viewAllTopBar}>
         <View style={styles.big_title_box}>
           <Text style={styles.big_title} numberOfLines={1}>
@@ -348,7 +349,7 @@ export const PdfView = ({ route, navigation }) => {
           </TouchableOpacity>
         </View>
       </Modal>
-    </View>
+    </SafeAreaView>
   );
 };
 export default PdfView;
@@ -392,7 +393,7 @@ const styles = StyleSheet.create({
     marginTop: 0,
     marginBottom: 0,
     marginLeft: 0,
-    flexGrow: 1,
+    flex: 1,
     marginRight: 0,
   },
   viewAllTopBar: {

@@ -11,9 +11,9 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import { useDispatch, useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectColour } from 'apps/client/src/app/slices/user.slice';
+import { selectColour } from '../../../../../../../apps/client/src/app/slices/user.slice';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { toggleDown } from 'apps/client/src/app/slices/pdf.slice';
+import { toggleDown } from '../../../../../../../apps/client/src/app/slices/pdf.slice';
 import { gql, useLazyQuery, useMutation } from '@apollo/client';
 //import FileViewer from "react-native-file-viewer";
 import pdfLocalAccess from '../local-pdfs-access/local-pdfs-access';
@@ -119,7 +119,9 @@ const PdfTile = ({
         <ImageBackground
           style={styles.pdfThumbnail}
           //thumbnailSource={thumbnailSource}
-        />
+          >
+            <Text style={styles.thumbnailContent}>{text}</Text>
+        </ImageBackground>
       </View>
       <View style={styles.pdfTile_contents_not_thumbnail}>
         <View style={styles.pdfTile_contents_not_thumbnail_inner}>
@@ -164,6 +166,17 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderWidth: 1,
     aspectRatio: 1 / 1.4142,
+  },
+  thumbnailContent: {
+    color: '#344053ff',
+    textAlign: 'left',
+    letterSpacing: 0,
+    lineHeight: 5,
+    fontSize: 6,
+    fontWeight: '300',
+    fontStyle: 'normal',
+    fontFamily: 'System',
+    paddingHorizontal: 5,
   },
   pdfThumbnail: {
     resizeMode: 'contain',

@@ -40,6 +40,7 @@
     "@react-native-firebase/app": "*",
     "redux-persist": "*",
     "@react-pdf/renderer": "*",
-    "react-native-tab-view": "*"
+    "react-native-tab-view": "*",
+    "react-native-html-to-pdf": "*"
   }
 }

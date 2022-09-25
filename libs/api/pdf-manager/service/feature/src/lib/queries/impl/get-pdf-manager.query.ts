@@ -5,3 +5,7 @@ export class GetPdfByIdQuery {
 export class GetPdfsQuery {
   constructor(public readonly userid) {}
 }
+
+export class SemanticSearchQuery {
+  constructor(public readonly query, public readonly docs) {}
+}
