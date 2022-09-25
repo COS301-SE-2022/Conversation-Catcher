@@ -117,7 +117,8 @@ export class SetEmbeddingsHandler
       const embeddings = await lastValueFrom(
         this.httpService.post('http://localhost:5555/embed', data, config)
       );
-      const res = await this.repository.updateEmbeddings(id, embeddings);
+      console.log(embeddings)
+      const res = await this.repository.updateEmbeddings(id, embeddings.data.embeddings);
       if (res !== null && res.modifiedCount === 1)
         return 'Embeddings has been added';
       return 'Error: failed to add embeddings';
