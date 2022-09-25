@@ -457,10 +457,12 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     flexGrow: 1,
   },
-  groupPageHeaderGroup: {
-    flexShrink: 1,
-    padding: 10,
+  groupPageHeaderGroup: {//Make this smaller
+    //flexShrink: 1,
+    flex: 3,
+    padding: 0,
     alignItems: 'center',
+    //backgroundColor: '#667084ff',
   },
   groupThumbnailBox: {
     borderRadius: 180,
@@ -491,6 +493,8 @@ const styles = StyleSheet.create({
   groupTextBox: {
     width: '80%',
     flexShrink: 1,
+    //backgroundColor: '#667084ff',
+    numberOfLines: 2,
   },
   groupText: {
     color: '#667084ff',
@@ -503,10 +507,13 @@ const styles = StyleSheet.create({
     fontFamily: 'System' /* Inter */,
   },
   buttonsGroup: {
-    flexShrink: 1,
+    //flexShrink: 1,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    //paddingBottom: 15,
+    //backgroundColor: '#667084ff',
+    flex: 1
   },
   leaveButtonBox: {
     flexShrink: 1,
@@ -546,6 +553,8 @@ const styles = StyleSheet.create({
   membersSection: {
     //alignItems: 'center',
     justifyContent: 'center',
+    //backgroundColor: '#667084ff',
+    flex: 8
   },
   membersSectionHeader: {
     flexDirection: 'row',

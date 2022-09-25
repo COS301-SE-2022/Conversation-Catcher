@@ -413,7 +413,7 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     height: '5%',
     width: '100%',
-    minHeight: 28,
+    minHeight: 35,
     paddingTop: 5,
   },
   searchBarGroup: {
