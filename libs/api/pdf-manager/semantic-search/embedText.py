@@ -9,7 +9,7 @@ class embedText:
 
         input = input_name + ". " + input_text
         
-        embeddings = embedder.encode(input, convert_to_tensor=True)
+        embeddings = embedder.encode(input, convert_to_tensor=False)
 
         return embeddings
 
