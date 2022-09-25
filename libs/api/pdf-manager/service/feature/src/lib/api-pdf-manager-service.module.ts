@@ -5,12 +5,11 @@ import { CqrsModule } from '@nestjs/cqrs';
 import * as CommandHandlers from './commands/handlers';
 import * as QueryHandlers from './queries/handlers';
 import { PdfManagerRepositoryDataAccessModule } from '@conversation-catcher/api/pdf-manager/repository/data-access';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
   controllers: [],
-  imports: [
-    CqrsModule, PdfManagerRepositoryDataAccessModule
-  ],
+  imports: [CqrsModule, PdfManagerRepositoryDataAccessModule, HttpModule],
   providers: [
     ApiPdfManagerServiceService,
     CommandHandlers.SetDownloadedPdfHandler,
@@ -19,11 +18,12 @@ import { PdfManagerRepositoryDataAccessModule } from '@conversation-catcher/api/
     CommandHandlers.AddPdfHandler,
     CommandHandlers.AddTagsHandler,
     CommandHandlers.DeleteTagsHandler,
+    CommandHandlers.SetSummarisedHandler,
+    CommandHandlers.SetEmbeddingsHandler,
     QueryHandlers.GetPdfByIdHandler,
     QueryHandlers.GetPdfsHandler,
+    QueryHandlers.SemanticSearchHandler,
   ],
-  exports: [
-    ApiPdfManagerServiceService
-  ],
+  exports: [ApiPdfManagerServiceService],
 })
 export class ApiPdfManagerServiceModule {}

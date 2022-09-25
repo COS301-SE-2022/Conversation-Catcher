@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -6,18 +6,20 @@ import {
   Image,
   ImageBackground,
   TouchableOpacity,
-  Alert,
+  SafeAreaView,
   TextInput,
+  DeviceEventEmitter
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Loading from '../shared-components/loading/loading';
 import { useDispatch, useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import {
   selectColour,
   selectUser,
-} from 'apps/client/src/app/slices/user.slice';
+} from '../../../../../../apps/client/src/app/slices/user.slice';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { setUser } from 'apps/client/src/app/slices/user.slice';
+import { setUser } from '../../../../../../apps/client/src/app/slices/user.slice';
 import auth from '@react-native-firebase/auth';
 import { gql, useLazyQuery } from '@apollo/client';
 
@@ -31,10 +33,17 @@ export const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('Invalid login details');
+  const [loadingIcon,setLoad] = useState(false);
 
-  if (userPresent.email !== ""){
-    navigation.navigate("Home");
-  }
+  DeviceEventEmitter.addListener('logout', () => {
+    setEmail('');
+    setPassword('');
+  });
+  useEffect(() => {
+    if (userPresent.email !== '') {
+      navigation.navigate('Home');
+    }
+  });
 
   //graphql query tree
   const GET_USER = gql`
@@ -82,11 +91,13 @@ export const Login = ({ navigation }) => {
     );
   }
 
+
   return (
-    <View style={styles.logInPage}>
+    <SafeAreaView style={styles.logInPage}>
       <View style={styles.big_title_box}>
         <Text style={styles.big_title}>{'Log in to your account'}</Text>
       </View>
+      <Loading width={100} height={100} load={loadingIcon}/>
       <View style={styles.inputsGroup}>
         <InvalidDetails />
         <View style={styles.inputsItem}>
@@ -182,6 +193,7 @@ export const Login = ({ navigation }) => {
             setErrorMessage('Password is required');
             return;
           }
+          setLoad(true);
           auth()
             .signInWithEmailAndPassword(
               email.trim().toLowerCase(),
@@ -193,15 +205,17 @@ export const Login = ({ navigation }) => {
                 await getUser({
                   variables: { email: email.trim().toLowerCase() },
                 })
-                ).data.getUser;
-                console.log(queryRes);
-                dispatch(setUser(queryRes));
-                navigation.navigate('Home');
+              ).data.getUser;
+              console.log(queryRes);
+              dispatch(setUser(queryRes));
+              setLoad(false);
+              navigation.navigate('Home');
             })
             .catch((error) => {
               setFailedLogin(true);
               setErrorMessage('Invalid login details');
               setPassword('');
+              setLoad(false);
             });
         }}
       >
@@ -229,7 +243,7 @@ export const Login = ({ navigation }) => {
           <Text style={styles.smallGreyText}>{'Don’t have an account?'}</Text>
         </View>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -243,7 +257,7 @@ const styles = StyleSheet.create({
   logInPage: {
     backgroundColor: '#ffffffff',
     overflow: 'hidden',
-    flexGrow: 1,
+    flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
   },

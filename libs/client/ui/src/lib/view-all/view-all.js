@@ -6,9 +6,10 @@ import {
   Image,
   ImageBackground,
   TouchableOpacity,
-  Alert,
+  SafeAreaView,
   ScrollView,
   TextInput,
+  NativeAppEventEmitter,
 } from 'react-native';
 import { gql, useQuery, useMutation } from '@apollo/client';
 import ModalDropdown from 'react-native-modal-dropdown';
@@ -19,7 +20,7 @@ import PdfDisplay from '../shared-components/pdf-display/pdf-display.js';
 import pdfLocalAccess from '../shared-components/local-pdfs-access/local-pdfs-access';
 import { useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectColour } from 'apps/client/src/app/slices/user.slice';
+import { selectColour } from '../../../../../../apps/client/src/app/slices/user.slice';
 
 export const ViewAll = ({ navigation }) => {
   const pdfRef = useRef();
@@ -116,48 +117,8 @@ export const ViewAll = ({ navigation }) => {
     }
   };
 
-  // function changeArray(index, itemValue) {
-  //   if (currOrderValue !== itemValue) {
-  //     setCurrOrderValue(itemValue);
-  //     // Sort PDFs array according to currOrderValue
-  //     switch (itemValue) {
-  //       case 'Name':
-  //         var temp2 = objArr;
-  //         temp2.sort((a, b) => {
-  //           if (a.name < b.name) return -1;
-  //           return 1;
-  //         });
-  //         setObjArr(temp2);
-  //         console.log(objArr);
-  //         break;
-  //       case 'Date':
-  //         var temp = objArr;
-  //         temp.sort((a, b) => {
-  //           if (new Date(a.creationDate) > new Date(b.creationDate)) return -1;
-  //           return 1;
-  //         });
-  //         setObjArr(temp);
-  //         console.log(objArr);
-  //         break;
-  //     }
-  //   }
-  //   refresh();
-  //   console.log(itemValue);
-  // }
-
-  // function filterPdf(text) {
-  //   const temp = [];
-  //   for (let i = 0; i < pdfLocalAccess.getLength(); i++)
-  //     objArr[i] = pdfLocalAccess.get(i);
-  //   for (let i = 0; i < objArr.length; i++) {
-  //     if (objArr[i].name.indexOf(text) !== -1) temp.push(objArr[i]);
-  //   }
-  //   setObjArr(temp);
-  //   refresh();
-  // }
-
   return (
-    <View style={styles.viewAllPage}>
+    <SafeAreaView style={styles.viewAllPage}>
       <View style={styles.viewAllTopBar}>
         <View style={styles.big_title_box}>
           <Text style={styles.big_title}>{'PDFs'}</Text>
@@ -169,7 +130,8 @@ export const ViewAll = ({ navigation }) => {
             placeholder="Search"
             onChangeText={(text) => {
               pdfLocalAccess.filterPdfs(text);
-              pdfRef.current.refreshPfds();
+              // pdfRef.current.refreshPfds();
+              NativeAppEventEmitter.emit('updatePage');
             }}
           />
           <View style={styles.searchIconFrame}>
@@ -207,7 +169,8 @@ export const ViewAll = ({ navigation }) => {
             defaultValue={'Date'}
             onSelect={(index, itemValue) => {
               pdfLocalAccess.sortPdfs(itemValue);
-              pdfRef.current.refreshPfds();
+              // pdfRef.current.refreshPfds();
+              NativeAppEventEmitter.emit('updatePage');
             }}
             style={styles.orderByDropdown}
             textStyle={styles.orderByDropdownText}
@@ -373,7 +336,7 @@ export const ViewAll = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </Modal>
-    </View>
+    </SafeAreaView>
   );
 };
 export default ViewAll;
@@ -384,7 +347,7 @@ const styles = StyleSheet.create({
     marginTop: 0,
     marginBottom: 0,
     marginLeft: 0,
-    flexGrow: 1,
+    flex: 1,
     marginRight: 0,
   },
   viewAllTopBar: {

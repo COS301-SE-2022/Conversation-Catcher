@@ -31,6 +31,8 @@ const mockaddPdfDataBase = {handler: {findFirst: jest.fn((email, name, text)=>Pd
 const mockgetPdfsDataBase = {handler: {findMany: jest.fn((userId)=>PdfsMock)}};
 const mockaddTagDataBase = {handler: {findFirst: jest.fn((id,tags)=>{return {modifiedCount:1}})}};
 const mockremoveTagDataBase = {handler: {findFirst: jest.fn((id,tags)=>{return {modifiedCount:1}})}};
+const mocksetSummarizedDataBase = {handler: {findFirst: jest.fn((id,summary)=>{return {modifiedCount:1}})}};
+const mocksetEmbeddingsTagDataBase = {handler: {findFirst: jest.fn((id,embeddings)=>{return {modifiedCount:1}})}};
 
 
 const id = '9332';
@@ -147,6 +149,27 @@ describe('ApiPdfManagerServiceService', () => {
   describe('removeTags', () => {
     it('should remove a tag from the pdf', async () => {
       const result = await mockremoveTagDataBase.handler.findFirst(id,tags);
+      expect(result.modifiedCount).toEqual(1);
+    })
+  });
+
+  // async setSumarry(id: string, summary: string) {
+  //   return await this.commandBus.execute(new SetSummarizedCommand(id, summary));
+  // }
+  describe('removeTags', () => {
+    it('should remove a tag from the pdf', async () => {
+      const result = await mocksetSummarizedDataBase.handler.findFirst(id,tags);
+      expect(result.modifiedCount).toEqual(1);
+    })
+  });
+  
+  // async setEmbeddings(id: string, embeddings: string) {
+  //   return await this.commandBus.execute(
+  //     new SetEmbeddingsCommand(id, embeddings)
+  //   );
+  describe('removeTags', () => {
+    it('should remove a tag from the pdf', async () => {
+      const result = await mocksetEmbeddingsTagDataBase.handler.findFirst(id,tags);
       expect(result.modifiedCount).toEqual(1);
     })
   });

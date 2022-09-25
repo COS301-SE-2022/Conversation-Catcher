@@ -21,3 +21,18 @@ export class AddTagsCommand {
 export class DeleteTagsCommand {
   constructor(public readonly id?: string, public readonly tags?: string[]) {}
 }
+
+export class SetSummarisedCommand {
+  constructor(
+    public readonly id?: string,
+    public readonly summarised?: string
+  ) {}
+}
+
+export class SetEmbeddingsCommand {
+  constructor(
+    public readonly id?: string,
+    public readonly name?: string,
+    public readonly text?: string
+  ) {}
+}

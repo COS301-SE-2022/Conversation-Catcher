@@ -1,3 +1,4 @@
+from asyncio.windows_events import NULL
 from flask import Flask, jsonify, render_template, request
 from flask_cors import CORS
 import os
@@ -14,7 +15,10 @@ def home():
 
 @app.route('/summarise', methods=['POST'])
 def summarise():
-    input_text = request.form['text']
+    # if request.form['text'] != NULL:
+    #   input_text = request.form['text']
+    # else
+    input_text = request.get_json()['text']
     summarised_text = summariser.summarise(input_text)
     summarised_text_object = { "summarised_text": summarised_text }
     return jsonify(summarised_text_object)

@@ -5,8 +5,9 @@ import {
   Text,
   ImageBackground,
   TouchableOpacity,
-  Alert,
   SafeAreaView,
+  DeviceEventEmitter,
+  NativeAppEventEmitter,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
@@ -14,10 +15,11 @@ import { gql } from '@apollo/client';
 // import { WebSocketLink } from '@apollo/client/link/ws';
 import { useDispatch, useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectColour, clearUser } from 'apps/client/src/app/slices/user.slice';
+import { selectColour, clearUser } from '../../../../../../apps/client/src/app/slices/user.slice';
 import auth from '@react-native-firebase/auth';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { clearPDFs } from 'apps/client/src/app/slices/pdf.slice';
+import { clearPDFs } from '../../../../../../apps/client/src/app/slices/pdf.slice';
+import pdfLocalAccess from '../shared-components/local-pdfs-access/local-pdfs-access';
 
 export const SettingsPage = ({ navigation }) => {
   const [user, setUser] = useState({});
@@ -25,7 +27,7 @@ export const SettingsPage = ({ navigation }) => {
   const colourState = useSelector(selectColour);
 
   return (
-    <View style={styles.settings}>
+    <SafeAreaView style={styles.settings}>
       <View style={styles.big_title_box}>
         <Text style={styles.big_title}>{'Settings'}</Text>
       </View>
@@ -94,11 +96,16 @@ export const SettingsPage = ({ navigation }) => {
               .then(() => {
                 dispatch(clearUser());
                 dispatch(clearPDFs());
+                pdfLocalAccess.clearPdfs();
+                NativeAppEventEmitter.emit('logout');
                 navigation.navigate('Login');
               }).catch((e)=>{
+                console.log("not logged in:")
                 console.log(e);
                 dispatch(clearUser());
                 dispatch(clearPDFs());
+                NativeAppEventEmitter.emit('logout');
+                pdfLocalAccess.clearPdfs();
                 navigation.navigate('Login');
               })
           }
@@ -124,7 +131,7 @@ export const SettingsPage = ({ navigation }) => {
       >
         <Icon name="angle-left" color={colourState} size={28} />
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 };
 

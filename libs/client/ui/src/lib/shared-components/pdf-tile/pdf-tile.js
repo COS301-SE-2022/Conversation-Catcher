@@ -11,11 +11,12 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import { useDispatch, useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectColour } from 'apps/client/src/app/slices/user.slice';
+import { selectColour } from '../../../../../../../apps/client/src/app/slices/user.slice';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { toggleDown } from 'apps/client/src/app/slices/pdf.slice';
+import { toggleDown } from '../../../../../../../apps/client/src/app/slices/pdf.slice';
 import { gql, useLazyQuery, useMutation } from '@apollo/client';
 //import FileViewer from "react-native-file-viewer";
+import pdfLocalAccess from '../local-pdfs-access/local-pdfs-access';
 
 function DownloadButtonState(props) {
   const colourState = useSelector(selectColour);
@@ -37,7 +38,9 @@ function DownloadButtonState(props) {
           async () => {
             setDownloadState(!downloadState);
             dispatch(toggleDown(props.a));
+            pdfLocalAccess.toggleDownloaded(props.a.id);
             var res = await changeDownloaded({ variables: { id: props.a.id }});
+            console.log(res);
           }
         }
         color={colourState}
@@ -53,7 +56,9 @@ function DownloadButtonState(props) {
         async () => {
           setDownloadState(!downloadState);
           dispatch(toggleDown(props.a));
+          pdfLocalAccess.toggleDownloaded(props.a.id);
           var res = await changeDownloaded({ variables: { id: props.a.id }});
+          console.log(res);
         }
       }
       color={colourState}
@@ -96,7 +101,7 @@ const PdfTile = ({
   downloaded,
   text,
   showCheck,
-  pdfSource,
+  summarised,
   nav,
 }) => {
   const colourState = useSelector(selectColour);
@@ -107,14 +112,16 @@ const PdfTile = ({
     <TouchableOpacity
       style={styles.pdfTile}
       onPress={() =>
-        nav.navigate('PdfView', { id: { id }, text: { text }, name: { name } })
+        nav.navigate('PdfView', { id: { id }, text: { text }, name: { name }, summarised: { summarised } })
       }
     >
       <View style={[styles.thumbnail_containter, { borderColor: colourState }]}>
         <ImageBackground
           style={styles.pdfThumbnail}
           //thumbnailSource={thumbnailSource}
-        />
+          >
+            <Text style={styles.thumbnailContent}>{text}</Text>
+        </ImageBackground>
       </View>
       <View style={styles.pdfTile_contents_not_thumbnail}>
         <View style={styles.pdfTile_contents_not_thumbnail_inner}>
@@ -159,6 +166,17 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderWidth: 1,
     aspectRatio: 1 / 1.4142,
+  },
+  thumbnailContent: {
+    color: '#344053ff',
+    textAlign: 'left',
+    letterSpacing: 0,
+    lineHeight: 5,
+    fontSize: 6,
+    fontWeight: '300',
+    fontStyle: 'normal',
+    fontFamily: 'System',
+    paddingHorizontal: 5,
   },
   pdfThumbnail: {
     resizeMode: 'contain',

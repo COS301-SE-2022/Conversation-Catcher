@@ -7,9 +7,11 @@ import {
   SetNamePdfCommand,
   AddTagsCommand,
   DeleteTagsCommand,
+  SetEmbeddingsCommand,
+  SetSummarisedCommand,
 } from './commands/impl/set-pdf-manager.command';
 import { DeletePdfCommand } from './commands/impl/delete-pdf-manager.command';
-import { GetPdfByIdQuery, GetPdfsQuery } from './queries/impl';
+import { GetPdfByIdQuery, GetPdfsQuery, SemanticSearchQuery } from './queries/impl';
 
 @Injectable()
 export class ApiPdfManagerServiceService {
@@ -34,6 +36,14 @@ export class ApiPdfManagerServiceService {
   async removeTags(id: string, tags: string[]) {
     return await this.commandBus.execute(new DeleteTagsCommand(id, tags));
   }
+  async setSumarry(id: string, summary: string) {
+    return await this.commandBus.execute(new SetSummarisedCommand(id, summary));
+  }
+  async setEmbeddings(id: string, name: string, text: string) {
+    return await this.commandBus.execute(
+      new SetEmbeddingsCommand(id, name, text)
+    );
+  }
 
   //queries
   async getPdfById(id: string) {
@@ -41,5 +51,8 @@ export class ApiPdfManagerServiceService {
   }
   async getPdfs(userid: string) {
     return await this.queryBus.execute(new GetPdfsQuery(userid));
+  }
+  async getSearchResults(query: string, docs: any[]){
+    return await this.queryBus.execute(new SemanticSearchQuery(query, docs));
   }
 }

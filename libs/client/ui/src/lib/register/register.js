@@ -6,17 +6,18 @@ import {
   Image,
   ImageBackground,
   TouchableOpacity,
-  Alert,
+  SafeAreaView,
   TextInput,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useDispatch, useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectColour } from 'apps/client/src/app/slices/user.slice';
+import { selectColour } from '../../../../../../apps/client/src/app/slices/user.slice';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { setUser } from 'apps/client/src/app/slices/user.slice';
+import { setUser } from '../../../../../../apps/client/src/app/slices/user.slice';
 import auth from '@react-native-firebase/auth';
 import { gql, useMutation } from '@apollo/client';
+import Loading from '../shared-components/loading/loading';
 
 export const Register = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -27,6 +28,7 @@ export const Register = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('Invalid login details');
+  const [loadingIcon,setLoad] = useState(false);
 
   //graphql query tree
   const ADDUSER = gql`
@@ -74,11 +76,21 @@ export const Register = ({ navigation }) => {
     );
   }
 
+  function ShowLoading(){
+    if (!loadingIcon) return null;
+    return (
+      <View>
+        <Loading width={50} height={50}/>
+      </View>
+    );
+  }
+  
   return (
-    <View style={styles.registerPage}>
+    <SafeAreaView style={styles.registerPage}>
       <View style={styles.big_title_box}>
         <Text style={styles.big_title}>{'Create new account'}</Text>
       </View>
+      <ShowLoading/>
       <View style={styles.inputsGroup}>
         <InvalidDetails />
         <View style={styles.inputsItem}>
@@ -171,6 +183,7 @@ export const Register = ({ navigation }) => {
             setErrorMessage('Password is required');
             return;
           }
+          setLoad(true);
           auth()
             .createUserWithEmailAndPassword(
               email.trim().toLowerCase(),
@@ -185,11 +198,13 @@ export const Register = ({ navigation }) => {
                 })
               ).data.addUser;
               dispatch(setUser(queryRes));
+              setLoad(false);
               navigation.navigate('Home');
             })
             .catch((error) => {
               //If there is an error registering output a helpfull error message
               console.log(error.code);
+              setLoad(false);
               setFailedSignUp(true);
               if (error.code === 'auth/email-already-in-use')
                 setErrorMessage('That email address is already in use!');
@@ -215,7 +230,7 @@ export const Register = ({ navigation }) => {
           <Text style={styles.smallGreyText}>{'Already a user?'}</Text>
         </View>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -229,7 +244,7 @@ const styles = StyleSheet.create({
   registerPage: {
     backgroundColor: '#ffffffff',
     overflow: 'hidden',
-    flexGrow: 1,
+    flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
   },

@@ -5,8 +5,12 @@ import {
   SetNamePdfCommand,
   AddTagsCommand,
   DeleteTagsCommand,
+  SetSummarisedCommand,
+  SetEmbeddingsCommand,
 } from '../impl/set-pdf-manager.command';
 import { MongoDBAccess } from '@conversation-catcher/api/pdf-manager/repository/data-access';
+import { HttpService } from '@nestjs/axios';
+import { lastValueFrom, map } from 'rxjs';
 // import { HttpService } from '@nestjs/axios';
 // import { lastValueFrom, map, tap } from 'rxjs';
 
@@ -63,7 +67,6 @@ export class DeleteTagsHandler implements ICommandHandler<DeleteTagsCommand> {
   constructor(private repository: MongoDBAccess) {}
   async execute({ id, tags }: DeleteTagsCommand): Promise<any> {
     const pdf = await this.repository.getPDF(id);
-    console.log(pdf);
     tags.forEach((tag) => {
       pdf.tags.forEach((item, index) => {
         if (item === tag) pdf.tags.splice(index, 1);
@@ -72,5 +75,55 @@ export class DeleteTagsHandler implements ICommandHandler<DeleteTagsCommand> {
     const res = await this.repository.updateTags(id, tags);
     if (res !== null && res.modifiedCount === 1) return 'Tags have been added';
     return 'Error: tags have not been added';
+  }
+}
+@CommandHandler(SetSummarisedCommand)
+export class SetSummarisedHandler
+  implements ICommandHandler<SetSummarisedCommand>
+{
+  constructor(private repository: MongoDBAccess) {}
+  async execute({ id, summarised }: SetSummarisedCommand): Promise<any> {
+    const res = await this.repository.updateSummarised(id, summarised);
+    if (res !== null && res.modifiedCount === 1)
+      return 'Summary has been added';
+    return 'Error: failed to add summary';
+  }
+}
+
+@CommandHandler(SetEmbeddingsCommand)
+export class SetEmbeddingsHandler
+  implements ICommandHandler<SetEmbeddingsCommand>
+{
+  constructor(
+    private repository: MongoDBAccess,
+    private httpService: HttpService
+  ) {}
+
+  //Generate and add the embeddings to the database
+  async execute({ id, name, text }: SetEmbeddingsCommand): Promise<any> {
+    const config = {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    const data = JSON.stringify({
+      name: name,
+      text: text,
+    });
+
+    try {
+      const embeddings = await lastValueFrom(
+        this.httpService.post('http://localhost:5555/embed', data, config)
+      );
+      const res = await this.repository.updateEmbeddings(id, embeddings);
+      if (res !== null && res.modifiedCount === 1)
+        return 'Embeddings has been added';
+      return 'Error: failed to add embeddings';
+    } catch (error) {
+      console.log(error);
+      return 'Error: failed to add embeddings';
+    }
   }
 }

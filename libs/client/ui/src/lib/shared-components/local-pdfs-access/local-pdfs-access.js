@@ -1,10 +1,15 @@
 class LocalPdfsAccess {
   displayPdfs; //The pdfs that get displayed
   allPdfs; //All the pdfs loaded from the api call
+  summariseListener = ['false']; //Checks if the summarise listener has been defined
 
   constructor() {
     this.displayPdfs = [];
     this.allPdfs = [];
+  }
+
+  isLoaded(){
+    return this.allPdfs[0] !== undefined && this.allPdfs[0].name !== 'error'
   }
 
   //Add shallow copy of an array of pdfs into both arrays
@@ -26,6 +31,15 @@ class LocalPdfsAccess {
     return this.displayPdfs;
   }
 
+  //Return an array of the ids of all the pdfs (as it is stored for a user)
+  getPdfIds() {
+    const id_array = [];
+    this.allPdfs.forEach((pdf) => {
+      id_array.push(pdf.id);
+    });
+    return id_array;
+  }
+
   //Return the size of the displayPdfs array
   getLength() {
     if (this.displayPdfs[0] === undefined) return 0;
@@ -36,6 +50,13 @@ class LocalPdfsAccess {
   // get(i) {
   //   return this.displayPdfs[i];
   // }
+
+  //Changes the summary of the pdf
+  addSummary(id, summary) {
+    this.allPdfs.forEach((pdf) => {
+      if (pdf.id === id) pdf.summarised = summary
+    });
+  }
 
   //Resets both arrays of pdfs to be empty
   clearPdfs() {
@@ -52,22 +73,22 @@ class LocalPdfsAccess {
     }
   }
 
+  // Sort PDFs array according to sortBy (Which is either Name or )
   sortPdfs(sortBy) {
-    // Sort PDFs array according to sortBy (Which is either Name or )
     switch (sortBy) {
       case 'Name':
         this.displayPdfs.sort((a, b) => {
           if (a.name < b.name) return -1;
           return 1;
         });
-        console.log(this.displayPdfs);
+        // console.log(this.displayPdfs);
         break;
       case 'Date':
         this.displayPdfs.sort((a, b) => {
           if (new Date(a.creationDate) > new Date(b.creationDate)) return -1;
           return 1;
         });
-        console.log(this.displayPdfs);
+        // console.log(this.displayPdfs);
         break;
     }
   }
@@ -76,6 +97,13 @@ class LocalPdfsAccess {
   renamePdf(pdfId, newName) {
     for (let i = 0; i < this.allPdfs.length; i++) {
       if (this.allPdfs[i].id === pdfId) this.allPdfs[i].name = newName;
+    }
+  }
+
+  //Search for pdf with id pdfId and change the name
+  toggleDownloaded(pdfId) {
+    for (let i = 0; i < this.allPdfs.length; i++) {
+      if (this.allPdfs[i].id === pdfId) this.allPdfs[i].downloaded = !this.allPdfs[i].downloaded;
     }
   }
 
