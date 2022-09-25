@@ -23,7 +23,6 @@
     "@reduxjs/toolkit": "^1.8.2",
     "babel-preset-react-native": "^4.0.1",
     "buffer": "^6.0.3",
-    "ios-deploy": "^1.11.4",
     "jquery": "^3.6.0",
     "lottie-ios": "3.2.3",
     "lottie-react-native": "^5.1.3",

@@ -53,9 +53,9 @@ target 'Client' do
   # you should disable the next line.
   use_flipper!()
 
-  pod 'RNShare', :path => '../node_modules/react-native-share'
+  #pod 'RNShare', :path => '../node_modules/react-native-share'
 
-  pod 'react-native-html-to-pdf', :path => '../node_modules/react-native-html-to-pdf'
+  #pod 'react-native-html-to-pdf', :path => '../node_modules/react-native-html-to-pdf'
 
   post_install do |installer|
     react_native_post_install(installer)
