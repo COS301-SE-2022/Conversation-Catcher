@@ -30,12 +30,10 @@ def return_status():
     
 
 def summarise(input_text, pdf_id):
-    print(input_text)
-    print(pdf_id)
     summarised_text = summariser.summarise(input_text)
-    print(summarised_text)
+    summarised_text = summarised_text[0]['summary_text']
 
-    url = "http://localhost:3333/graphql"
+    url = "http://192.168.1.104:3333/graphql"
     query = """
     mutation setSummarised($id: String!, $summary: String!) {
     setSummarized(id:$id,summary:$summary)
@@ -44,7 +42,7 @@ def summarise(input_text, pdf_id):
     variables = {"id" : pdf_id, "summary": summarised_text}
   
     response = requests.post(url=url, json={"query": query, "variables": variables})
-    print("response status code: ", response.status_code)
+    # print("response status code: ", response.status_code)
     if response.status_code == 200:
         print("response : ", response.content)
     return print('Success')
