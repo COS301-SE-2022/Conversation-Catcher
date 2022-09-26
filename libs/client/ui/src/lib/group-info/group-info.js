@@ -62,10 +62,19 @@ export const GroupInfo = ({ route, navigation }) => {
       removeUserFrom(user: $user, groupName: $groupName)
     }
   `;
+  const ADD_MEMBER = gql`
+    mutation addUserTo(
+      $user: String!
+      $groupName: String!
+    ) {
+      addUserTo(user: $user, groupName: $groupName)
+    }
+  `;
 
   const [rename] = useMutation(RENAME);
   const [delete_group] = useMutation(DELETE);
-  const [remove] = useMutation(REMOVE_USER); 
+  const [remove] = useMutation(REMOVE_USER);
+  const [add] = useMutation(ADD_MEMBER);
 
   async function renameGroup() {
     console.log(id);
@@ -339,7 +348,6 @@ export const GroupInfo = ({ route, navigation }) => {
             style={[styles.actionFileButton, { backgroundColor: colourState }]}
             state={null}
             onPress={() => {
-              // Delete the pdf
               deleteGroup();
               setDeleteConfirmVisible(false);
               navigation.goBack();
@@ -383,9 +391,9 @@ export const GroupInfo = ({ route, navigation }) => {
             style={[styles.actionFileButton, { backgroundColor: colourState }]}
             state={null}
             onPress={() => {
-              removeUser();
+              putname
+              removeUser().then(navigation.navigate('Groups')).catch(e=>console.log(e));
               setLeaveConfirmVisible(false);
-              navigation.goBack();
               NativeAppEventEmitter.emit('updatePage');
             }}
           >
