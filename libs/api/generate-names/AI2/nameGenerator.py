@@ -10,7 +10,6 @@ import nltk
 nltk.download('stopwords')
 # from keras.utils.data_utils import pad_sequences
 from nltk.corpus import stopwords
-import tensorflow_datasets as tfds
 import ast
 
 from tensorflow import keras
@@ -57,8 +56,6 @@ class nameGenerator:
     target_word_index = None
     global reverse_target_word_index
     reverse_target_word_index = None
-    global target_source_index
-    target_source_index = None
 
     # Function for cleaning up text
     global text_cleaner
@@ -146,7 +143,7 @@ class nameGenerator:
 
     def generateName(self, text):
         cleaned_text = []
-        cleaned_text.append(text_cleaner(text,0)) 
+        cleaned_text.append(text_cleaner(self,text,0)) 
 
         # Storing cleanead text and cleaned summary
 
@@ -198,21 +195,14 @@ class nameGenerator:
 
         # Convert text sequences into integer sequences
 
-        x_tr_seq    =   x_tokenizer.texts_to_sequences(x_tr) 
+        x_tr_seq    =   x_tokenizer.texts_to_sequences(list(cleaned_text)) 
 
         # Padding zero upto maximum length
 
         x_tr    =   pad_sequences(x_tr_seq,  maxlen=max_text_len, padding='post')
 
 
-        f = open("reverse_target_word_index.txt", "r")
-        reverse_target_word_index = ast.literal_eval(f.read())
-
-        f = open("reverse_source_word_index.txt", "r")
-        reverse_source_word_index = ast.literal_eval(f.read())
-
-        f = open("target_word_index.txt", "r")
-        target_word_index = ast.literal_eval(f.read())
+    
 
         model = keras.model.load_model("conversationcatcher")
         encoder_model = keras.model.load_model('encoder')
