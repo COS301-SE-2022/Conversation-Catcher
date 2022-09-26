@@ -14,8 +14,8 @@ import {
   setEmail,
 } from '@conversation-catcher/app/client/src/app/slices/user.slice';
 
-/*import { screen, fireEvent } from '@testing-library/react-native';
-import { QuestionsBoard } from '../QuestionsBoard';
+import { screen, fireEvent } from '@testing-library/react-native';
+/*import { QuestionsBoard } from '../QuestionsBoard';
 
 test('form submits two answers', () => {
   const allQuestions = ['q1', 'q2'];
@@ -65,16 +65,6 @@ test('fire changeText event', () => {
 });*/
 
 describe('ChangeEmail', () => {
-  const colourState = useSelector(selectColour);
-  const user = useSelector(selectUser);
-  const [showMailHint, setShowMailHint] = useState(false);
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-  const [failedText, setFailedText] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [email, setNewEmail] = useState('');
-  const [checkEmail, setCheckEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const dispatch = useDispatch();
   const store = configureStore({
     reducer: {
       user:reducer
@@ -90,4 +80,33 @@ describe('ChangeEmail', () => {
     expect(container).toBeTruthy();
     expect(true).toEqual(true);
   });
+});
+
+test('fire changeText event', () => {
+  const colourState = useSelector(selectColour);
+  const user = useSelector(selectUser);
+  const [showMailHint, setShowMailHint] = useState(false);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [failedText, setFailedText] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [email, setNewEmail] = useState('');
+  const [checkEmail, setCheckEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
+  const store = configureStore({
+    reducer: {
+      user:reducer
+    },
+  });
+  const onEventMock = jest.fn();
+  render(
+    // MyComponent renders TextInput which has a placeholder 'Enter details'
+    // and with `onChangeText` bound to handleChangeText
+    <Provider store={store}>
+      <ChangeEmail />
+    </Provider>
+  );
+
+  fireEvent(screen.getByPlaceholderText('change'), 'onChangeText', 'ab');
+  expect(onEventMock).toHaveBeenCalledWith('ab');
 });
