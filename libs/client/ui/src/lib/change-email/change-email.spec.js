@@ -6,15 +6,15 @@ import { configureStore } from '@reduxjs/toolkit';
 import reducer from '../../../../../../apps/client/src/app/slices/user.slice';
 import { Provider } from 'react-redux';
 
-/*import { useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   selectColour,
   selectUser,
   setEmail,
-} from '../../../../../../apps/client/src/app/slices/user.slice';
+} from '@conversation-catcher/app/client/src/app/slices/user.slice';
 
-import { screen, fireEvent } from '@testing-library/react-native';
+/*import { screen, fireEvent } from '@testing-library/react-native';
 import { QuestionsBoard } from '../QuestionsBoard';
 
 test('form submits two answers', () => {
@@ -65,6 +65,16 @@ test('fire changeText event', () => {
 });*/
 
 describe('ChangeEmail', () => {
+  const colourState = useSelector(selectColour);
+  const user = useSelector(selectUser);
+  const [showMailHint, setShowMailHint] = useState(false);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [failedText, setFailedText] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [email, setNewEmail] = useState('');
+  const [checkEmail, setCheckEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
   const store = configureStore({
     reducer: {
       user:reducer
