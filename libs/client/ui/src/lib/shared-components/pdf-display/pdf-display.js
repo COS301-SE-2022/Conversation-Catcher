@@ -147,7 +147,7 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
     return (
       <ScrollDisplay
         arr={localPDFs}
-        text={'No Documents Locally'}
+        text={'No Documents Stored Locally'}
         load={false}
       />
     );

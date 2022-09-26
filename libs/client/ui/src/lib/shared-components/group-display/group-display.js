@@ -1,6 +1,6 @@
-import { gql, useMutation, useQuery } from '@apollo/client';
+import { gql, useMutation, useQuery, useLazyQuery} from '@apollo/client';
 import React, { useImperativeHandle, forwardRef, useState } from 'react';
-import { Text, ScrollView, StyleSheet, DeviceEventEmitter } from 'react-native';
+import { Text, ScrollView, StyleSheet, DeviceEventEmitter, RefreshControl } from 'react-native';
 import Loading from '../loading/loading';
 // import LocalGroupsAccess from '../local-groups-access/local-groups-access';
 import GroupTile from '../group-tile/group-tile';
@@ -15,6 +15,7 @@ export function GroupDisplay({ navigation, selectMode }, ref) {
   // const [selectMode, setSelectMode] = useState(false);
   const [didReload, setDidReload] = useState(true);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
   const emailState = useSelector(selectEmail);
   const localGroups = useSelector(selectGroups);
   const dispatch = useDispatch();
@@ -41,57 +42,134 @@ export function GroupDisplay({ navigation, selectMode }, ref) {
       }
     }
   `;
+  //Look at query
+  const SET_GROUP = gql`
+    mutation setUser(
+      $oldEmail: String!
+      $email: String!
+      $colour: String!
+      $pdfs: [String!]!
+    ) {
+      setUser(oldEmail: $oldEmail, email: $email, colour: $colour, pdfs: $pdfs)
+    }
+  `; 
+  const [setGroup] = useMutation(SET_GROUP);
   const { data, loading, error } = useQuery(GET_USER_GROUPS, {
     variables: { email: emailState },
   });
+  const [fetchGroups] = useLazyQuery(GET_USER_GROUPS);
+
+  const setData = (d) => {
+    for (let i = 0; i < d.getGroups.length; i++) {
+      groupLocalAccess.addGroup({
+        name: d.getGroups[i].name,
+        creationDate: d.getGroups[i].creationDate,
+        downloaded: d.getGroups[i].downloaded,
+        group: d.getGroups[i].group,
+        text: d.getGroups[i].text,
+        id: d.getGroups[i].id,
+      });
+    }
+  }
+
+  const ReloadData = () => {
+    setRefreshing(true);
+    fetchGroups({
+      variables: {
+        email: emailState,
+      },
+      fetchPolicy: 'no-cache',
+    })
+      .then((d) => {
+        groupLocalAccess.clearPdfs();
+        setData(d.data)
+        setRefreshing(false);
+        // setDidReload(!didReload);
+      })
+      .catch((e) => {
+        console.log(e);
+        groupLocalAccess.clearPdfs();
+        setDidReload(!didReload);
+      });
+  };
+
+  const ScrollDisplay = (props) => {
+    if (props.arr.length !== 0)
+      return (
+        <ScrollView
+          style={styles.recentGroupTiles}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={ReloadData} />
+          }
+        >
+          <Loading width={100} height={100} load={props.load} />
+          {props.arr.map((item, key) => (
+            <GroupTile
+            key={key}
+            id={item.id}
+            name={item.name}
+            text={item.text}
+            thumbnailSource={'groupRefresh'}
+            nav={navigation}
+            refresh={setDidReload}
+          />
+          ))}
+        </ScrollView>
+      );
+    else
+      return (
+        <ScrollView
+          style={styles.recentGroupTiles}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={ReloadData} />
+          }
+        >
+          <Loading width={100} height={100} load={props.load} />
+          <Text style={{ textAlign: 'center' }}>{props.text}</Text>
+        </ScrollView>
+      );
+  };
+
   // console.log('GetGroups');
   // console.log(data);
   // console.log(loading);
   // console.log(error);
   if (loading)
     return (
-      <ScrollView style={styles.recentGroupTiles}>
-        {localGroups.map((item, key) => (
-        <GroupTile
-          key={key}
-          id={item.id}
-          name={item.name}
-          text={item.text}
-          thumbnailSource={'groupRefresh'}
-          nav={navigation}
-          refresh={setDidReload}
-        />
-      ))}
-        {/*<Loading >*/}
-      </ScrollView>
+      <ScrollDisplay
+        arr={localGroups}
+        text={"No Groups Stored Locally"}
+        load={true}
+      />
     );
 
   if (error)
     return (
-      <ScrollView style={styles.recentGroupTiles}>
-        <Text>An error occured...</Text>
-        <Text>{error[0]}</Text>
-      </ScrollView>
+      <ScrollDisplay
+        arr={localGroups}
+        text={"No Groups Stored Locally"}
+        load={true}
+      />
     );
   //If the group array is empty assign the result from the query
   //create deep copy of the returned data
   //Data is here in data if returned
-  if (!isLoaded) {
+  if (!groupLocalAccess.isLoaded()) {
     groupLocalAccess.clearGroups();
-    for (let i = 0; i < data.getGroups.length; i++) {
-      groupLocalAccess.addGroup({
-        name: data.getGroups[i].name,
-        creationDate: data.getGroups[i].creationDate,
-        downloaded: data.getGroups[i].downloaded,
-        group: data.getGroups[i].group,
-        text: data.getGroups[i].text,
-        id: data.getGroups[i].id,
+    setData(data);
+    if (groupLocalAccess.isLoaded()) {
+      // console.log('setting pdf');
+      setGroup({
+        
+      }).catch((e) => {
+        // console.log('error in delete of pdf in pdf array');
+        console.log(e);
       });
     }
-    setIsLoaded(true);
+    //setIsLoaded(true);
     //Update local group storage
     //array of groups stored locally, selected from data to overwrite the slice
-    if (data.getGroups[0].name !== "error"){
+    if (data.getGroups[0] !== undefined && data.getGroups[0].name !== "error"){
       let tempArray = [];
       var p;
       for (p in groupLocalAccess.getGroups()){
@@ -103,22 +181,12 @@ export function GroupDisplay({ navigation, selectMode }, ref) {
     }
   }
 
-  
-
   return (
-    <ScrollView style={styles.recentGroupTiles}>
-      {groupLocalAccess.getGroups().map((item, key) => (
-        <GroupTile
-          key={key}
-          id={item.id}
-          name={item.name}
-          text={item.text}
-          thumbnailSource={'groupRefresh'}
-          nav={navigation}
-          refresh={setDidReload}
-        />
-      ))}
-    </ScrollView>
+    <ScrollDisplay
+    arr={groupLocalAccess.getGroups()}
+    text={""}
+    load={false}
+    />
   );
 }
 export default forwardRef(GroupDisplay);

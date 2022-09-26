@@ -183,7 +183,9 @@ export const Groups = ({ navigation }) => {
         navigation={navigation}
         selectMode={selectMode}
         ref={groupRef}
-      /> */}
+      /> */
+      //List of groups
+      }
       <View style={styles.groupTiles}>
         <GroupTile
           key={'1'}
@@ -210,7 +212,9 @@ export const Groups = ({ navigation }) => {
           nav={navigation}
         />
       </View>
-
+      {
+        //Bottom Bar
+      }
 
       <View style={styles.viewAllBottomBar}>
         <TouchableOpacity
