@@ -39,38 +39,33 @@ export const GroupInfo = ({ route, navigation }) => {
     const { id, text, name, thumbnailSource } = route.params;
 
     const RENAME = gql`
-    mutation setName($id: String!, $name: String!) {
-      renameGroup(id: $id, name: $name) {
-        id
-        name
-        downloaded
-      }
+    mutation setName(
+      $groupName: String!
+      $newName: String!
+    ) {
+      renameGroup(groupName: $groupName, newName: $newName)
     }
   `;
 
   const DELETE = gql`
-    mutation delete($id: String!) {
-      deleteGroup(id: $id) {
-        id
-        name
-        text
-      }
+    mutation delete(
+      $groupName: String!
+    ) {
+      deleteGroup(groupName: $groupName)
     }
   `;
-
-  const LEAVE = gql`
-    mutation leave($id: String!) {
-      leaveGroup(id: $id) {
-        id
-        name
-        text
-      }
+  const REMOVE_USER = gql`
+    mutation removeUserFrom(
+      $user: String!
+      $groupName: String!
+    ) {
+      removeUserFrom(user: $user, groupName: $groupName)
     }
   `;
 
   const [rename] = useMutation(RENAME);
   const [delete_group] = useMutation(DELETE);
-  const [leave_group] = useMutation(LEAVE);
+  const [remove] = useMutation(REMOVE_USER); 
 
   async function renameGroup() {
     console.log(id);
@@ -85,11 +80,11 @@ export const GroupInfo = ({ route, navigation }) => {
     await delete_group({ variables: { id: id.id } });
     dispatch(removeGroup({ id: id.id }));
   }
-
-  async function leaveGroup() {
-    groupsLocalAccess.leaveGroup(id.id);
-    await leave_group({ variables: { id: id.id } });
-    dispatch(leaveGroup({ id: id.id }));
+  
+  async function removeUser(userID){//define all this in respective files
+    groupsLocalAccess.removeUser(id.id,userID)
+    await remove({variables:{user:userID, groupName:id,id}});
+    dispatch(removeUser({id:id.id, user: userID}));
   }
 
   const handleDocumentSelection = useCallback(async () => {
@@ -108,16 +103,6 @@ export const GroupInfo = ({ route, navigation }) => {
       if(adminState){
         return (
           <View style={styles.buttonsGroup}>
-            <View style={styles.leaveButtonBox}>
-              <TouchableOpacity 
-                style={styles.leaveButton}
-                onPress={() => {
-                  setLeaveConfirmVisible(true);
-                }} 
-              >
-                <Text style={styles.leaveButtonText}>Leave Group</Text>
-              </TouchableOpacity>
-            </View>
             <View style={styles.deleteButtonBox}>
               <TouchableOpacity 
                 style={styles.deleteButton}
@@ -398,8 +383,7 @@ export const GroupInfo = ({ route, navigation }) => {
             style={[styles.actionFileButton, { backgroundColor: colourState }]}
             state={null}
             onPress={() => {
-              // Delete the pdf
-              leaveGroup();
+              removeUser();
               setLeaveConfirmVisible(false);
               navigation.goBack();
               NativeAppEventEmitter.emit('updatePage');

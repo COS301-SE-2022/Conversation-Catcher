@@ -178,7 +178,7 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
 
     //Update local pdf storage
     //array of pdfs stored locally, selected from data to overwrite the slice
-    if (data.getPDFs[0] !== undefined && data.getPDFs[0].name !== 'error') {
+    if (data.getPDFs[0] !== undefined && data.getPDFs[0].name !== 'error') {//remove as under a check already
       let tempArray = [];
       var p;
       for (p in pdfLocalAccess.getPdfs()) {

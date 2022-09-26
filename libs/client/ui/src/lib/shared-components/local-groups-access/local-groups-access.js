@@ -7,6 +7,10 @@ class LocalGroupsAccess {
     this.allGroups = [];
   }
 
+  isLoaded(){
+    return this.allGroups[0] !== undefined && this.allGroups[0].name !== 'error'
+  }
+
   //Add shallow copy of an array of groups into both arrays
   addGroups(newGroups) {
     for (let i = 0; i < newGroups.length; i++) {

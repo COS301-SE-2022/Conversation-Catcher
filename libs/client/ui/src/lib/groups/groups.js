@@ -10,7 +10,7 @@ import {
   ScrollView,
   TextInput,
 } from 'react-native';
-import { gql, useQuery, useMutation } from '@apollo/client';
+import { gql, useLazyQuery, useMutation } from '@apollo/client';
 import GroupTile from '../shared-components/group-tile/group-tile.js';
 import ModalDropdown from 'react-native-modal-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -20,11 +20,12 @@ import GroupDisplay from '../shared-components/group-display/group-display.js';
 import groupLocalAccess from '../shared-components/local-groups-access/local-groups-access';
 import { useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectColour } from 'apps/client/src/app/slices/user.slice';
+import { selectColour, selectEmail } from 'apps/client/src/app/slices/user.slice';
 
 export const Groups = ({ navigation }) => {
   const groupRef = useRef();
   const colourState = useSelector(selectColour);
+  const userEmail = useSelector(selectEmail);
   const [moreVisible, setMoreVisible] = useState(false);
   const [selectMode, setSelectMode] = useState(false);
   const [bottomModalVisible, setBottomModalVisible] = useState(false);
@@ -32,12 +33,23 @@ export const Groups = ({ navigation }) => {
   const [renameModalVisible, setRenameModalVisible] = useState(false);
   const [currOrderValue, setCurrOrderValue] = useState('Date');
   const [renameVisible, setRenameVisible] = useState(false);
+  const [newName, setNewName] = useState(null);
   // const [refreshPage, setRefreshPage] = useState('');
 
   const url = 'https://awesome.contents.com/';
   const title = 'Awesome Contents';
   const message = 'Please check this out.';
 
+  //Queries and mutations
+  const CREATE_GROUP = gql`
+    mutation createGroup(
+      $email: String!
+      $groupName: String!
+    ) {
+      createGroup(email: $email, groupName: $groupName)
+    }
+  `;
+    const [createGroup] = useMutation(CREATE_GROUP);
   //variables for object sorting
   const [objArr, setObjArr] = useState([]);
 
@@ -219,7 +231,10 @@ export const Groups = ({ navigation }) => {
       <View style={styles.viewAllBottomBar}>
         <TouchableOpacity
           style={styles.moreButton}
-          onPress={() => setMoreVisible(true)}
+          onPress={() => {
+            setMoreVisible(true)
+            console.log("poggers");
+          }}
         >
           <Icon name="plus" color={colourState} size={30} />
         </TouchableOpacity>
@@ -239,7 +254,7 @@ export const Groups = ({ navigation }) => {
             defaultValue={'Date'}
             onSelect={(index, itemValue) => {
               groupLocalAccess.sortGroups(itemValue);
-              groupRef.current.refreshPfds();
+              groupRef.current.refreshPfds();//breaks
             }}
             style={styles.orderByDropdown}
             textStyle={styles.orderByDropdownText}
@@ -259,34 +274,33 @@ export const Groups = ({ navigation }) => {
         onBackdropPress={() => setMoreVisible(false)}
       >
         <View style={styles.moreModalInner}>
-          <TouchableOpacity
-            style={styles.moreModalButton}
-            onPress={() => {
-              //navigate to new group-info page
-              setMoreVisible(false);
-            }}
-          >
-            <View style={styles.moreModalButtonContent}>
-              <View style={styles.moreModalButtonText_box}>
-                <Text style={styles.moreModalButtonText} ellipsizeMode={'clip'}>
-                  {'Create Group'}
-                </Text>
-              </View>
-            </View>
-          </TouchableOpacity>
+          <TextInput
+            onChangeText={setNewName}
+            value={newName}
+            placeholder="Name your group"
+          />
 
           <View style={styles.moreModalButtonDivider} />
 
           <TouchableOpacity
             style={styles.moreModalButton}
             onPress={() => {
-              //navigate to view all groups page
-              setMoreVisible(false);
+              createGroup({
+                variables: {
+                  email: userEmail,
+                  groupName: newName,
+                }
+              }).then((result)=>{
+                setMoreVisible(false);
+                navigation.navigate('GroupInfo', { id: { id }, text: { text }, name: { name }, thumbnailSource: { thumbnailSource } })
+              }).catch((e)=>{
+                console.log(e);
+              });
             }}
           >
             <View style={styles.moreModalButtonContent}>
               <View style={styles.moreModalButtonText_box}>
-                <Text style={styles.moreModalButtonText}>{'Join Group'}</Text>
+                <Text style={styles.moreModalButtonText}>{'Create Group'}</Text>
               </View>
             </View>
           </TouchableOpacity>
