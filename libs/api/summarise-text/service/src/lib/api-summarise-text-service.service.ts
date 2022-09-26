@@ -7,8 +7,8 @@ export class ApiSummariseTextServiceService {
     constructor(private commandBus: CommandBus, private queryBus: QueryBus) {}
 
     //commands
-    async Summarise(text: string) {
-        return await this.commandBus.execute(new SummariseCommand(text));
+    async Summarise(text: string, id: string) {
+        return await this.commandBus.execute(new SummariseCommand(text, id));
     }
   
     //queries

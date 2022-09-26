@@ -41,13 +41,13 @@ export class PdfEntityInput {
   @Field({nullable: true})
   text?: string;
 
-  @Field(()=> [Number],{nullable: 'itemsAndList'})
-  embeddings?: number[];
+  @Field(()=> [Number])
+  embeddings: number[];
 
   @Field({nullable : true})
   creationDate: string;
 
-  @Field()
+  @Field({nullable: true})
   downloaded: boolean;
 
   @Field(()=> [String],{nullable:'itemsAndList'})

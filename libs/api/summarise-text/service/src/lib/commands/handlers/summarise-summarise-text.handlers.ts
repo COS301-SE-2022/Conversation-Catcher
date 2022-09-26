@@ -9,7 +9,7 @@ import { lastValueFrom, map, tap } from 'rxjs';
 export class SummariesHandler implements ICommandHandler<SummariseCommand> {
   constructor(private httpService: HttpService) {}
 
-  async execute({ text }: SummariseCommand) {
+  async execute({ text, id }: SummariseCommand) {
     const config = {
       method: 'post',
       headers: {
@@ -19,6 +19,7 @@ export class SummariesHandler implements ICommandHandler<SummariseCommand> {
 
     const data = JSON.stringify({
       text: text,
+      id: id,
     });
 
     try {
