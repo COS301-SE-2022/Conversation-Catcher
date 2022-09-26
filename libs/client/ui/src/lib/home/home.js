@@ -304,12 +304,11 @@ export const Home = ({ navigation }) => {
 
   //summarise the text and populate the required fields
   const summarise = (id, text) => {
-    console.log('starting summarisation');
     summariseText({ variables: { text: text } })
       .then((res) => {
         console.log(res);
         setSummarisedText({
-          variables: { id: id, summary: res.data.Summarise },
+          variables: { id: id, summary: 'loading' },
         }).catch((e) => {
           console.log(e);
           pdfLocalAccess.addSummary(id, 'error');
@@ -318,7 +317,15 @@ export const Home = ({ navigation }) => {
         pdfLocalAccess.addSummary(id, res.data.Summarise);
         console.log('summary added');
       })
-      .catch((e) => console.log(e));
+      .catch((e) => {
+        console.log(e);
+        setSummarisedText({
+          variables: { id: id, summary: 'error' },
+        }).catch((e) => {
+          console.log(e);
+        });
+        pdfLocalAccess.addSummary(id, 'error');
+      });
   };
 
   // componentDidMount();

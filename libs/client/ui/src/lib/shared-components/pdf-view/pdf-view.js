@@ -116,7 +116,7 @@ export const PdfView = ({ route, navigation }) => {
       return (
         <View style={styles.pdfTextContainer}>
           <Loading width={100} height={100} load={true} />
-          <Text style={styles.modalTitle}>Summarising in progress</Text>
+          <Text style={styles.modalTitle}>Summarising in progress...it will take approximately 5 minutes</Text>
         </View>
       );
     if (summarised.summarised === 'error')
