@@ -75,7 +75,7 @@ export class ApiPdfManagerApiFeatureResolver {
     return [this.errorObj];
   }
 
-  @Query(() => String)
+  @Query(() => [String])
   async semanticSearch(
     @Args('query') query: string,
     @Args('docs', { type: () => [PdfEntityInput] }) docs: PdfEntityInput[]

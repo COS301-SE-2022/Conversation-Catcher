@@ -50,10 +50,9 @@ export class SemanticSearchHandler
       const res = await lastValueFrom(
         this.httpService.post('http://localhost:5555/semanticsearch', data, config)
       );
-      console.log(res);
-      return res;
+      return res.data.results;
     } catch (error) {
-      return '';
+      return [''];
     }
   }
 }
