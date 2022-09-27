@@ -49,28 +49,28 @@ describe('ChangePassword', () => {
   render(TestComponent);
 
   //password
-  const passwordInput = screen.getByText("*****************");
+  const passwordInput = screen.getByPlaceholderText("*****************");
   expect(passwordInput).toBeTruthy();
   
   const textToEnterPassword = '123qwe123#';
   fireEvent.changeText(passwordInput, textToEnterPassword);
 
   // setCheckPassword
-  const checkPasswordInput = screen.getByText("*****************");
+  const checkPasswordInput = screen.getByPlaceholderText("*****************");
   expect(checkPasswordInput).toBeTruthy();
   
   const textToEnterCheckPassword = '123qwe123#';
   fireEvent.changeText(checkPasswordInput, textToEnterCheckPassword);
 
   //password
-  const oldPasswordInput = screen.getByText("*****************");
+  const oldPasswordInput = screen.getByPlaceholderText("*****************");
   expect(oldPasswordInput).toBeTruthy();
   
   const textToEnterOldPassword = '123qwe123#';
   fireEvent.changeText(oldPasswordInput, textToEnterOldPassword);
 
   // Submit
-  fireEvent.press(screen.getByText('Change password'));
+  fireEvent.press(screen.ByLabelText("Change password"));
 
   const emailState = store.getState().email;
 

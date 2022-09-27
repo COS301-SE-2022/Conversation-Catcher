@@ -39,28 +39,28 @@ describe('ChangeEmail', () => {
   render(TestComponent);
 
   //new email
-  const newEmailInput = screen.getByText("johnsmith@gmail.com");
+  const newEmailInput = screen.getByPlaceholderText("johnsmith@gmail.com");
   expect(newEmailInput).toBeTruthy();
   
   const textToEnterNewEmail = 'random@random.com';
   fireEvent.changeText(newEmailInput, textToEnterNewEmail);
 
   // setCheckEmail
-  const checkEmailInput = screen.getByText("johnsmith@gmail.com");
+  const checkEmailInput = screen.getByPlaceholderText("johnsmith@gmail.com");
   expect(checkEmailInput).toBeTruthy();
   
   const textToEnterCheckEmail = 'random@random.com';
   fireEvent.changeText(newEmailInput, textToEnterCheckEmail);
 
   // setPassword
-  const passwordInput = screen.getByText("*********");
+  const passwordInput = screen.getByPlaceholderText("*********");
   expect(passwordInput).toBeTruthy();
   
   const textToEnterPassword = '123qwe123#';
   fireEvent.changeText(passwordInput, textToEnterPassword);
 
   // Submit
-  fireEvent.press(screen.getByText('Change email'));
+  fireEvent.press(screen.ByLabelText('Change email'));
 
   const emailState = store.getState().email;
 
