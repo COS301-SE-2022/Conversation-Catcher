@@ -43,7 +43,7 @@ export const GroupInfo = ({ route, navigation }) => {
     const dispatch = useDispatch();
 
     const {name, thumbnailSource, admin, users, description, pdfs } = route.params;
-
+    console.log(thumbnailSource);
     const RENAME = gql`
       mutation setName(
         $groupName: String!
@@ -92,34 +92,33 @@ export const GroupInfo = ({ route, navigation }) => {
 
   async function renameGroup() {
     console.log(name);
-    name.name = newName;
-    groupsLocalAccess.renameGroup(name.name, newName);
-    await rename({ variables: { groupName:name.name, newName: newName } });
+    groupsLocalAccess.renameGroup(name, newName);
+    await rename({ variables: { groupName:name, newName: newName } });
     //dispatch(changeName({ id: id.id, name: newName }));
   }
 
   async function updateDescription() {
     description.description = newDesc;
-    groupsLocalAccess.chngDesc(name.name, newDesc);
-    await chngDesc({variables: {groupName:name.name, description: newDesc}});
+    groupsLocalAccess.chngDesc(name, newDesc);
+    await chngDesc({variables: {groupName:name, description: newDesc}});
     //dispatch(changeDesc({id:id.id, desc: newDesc}));
   }
 
   async function deleteGroup() {
-    groupsLocalAccess.deleteGroup(name.name);
-    await delete_group({ variables: { groupName:name.name } });
+    groupsLocalAccess.deleteGroup(name);
+    await delete_group({ variables: { groupName:name } });
     //dispatch(removeGroup({ id: id.id }));
   }
   
   async function removeUser(userID){//define all this in respective files
-    groupsLocalAccess.removeUser(userID, name.name)
-    await remove({variables:{user:userID, groupName:name.name}});
+    groupsLocalAccess.removeUser(userID, name)
+    await remove({variables:{user:userID, groupName:name}});
     //dispatch(removeUser({id:id.id, user: userID}));
   }
 
   async function addUser(userID){//define all this in respective files
-    groupsLocalAccess.addUser(userID, name.name)
-    await add({variables:{user:userID, groupName:name.name}});
+    groupsLocalAccess.addUser(userID, name)
+    await add({variables:{user:userID, groupName:name}});
   }
 
   const handleDocumentSelection = useCallback(async () => {
@@ -225,7 +224,7 @@ export const GroupInfo = ({ route, navigation }) => {
                 setRenameVisible(true);
               }}
             >
-                <Text style={styles.groupName} numberOfLines={1}>{name.name}</Text>
+                <Text style={styles.groupName} numberOfLines={1}>{name}</Text>
             </TouchableOpacity>
 
             <TouchableOpacity 
@@ -235,7 +234,7 @@ export const GroupInfo = ({ route, navigation }) => {
                 setEditDescriptionVisible(true);
               }}
             >
-              <Text style={styles.groupText} numberOfLines={2}>{description.description}</Text>
+              <Text style={styles.groupText} numberOfLines={2}>{description}</Text>
             </TouchableOpacity>
           </View>
           
@@ -251,11 +250,11 @@ export const GroupInfo = ({ route, navigation }) => {
           </View>
 
           <View style={styles.groupNameBox}>
-            <Text style={styles.groupName} numberOfLines={1}>{name.name}</Text>
+            <Text style={styles.groupName} numberOfLines={1}>{name}</Text>
           </View>
 
           <View style={styles.groupTextBox}>
-            <Text style={styles.groupText} numberOfLines={2}>{description.description}</Text>
+            <Text style={styles.groupText} numberOfLines={2}>{description}</Text>
           </View>
         </View>
         
@@ -335,7 +334,7 @@ export const GroupInfo = ({ route, navigation }) => {
         <View style={styles.actionModalInner}>
           <TextInput
             style={styles.actionModalTextInput}
-            defaultValue={name.name}
+            defaultValue={name}
             onChangeText={(text) => {
               setNewName(text);
             }}
@@ -369,7 +368,7 @@ export const GroupInfo = ({ route, navigation }) => {
         <View style={styles.actionModalInner}>
           <TextInput
             style={styles.actionModalTextInput}
-            defaultValue={description.description}
+            defaultValue={description}
             onChangeText={(text) => {
               setNewDesc(text);
             }}
@@ -378,7 +377,7 @@ export const GroupInfo = ({ route, navigation }) => {
             style={[styles.actionFileButton, { backgroundColor: colourState }]}
             state={null}
             onPress={() => {
-              console.log('Change the description to' + description.description);
+              console.log('Change the description to' + description);
               updateDescription();
               setDescribeVisible(false);
             }}
@@ -403,7 +402,7 @@ export const GroupInfo = ({ route, navigation }) => {
         <View style={styles.actionModalInner}>
           <TextInput
             style={styles.actionModalLargeTextInput}
-            defaultValue={name.name}
+            defaultValue={name}
             onChangeText={(text) => {
               //setNewDescription(text);
             }}
@@ -438,7 +437,7 @@ export const GroupInfo = ({ route, navigation }) => {
       >
         <View style={styles.actionModalInner}>
           <Text style={styles.modalTitle}>
-            {'Are you sure you want to delete ' + name.name + '?'}
+            {'Are you sure you want to delete ' + name + '?'}
           </Text>
           <TouchableOpacity
             style={[styles.actionButton, { backgroundColor: colourState }]}
@@ -481,7 +480,7 @@ export const GroupInfo = ({ route, navigation }) => {
       >
         <View style={styles.actionModalInner}>
           <Text style={styles.modalTitle}>
-            {'Are you sure you want to leave ' + name.name + '?'}
+            {'Are you sure you want to leave ' + name + '?'}
           </Text>
           <TouchableOpacity
             style={[styles.actionButton, { backgroundColor: colourState }]}

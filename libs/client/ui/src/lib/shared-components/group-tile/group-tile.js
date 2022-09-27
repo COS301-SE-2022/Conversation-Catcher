@@ -29,6 +29,7 @@ const GroupTile = ({
   const buildGroup = () => {
     return { name: name, }
   }
+  console.log(name);
   return (
     <TouchableOpacity
       style={styles.groupTile}

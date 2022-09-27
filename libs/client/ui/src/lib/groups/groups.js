@@ -197,32 +197,39 @@ export const Groups = ({ navigation }) => {
       /> */
       //List of groups
       }
-      <View style={styles.groupTiles}>
-        <GroupTile
-          key={'1'}
-          id={'1'}
-          name={'Group1'}
-          thumbnailSource={{
-            uri:
-            'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg',
-          }}
-          text={'test'}
-          groupSource={'groupRefresh'}
-          nav={navigation}
-        />
-        <GroupTile
-          key={'2'}
-          id={'2'}
-          name={'Group2'}
-          thumbnailSource={{
-            uri:
-            'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg',
-          }}
-          text={'blah'}
-          groupSource={'groupRefresh'}
-          nav={navigation}
-        />
-      </View>
+      <GroupDisplay
+        navigation={navigation}
+        selectMode={selectMode}
+        ref={groupRef}
+      />
+      {
+      //   <View style={styles.groupTiles}>
+      //   <GroupTile
+      //     key={'1'}
+      //     id={'1'}
+      //     name={'Group1'}
+      //     thumbnailSource={{
+      //       uri:
+      //       'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg',
+      //     }}
+      //     description={'test'}
+      //     groupSource={'groupRefresh'}
+      //     nav={navigation}
+      //   />
+      //   <GroupTile
+      //     key={'2'}
+      //     id={'2'}
+      //     name={'Group2'}
+      //     thumbnailSource={{
+      //       uri:
+      //       'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg',
+      //     }}
+      //     text={'blah'}
+      //     groupSource={'groupRefresh'}
+      //     nav={navigation}
+      //   />
+      // </View>
+      }
       {
         //Bottom Bar
       }
@@ -232,7 +239,6 @@ export const Groups = ({ navigation }) => {
           style={styles.moreButton}
           onPress={() => {
             setMoreVisible(true)
-            console.log("poggers");
           }}
         >
           <Icon name="plus" color={colourState} size={30} />
