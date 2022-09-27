@@ -38,13 +38,6 @@ describe('ChangeEmail', () => {
 
   render(TestComponent);
 
-  const input = screen.getByPlaceholderText(/repository/i);
-  expect(input).toBeTruthy();
-
-  const textToEnter = 'This is a random element';
-  fireEvent.changeText(input, textToEnter);
-  fireEvent.press(screen.getByText('Submit form'));
-
   //new email
   const newEmailInput = screen.getByText("johnsmith@gmail.com");
   expect(newEmailInput).toBeTruthy();
