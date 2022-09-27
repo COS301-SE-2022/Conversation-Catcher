@@ -6,11 +6,11 @@ import re
 from bs4 import BeautifulSoup
 from keras.preprocessing.text import Tokenizer
 from keras_preprocessing.sequence import pad_sequences
-import nltk  
-nltk.download('stopwords')
+
 # from keras.utils.data_utils import pad_sequences
 from nltk.corpus import stopwords
 import ast
+from keras.preprocessing.text import Tokenizer 
 
 from tensorflow import keras
 import warnings
@@ -104,6 +104,16 @@ class nameGenerator:
     global decode_sequence
     def decode_sequence(self, input_seq):
 
+        f = open("reverse_target_word_index.txt", "r")
+        reverse_target_word_index = ast.literal_eval(f.read())
+
+        f = open("target_word_index.txt", "r")
+        target_word_index = ast.literal_eval(f.read())
+
+        model = keras.models.load_model("conversationcatcher")
+        encoder_model = keras.models.load_model('encoder')
+        decoder_model = keras.models.load_model('decoder')
+
         max_summary_len=10
 
         # Encode the input as state vectors.
@@ -161,13 +171,26 @@ class nameGenerator:
         # Split dataset into training and validation set (90:10)
         # -------------------------- Text tokanizer ------------------------------
 
-        from keras.preprocessing.text import Tokenizer 
+        
+
+        f = open("reverse_source_word_index.txt", "r")
+        reverse_source_word_index = ast.literal_eval(f.read())
+
+        
+
+        
         #from keras.preprocessing.sequence import pad_sequences
 
         # Prepare a tokenizer for reviews on training data
 
         x_tokenizer = Tokenizer() 
-        x_tokenizer.fit_on_texts(list(cleaned_text))
+        #x_tokenizer.fit_on_texts(list(cleaned_text))
+        x_tokenizer.index_word = reverse_source_word_index
+
+        
+
+        #reverse_target_word_index=y_tokenizer.index_word
+        #target_word_index=y_tokenizer.word_index
 
         # Calculate rare words and coverage (word count less that thresh is rare)
 
@@ -194,18 +217,14 @@ class nameGenerator:
         #x_tokenizer.fit_on_texts(list(cleaned_text))
 
         # Convert text sequences into integer sequences
-
-        x_tr_seq    =   x_tokenizer.texts_to_sequences(list(cleaned_text)) 
-
+        print(cleaned_text)
+        x_tr_seq    =   x_tokenizer.texts_to_sequences(cleaned_text) 
+        print(x_tr_seq)
+        print(x_tr_seq[0])
         # Padding zero upto maximum length
 
-        x_tr    =   pad_sequences(x_tr_seq,  maxlen=max_text_len, padding='post')
+        x_tr    =   pad_sequences(x_tr_seq[0],  maxlen=max_text_len, padding='post')
 
+        print(x_tr)
 
-    
-
-        model = keras.model.load_model("conversationcatcher")
-        encoder_model = keras.model.load_model('encoder')
-        decoder_model = keras.model.load_model('decoder')
-
-        decode_sequence(x_tr)
+        decode_sequence(self, x_tr.reshape(1,max_text_len))
