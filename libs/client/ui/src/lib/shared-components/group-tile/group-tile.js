@@ -17,15 +17,17 @@ import { gql, useLazyQuery, useMutation } from '@apollo/client';
 //import FileViewer from "react-native-file-viewer";
 
 const GroupTile = ({
-  id,
   name,
+  admin,
+  users,
   thumbnailSource,
-  text,
+  description,
+  pdfs,
   nav,
 }) => {
   const colourState = useSelector(selectColour);
   const buildGroup = () => {
-    return { id: id, text: text , name: name }
+    return { name: name, }
   }
   return (
     <TouchableOpacity
@@ -45,7 +47,7 @@ const GroupTile = ({
           <Text style={styles.groupName} numberOfLines={1}>{name}</Text>
         </View>
         <View style={styles.groupDescriptionBox}>
-          <Text style={styles.groupDescription} numberOfLines={1}>{text}</Text>
+          <Text style={styles.groupDescription} numberOfLines={1}>{description}</Text>
         </View>
       </View>
     </TouchableOpacity>
