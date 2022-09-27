@@ -112,9 +112,14 @@ export const GroupInfo = ({ route, navigation }) => {
   }
   
   async function removeUser(userID){//define all this in respective files
-    groupsLocalAccess.removeUser(id.id,userID)
-    await remove({variables:{user:userID, groupName:id,id}});
+    groupsLocalAccess.removeUser(userID, name.name)
+    await remove({variables:{user:userID, groupName:name.name}});
     //dispatch(removeUser({id:id.id, user: userID}));
+  }
+
+  async function addUser(userID){//define all this in respective files
+    groupsLocalAccess.addUser(userID, name.name)
+    await add({variables:{user:userID, groupName:name.name}});
   }
 
   const handleDocumentSelection = useCallback(async () => {
@@ -230,7 +235,7 @@ export const GroupInfo = ({ route, navigation }) => {
                 setEditDescriptionVisible(true);
               }}
             >
-              <Text style={styles.groupText} numberOfLines={2}>{text.text}</Text>
+              <Text style={styles.groupText} numberOfLines={2}>{description.description}</Text>
             </TouchableOpacity>
           </View>
           
@@ -250,7 +255,7 @@ export const GroupInfo = ({ route, navigation }) => {
           </View>
 
           <View style={styles.groupTextBox}>
-            <Text style={styles.groupText} numberOfLines={2}>{text.text}</Text>
+            <Text style={styles.groupText} numberOfLines={2}>{description.description}</Text>
           </View>
         </View>
         
@@ -285,7 +290,9 @@ export const GroupInfo = ({ route, navigation }) => {
             <Icon color="#667084ff" name="search" size={24} />
           </View>
         </View>
-
+            {
+              //We can use map to generate the list of member tiles based on the users array in the group
+            }
         <ScrollView style={styles.groupMembersBox}>
             <MemberTile
                 key={'1'}
@@ -362,7 +369,7 @@ export const GroupInfo = ({ route, navigation }) => {
         <View style={styles.actionModalInner}>
           <TextInput
             style={styles.actionModalTextInput}
-            defaultValue={text.text}
+            defaultValue={description.description}
             onChangeText={(text) => {
               setNewDesc(text);
             }}
@@ -371,7 +378,7 @@ export const GroupInfo = ({ route, navigation }) => {
             style={[styles.actionFileButton, { backgroundColor: colourState }]}
             state={null}
             onPress={() => {
-              console.log('Change the description to' + text.text);
+              console.log('Change the description to' + description.description);
               updateDescription();
               setDescribeVisible(false);
             }}
