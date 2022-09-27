@@ -155,7 +155,7 @@ export const Login = ({ navigation }) => {
                 onChangeText={(text) => {
                   setPassword(text);
                 }}
-                keyboardType="visible-password"
+                secureTextEntry={true}
               />
               <TouchableOpacity
                 style={styles.helpIcon}
