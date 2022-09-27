@@ -14,7 +14,7 @@ export const groupSlice = createSlice({
     },
     removeGroup: (state,action) => {
       state.forEach((item,index) => {
-        if (item.id === action.payload.id) state.splice(index,1)
+        if (item.name === action.payload.name) state.splice(index,1)
       })
       return state;
     },
@@ -26,22 +26,9 @@ export const groupSlice = createSlice({
       state = action.payload;
       return state;
     },
-    toggleDown: (state,action) => {
-      let notIn = true;
-      state.forEach((item,index) => {
-        if (item.id === action.payload.id){
-          state.splice(index,1);
-          notIn = false;
-        }
-      })
-      if (notIn) {
-        state.push({...action.payload,downloaded:{notIn}});
-      };
-      return state;
-    },
     changeName: (state,action) => {
       state.forEach((item,index) => {
-        if (item.id === action.payload.id){
+        if (item.name === action.payload.name){
           state[index].name = action.payload.name;
         }
       })
@@ -49,8 +36,8 @@ export const groupSlice = createSlice({
     },
     changeDesc: (state,action) => {
       state.forEach((item,index) => {
-        if (item.id === action.payload.id){
-          state[index].desc = action.payload.desc;
+        if (item.name === action.payload.name){
+          state[index].description = action.payload.description;
         }
       })
       return state;
@@ -60,6 +47,6 @@ export const groupSlice = createSlice({
 
 export const {actions, reducer} = groupSlice;
 
-export const {addGroup, removeGroup, clearGroups, refillGroups, toggleDown, changeName} = actions;
+export const {addGroup, removeGroup, clearGroups, refillGroups, changeName, changeDesc} = actions;
 
 export const selectGroups = (state) => state.group;

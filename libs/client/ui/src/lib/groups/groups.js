@@ -292,7 +292,7 @@ export const Groups = ({ navigation }) => {
                 }
               }).then((result)=>{
                 setMoreVisible(false);
-                navigation.navigate('GroupInfo', { id: { id }, text: { text }, name: { name }, thumbnailSource: { thumbnailSource } })
+                //refreshGroups
               }).catch((e)=>{
                 console.log(e);
               });
