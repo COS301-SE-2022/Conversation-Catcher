@@ -6,6 +6,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import reducer from '../../../../../../apps/client/src/app/slices/user.slice';
 import { Provider } from 'react-redux';
 import { screen, fireEvent } from '@testing-library/react-native';
+// yarn nx run change-email.spec:test
 
 /*describe('ChangeEmail', () => {
   const store = configureStore({
