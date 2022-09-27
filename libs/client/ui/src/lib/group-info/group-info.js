@@ -18,7 +18,7 @@ import { useSelector, useDispatch } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { selectColour, selectEmail } from 'apps/client/src/app/slices/user.slice';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { changeName, removeGroup} from 'apps/client/src/app/slices/group.slice';
+import { changeName, removeGroup, changeDesc} from 'apps/client/src/app/slices/group.slice';
 import MemberTile from '../shared-components/member-tile/member-tile.js';
 import groupsLocalAccess from '../shared-components/local-groups-access/local-groups-access';
 
@@ -42,14 +42,21 @@ export const GroupInfo = ({ route, navigation }) => {
     const { id, text, name, thumbnailSource } = route.params;
 
     const RENAME = gql`
-    mutation setName(
-      $groupName: String!
-      $newName: String!
-    ) {
-      renameGroup(groupName: $groupName, newName: $newName)
-    }
-  `;
-
+      mutation setName(
+        $groupName: String!
+        $newName: String!
+      ) {
+        renameGroup(groupName: $groupName, newName: $newName)
+      }
+    `;
+    const CHANGE_DESCRIPTION = gql`
+      mutation chngDesc(
+        $groupName: String!
+        $description: String!
+      ) {
+        updateDescription(groupName: $groupName, description: $description)
+      }
+    `;
   const DELETE = gql`
     mutation delete(
       $groupName: String!
@@ -75,6 +82,7 @@ export const GroupInfo = ({ route, navigation }) => {
   `;
 
   const [rename] = useMutation(RENAME);
+  const [chngDesc] = useMutation(CHANGE_DESCRIPTION);
   const [delete_group] = useMutation(DELETE);
   const [remove] = useMutation(REMOVE_USER);
   const [add] = useMutation(ADD_MEMBER);
@@ -85,6 +93,13 @@ export const GroupInfo = ({ route, navigation }) => {
     groupsLocalAccess.renameGroup(id.id, newName);
     await rename({ variables: { id: id.id, name: newName } });
     dispatch(changeName({ id: id.id, name: newName }));
+  }
+
+  async function updateDescription() {
+    text.text = newDesc;
+    groupsLocalAccess.chngDesc(id.id, newDesc);
+    await chngDesc({variables: {id:id.id, description: newDesc}});
+    dispatch(changeDesc({id:id.id, desc: newDesc}));
   }
 
   async function deleteGroup() {
@@ -348,7 +363,7 @@ export const GroupInfo = ({ route, navigation }) => {
             state={null}
             onPress={() => {
               console.log('Change the description to' + text.text);
-              /
+              updateDescription();
               setDescribeVisible(false);
             }}
           >

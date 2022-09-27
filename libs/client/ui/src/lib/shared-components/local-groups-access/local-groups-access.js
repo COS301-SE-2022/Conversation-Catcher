@@ -83,6 +83,13 @@ class LocalGroupsAccess {
     }
   }
 
+  //Change description of group given an id
+  chngDesc(groupID,desc) {
+    for (let i = 0; i < this.allGroups.length; i++) {
+      if (this.allGroups[i].id === groupID) this.allGroups[i].desc = desc;
+    }
+  }
+
   //Remove group with certain id from the list
   deleteGroup(groupId) {
     var temp = [];

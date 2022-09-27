@@ -46,7 +46,15 @@ export const groupSlice = createSlice({
         }
       })
       return state;
-    }
+    },
+    changeDesc: (state,action) => {
+      state.forEach((item,index) => {
+        if (item.id === action.payload.id){
+          state[index].desc = action.payload.desc;
+        }
+      })
+      return state;
+    },
   },
 });
 
