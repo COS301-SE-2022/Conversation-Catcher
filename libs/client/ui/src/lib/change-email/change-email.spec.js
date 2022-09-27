@@ -1,11 +1,9 @@
-import React from 'react';
-import { render } from '@testing-library/react-native';
+import { render, screen, fireEvent } from '@testing-library/react-native';
 import ChangeEmail from './change-email';
 import { configureStore } from '@reduxjs/toolkit';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import reducer from '../../../../../../apps/client/src/app/slices/user.slice';
 import { Provider } from 'react-redux';
-import { screen, fireEvent } from '@testing-library/react-native';
 // yarn nx run change-email.spec:test
 
 /*describe('ChangeEmail', () => {
