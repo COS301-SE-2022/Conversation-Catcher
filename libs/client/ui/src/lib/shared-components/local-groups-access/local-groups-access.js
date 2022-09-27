@@ -88,6 +88,42 @@ class LocalGroupsAccess {
     this.clearGroups();
     this.addGroups(temp);
   }
+
+  addPdf(pdf, group){
+    for (let i = 0; i < this.allGroups.length; i++) {
+      if (this.allGroups[i].name === group) this.allGroups[i].pdfs.push(pdf);
+    }
+  }
+
+  removePdf(pdf, group){
+    for (let i = 0; i < this.allGroups.length; i++) {
+      if (this.allGroups[i].name === group){
+        var temp = [];
+        for (let j = 0; j < this.allGroups[i].pdfs.length; j++){
+          if (this.allGroups[i].pdfs[j] !== pdf) temp.push(this.allGroups[i].pdfs[j]);
+        }
+        this.allGroups[i].pdfs = temp;
+      }
+    }
+  }
+
+  addUser(user, group){
+    for (let i = 0; i < this.allGroups.length; i++) {
+      if (this.allGroups[i].name === group) this.allGroups[i].users.push(user);
+    }
+  }
+
+  removeUser(user, group){
+    for (let i = 0; i < this.allGroups.length; i++) {
+      if (this.allGroups[i].name === group){
+        var temp = [];
+        for (let j = 0; j < this.allGroups[i].users.length; j++){
+          if (this.allGroups[i].users[j] !== user) temp.push(this.allGroups[i].users[j]);
+        }
+        this.allGroups[i].users = temp;
+      }
+    }
+  }
 }
 
 const groupLocalAccess = new LocalGroupsAccess();

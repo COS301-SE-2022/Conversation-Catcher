@@ -35,7 +35,7 @@ export const ViewAll = ({ navigation, route }) => {
   const [renameVisible, setRenameVisible] = useState(false);
   // const [refreshPage, setRefreshPage] = useState('');
 
-  const { groupName,  } = route.params;
+  const { groupName } = route.params;
 
   const url = 'https://awesome.contents.com/';
   const title = 'Awesome Contents';
@@ -62,7 +62,7 @@ export const ViewAll = ({ navigation, route }) => {
 
   async function addPDF(){//call this after selectedPdf is set to add pdf to group
     if (selectedPdf === null || selectedGroup === null) return;
-    groupLocalAccess.addPdf();
+    groupLocalAccess.addPdf(selectedPdf, selectedGroup);
     await addPdf({variables:{pdfId: selectedPdf,groupName:selectedGroup}}).then(()=>{
       setSelectedPdf(null);
       setSelectedGroup(null);
@@ -70,7 +70,7 @@ export const ViewAll = ({ navigation, route }) => {
   }
   async function removePDF(){//call this after selectedPdf is set to remove pdf to group
     if (selectedPdf === null || groupName === null) return;
-    groupLocalAccess.addPdf();
+    groupLocalAccess.removePdf(selectedPdf, groupName);
     await removePdf({variables:{pdfId: selectedPdf,groupName:groupName}}).then(()=>{
       setSelectedPdf(null);
     });

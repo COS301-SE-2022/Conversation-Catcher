@@ -33,7 +33,7 @@ const GroupTile = ({
     <TouchableOpacity
       style={styles.groupTile}
       onPress={() =>
-        nav.navigate('GroupInfo', { id: { id }, text: { text }, name: { name }, thumbnailSource: { thumbnailSource } })
+        nav.navigate('GroupInfo', { name:name, thumbnailSource:thumbnailSource, admin:admin, users:users, description:description, pdfs:pdfs  })
       }
     >
       <View style={[styles.groupThumbnailBox, { borderColor: colourState }]}>

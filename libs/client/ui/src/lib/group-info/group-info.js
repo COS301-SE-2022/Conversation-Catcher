@@ -42,7 +42,7 @@ export const GroupInfo = ({ route, navigation }) => {
     const [newDesc,setNewDesc] = useState('');
     const dispatch = useDispatch();
 
-    const { id, text, name, thumbnailSource } = route.params;
+    const {name, thumbnailSource, admin, users, description, pdfs } = route.params;
 
     const RENAME = gql`
       mutation setName(
@@ -75,7 +75,7 @@ export const GroupInfo = ({ route, navigation }) => {
       removeUserFrom(user: $user, groupName: $groupName)
     }
   `;
-  const ADD_MEMBER = gql`
+  const ADD_USER = gql`
     mutation addUserTo(
       $user: String!
       $groupName: String!
@@ -88,26 +88,26 @@ export const GroupInfo = ({ route, navigation }) => {
   const [chngDesc] = useMutation(CHANGE_DESCRIPTION);
   const [delete_group] = useMutation(DELETE);
   const [remove] = useMutation(REMOVE_USER);
-  const [add] = useMutation(ADD_MEMBER);
+  const [add] = useMutation(ADD_USER);
 
   async function renameGroup() {
-    console.log(id);
+    console.log(name);
     name.name = newName;
-    groupsLocalAccess.renameGroup(id.id, newName);
-    await rename({ variables: { id: id.id, name: newName } });
+    groupsLocalAccess.renameGroup(name.name, newName);
+    await rename({ variables: { groupName:name.name, newName: newName } });
     //dispatch(changeName({ id: id.id, name: newName }));
   }
 
   async function updateDescription() {
-    text.text = newDesc;
-    groupsLocalAccess.chngDesc(id.id, newDesc);
-    await chngDesc({variables: {id:id.id, description: newDesc}});
+    description.description = newDesc;
+    groupsLocalAccess.chngDesc(name.name, newDesc);
+    await chngDesc({variables: {groupName:name.name, description: newDesc}});
     //dispatch(changeDesc({id:id.id, desc: newDesc}));
   }
 
   async function deleteGroup() {
-    groupsLocalAccess.deleteGroup(id.id);
-    await delete_group({ variables: { id: id.id } });
+    groupsLocalAccess.deleteGroup(name.name);
+    await delete_group({ variables: { groupName:name.name } });
     //dispatch(removeGroup({ id: id.id }));
   }
   
