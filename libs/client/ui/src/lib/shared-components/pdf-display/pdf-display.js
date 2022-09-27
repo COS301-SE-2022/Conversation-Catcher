@@ -81,7 +81,7 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
               showCheck={selectMode}
               summarised={item.summarised}
               nav={navigation}
-              refresh={setDidReload}
+              //refresh={setDidReload}
             />
           ))}
         </ScrollView>
@@ -131,7 +131,8 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
       .catch((e) => {
         console.log(e);
         pdfLocalAccess.clearPdfs();
-        setDidReload(!didReload);
+        //setDidReload(!didReload);
+        setRefreshing(false);
       });
   };
 

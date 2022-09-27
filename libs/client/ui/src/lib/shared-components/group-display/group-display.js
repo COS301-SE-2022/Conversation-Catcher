@@ -16,19 +16,14 @@ export function GroupDisplay({ navigation, selectMode }, ref) {
   const [didReload, setDidReload] = useState(true);
   const [isLoaded, setIsLoaded] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+  const [refreshFlag,setRefreshFlag] = useState(false);
   const emailState = useSelector(selectEmail);
   //const localGroups = useSelector(selectGroups);
   //const dispatch = useDispatch();
   //Expose refresh function to parent(View-all page)
-  useImperativeHandle(ref, () => ({
-    refreshPfds: () => {
-      // console.log('refreshing');
-      setDidReload(!didReload);
-    },
-  }));
 
   //Listen to when to update page
-  DeviceEventEmitter.addListener('updatePage', () => setDidReload(!didReload));
+  DeviceEventEmitter.addListener('updateGroups', () => setRefreshFlag(true));
   //graphql syntax trees
   const GET_USER_GROUPS = gql`
     query getForUser($email: String!) {
@@ -37,7 +32,7 @@ export function GroupDisplay({ navigation, selectMode }, ref) {
         name
         creationDate
         downloaded
-        #group
+        group
         text
       }
     }
@@ -74,6 +69,7 @@ export function GroupDisplay({ navigation, selectMode }, ref) {
 
   const ReloadData = () => {
     setRefreshing(true);
+    setRefreshFlag(false);
     fetchGroups({
       variables: {
         email: emailState,
@@ -89,7 +85,8 @@ export function GroupDisplay({ navigation, selectMode }, ref) {
       .catch((e) => {
         console.log(e);
         groupLocalAccess.clearPdfs();
-        setDidReload(!didReload);
+        //setDidReload(!didReload);
+        setRefreshing(false);
       });
   };
 
@@ -134,6 +131,7 @@ export function GroupDisplay({ navigation, selectMode }, ref) {
   // console.log(data);
   // console.log(loading);
   // console.log(error);
+  if (refreshFlag) ReloadData();
   if (loading)
     return (
       //loading animation

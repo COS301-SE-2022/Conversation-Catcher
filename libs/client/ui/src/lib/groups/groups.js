@@ -9,6 +9,7 @@ import {
   Alert,
   ScrollView,
   TextInput,
+  DeviceEventEmitter,
 } from 'react-native';
 import { gql, useLazyQuery, useMutation } from '@apollo/client';
 import GroupTile from '../shared-components/group-tile/group-tile.js';
@@ -254,7 +255,7 @@ export const Groups = ({ navigation }) => {
             defaultValue={'Date'}
             onSelect={(index, itemValue) => {
               groupLocalAccess.sortGroups(itemValue);
-              groupRef.current.refreshPfds();//breaks
+              groupRef.current.refreshPfds();breaks
             }}
             style={styles.orderByDropdown}
             textStyle={styles.orderByDropdownText}
@@ -292,7 +293,7 @@ export const Groups = ({ navigation }) => {
                 }
               }).then((result)=>{
                 setMoreVisible(false);
-                //refreshGroups
+                DeviceEventEmitter.emit("updateGroups");
               }).catch((e)=>{
                 console.log(e);
               });
@@ -304,7 +305,6 @@ export const Groups = ({ navigation }) => {
               </View>
             </View>
           </TouchableOpacity>
-
         </View>
       </Modal>
       <Modal
