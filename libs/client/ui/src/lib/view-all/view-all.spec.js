@@ -20,32 +20,25 @@ describe('ViewAll', () => {
     </Provider>
   );
 
+  it('View all should render', () => {
+    const { container } = render(TestComponent);
+    expect(container).toBeTruthy();
+    expect(true).toEqual(true);
+  });
+
   render(TestComponent);
 
-  //new email
-  const emailInput = screen.getByPlaceholderText("johnsmith@gmail.com");
-  expect(emailInput).toBeTruthy();
-  
-  const textToEnterEmail = 'random@random.com';
-  fireEvent.changeText(emailInput, textToEnterEmail);
+  // search bar
+
+  //order by
+
+  //modal button
+
+  //rename
+  //rename
+
+  //delete
 
   //password
-  const passwordInput = screen.getByPlaceholderText("*******************");
-  expect(passwordInput).toBeTruthy();
   
-  const textToEnterPassword = '123qwe123#';
-  fireEvent.changeText(passwordInput, textToEnterPassword);
-
-  // Submit
-  fireEvent.press(screen.ByLabelText("Log in"));
-  
-  it('test email', () => {
-    const emailState = store.getState().email;
-    expect(emailState).toEqual('random@random.com');
-  });
-
-  it('test password', () => {
-    const passwordState = store.getState().password;
-    expect(passwordState).toEqual('123qwe123#');
-  });
 });
