@@ -52,7 +52,7 @@ describe('ChangePassword', () => {
   const passwordInput = screen.getByText("*****************");
   expect(passwordInput).toBeTruthy();
   
-  const textToEnterPassword = '123qwe123';
+  const textToEnterPassword = '123qwe123#';
   fireEvent.changeText(passwordInput, textToEnterPassword);
 
   // setCheckPassword
