@@ -1,5 +1,6 @@
 from sentence_transformers import SentenceTransformer, util
 import requests
+import tensorflow
 
 class embedText:
 
@@ -18,7 +19,12 @@ class embedText:
         embedder = SentenceTransformer('all-MiniLM-L6-v2')
         top_k = 10
 
-        corpus_embeddings = df['id','embeddings']
+        # corpus_embeddings = df['id','embeddings']
+        corpus_embeddings = []
+        for pdf in df:
+            corpus_embeddings.append(tensorflow.convert_to_tensor(pdf['embeddings']))
+        
+        print(corpus_embeddings)
 
         query_embedding = embedder.encode(query, convert_to_tensor=True)
         hits = util.semantic_search(query_embedding, corpus_embeddings, top_k=top_k)
