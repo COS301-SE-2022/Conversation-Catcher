@@ -17,8 +17,8 @@ export function GroupDisplay({ navigation, selectMode }, ref) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const emailState = useSelector(selectEmail);
-  const localGroups = useSelector(selectGroups);
-  const dispatch = useDispatch();
+  //const localGroups = useSelector(selectGroups);
+  //const dispatch = useDispatch();
   //Expose refresh function to parent(View-all page)
   useImperativeHandle(ref, () => ({
     refreshPfds: () => {
@@ -43,17 +43,17 @@ export function GroupDisplay({ navigation, selectMode }, ref) {
     }
   `;
   //Look at query
-  const SET_GROUP = gql`
-    mutation setUser(
-      $oldEmail: String!
-      $email: String!
-      $colour: String!
-      $pdfs: [String!]!
-    ) {
-      setUser(oldEmail: $oldEmail, email: $email, colour: $colour, pdfs: $pdfs)
-    }
-  `; 
-  const [setGroup] = useMutation(SET_GROUP);
+  // const SET_GROUP = gql`
+  //   mutation setUser(
+  //     $oldEmail: String!
+  //     $email: String!
+  //     $colour: String!
+  //     $pdfs: [String!]!
+  //   ) {
+  //     setUser(oldEmail: $oldEmail, email: $email, colour: $colour, pdfs: $pdfs)
+  //   }
+  // `; 
+  // const [setGroup] = useMutation(SET_GROUP);
   const { data, loading, error } = useQuery(GET_USER_GROUPS, {
     variables: { email: emailState },
   });
@@ -136,25 +136,35 @@ export function GroupDisplay({ navigation, selectMode }, ref) {
   // console.log(error);
   if (loading)
     return (
-      <ScrollDisplay
-        arr={localGroups}
-        text={"No Groups Stored Locally"}
-        load={true}
-      />
+      //loading animation
+      <ScrollView
+          style={styles.recentGroupTiles}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={ReloadData} />
+          }
+        >
+          <Loading width={100} height={100} load={true} />
+          <Text style={{ textAlign: 'center' }}>{"Retrieving groups"}</Text>
+        </ScrollView>
     );
 
   if (error)
     return (
-      <ScrollDisplay
-        arr={localGroups}
-        text={"No Groups Stored Locally"}
-        load={true}
-      />
+      //error message
+      <ScrollView
+          style={styles.recentGroupTiles}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={ReloadData} />
+          }
+        >
+          <Text style={{ textAlign: 'center' }}>{"No network connection"}</Text>
+        </ScrollView>
     );
   //If the group array is empty assign the result from the query
   //create deep copy of the returned data
   //Data is here in data if returned
   if (!groupLocalAccess.isLoaded()) {
+    //some of this can be removed
     groupLocalAccess.clearGroups();
     setData(data);
     if (groupLocalAccess.isLoaded()) {
@@ -169,22 +179,22 @@ export function GroupDisplay({ navigation, selectMode }, ref) {
     //setIsLoaded(true);
     //Update local group storage
     //array of groups stored locally, selected from data to overwrite the slice
-    if (data.getGroups[0] !== undefined && data.getGroups[0].name !== "error"){
-      let tempArray = [];
-      var p;
-      for (p in groupLocalAccess.getGroups()){
-        if (data.getGroups[p].downloaded === true){
-          tempArray.push(data.getGroups[p]);
-        }
-      }
-      dispatch(refillGroups(tempArray));
-    }
+    // if (data.getGroups[0] !== undefined && data.getGroups[0].name !== "error"){
+    //   let tempArray = [];
+    //   var p;
+    //   for (p in groupLocalAccess.getGroups()){
+    //     if (data.getGroups[p].downloaded === true){
+    //       tempArray.push(data.getGroups[p]);
+    //     }
+    //   }
+    //   dispatch(refillGroups(tempArray));
+    // }
   }
 
   return (
     <ScrollDisplay
     arr={groupLocalAccess.getGroups()}
-    text={""}
+    text={"You are not a member of any groups"}
     load={false}
     />
   );

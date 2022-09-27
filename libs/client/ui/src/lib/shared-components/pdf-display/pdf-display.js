@@ -192,7 +192,7 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
   return (
     <ScrollDisplay
       arr={pdfLocalAccess.getPdfs()}
-      text={'This account has no documents yet!'}
+      text={'You have no documents yet!'}
       load={false}
     />
   );
