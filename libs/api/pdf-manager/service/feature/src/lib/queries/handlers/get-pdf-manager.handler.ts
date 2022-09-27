@@ -17,9 +17,9 @@ export class GetPdfsByArrHandler implements IQueryHandler<GetPdfsByArrQuery> {
 
   async execute({ ids }: GetPdfsByArrQuery): Promise<any> {
     const result = []
-    ids.forEach(async (id) => {
-      result.push(await this.repository.getPDF(id))
-    });
+    for (let i=0; i< ids.length; i++){
+      result.push( await this.repository.getPDF(ids[i]));
+    }
     return result;
   }
 }
