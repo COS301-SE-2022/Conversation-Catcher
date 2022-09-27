@@ -16,7 +16,7 @@ import DocumentPicker, { types } from 'react-native-document-picker';
 import { useSelector, useDispatch } from 'react-redux';
 //import { selectColour } from '../../../../../../../apps/client/src/app/slices/user.slice';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectColour } from 'apps/client/src/app/slices/user.slice';
+import { selectColour, selectEmail } from 'apps/client/src/app/slices/user.slice';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { changeName, removeGroup} from 'apps/client/src/app/slices/group.slice';
 import MemberTile from '../shared-components/member-tile/member-tile.js';
@@ -27,13 +27,16 @@ export const GroupInfo = ({ route, navigation }) => {
 
     const [selectMode, setSelectMode] = useState(false);
     const colourState = useSelector(selectColour);
+    const userName = useSelector(selectEmail);
     const [bottomModalVisible, setBottomModalVisible] = useState(false);
     const [adminState, setAdminState] = useState(true);
     const [renameVisible, setRenameVisible] = useState(false);
+    const [describeVisible,setDescribeVisible] = useState(true);
     const [deleteConfirmVisible, setDeleteConfirmVisible] = useState(false);
     const [leaveConfirmVisible, setLeaveConfirmVisible] = useState(false);
     const [fileResponse, setFileResponse] = useState([]);
     const [newName, setNewName] = useState('');
+    const [newDesc,setNewDesc] = useState('');
     const dispatch = useDispatch();
 
     const { id, text, name, thumbnailSource } = route.params;
@@ -197,9 +200,14 @@ export const GroupInfo = ({ route, navigation }) => {
                 <Text style={styles.groupName} numberOfLines={1}>{name.name}</Text>
             </TouchableOpacity>
 
-            <View style={styles.groupTextBox}>
+            <TouchableOpacity 
+              style={styles.groupTextBox}
+              onPress={() => {
+                setDescribeVisible(true);
+              }}
+            >
               <Text style={styles.groupText} numberOfLines={2}>{text.text}</Text>
-            </View>
+            </TouchableOpacity>
           </View>
           
         )
@@ -305,7 +313,7 @@ export const GroupInfo = ({ route, navigation }) => {
             style={[styles.actionFileButton, { backgroundColor: colourState }]}
             state={null}
             onPress={() => {
-              console.log('renaming the pdf to ' + newName);
+              console.log('renaming the group to ' + newName);
               renameGroup();
               setRenameVisible(false);
             }}
@@ -313,6 +321,40 @@ export const GroupInfo = ({ route, navigation }) => {
             <View style={styles.actionModalButtonContent}>
               <View style={styles.actionModalButtonText_box}>
                 <Text style={styles.actionModalButtonText}>{'Rename'}</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </Modal>
+      
+      <Modal
+        style={styles.modal}
+        isVisible={describeVisible}
+        hasBackdrop={true}
+        backdropColor="white"
+        onBackdropPress={() => setDescribeVisible(false)}
+        //onModalHide={() => setFileSelected(false)}
+      >
+        <View style={styles.actionModalInner}>
+          <TextInput
+            style={styles.actionModalTextInput}
+            defaultValue={text.text}
+            onChangeText={(text) => {
+              setNewDesc(text);
+            }}
+          />
+          <TouchableOpacity
+            style={[styles.actionFileButton, { backgroundColor: colourState }]}
+            state={null}
+            onPress={() => {
+              console.log('Change the description to' + text.text);
+              /
+              setDescribeVisible(false);
+            }}
+          >
+            <View style={styles.actionModalButtonContent}>
+              <View style={styles.actionModalButtonText_box}>
+                <Text style={styles.actionModalButtonText}>{'Change Description'}</Text>
               </View>
             </View>
           </TouchableOpacity>
@@ -391,8 +433,7 @@ export const GroupInfo = ({ route, navigation }) => {
             style={[styles.actionFileButton, { backgroundColor: colourState }]}
             state={null}
             onPress={() => {
-              putname
-              removeUser().then(navigation.navigate('Groups')).catch(e=>console.log(e));
+              removeUser(userName).then(navigation.navigate('Groups')).catch(e=>console.log(e));
               setLeaveConfirmVisible(false);
               NativeAppEventEmitter.emit('updatePage');
             }}
