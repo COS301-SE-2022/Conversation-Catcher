@@ -31,7 +31,7 @@ export const GroupInfo = ({ route, navigation }) => {
     const [bottomModalVisible, setBottomModalVisible] = useState(false);
     const [adminState, setAdminState] = useState(true);
     const [renameVisible, setRenameVisible] = useState(false);
-    const [describeVisible,setDescribeVisible] = useState(true);
+    const [describeVisible,setDescribeVisible] = useState(false);
     const [deleteConfirmVisible, setDeleteConfirmVisible] = useState(false);
     const [leaveConfirmVisible, setLeaveConfirmVisible] = useState(false);
     const [fileResponse, setFileResponse] = useState([]);

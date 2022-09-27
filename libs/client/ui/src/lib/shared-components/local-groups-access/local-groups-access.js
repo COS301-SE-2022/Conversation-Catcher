@@ -58,43 +58,32 @@ class LocalGroupsAccess {
 
   sortGroups(sortBy) {
     // Sort PDFs array according to sortBy (Which is either Name or )
-    switch (sortBy) {
-      case 'Name':
-        this.displayGroups.sort((a, b) => {
-          if (a.name < b.name) return -1;
-          return 1;
-        });
-        console.log(this.displayGroups);
-        break;
-      case 'Date':
-        this.displayGroups.sort((a, b) => {
-          if (new Date(a.creationDate) > new Date(b.creationDate)) return -1;
-          return 1;
-        });
-        console.log(this.displayGroups);
-        break;
-    }
+    this.displayGroups.sort((a, b) => {
+      if (a.name < b.name) return -1;
+      return 1;
+    });
+    console.log(this.displayGroups);
   }
 
   //Search for group with id groupId and change the name
-  renameGroup(groupId, newName) {
+  renameGroup(oldName, newName) {
     for (let i = 0; i < this.allGroups.length; i++) {
-      if (this.allGroups[i].id === groupId) this.allGroups[i].name = newName;
+      if (this.allGroups[i].name === oldName) this.allGroups[i].name = newName;
     }
   }
 
   //Change description of group given an id
-  chngDesc(groupID,desc) {
+  chngDesc(name,desc) {
     for (let i = 0; i < this.allGroups.length; i++) {
-      if (this.allGroups[i].id === groupID) this.allGroups[i].desc = desc;
+      if (this.allGroups[i].name === name) this.allGroups[i].description = desc;
     }
   }
 
   //Remove group with certain id from the list
-  deleteGroup(groupId) {
+  deleteGroup(name) {
     var temp = [];
     for (let i = 0; i < this.allGroups.length; i++) {
-      if (this.allGroups[i].id !== groupId) temp.push(this.allGroups[i]);
+      if (this.allGroups[i].name !== name) temp.push(this.allGroups[i]);
     }
     this.clearGroups();
     this.addGroups(temp);
