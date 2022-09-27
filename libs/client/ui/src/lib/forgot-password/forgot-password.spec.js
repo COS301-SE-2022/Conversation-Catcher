@@ -49,5 +49,5 @@ describe('ForgotPassword', () => {
 
   const emailState = store.getState().email;
 
-  expect(emailState).toEqual('123qwe123#');
+  expect(emailState).toEqual('random@random.com');
 });

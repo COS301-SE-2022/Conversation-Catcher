@@ -72,7 +72,7 @@ describe('ChangePassword', () => {
   // Submit
   fireEvent.press(screen.ByLabelText("Change password"));
 
-  const emailState = store.getState().email;
+  const passwordState = store.getState().password;
 
-  expect(emailState).toEqual('123qwe123#');
+  expect(passwordState).toEqual('123qwe123#');
 });

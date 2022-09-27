@@ -45,16 +45,27 @@ describe('Login', () => {
   render(TestComponent);
 
   //new email
-  const newEmailInput = screen.getByPlaceholderText("johnsmith@gmail.com");
-  expect(newEmailInput).toBeTruthy();
+  const emailInput = screen.getByPlaceholderText("johnsmith@gmail.com");
+  expect(emailInput).toBeTruthy();
   
-  const textToEnterNewEmail = 'random@random.com';
-  fireEvent.changeText(newEmailInput, textToEnterNewEmail);
+  const textToEnterEmail = 'random@random.com';
+  fireEvent.changeText(emailInput, textToEnterEmail);
+
+  //password
+  const passwordInput = screen.getByPlaceholderText("*******************");
+  expect(passwordInput).toBeTruthy();
+  
+  const textToEnterPassword = '123qwe123#';
+  fireEvent.changeText(passwordInput, textToEnterPassword);
 
   // Submit
-  fireEvent.press(screen.ByLabelText("Send reset email"));
+  fireEvent.press(screen.ByLabelText("Log in"));
 
   const emailState = store.getState().email;
 
-  expect(emailState).toEqual('123qwe123#');
+  expect(emailState).toEqual('random@random.com');
+
+  const passwordState = store.getState().password;
+
+  expect(passwordState).toEqual('123qwe123#');
 });
