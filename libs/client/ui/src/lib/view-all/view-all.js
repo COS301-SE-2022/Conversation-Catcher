@@ -21,8 +21,9 @@ import pdfLocalAccess from '../shared-components/local-pdfs-access/local-pdfs-ac
 import { useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { selectColour } from '../../../../../../apps/client/src/app/slices/user.slice';
+import groupLocalAccess from '../shared-components/local-groups-access/local-groups-access.js';
 
-export const ViewAll = ({ navigation }) => {
+export const ViewAll = ({ navigation, route }) => {
   const pdfRef = useRef();
   const colourState = useSelector(selectColour);
   const [moreVisible, setMoreVisible] = useState(false);
@@ -34,12 +35,51 @@ export const ViewAll = ({ navigation }) => {
   const [renameVisible, setRenameVisible] = useState(false);
   // const [refreshPage, setRefreshPage] = useState('');
 
+  const { groupName,  } = route.params;
+
   const url = 'https://awesome.contents.com/';
   const title = 'Awesome Contents';
   const message = 'Please check this out.';
 
-  //variables for object sorting
+  const ADD_PDF = gql`
+    mutation addPdfTo(
+      $pdfId: String!
+      $groupName: String!
+    ) {
+      addPdfTo(pdfId: $pdf, groupName: $groupName)
+    }
+  `;
+  const REMOVE_PDF = gql`
+    mutation removePdfFrom(
+      $pdfId: String!
+      $groupName: String!
+    ) {
+      removePdfFrom(pdfId: $pdf, groupName: $groupName)
+    }
+  `;
+  const [addPdf] = useMutation(ADD_PDF);
+  const [removePdf] = useMutation(REMOVE_PDF);
+
+  async function addPDF(){//call this after selectedPdf is set to add pdf to group
+    if (selectedPdf === null || selectedGroup === null) return;
+    groupLocalAccess.addPdf();
+    await addPdf({variables:{pdfId: selectedPdf,groupName:selectedGroup}}).then(()=>{
+      setSelectedPdf(null);
+      setSelectedGroup(null);
+    });
+  }
+  async function removePDF(){//call this after selectedPdf is set to remove pdf to group
+    if (selectedPdf === null || groupName === null) return;
+    groupLocalAccess.addPdf();
+    await removePdf({variables:{pdfId: selectedPdf,groupName:groupName}}).then(()=>{
+      setSelectedPdf(null);
+    });
+  }
+
+  //variables for object sorting and management
   const [objArr, setObjArr] = useState([]);
+  const [selectedPdf, setSelectedPdf] = useState(null);
+  const [selectedGroup, setSelectedGroup] = useState(null);
 
   const options = {
     title,

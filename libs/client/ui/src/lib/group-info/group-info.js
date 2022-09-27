@@ -95,26 +95,26 @@ export const GroupInfo = ({ route, navigation }) => {
     name.name = newName;
     groupsLocalAccess.renameGroup(id.id, newName);
     await rename({ variables: { id: id.id, name: newName } });
-    dispatch(changeName({ id: id.id, name: newName }));
+    //dispatch(changeName({ id: id.id, name: newName }));
   }
 
   async function updateDescription() {
     text.text = newDesc;
     groupsLocalAccess.chngDesc(id.id, newDesc);
     await chngDesc({variables: {id:id.id, description: newDesc}});
-    dispatch(changeDesc({id:id.id, desc: newDesc}));
+    //dispatch(changeDesc({id:id.id, desc: newDesc}));
   }
 
   async function deleteGroup() {
     groupsLocalAccess.deleteGroup(id.id);
     await delete_group({ variables: { id: id.id } });
-    dispatch(removeGroup({ id: id.id }));
+    //dispatch(removeGroup({ id: id.id }));
   }
   
   async function removeUser(userID){//define all this in respective files
     groupsLocalAccess.removeUser(id.id,userID)
     await remove({variables:{user:userID, groupName:id,id}});
-    dispatch(removeUser({id:id.id, user: userID}));
+    //dispatch(removeUser({id:id.id, user: userID}));
   }
 
   const handleDocumentSelection = useCallback(async () => {
