@@ -36,8 +36,13 @@ describe('ColourPage', () => {
   );
 
   render(TestComponent);
+  it('should render successfully', () => {
+    const { container } = render(TestComponent);
+    expect(container).toBeTruthy();
+    expect(true).toEqual(true);
+  });
 
   // Submit
   //fireEvent.press(screen.ByLabelText("Register"));
-  
+  // TODO: figure out how to do this
 });
