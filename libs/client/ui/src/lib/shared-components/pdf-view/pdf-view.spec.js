@@ -4,7 +4,7 @@ import { render } from '@testing-library/react-native';
 import { create } from 'react-test-renderer';
 import { configureStore } from '@reduxjs/toolkit';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import reducer from 'apps/client/src/app/slices/user.slice';
+import reducer from '../../../../../../../apps/client/src/app/slices/user.slice';
 import { Provider } from 'react-redux';
 import { ApolloProvider,ApolloClient,InMemoryCache } from '@apollo/client';
 

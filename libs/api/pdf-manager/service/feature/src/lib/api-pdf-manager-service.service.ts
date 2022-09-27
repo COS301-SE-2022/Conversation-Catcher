@@ -39,9 +39,9 @@ export class ApiPdfManagerServiceService {
   async setSumarry(id: string, summary: string) {
     return await this.commandBus.execute(new SetSummarisedCommand(id, summary));
   }
-  async setEmbeddings(id: string, embeddings: string) {
+  async setEmbeddings(id: string, name: string, text: string) {
     return await this.commandBus.execute(
-      new SetEmbeddingsCommand(id, embeddings)
+      new SetEmbeddingsCommand(id, name, text)
     );
   }
 
@@ -54,5 +54,8 @@ export class ApiPdfManagerServiceService {
   }
   async getUserPdfs(userid: string) {
     return await this.queryBus.execute(new GetUserPdfsQuery(userid));
+  }
+  async getSearchResults(query: string, docs: any[]){
+    return await this.queryBus.execute(new SemanticSearchQuery(query, docs));
   }
 }

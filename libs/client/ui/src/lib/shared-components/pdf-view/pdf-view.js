@@ -6,7 +6,7 @@ import {
   Image,
   ImageBackground,
   TouchableOpacity,
-  Alert,
+  SafeAreaView,
   ScrollView,
   TextInput,
   Share,
@@ -15,8 +15,6 @@ import {
   Switch,
 } from 'react-native';
 import { gql, useQuery, useMutation } from '@apollo/client';
-import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
-import ModalDropdown from 'react-native-modal-dropdown';
 import Loading from '../loading/loading';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
@@ -150,7 +148,7 @@ export const PdfView = ({ route, navigation }) => {
   };
 
   return (
-    <View style={styles.viewAllPage}>
+    <SafeAreaView style={styles.viewAllPage}>
       <View style={styles.viewAllTopBar}>
         <View style={styles.big_title_box}>
           <Text style={styles.big_title} numberOfLines={1}>
@@ -351,7 +349,7 @@ export const PdfView = ({ route, navigation }) => {
           </TouchableOpacity>
         </View>
       </Modal>
-    </View>
+    </SafeAreaView>
   );
 };
 export default PdfView;
@@ -395,7 +393,7 @@ const styles = StyleSheet.create({
     marginTop: 0,
     marginBottom: 0,
     marginLeft: 0,
-    flexGrow: 1,
+    flex: 1,
     marginRight: 0,
   },
   viewAllTopBar: {

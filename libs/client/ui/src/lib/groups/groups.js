@@ -3,10 +3,8 @@ import {
   View,
   StyleSheet,
   Text,
-  Image,
-  ImageBackground,
+  SafeAreaView,
   TouchableOpacity,
-  Alert,
   ScrollView,
   TextInput,
   DeviceEventEmitter,
@@ -21,7 +19,7 @@ import GroupDisplay from '../shared-components/group-display/group-display.js';
 import groupLocalAccess from '../shared-components/local-groups-access/local-groups-access';
 import { useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectColour, selectEmail } from 'apps/client/src/app/slices/user.slice';
+import { selectColour, selectEmail } from '../../../../../../apps/client/src/app/slices/user.slice';
 
 export const Groups = ({ navigation }) => {
   const groupRef = useRef();
@@ -171,7 +169,7 @@ export const Groups = ({ navigation }) => {
   // }
 
   return (
-    <View style={styles.groupsPage}>
+    <SafeAreaView style={styles.groupsPage}>
       <View style={styles.groupsTopBar}>
         <View style={styles.big_title_box}>
           <Text style={styles.big_title}>{'Groups'}</Text>
@@ -364,7 +362,7 @@ export const Groups = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </Modal>
-    </View>
+    </SafeAreaView>
   );
 };
 export default Groups;
@@ -375,7 +373,7 @@ const styles = StyleSheet.create({
     marginTop: 0,
     marginBottom: 0,
     marginLeft: 0,
-    flexGrow: 1,
+    flex: 1,
     marginRight: 0,
   },
   groupsTopBar: {

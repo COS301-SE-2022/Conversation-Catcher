@@ -1,8 +1,7 @@
 import { Resolver } from '@nestjs/graphql';
 import { Query, Args, Mutation } from '@nestjs/graphql';
 import { ApiPdfManagerServiceService } from '@conversation-catcher/api/pdf-manager/service/feature';
-import { PdfEntity } from '@conversation-catcher/api/pdf-manager/api/data-access';
-// import { text } from 'stream/consumers';
+import { PdfEntity, PdfEntityInput } from '@conversation-catcher/api/pdf-manager/api/data-access';
 
 @Resolver()
 export class ApiPdfManagerApiFeatureResolver {
@@ -94,6 +93,14 @@ export class ApiPdfManagerApiFeatureResolver {
     return [this.errorObj];
   }
 
+  @Query(() => String)
+  async semanticSearch(
+    @Args('query') query: string,
+    @Args('docs', { type: () => [PdfEntityInput] }) docs: PdfEntityInput[]
+  ) {
+    return await this.pdfService.getSearchResults(query, docs);
+  }
+
   //Append the passed in array of tags to the current tags in the array
   //Does not push duplicate tags
   @Mutation(() => String)
@@ -115,17 +122,21 @@ export class ApiPdfManagerApiFeatureResolver {
 
   //Add a summary of the text to the pdf
   @Mutation(() => String)
-  async setSummarized(@Args('id') id: string, @Args('summary') summary: string) {
+  async setSummarized(
+    @Args('id') id: string,
+    @Args('summary') summary: string
+  ) {
     return await this.pdfService.setSumarry(id, summary);
   }
 
   //Add embeddings for the search by idea
   @Mutation(() => String)
-  async setEmbeddings(
+  async embed(
     @Args('id') id: string,
-    @Args('embeddings') embeddings: string
+    @Args('name') name: string,
+    @Args('text') text: string
   ) {
-    return await this.pdfService.setEmbeddings(id, embeddings);
+    return await this.pdfService.setEmbeddings(id, name, text);
   }
 
   // add pdf to db connected to this user
@@ -147,7 +158,7 @@ export class ApiPdfManagerApiFeatureResolver {
   async renamePDF(@Args('id') id: string, @Args('name') name: string) {
     const pdfArr = await this.pdfService.setNamePdf(id, name);
     if (pdfArr.modifiedCount === 1) {
-      return 'success'
+      return 'success';
     }
     return 'Failed to rename the pdf';
   }
@@ -158,7 +169,7 @@ export class ApiPdfManagerApiFeatureResolver {
     const pdfArr = await this.pdfService.setDownloadedPdf(id);
 
     if (pdfArr != undefined) {
-      console.log("test");
+      console.log('test');
       return this.assignResult(pdfArr);
     }
     return this.errorObj;

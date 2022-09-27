@@ -6,7 +6,7 @@ import {
   Image,
   ImageBackground,
   TouchableOpacity,
-  Alert,
+  SafeAreaView,
   PermissionsAndroid,
   NativeAppEventEmitter,
   DeviceEventEmitter,
@@ -30,7 +30,7 @@ import {
   selectEmail,
   addPDF,
   selectUser,
-} from 'apps/client/src/app/slices/user.slice';
+} from '../../../../../../apps/client/src/app/slices/user.slice';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 
 export const Home = ({ navigation }) => {
@@ -53,10 +53,8 @@ export const Home = ({ navigation }) => {
   const [fileResponse, setFileResponse] = useState([]);
 
   if (pdfLocalAccess.summariseListener.length !== 0) {
-    console.log('adding listener');
+    //If statement to ensure that only one listener is created for the summarise command
     DeviceEventEmitter.addListener('summarise', (id, text) => {
-      console.log(id);
-      console.log(text);
       summarise(id, text);
     });
     pdfLocalAccess.summariseListener.length = 0;
@@ -87,10 +85,17 @@ export const Home = ({ navigation }) => {
     }
   `;
 
+  const GENERATE_NAME = gql`
+    mutation generateName($text: String!) {
+      generateName(text: $text)
+    }
+  `;
+
   //Mutations to be used in the creation of new PDFs
   const [summariseText] = useMutation(SUMMARISE_TEXT);
   const [setSummarisedText] = useMutation(SET_SUMMARISED);
   const [addPdf] = useMutation(ADD_PDF);
+  const [generateName] = useMutation(GENERATE_NAME);
 
   const handleDocumentSelection = useCallback(async () => {
     try {
@@ -185,7 +190,7 @@ export const Home = ({ navigation }) => {
   const componentDidMount = async () => {
     await checkPermission();
     await checkPermissionWrite();
-    
+
     const options = {
       sampleRate: 16000,
       channels: 1,
@@ -274,7 +279,9 @@ export const Home = ({ navigation }) => {
           const newPdf = await addPdf({
             variables: {
               email: emailState,
-              name: '', //await generateName({variables: {text: result.converted_text}})
+              name: await generateName({
+                variables: { text: result.converted_text },
+              }),
               text: result.converted_text,
             },
           });
@@ -316,7 +323,7 @@ export const Home = ({ navigation }) => {
 
   // componentDidMount();
   return (
-    <View style={styles.home}>
+    <SafeAreaView style={styles.home}>
       <View style={styles.big_title_box}>
         <Text style={styles.big_title} ellipsizeMode={'clip'}>
           {'Recents'}
@@ -506,7 +513,7 @@ export const Home = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </Modal>
-    </View>
+    </SafeAreaView>
   );
 };
 export default Home;
@@ -520,7 +527,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffffff',
     overflow: 'hidden',
     //flexShrink: 1,
-    //flex: 1,
+    flex: 1,
     //flexShrink: 0,
     flexDirection: 'column',
     width: '100%',

@@ -5,6 +5,8 @@ import { ApiStudentExploreApiFeatureModule as PdfManager } from '@conversation-c
 import { ApiSummariseTextApiModule as Summariser} from '@conversation-catcher/api/summarise-text/api'
 import { ApiSpeechToTextApiModule as SpeechToText } from '@conversation-catcher/api/speech-to-text/api';
 import { UserManagementApiFeatureModule as UserManagement } from '@conversation-catcher/api/user-management/api/feature'
+import { ApiGenerateNamesApiFeatureModule as NameGeneration } from '@conversation-catcher/api/generate-names/api/feature'
+
 
 @Module({
   controllers: [],
@@ -19,7 +21,8 @@ import { UserManagementApiFeatureModule as UserManagement } from '@conversation-
     PdfManager,
     Summariser,
     SpeechToText,
-    UserManagement
+    UserManagement,
+    NameGeneration,
   ],
 })
 export class ApiShellModule {}

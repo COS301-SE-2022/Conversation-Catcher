@@ -6,9 +6,9 @@ import Loading from '../loading/loading';
 import GroupTile from '../group-tile/group-tile';
 import groupLocalAccess from '../local-groups-access/local-groups-access';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectEmail} from 'apps/client/src/app/slices/user.slice';
+import { selectEmail} from '../../../../../../../apps/client/src/app/slices/user.slice';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectGroups, refillGroups } from 'apps/client/src/app/slices/group.slice';
+import { selectGroups, refillGroups } from '../../../../../../../apps/client/src/app/slices/group.slice';
 import { useSelector, useDispatch } from 'react-redux';
 
 export function GroupDisplay({ navigation, selectMode }, ref) {

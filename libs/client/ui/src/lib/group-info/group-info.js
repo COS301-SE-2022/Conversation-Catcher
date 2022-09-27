@@ -8,17 +8,17 @@ import {
   ScrollView,
   TextInput,
   NativeAppEventEmitter,
+  SafeAreaView,
 } from 'react-native';
 import { gql, useQuery, useMutation } from '@apollo/client';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
 import DocumentPicker, { types } from 'react-native-document-picker';
 import { useSelector, useDispatch } from 'react-redux';
-//import { selectColour } from '../../../../../../../apps/client/src/app/slices/user.slice';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectColour, selectEmail } from 'apps/client/src/app/slices/user.slice';
+import { selectColour, selectEmail } from '../../../../../../apps/client/src/app/slices/user.slice';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { changeName, removeGroup, changeDesc} from 'apps/client/src/app/slices/group.slice';
+import { changeName, removeGroup, changeDesc} from '../../../../../../apps/client/src/app/slices/group.slice';
 import MemberTile from '../shared-components/member-tile/member-tile.js';
 import groupsLocalAccess from '../shared-components/local-groups-access/local-groups-access';
 
@@ -32,7 +32,10 @@ export const GroupInfo = ({ route, navigation }) => {
     const [adminState, setAdminState] = useState(true);
     const [renameVisible, setRenameVisible] = useState(false);
     const [describeVisible,setDescribeVisible] = useState(false);
+    const [inviteVisible, setInviteVisible] = useState(false);
+    const [editDescriptionVisible, setEditDescriptionVisible] = useState(false);
     const [deleteConfirmVisible, setDeleteConfirmVisible] = useState(false);
+    const [removeConfirmVisible, setRemoveConfirmVisible] = useState(false);
     const [leaveConfirmVisible, setLeaveConfirmVisible] = useState(false);
     const [fileResponse, setFileResponse] = useState([]);
     const [newName, setNewName] = useState('');
@@ -164,7 +167,12 @@ export const GroupInfo = ({ route, navigation }) => {
         return (
           <View style={styles.membersButtonsGroup}> 
             <View style={styles.inviteButtonBox}>
-              <TouchableOpacity style={styles.invitebutton}>
+              <TouchableOpacity 
+                style={styles.invitebutton}
+                onPress={() => {
+                  setInviteVisible(true);
+                }}
+              >
                 <Icon name="plus" size={30} color={colourState} />
               </TouchableOpacity>
             </View>
@@ -219,6 +227,7 @@ export const GroupInfo = ({ route, navigation }) => {
               style={styles.groupTextBox}
               onPress={() => {
                 setDescribeVisible(true);
+                setEditDescriptionVisible(true);
               }}
             >
               <Text style={styles.groupText} numberOfLines={2}>{text.text}</Text>
@@ -249,7 +258,7 @@ export const GroupInfo = ({ route, navigation }) => {
     }
 
   return (
-    <View style={styles.groupPage}>
+    <SafeAreaView style={styles.groupPage}>
       
       <ConditionalGroupHeader/>
 
@@ -325,7 +334,7 @@ export const GroupInfo = ({ route, navigation }) => {
             }}
           />
           <TouchableOpacity
-            style={[styles.actionFileButton, { backgroundColor: colourState }]}
+            style={[styles.actionButton, { backgroundColor: colourState }]}
             state={null}
             onPress={() => {
               console.log('renaming the group to ' + newName);
@@ -378,6 +387,42 @@ export const GroupInfo = ({ route, navigation }) => {
 
       <Modal
         style={styles.modal}
+        isVisible={editDescriptionVisible}
+        hasBackdrop={true}
+        backdropColor="white"
+        onBackdropPress={() => setEditDescriptionVisible(false)}
+        //onModalHide={() => setFileSelected(false)}
+      >
+        <View style={styles.actionModalInner}>
+          <TextInput
+            style={styles.actionModalLargeTextInput}
+            defaultValue={name.name}
+            onChangeText={(text) => {
+              //setNewDescription(text);
+            }}
+            numberOfLines={4}
+            multiline={true}
+          />
+          <TouchableOpacity
+            style={[styles.actionButton, { backgroundColor: colourState }]}
+            state={null}
+            onPress={() => {
+              //console.log('renaming the pdf to ' + newName);
+              //editDescription();
+              setEditDescriptionVisible(false);
+            }}
+          >
+            <View style={styles.actionModalButtonContent}>
+              <View style={styles.actionModalButtonText_box}>
+                <Text style={styles.actionModalButtonText}>{'Save'}</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </Modal>
+
+      <Modal
+        style={styles.modal}
         isVisible={deleteConfirmVisible}
         hasBackdrop={true}
         backdropColor="white"
@@ -389,7 +434,7 @@ export const GroupInfo = ({ route, navigation }) => {
             {'Are you sure you want to delete ' + name.name + '?'}
           </Text>
           <TouchableOpacity
-            style={[styles.actionFileButton, { backgroundColor: colourState }]}
+            style={[styles.actionButton, { backgroundColor: colourState }]}
             state={null}
             onPress={() => {
               setDeleteConfirmVisible(false);
@@ -402,7 +447,7 @@ export const GroupInfo = ({ route, navigation }) => {
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.actionFileButton, { backgroundColor: colourState }]}
+            style={[styles.actionButton, { backgroundColor: colourState }]}
             state={null}
             onPress={() => {
               deleteGroup();
@@ -432,7 +477,7 @@ export const GroupInfo = ({ route, navigation }) => {
             {'Are you sure you want to leave ' + name.name + '?'}
           </Text>
           <TouchableOpacity
-            style={[styles.actionFileButton, { backgroundColor: colourState }]}
+            style={[styles.actionButton, { backgroundColor: colourState }]}
             state={null}
             onPress={() => {
               setLeaveConfirmVisible(false);
@@ -445,7 +490,7 @@ export const GroupInfo = ({ route, navigation }) => {
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.actionFileButton, { backgroundColor: colourState }]}
+            style={[styles.actionButton, { backgroundColor: colourState }]}
             state={null}
             onPress={() => {
               removeUser(userName).then(navigation.navigate('Groups')).catch(e=>console.log(e));
@@ -486,14 +531,102 @@ export const GroupInfo = ({ route, navigation }) => {
 
           <TouchableOpacity
             style={styles.backButton}
-            onPress={() => setBottomModalVisible(false)}
+            onPress={() => {
+              setBottomModalVisible(false)
+              setSelectMode(false)
+              setRemoveConfirmVisible(true)
+            }}
           >
-            <Icon name="pencil-square-o" color="#ffffffff" size={22} />
+            <Icon name="trash-o" color="#ffffffff" size={25} />
+          </TouchableOpacity>
+        </View>
+      </Modal>
+
+      <Modal
+        style={styles.modal}
+        isVisible={inviteVisible}
+        hasBackdrop={true}
+        backdropColor="white"
+        onBackdropPress={() => setInviteVisible(false)}
+        //onModalHide={() => setFileSelected(false)}
+      >
+        <View style={styles.actionModalInner}>
+          <View style={styles.actionModalTextInputGroup}>
+            <View style={styles.mailIconContainer}>
+              <Icon
+                style={{ color: colourState }}
+                name="envelope"
+                size={20}
+              />
+            </View>
+            <TextInput
+              style={styles.inviteTextInput}
+            />
+          </View>
+          <TouchableOpacity
+            style={[styles.actionButton, { backgroundColor: colourState }]}
+            state={null}
+            onPress={() => {
+              //console.log('iinviting ' + newName);
+              //invite();
+              setInviteVisible(false);
+            }}
+          >
+            <View style={styles.actionModalButtonContent}>
+              <View style={styles.actionModalButtonText_box}>
+                <Text style={styles.actionModalButtonText}>{'Invite'}</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </Modal>
+
+      <Modal
+        style={styles.modal}
+        isVisible={removeConfirmVisible}
+        hasBackdrop={true}
+        backdropColor="white"
+        onBackdropPress={() => setRemoveConfirmVisible(false)}
+        //onModalHide={() => setFileSelected(false)}
+      >
+        <View style={styles.actionModalInner}>
+          <Text style={styles.modalTitle}>
+            {'Are you sure you want to remove * members?'}
+          </Text>
+          <TouchableOpacity
+            style={[styles.actionButton, { backgroundColor: colourState }]}
+            state={null}
+            onPress={() => {
+              setRemoveConfirmVisible(false);
+              setSelectMode(false);
+            }}
+          >
+            <View style={styles.actionModalButtonContent}>
+              <View style={styles.actionModalButtonText_box}>
+                <Text style={styles.actionModalButtonText}>{'Cancel'}</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.actionButton, { backgroundColor: colourState }]}
+            state={null}
+            onPress={() => {
+              // Delete the pdf
+              //deletePdf();
+              setRemoveConfirmVisible(false);
+              setSelectMode(false);
+            }}
+          >
+            <View style={styles.actionModalButtonContent}>
+              <View style={styles.actionModalButtonText_box}>
+                <Text style={styles.actionModalButtonText}>{'Remove'}</Text>
+              </View>
+            </View>
           </TouchableOpacity>
         </View>
       </Modal>
       
-    </View>
+    </SafeAreaView>
   );
 };
 export default GroupInfo;
@@ -503,7 +636,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffffff',
     justifyContent: 'space-between',
     flexDirection: 'column',
-    flexGrow: 1,
+    flex: 1,
+    
   },
   groupPageHeaderGroup: {//Make this smaller
     //flexShrink: 1,
@@ -704,11 +838,16 @@ const styles = StyleSheet.create({
   backButton: {
     alignContent: 'center',
     alignItems: 'center',
-    flexShrink: 1,
+    justifyContent: 'center',
+    flexGrow: 1,
     padding: 10,
+
+  },
+  modal: {
+    alignSelf: 'center',
   },
   actionModalInner: {
-    width: '70%',
+    width: '90%',
     flexShrink: 1,
     backgroundColor: '#d0d5ddff',
     borderRadius: 7,
@@ -745,7 +884,7 @@ const styles = StyleSheet.create({
     fontStyle: 'normal',
     fontFamily: 'System' /* Inter */,
   },
-  actionFileButton: {
+  actionButton: {
     flexGrow: 1,
     height: 40,
     alignItems: 'center',
@@ -764,8 +903,7 @@ const styles = StyleSheet.create({
     },
   },
   actionModalButtonContent: {
-    flexGrow: 1,
-    flexDirection: 'row',
+    flexShrink: 1,
     alignItems: 'center',
     justifyContent: 'center',
     //padding: 5
@@ -786,6 +924,36 @@ const styles = StyleSheet.create({
   fileactionIconContainer: {
     flexShrink: 1,
   },
+  mailIconContainer: {
+    flexGrow: 1,
+    alignContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: 7,
+  },
+  actionModalTextInputGroup: {
+    flexShrink: 1,
+    backgroundColor: '#ffffffff',
+    borderRadius: 8,
+    marginHorizontal: 10,
+    marginTop: 10,
+    flexDirection: 'row',
+  },
+  inviteTextInput: {
+    flexShrink: 1,
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 15,
+    color: 'black',
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+    backgroundColor: '#ffffffff',
+    borderRadius: 8,
+    marginHorizontal: 10,
+    height: 40,
+    width: '80%',
+  },
   actionModalTextInput: {
     flexShrink: 1,
     textAlign: 'center',
@@ -801,6 +969,25 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     marginTop: 10,
     height: 40,
+    width: '80%',
+  },
+  actionModalLargeTextInput: {
+    flexShrink: 1,
+    textAlign: 'center',
+    textAlignVertical: "top",
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 15,
+    color: 'black',
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+    backgroundColor: '#ffffffff',
+    borderRadius: 8,
+    marginHorizontal: 10,
+    marginTop: 10,
+    height: '50%',
+    flexWrap: 'wrap',
   },
   modalTitle: {
     color: '#344053ff',
