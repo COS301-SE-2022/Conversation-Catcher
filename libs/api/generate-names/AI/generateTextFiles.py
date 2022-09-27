@@ -16,6 +16,7 @@ from tensorflow import keras
 import warnings
 import datetime
 import os
+import pickle
 
 pd.set_option("display.max_colwidth", 200)
 warnings.filterwarnings("ignore")
@@ -275,195 +276,39 @@ for i in range(len(y_val)):
 y_val=np.delete(y_val,ind, axis=0)
 x_val=np.delete(x_val,ind, axis=0)
 
-# ------------------------ Model building ----------------------------
-
-# Return Sequences = True: When the return sequences parameter is set to True, LSTM produces the hidden state and cell state for every timestep
-# Return State = True: When return state = True, LSTM produces the hidden state and cell state of the last timestep only
-# Initial State: This is used to initialize the internal states of the LSTM for the first timestep
-# Stacked LSTM: Stacked LSTM has multiple layers of LSTM stacked on top of each other. This leads to a better representation of the sequence. I encourage you to experiment with the multiple layers of the LSTM stacked on top of each other (it’s a great way to learn this)
-
-# Building a 3 stacked LSTM for the encoder
-
-from keras import backend as K 
-K.clear_session()
-
-latent_dim = 300
-embedding_dim=100
-
-# Encoder
-encoder_inputs = Input(shape=(max_text_len,))
-
-# Embedding layer
-enc_emb =  Embedding(x_voc, embedding_dim,trainable=True)(encoder_inputs)
-
-# Encoder lstm 1
-encoder_lstm1 = LSTM(latent_dim,return_sequences=True,return_state=True,dropout=0.4,recurrent_dropout=0.4)
-encoder_output1, state_h1, state_c1 = encoder_lstm1(enc_emb)
-
-# Encoder lstm 2
-encoder_lstm2 = LSTM(latent_dim,return_sequences=True,return_state=True,dropout=0.4,recurrent_dropout=0.4)
-encoder_output2, state_h2, state_c2 = encoder_lstm2(encoder_output1)
-
-# Encoder lstm 3
-encoder_lstm3=LSTM(latent_dim, return_state=True, return_sequences=True,dropout=0.4,recurrent_dropout=0.4)
-encoder_outputs, state_h, state_c= encoder_lstm3(encoder_output2)
-
-# Set up the decoder, using `encoder_states` as initial state.
-decoder_inputs = Input(shape=(None,))
-
-# Embedding layer
-dec_emb_layer = Embedding(y_voc, embedding_dim,trainable=True)
-dec_emb = dec_emb_layer(decoder_inputs)
-
-decoder_lstm = LSTM(latent_dim, return_sequences=True, return_state=True,dropout=0.4,recurrent_dropout=0.2)
-decoder_outputs,decoder_fwd_state, decoder_back_state = decoder_lstm(dec_emb,initial_state=[state_h, state_c])
-
-# Attention layer
-attn_layer = AttentionLayer(name='attention_layer')
-attn_out, attn_states = attn_layer([encoder_outputs, decoder_outputs])
-
-# Concat attention input and decoder LSTM output
-decoder_concat_input = Concatenate(axis=-1, name='concat_layer')([decoder_outputs, attn_out])
-
-# Dense layer
-decoder_dense =  TimeDistributed(Dense(y_voc, activation='softmax'))
-decoder_outputs = decoder_dense(decoder_concat_input)
-
-gcp_bucket = "convbucket"
-
-checkpoint_path = os.path.join("gs://", gcp_bucket, "conversationcatcher", "save_at_{epoch}", datetime.datetime.now().strftime("%Y%m%d-%H%M%S"))
-
-tensorboard_path = os.path.join(  # Timestamp included to enable timeseries graphs
-    "gs://", gcp_bucket, "logs", datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
-)
-
-callbacks = [
-    # TensorBoard will store logs for each epoch and graph performance for us.
-    #os.makedirs(tensorboard_path),
-    keras.callbacks.TensorBoard(log_dir=tensorboard_path, histogram_freq=1),
-    # ModelCheckpoint will save models after each epoch for retrieval later.
-    #os.makedirs(checkpoint_path),
-    keras.callbacks.ModelCheckpoint(checkpoint_path),
-    # EarlyStopping will terminate training when val_loss ceases to improve.
-    keras.callbacks.EarlyStopping(monitor='val_loss', mode='min', verbose=1,patience=2),
-]
-
-# Define the model 
-model = Model([encoder_inputs, decoder_inputs], decoder_outputs)
-
-model.summary()
-
-# Using categorical cross-entropy to overcome memory issues
-
-model.compile(optimizer='rmsprop', loss='sparse_categorical_crossentropy')
-
-# Training will stop once the validation loss increases
-
-# Train on batch of 128
-
-epochs = 100
-callbacks = callbacks
-batch_size = 256
-
-history=model.fit([x_tr,y_tr[:,:-1]], y_tr.reshape(y_tr.shape[0],y_tr.shape[1], 1)[:,1:] ,epochs=epochs,callbacks=callbacks,batch_size=batch_size, validation_data=([x_val,y_val[:,:-1]], y_val.reshape(y_val.shape[0],y_val.shape[1], 1)[:,1:]))
-
-#model_version = int(datetime.time())
-#save_path = os.path.join("gs://", gcp_bucket, "conversationcatcher" + model_version+ ".h5")
-
-save_path = os.path.join("gs://", gcp_bucket, "conversationcatcher")
-
-##MODEL_NAME = 'conversationcatcher.'
-#model_version = int(datetime.time())
-#model_path = os.path.join(MODEL_NAME, str(model_version))
-#os.makedirs(model_path)
-#model.save(model_path)
-
-#os.makedirs(save_path)
-model.save(save_path)
-#model.save("model/conversationcatcher.h5")
-# Dictionary for converting the index to word
-
-
 reverse_target_word_index=y_tokenizer.index_word
 reverse_source_word_index=x_tokenizer.index_word
+source_word_index=x_tokenizer.word_index
 target_word_index=y_tokenizer.word_index
 
-f = open("outputs.txt", "a")
-f.write("reverse_target_word_index: " + str(reverse_target_word_index))
-f.write("reverse_source_word_index: " + str(reverse_source_word_index))
-f.write("target_word_index: " + str(target_word_index))
+#f = open("reverse_target_word_index.txt", "w")
+#f.write(str(reverse_target_word_index))
+#f.close()
+
+#f = open("reverse_source_word_index.txt", "w")
+#f.write(str(reverse_source_word_index))
+#f.close()
+
+#f = open("target_word_index.txt", "w")
+#f.write(str(target_word_index))
+#f.close()
+
+#f = open("source_word_index.txt", "w")
+#f.write(str(source_word_index))
+#f.close()
+
+f = open("reverse_target_word_index", "wb")
+pickle.dump(reverse_target_word_index, f)
 f.close()
 
-# ------------------------------- Inference ----------------------------------------
+f = open("reverse_source_word_index", "wb")
+pickle.dump(reverse_source_word_index, f)
+f.close()
 
-# Set up inference for the encoder and decoder
+f = open("target_word_index", "wb")
+pickle.dump(target_word_index, f)
+f.close()
 
-# Encode the input sequence to get the feature vector
-encoder_model = Model(inputs=encoder_inputs,outputs=[encoder_outputs, state_h, state_c])
-save_path = os.path.join("gs://", gcp_bucket, "encoder")
-#os.makedirs(save_path)
-encoder_model.save(save_path)
-
-# Decoder setup
-# Below tensors will hold the states of the previous time step
-decoder_state_input_h = Input(shape=(latent_dim,))
-decoder_state_input_c = Input(shape=(latent_dim,))
-decoder_hidden_state_input = Input(shape=(max_text_len,latent_dim))
-
-# Get the embeddings of the decoder sequence
-dec_emb2= dec_emb_layer(decoder_inputs) 
-# To predict the next word in the sequence, set the initial states to the states from the previous time step
-decoder_outputs2, state_h2, state_c2 = decoder_lstm(dec_emb2, initial_state=[decoder_state_input_h, decoder_state_input_c])
-
-# Attention inference
-attn_out_inf, attn_states_inf = attn_layer([decoder_hidden_state_input, decoder_outputs2])
-decoder_inf_concat = Concatenate(axis=-1, name='concat')([decoder_outputs2, attn_out_inf])
-
-# A dense softmax layer to generate prob dist. over the target vocabulary
-decoder_outputs2 = decoder_dense(decoder_inf_concat) 
-
-# Final decoder model
-decoder_model = Model(
-    [decoder_inputs] + [decoder_hidden_state_input,decoder_state_input_h, decoder_state_input_c],
-    [decoder_outputs2] + [state_h2, state_c2])
-
-save_path = os.path.join("gs://", gcp_bucket, "decoder")
-#os.makedirs(save_path)
-decoder_model.save(save_path)
-
-def decode_sequence(input_seq):
-    # Encode the input as state vectors.
-    e_out, e_h, e_c = encoder_model.predict(input_seq)
-    
-    # Generate empty target sequence of length 1.
-    target_seq = np.zeros((1,1))
-    
-    # Populate the first word of target sequence with the start word.
-    target_seq[0, 0] = target_word_index['sostok']
-
-    stop_condition = False
-    decoded_sentence = ''
-    while not stop_condition:
-    
-        output_tokens, h, c = decoder_model.predict([target_seq] + [e_out, e_h, e_c])
-
-        
-        # Sample a token
-        sampled_token_index = np.argmax(output_tokens[0, -1, :])
-        sampled_token = reverse_target_word_index[sampled_token_index]
-        
-        if(sampled_token!='eostok'):
-            decoded_sentence += ' '+sampled_token
-
-        # Exit condition: either hit max length or find stop word.
-        if (sampled_token == 'eostok'  or len(decoded_sentence.split()) >= (max_summary_len-1)):
-            stop_condition = True
-
-        # Update the target sequence (of length 1).
-        target_seq = np.zeros((1,1))
-        target_seq[0, 0] = sampled_token_index
-
-        # Update internal states
-        e_h, e_c = h, c
-
-    return decoded_sentence
+f = open("source_word_index", "wb")
+pickle.dump(source_word_index, f)
+f.close()
