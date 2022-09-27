@@ -246,24 +246,6 @@ export const Groups = ({ navigation }) => {
         >
           <Icon name="angle-left" color="#344053ff" size={30} />
         </TouchableOpacity>
-
-        <View style={styles.orderByGroup}>
-          <Text style={styles.orderByLabel}>{'Order by'}</Text>
-          <ModalDropdown
-            options={['Date', 'Name']}
-            defaultIndex={0}
-            defaultValue={'Date'}
-            onSelect={(index, itemValue) => {
-              groupLocalAccess.sortGroups(itemValue);
-              groupRef.current.refreshPfds();breaks
-            }}
-            style={styles.orderByDropdown}
-            textStyle={styles.orderByDropdownText}
-            dropdownStyle={styles.orderByDropdownStyle}
-            dropdownTextStyle={styles.orderByDropdownTextStyle}
-            dropdownTextSelectHighlightStyle={{ color: colourState }}
-          />
-        </View>
       </View>
 
       <Modal
@@ -480,6 +462,7 @@ const styles = StyleSheet.create({
   },
   viewAllBottomBar: {
     width: '100%',
+    height: '8%',
     flexDirection: 'row',
     flexShrink: 1,
     backgroundColor: '#c4c4c4ff',
