@@ -58,11 +58,11 @@ export function GroupDisplay({ navigation, selectMode }, ref) {
     for (let i = 0; i < d.getGroups.length; i++) {
       groupLocalAccess.addGroup({
         name: d.getGroups[i].name,
-        creationDate: d.getGroups[i].creationDate,
-        downloaded: d.getGroups[i].downloaded,
-        group: d.getGroups[i].group,
-        text: d.getGroups[i].text,
-        id: d.getGroups[i].id,
+        admin: d.getGroups[i].admin,
+        users: d.getGroups[i].users,
+        description: d.getGroups[i].description,
+        pdfs: d.getGroups[i].pdfs,
+        requests: d.getGroups[i].requests,
       });
     }
   }
@@ -77,14 +77,14 @@ export function GroupDisplay({ navigation, selectMode }, ref) {
       fetchPolicy: 'no-cache',
     })
       .then((d) => {
-        groupLocalAccess.clearPdfs();
+        groupLocalAccess.clearGroups();
         setData(d.data)
         setRefreshing(false);
         // setDidReload(!didReload);
       })
       .catch((e) => {
         console.log(e);
-        groupLocalAccess.clearPdfs();
+        groupLocalAccess.clearGroups();
         //setDidReload(!didReload);
         setRefreshing(false);
       });
@@ -162,18 +162,18 @@ export function GroupDisplay({ navigation, selectMode }, ref) {
   //create deep copy of the returned data
   //Data is here in data if returned
   if (!groupLocalAccess.isLoaded()) {
-    //some of this can be removed
+    //clears and then re adds data to local access
     groupLocalAccess.clearGroups();
     setData(data);
-    if (groupLocalAccess.isLoaded()) {
-      // console.log('setting pdf');
-      setGroup({
+    // if (groupLocalAccess.isLoaded()) {
+    //   // console.log('setting pdf');
+    //   setGroup({
         
-      }).catch((e) => {
-        // console.log('error in delete of pdf in pdf array');
-        console.log(e);
-      });
-    }
+    //   }).catch((e) => {
+    //     // console.log('error in delete of pdf in pdf array');
+    //     console.log(e);
+    //   });
+    // }
     //setIsLoaded(true);
     //Update local group storage
     //array of groups stored locally, selected from data to overwrite the slice

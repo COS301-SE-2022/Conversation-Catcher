@@ -13,7 +13,3 @@ export class GetUserPdfsQuery {
 export class SemanticSearchQuery {
   constructor(public readonly query: string, public readonly docs) {}
 }
-
-export class SemanticSearchQuery {
-  constructor(public readonly query, public readonly docs) {}
-}
