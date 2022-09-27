@@ -20,6 +20,7 @@ import { PdfManagerRepositoryDataAccessModule } from '@conversation-catcher/api/
     CommandHandlers.SetSummarisedHandler,
     CommandHandlers.SetEmbeddingsHandler,
     QueryHandlers.GetPdfByIdHandler,
+    QueryHandlers.GetPdfsByArrHandler,
     QueryHandlers.GetPdfsHandler,
   ],
   exports: [ApiPdfManagerServiceService],

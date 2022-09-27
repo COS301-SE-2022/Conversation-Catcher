@@ -11,7 +11,7 @@ import {
   SetSummarisedCommand,
 } from './commands/impl/set-pdf-manager.command';
 import { DeletePdfCommand } from './commands/impl/delete-pdf-manager.command';
-import { GetPdfByIdQuery, GetPdfsQuery } from './queries/impl';
+import { GetPdfByIdQuery, GetPdfsByArrQuery, GetUserPdfsQuery, SemanticSearchQuery } from './queries/impl';
 
 @Injectable()
 export class ApiPdfManagerServiceService {
@@ -49,7 +49,10 @@ export class ApiPdfManagerServiceService {
   async getPdfById(id: string) {
     return await this.queryBus.execute(new GetPdfByIdQuery(id));
   }
-  async getPdfs(userid: string) {
-    return await this.queryBus.execute(new GetPdfsQuery(userid));
+  async getPdfsByArr(ids: string[]) {
+    return await this.queryBus.execute(new GetPdfsByArrQuery(ids));
+  }
+  async getUserPdfs(userid: string) {
+    return await this.queryBus.execute(new GetUserPdfsQuery(userid));
   }
 }
