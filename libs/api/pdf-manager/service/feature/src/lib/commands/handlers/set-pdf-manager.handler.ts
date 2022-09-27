@@ -120,11 +120,11 @@ export class SetEmbeddingsHandler
       console.log(embeddings)
       const res = await this.repository.updateEmbeddings(id, embeddings.data.embeddings);
       if (res !== null && res.modifiedCount === 1)
-        return 'Embeddings has been added';
-      return 'Error: failed to add embeddings';
+        return embeddings.data.embeddings;
+      return null;
     } catch (error) {
       console.log(error);
-      return 'Error: failed to add embeddings';
+      return null;
     }
   }
 }

@@ -11,7 +11,7 @@ import {
   TextInput,
   NativeAppEventEmitter,
 } from 'react-native';
-import { gql, useQuery, useMutation } from '@apollo/client';
+import { gql, useQuery, useMutation, useLazyQuery } from '@apollo/client';
 import ModalDropdown from 'react-native-modal-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
@@ -46,6 +46,30 @@ export const ViewAll = ({ navigation }) => {
     url,
     message,
   };
+
+  const SEARCH_IDEA = gql`
+  query searchIdea($query: String!, $docs:[PdfEntityInput!]!){
+    semanticSearch(query:$query, docs:$docs)
+  }
+  `;
+
+  const GET_PDFS = gql`
+  query getArrPdfs($ids: [String!]!){
+    getPDFByArr(ids:$ids){
+      id
+      name
+      creationDate
+      downloaded
+      text
+      summarised
+      embeddings
+    }
+  }
+  `;
+
+
+  const [semanticSearch] = useLazyQuery(SEARCH_IDEA);
+  const [getPdfs] = useLazyQuery(GET_PDFS);
 
   const share = async (customOptions = options) => {
     try {
@@ -129,9 +153,29 @@ export const ViewAll = ({ navigation }) => {
             style={styles.searchInput}
             placeholder="Search"
             onChangeText={(text) => {
-              pdfLocalAccess.filterPdfs(text);
-              // pdfRef.current.refreshPfds();
-              NativeAppEventEmitter.emit('updatePage');
+              
+              semanticSearch({
+                variables: {query: text, docs: pdfLocalAccess.allPdfs}
+              }).then((res) => {
+                console.log(res);
+                getPdfs({variables: {ids: res.data.searchIdea}}).then((d) => {
+                  console.log(d);
+                  //for each element in d:
+                  // pdfLocalAccess.addPdf({
+                  //   name: d.getPDFs[i].name,
+                  //   creationDate: d.getPDFs[i].creationDate,
+                  //   downloaded: d.getPDFs[i].downloaded,
+                  //   text: d.getPDFs[i].text,
+                  //   id: d.getPDFs[i].id,
+                  //   summarised: d.getPDFs[i].summarised,
+                  //   embeddings: d.getPDFs[i].embeddings,
+                  // });
+                })
+              }).catch( (error) => {
+                console.log(error)
+                  pdfLocalAccess.filterPdfs(text);
+                  NativeAppEventEmitter.emit('updatePage');
+              })
             }}
           />
           <View style={styles.searchIconFrame}>

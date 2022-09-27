@@ -53,7 +53,14 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
     }
   `;
 
+  const SET_EMBEDDINGS = gql`
+  mutation setEmbeddings($id: String!, $name: String!, $text: String!){
+    embed(id:$id, name:$name, text:$text)
+  }
+  `;
+
   const [setUser] = useMutation(SET_USER);
+  const [setEmbedding] = useMutation(SET_EMBEDDINGS);
   const { data, loading, error } = useQuery(GET_USER_PDFS, {
     variables: { email: emailState },
   });
@@ -100,8 +107,14 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
       );
   };
 
-  const setData = (d) => {
+  const setData = async (d) => {
     for (let i = 0; i < d.getPDFs.length; i++) {
+      if (d.getPDFs[i].embeddings === null){
+        d.getPDFs[i].embeddings = await setEmbedding(
+          {variables: {id: d.getPDFs[i].id, name: d.getPDFs[i].id.name, text: d.getPDFs[i].text}}
+          ).catch(e => console.log(e))
+        console.log(d.getPDFs[i].embeddings);
+      }
       pdfLocalAccess.addPdf({
         name: d.getPDFs[i].name,
         creationDate: d.getPDFs[i].creationDate,

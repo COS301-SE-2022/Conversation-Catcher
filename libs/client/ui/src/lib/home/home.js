@@ -91,11 +91,20 @@ export const Home = ({ navigation }) => {
     }
   `;
 
+  const SET_EMBEDDINGS = gql`
+  mutation setEmbeddings($id: String!, $name: String!, $text: String!){
+    embed(id:$id, name:$name, text:$text)
+  }
+  `;
+
+
   //Mutations to be used in the creation of new PDFs
   const [summariseText] = useMutation(SUMMARISE_TEXT);
   const [setSummarisedText] = useMutation(SET_SUMMARISED);
   const [addPdf] = useMutation(ADD_PDF);
   const [generateName] = useMutation(GENERATE_NAME);
+  const [setEmbedding] = useMutation(SET_EMBEDDINGS);
+
 
   const handleDocumentSelection = useCallback(async () => {
     try {
@@ -285,6 +294,10 @@ export const Home = ({ navigation }) => {
               text: result.converted_text,
             },
           });
+          const embeddings = await setEmbedding(
+            {variables: {id: newPdf.data.addPDF.id, name: newPdf.data.addPDF.name, text: newPdf.data.addPDF.text}}
+            ).catch(e => console.log(e))
+          console.log(embeddings);
           pdfLocalAccess.addPdf({
             name: newPdf.data.addPDF.name,
             creationDate: newPdf.data.addPDF.creationDate,
@@ -292,7 +305,7 @@ export const Home = ({ navigation }) => {
             text: newPdf.data.addPDF.text,
             id: newPdf.data.addPDF.id,
             summarised: newPdf.data.addPDF.summarised,
-            embeddings: newPdf.data.addPDF.embeddings,
+            embeddings: embeddings,
           });
           NativeAppEventEmitter.emit('updatePage');
           dispatch(addPDF(newPdf.data.addPDF.id));
@@ -314,8 +327,7 @@ export const Home = ({ navigation }) => {
           pdfLocalAccess.addSummary(id, 'error');
           return;
         });
-        pdfLocalAccess.addSummary(id, res.data.Summarise);
-        console.log('summary added');
+        pdfLocalAccess.addSummary(id, 'loading');
       })
       .catch((e) => {
         console.log(e);
