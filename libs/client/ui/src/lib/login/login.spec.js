@@ -60,12 +60,14 @@ describe('Login', () => {
 
   // Submit
   fireEvent.press(screen.ByLabelText("Log in"));
+  
+  it('test email', () => {
+    const emailState = store.getState().email;
+    expect(emailState).toEqual('random@random.com');
+  });
 
-  const emailState = store.getState().email;
-
-  expect(emailState).toEqual('random@random.com');
-
-  const passwordState = store.getState().password;
-
-  expect(passwordState).toEqual('123qwe123#');
+  it('test password', () => {
+    const passwordState = store.getState().password;
+    expect(passwordState).toEqual('123qwe123#');
+  });
 });
