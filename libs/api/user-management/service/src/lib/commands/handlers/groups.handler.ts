@@ -84,20 +84,20 @@ export class addUserToHandler implements ICommandHandler<addUserToCommand> {
     const usr = await this.repository.getUser(user);
     if (groups[groupName] === undefined || usr === null) return null;
 
-    let validated = false;
+    // let validated = false;
     //Case 1: By request : User email is request on group
-    const index = groups[groupName].requests.indexOf(user);
-    if (index !== -1) {
-      groups[groupName].requests.splice(index, 1);
-      validated = true;
-    }
+    // const index = groups[groupName].requests.indexOf(user);
+    // if (index !== -1) {
+    //   groups[groupName].requests.splice(index, 1);
+    //   validated = true;
+    // }
     //Case 2: By invite : Invite on user
-    usr.invites.forEach((element, index) => {
-      if (groupName === element.group) {
-        usr.invites.splice(index, 1);
-        validated = true;
-      }
-    });
+    // usr.invites.forEach((element, index) => {
+    //   if (groupName === element.group) {
+    //     usr.invites.splice(index, 1);
+    //     validated = true;
+    //   }
+    // });
     const errGroup = {
       admin: '',
       name: 'Error: User to be added did not have an invite or request',
@@ -105,7 +105,7 @@ export class addUserToHandler implements ICommandHandler<addUserToCommand> {
       requests: [],
       users: [],
     } as Group;
-    if (!validated) return errGroup; //If the user did not have a join request or an invite don't add them to the group
+    // if (!validated) return errGroup; //If the user did not have a join request or an invite don't add them to the group
 
     //set the user and the group
     groups[groupName].users.push(user);

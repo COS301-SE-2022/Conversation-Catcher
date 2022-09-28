@@ -21,8 +21,11 @@ export class ApiGenerateNamesServiceService {
       return await lastValueFrom(
         this.httpService
           .post('http://192.168.0.129:5550/gennames', data, config)
-          .pipe(map((res) => res.data))
-      );
+          .pipe(map((res) => res.data.generated_name))
+      ).catch((e) => {
+        // console.log(e);
+        return '';
+      });
     } catch (error) {
       return '';
     }
