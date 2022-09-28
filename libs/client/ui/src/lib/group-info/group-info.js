@@ -121,18 +121,6 @@ export const GroupInfo = ({ route, navigation }) => {
     await add({variables:{user:userID, groupName:name}});
   }
 
-  const handleDocumentSelection = useCallback(async () => {
-    try {
-      const response = await DocumentPicker.pick({
-        presentationStyle: 'fullScreen',
-        type: [types.audio],
-      });
-      setFileResponse(response);
-    } catch (err) {
-      console.warn(err);
-    }
-  }, []);
-
     function AdminGroupButtons(){
       if(adminState){
         return (
@@ -209,7 +197,7 @@ export const GroupInfo = ({ route, navigation }) => {
             <TouchableOpacity 
               style={styles.groupThumbnailBox}
               onPress={() => {
-                handleDocumentSelection();
+                //handleDocumentSelection();
               }}
             >
               <Image
