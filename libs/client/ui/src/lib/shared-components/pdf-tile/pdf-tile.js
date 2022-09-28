@@ -129,11 +129,6 @@ const PdfTile = ({
     }
     return <DownloadButtonState d={props.d} a={props.a}/>;
   }
-  
-  const pdfthumbnailSource = {
-    uri: 'http://samples.leanpub.com/thereactnativebook-sample.pdf',
-    cache: true,
-  };
 
   return (
     <TouchableOpacity
