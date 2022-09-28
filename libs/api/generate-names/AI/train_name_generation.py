@@ -164,7 +164,7 @@ x_tokenizer.fit_on_texts(list(x_tr))
 
 # Calculate rare words and coverage (word count less that thresh is rare)
 
-thresh=5
+thresh=30
 
 cnt=0 # total rare words (count below thresh)
 tot_cnt=0 # total unique words in text
@@ -209,7 +209,7 @@ y_tokenizer.fit_on_texts(list(y_tr))
 
 # Calculate rare words and coverage (word count less that thresh is rare)
 
-thresh=7
+thresh=50
 
 cnt=0
 tot_cnt=0
