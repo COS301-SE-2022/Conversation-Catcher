@@ -35,43 +35,43 @@ export const ViewAll = ({ navigation, route }) => {
   const [renameVisible, setRenameVisible] = useState(false);
   // const [refreshPage, setRefreshPage] = useState('');
 
-  const { groupName } = route.params; 
+  const { groupName } = route.params;
 
   const url = 'https://awesome.contents.com/';
   const title = 'Awesome Contents';
   const message = 'Please check this out.';
 
   const ADD_PDF = gql`
-    mutation addPdfTo(
-      $pdfId: String!
-      $groupName: String!
-    ) {
+    mutation addPdfTo($pdfId: String!, $groupName: String!) {
       addPdfTo(pdfId: $pdf, groupName: $groupName)
     }
   `;
   const REMOVE_PDF = gql`
-    mutation removePdfFrom(
-      $pdfId: String!
-      $groupName: String!
-    ) {
+    mutation removePdfFrom($pdfId: String!, $groupName: String!) {
       removePdfFrom(pdfId: $pdf, groupName: $groupName)
     }
   `;
   const [addPdf] = useMutation(ADD_PDF);
   const [removePdf] = useMutation(REMOVE_PDF);
 
-  async function addPDF(){//call this after selectedPdf is set to add pdf to group
+  async function addPDF() {
+    //call this after selectedPdf is set to add pdf to group
     if (selectedPdf === null || selectedGroup === null) return;
     groupLocalAccess.addPdf(selectedPdf, selectedGroup);
-    await addPdf({variables:{pdfId: selectedPdf,groupName:selectedGroup}}).then(()=>{
+    await addPdf({
+      variables: { pdfId: selectedPdf, groupName: selectedGroup },
+    }).then(() => {
       setSelectedPdf(null);
       setSelectedGroup(null);
     });
   }
-  async function removePDF(){//call this after selectedPdf is set to remove pdf to group
+  async function removePDF() {
+    //call this after selectedPdf is set to remove pdf to group
     if (selectedPdf === null || groupName === null) return;
     groupLocalAccess.removePdf(selectedPdf, groupName);
-    await removePdf({variables:{pdfId: selectedPdf,groupName:groupName}}).then(()=>{
+    await removePdf({
+      variables: { pdfId: selectedPdf, groupName: groupName },
+    }).then(() => {
       setSelectedPdf(null);
     });
   }
@@ -88,25 +88,24 @@ export const ViewAll = ({ navigation, route }) => {
   };
 
   const SEARCH_IDEA = gql`
-  query searchIdea($query: String!, $docs:[PdfEntityInput!]!){
-    semanticSearch(query:$query, docs:$docs)
-  }
+    query searchIdea($query: String!, $docs: [PdfEntityInput!]!) {
+      semanticSearch(query: $query, docs: $docs)
+    }
   `;
 
   const GET_PDFS = gql`
-  query getArrPdfs($ids: [String!]!){
-    getPDFByArr(ids:$ids){
-      id
-      name
-      creationDate
-      downloaded
-      text
-      summarised
-      embeddings
+    query getArrPdfs($ids: [String!]!) {
+      getPDFByArr(ids: $ids) {
+        id
+        name
+        creationDate
+        downloaded
+        text
+        summarised
+        embeddings
+      }
     }
-  }
   `;
-
 
   const [semanticSearch] = useLazyQuery(SEARCH_IDEA);
   const [getPdfs] = useLazyQuery(GET_PDFS);
@@ -192,35 +191,29 @@ export const ViewAll = ({ navigation, route }) => {
           <TextInput
             style={styles.searchInput}
             placeholder="Search"
-            onChangeText={(text) => {
-
+            onSubmitEditing={(text) => {
+              console.log(text.nativeEvent.text);
+              pdfLocalAccess.filterPdfs(text.nativeEvent.text);
               semanticSearch({
-                variables: {query: text, docs: pdfLocalAccess.allPdfs}
-              }).then((res) => {
-                console.log(res.data.semanticSearch);
-                pdfLocalAccess.sortByIds(res.data.semanticSearch);
-                NativeAppEventEmitter.emit('updatePage');
-                // console.log('updated')
-                // getPdfs({variables: {ids: res.data.semanticSearch}}).then((d) => {
-                //   console.log(d.data.getPDFByArr);
-                //   pdfLocalAccess.clearPdfs();
-                //   for (let i=0; i< d.data.getPDFByArr.length; i++){
-                //     pdfLocalAccess.addPdf({
-                //       name: d.data.getPDFByArr[i].name,
-                //       creationDate: d.data.getPDFByArr[i].creationDate,
-                //       downloaded: d.data.getPDFByArr[i].downloaded,
-                //       text: d.data.getPDFByArr[i].text,
-                //       id: d.data.getPDFByArr[i].id,
-                //       summarised: d.data.getPDFByArr[i].summarised,
-                //       embeddings: d.data.getPDFByArr[i].embeddings,
-                //     });
-                //   }
-                // })
-              }).catch( (error) => {
-                console.log(error)
+                variables: {
+                  query: text.nativeEvent.text,
+                  docs: pdfLocalAccess.allPdfs,
+                },
+              })
+                .then((res) => {
+                  if (res.data.semanticSearch[0] !== ''){
+                    pdfLocalAccess.sortByIds(res.data.semanticSearch);
+                  }
+                  NativeAppEventEmitter.emit('updatePage');
+                })
+                .catch((error) => {
+                  console.log(error);
                   pdfLocalAccess.filterPdfs(text);
                   NativeAppEventEmitter.emit('updatePage');
-              })
+                });
+            }}
+            onChangeText={(text) => {
+              //
             }}
           />
           <View style={styles.searchIconFrame}>
@@ -475,7 +468,7 @@ const styles = StyleSheet.create({
     height: '5%',
     width: '100%',
     minHeight: 28,
-    paddingTop: 5
+    paddingTop: 5,
   },
   searchBarGroup: {
     width: '85%',
@@ -515,7 +508,7 @@ const styles = StyleSheet.create({
   searchIconFrame: {
     resizeMode: 'contain',
     paddingHorizontal: 10,
-    paddingVertical: 5
+    paddingVertical: 5,
   },
   recentPdfTiles: {
     height: '70%',
@@ -562,7 +555,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignSelf: 'flex-end',
     marginVertical: 5,
-    paddingHorizontal: 7
+    paddingHorizontal: 7,
   },
   orderByLabel: {
     color: '#344053ff',
