@@ -153,13 +153,13 @@ export const ViewAll = ({ navigation }) => {
             style={styles.searchInput}
             placeholder="Search"
             onChangeText={(text) => {
-              
+
               semanticSearch({
                 variables: {query: text, docs: pdfLocalAccess.allPdfs}
               }).then((res) => {
-                console.log(res);
-                getPdfs({variables: {ids: res.data.searchIdea}}).then((d) => {
-                  console.log(d);
+                console.log(res.data.semanticSearch);
+                getPdfs({variables: {ids: res.data.semanticSearch}}).then((d) => {
+                  console.log(d.error);
                   //for each element in d:
                   // pdfLocalAccess.addPdf({
                   //   name: d.getPDFs[i].name,

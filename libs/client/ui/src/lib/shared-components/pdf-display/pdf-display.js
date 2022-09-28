@@ -12,9 +12,12 @@ import Loading from '../loading/loading';
 import PdfTile from '../pdf-tile/pdf-tile';
 import pdfLocalAccess from '../local-pdfs-access/local-pdfs-access';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectEmail} from '../../../../../../../apps/client/src/app/slices/user.slice';
+import { selectEmail } from '../../../../../../../apps/client/src/app/slices/user.slice';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectPDFS, refillPDFs } from '../../../../../../../apps/client/src/app/slices/pdf.slice';
+import {
+  selectPDFS,
+  refillPDFs,
+} from '../../../../../../../apps/client/src/app/slices/pdf.slice';
 import { useSelector, useDispatch } from 'react-redux';
 
 export function PdfDisplay({ navigation, selectMode }, ref) {
@@ -54,9 +57,9 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
   `;
 
   const SET_EMBEDDINGS = gql`
-  mutation setEmbeddings($id: String!, $name: String!, $text: String!){
-    embed(id:$id, name:$name, text:$text)
-  }
+    mutation setEmbeddings($id: String!, $name: String!, $text: String!) {
+      embed(id: $id, name: $name, text: $text)
+    }
   `;
 
   const [setUser] = useMutation(SET_USER);
@@ -107,14 +110,24 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
       );
   };
 
+  const getEmbedding = async (document) => {
+    if (document.embedding === null) {
+      return await setEmbedding({
+        variables: {
+          id: document.id,
+          name: document.id.name,
+          text: document.text,
+        },
+      }).catch((e) => {
+        console.log(e);
+        return null;
+      });
+    }
+  };
+
   const setData = async (d) => {
+    // console.log(d)
     for (let i = 0; i < d.getPDFs.length; i++) {
-      if (d.getPDFs[i].embeddings === null){
-        d.getPDFs[i].embeddings = await setEmbedding(
-          {variables: {id: d.getPDFs[i].id, name: d.getPDFs[i].id.name, text: d.getPDFs[i].text}}
-          ).catch(e => console.log(e))
-        console.log(d.getPDFs[i].embeddings);
-      }
       pdfLocalAccess.addPdf({
         name: d.getPDFs[i].name,
         creationDate: d.getPDFs[i].creationDate,
@@ -124,8 +137,19 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
         summarised: d.getPDFs[i].summarised,
         embeddings: d.getPDFs[i].embeddings,
       });
+      if (d.getPDFs[i].embeddings === null) {
+        setEmbedding({
+          variables: {
+            id: d.getPDFs[i].id,
+            name: d.getPDFs[i].name,
+            text: d.getPDFs[i].text,
+          },
+        })
+          .then((res) => console.log(res))
+          .catch((e) => console.log(e));
+      }
     }
-  }
+  };
 
   const ReloadData = () => {
     setRefreshing(true);
@@ -137,7 +161,7 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
     })
       .then((d) => {
         pdfLocalAccess.clearPdfs();
-        setData(d.data)
+        setData(d.data);
         setRefreshing(false);
         // setDidReload(!didReload);
       })
@@ -147,7 +171,6 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
         setDidReload(!didReload);
       });
   };
-
   if (loading)
     return (
       <ScrollDisplay
