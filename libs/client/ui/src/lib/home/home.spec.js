@@ -31,8 +31,8 @@ import * as React from 'react';
 //import { NavigationContainer } from '@react-navigation/native';
 import { render, screen, fireEvent } from '@testing-library/react-native';
 //import AppNavigator from '../AppNavigator';
-import Home from './home';
 import reducer from '../../../../../../apps/client/src/app/slices/user.slice';
+import Home from './home';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 

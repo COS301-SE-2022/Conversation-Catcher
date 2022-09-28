@@ -31,6 +31,7 @@ describe('Setup of settings and navigation', () => {
   // test('snapshot', () => {
   //   expect(tree).toMatchSnapshot();
   // });
+  
   test('screen contains a button linking to the Change email page', async () => {
     const component = (
       <Provider store = { store }>
