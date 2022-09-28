@@ -8,6 +8,7 @@ import {
   ScrollView,
   TextInput,
   DeviceEventEmitter,
+  NativeAppEventEmitter,
 } from 'react-native';
 import { gql, useLazyQuery, useMutation } from '@apollo/client';
 import GroupTile from '../shared-components/group-tile/group-tile.js';
@@ -20,6 +21,7 @@ import groupLocalAccess from '../shared-components/local-groups-access/local-gro
 import { useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { selectColour, selectEmail } from '../../../../../../apps/client/src/app/slices/user.slice';
+import pdfLocalAccess from '../shared-components/local-pdfs-access/local-pdfs-access'
 
 export const Groups = ({ navigation }) => {
   const groupRef = useRef();
@@ -195,7 +197,7 @@ export const Groups = ({ navigation }) => {
           </View>
         </View>
       </View>
-{/* 
+{/*
       <GroupDisplay
         navigation={navigation}
         selectMode={selectMode}
@@ -252,7 +254,14 @@ export const Groups = ({ navigation }) => {
 
         <TouchableOpacity
           style={styles.backButton}
-          onPress={() => navigation.navigate('Home')}
+          onPress={() => {
+            if (pdfLocalAccess.isSet.length !== 0){
+              pdfLocalAccess.allPdfs.forEach((pdf) => { pdfLocalAccess.displayPdfs.push(pdf); });
+              NativeAppEventEmitter.emit('updatePage');
+              pdfLocalAccess.isSet.length = 0;
+            }
+            navigation.navigate('Home')
+          }}
         >
           <Icon name="angle-left" color="#344053ff" size={30} />
         </TouchableOpacity>
@@ -620,7 +629,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    
+
   },
   moreModalButtonText: {
     color: '#ffffff',
