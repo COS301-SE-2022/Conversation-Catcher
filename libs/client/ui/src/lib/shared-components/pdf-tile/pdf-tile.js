@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { selectColour } from '../../../../../../../apps/client/src/app/slices/user.slice';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { toggleDown } from '../../../../../../../apps/client/src/app/slices/pdf.slice';
+import { removePDF, toggleDown } from '../../../../../../../apps/client/src/app/slices/pdf.slice';
 import { gql, useLazyQuery, useMutation } from '@apollo/client';
 //import FileViewer from "react-native-file-viewer";
 import pdfLocalAccess from '../local-pdfs-access/local-pdfs-access';
@@ -56,7 +56,8 @@ const PdfTile = ({
 
   DeviceEventEmitter.addListener("DeleteAll",() => {
     if (checkboxState){
-
+      //deletePdf();
+      console.log(name);
     }
   })
   function DownloadButtonState(props) {
@@ -104,7 +105,7 @@ const PdfTile = ({
         }
         color={colourState}
         name="cloud"
-        size={22}
+        size={18}
         container={TouchableOpacity}
       />
     );
@@ -128,11 +129,6 @@ const PdfTile = ({
     }
     return <DownloadButtonState d={props.d} a={props.a}/>;
   }
-  
-  const pdfthumbnailSource = {
-    uri: 'http://samples.leanpub.com/thereactnativebook-sample.pdf',
-    cache: true,
-  };
 
   return (
     <TouchableOpacity

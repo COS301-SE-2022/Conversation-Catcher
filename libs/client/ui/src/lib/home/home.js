@@ -546,7 +546,7 @@ export const Home = ({ navigation }) => {
           setNotifyUser(false);
         }}
       >
-        <View style={styles.uploadModalInner}>
+        <View style={styles.modalNotifyInner}>
           <Text style={styles.modalTitle}>
             {'Document generation has started and will take about 2 minutes'}
           </Text>
@@ -712,12 +712,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalNotify: {
-    //top: "40%",
-    //width: '100%',
-    //marginLeft: '12%',
-    // marginRight: "20%",
-    //height: '5%',
-    //flexGrow: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  modalNotifyInner: {
+    width: '100%',
+    flexShrink: 1,
+    backgroundColor: '#d0d5ddff',
+    borderRadius: 7,
+    flexDirection: 'column',
+    borderWidth: 1,
+    borderColor: '#667084ff',
+    opacity: 1,
+    //alignSelf: 'flex-end',
   },
   modalTitle: {
     color: '#344053ff',
