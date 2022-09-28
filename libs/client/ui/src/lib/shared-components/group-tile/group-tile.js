@@ -38,6 +38,7 @@ const GroupTile = ({
       style={styles.groupTile}
       onPress={() =>
         nav.navigate('ViewAll', { groupObject: buildGroup() })
+        
       }
     >
       <View style={[styles.groupThumbnailBox, { borderColor: colourState }]}>
