@@ -272,6 +272,7 @@ export const PdfView = ({ route, navigation }) => {
             onPress={() => {
               setMoreVisible(false);
               //onShare();
+              navigation.navigate('GroupSelection');
             }}
           >
             <View style={styles.moreModalButtonContent}>
