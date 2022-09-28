@@ -27,13 +27,9 @@ export function GroupDisplay({ navigation, selectMode }, ref) {
   //graphql syntax trees
   const GET_USER_GROUPS = gql`
     query getForUser($email: String!) {
-      getGroups(id: $email) {
-        id
+      getGroupsFor(email: $email) {
         name
-        creationDate
-        downloaded
-        group
-        text
+        description
       }
     }
   `;
@@ -53,16 +49,15 @@ export function GroupDisplay({ navigation, selectMode }, ref) {
     variables: { email: emailState },
   });
   const [fetchGroups] = useLazyQuery(GET_USER_GROUPS);
-
   const setData = (d) => {
-    for (let i = 0; i < d.getGroups.length; i++) {
+    for (let i = 0; i < d.getGroupsFor.length; i++) {
       groupLocalAccess.addGroup({
-        name: d.getGroups[i].name,
-        admin: d.getGroups[i].admin,
-        users: d.getGroups[i].users,
-        description: d.getGroups[i].description,
-        pdfs: d.getGroups[i].pdfs,
-        requests: d.getGroups[i].requests,
+        name: d.getGroupsFor[i].name,
+        admin: d.getGroupsFor[i].admin,
+        users: d.getGroupsFor[i].users,
+        description: d.getGroupsFor[i].description,
+        pdfs: d.getGroupsFor[i].pdfs,
+        requests: d.getGroupsFor[i].requests,
       });
     }
   }
@@ -99,7 +94,7 @@ export function GroupDisplay({ navigation, selectMode }, ref) {
             <RefreshControl refreshing={refreshing} onRefresh={ReloadData} />
           }
         >
-          <Loading width={100} height={100} load={props.load} />
+          <Loading width={100} height={100} load={props.load} text={"Fetching your groups"}/>
           {props.arr.map((item, key) => (
             <GroupTile
             key={key}
@@ -121,7 +116,7 @@ export function GroupDisplay({ navigation, selectMode }, ref) {
             <RefreshControl refreshing={refreshing} onRefresh={ReloadData} />
           }
         >
-          <Loading width={100} height={100} load={props.load} />
+          <Loading width={100} height={100} load={props.load} text={"Fetching your groups"}/>
           <Text style={{ textAlign: 'center' }}>{props.text}</Text>
         </ScrollView>
       );
@@ -141,7 +136,7 @@ export function GroupDisplay({ navigation, selectMode }, ref) {
             <RefreshControl refreshing={refreshing} onRefresh={ReloadData} />
           }
         >
-          <Loading width={100} height={100} load={true} />
+          <Loading width={100} height={100} load={true} text={"Fetching your groups"}/>
           <Text style={{ textAlign: 'center' }}>{"Retrieving groups"}</Text>
         </ScrollView>
     );

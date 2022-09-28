@@ -5,7 +5,7 @@ export function Loading(props) {
   if (props.load)
   return (
     <View style = {styles.view}>
-      <Text style={styles.text}>Fetching your pdfs</Text>
+      <Text style={styles.text}>{props.text}</Text>
       <LottieView
         source={require("../../assets/loading-circle.json")}
         style={{width: props.width, height: props.height, alignSelf: 'center'}}
