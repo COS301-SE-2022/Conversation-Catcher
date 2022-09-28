@@ -344,4 +344,4 @@ export class updateDescriptionHandler
     if (res !== null && res.modifiedCount === 1) return 'Description updated succesfully.';
     return 'Failed to update description, try again later.';
   }
-}updateDescriptionCommand
+}
