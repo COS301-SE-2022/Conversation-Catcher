@@ -104,7 +104,7 @@ export function GroupDisplay({ navigation, selectMode }, ref) {
             key={key}
             name={item.name}
             description={item.description}
-            thumbnailSource={'groupRefresh'}
+            thumbnail={"#123456"}
             admin={item.admin}
             users={item.users}
             pdfs={item.pdfs}

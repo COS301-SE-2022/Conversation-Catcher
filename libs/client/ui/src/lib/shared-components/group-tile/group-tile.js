@@ -20,7 +20,7 @@ const GroupTile = ({
   name,
   admin,
   users,
-  thumbnailSource,
+  thumbnail,
   description,
   pdfs,
   nav,
@@ -34,14 +34,13 @@ const GroupTile = ({
     <TouchableOpacity
       style={styles.groupTile}
       onPress={() =>
-        nav.navigate('GroupInfo', { name:name, thumbnailSource:thumbnailSource, admin:admin, users:users, description:description, pdfs:pdfs  })
+        nav.navigate('GroupInfo', { name:name, thumbnail:thumbnail, admin:admin, users:users, description:description, pdfs:pdfs  })
       }
     >
       <View style={[styles.groupThumbnailBox, { borderColor: colourState }]}>
-        <Image
-          style={styles.groupThumbnail}
-          source={thumbnailSource}
-        />
+        <View style={[styles.groupThumbnail, {backgroundColor: thumbnail}]}>
+          <Text style={styles.groupIcon}>{name.toUpperCase()[0]}</Text>
+        </View>
       </View>
       <View style={styles.groupTile_contents_not_thumbnail}>
         <View style={styles.groupNameBox}>
@@ -86,6 +85,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     resizeMode: 'center',
     borderRadius: 180,
+    justifyContent: "center",
   },
   groupTile_contents_not_thumbnail: {
     flexGrow: 1,
@@ -122,5 +122,11 @@ const styles = StyleSheet.create({
     flexShrink: 1,
     width: '80%',
     paddingHorizontal: 5,
+  },
+  groupIcon: {
+    textAlign: "center",
+    color: "#ffffff",
+    fontSize: 25,
+    fontWeight: "bold",
   },
 });
