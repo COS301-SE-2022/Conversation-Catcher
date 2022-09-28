@@ -5,6 +5,7 @@ import {
   Text,
   Image,
   TouchableOpacity,
+  DeviceEventEmitter,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
@@ -24,18 +25,24 @@ const GroupTile = ({
   description,
   pdfs,
   nav,
-}) => {
+}, props) => {
   const colourState = useSelector(selectColour);
+  //console.log(props);
+  const add = props.add;
   const buildGroup = () => {
     return { name: name, }
   }
-  console.log(name);
   return (
     <TouchableOpacity
       style={styles.groupTile}
-      onPress={() =>
-        nav.navigate('GroupInfo', { name:name, thumbnail:thumbnail, admin:admin, users:users, description:description, pdfs:pdfs  })
-      }
+      onPress={() =>{
+        if (add){
+          console.log("test");
+          DeviceEventEmitter.emit("AddPdf",name);
+        } else {
+          nav.navigate('GroupInfo', { name:name, thumbnail:thumbnail, admin:admin, users:users, description:description, pdfs:pdfs });
+        }
+      }}
     >
       <View style={[styles.groupThumbnailBox, { borderColor: colourState }]}>
         <View style={[styles.groupThumbnail, {backgroundColor: thumbnail}]}>

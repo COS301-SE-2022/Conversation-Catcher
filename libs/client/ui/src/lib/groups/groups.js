@@ -207,6 +207,7 @@ export const Groups = ({ navigation }) => {
         navigation={navigation}
         selectMode={selectMode}
         ref={groupRef}
+        add={false}
       />
       {
       //   <View style={styles.groupTiles}>
