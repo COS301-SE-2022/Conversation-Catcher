@@ -12,6 +12,10 @@ embedder = embedText()
 def home():
     return render_template('index.html')
 
+@app.route('/test', methods=['POST'])
+def test():
+    return jsonify({"result":"success"})
+
 @app.route('/embed', methods=['POST'])
 def embed():
     input_name = request.get_json()['name']

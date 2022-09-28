@@ -269,7 +269,7 @@ export const Home = ({ navigation }) => {
 
   // Send the audio stream to the server and receive the converted text
   const convertSpeech = () => {
-    fetch('http://localhost:5050/stt', {
+    fetch('https://ccstt.azurewebsites.net/stt', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
