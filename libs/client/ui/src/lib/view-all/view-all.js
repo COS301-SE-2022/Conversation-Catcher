@@ -114,8 +114,11 @@ export const ViewAll = ({ navigation, route }) => {
 
   function DetermineTitle(){
     if (groupObject == null){
-      pdfLocalAccess.allPdfs.forEach((pdf) => { pdfLocalAccess.displayPdfs.push(pdf); });
-      NativeAppEventEmitter.emit('updatePage');
+      if (pdfLocalAccess.isSet.length !== 0){
+        pdfLocalAccess.allPdfs.forEach((pdf) => { pdfLocalAccess.displayPdfs.push(pdf); });
+        NativeAppEventEmitter.emit('updatePage');
+        pdfLocalAccess.isSet.length = 0;
+      }
       return (
         <View style={styles.big_title_box}>
           <Text style={styles.big_title}>{'PDFs'}</Text>
@@ -123,6 +126,7 @@ export const ViewAll = ({ navigation, route }) => {
       )
     }
     if (pdfLocalAccess.displayPdfs.length !== 0){
+      pdfLocalAccess.isSet.push('false');
       pdfLocalAccess.displayPdfs.length = 0;
       NativeAppEventEmitter.emit('updatePage');
       getPdfs({variables: {
@@ -133,13 +137,13 @@ export const ViewAll = ({ navigation, route }) => {
           pdfLocalAccess.displayPdfs.push(pdf);
         });
         NativeAppEventEmitter.emit('updatePage');
-        
+
       }).catch((error) => { console.log(error)});
     }
     return (
       <TouchableOpacity
         style={styles.group_title_button}
-        onPress={() => {  
+        onPress={() => {
           navigation.navigate('GroupInfo', { groupObject: groupObject });
         }}
       >
