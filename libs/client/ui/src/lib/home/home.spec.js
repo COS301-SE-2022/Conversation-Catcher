@@ -31,10 +31,19 @@ import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { render, screen, fireEvent } from '@testing-library/react-native';
 import AppNavigator from '../AppNavigator';
+import Home from './home';
+import reducer from '../../../../../../apps/client/src/app/slices/user.slice';
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
 
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
 
 describe('Testing react navigation', () => {
+  const store = configureStore({
+    reducer: {
+      user:reducer
+    }
+  })
   test('screen contains a button linking to the ViewAll page', async () => {
     const component = (
       <NavigationContainer>
@@ -50,9 +59,9 @@ describe('Testing react navigation', () => {
 
   test('clicking on the button takes you to the ViewAll screen', async () => {
     const component = (
-      <NavigationContainer>
-        <AppNavigator />
-      </NavigationContainer>
+      <Provider store = { store }>
+        <Home />
+    </Provider>
     );
 
     render(component);
