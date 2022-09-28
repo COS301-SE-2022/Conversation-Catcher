@@ -45,7 +45,13 @@ export const Groups = ({ navigation }) => {
       $email: String!
       $groupName: String!
     ) {
-      createGroup(email: $email, groupName: $groupName)
+      createGroup(email: $email, groupName: $groupName) {
+        name
+        admin
+        users
+        description
+        pdfs
+      }
     }
   `;
     const [createGroup] = useMutation(CREATE_GROUP);
@@ -273,6 +279,8 @@ export const Groups = ({ navigation }) => {
           <TouchableOpacity
             style={[styles.moreModalButton, { backgroundColor: colourState }]}
             onPress={() => {
+              console.log(userEmail);
+              console.log(newName);
               createGroup({
                 variables: {
                   email: userEmail,
@@ -281,8 +289,11 @@ export const Groups = ({ navigation }) => {
               }).then((result)=>{
                 setMoreVisible(false);
                 DeviceEventEmitter.emit("updateGroups");
+                setNewName("");
               }).catch((e)=>{
                 console.log(e);
+                setMoreVisible(false);
+                setNewName("");
               });
             }}
           >
