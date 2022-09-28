@@ -46,7 +46,7 @@ export const PdfView = ({ route, navigation }) => {
 
   const { text, name, id, summarised } = route.params;
 
-  const onShare = async () => {
+  const onPdfShare = async () => {
     try {
       const htmlPDF = '<h1>'+name.name+'</h1>'+text.text;//Add check to output summerized text when toggled
       console.log("Export");
@@ -59,6 +59,21 @@ export const PdfView = ({ route, navigation }) => {
       console.log(file.filePath);
     } catch (error) {
       alert(error.message);
+    }
+  };
+
+  const onTextShare = async () => {
+    try {
+      const result = await Share.share({
+        message:
+          text.text,
+        title:
+          name.name,
+        url:
+          name.name,
+      });
+    } catch (error) {
+      //alert(error.message);
     }
   };
 
@@ -210,7 +225,53 @@ export const PdfView = ({ route, navigation }) => {
             style={styles.moreModalButton}
             onPress={() => {
               setMoreVisible(false);
-              onShare();
+              onTextShare();
+            }}
+          >
+            <View style={styles.moreModalButtonContent}>
+              <View style={styles.iconContainer}>
+                <Icon
+                  style={{ color: colourState }}
+                  name="file-text-o"
+                  size={18}
+                />
+              </View>
+              <View style={styles.moreModalButtonText_box}>
+                <Text style={styles.moreModalButtonText} ellipsizeMode={'clip'}>
+                  {'Export text'}
+                </Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.moreModalButton}
+            onPress={() => {
+              setMoreVisible(false);
+              onPdfShare();
+            }}
+          >
+            <View style={styles.moreModalButtonContent}>
+              <View style={styles.iconContainer}>
+                <Icon
+                  style={{ color: colourState }}
+                  name="file-pdf-o"
+                  size={18}
+                />
+              </View>
+              <View style={styles.moreModalButtonText_box}>
+                <Text style={styles.moreModalButtonText} ellipsizeMode={'clip'}>
+                  {'Download PDF'}
+                </Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.moreModalButton}
+            onPress={() => {
+              setMoreVisible(false);
+              //onShare();
             }}
           >
             <View style={styles.moreModalButtonContent}>
@@ -223,7 +284,7 @@ export const PdfView = ({ route, navigation }) => {
               </View>
               <View style={styles.moreModalButtonText_box}>
                 <Text style={styles.moreModalButtonText} ellipsizeMode={'clip'}>
-                  {'Export'}
+                  {'Share with group'}
                 </Text>
               </View>
             </View>
@@ -512,7 +573,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   moreModalInner: {
-    width: '45%',
+    width: '70%',
     flexShrink: 1,
     backgroundColor: '#f5f5f5ff',
     borderRadius: 7,
@@ -535,7 +596,7 @@ const styles = StyleSheet.create({
     //padding: 5
   },
   iconContainer: {
-    width: '40%',
+    width: '25%',
     height: '100%',
     alignItems: 'center',
   },
@@ -551,6 +612,7 @@ const styles = StyleSheet.create({
   },
   moreModalButtonText_box: {
     flexShrink: 1,
+
   },
   moreModalButtonDivider: {
     backgroundColor: '#d0d5ddff',
