@@ -286,9 +286,11 @@ export const Home = ({ navigation }) => {
           const newPdf = await addPdf({
             variables: {
               email: emailState,
-              name: (await generateName({
-                variables: { text: result.converted_text },
-              }).catch((e) => console.log(e))).data.generateName,
+              name: (
+                await generateName({
+                  variables: { text: result.converted_text },
+                }).catch((e) => console.log(e))
+              ).data.generateName,
               text: result.converted_text,
             },
           });
@@ -358,7 +360,7 @@ export const Home = ({ navigation }) => {
             { backgroundColor: colourState },
           ]}
           onPress={() => {
-            navigation.navigate('ViewAll');
+            navigation.navigate('ViewAll', { groupName: '' });
           }}
         >
           <View style={styles.viewPdfsTouchableOpacityLabel_box}>
