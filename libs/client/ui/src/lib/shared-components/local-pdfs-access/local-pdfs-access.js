@@ -2,6 +2,7 @@ class LocalPdfsAccess {
   displayPdfs; //The pdfs that get displayed
   allPdfs; //All the pdfs loaded from the api call
   summariseListener = ['false']; //Checks if the summarise listener has been defined
+  clearSearchInput = ['false'];
 
   constructor() {
     this.displayPdfs = [];
@@ -62,6 +63,15 @@ class LocalPdfsAccess {
   clearPdfs() {
     this.displayPdfs.length = 0;
     this.allPdfs.length = 0;
+  }
+
+  sortByIds(ids){
+    this.displayPdfs.length = 0;
+    for (let j=0; j<ids.length; j++){
+      for (let i = 0; i < this.allPdfs.length; i++) {
+        if (this.allPdfs[i].id === ids[j]) this.displayPdfs.push(this.allPdfs[i]);
+      }
+    }
   }
 
   //Filter the displayPdfs on name to display pdfs based on given search criteria

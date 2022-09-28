@@ -8,6 +8,6 @@ export class ApiGenerateNamesApiFeatureResolver {
   //Function to call and expose the generate name service
   @Mutation(() => String)
   async generateName(@Args('text') text: string) {
-    return this.generateNameService.generateName(text);
+    return await this.generateNameService.generateName(text);
   }
 }

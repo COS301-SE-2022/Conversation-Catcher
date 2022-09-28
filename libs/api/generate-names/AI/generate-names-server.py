@@ -12,9 +12,13 @@ generator = nameGenerator()
 def home():
     return render_template('index.html')
 
+@app.route('/test', methods=['POST'])
+def test():
+  return jsonify({"result": "success"})
+
 @app.route('/gennames', methods=['POST'])
-def summarise():
-    input_text = request.form['text']
+def gennames():
+    input_text = request.get_json()['text']
     generated_name = generator.generateName(input_text)
     generated_name_object = { "generated_name": generated_name }
     return jsonify(generated_name_object)

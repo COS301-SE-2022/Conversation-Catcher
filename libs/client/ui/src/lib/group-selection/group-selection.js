@@ -21,7 +21,7 @@ import { useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { selectColour, selectEmail } from '../../../../../../apps/client/src/app/slices/user.slice';
 
-export const Groups = ({ navigation }) => {
+export const GroupSelection = ({ navigation }) => {
   const groupRef = useRef();
   const colourState = useSelector(selectColour);
   const userEmail = useSelector(selectEmail);
@@ -40,21 +40,7 @@ export const Groups = ({ navigation }) => {
   const message = 'Please check this out.';
 
   //Queries and mutations
-  const CREATE_GROUP = gql`
-    mutation createGroup(
-      $email: String!
-      $groupName: String!
-    ) {
-      createGroup(email: $email, groupName: $groupName) {
-        name
-        admin
-        users
-        description
-        pdfs
-      }
-    }
-  `;
-    const [createGroup] = useMutation(CREATE_GROUP);
+
   //variables for object sorting
   const [objArr, setObjArr] = useState([]);
 
@@ -72,67 +58,6 @@ export const Groups = ({ navigation }) => {
     }
   };
 
-  function BottomModalButton(props) {
-    if (props.type === 'share') {
-      return (
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={async () => {
-            await share({
-              title: 'Sharing group file from awesome share app',
-              message: 'Please take a look at this file',
-              url: '../assets/thereactnativebook-sample.group',
-            });
-            setSelectMode(false);
-            setBottomModalVisible(false);
-          }}
-        >
-          <Icon name="paper-plane-o" color="#ffffffff" size={22} />
-        </TouchableOpacity>
-      );
-    }
-    if (props.type === 'rename') {
-      return (
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => setBottomModalVisible(false)}
-        >
-          <Icon name="pencil-square-o" color="#ffffffff" size={22} />
-        </TouchableOpacity>
-      );
-    }
-    return (
-      <TouchableOpacity
-        style={styles.backButton}
-        onPress={() => {
-          setSelectMode(false);
-          setBottomModalVisible(false);
-        }}
-      >
-        <Icon name="trash-o" color="#ffffffff" size={22} />
-      </TouchableOpacity>
-    );
-  }
-
-  // const onShare = async () => {
-  //   try {
-  //     const result = await Share.share({
-  //       message:
-  //         'React Native | A framework for building native apps using React',
-  //     });
-  //     if (result.action === Share.sharedAction) {
-  //       if (result.activityType) {
-  //         // shared with activity type of result.activityType
-  //       } else {
-  //         // shared
-  //       }
-  //     } else if (result.action === Share.dismissedAction) {
-  //       // dismissed
-  //     }
-  //   } catch (error) {
-  //     alert(error.message);
-  //   }
-  // };
 
   // function changeArray(index, itemValue) {
   //   if (currOrderValue !== itemValue) {
@@ -178,7 +103,7 @@ export const Groups = ({ navigation }) => {
     <SafeAreaView style={styles.groupsPage}>
       <View style={styles.groupsTopBar}>
         <View style={styles.big_title_box}>
-          <Text style={styles.big_title}>{'Groups'}</Text>
+          <Text style={styles.big_title}>{'Select a group'}</Text>
         </View>
 
         <View style={styles.searchBarGroup}>
@@ -242,148 +167,17 @@ export const Groups = ({ navigation }) => {
 
       <View style={styles.viewAllBottomBar}>
         <TouchableOpacity
-          style={styles.moreButton}
-          onPress={() => {
-            setMoreVisible(true)
-          }}
-        >
-          <Icon name="plus" color={colourState} size={30} />
-        </TouchableOpacity>
-
-        <TouchableOpacity
           style={styles.backButton}
-          onPress={() => navigation.navigate('Home')}
+          onPress={() => navigation.goBack()}
         >
           <Icon name="angle-left" color="#344053ff" size={30} />
         </TouchableOpacity>
       </View>
-
-      <Modal
-        style={styles.modal}
-        isVisible={moreVisible}
-        avoidKeyboard={true}
-        hasBackdrop={true}
-        backdropColor="white"
-        onBackdropPress={() => setMoreVisible(false)}
-      >
-        <View style={styles.moreModalInner}>
-          <TextInput
-            style={styles.groupNameInput}
-            onChangeText={setNewName}
-            value={newName}
-            placeholder="Name your group"
-          />
-
-          <View style={styles.moreModalButtonDivider} />
-
-          <TouchableOpacity
-            style={[styles.moreModalButton, { backgroundColor: colourState }]}
-            onPress={() => {
-              console.log(userEmail);
-              console.log(newName);
-              createGroup({
-                variables: {
-                  email: userEmail,
-                  groupName: newName,
-                }
-              }).then((result)=>{
-                setMoreVisible(false);
-                DeviceEventEmitter.emit("updateGroups");
-                setNewName("");
-              }).catch((e)=>{
-                console.log(e);
-                setMoreVisible(false);
-                setNewName("");
-              });
-            }}
-          >
-            <View style={styles.moreModalButtonContent}>
-              <View style={styles.moreModalButtonText_box}>
-                <Text style={styles.moreModalButtonText}>{'Create Group'}</Text>
-              </View>
-            </View>
-          </TouchableOpacity>
-        </View>
-      </Modal>
-      <Modal
-        isVisible={bottomModalVisible}
-        coverScreen={false}
-        hasBackdrop={false}
-        style={{
-          width: '100%',
-          height: '8%',
-          margin: 0,
-          justifyContent: 'flex-end',
-        }}
-      >
-        <View style={[styles.modalBottomBar, { backgroundColor: colourState }]}>
-          <TouchableOpacity
-            style={styles.backButton}
-            onPress={() => {
-              setBottomModalVisible(false);
-              setSelectMode(false);
-            }}
-          >
-            <Icon name="angle-left" color="#ffffffff" size={30} />
-          </TouchableOpacity>
-
-          <BottomModalButton type={bottomModalType} />
-        </View>
-      </Modal>
-
-      <Modal
-        style={styles.renameModal}
-        isVisible={renameModalVisible}
-        avoidKeyboard={true}
-      >
-        <View style={styles.moreModalInner}>
-          <TextInput editable />
-          <TouchableOpacity
-            style={[styles.backButton, { backgroundColor: colourState }]}
-            onPress={() => {
-              setBottomModalVisible(false);
-              setSelectMode(false);
-            }}
-          >
-            <Text>{'Rename file'}</Text>
-          </TouchableOpacity>
-
-          <BottomModalButton type={bottomModalType} />
-        </View>
-      </Modal>
-
-      <Modal
-        style={styles.modal}
-        isVisible={renameVisible}
-        hasBackdrop={true}
-        backdropColor="white"
-        onBackdropPress={() => setRenameVisible(false)}
-        //onModalHide={() => setFileSelected(false)}
-      >
-        <View style={styles.renameModalInner}>
-          <TextInput
-            style={styles.renameModalTextInput}
-            defaultValue={'temp'}
-          />
-          <TouchableOpacity
-            style={[styles.renameFileButton, { backgroundColor: colourState }]}
-            state={null}
-            onPress={() => {
-              setRenameVisible(false);
-            }}
-          >
-            <View style={styles.renameModalButtonContent}>
-              <View style={styles.renameModalButtonText_box}>
-                <Text style={styles.renameModalButtonText}>{'Rename'}</Text>
-              </View>
-            </View>
-          </TouchableOpacity>
-        </View>
-      </Modal>
+      
     </SafeAreaView>
   );
 };
-export default Groups;
+export default GroupSelection;
 
 const styles = StyleSheet.create({
   groupsPage: {
@@ -507,81 +301,6 @@ const styles = StyleSheet.create({
     width: '40%',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  orderByGroup: {
-    flexShrink: 1,
-    width: '40%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    alignSelf: 'flex-end',
-    marginVertical: 5,
-    paddingHorizontal: 7
-  },
-  orderByLabel: {
-    color: '#344053ff',
-    textAlign: 'center',
-    letterSpacing: 0,
-    lineHeight: 20,
-    fontSize: 14,
-    fontWeight: '500',
-    fontStyle: 'normal',
-    fontFamily: 'System' /* Inter */,
-    padding: 3,
-    flexShrink: 1,
-    width: 50,
-  },
-  orderByDropdown: {
-    flexShrink: 1,
-    backgroundColor: '#ffffffff',
-    borderRadius: 8,
-    borderStyle: 'solid',
-    borderColor: '#d0d5ddff',
-    borderWidth: 1,
-    elevation: 2,
-    shadowColor: '#000000',
-    shadowRadius: 2.621621621621622,
-    shadowOpacity: 0.2173913043478261,
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    flexDirection: 'row',
-    marginVertical: 5,
-    width: 65,
-  },
-  orderByDropdownText: {
-    color: '#667084ff',
-    textAlign: 'left',
-    letterSpacing: 0,
-    lineHeight: 18,
-    fontSize: 16,
-    fontWeight: '400',
-    fontStyle: 'normal',
-    fontFamily: 'System' /* Inter */,
-    padding: 10,
-  },
-  orderByDropDownText_box: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
-  },
-  orderByDropdownStyle: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 80,
-    borderRadius: 8,
-  },
-  orderByDropdownTextStyle: {
-    color: '#667084ff',
-    textAlign: 'left',
-    letterSpacing: 0,
-    lineHeight: 18,
-    fontSize: 16,
-    fontWeight: '400',
-    fontStyle: 'normal',
-    fontFamily: 'System' /* Inter */,
-    padding: 10,
   },
   modal: {
     justifyContent: 'center',

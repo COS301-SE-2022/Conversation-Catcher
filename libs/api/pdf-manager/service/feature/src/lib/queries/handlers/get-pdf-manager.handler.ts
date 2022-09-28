@@ -1,5 +1,5 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { GetPdfByIdQuery, GetPdfsQuery, SemanticSearchQuery } from '../impl';
+import { GetPdfByIdQuery,GetPdfsByArrQuery, GetUserPdfsQuery, SemanticSearchQuery } from '../impl';
 import { MongoDBAccess } from '@conversation-catcher/api/pdf-manager/repository/data-access';
 import { HttpService } from '@nestjs/axios';
 import { lastValueFrom } from 'rxjs';
@@ -13,11 +13,24 @@ export class GetPdfByIdHandler implements IQueryHandler<GetPdfByIdQuery> {
   }
 }
 
-@QueryHandler(GetPdfsQuery)
-export class GetPdfsHandler implements IQueryHandler<GetPdfsQuery> {
+@QueryHandler(GetPdfsByArrQuery)
+export class GetPdfsByArrHandler implements IQueryHandler<GetPdfsByArrQuery> {
   constructor(private repository: MongoDBAccess) {}
 
-  async execute({ userid }: GetPdfsQuery): Promise<any> {
+  async execute({ ids }: GetPdfsByArrQuery): Promise<any> {
+    const result = []
+    for (let i=0; i< ids.length; i++){
+      result.push( await this.repository.getPDF(ids[i]));
+    }
+    return result;
+  }
+}
+
+@QueryHandler(GetUserPdfsQuery)
+export class GetPdfsHandler implements IQueryHandler<GetUserPdfsQuery> {
+  constructor(private repository: MongoDBAccess) {}
+
+  async execute({ userid }: GetUserPdfsQuery): Promise<any> {
     // console.log('Calling query for Get all pdfs');
     return await this.repository.getUserPdfs(userid);
   }

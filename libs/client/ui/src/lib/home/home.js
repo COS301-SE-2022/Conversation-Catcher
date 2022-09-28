@@ -92,11 +92,10 @@ export const Home = ({ navigation }) => {
   `;
 
   const SET_EMBEDDINGS = gql`
-  mutation setEmbeddings($id: String!, $name: String!, $text: String!){
-    embed(id:$id, name:$name, text:$text)
-  }
+    mutation setEmbeddings($id: String!, $name: String!, $text: String!) {
+      embed(id: $id, name: $name, text: $text)
+    }
   `;
-
 
   //Mutations to be used in the creation of new PDFs
   const [summariseText] = useMutation(SUMMARISE_TEXT);
@@ -104,7 +103,6 @@ export const Home = ({ navigation }) => {
   const [addPdf] = useMutation(ADD_PDF);
   const [generateName] = useMutation(GENERATE_NAME);
   const [setEmbedding] = useMutation(SET_EMBEDDINGS);
-
 
   const handleDocumentSelection = useCallback(async () => {
     try {
@@ -288,15 +286,21 @@ export const Home = ({ navigation }) => {
           const newPdf = await addPdf({
             variables: {
               email: emailState,
-              name: await generateName({
-                variables: { text: result.converted_text },
-              }),
+              name: (
+                await generateName({
+                  variables: { text: result.converted_text },
+                }).catch((e) => console.log(e))
+              ).data.generateName,
               text: result.converted_text,
             },
           });
-          const embeddings = await setEmbedding(
-            {variables: {id: newPdf.data.addPDF.id, name: newPdf.data.addPDF.name, text: newPdf.data.addPDF.text}}
-            ).catch(e => console.log(e))
+          const embeddings = await setEmbedding({
+            variables: {
+              id: newPdf.data.addPDF.id,
+              name: newPdf.data.addPDF.name,
+              text: newPdf.data.addPDF.text,
+            },
+          }).catch((e) => console.log(e));
           console.log(embeddings);
           pdfLocalAccess.addPdf({
             name: newPdf.data.addPDF.name,
@@ -356,7 +360,7 @@ export const Home = ({ navigation }) => {
             { backgroundColor: colourState },
           ]}
           onPress={() => {
-            navigation.navigate('ViewAll');
+            navigation.navigate('ViewAll', { groupName: '' });
           }}
         >
           <View style={styles.viewPdfsTouchableOpacityLabel_box}>

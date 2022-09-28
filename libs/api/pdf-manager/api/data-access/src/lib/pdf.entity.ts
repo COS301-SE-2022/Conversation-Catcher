@@ -8,22 +8,22 @@ export class PdfEntity {
   @Field()
   name: string;
 
-  @Field({nullable: true})
+  @Field({ nullable: true })
   summarised?: string;
 
-  @Field({nullable: true})
+  @Field({ nullable: true })
   text?: string;
 
-  @Field(()=> [Number],{nullable: 'itemsAndList'})
+  @Field(() => [Number], { nullable: 'itemsAndList' })
   embeddings?: number[];
 
-  @Field({nullable : true})
+  @Field({ nullable: true })
   creationDate: string;
 
   @Field()
   downloaded: boolean;
 
-  @Field(()=> [String],{nullable:'itemsAndList'})
+  @Field(() => [String], { nullable: 'itemsAndList' })
   tags?: string[];
 }
 
@@ -35,21 +35,21 @@ export class PdfEntityInput {
   @Field()
   name: string;
 
-  @Field({nullable: true})
+  @Field({ nullable: true })
   summarised?: string;
 
-  @Field({nullable: true})
+  @Field({ nullable: true })
   text?: string;
 
-  @Field(()=> [Number])
+  @Field(() => [Number], { nullable: 'itemsAndList' })
   embeddings: number[];
 
-  @Field({nullable : true})
+  @Field({ nullable: true })
   creationDate: string;
 
-  @Field({nullable: true})
+  @Field({ nullable: true })
   downloaded: boolean;
 
-  @Field(()=> [String],{nullable:'itemsAndList'})
+  @Field(() => [String], { nullable: 'itemsAndList' })
   tags?: string[];
 }

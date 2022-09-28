@@ -11,6 +11,9 @@ export class GroupEntity {
   @Field(() => [String])
   users: [string];
 
+  @Field({nullable: true})
+  description: string;
+
   @Field(() => [String], { nullable: 'items' })
   pdfs: [string];
 

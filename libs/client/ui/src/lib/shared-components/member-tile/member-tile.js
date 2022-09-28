@@ -34,14 +34,13 @@ function DetermineTileCorner(props) {
 }
 
 const MemberTile = ({
-  id,
   name,
   showCheck,
   nav,
 }) => {
   const colourState = useSelector(selectColour);
   const buildMember = () => {
-    return { id: id, name: name }
+    return { name: name }
   }
   return (
     <TouchableOpacity
