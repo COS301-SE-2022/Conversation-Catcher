@@ -5,24 +5,6 @@ import { Provider } from 'react-redux';
 import reducer from '../../../../../../apps/client/src/app/slices/user.slice';
 import { configureStore } from '@reduxjs/toolkit';
 
-// describe('ColourPage', () => {
-//   const store = configureStore({
-//     reducer: {
-//       user:reducer
-//     }
-//   })
-//   const TestComponent = () => (
-//     <Provider store = { store }>
-//         <ColourPage />
-//     </Provider>
-// )
-//   it('should render successfully', () => {
-//     // const { container } = render(<TestComponent />);
-//     // expect(container).toBeTruthy();
-//     expect(true).toEqual(true);
-//   });
-// });
-
 describe('ColourPage', () => {
   const store = configureStore({
     reducer: {
@@ -34,15 +16,12 @@ describe('ColourPage', () => {
       <ColourPage />
     </Provider>
   );
-
-  render(TestComponent);
   it('should render successfully', () => {
     const { container } = render(TestComponent);
     expect(container).toBeTruthy();
-    expect(true).toEqual(true);
   });
+});
 
   // Submit
   //fireEvent.press(screen.ByLabelText("Register"));
   // TODO: figure out how to do this
-});
