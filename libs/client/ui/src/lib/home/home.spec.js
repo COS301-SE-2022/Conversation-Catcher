@@ -28,11 +28,12 @@ describe('Home', () => {
 */
 
 import * as React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+//import { NavigationContainer } from '@react-navigation/native';
 import { render, screen, fireEvent } from '@testing-library/react-native';
-import AppNavigator from '../AppNavigator';
+//import AppNavigator from '../AppNavigator';
 import Home from './home';
 import reducer from '../../../../../../apps/client/src/app/slices/user.slice';
+//import  from 'apps/client/src/app/slices/user.slice'
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 
@@ -46,9 +47,9 @@ describe('Testing react navigation', () => {
   })
   test('screen contains a button linking to the ViewAll page', async () => {
     const component = (
-      <NavigationContainer>
-        <AppNavigator />
-      </NavigationContainer>
+      <Provider store = { store }>
+        <Home />
+    </Provider>
     );
 
     render(component);
@@ -78,9 +79,9 @@ describe('Testing react navigation', () => {
 
   test('screen contains a button linking to the Groups page', async () => {
     const component = (
-      <NavigationContainer>
-        <AppNavigator />
-      </NavigationContainer>
+      <Provider store = { store }>
+        <Home />
+    </Provider>
     );
 
     render(component);
@@ -91,9 +92,9 @@ describe('Testing react navigation', () => {
 
   test('clicking on the button takes you to the Groups screen', async () => {
     const component = (
-      <NavigationContainer>
-        <AppNavigator />
-      </NavigationContainer>
+      <Provider store = { store }>
+        <Home />
+    </Provider>
     );
 
     render(component);
@@ -110,9 +111,9 @@ describe('Testing react navigation', () => {
 
   test('screen contains a button linking to the Settings page', async () => {
     const component = (
-      <NavigationContainer>
-        <AppNavigator />
-      </NavigationContainer>
+      <Provider store = { store }>
+        <Home />
+    </Provider>
     );
 
     render(component);
@@ -123,9 +124,9 @@ describe('Testing react navigation', () => {
 
   test('clicking on the button takes you to the Settings screen', async () => {
     const component = (
-      <NavigationContainer>
-        <AppNavigator />
-      </NavigationContainer>
+      <Provider store = { store }>
+        <Home />
+    </Provider>
     );
 
     render(component);
