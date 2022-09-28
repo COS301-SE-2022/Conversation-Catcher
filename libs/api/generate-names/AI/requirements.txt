@@ -5,4 +5,3 @@ nltk
 sklearn
 tensorflow-datasets
 Jinja2
-pickle
