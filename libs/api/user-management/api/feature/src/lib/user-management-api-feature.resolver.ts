@@ -203,4 +203,12 @@ export class UserManagementApiFeatureResolver {
   ) {
     return await this.userService.removeGroupPdf(pdfId, groupName);
   }
+
+  @Mutation(()=> String)
+  async updateDescription(
+    @Args('groupName') groupName: string,
+    @Args('description') description: string
+  ){
+    return await this.userService.updateDescription(groupName, description);
+  }
 }

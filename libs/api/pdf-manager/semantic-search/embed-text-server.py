@@ -17,11 +17,12 @@ def embed():
     input_name = request.get_json()['name']
     input_text = request.get_json()['text']
     embeddings = embedder.embed(input_name, input_text)
-    embeddings_object = { "embeddings": embeddings }
+    # print(embeddings.tolist())
+    embeddings_object = { "embeddings": embeddings.tolist() }
     return jsonify(embeddings_object)
 
 @app.route('/semanticsearch', methods=['POST'])
-def embed():
+def semanticsearch():
     query = request.get_json()['query']
     docs = request.get_json()['docs']
     results = embedder.search(query, docs)
