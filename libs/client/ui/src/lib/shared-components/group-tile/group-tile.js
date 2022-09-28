@@ -27,10 +27,10 @@ const GroupTile = ({
   description,
   pdfs,
   nav,
-}, props) => {
+  add,
+}) => {
   const colourState = useSelector(selectColour);
   //console.log(props);
-  const add = props.add;
   const buildGroup = () => {
     return { name:name, thumbnail:thumbnail, admin:admin, users:users, description:description, pdfs:pdfs }
   }
@@ -39,7 +39,6 @@ const GroupTile = ({
       style={styles.groupTile}
       onPress={() =>{
         if (add){
-          console.log("test");
           DeviceEventEmitter.emit("AddPdf",name);
         } else {
           nav.navigate('ViewAll', { groupObject: buildGroup() })

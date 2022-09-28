@@ -11,7 +11,7 @@ import { selectEmail} from '../../../../../../../apps/client/src/app/slices/user
 import { selectGroups, refillGroups } from '../../../../../../../apps/client/src/app/slices/group.slice';
 import { useSelector, useDispatch } from 'react-redux';
 
-export function GroupDisplay({ navigation, selectMode }, ref, add) {
+export function GroupDisplay({ navigation, selectMode, add}, ref) {
   // const [selectMode, setSelectMode] = useState(false);
   const [didReload, setDidReload] = useState(true);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -21,7 +21,6 @@ export function GroupDisplay({ navigation, selectMode }, ref, add) {
   //const localGroups = useSelector(selectGroups);
   //const dispatch = useDispatch();
   //Expose refresh function to parent(View-all page)
-
   //Listen to when to update page
   DeviceEventEmitter.addListener('updateGroups', () => setRefreshFlag(true));
   //graphql syntax trees

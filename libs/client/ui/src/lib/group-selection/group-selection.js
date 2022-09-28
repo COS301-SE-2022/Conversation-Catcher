@@ -21,7 +21,9 @@ import { useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { selectColour, selectEmail } from '../../../../../../apps/client/src/app/slices/user.slice';
 
-export const GroupSelection = ({ navigation },id) => {
+export const GroupSelection = ({ navigation, route }) => {
+  console.log(route);
+  const id = route.params;
   const groupRef = useRef();
   const colourState = useSelector(selectColour);
   const userEmail = useSelector(selectEmail);
@@ -34,7 +36,6 @@ export const GroupSelection = ({ navigation },id) => {
   const [renameVisible, setRenameVisible] = useState(false);
   const [newName, setNewName] = useState(null);
   // const [refreshPage, setRefreshPage] = useState('');
-
   const url = 'https://awesome.contents.com/';
   const title = 'Awesome Contents';
   const message = 'Please check this out.';
@@ -52,14 +53,15 @@ export const GroupSelection = ({ navigation },id) => {
   const [objArr, setObjArr] = useState([]);
   const [addToGroup] = useMutation(ADD_TO_GROUP);
   const AddNew = async (g) => {
-    addToGroup({variables:{pdfId: id, groupName: g}}).then(()=>{
+    addToGroup({variables:{pdfId: id, groupName: g}}).then((e)=>{
+      console.log(e);
       groupLocalAccess.addPdf(id,g);
       navigation.goBack();
     }).catch((e)=>{
       console.log(e);
     })
   }
-  DeviceEventEmitter.addListener("AddPDF",(group)=>{
+  DeviceEventEmitter.addListener("AddPdf",(group)=>{
     AddNew(group);
   })
   return (
