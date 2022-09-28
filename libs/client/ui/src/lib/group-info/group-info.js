@@ -121,18 +121,6 @@ export const GroupInfo = ({ route, navigation }) => {
     await add({variables:{user:userID, groupName:name}});
   }
 
-  const handleDocumentSelection = useCallback(async () => {
-    try {
-      const response = await DocumentPicker.pick({
-        presentationStyle: 'fullScreen',
-        type: [types.audio],
-      });
-      setFileResponse(response);
-    } catch (err) {
-      console.warn(err);
-    }
-  }, []);
-
     function AdminGroupButtons(){
       if(adminState){
         return (
@@ -209,7 +197,7 @@ export const GroupInfo = ({ route, navigation }) => {
             <TouchableOpacity 
               style={styles.groupThumbnailBox}
               onPress={() => {
-                handleDocumentSelection();
+                //handleDocumentSelection();
               }}
             >
               <Image
@@ -260,7 +248,6 @@ export const GroupInfo = ({ route, navigation }) => {
         
       )
     }
-
   return (
     <SafeAreaView style={styles.groupPage}>
       
@@ -293,24 +280,13 @@ export const GroupInfo = ({ route, navigation }) => {
               //We can use map to generate the list of member tiles based on the users array in the group
             }
         <ScrollView style={styles.groupMembersBox}>
+          {users.map((item, key) => (
             <MemberTile
-                key={'1'}
-                id={'1'}
-                name={'member1@gmail.com'}
-                showCheck={selectMode}
+              key={key}
+              name={item}
+              showCheck={selectMode}
             />
-            <MemberTile
-                key={'2'}
-                id={'2'}
-                name={'member2@gmail.com'}
-                showCheck={selectMode}
-            />
-            <MemberTile
-                key={'3'}
-                id={'3'}
-                name={'member3@gmail.com'}
-                showCheck={selectMode}
-            />
+          ))}
         </ScrollView>
       </View>
 

@@ -29,7 +29,11 @@ export function GroupDisplay({ navigation, selectMode }, ref) {
     query getForUser($email: String!) {
       getGroupsFor(email: $email) {
         name
+        admin
         description
+        pdfs
+        requests
+        users
       }
     }
   `;
@@ -98,10 +102,12 @@ export function GroupDisplay({ navigation, selectMode }, ref) {
           {props.arr.map((item, key) => (
             <GroupTile
             key={key}
-            id={item.id}
             name={item.name}
-            text={item.text}
-            thumbnailSource={'groupRefresh'}
+            description={item.description}
+            thumbnail={"#123456"}
+            admin={item.admin}
+            users={item.users}
+            pdfs={item.pdfs}
             nav={navigation}
             refresh={setDidReload}
           />

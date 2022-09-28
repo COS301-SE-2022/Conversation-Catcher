@@ -45,7 +45,13 @@ export const Groups = ({ navigation }) => {
       $email: String!
       $groupName: String!
     ) {
-      createGroup(email: $email, groupName: $groupName)
+      createGroup(email: $email, groupName: $groupName) {
+        name
+        admin
+        users
+        description
+        pdfs
+      }
     }
   `;
     const [createGroup] = useMutation(CREATE_GROUP);
@@ -108,25 +114,25 @@ export const Groups = ({ navigation }) => {
     );
   }
 
-  const onShare = async () => {
-    try {
-      const result = await Share.share({
-        message:
-          'React Native | A framework for building native apps using React',
-      });
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          // shared with activity type of result.activityType
-        } else {
-          // shared
-        }
-      } else if (result.action === Share.dismissedAction) {
-        // dismissed
-      }
-    } catch (error) {
-      alert(error.message);
-    }
-  };
+  // const onShare = async () => {
+  //   try {
+  //     const result = await Share.share({
+  //       message:
+  //         'React Native | A framework for building native apps using React',
+  //     });
+  //     if (result.action === Share.sharedAction) {
+  //       if (result.activityType) {
+  //         // shared with activity type of result.activityType
+  //       } else {
+  //         // shared
+  //       }
+  //     } else if (result.action === Share.dismissedAction) {
+  //       // dismissed
+  //     }
+  //   } catch (error) {
+  //     alert(error.message);
+  //   }
+  // };
 
   // function changeArray(index, itemValue) {
   //   if (currOrderValue !== itemValue) {
@@ -273,6 +279,8 @@ export const Groups = ({ navigation }) => {
           <TouchableOpacity
             style={[styles.moreModalButton, { backgroundColor: colourState }]}
             onPress={() => {
+              console.log(userEmail);
+              console.log(newName);
               createGroup({
                 variables: {
                   email: userEmail,
@@ -281,8 +289,11 @@ export const Groups = ({ navigation }) => {
               }).then((result)=>{
                 setMoreVisible(false);
                 DeviceEventEmitter.emit("updateGroups");
+                setNewName("");
               }).catch((e)=>{
                 console.log(e);
+                setMoreVisible(false);
+                setNewName("");
               });
             }}
           >
