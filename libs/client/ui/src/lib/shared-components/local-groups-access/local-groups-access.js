@@ -7,6 +7,10 @@ class LocalGroupsAccess {
     this.allGroups = [];
   }
 
+  isLoaded(){
+    return this.allGroups[0] !== undefined && this.allGroups[0].name !== 'error'
+  }
+
   //Add shallow copy of an array of groups into both arrays
   addGroups(newGroups) {
     for (let i = 0; i < newGroups.length; i++) {
@@ -54,39 +58,71 @@ class LocalGroupsAccess {
 
   sortGroups(sortBy) {
     // Sort PDFs array according to sortBy (Which is either Name or )
-    switch (sortBy) {
-      case 'Name':
-        this.displayGroups.sort((a, b) => {
-          if (a.name < b.name) return -1;
-          return 1;
-        });
-        console.log(this.displayGroups);
-        break;
-      case 'Date':
-        this.displayGroups.sort((a, b) => {
-          if (new Date(a.creationDate) > new Date(b.creationDate)) return -1;
-          return 1;
-        });
-        console.log(this.displayGroups);
-        break;
-    }
+    this.displayGroups.sort((a, b) => {
+      if (a.name < b.name) return -1;
+      return 1;
+    });
+    console.log(this.displayGroups);
   }
 
   //Search for group with id groupId and change the name
-  renameGroup(groupId, newName) {
+  renameGroup(oldName, newName) {
     for (let i = 0; i < this.allGroups.length; i++) {
-      if (this.allGroups[i].id === groupId) this.allGroups[i].name = newName;
+      if (this.allGroups[i].name === oldName) this.allGroups[i].name = newName;
+    }
+  }
+
+  //Change description of group given an id
+  chngDesc(name,desc) {
+    for (let i = 0; i < this.allGroups.length; i++) {
+      if (this.allGroups[i].name === name) this.allGroups[i].description = desc;
     }
   }
 
   //Remove group with certain id from the list
-  deleteGroup(groupId) {
+  deleteGroup(name) {
     var temp = [];
     for (let i = 0; i < this.allGroups.length; i++) {
-      if (this.allGroups[i].id !== groupId) temp.push(this.allGroups[i]);
+      if (this.allGroups[i].name !== name) temp.push(this.allGroups[i]);
     }
     this.clearGroups();
     this.addGroups(temp);
+  }
+
+  addPdf(pdf, group){
+    for (let i = 0; i < this.allGroups.length; i++) {
+      if (this.allGroups[i].name === group) this.allGroups[i].pdfs.push(pdf);
+    }
+  }
+
+  removePdf(pdf, group){
+    for (let i = 0; i < this.allGroups.length; i++) {
+      if (this.allGroups[i].name === group){
+        var temp = [];
+        for (let j = 0; j < this.allGroups[i].pdfs.length; j++){
+          if (this.allGroups[i].pdfs[j] !== pdf) temp.push(this.allGroups[i].pdfs[j]);
+        }
+        this.allGroups[i].pdfs = temp;
+      }
+    }
+  }
+
+  addUser(user, group){
+    for (let i = 0; i < this.allGroups.length; i++) {
+      if (this.allGroups[i].name === group) this.allGroups[i].users.push(user);
+    }
+  }
+
+  removeUser(user, group){
+    for (let i = 0; i < this.allGroups.length; i++) {
+      if (this.allGroups[i].name === group){
+        var temp = [];
+        for (let j = 0; j < this.allGroups[i].users.length; j++){
+          if (this.allGroups[i].users[j] !== user) temp.push(this.allGroups[i].users[j]);
+        }
+        this.allGroups[i].users = temp;
+      }
+    }
   }
 }
 

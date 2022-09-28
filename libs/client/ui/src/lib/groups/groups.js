@@ -7,8 +7,9 @@ import {
   TouchableOpacity,
   ScrollView,
   TextInput,
+  DeviceEventEmitter,
 } from 'react-native';
-import { gql, useQuery, useMutation } from '@apollo/client';
+import { gql, useLazyQuery, useMutation } from '@apollo/client';
 import GroupTile from '../shared-components/group-tile/group-tile.js';
 import ModalDropdown from 'react-native-modal-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -18,11 +19,12 @@ import GroupDisplay from '../shared-components/group-display/group-display.js';
 import groupLocalAccess from '../shared-components/local-groups-access/local-groups-access';
 import { useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectColour } from '../../../../../../apps/client/src/app/slices/user.slice';
+import { selectColour, selectEmail } from '../../../../../../apps/client/src/app/slices/user.slice';
 
 export const Groups = ({ navigation }) => {
   const groupRef = useRef();
   const colourState = useSelector(selectColour);
+  const userEmail = useSelector(selectEmail);
   const [moreVisible, setMoreVisible] = useState(false);
   const [selectMode, setSelectMode] = useState(false);
   const [bottomModalVisible, setBottomModalVisible] = useState(false);
@@ -30,12 +32,23 @@ export const Groups = ({ navigation }) => {
   const [renameModalVisible, setRenameModalVisible] = useState(false);
   const [currOrderValue, setCurrOrderValue] = useState('Date');
   const [renameVisible, setRenameVisible] = useState(false);
+  const [newName, setNewName] = useState(null);
   // const [refreshPage, setRefreshPage] = useState('');
 
   const url = 'https://awesome.contents.com/';
   const title = 'Awesome Contents';
   const message = 'Please check this out.';
 
+  //Queries and mutations
+  const CREATE_GROUP = gql`
+    mutation createGroup(
+      $email: String!
+      $groupName: String!
+    ) {
+      createGroup(email: $email, groupName: $groupName)
+    }
+  `;
+    const [createGroup] = useMutation(CREATE_GROUP);
   //variables for object sorting
   const [objArr, setObjArr] = useState([]);
 
@@ -181,39 +194,52 @@ export const Groups = ({ navigation }) => {
         navigation={navigation}
         selectMode={selectMode}
         ref={groupRef}
-      /> */}
-      <View style={styles.groupTiles}>
-        <GroupTile
-          key={'1'}
-          id={'1'}
-          name={'Group1'}
-          thumbnailSource={{
-            uri:
-            'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg',
-          }}
-          text={'test'}
-          groupSource={'groupRefresh'}
-          nav={navigation}
-        />
-        <GroupTile
-          key={'2'}
-          id={'2'}
-          name={'Group2'}
-          thumbnailSource={{
-            uri:
-            'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg',
-          }}
-          text={'blah'}
-          groupSource={'groupRefresh'}
-          nav={navigation}
-        />
-      </View>
-
+      /> */
+      //List of groups
+      }
+      <GroupDisplay
+        navigation={navigation}
+        selectMode={selectMode}
+        ref={groupRef}
+      />
+      {
+      //   <View style={styles.groupTiles}>
+      //   <GroupTile
+      //     key={'1'}
+      //     id={'1'}
+      //     name={'Group1'}
+      //     thumbnailSource={{
+      //       uri:
+      //       'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg',
+      //     }}
+      //     description={'test'}
+      //     groupSource={'groupRefresh'}
+      //     nav={navigation}
+      //   />
+      //   <GroupTile
+      //     key={'2'}
+      //     id={'2'}
+      //     name={'Group2'}
+      //     thumbnailSource={{
+      //       uri:
+      //       'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg',
+      //     }}
+      //     text={'blah'}
+      //     groupSource={'groupRefresh'}
+      //     nav={navigation}
+      //   />
+      // </View>
+      }
+      {
+        //Bottom Bar
+      }
 
       <View style={styles.viewAllBottomBar}>
         <TouchableOpacity
           style={styles.moreButton}
-          onPress={() => setMoreVisible(true)}
+          onPress={() => {
+            setMoreVisible(true)
+          }}
         >
           <Icon name="plus" color={colourState} size={30} />
         </TouchableOpacity>
@@ -224,24 +250,6 @@ export const Groups = ({ navigation }) => {
         >
           <Icon name="angle-left" color="#344053ff" size={30} />
         </TouchableOpacity>
-
-        <View style={styles.orderByGroup}>
-          <Text style={styles.orderByLabel}>{'Order by'}</Text>
-          <ModalDropdown
-            options={['Date', 'Name']}
-            defaultIndex={0}
-            defaultValue={'Date'}
-            onSelect={(index, itemValue) => {
-              groupLocalAccess.sortGroups(itemValue);
-              groupRef.current.refreshPfds();
-            }}
-            style={styles.orderByDropdown}
-            textStyle={styles.orderByDropdownText}
-            dropdownStyle={styles.orderByDropdownStyle}
-            dropdownTextStyle={styles.orderByDropdownTextStyle}
-            dropdownTextSelectHighlightStyle={{ color: colourState }}
-          />
-        </View>
       </View>
 
       <Modal
@@ -253,38 +261,36 @@ export const Groups = ({ navigation }) => {
         onBackdropPress={() => setMoreVisible(false)}
       >
         <View style={styles.moreModalInner}>
-          <TouchableOpacity
-            style={styles.moreModalButton}
-            onPress={() => {
-              //navigate to new group-info page
-              setMoreVisible(false);
-            }}
-          >
-            <View style={styles.moreModalButtonContent}>
-              <View style={styles.moreModalButtonText_box}>
-                <Text style={styles.moreModalButtonText} ellipsizeMode={'clip'}>
-                  {'Create Group'}
-                </Text>
-              </View>
-            </View>
-          </TouchableOpacity>
+          <TextInput
+            onChangeText={setNewName}
+            value={newName}
+            placeholder="Name your group"
+          />
 
           <View style={styles.moreModalButtonDivider} />
 
           <TouchableOpacity
             style={styles.moreModalButton}
             onPress={() => {
-              //navigate to view all groups page
-              setMoreVisible(false);
+              createGroup({
+                variables: {
+                  email: userEmail,
+                  groupName: newName,
+                }
+              }).then((result)=>{
+                setMoreVisible(false);
+                DeviceEventEmitter.emit("updateGroups");
+              }).catch((e)=>{
+                console.log(e);
+              });
             }}
           >
             <View style={styles.moreModalButtonContent}>
               <View style={styles.moreModalButtonText_box}>
-                <Text style={styles.moreModalButtonText}>{'Join Group'}</Text>
+                <Text style={styles.moreModalButtonText}>{'Create Group'}</Text>
               </View>
             </View>
           </TouchableOpacity>
-
         </View>
       </Modal>
       <Modal
@@ -411,7 +417,7 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     height: '5%',
     width: '100%',
-    minHeight: 28,
+    minHeight: 35,
     paddingTop: 5,
   },
   searchBarGroup: {
@@ -460,6 +466,7 @@ const styles = StyleSheet.create({
   },
   viewAllBottomBar: {
     width: '100%',
+    height: '8%',
     flexDirection: 'row',
     flexShrink: 1,
     backgroundColor: '#c4c4c4ff',
