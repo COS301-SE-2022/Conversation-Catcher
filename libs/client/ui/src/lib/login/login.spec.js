@@ -70,4 +70,43 @@ describe('Login', () => {
     const passwordState = store.getState().password;
     expect(passwordState).toEqual('123qwe123#');
   });
+
+  test('clicking on the button takes you to the Register screen', async () => {
+    const component = (
+      <Provider store = { store }>
+        <Login />
+    </Provider>
+    );
+
+    render(component);
+    const oldScreen = screen.queryByText('Log in to your account');
+    const button = await screen.findByText('Don’t have an account?');
+
+    expect(oldScreen).toBeTruthy();
+
+    fireEvent(button, 'press');
+    const newScreen = await screen.queryByPlaceholderText('Create new account');
+
+    expect(newScreen).toBeTruthy();
+  });
+
+  test('clicking on the button takes you to the ForgotPassword screen', async () => {
+    const component = (
+      <Provider store = { store }>
+        <Login />
+    </Provider>
+    );
+
+    render(component);
+    const oldScreen = screen.queryByText('Log in to your account');
+    const button = await screen.findByText('Forgot your password?');
+
+    expect(oldScreen).toBeTruthy();
+
+    fireEvent(button, 'press');
+    const newScreen = await screen.queryByPlaceholderText('Reset password');
+
+    expect(newScreen).toBeTruthy();
+  });
 });
+
