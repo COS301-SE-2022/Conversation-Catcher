@@ -43,6 +43,7 @@ export const Home = ({ navigation }) => {
   const [recordAudioState, setRecordAudioState] = useState(false);
   const [uploadVisible, setUploadVisible] = useState(false);
   const [fileSelected, setFileSelected] = useState(false);
+  const [notifyUser, setNotifyUser] = useState(false);
   const [state, setState] = useState({
     chunks: [],
     recording: false,
@@ -267,56 +268,57 @@ export const Home = ({ navigation }) => {
 
   // Send the audio stream to the server and receive the converted text
   const convertSpeech = () => {
-    fetch('https://ccstt.azurewebsites.net/stt', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-      },
-      body: JSON.stringify({
-        audio_path: 'audio_path',
-        audio_chunks: state.chunks,
-      }),
-    })
-      .then(async (res) => {
-        if (res.ok) {
-          const result = await res.json();
-          console.log(result);
-          const newPdf = await addPdf({
-            variables: {
-              email: emailState,
-              name: (
-                await generateName({
-                  variables: { text: result.converted_text },
-                }).catch((e) => console.log(e))
-              ).data.generateName,
-              text: result.converted_text,
-            },
-          });
-          const embeddings = await setEmbedding({
-            variables: {
-              id: newPdf.data.addPDF.id,
-              name: newPdf.data.addPDF.name,
-              text: newPdf.data.addPDF.text,
-            },
-          }).catch((e) => console.log(e));
-          console.log(embeddings);
-          pdfLocalAccess.addPdf({
-            name: newPdf.data.addPDF.name,
-            creationDate: newPdf.data.addPDF.creationDate,
-            downloaded: newPdf.data.addPDF.downloaded,
-            text: newPdf.data.addPDF.text,
-            id: newPdf.data.addPDF.id,
-            summarised: newPdf.data.addPDF.summarised,
-            embeddings: embeddings,
-          });
-          NativeAppEventEmitter.emit('updatePage');
-          dispatch(addPDF(newPdf.data.addPDF.id));
-          summarise(newPdf.data.addPDF.id, newPdf.data.addPDF.text);
-        } else console.log('Connection error: internet connection is required');
-      })
-      .catch((e) => console.log(e));
+    setNotifyUser(true);
+    // fetch('https://ccstt.azurewebsites.net/stt', {
+    //   method: 'POST',
+    //   headers: {
+    //     Accept: 'application/json',
+    //     'Content-Type': 'application/json',
+    //     'Access-Control-Allow-Origin': '*',
+    //   },
+    //   body: JSON.stringify({
+    //     audio_path: 'audio_path',
+    //     audio_chunks: state.chunks,
+    //   }),
+    // })
+    //   .then(async (res) => {
+    //     if (res.ok) {
+    //       const result = await res.json();
+    //       console.log(result);
+    //       const newPdf = await addPdf({
+    //         variables: {
+    //           email: emailState,
+    //           name: (
+    //             await generateName({
+    //               variables: { text: result.converted_text },
+    //             }).catch((e) => console.log(e))
+    //           ).data.generateName,
+    //           text: result.converted_text,
+    //         },
+    //       });
+    //       const embeddings = await setEmbedding({
+    //         variables: {
+    //           id: newPdf.data.addPDF.id,
+    //           name: newPdf.data.addPDF.name,
+    //           text: newPdf.data.addPDF.text,
+    //         },
+    //       }).catch((e) => console.log(e));
+    //       console.log(embeddings);
+    //       pdfLocalAccess.addPdf({
+    //         name: newPdf.data.addPDF.name,
+    //         creationDate: newPdf.data.addPDF.creationDate,
+    //         downloaded: newPdf.data.addPDF.downloaded,
+    //         text: newPdf.data.addPDF.text,
+    //         id: newPdf.data.addPDF.id,
+    //         summarised: newPdf.data.addPDF.summarised,
+    //         embeddings: embeddings,
+    //       });
+    //       NativeAppEventEmitter.emit('updatePage');
+    //       dispatch(addPDF(newPdf.data.addPDF.id));
+    //       summarise(newPdf.data.addPDF.id, newPdf.data.addPDF.text);
+    //     } else console.log('Connection error: internet connection is required');
+    //   })
+    //   .catch((e) => console.log(e));
   };
 
   //summarise the text and populate the required fields
@@ -535,6 +537,22 @@ export const Home = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </Modal>
+      <Modal
+        style={styles.modalNotify}
+        isVisible={notifyUser}
+        hasBackdrop={true}
+        backdropColor=""
+        onBackdropPress={() => {
+          setNotifyUser(false);
+        }}
+      >
+        <View style={styles.uploadModalInner}>
+          <Text style={styles.modalTitle}>
+            {'Document generation has started and will take about 2 minutes'}
+          </Text>
+          {/* <Text style={styles.modalTitle}>{'Your document will be ready in 2 minutes'}</Text> */}
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 };
@@ -692,6 +710,14 @@ const styles = StyleSheet.create({
   modal: {
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  modalNotify: {
+    //top: "40%",
+    //width: '100%',
+    //marginLeft: '12%',
+    // marginRight: "20%",
+    //height: '5%',
+    //flexGrow: 1,
   },
   modalTitle: {
     color: '#344053ff',

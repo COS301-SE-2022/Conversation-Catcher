@@ -5,6 +5,7 @@
 /tmp
 /out-tsc
 __pycache__
+*.whl
 
 # dependencies
 node_modules

@@ -115,9 +115,9 @@ export class SetEmbeddingsHandler
 
     try {
       const embeddings = await lastValueFrom(
-        this.httpService.post('http://localhost:5555/embed', data, config)
+        this.httpService.post('https://ccidea.azurewebsites.net/embed', data, config)
       );
-      console.log(embeddings)
+      // console.log(embeddings)
       const res = await this.repository.updateEmbeddings(id, embeddings.data.embeddings);
       if (res !== null && res.modifiedCount === 1)
         return embeddings.data.embeddings;

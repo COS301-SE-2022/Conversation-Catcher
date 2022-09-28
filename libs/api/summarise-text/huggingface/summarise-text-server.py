@@ -33,7 +33,7 @@ def summarise(input_text, pdf_id):
     summarised_text = summariser.summarise(input_text)
     summarised_text = summarised_text[0]['summary_text']
 
-    url = "http://192.168.1.104:3333/graphql"
+    url = "https://ccmain.azurewebsites.net/graphql"
     query = """
     mutation setSummarised($id: String!, $summary: String!) {
     setSummarized(id:$id,summary:$summary)
