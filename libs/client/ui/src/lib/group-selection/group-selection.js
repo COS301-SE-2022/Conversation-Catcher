@@ -21,7 +21,7 @@ import { useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { selectColour, selectEmail } from '../../../../../../apps/client/src/app/slices/user.slice';
 
-export const GroupSelection = ({ navigation }) => {
+export const GroupSelection = ({ navigation },id) => {
   const groupRef = useRef();
   const colourState = useSelector(selectColour);
   const userEmail = useSelector(selectEmail);
@@ -40,65 +40,28 @@ export const GroupSelection = ({ navigation }) => {
   const message = 'Please check this out.';
 
   //Queries and mutations
-
+  const ADD_TO_GROUP = gql`
+    mutation addPdfTo(
+      $pdfId: String!
+      $groupName: String!
+    ) {
+      addPdfTo(pdfId: $pdfId, groupName: $groupName)
+    }
+  `;
   //variables for object sorting
   const [objArr, setObjArr] = useState([]);
-
-  const options = {
-    title,
-    url,
-    message,
-  };
-
-  const share = async (customOptions = options) => {
-    try {
-      await Share.open(customOptions);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-
-  // function changeArray(index, itemValue) {
-  //   if (currOrderValue !== itemValue) {
-  //     setCurrOrderValue(itemValue);
-  //     // Sort PDFs array according to currOrderValue
-  //     switch (itemValue) {
-  //       case 'Name':
-  //         var temp2 = objArr;
-  //         temp2.sort((a, b) => {
-  //           if (a.name < b.name) return -1;
-  //           return 1;
-  //         });
-  //         setObjArr(temp2);
-  //         console.log(objArr);
-  //         break;
-  //       case 'Date':
-  //         var temp = objArr;
-  //         temp.sort((a, b) => {
-  //           if (new Date(a.creationDate) > new Date(b.creationDate)) return -1;
-  //           return 1;
-  //         });
-  //         setObjArr(temp);
-  //         console.log(objArr);
-  //         break;
-  //     }
-  //   }
-  //   refresh();
-  //   console.log(itemValue);
-  // }
-
-  // function filterGroup(text) {
-  //   const temp = [];
-  //   for (let i = 0; i < groupLocalAccess.getLength(); i++)
-  //     objArr[i] = groupLocalAccess.get(i);
-  //   for (let i = 0; i < objArr.length; i++) {
-  //     if (objArr[i].name.indexOf(text) !== -1) temp.push(objArr[i]);
-  //   }
-  //   setObjArr(temp);
-  //   refresh();
-  // }
-
+  const [addToGroup] = useMutation(ADD_TO_GROUP);
+  const AddNew = async (g) => {
+    addToGroup({variables:{pdfId: id, groupName: g}}).then(()=>{
+      groupLocalAccess.addPdf(id,g);
+      navigation.goBack();
+    }).catch((e)=>{
+      console.log(e);
+    })
+  }
+  DeviceEventEmitter.addListener("AddPDF",(group)=>{
+    AddNew(group);
+  })
   return (
     <SafeAreaView style={styles.groupsPage}>
       <View style={styles.groupsTopBar}>
@@ -132,35 +95,8 @@ export const GroupSelection = ({ navigation }) => {
         navigation={navigation}
         selectMode={selectMode}
         ref={groupRef}
+        add={true}
       />
-      {
-      //   <View style={styles.groupTiles}>
-      //   <GroupTile
-      //     key={'1'}
-      //     id={'1'}
-      //     name={'Group1'}
-      //     thumbnailSource={{
-      //       uri:
-      //       'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg',
-      //     }}
-      //     description={'test'}
-      //     groupSource={'groupRefresh'}
-      //     nav={navigation}
-      //   />
-      //   <GroupTile
-      //     key={'2'}
-      //     id={'2'}
-      //     name={'Group2'}
-      //     thumbnailSource={{
-      //       uri:
-      //       'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg',
-      //     }}
-      //     text={'blah'}
-      //     groupSource={'groupRefresh'}
-      //     nav={navigation}
-      //   />
-      // </View>
-      }
       {
         //Bottom Bar
       }

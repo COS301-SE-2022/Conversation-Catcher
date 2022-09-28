@@ -11,7 +11,7 @@ import { selectEmail} from '../../../../../../../apps/client/src/app/slices/user
 import { selectGroups, refillGroups } from '../../../../../../../apps/client/src/app/slices/group.slice';
 import { useSelector, useDispatch } from 'react-redux';
 
-export function GroupDisplay({ navigation, selectMode }, ref) {
+export function GroupDisplay({ navigation, selectMode }, ref, add) {
   // const [selectMode, setSelectMode] = useState(false);
   const [didReload, setDidReload] = useState(true);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -110,6 +110,7 @@ export function GroupDisplay({ navigation, selectMode }, ref) {
             pdfs={item.pdfs}
             nav={navigation}
             refresh={setDidReload}
+            add={add}
           />
           ))}
         </ScrollView>
