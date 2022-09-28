@@ -16,6 +16,14 @@ import { toggleDown } from '../../../../../../../apps/client/src/app/slices/grou
 import { gql, useLazyQuery, useMutation } from '@apollo/client';
 //import FileViewer from "react-native-file-viewer";
 
+const ADD_PDF = gql`
+    mutation addPdfTo($pdfId: String!, $groupName: String!) {
+      addPdfTo(pdfId: $pdf, groupName: $groupName)
+    }
+  `;
+
+//const [addPdf] = useMutation(ADD_PDF);
+
 const GroupTile = ({
   name,
   admin,
@@ -24,12 +32,21 @@ const GroupTile = ({
   description,
   pdfs,
   nav,
+  chooseMode,
 }) => {
   const colourState = useSelector(selectColour);
   const buildGroup = () => {
     return { name: name, }
   }
   console.log(name);
+
+  function determinePress() {
+    if (chooseMode)
+      return  nav.navigate('GroupInfo', { name:name, thumbnailSource:thumbnailSource, admin:admin, users:users, description:description, pdfs:pdfs  })
+
+    return 
+  }
+
   return (
     <TouchableOpacity
       style={styles.groupTile}
