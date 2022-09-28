@@ -262,6 +262,7 @@ export const Groups = ({ navigation }) => {
       >
         <View style={styles.moreModalInner}>
           <TextInput
+            style={styles.groupNameInput}
             onChangeText={setNewName}
             value={newName}
             placeholder="Name your group"
@@ -270,7 +271,7 @@ export const Groups = ({ navigation }) => {
           <View style={styles.moreModalButtonDivider} />
 
           <TouchableOpacity
-            style={styles.moreModalButton}
+            style={[styles.moreModalButton, { backgroundColor: colourState }]}
             onPress={() => {
               createGroup({
                 variables: {
@@ -576,30 +577,42 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   moreModalInner: {
-    width: '45%',
+    width: '70%',
     flexShrink: 1,
     backgroundColor: '#f5f5f5ff',
-    borderRadius: 7,
+    borderRadius: 8,
     flexDirection: 'column',
     borderWidth: 1,
     borderColor: '#667084ff',
     opacity: 1,
   },
+  groupNameInput:{
+    backgroundColor: '#ffffff',
+    margin: 10,
+    padding: 5,
+    //height: '20%',
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    flexShrink: 1,
+  },
   moreModalButton: {
     flexGrow: 1,
-    height: '8%',
+    //height: '8%',
+    width: '80%',
     alignItems: 'center',
     flexDirection: 'row',
+    borderRadius: 8,
+    margin: 10,
   },
   moreModalButtonContent: {
     flexGrow: 1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    //padding: 5
+    
   },
   moreModalButtonText: {
-    color: '#344053ff',
+    color: '#ffffff',
     textAlign: 'center',
     letterSpacing: 0,
     lineHeight: 20,
@@ -607,6 +620,7 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     fontStyle: 'normal',
     fontFamily: 'System' /* Inter */,
+    margin: 10,
   },
   moreModalButtonText_box: {
     flexShrink: 1,
