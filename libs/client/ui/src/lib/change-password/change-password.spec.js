@@ -4,19 +4,9 @@ import { configureStore } from '@reduxjs/toolkit';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import reducer from '../../../../../../apps/client/src/app/slices/user.slice';
 import { Provider } from 'react-redux';
+// yarn nx run change-password:test
 
-/*const onChangeMock = jest.fn();
-const eventData = {
-  nativeEvent: {
-    password: '',
-    oldPassword: '',
-  },
-};
-
-//const colourState = useSelector(selectColour);
-//const emailState = useSelector(selectEmail);
-
-describe('ChangePassword', () => {
+describe('check that ChangePassword is rendered correctly', () => {
   const store = configureStore({
     reducer: {
       user:reducer
@@ -28,13 +18,12 @@ describe('ChangePassword', () => {
     </Provider>
 )
   it('should render successfully', () => {
-    // const { container } = render(<TestComponent />);
-    // expect(container).toBeTruthy();
-    expect(true).toEqual(true)
+    const { container } = render(TestComponent);
+    expect(container).toBeTruthy();
   });
-});*/
+});
 
-describe('ChangePassword', () => {
+test('check that password is changed', () => {
   const store = configureStore({
     reducer: {
       user:reducer
