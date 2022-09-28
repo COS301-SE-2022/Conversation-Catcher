@@ -11,6 +11,7 @@ import {
   removeGroupPdfCommand,
   removeInviteCommand,
   removeRequestCommand,
+  updateDescriptionCommand,
 } from '../impl';
 import { MongoDBAccess } from '@conversation-catcher/api/user-management/repository/data-access';
 
@@ -39,8 +40,9 @@ export class requestJoinGroupHandler
       return 'You have already requested to join the group: ' + groupName;
     groups[groupName].requests.push(email);
     delete groups._id;
-    this.repository.updateGroups(groups);
-    return 'Request to join sent to: ' + groupName;
+    const res = await this.repository.updateGroups(groups);
+    if (res !== null && res.modifiedCount === 1) return 'Request to join sent to: ' + groupName;
+    return 'Failed to send request to: ' + groupName;
   }
 }
 
@@ -65,8 +67,9 @@ export class sendInviteHandler implements ICommandHandler<sendInviteCommand> {
     });
     user.invites.push({ from: fromUser, group: groupName });
     delete user._id;
-    this.repository.setUser(toUser, user);
-    return 'Invite sent to ' + toUser;
+    const res = await this.repository.setUser(toUser, user);
+    if (res !== null && res.modifiedCount === 1) return 'Invite sent to ' + toUser;
+    return 'Failed to send invite to ' + toUser;
   }
 }
 
@@ -113,8 +116,10 @@ export class addUserToHandler implements ICommandHandler<addUserToCommand> {
     delete groups._id;
     delete usr._id;
     this.repository.setUser(user, usr);
-    this.repository.updateGroups(groups);
-    return groups[groupName];
+    const res = await this.repository.updateGroups(groups);
+    if (res !== null && res.modifiedCount === 1) return groups[groupName];
+    errGroup.name = 'Failed to establish connetction, retry operation at a later stage'
+    return errGroup;
   }
 }
 
@@ -142,8 +147,9 @@ export class removeUserFromHandler
     delete groups._id;
     delete user._id;
     this.repository.setUser(email, user);
-    this.repository.updateGroups(groups);
-    return 'User with email ' + email + ' removed from ' + groupName;
+    const res = await this.repository.updateGroups(groups);
+    if (res !== null && res.modifiedCount === 1) return 'User with email ' + email + ' removed from ' + groupName;
+    return 'Failed to remove user with email ' + email + ' from ' + groupName;
   }
 }
 
@@ -167,9 +173,17 @@ export class createGroupHandler implements ICommandHandler<createGroupCommand> {
     groups[groupName] = newGroup;
     delete user._id;
     delete groups._id;
-    this.repository.updateGroups(groups); //Update the database
     this.repository.setUser(admin, user);
-    return newGroup;
+    const res = await this.repository.updateGroups(groups); //Update the database
+    if (res !== null && res.modifiedCount === 1) return newGroup;
+    const errGroup = {
+      admin: '',
+      name: 'Error: Failed to establish connection. Retry at a later stage',
+      pdfs: [],
+      requests: [],
+      users: [],
+    } as Group;
+    return errGroup
   }
 }
 
@@ -190,8 +204,9 @@ export class deleteGroupHandler implements ICommandHandler<deleteGroupCommand> {
     }
     delete groups[groupName];
     delete groups._id;
-    this.repository.updateGroups(groups); //Update the database
-    return 'Group ' + groupName + ' has been deleted';
+    const res = await this.repository.updateGroups(groups); //Update the database
+    if (res !== null && res.modifiedCount === 1) return 'Group ' + groupName + ' has been deleted';
+    return 'Failed to delete group ' + groupName;
   }
 }
 
@@ -228,8 +243,9 @@ export class renameGroupHandler implements ICommandHandler<renameGroupCommand> {
       this.repository.setUser(user, usr);
     }
     delete groups._id;
-    this.repository.updateGroups(groups); //Update the database
-    return 'Group renamed to ' + newName;
+    const res = await this.repository.updateGroups(groups); //Update the database
+    if (res !== null && res.modifiedCount === 1) return 'Group renamed to ' + newName;
+    return 'Failed to rename group';
   }
 }
 
@@ -243,8 +259,9 @@ export class addGroupPdfHandler implements ICommandHandler<addGroupPdfCommand> {
     if (groups[groupName] === undefined) return 'group does not exist';
     groups[groupName].pdfs.push(pdf_id);
     delete groups._id;
-    this.repository.updateGroups(groups); //Update the database
-    return 'pdf added to group';
+    const res = await this.repository.updateGroups(groups); //Update the database
+    if (res !== null && res.modifiedCount === 1) return 'Document added to group';
+    return 'Failed to add document to group'
   }
 }
 
@@ -262,8 +279,9 @@ export class removeGroupPdfHandler
       if (item === pdf_id) groups[groupName].pdfs.splice(index, 1);
     });
     delete groups._id;
-    this.repository.updateGroups(groups); //Update the database
-    return 'pdf removed from group';
+    const res = await this.repository.updateGroups(groups); //Update the database
+    if (res !== null && res.modifiedCount === 1) return 'Document removed from group';
+    return 'Failed to remove document from group'
   }
 }
 
@@ -280,8 +298,9 @@ export class removeInviteHandler
       if (groupName === element.group) usr.invites.splice(index, 1);
     });
     delete usr._id;
-    this.repository.setUser(user, usr);
-    return 'Invite for ' + groupName + ' cancelled';
+    const res = await this.repository.setUser(user, usr);
+    if (res !== null && res.modifiedCount === 1) return 'Invite for ' + groupName + ' cancelled';
+    return 'Failed to cancel invite for ' + groupName;
   }
 }
 
@@ -300,9 +319,29 @@ export class removeRequestHandler
     if (index !== -1) {
       groups[groupName].requests.splice(index, 1);
       delete groups._id;
-      this.repository.updateGroups(groups);
-      return 'Request for ' + user + ' has been removed from ' + groupName;
+      const res = await this.repository.updateGroups(groups);
+      if (res !== null && res.modifiedCount === 1) return 'Request for ' + user + ' has been removed from ' + groupName;
+      return 'Failed to remove request for ' + user + ' from ' + groupName;
     }
     return 'Error: Request for ' + user + ' not found in group ' + groupName;
   }
 }
+
+@CommandHandler(updateDescriptionCommand)
+export class updateDescriptionHandler
+  implements ICommandHandler<updateDescriptionCommand>
+{
+  constructor(private repository: MongoDBAccess) {}
+
+  //add the updated description to a group
+  async execute({ groupName, description }: updateDescriptionCommand) {
+    const groups = await this.repository.getGroups();
+    if (groups[groupName] === undefined)
+      return 'Group ' + groupName + ' does not exist';
+    groups[groupName].description = description;
+    delete groups._id;
+    const res = await this.repository.updateGroups(groups);
+    if (res !== null && res.modifiedCount === 1) return 'Description updated succesfully.';
+    return 'Failed to update description, try again later.';
+  }
+}updateDescriptionCommand

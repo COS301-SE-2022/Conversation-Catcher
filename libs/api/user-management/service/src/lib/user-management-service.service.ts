@@ -15,6 +15,7 @@ import {
   setUserCommand,
   removeInviteCommand,
   removeRequestCommand,
+  updateDescriptionCommand,
 } from './commands/impl';
 import {
   getAllGroupsQuery,
@@ -123,5 +124,11 @@ export class UserManagementServiceService {
     return await this.commandBus.execute(
       new removeRequestCommand(user, groupName)
     );
+  }
+
+  async updateDescription(groupName: string, description: string){
+    return await this.commandBus.execute(
+      new updateDescriptionCommand(groupName, description)
+    )
   }
 }
