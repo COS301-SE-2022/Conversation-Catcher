@@ -56,10 +56,28 @@ export class ApiPdfManagerApiFeatureResolver {
     return this.errorObj;
   }
 
+  @Query(() => [PdfEntity])
+  async getPDFByArr(@Args('ids', {type: () => [String] }) ids: string[]) {
+    const pdfsArr = await this.pdfService.getPdfsByArr(ids);
+
+    if (pdfsArr != undefined) {
+      const arrOfPDFs = new Array<PdfEntity>();
+
+      for (let index = 0; index < pdfsArr.length; index++) {
+        const pdf = pdfsArr[index];
+
+        arrOfPDFs.push(this.assignResult(pdf));
+      }
+
+      return arrOfPDFs;
+    }
+    return this.errorObj;
+  }
+
   // get all of the user's pdfs
   @Query(() => [PdfEntity], { nullable: true })
   async getPDFs(@Args('id') userid: string) {
-    const pdfsArr = await this.pdfService.getPdfs(userid);
+    const pdfsArr = await this.pdfService.getUserPdfs(userid);
 
     if (pdfsArr != undefined) {
       const arrOfPDFs = new Array<PdfEntity>();

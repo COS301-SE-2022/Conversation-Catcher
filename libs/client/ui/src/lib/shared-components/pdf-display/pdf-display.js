@@ -68,7 +68,7 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
             <RefreshControl refreshing={refreshing} onRefresh={ReloadData} />
           }
         >
-          <Loading width={100} height={100} load={props.load} />
+          <Loading width={100} height={100} load={props.load} text={"Fetching your pdfs"}/>
           {props.arr.map((item, key) => (
             <PdfTile
               key={key}
@@ -81,7 +81,7 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
               showCheck={selectMode}
               summarised={item.summarised}
               nav={navigation}
-              refresh={setDidReload}
+              //refresh={setDidReload}
             />
           ))}
         </ScrollView>
@@ -94,7 +94,7 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
             <RefreshControl refreshing={refreshing} onRefresh={ReloadData} />
           }
         >
-          <Loading width={100} height={100} load={props.load} />
+          <Loading width={100} height={100} load={props.load}  text={"Fetching your pdfs"}/>
           <Text style={{ textAlign: 'center' }}>{props.text}</Text>
         </ScrollView>
       );
@@ -131,7 +131,8 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
       .catch((e) => {
         console.log(e);
         pdfLocalAccess.clearPdfs();
-        setDidReload(!didReload);
+        //setDidReload(!didReload);
+        setRefreshing(false);
       });
   };
 
@@ -147,7 +148,7 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
     return (
       <ScrollDisplay
         arr={localPDFs}
-        text={'No Documents Locally'}
+        text={'No Documents Stored Locally'}
         load={false}
       />
     );
@@ -178,7 +179,7 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
 
     //Update local pdf storage
     //array of pdfs stored locally, selected from data to overwrite the slice
-    if (data.getPDFs[0] !== undefined && data.getPDFs[0].name !== 'error') {
+    if (data.getPDFs[0] !== undefined && data.getPDFs[0].name !== 'error') {//remove as under a check already
       let tempArray = [];
       var p;
       for (p in pdfLocalAccess.getPdfs()) {
@@ -192,7 +193,7 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
   return (
     <ScrollDisplay
       arr={pdfLocalAccess.getPdfs()}
-      text={'This account has no documents yet!'}
+      text={'You have no documents yet!'}
       load={false}
     />
   );

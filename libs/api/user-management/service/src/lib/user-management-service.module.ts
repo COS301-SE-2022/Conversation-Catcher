@@ -29,6 +29,7 @@ import * as QueryHandlers from './queries/handlers';
     CommandHandlers.removeGroupPdfHandler,
     CommandHandlers.removeInviteHandler,
     CommandHandlers.removeRequestHandler,
+    CommandHandlers.updateDescriptionHandler,
     QueryHandlers.getUserHandler,
     QueryHandlers.getAllGroupsHandler,
     // QueryHandlers.getGroupPdfsHandler,

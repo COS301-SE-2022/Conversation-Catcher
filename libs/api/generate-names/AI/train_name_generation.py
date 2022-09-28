@@ -5,13 +5,13 @@ import re
 from bs4 import BeautifulSoup
 from keras.preprocessing.text import Tokenizer
 from keras_preprocessing.sequence import pad_sequences
+
 # from keras.utils.data_utils import pad_sequences
 from nltk.corpus import stopwords
 from tensorflow.keras.layers import Input, LSTM, Embedding, Dense, Concatenate, TimeDistributed
 from tensorflow.keras.models import Model
+import tensorflow_datasets as tfds
 
-import tensorflow_cloud as tfc
-import tensorflow as tf
 from tensorflow import keras
 import warnings
 import datetime
@@ -22,12 +22,15 @@ warnings.filterwarnings("ignore")
 
 # Reading the dataset
 
-data=pd.read_csv("./training-dataset/Reviews.csv",nrows=100000)
+data = tfds.load('gigaword', split='train')
+data = data.take(1000000)
+data = tfds.as_dataframe(data)
+
 
 # Remove duplicates and NA values
 
-data.drop_duplicates(subset=['Text'],inplace=True)#dropping duplicates
-data.dropna(axis=0,inplace=True)#dropping na
+#data.drop_duplicates(subset=['Text'],inplace=True)#dropping duplicates
+#data.dropna(axis=0,inplace=True)#dropping na
 
 # ------------------------ Dataset preprocessing --------------------------------
 
@@ -60,7 +63,6 @@ contraction_mapping = {"ain't": "is not", "aren't": "are not","can't": "cannot",
 stop_words = set(stopwords.words('english')) 
 
 # Function for cleaning up text
-
 def text_cleaner(text,num):
 
     # Convert to lower case
@@ -69,7 +71,7 @@ def text_cleaner(text,num):
 
     # Remove html tags
 
-    newString = BeautifulSoup(newString, "lxml").text 
+    newString = BeautifulSoup(newString, "html.parser").text 
     newString = re.sub(r'\([^)]*\)', '', newString) 
     newString = re.sub('"','', newString)
 
@@ -104,11 +106,11 @@ def text_cleaner(text,num):
 # Calling cleaned text and cleaned summary functions
 
 cleaned_text = []
-for t in data['Text']:
+for t in data['document']:
     cleaned_text.append(text_cleaner(t,0)) 
 
 cleaned_summary = []
-for t in data['Summary']:
+for t in data['summary']:
     cleaned_summary.append(text_cleaner(t,1))
 
 # Storing cleanead text and cleaned summary
@@ -123,8 +125,8 @@ data.dropna(axis=0,inplace=True)
 
 # Set max text length and max summary length based on length distributions
 
-max_text_len=30
-max_summary_len=8
+max_text_len=40
+max_summary_len=10
 
 # Select text and summaries whose lengths fall within the above boundaries and
 
@@ -162,7 +164,7 @@ x_tokenizer.fit_on_texts(list(x_tr))
 
 # Calculate rare words and coverage (word count less that thresh is rare)
 
-thresh=4
+thresh=30
 
 cnt=0 # total rare words (count below thresh)
 tot_cnt=0 # total unique words in text
@@ -207,7 +209,7 @@ y_tokenizer.fit_on_texts(list(y_tr))
 
 # Calculate rare words and coverage (word count less that thresh is rare)
 
-thresh=6
+thresh=50
 
 cnt=0
 tot_cnt=0
@@ -329,7 +331,7 @@ decoder_outputs = decoder_dense(decoder_concat_input)
 
 gcp_bucket = "convbucket"
 
-checkpoint_path = os.path.join("gs://", gcp_bucket, "convcatch", "save_at_{epoch}")
+checkpoint_path = os.path.join("gs://", gcp_bucket, "conversationcatcher", "save_at_{epoch}", datetime.datetime.now().strftime("%Y%m%d-%H%M%S"))
 
 tensorboard_path = os.path.join(  # Timestamp included to enable timeseries graphs
     "gs://", gcp_bucket, "logs", datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
@@ -337,8 +339,10 @@ tensorboard_path = os.path.join(  # Timestamp included to enable timeseries grap
 
 callbacks = [
     # TensorBoard will store logs for each epoch and graph performance for us.
+    #os.makedirs(tensorboard_path),
     keras.callbacks.TensorBoard(log_dir=tensorboard_path, histogram_freq=1),
     # ModelCheckpoint will save models after each epoch for retrieval later.
+    #os.makedirs(checkpoint_path),
     keras.callbacks.ModelCheckpoint(checkpoint_path),
     # EarlyStopping will terminate training when val_loss ceases to improve.
     keras.callbacks.EarlyStopping(monitor='val_loss', mode='min', verbose=1,patience=2),
@@ -359,15 +363,24 @@ model.compile(optimizer='rmsprop', loss='sparse_categorical_crossentropy')
 
 epochs = 100
 callbacks = callbacks
-batch_size = 100000
+batch_size = 256
 
 history=model.fit([x_tr,y_tr[:,:-1]], y_tr.reshape(y_tr.shape[0],y_tr.shape[1], 1)[:,1:] ,epochs=epochs,callbacks=callbacks,batch_size=batch_size, validation_data=([x_val,y_val[:,:-1]], y_val.reshape(y_val.shape[0],y_val.shape[1], 1)[:,1:]))
 
-save_path = os.path.join("gs://", gcp_bucket, "convcatch.h5")
+#model_version = int(datetime.time())
+#save_path = os.path.join("gs://", gcp_bucket, "conversationcatcher" + model_version+ ".h5")
 
+save_path = os.path.join("gs://", gcp_bucket, "conversationcatcher")
 
+##MODEL_NAME = 'conversationcatcher.'
+#model_version = int(datetime.time())
+#model_path = os.path.join(MODEL_NAME, str(model_version))
+#os.makedirs(model_path)
+#model.save(model_path)
+
+#os.makedirs(save_path)
 model.save(save_path)
-model.save("model/convcatch.h5")
+#model.save("model/conversationcatcher.h5")
 # Dictionary for converting the index to word
 
 
@@ -378,7 +391,8 @@ target_word_index=y_tokenizer.word_index
 f = open("outputs.txt", "a")
 f.write("reverse_target_word_index: " + str(reverse_target_word_index))
 f.write("reverse_source_word_index: " + str(reverse_source_word_index))
-f.close("target_word_index: " + str(target_word_index))
+f.write("target_word_index: " + str(target_word_index))
+f.close()
 
 # ------------------------------- Inference ----------------------------------------
 
@@ -386,7 +400,10 @@ f.close("target_word_index: " + str(target_word_index))
 
 # Encode the input sequence to get the feature vector
 encoder_model = Model(inputs=encoder_inputs,outputs=[encoder_outputs, state_h, state_c])
-encoder_model.save('models/encoder.h5')
+save_path = os.path.join("gs://", gcp_bucket, "encoder")
+#os.makedirs(save_path)
+encoder_model.save(save_path)
+
 # Decoder setup
 # Below tensors will hold the states of the previous time step
 decoder_state_input_h = Input(shape=(latent_dim,))
@@ -410,7 +427,9 @@ decoder_model = Model(
     [decoder_inputs] + [decoder_hidden_state_input,decoder_state_input_h, decoder_state_input_c],
     [decoder_outputs2] + [state_h2, state_c2])
 
-decoder_model.save('models/decoder.h5')
+save_path = os.path.join("gs://", gcp_bucket, "decoder")
+#os.makedirs(save_path)
+decoder_model.save(save_path)
 
 def decode_sequence(input_seq):
     # Encode the input as state vectors.
@@ -428,6 +447,7 @@ def decode_sequence(input_seq):
     
         output_tokens, h, c = decoder_model.predict([target_seq] + [e_out, e_h, e_c])
 
+        
         # Sample a token
         sampled_token_index = np.argmax(output_tokens[0, -1, :])
         sampled_token = reverse_target_word_index[sampled_token_index]

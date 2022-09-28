@@ -72,3 +72,10 @@ export class removeRequestCommand {
     public readonly groupName: string
   ) {}
 }
+
+export class updateDescriptionCommand {
+  constructor(
+    public readonly groupName: string,
+    public readonly description: string
+  ) {}
+}
