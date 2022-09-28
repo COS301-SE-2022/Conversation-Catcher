@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Image,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import Loading from '../loading/loading';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import {
@@ -14,26 +15,29 @@ import { useSelector } from 'react-redux';
 
 export const Splash = ({navigation}) => {
   const userPresent = useSelector(selectUser);
-  useEffect(() => {
-    if (userPresent.email !== '') {
-      navigation.navigate('Home');
-    } else {
-      navigation.navigate('Login');
-    }
-  });
+  // useEffect(() => {
+  //   if (userPresent.email !== '') {
+  //     navigation.navigate('Home');
+  //   } else {
+  //     navigation.navigate('Login');
+  //   }
+  // });
   return (
     <View style={styles.splashScreen}>
       <View style={styles.title}>
         <Text style={styles.titleText}>Conversation Catcher</Text>
       </View>
       <View style={styles.icon}>
-        <Image
+        <Icon
           style={styles.logo}
-          source={'../../assets/LOGO.jpg'}
+          name="microphone"
+          size={50}
         />
       </View>
-      <View style={styles.load}>
-        <Loading  width={100} height={100} load={true} text={"Loading"}/>
+      <View 
+        //style={styles.load}
+        >
+        <Loading  width={100} height={100} load={true} text={""}/>
       </View>
     </View>
   );
@@ -47,13 +51,13 @@ const styles = StyleSheet.create({
   },
   title: {
     alignContent: "center",
-    height: '30%',
+    height: '20%',
     justifyContent: 'center',
     alignItems: 'center',
   },
   titleText: {
     color: '#3f89beff',
-    fontSize: 30,
+    fontSize: 50,
     fontWeight: "bold",
     textShadowColor: "black",
     textShadowOffset: {
@@ -61,15 +65,16 @@ const styles = StyleSheet.create({
       height: 1,
     },
     textShadowRadius: 2,
-
+    textAlign: 'center',
   },
   icon: {
-
+    alignContent: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: "10%",
   },
   logo: {
-    flexGrow: 1,
-    resizeMode: 'center',
-    borderRadius: 180,
+    color: '#3f89beff',
   },
   load: {
 
