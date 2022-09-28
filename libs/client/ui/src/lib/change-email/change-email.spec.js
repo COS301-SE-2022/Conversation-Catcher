@@ -6,7 +6,7 @@ import reducer from '../../../../../../apps/client/src/app/slices/user.slice';
 import { Provider } from 'react-redux';
 // yarn nx run change-email.spec:test
 
-/*describe('ChangeEmail', () => {
+describe('check if ChangeEmail renders correctly', () => {
   const store = configureStore({
     reducer: {
       user:reducer
@@ -18,13 +18,12 @@ import { Provider } from 'react-redux';
     </Provider>
   );
   it('should render successfully', () => {
-    const { container } = render(<TestComponent />);
+    const { container } = render(TestComponent);
     expect(container).toBeTruthy();
-    expect(true).toEqual(true);
   });
-});*/
+});
 
-describe('ChangeEmail', () => {
+test('check changing of email works', () => {
   const store = configureStore({
     reducer: {
       user:reducer
