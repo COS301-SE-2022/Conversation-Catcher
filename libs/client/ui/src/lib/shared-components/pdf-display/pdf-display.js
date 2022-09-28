@@ -230,7 +230,7 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
   return (
     <ScrollDisplay
       arr={pdfLocalAccess.getPdfs()}
-      text={'You have no documents yet!'}
+      text={'No documents found'}
       load={false}
     />
   );
