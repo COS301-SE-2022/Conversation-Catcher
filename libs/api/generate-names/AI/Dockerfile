@@ -4,6 +4,7 @@ ADD embedText.py /
 RUN pip install flask
 RUN pip install flask-cors
 RUN pip install requests
-RUN pip install
+RUN pip install pandas
+RUN pip install bs4
 EXPOSE 5550
 CMD ["python","./summarise-text-server.py"]

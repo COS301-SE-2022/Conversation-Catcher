@@ -6,26 +6,26 @@ import { lastValueFrom, map, tap } from 'rxjs';
 export class ApiGenerateNamesServiceService {
   constructor(private httpService: HttpService) {}
   async generateName(text: string) {
-    // const config = {
-    //   method: 'post',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    // };
+    const config = {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
 
-    // const data = JSON.stringify({
-    //   text: text,
-    // });
+    const data = JSON.stringify({
+      text: text,
+    });
 
-    // try {
-    //   return await lastValueFrom(
-    //     this.httpService
-    //       .post('http://localhost:5000/summarise', data, config)
-    //       .pipe(map((res) => res.data))
-    //   );
-    // } catch (error) {
-    //   return null;
-    // }
+    try {
+      return await lastValueFrom(
+        this.httpService
+          .post('http://localhost:5550/gennames', data, config)
+          .pipe(map((res) => res.data))
+      );
+    } catch (error) {
+      return '';
+    }
     return '';
   }
 }
