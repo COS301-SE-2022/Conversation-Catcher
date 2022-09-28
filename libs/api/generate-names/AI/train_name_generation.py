@@ -6,6 +6,9 @@ from bs4 import BeautifulSoup
 from keras.preprocessing.text import Tokenizer
 from keras_preprocessing.sequence import pad_sequences
 
+import nltk
+nltk.download('stopwords')
+
 # from keras.utils.data_utils import pad_sequences
 from nltk.corpus import stopwords
 from tensorflow.keras.layers import Input, LSTM, Embedding, Dense, Concatenate, TimeDistributed
@@ -16,6 +19,7 @@ from tensorflow import keras
 import warnings
 import datetime
 import os
+import pickle
 
 pd.set_option("display.max_colwidth", 200)
 warnings.filterwarnings("ignore")
@@ -82,6 +86,18 @@ def text_cleaner(text,num):
     # Remove 's
 
     newString = re.sub(r"'s\b","",newString)
+
+    # Remove digits
+
+    newString = re.sub(r'[0-9]',"",newString)
+
+    # Remove hashes
+
+    newString = re.sub(r'#',"",newString)
+
+    # Remove unknown tokens from dataset
+
+    newString = re.sub(r'unk',"",newString)
 
     # Remove text inside parentheses
 
@@ -164,7 +180,7 @@ x_tokenizer.fit_on_texts(list(x_tr))
 
 # Calculate rare words and coverage (word count less that thresh is rare)
 
-thresh=30
+thresh=5
 
 cnt=0 # total rare words (count below thresh)
 tot_cnt=0 # total unique words in text
@@ -209,7 +225,7 @@ y_tokenizer.fit_on_texts(list(y_tr))
 
 # Calculate rare words and coverage (word count less that thresh is rare)
 
-thresh=50
+thresh=7
 
 cnt=0
 tot_cnt=0
@@ -386,12 +402,27 @@ model.save(save_path)
 
 reverse_target_word_index=y_tokenizer.index_word
 reverse_source_word_index=x_tokenizer.index_word
+source_word_index=x_tokenizer.word_index
 target_word_index=y_tokenizer.word_index
 
-f = open("outputs.txt", "a")
-f.write("reverse_target_word_index: " + str(reverse_target_word_index))
-f.write("reverse_source_word_index: " + str(reverse_source_word_index))
-f.write("target_word_index: " + str(target_word_index))
+save_path = os.path.join("gs://", gcp_bucket, "reverse_target_word_index")
+f = open("reverse_target_word_index", "wb")
+pickle.dump(reverse_target_word_index, f)
+f.close()
+
+save_path = os.path.join("gs://", gcp_bucket, "reverse_source_word_index")
+f = open("reverse_source_word_index", "wb")
+pickle.dump(reverse_source_word_index, f)
+f.close()
+
+save_path = os.path.join("gs://", gcp_bucket, "target_word_index")
+f = open("target_word_index", "wb")
+pickle.dump(target_word_index, f)
+f.close()
+
+save_path = os.path.join("gs://", gcp_bucket, "source_word_index")
+f = open("source_word_index", "wb")
+pickle.dump(source_word_index, f)
 f.close()
 
 # ------------------------------- Inference ----------------------------------------
