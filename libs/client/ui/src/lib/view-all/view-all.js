@@ -36,7 +36,7 @@ export const ViewAll = ({ navigation, route }) => {
   const [renameVisible, setRenameVisible] = useState(false);
   // const [refreshPage, setRefreshPage] = useState('');
 
-  const { groupName } = route.params;
+  const { groupObject } = route.params;
 
   const url = 'https://awesome.contents.com/';
   const title = 'Awesome Contents';
@@ -68,10 +68,10 @@ export const ViewAll = ({ navigation, route }) => {
   }
   async function removePDF() {
     //call this after selectedPdf is set to remove pdf to group
-    if (selectedPdf === null || groupName === null) return;
-    groupLocalAccess.removePdf(selectedPdf, groupName);
+    if (selectedPdf === null || groupObject.name === null) return;
+    groupLocalAccess.removePdf(selectedPdf, groupObject.name);
     await removePdf({
-      variables: { pdfId: selectedPdf, groupName: groupName },
+      variables: { pdfId: selectedPdf, groupName: groupObject.name },
     }).then(() => {
       setSelectedPdf(null);
     });
@@ -111,6 +111,53 @@ export const ViewAll = ({ navigation, route }) => {
 
   const [semanticSearch] = useLazyQuery(SEARCH_IDEA);
   const [getPdfs] = useLazyQuery(GET_PDFS);
+
+  function DetermineTitle(){
+    if (groupObject == null){
+      pdfLocalAccess.allPdfs.forEach((pdf) => { pdfLocalAccess.displayPdfs.push(pdf); });
+      NativeAppEventEmitter.emit('updatePage');
+      return (
+        <View style={styles.big_title_box}>
+          <Text style={styles.big_title}>{'PDFs'}</Text>
+        </View>
+      )
+    }
+    if (pdfLocalAccess.displayPdfs.length !== 0){
+      pdfLocalAccess.displayPdfs.length = 0;
+      NativeAppEventEmitter.emit('updatePage');
+      getPdfs({variables: {
+        ids: groupObject.pdfs
+      }}).then((result) => {
+        console.log(result.data)
+        result.data.getPDFByArr.forEach((pdf) => {
+          pdfLocalAccess.displayPdfs.push(pdf);
+        });
+        NativeAppEventEmitter.emit('updatePage');
+        
+      }).catch((error) => { console.log(error)});
+    }
+    return (
+      <TouchableOpacity
+        style={styles.group_title_button}
+        onPress={() => {  
+          navigation.navigate('GroupInfo', { groupObject: groupObject });
+        }}
+      >
+        <View style={[styles.groupThumbnailBox, { borderColor: colourState }]}>
+          <View style={[styles.groupThumbnail, {backgroundColor: "#667084ff"}]}>
+            <Text style={styles.groupIcon}>{groupObject.name.toUpperCase()[0]}</Text>
+          </View>
+        </View>
+        <View style={styles.groupTile_contents_not_thumbnail}>
+          <View style={styles.groupNameBox}>
+            <Text style={styles.groupName} numberOfLines={1}>{groupObject.name}</Text>
+          </View>
+      </View>
+      </TouchableOpacity>
+    )
+  }
+
+
 
   if (pdfLocalAccess.clearSearchInput.length !== 0) {
     //If statement to ensure that only one listener is created for the summarise command
@@ -194,9 +241,7 @@ export const ViewAll = ({ navigation, route }) => {
   return (
     <SafeAreaView style={styles.viewAllPage}>
       <View style={styles.viewAllTopBar}>
-        <View style={styles.big_title_box}>
-          <Text style={styles.big_title}>{'PDFs'}</Text>
-        </View>
+        <DetermineTitle/>
 
         <View style={styles.searchBarGroup}>
           <TextInput
@@ -250,7 +295,7 @@ export const ViewAll = ({ navigation, route }) => {
 
         <TouchableOpacity
           style={styles.backButton}
-          onPress={() => navigation.navigate('Home')}
+          onPress={() => navigation.goBack()}
         >
           <Icon name="angle-left" color="#344053ff" size={30} />
         </TouchableOpacity>
@@ -438,11 +483,7 @@ export default ViewAll;
 const styles = StyleSheet.create({
   viewAllPage: {
     backgroundColor: '#ffffffff',
-    marginTop: 0,
-    marginBottom: 0,
-    marginLeft: 0,
     flex: 1,
-    marginRight: 0,
   },
   viewAllTopBar: {
     width: '100%',
@@ -482,13 +523,20 @@ const styles = StyleSheet.create({
     minHeight: 28,
     paddingTop: 5,
   },
-  searchBarGroup: {
-    width: '85%',
-    flexShrink: 1,
-    marginVertical: 20,
+  group_title_button : {
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    minHeight: 38,
+    width: '85%',
+    paddingTop: 10,
+  },
+  searchBarGroup: {
+    width: '85%',
+    flex: 1,
+    marginVertical: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    //minHeight: 38,
     backgroundColor: '#ffffffff',
     borderRadius: 8,
     borderStyle: 'solid',
@@ -787,5 +835,44 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     marginTop: 10,
     height: 40,
+  },
+  groupThumbnailBox: {
+    borderRadius: 180,
+    backgroundColor: '#667084ff',
+    aspectRatio: 1,
+    width: '12%',
+    margin: 10,
+  },
+  groupThumbnail: {
+    flexGrow: 1,
+    resizeMode: 'center',
+    borderRadius: 180,
+    justifyContent: "center",
+  },
+  groupTile_contents_not_thumbnail: {
+    flexGrow: 1,
+    justifyContent: 'center',
+  },
+  groupName: {
+    color: '#344053ff',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 20,
+    fontWeight: '700',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Jaldi */,
+  },
+  groupNameBox: {
+    flexShrink: 1,
+    width: '80%',
+    resizeMode: 'contain',
+    justifyContent: 'center',
+    //paddingVertical: 5,
+  },
+  groupIcon: {
+    textAlign: "center",
+    color: "#ffffff",
+    fontSize: 22,
+    fontWeight: "bold",
   },
 });

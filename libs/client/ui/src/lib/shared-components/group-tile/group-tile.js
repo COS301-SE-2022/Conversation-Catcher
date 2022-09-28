@@ -17,6 +17,8 @@ import { toggleDown } from '../../../../../../../apps/client/src/app/slices/grou
 import { gql, useLazyQuery, useMutation } from '@apollo/client';
 //import FileViewer from "react-native-file-viewer";
 
+//const [addPdf] = useMutation(ADD_PDF);
+
 const GroupTile = ({
   name,
   admin,
@@ -30,7 +32,7 @@ const GroupTile = ({
   //console.log(props);
   const add = props.add;
   const buildGroup = () => {
-    return { name: name, }
+    return { name:name, thumbnail:thumbnail, admin:admin, users:users, description:description, pdfs:pdfs }
   }
   return (
     <TouchableOpacity
