@@ -149,6 +149,7 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
           .catch((e) => console.log(e));
       }
     }
+    pdfLocalAccess.sortPdfs('Name');
   };
 
   const ReloadData = () => {

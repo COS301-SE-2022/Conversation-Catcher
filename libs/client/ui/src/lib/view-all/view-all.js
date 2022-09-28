@@ -35,7 +35,7 @@ export const ViewAll = ({ navigation, route }) => {
   const [renameVisible, setRenameVisible] = useState(false);
   // const [refreshPage, setRefreshPage] = useState('');
 
-  const { groupName } = route.params;
+  const { groupName } = route.params; 
 
   const url = 'https://awesome.contents.com/';
   const title = 'Awesome Contents';
@@ -198,19 +198,24 @@ export const ViewAll = ({ navigation, route }) => {
                 variables: {query: text, docs: pdfLocalAccess.allPdfs}
               }).then((res) => {
                 console.log(res.data.semanticSearch);
-                getPdfs({variables: {ids: res.data.semanticSearch}}).then((d) => {
-                  console.log(d.error);
-                  //for each element in d:
-                  // pdfLocalAccess.addPdf({
-                  //   name: d.getPDFs[i].name,
-                  //   creationDate: d.getPDFs[i].creationDate,
-                  //   downloaded: d.getPDFs[i].downloaded,
-                  //   text: d.getPDFs[i].text,
-                  //   id: d.getPDFs[i].id,
-                  //   summarised: d.getPDFs[i].summarised,
-                  //   embeddings: d.getPDFs[i].embeddings,
-                  // });
-                })
+                pdfLocalAccess.sortByIds(res.data.semanticSearch);
+                NativeAppEventEmitter.emit('updatePage');
+                // console.log('updated')
+                // getPdfs({variables: {ids: res.data.semanticSearch}}).then((d) => {
+                //   console.log(d.data.getPDFByArr);
+                //   pdfLocalAccess.clearPdfs();
+                //   for (let i=0; i< d.data.getPDFByArr.length; i++){
+                //     pdfLocalAccess.addPdf({
+                //       name: d.data.getPDFByArr[i].name,
+                //       creationDate: d.data.getPDFByArr[i].creationDate,
+                //       downloaded: d.data.getPDFByArr[i].downloaded,
+                //       text: d.data.getPDFByArr[i].text,
+                //       id: d.data.getPDFByArr[i].id,
+                //       summarised: d.data.getPDFByArr[i].summarised,
+                //       embeddings: d.data.getPDFByArr[i].embeddings,
+                //     });
+                //   }
+                // })
               }).catch( (error) => {
                 console.log(error)
                   pdfLocalAccess.filterPdfs(text);

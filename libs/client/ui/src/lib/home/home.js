@@ -92,11 +92,10 @@ export const Home = ({ navigation }) => {
   `;
 
   const SET_EMBEDDINGS = gql`
-  mutation setEmbeddings($id: String!, $name: String!, $text: String!){
-    embed(id:$id, name:$name, text:$text)
-  }
+    mutation setEmbeddings($id: String!, $name: String!, $text: String!) {
+      embed(id: $id, name: $name, text: $text)
+    }
   `;
-
 
   //Mutations to be used in the creation of new PDFs
   const [summariseText] = useMutation(SUMMARISE_TEXT);
@@ -104,7 +103,6 @@ export const Home = ({ navigation }) => {
   const [addPdf] = useMutation(ADD_PDF);
   const [generateName] = useMutation(GENERATE_NAME);
   const [setEmbedding] = useMutation(SET_EMBEDDINGS);
-
 
   const handleDocumentSelection = useCallback(async () => {
     try {
@@ -269,7 +267,7 @@ export const Home = ({ navigation }) => {
 
   // Send the audio stream to the server and receive the converted text
   const convertSpeech = () => {
-    fetch('http://localhost:5050/stt', {
+    fetch('https://ccstt.azurewebsites.net/stt', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -288,15 +286,19 @@ export const Home = ({ navigation }) => {
           const newPdf = await addPdf({
             variables: {
               email: emailState,
-              name: await generateName({
+              name: (await generateName({
                 variables: { text: result.converted_text },
-              }),
+              }).catch((e) => console.log(e))).data.generateName,
               text: result.converted_text,
             },
           });
-          const embeddings = await setEmbedding(
-            {variables: {id: newPdf.data.addPDF.id, name: newPdf.data.addPDF.name, text: newPdf.data.addPDF.text}}
-            ).catch(e => console.log(e))
+          const embeddings = await setEmbedding({
+            variables: {
+              id: newPdf.data.addPDF.id,
+              name: newPdf.data.addPDF.name,
+              text: newPdf.data.addPDF.text,
+            },
+          }).catch((e) => console.log(e));
           console.log(embeddings);
           pdfLocalAccess.addPdf({
             name: newPdf.data.addPDF.name,
