@@ -2,6 +2,6 @@ numpy
 pandas
 bs4
 nltk
-warnings
-datetime
-os
+sklearn
+tensorflow-datasets
+Jinja2
