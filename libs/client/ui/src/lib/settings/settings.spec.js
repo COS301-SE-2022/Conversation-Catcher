@@ -1,13 +1,13 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react-native';
 import Settings from './settings';
-import { create } from 'react-test-renderer';
+// import { create } from 'react-test-renderer';
 import { configureStore } from '@reduxjs/toolkit';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import reducer from '../../../../../../apps/client/src/app/slices/user.slice';
 import { Provider } from 'react-redux';
-import { NavigationContainer } from '@react-navigation/native';
-import AppNavigator from '../AppNavigator';
+// import { NavigationContainer } from '@react-navigation/native';
+// import AppNavigator from '../AppNavigator';
 
 describe('Setup of settings and navigation', () => {
   const store = configureStore({
