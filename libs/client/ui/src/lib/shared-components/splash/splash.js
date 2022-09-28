@@ -15,13 +15,13 @@ import { useSelector } from 'react-redux';
 
 export const Splash = ({navigation}) => {
   const userPresent = useSelector(selectUser);
-  // useEffect(() => {
-  //   if (userPresent.email !== '') {
-  //     navigation.navigate('Home');
-  //   } else {
-  //     navigation.navigate('Login');
-  //   }
-  // });
+  useEffect(() => {
+    if (userPresent.email !== '') {
+      navigation.navigate('Home');
+    } else {
+      navigation.navigate('Login');
+    }
+  });
   return (
     <View style={styles.splashScreen}>
       <View style={styles.title}>
