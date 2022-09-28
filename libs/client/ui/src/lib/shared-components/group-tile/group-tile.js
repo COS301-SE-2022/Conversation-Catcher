@@ -29,7 +29,7 @@ const GroupTile = ({
 }) => {
   const colourState = useSelector(selectColour);
   const buildGroup = () => {
-    return { name: name, }
+    return { name:name, thumbnail:thumbnail, admin:admin, users:users, description:description, pdfs:pdfs }
   }
   console.log(name);
 
@@ -37,7 +37,7 @@ const GroupTile = ({
     <TouchableOpacity
       style={styles.groupTile}
       onPress={() =>
-        nav.navigate('GroupInfo', { name:name, thumbnail:thumbnail, admin:admin, users:users, description:description, pdfs:pdfs  })
+        nav.navigate('ViewAll', { groupObject: buildGroup() })
       }
     >
       <View style={[styles.groupThumbnailBox, { borderColor: colourState }]}>

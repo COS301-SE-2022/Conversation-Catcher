@@ -63,7 +63,7 @@ function DownloadButtonState(props) {
       }
       color={colourState}
       name="cloud"
-      size={22}
+      size={18}
       container={TouchableOpacity}
     />
   );

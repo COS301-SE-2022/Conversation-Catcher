@@ -344,7 +344,6 @@ export const Home = ({ navigation }) => {
       });
   };
 
-  // componentDidMount();
   return (
     <SafeAreaView style={styles.home}>
       <View style={styles.big_title_box}>
@@ -380,7 +379,7 @@ export const Home = ({ navigation }) => {
             { backgroundColor: colourState },
           ]}
           onPress={() => {
-            navigation.navigate('Groups');
+            navigation.navigate('Groups', { groupObject: null });
           }}
         >
           <View style={styles.viewPdfsTouchableOpacityLabel_box}>
