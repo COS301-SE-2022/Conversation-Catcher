@@ -878,8 +878,27 @@ const styles = StyleSheet.create({
       height: 1,
     },
   },
+  actionFileButton: {
+    flexGrow: 1,
+    height: 40,
+    alignItems: 'center',
+    flexDirection: 'row',
+    margin: 10,
+    justifyContent: 'center',
+    alignContent: 'center',
+    borderRadius: 8,
+    elevation: 2,
+    shadowColor: '#000000',
+    shadowRadius: 2.621621621621622,
+    shadowOpacity: 0.2173913043478261,
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+  },
   actionModalButtonContent: {
-    flexShrink: 1,
+    flexGrow: 1,
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     //padding: 5
@@ -895,9 +914,6 @@ const styles = StyleSheet.create({
     fontFamily: 'System' /* Inter */,
   },
   actionModalButtonText_box: {
-    flexShrink: 1,
-  },
-  fileactionIconContainer: {
     flexShrink: 1,
   },
   mailIconContainer: {
