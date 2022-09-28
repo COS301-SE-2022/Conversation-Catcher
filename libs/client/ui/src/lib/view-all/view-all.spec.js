@@ -43,7 +43,6 @@ describe('ViewAll', () => {
   it('View all should render', () => {
     const { container } = render(TestComponent);
     expect(container).toBeTruthy();
-    expect(true).toEqual(true);
   });
 
   render(TestComponent);

@@ -63,4 +63,52 @@ describe('Register', () => {
     const passwordState = store.getState().password;
     expect(passwordState).toEqual('123qwe123#');
   });
+
+  
+});
+
+describe('Testing react navigation', () => {
+  const store = configureStore({
+    reducer: {
+      user:reducer
+    },
+  });
+  const TestComponent = () => (
+    <Provider store={store}>
+      <Register />
+    </Provider>
+  );
+
+  render(TestComponent);
+  test('screen contains a button linking to the Login page', async () => {
+    const component = (
+      <Provider store = { store }>
+        <Register />
+    </Provider>
+    );
+
+    render(component);
+    const button = await screen.findByText('Already a user?');
+
+    expect(button).toBeTruthy();
+  });
+
+  test('clicking on the button takes you to the Login screen', async () => {
+    const component = (
+      <Provider store = { store }>
+        <Register />
+    </Provider>
+    );
+
+    render(component);
+    const oldScreen = screen.queryByText('Create new account');
+    const button = await screen.findByText('Already a user?');
+
+    expect(oldScreen).toBeTruthy();
+
+    fireEvent(button, 'press');
+    const newScreen = await screen.queryByPlaceholderText('Log in to your account');
+
+    expect(newScreen).toBeTruthy();
+  });
 });

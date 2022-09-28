@@ -70,6 +70,34 @@ describe('Login', () => {
     const passwordState = store.getState().password;
     expect(passwordState).toEqual('123qwe123#');
   });
+});
+
+describe('Testing react navigation', () => {
+  const store = configureStore({
+    reducer: {
+      user:reducer
+    },
+  });
+  const TestComponent = () => (
+    <Provider store={store}>
+      <Login />
+    </Provider>
+  );
+
+  render(TestComponent);
+  
+  test('screen contains a button linking to the Register page', async () => {
+    const component = (
+      <Provider store = { store }>
+        <Login />
+    </Provider>
+    );
+
+    render(component);
+    const button = await screen.findByText('Don’t have an account?');
+
+    expect(button).toBeTruthy();
+  });
 
   test('clicking on the button takes you to the Register screen', async () => {
     const component = (
@@ -88,6 +116,19 @@ describe('Login', () => {
     const newScreen = await screen.queryByPlaceholderText('Create new account');
 
     expect(newScreen).toBeTruthy();
+  });
+
+  test('screen contains a button linking to the ForgotPassword page', async () => {
+    const component = (
+      <Provider store = { store }>
+        <Login />
+    </Provider>
+    );
+
+    render(component);
+    const button = await screen.findByText('Forgot your password?');
+
+    expect(button).toBeTruthy();
   });
 
   test('clicking on the button takes you to the ForgotPassword screen', async () => {
