@@ -15,7 +15,7 @@ import {
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 //import { ViewAll, Home} from '@conversation-catcher/client/ui';
-import Splash from '../../../../libs/client/ui/src/lib/shared-components/splash/splash'
+import Splash from '../../../../libs/client/ui/src/lib/shared-components/splash/splash.js'
 import Home from '../../../../libs/client/ui/src/lib/home/home.js';
 import ViewAll from '../../../../libs/client/ui/src/lib/view-all/view-all.js';
 import Groups from '../../../../libs/client/ui/src/lib/groups/groups.js';
