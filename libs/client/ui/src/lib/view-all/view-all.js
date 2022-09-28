@@ -163,6 +163,7 @@ export const ViewAll = ({ navigation, route }) => {
         onPress={() => {
           setSelectMode(false);
           setBottomModalVisible(false);
+          DeviceEventEmitter.emit("DeleteAll");
         }}
       >
         <Icon name="trash-o" color="#ffffffff" size={22} />
@@ -259,7 +260,7 @@ export const ViewAll = ({ navigation, route }) => {
           <ModalDropdown
             options={['Date', 'Name']}
             defaultIndex={0}
-            defaultValue={'Date'}
+            defaultValue={'Name'}
             onSelect={(index, itemValue) => {
               pdfLocalAccess.sortPdfs(itemValue);
               // pdfRef.current.refreshPfds();
@@ -583,6 +584,7 @@ const styles = StyleSheet.create({
   },
   orderByDropdown: {
     flexShrink: 1,
+    justifyContent: 'center',
     backgroundColor: '#ffffffff',
     borderRadius: 8,
     borderStyle: 'solid',
