@@ -35,22 +35,6 @@ import AppNavigator from '../AppNavigator';
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
 
 describe('Testing react navigation', () => {
-  // test('page contains the header and 10 items', async () => {
-  //   const component = (
-  //     <NavigationContainer>
-  //       <AppNavigator />
-  //     </NavigationContainer>
-  //   );
-
-  //   render(component);
-
-  //   const header = await screen.findByText('List of numbers from 1 to 20');
-  //   const items = await screen.findAllByText(/Item number/);
-
-  //   expect(header).toBeTruthy();
-  //   expect(items.length).toBe(10);
-  // });
-
   test('screen contains a button linking to the ViewAll page', async () => {
     const component = (
       <NavigationContainer>
@@ -72,13 +56,77 @@ describe('Testing react navigation', () => {
     );
 
     render(component);
-    const oldScreen = screen.queryByText('Search');
+    const oldScreen = screen.queryByText('Recents');
     const button = await screen.findByText('My PDFs');
 
     expect(oldScreen).toBeTruthy();
 
     fireEvent(button, 'press');
-    const newScreen = await screen.queryByPlaceholderText('Recents');
+    const newScreen = await screen.queryByPlaceholderText('Search');
+
+    expect(newScreen).toBeTruthy();
+  });
+
+  test('screen contains a button linking to the Groups page', async () => {
+    const component = (
+      <NavigationContainer>
+        <AppNavigator />
+      </NavigationContainer>
+    );
+
+    render(component);
+    const button = await screen.findByText('Groups');
+
+    expect(button).toBeTruthy();
+  });
+
+  test('clicking on the button takes you to the Groups screen', async () => {
+    const component = (
+      <NavigationContainer>
+        <AppNavigator />
+      </NavigationContainer>
+    );
+
+    render(component);
+    const oldScreen = screen.queryByText('Recents');
+    const button = await screen.findByText('Groups');
+
+    expect(oldScreen).toBeTruthy();
+
+    fireEvent(button, 'press');
+    const newScreen = await screen.queryByText('Groups');
+
+    expect(newScreen).toBeTruthy();
+  });
+
+  test('screen contains a button linking to the Settings page', async () => {
+    const component = (
+      <NavigationContainer>
+        <AppNavigator />
+      </NavigationContainer>
+    );
+
+    render(component);
+    const button = await screen.findByText('Settings');
+
+    expect(button).toBeTruthy();
+  });
+
+  test('clicking on the button takes you to the Settings screen', async () => {
+    const component = (
+      <NavigationContainer>
+        <AppNavigator />
+      </NavigationContainer>
+    );
+
+    render(component);
+    const oldScreen = screen.queryByText('Recents');
+    const button = await screen.findByText('Settings'); // come back to
+
+    expect(oldScreen).toBeTruthy();
+
+    fireEvent(button, 'press');
+    const newScreen = await screen.queryByText('Settings');
 
     expect(newScreen).toBeTruthy();
   });
