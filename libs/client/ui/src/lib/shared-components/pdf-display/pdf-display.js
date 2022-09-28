@@ -68,7 +68,7 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
             <RefreshControl refreshing={refreshing} onRefresh={ReloadData} />
           }
         >
-          <Loading width={100} height={100} load={props.load} />
+          <Loading width={100} height={100} load={props.load} text={"Fetching your pdfs"}/>
           {props.arr.map((item, key) => (
             <PdfTile
               key={key}
@@ -94,7 +94,7 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
             <RefreshControl refreshing={refreshing} onRefresh={ReloadData} />
           }
         >
-          <Loading width={100} height={100} load={props.load} />
+          <Loading width={100} height={100} load={props.load}  text={"Fetching your pdfs"}/>
           <Text style={{ textAlign: 'center' }}>{props.text}</Text>
         </ScrollView>
       );

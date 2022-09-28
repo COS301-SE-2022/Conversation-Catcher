@@ -214,7 +214,7 @@ export const GroupInfo = ({ route, navigation }) => {
             >
               <Image
                 style={styles.groupThumbnail}
-                source={thumbnailSource.thumbnailSource}
+                source={thumbnailSource}
               />
             </TouchableOpacity>
 
@@ -245,7 +245,7 @@ export const GroupInfo = ({ route, navigation }) => {
           <View style={styles.groupThumbnailBox}>
             <Image
               style={styles.groupThumbnail}
-              source={thumbnailSource.thumbnailSource}
+              source={thumbnailSource}
             />
           </View>
 
