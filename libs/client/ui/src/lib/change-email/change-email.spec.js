@@ -4,7 +4,7 @@ import { configureStore } from '@reduxjs/toolkit';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import reducer from '../../../../../../apps/client/src/app/slices/user.slice';
 import { Provider } from 'react-redux';
-// yarn nx run change-email.spec:test
+// yarn nx run change-email:test
 
 describe('check if ChangeEmail renders correctly', () => {
   const store = configureStore({
