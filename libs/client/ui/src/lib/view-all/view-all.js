@@ -10,6 +10,7 @@ import {
   ScrollView,
   TextInput,
   NativeAppEventEmitter,
+  DeviceEventEmitter,
 } from 'react-native';
 import { gql, useQuery, useMutation, useLazyQuery } from '@apollo/client';
 import ModalDropdown from 'react-native-modal-dropdown';
@@ -78,6 +79,7 @@ export const ViewAll = ({ navigation, route }) => {
 
   //variables for object sorting and management
   const [objArr, setObjArr] = useState([]);
+  const [searchInput, setSearchInput] = useState('');
   const [selectedPdf, setSelectedPdf] = useState(null);
   const [selectedGroup, setSelectedGroup] = useState(null);
 
@@ -109,6 +111,14 @@ export const ViewAll = ({ navigation, route }) => {
 
   const [semanticSearch] = useLazyQuery(SEARCH_IDEA);
   const [getPdfs] = useLazyQuery(GET_PDFS);
+
+  if (pdfLocalAccess.clearSearchInput.length !== 0) {
+    //If statement to ensure that only one listener is created for the summarise command
+    DeviceEventEmitter.addListener('clearSearch', () => {
+      setSearchInput('');
+    });
+    pdfLocalAccess.clearSearchInput.length = 0;
+  }
 
   const share = async (customOptions = options) => {
     try {
@@ -190,6 +200,7 @@ export const ViewAll = ({ navigation, route }) => {
         <View style={styles.searchBarGroup}>
           <TextInput
             style={styles.searchInput}
+            value={searchInput}
             placeholder="Search"
             onSubmitEditing={(text) => {
               console.log(text.nativeEvent.text);
@@ -213,7 +224,7 @@ export const ViewAll = ({ navigation, route }) => {
                 });
             }}
             onChangeText={(text) => {
-              //
+              setSearchInput(text);
             }}
           />
           <View style={styles.searchIconFrame}>

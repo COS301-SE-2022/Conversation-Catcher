@@ -1,11 +1,17 @@
 import { gql, useMutation, useQuery, useLazyQuery } from '@apollo/client';
-import React, { useImperativeHandle, forwardRef, useState } from 'react';
+import React, {
+  useImperativeHandle,
+  forwardRef,
+  useState,
+  useEffect,
+} from 'react';
 import {
   Text,
   ScrollView,
   StyleSheet,
   DeviceEventEmitter,
   RefreshControl,
+  NativeAppEventEmitter,
 } from 'react-native';
 import Loading from '../loading/loading';
 // import LocalPdfsAccess from '../local-pdfs-access/local-pdfs-access';
@@ -27,6 +33,38 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
   const emailState = useSelector(selectEmail);
   const localPDFs = useSelector(selectPDFS);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    var counter = 0;
+
+    var oneSecInterval = setInterval(() => {
+      console.log('fetching')
+      fetchDocs({
+        variables: {
+          email: emailState,
+        },
+        fetchPolicy: 'no-cache',
+      })
+        .then((d) => {
+          console.log('received')
+          pdfLocalAccess.clearPdfs();
+          setData(d.data);
+          // setRefreshing(false);
+          setDidReload(!didReload);
+        })
+        .catch((e) => {
+          console.log(e);
+          // pdfLocalAccess.clearPdfs();
+          // setDidReload(!didReload);
+          // setRefreshing(false);
+        });
+      counter++;
+
+      if (counter === 5) {
+        clearInterval(oneSecInterval);
+      }
+    }, 120000);
+  }, []);
 
   //Listen to when to update page
   DeviceEventEmitter.addListener('updatePage', () => setDidReload(!didReload));
@@ -78,7 +116,12 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
             <RefreshControl refreshing={refreshing} onRefresh={ReloadData} />
           }
         >
-          <Loading width={100} height={100} load={props.load} text={"Fetching your pdfs"}/>
+          <Loading
+            width={100}
+            height={100}
+            load={props.load}
+            text={'Fetching your pdfs'}
+          />
           {props.arr.map((item, key) => (
             <PdfTile
               key={key}
@@ -104,7 +147,12 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
             <RefreshControl refreshing={refreshing} onRefresh={ReloadData} />
           }
         >
-          <Loading width={100} height={100} load={props.load}  text={"Fetching your pdfs"}/>
+          <Loading
+            width={100}
+            height={100}
+            load={props.load}
+            text={'Fetching your pdfs'}
+          />
           <Text style={{ textAlign: 'center' }}>{props.text}</Text>
         </ScrollView>
       );
@@ -153,6 +201,7 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
   };
 
   const ReloadData = () => {
+    NativeAppEventEmitter.emit('clearSearch');
     setRefreshing(true);
     fetchDocs({
       variables: {
@@ -216,7 +265,8 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
 
     //Update local pdf storage
     //array of pdfs stored locally, selected from data to overwrite the slice
-    if (data.getPDFs[0] !== undefined && data.getPDFs[0].name !== 'error') {//remove as under a check already
+    if (data.getPDFs[0] !== undefined && data.getPDFs[0].name !== 'error') {
+      //remove as under a check already
       let tempArray = [];
       var p;
       for (p in pdfLocalAccess.getPdfs()) {
