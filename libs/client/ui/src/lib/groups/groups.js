@@ -297,14 +297,13 @@ export const Groups = ({ navigation }) => {
                   groupName: newName,
                 }
               }).then((result)=>{
-                setMoreVisible(false);
                 DeviceEventEmitter.emit("updateGroups");
                 setNewName("");
               }).catch((e)=>{
                 console.log(e);
-                setMoreVisible(false);
                 setNewName("");
               });
+              setMoreVisible(false);
             }}
           >
             <View style={styles.moreModalButtonContent}>
