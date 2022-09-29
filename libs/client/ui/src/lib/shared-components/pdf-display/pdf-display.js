@@ -34,37 +34,37 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
   const localPDFs = useSelector(selectPDFS);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    var counter = 0;
+  // useEffect(() => {
+  //   var counter = 0;
 
-    var oneSecInterval = setInterval(() => {
-      console.log('fetching')
-      fetchDocs({
-        variables: {
-          email: emailState,
-        },
-        fetchPolicy: 'no-cache',
-      })
-        .then((d) => {
-          console.log('received')
-          pdfLocalAccess.clearPdfs();
-          setData(d.data);
-          // setRefreshing(false);
-          setDidReload(!didReload);
-        })
-        .catch((e) => {
-          console.log(e);
-          // pdfLocalAccess.clearPdfs();
-          // setDidReload(!didReload);
-          // setRefreshing(false);
-        });
-      counter++;
+  // //   var oneSecInterval = setInterval(() => {
+  // //     console.log('fetching')
+  // //     fetchDocs({
+  // //       variables: {
+  // //         email: emailState,
+  // //       },
+  // //       fetchPolicy: 'no-cache',
+  // //     })
+  // //       .then((d) => {
+  // //         console.log('received')
+  // //         pdfLocalAccess.clearPdfs();
+  // //         setData(d.data);
+  // //         // setRefreshing(false);
+  // //         setDidReload(!didReload);
+  // //       })
+  // //       .catch((e) => {
+  // //         console.log(e);
+  // //         // pdfLocalAccess.clearPdfs();
+  // //         // setDidReload(!didReload);
+  // //         // setRefreshing(false);
+  // //       });
+  // //     counter++;
 
-      if (counter === 5) {
-        clearInterval(oneSecInterval);
-      }
-    }, 120000);
-  }, []);
+  // //     if (counter === 5) {
+  // //       clearInterval(oneSecInterval);
+  // //     }
+  // //   }, 120000);
+  // }, []);
 
   //Listen to when to update page
   DeviceEventEmitter.addListener('updatePage', () => setDidReload(!didReload));
