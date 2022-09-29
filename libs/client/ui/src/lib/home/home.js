@@ -398,14 +398,14 @@ export const Home = ({ navigation }) => {
         <View style={styles.bottomGroupSideSpacing}></View>
         <View style={styles.audioTouchableOpacityGroup}>
           <RecordAudioButtonState />
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={styles.uploadAudioTouchableOpacity}
             onPress={() => setUploadVisible(true)}
           >
             <View style={styles.uploadAudioIcon}>
               <Icon color="#667084ff" name="upload" size={40} />
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
         <View style={styles.bottomGroupSideSpacing}>
           <TouchableOpacity
@@ -460,7 +460,7 @@ export const Home = ({ navigation }) => {
             </View>
           </TouchableOpacity>
 
-          <View style={styles.recordingStopModalButtonDivider} />
+          {/* <View style={styles.recordingStopModalButtonDivider} />
 
           <TouchableOpacity
             style={styles.recordingStopModalButton}
@@ -482,7 +482,7 @@ export const Home = ({ navigation }) => {
                 </Text>
               </View>
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
           <View style={styles.recordingStopModalButtonDivider} />
 
@@ -681,13 +681,14 @@ const styles = StyleSheet.create({
   recordAudioTouchableOpacity: {
     width: '50%',
     flexShrink: 1,
-    borderTopLeftRadius: 8,
-    borderBottomLeftRadius: 8,
+    //borderTopLeftRadius: 8,
+    //borderBottomLeftRadius: 8,
+    borderRadius: 8,
     overflow: 'hidden',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRightColor: '#667084ff',
-    borderRightWidth: 1,
+    //borderRightColor: '#667084ff',
+    //borderRightWidth: 1,
   },
   recordAudioIcon: {
     padding: 10,

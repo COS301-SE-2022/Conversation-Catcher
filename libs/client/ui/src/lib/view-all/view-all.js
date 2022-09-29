@@ -333,7 +333,7 @@ export const ViewAll = ({ navigation, route }) => {
         onBackdropPress={() => setMoreVisible(false)}
       >
         <View style={styles.moreModalInner}>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={styles.moreModalButton}
             onPress={() => {
               setBottomModalType('share');
@@ -358,7 +358,7 @@ export const ViewAll = ({ navigation, route }) => {
             </View>
           </TouchableOpacity>
 
-          <View style={styles.moreModalButtonDivider} />
+          <View style={styles.moreModalButtonDivider} /> */}
 
           <TouchableOpacity
             style={styles.moreModalButton}
