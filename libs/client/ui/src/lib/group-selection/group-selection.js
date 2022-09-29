@@ -22,8 +22,7 @@ import { useSelector } from 'react-redux';
 import { selectColour, selectEmail } from '../../../../../../apps/client/src/app/slices/user.slice';
 
 export const GroupSelection = ({ navigation, route }) => {
-  console.log(route);
-  const id = route.params;
+  const {id} = route.params;
   const groupRef = useRef();
   const colourState = useSelector(selectColour);
   const userEmail = useSelector(selectEmail);
@@ -53,17 +52,24 @@ export const GroupSelection = ({ navigation, route }) => {
   const [objArr, setObjArr] = useState([]);
   const [addToGroup] = useMutation(ADD_TO_GROUP);
   const AddNew = async (g) => {
+    console.log(g);
+    console.log(id);
     addToGroup({variables:{pdfId: id, groupName: g}}).then((e)=>{
       console.log(e);
       groupLocalAccess.addPdf(id,g);
-      navigation.goBack();
     }).catch((e)=>{
       console.log(e);
     })
   }
-  DeviceEventEmitter.addListener("AddPdf",(group)=>{
-    AddNew(group);
-  })
+  if (groupLocalAccess.addEvent.length !== 0) {
+    //If statement to ensure that only one listener is created for the summarise command
+    DeviceEventEmitter.addListener("AddPdf",(group)=>{
+      AddNew(group);
+      navigation.navigate("Home");
+    });
+    groupLocalAccess.addEvent.length = 0;
+  }
+
   return (
     <SafeAreaView style={styles.groupsPage}>
       <View style={styles.groupsTopBar}>
