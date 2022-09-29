@@ -7,7 +7,6 @@
 
 Multiprocessing moguls - Conversation Catcher - The conversation catcher is used to record a conversation and convert it into structured text that can be analysed to extract the main and important ideas of the conversation. <br>
 The following links are to our demo videos<br>
-[Google drive used for this project](https://drive.google.com/drive/folders/1grxlzpaH5o_8EKc6KlxfjJSWD2MJ9Yw3?usp=sharing)<br>
 [Multiprocessing moguls - Demo 1 - link](https://drive.google.com/file/d/1WpsXG5zylm56bT9f_6F1-bOO9ZpunfR2/view?usp=sharing) <br>
 [Multiprocessing moguls - Demo 2 - link](https://drive.google.com/file/d/14bQFBt5VnbDpeEGc2W5Pa0BSND2wmY-c/view?usp=sharing) <br>
 [Multiprocessing moguls - Demo 3 - link](https://drive.google.com/file/d/1cOZXT2Sw5fW1BTVizLg0-Slsb8PGW3jr/view?usp=sharing) <br>
@@ -16,19 +15,15 @@ Links to documentation<br>
 [Coding standards document](https://docs.google.com/document/d/1ldcNnkpUx-dX3XYgYARz3ydb_r1uxhDfNxVyNXOUcBw/edit#heading=h.186zini1wvx4) <br>
 [Testing policy](https://docs.google.com/document/d/1GDkJa9m_CCDya0Eao0iKNwIsTTHjD_oVqclKSSnYMNA/edit#heading=h.yuae9x1vg2gc) <br>
 [SRS Documentation](https://docs.google.com/document/d/1cqF3RJu4W-wtqzAW2lQ43BdboS8xyZ0Ruu5oth4nWcU/edit#heading=h.js2t3xtgxcqd) <br>
-[](https://docs.google.com/document/d/) <br>
-[](https://docs.google.com/document/d/) <br>
-[](https://docs.google.com/document/d/) <br>
-[](https://docs.google.com/document/d/) <br>
+[Technical installation manual](https://docs.google.com/document/d/1EGm0Z91afRrLTXs03KXWhGs1kwQVMGslEpZlJxbs8AQ/edit#heading=h.tlj8gi87963i) <br>
+[Project Management](https://github.com/COS301-SE-2022/Conversation-Catcher/projects?type=classic) <br>
+[Roles of Team Members Summary](https://docs.google.com/document/d/12PeVn3BTVhIt0WFEk7qgkSHZ0IyTUVM-FNmvgjjVc54/edit#heading=h.4tn96r73cok5) <br>
+[Team Members](https://github.com/COS301-SE-2022/Conversation-Catcher/wiki/Team-Members) <br>
 Extra links<br>
+[Google drive used for this project](https://drive.google.com/drive/folders/1grxlzpaH5o_8EKc6KlxfjJSWD2MJ9Yw3?usp=sharing)<br>
 [GitHub Project Board](https://github.com/COS301-SE-2022/Conversation-Catcher/projects/1) <br>
 [Wiki](https://github.com/COS301-SE-2022/Conversation-Catcher/wiki)<br>
 [Team member information](https://github.com/COS301-SE-2022/Conversation-Catcher/wiki/Team-Members) <br>
-[SRS documents](https://drive.google.com/file/d/1q1SWzmBlPTPwOcCV4Dr0Lc6OEitmOMhc/view?usp=sharing) <br>
-[User Manual](https://drive.google.com/file/d/1a9L8ZcMxCSpmwWx1TmK06K-LRSFI92XW/view?usp=sharing) <br>
-[Technical installation manual](https://drive.google.com/file/d/1tgcjSzFpW3ZdHo9cHePviBs8rtxiTm8O/view?usp=sharing)<br>
-[Coding Standards](https://drive.google.com/file/d/1w_RNtBN3kwAAYETomJ8Z4spUsUEFqQNX/view?usp=sharing)<br>
-
 
 # ConversationCatcher
 
