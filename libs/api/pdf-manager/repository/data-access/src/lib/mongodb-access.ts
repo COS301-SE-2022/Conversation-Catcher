@@ -56,7 +56,7 @@ export class MongoDBAccess {
         text: text,
         summarised: 'loading',
         downloaded: false,
-        embeddings: '',
+        embeddings: null,
         tags: [],
       },
     });
