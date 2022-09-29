@@ -1,6 +1,7 @@
 class LocalGroupsAccess {
   displayGroups; //The groups that get displayed
   allGroups; //All the groups loaded from the api call
+  addEvent = ['false'];
 
   constructor() {
     this.displayGroups = [];
