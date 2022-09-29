@@ -23,7 +23,6 @@ Extra links<br>
 [Google drive used for this project](https://drive.google.com/drive/folders/1grxlzpaH5o_8EKc6KlxfjJSWD2MJ9Yw3?usp=sharing)<br>
 [GitHub Project Board](https://github.com/COS301-SE-2022/Conversation-Catcher/projects/1) <br>
 [Wiki](https://github.com/COS301-SE-2022/Conversation-Catcher/wiki)<br>
-[Team member information](https://github.com/COS301-SE-2022/Conversation-Catcher/wiki/Team-Members) <br>
 
 # ConversationCatcher
 
