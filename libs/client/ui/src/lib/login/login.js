@@ -215,6 +215,7 @@ export const Login = ({ navigation }) => {
             .catch((error) => {
               setFailedLogin(true);
               setErrorMessage('Invalid login details');
+              console.log(error);
               setPassword('');
               setLoad(false);
             });
