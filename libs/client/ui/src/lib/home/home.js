@@ -327,7 +327,7 @@ export const Home = ({ navigation }) => {
       .then((res) => {
         console.log(res);
         setSummarisedText({
-          variables: { id: id, summary: 'loading' },
+          variables: { id: id, summary: res.data.Summarise },
         }).catch((e) => {
           console.log(e);
           pdfLocalAccess.addSummary(id, 'error');
