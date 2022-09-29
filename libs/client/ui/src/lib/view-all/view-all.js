@@ -148,7 +148,7 @@ export const ViewAll = ({ navigation, route }) => {
         }}
       >
         <View style={[styles.groupThumbnailBox, { borderColor: colourState }]}>
-          <View style={[styles.groupThumbnail, {backgroundColor: "#667084ff"}]}>
+          <View style={[styles.groupThumbnail, {backgroundColor: colourState}]}>
             <Text style={styles.groupIcon}>{groupObject.name.toUpperCase()[0]}</Text>
           </View>
         </View>

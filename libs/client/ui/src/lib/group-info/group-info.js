@@ -197,7 +197,7 @@ export const GroupInfo = ({ route, navigation }) => {
             <View style={styles.groupThumbnailBox}>
               <View
                 style={styles.groupThumbnail}
-                backgroundColor={groupObject.thumbnail}
+                backgroundColor={colourState}
               >
                 <Text style={styles.groupThumbnailText}>{groupObject.name.charAt(0)}</Text>
               </View>
@@ -230,7 +230,7 @@ export const GroupInfo = ({ route, navigation }) => {
           <View style={styles.groupThumbnailBox}>
             <View
               style={styles.groupThumbnail}
-              backgroundColor={groupObject.thumbnail}
+              backgroundColor={colourState}
             >
               <Text style={styles.groupThumbnailText}>{groupObject.name.charAt(0)}</Text>
             </View>

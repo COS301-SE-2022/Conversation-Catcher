@@ -46,7 +46,8 @@ const GroupTile = ({
       }}
     >
       <View style={[styles.groupThumbnailBox, { borderColor: colourState }]}>
-        <View style={[styles.groupThumbnail, {backgroundColor: thumbnail}]}>
+        {/* </View><View style={[styles.groupThumbnail, {backgroundColor: thumbnail}]}> */}
+        <View style={[styles.groupThumbnail, {backgroundColor: colourState}]}>
           <Text style={styles.groupIcon}>{name.toUpperCase()[0]}</Text>
         </View>
       </View>
