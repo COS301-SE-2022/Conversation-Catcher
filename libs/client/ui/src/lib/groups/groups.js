@@ -257,6 +257,7 @@ export const Groups = ({ navigation }) => {
           style={styles.backButton}
           onPress={() => {
             if (pdfLocalAccess.isSet.length !== 0){
+              pdfLocalAccess.clearDisplay();
               pdfLocalAccess.allPdfs.forEach((pdf) => { pdfLocalAccess.displayPdfs.push(pdf); });
               NativeAppEventEmitter.emit('updatePage');
               pdfLocalAccess.isSet.length = 0;
