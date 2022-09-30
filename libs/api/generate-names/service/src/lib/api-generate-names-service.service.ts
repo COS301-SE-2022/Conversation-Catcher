@@ -20,7 +20,7 @@ export class ApiGenerateNamesServiceService {
     try {
       return await lastValueFrom(
         this.httpService
-          .post('http://localhost:5550/gennames', data, config)
+          .post('https://ccnamegeneration.azurewebsites.net/gennames', data, config)
           .pipe(map((res) => res.data.generated_name))
       ).catch((e) => {
         // console.log(e);
