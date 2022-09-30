@@ -9,7 +9,7 @@ import requests
 app = Flask(__name__)
 CORS(app)
 
-summariser = summariseText()
+# summariser = summariseText()
 
 @app.route('/')
 def home():
@@ -52,9 +52,9 @@ def summarise():
 #         print("response : ", response.content)
 #     return print('Success')
 
-# if __name__ == "__main__":
-#     port = int(os.environ.get('PORT', 5000))
-#     app.run(debug=True, host='0.0.0.0', port=port)
+if __name__ == "__main__":
+    port = int(os.environ.get('PORT', 5000))
+    app.run(debug=True, host='0.0.0.0', port=port)
 
 # Passing Data into Our POST Request
 # import requests
