@@ -1,6 +1,6 @@
 import { gql, useMutation, useQuery, useLazyQuery} from '@apollo/client';
 import React, { useImperativeHandle, forwardRef, useState } from 'react';
-import { Text, ScrollView, StyleSheet, DeviceEventEmitter, RefreshControl } from 'react-native';
+import { Text, ScrollView, StyleSheet, DeviceEventEmitter, RefreshControl, NativeAppEventEmitter } from 'react-native';
 import Loading from '../loading/loading';
 // import LocalGroupsAccess from '../local-groups-access/local-groups-access';
 import GroupTile from '../group-tile/group-tile';
@@ -22,7 +22,14 @@ export function GroupDisplay({ navigation, selectMode, add}, ref) {
   //const dispatch = useDispatch();
   //Expose refresh function to parent(View-all page)
   //Listen to when to update page
-  DeviceEventEmitter.addListener('updateGroups', () => setRefreshFlag(true));
+  DeviceEventEmitter.addListener('updateGroups', () => setRefreshFlag(!refreshFlag));
+  if (groupLocalAccess.addEvent.length !== 0) {
+    //If statement to ensure that only one listener is created for the summarise command
+    NativeAppEventEmitter.addListener("reloadGroup",()=>{
+      setRefreshFlag(!refreshFlag);
+    });
+    groupLocalAccess.addEvent.length = 0;
+  }
   //graphql syntax trees
   const GET_USER_GROUPS = gql`
     query getForUser($email: String!) {
@@ -67,7 +74,7 @@ export function GroupDisplay({ navigation, selectMode, add}, ref) {
 
   const ReloadData = () => {
     setRefreshing(true);
-    setRefreshFlag(false);
+    //setRefreshFlag(!refreshFlag);
     fetchGroups({
       variables: {
         email: emailState,
@@ -88,6 +95,14 @@ export function GroupDisplay({ navigation, selectMode, add}, ref) {
       });
   };
 
+  if (groupLocalAccess.addEvent.length !== 0) {
+    //If statement to ensure that only one listener is created for the summarise command
+    NativeAppEventEmitter.addListener("reloadGroup",(group)=>{
+      ReloadData();
+    });
+    groupLocalAccess.addEvent.length = 0;
+  }
+  
   const ScrollDisplay = (props) => {
     if (props.arr.length !== 0)
       return (

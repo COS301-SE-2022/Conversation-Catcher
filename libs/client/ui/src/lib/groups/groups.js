@@ -56,7 +56,7 @@ export const Groups = ({ navigation }) => {
       }
     }
   `;
-    const [createGroup] = useMutation(CREATE_GROUP);
+  const [createGroup] = useMutation(CREATE_GROUP);
   //variables for object sorting
   const [objArr, setObjArr] = useState([]);
 
@@ -290,8 +290,8 @@ export const Groups = ({ navigation }) => {
           <TouchableOpacity
             style={[styles.moreModalButton, { backgroundColor: colourState }]}
             onPress={() => {
-              console.log(userEmail);
-              console.log(newName);
+              // console.log(userEmail);
+              // console.log(newName);
               createGroup({
                 variables: {
                   email: userEmail,

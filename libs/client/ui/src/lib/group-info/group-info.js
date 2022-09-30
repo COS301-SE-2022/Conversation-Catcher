@@ -21,6 +21,7 @@ import { selectColour, selectEmail } from '../../../../../../apps/client/src/app
 import { changeName, removeGroup, changeDesc} from '../../../../../../apps/client/src/app/slices/group.slice';
 import MemberTile from '../shared-components/member-tile/member-tile.js';
 import groupsLocalAccess from '../shared-components/local-groups-access/local-groups-access';
+import Loading from '../shared-components/loading/loading';
 
 
 export const GroupInfo = ({ route, navigation }) => {
@@ -41,6 +42,7 @@ export const GroupInfo = ({ route, navigation }) => {
     const [newUser, setNewUser] = useState('');
     const [newName, setNewName] = useState('');
     const [newDesc,setNewDesc] = useState('');
+    const [load,setLoad] = useState(false);
     const dispatch = useDispatch();
 
     const { groupObject } = route.params;
@@ -101,7 +103,7 @@ export const GroupInfo = ({ route, navigation }) => {
   const [add] = useMutation(ADD_USER);
 
   async function renameGroup() {
-    console.log(groupObject.name);
+    // console.log(groupObject.name);
     groupsLocalAccess.renameGroup(groupObject.name, newName);
     await rename({ variables: { groupName: groupObject.name, newName: newName } });
     //dispatch(changeName({ id: id.id, name: newName }));
@@ -129,8 +131,8 @@ export const GroupInfo = ({ route, navigation }) => {
   }
 
   async function addUser(userID){
-    console.log(userID);
-    console.log(groupObject.name);
+    // console.log(userID);
+    // console.log(groupObject.name);
     await add({variables:{user:userID, groupName: groupObject.name}}).then(()=>{
       groupsLocalAccess.addUser(userID, groupObject.name);
       setNewUser("");
@@ -449,10 +451,14 @@ export const GroupInfo = ({ route, navigation }) => {
             style={[styles.actionButton, { backgroundColor: colourState }]}
             state={null}
             onPress={() => {
-              deleteGroup();
+              setLoad(true);
+              deleteGroup().then(()=>{
+                navigation.navigate('Groups');
+                setLoad(false);
+              }).catch(e=>console.log(e));
               setDeleteConfirmVisible(false);
-              navigation.goBack();
               NativeAppEventEmitter.emit('updatePage');
+              NativeAppEventEmitter.emit('reloadGroup');
             }}
           >
             <View style={styles.actionModalButtonContent}>
@@ -492,9 +498,14 @@ export const GroupInfo = ({ route, navigation }) => {
             style={[styles.actionButton, { backgroundColor: colourState }]}
             state={null}
             onPress={() => {
-              removeUser(userName).then(navigation.navigate('Groups')).catch(e=>console.log(e));
+              setLoad(true);
+              removeUser(userName).then(()=>{
+                navigation.navigate('Groups');
+                setLoad(false);
+              }).catch(e=>console.log(e));
               setLeaveConfirmVisible(false);
               NativeAppEventEmitter.emit('updatePage');
+              NativeAppEventEmitter.emit('reloadGroup');
             }}
           >
             <View style={styles.actionModalButtonContent}>
@@ -624,6 +635,22 @@ export const GroupInfo = ({ route, navigation }) => {
               </View>
             </View>
           </TouchableOpacity>
+        </View>
+      </Modal>
+
+      <Modal
+        style={styles.modal}
+        isVisible={load}
+        backdropColor=""
+        hasBackdrop={true}
+      >
+        <View style={styles.loadModal}>
+          <Loading 
+            width={100}
+            height={100}
+            load={true}
+            text={''}
+          />
         </View>
       </Modal>
       
@@ -849,6 +876,9 @@ const styles = StyleSheet.create({
   modal: {
     alignSelf: 'center',
     width: '70%',
+  },
+  loadModal:{
+
   },
   actionModalInner: {
     //width: '90%',
