@@ -15,6 +15,7 @@ import {
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 //import { ViewAll, Home} from '@conversation-catcher/client/ui';
+import Splash from '../../../../libs/client/ui/src/lib/shared-components/splash/splash.js'
 import Home from '../../../../libs/client/ui/src/lib/home/home.js';
 import ViewAll from '../../../../libs/client/ui/src/lib/view-all/view-all.js';
 import Groups from '../../../../libs/client/ui/src/lib/groups/groups.js';
@@ -81,6 +82,7 @@ export const App = () => {
         <ApolloProvider client={client}>
           <NavigationContainer>
             <Stack.Navigator>
+              <Stack.Screen name="Splash" component={Splash} options={{ headerShown: false }}/>
               <Stack.Screen name="Login" component={Login} options={{ headerShown: false }}/>
               <Stack.Screen name="Home" component={Home} options={{ headerShown: false }}/>
               <Stack.Screen name="ViewAll" component={ViewAll} options={{ headerShown: false }}/>

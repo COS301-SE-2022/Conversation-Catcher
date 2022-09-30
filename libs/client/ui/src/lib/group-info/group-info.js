@@ -16,11 +16,9 @@ import Modal from 'react-native-modal';
 import DocumentPicker, { types } from 'react-native-document-picker';
 import { useSelector, useDispatch } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectColour } from '../../../../../../apps/client/src/app/slices/user.slice';
+import { selectColour, selectEmail } from '../../../../../../apps/client/src/app/slices/user.slice';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-//import { selectColour } from 'apps/client/src/app/slices/user.slice';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { changeName, removeGroup} from '../../../../../../apps/client/src/app/slices/group.slice';
+import { changeName, removeGroup, changeDesc} from '../../../../../../apps/client/src/app/slices/group.slice';
 import MemberTile from '../shared-components/member-tile/member-tile.js';
 import groupsLocalAccess from '../shared-components/local-groups-access/local-groups-access';
 
@@ -29,9 +27,11 @@ export const GroupInfo = ({ route, navigation }) => {
 
     const [selectMode, setSelectMode] = useState(false);
     const colourState = useSelector(selectColour);
+    const userName = useSelector(selectEmail);
     const [bottomModalVisible, setBottomModalVisible] = useState(false);
     const [adminState, setAdminState] = useState(true);
     const [renameVisible, setRenameVisible] = useState(false);
+    const [describeVisible,setDescribeVisible] = useState(false);
     const [inviteVisible, setInviteVisible] = useState(false);
     const [editDescriptionVisible, setEditDescriptionVisible] = useState(false);
     const [deleteConfirmVisible, setDeleteConfirmVisible] = useState(false);
@@ -39,62 +39,86 @@ export const GroupInfo = ({ route, navigation }) => {
     const [leaveConfirmVisible, setLeaveConfirmVisible] = useState(false);
     const [fileResponse, setFileResponse] = useState([]);
     const [newName, setNewName] = useState('');
+    const [newDesc,setNewDesc] = useState('');
     const dispatch = useDispatch();
 
-    const { id, text, name, thumbnailSource } = route.params;
-
+    const {name, thumbnailSource, admin, users, description, pdfs } = route.params;
+    console.log(thumbnailSource);
     const RENAME = gql`
-    mutation setName($id: String!, $name: String!) {
-      renameGroup(id: $id, name: $name) {
-        id
-        name
-        downloaded
+      mutation setName(
+        $groupName: String!
+        $newName: String!
+      ) {
+        renameGroup(groupName: $groupName, newName: $newName)
       }
-    }
-  `;
-
+    `;
+    const CHANGE_DESCRIPTION = gql`
+      mutation chngDesc(
+        $groupName: String!
+        $description: String!
+      ) {
+        updateDescription(groupName: $groupName, description: $description)
+      }
+    `;
   const DELETE = gql`
-    mutation delete($id: String!) {
-      deleteGroup(id: $id) {
-        id
-        name
-        text
-      }
+    mutation delete(
+      $groupName: String!
+    ) {
+      deleteGroup(groupName: $groupName)
     }
   `;
-
-  const LEAVE = gql`
-    mutation leave($id: String!) {
-      leaveGroup(id: $id) {
-        id
-        name
-        text
-      }
+  const REMOVE_USER = gql`
+    mutation removeUserFrom(
+      $user: String!
+      $groupName: String!
+    ) {
+      removeUserFrom(user: $user, groupName: $groupName)
+    }
+  `;
+  const ADD_USER = gql`
+    mutation addUserTo(
+      $user: String!
+      $groupName: String!
+    ) {
+      addUserTo(user: $user, groupName: $groupName)
     }
   `;
 
   const [rename] = useMutation(RENAME);
+  const [chngDesc] = useMutation(CHANGE_DESCRIPTION);
   const [delete_group] = useMutation(DELETE);
-  const [leave_group] = useMutation(LEAVE);
+  const [remove] = useMutation(REMOVE_USER);
+  const [add] = useMutation(ADD_USER);
 
   async function renameGroup() {
-    console.log(id);
-    name.name = newName;
-    groupsLocalAccess.renameGroup(id.id, newName);
-    await rename({ variables: { id: id.id, name: newName } });
-    dispatch(changeName({ id: id.id, name: newName }));
+    console.log(name);
+    groupsLocalAccess.renameGroup(name, newName);
+    await rename({ variables: { groupName:name, newName: newName } });
+    //dispatch(changeName({ id: id.id, name: newName }));
+  }
+
+  async function updateDescription() {
+    description.description = newDesc;
+    groupsLocalAccess.chngDesc(name, newDesc);
+    await chngDesc({variables: {groupName:name, description: newDesc}});
+    //dispatch(changeDesc({id:id.id, desc: newDesc}));
   }
 
   async function deleteGroup() {
-    groupsLocalAccess.deleteGroup(id.id);
-    await delete_group({ variables: { id: id.id } });
-    dispatch(removeGroup({ id: id.id }));
+    groupsLocalAccess.deleteGroup(name);
+    await delete_group({ variables: { groupName:name } });
+    //dispatch(removeGroup({ id: id.id }));
+  }
+  
+  async function removeUser(userID){//define all this in respective files
+    groupsLocalAccess.removeUser(userID, name)
+    await remove({variables:{user:userID, groupName:name}});
+    //dispatch(removeUser({id:id.id, user: userID}));
   }
 
-  async function leaveGroup() {
-    groupsLocalAccess.leaveGroup(id.id);
-    await leave_group({ variables: { id: id.id } });
-    dispatch(leaveGroup({ id: id.id }));
+  async function addUser(userID){//define all this in respective files
+    groupsLocalAccess.addUser(userID, name)
+    await add({variables:{user:userID, groupName:name}});
   }
 
   const handleDocumentSelection = useCallback(async () => {
@@ -113,16 +137,6 @@ export const GroupInfo = ({ route, navigation }) => {
       if(adminState){
         return (
           <View style={styles.buttonsGroup}>
-            <View style={styles.leaveButtonBox}>
-              <TouchableOpacity 
-                style={styles.leaveButton}
-                onPress={() => {
-                  setLeaveConfirmVisible(true);
-                }} 
-              >
-                <Text style={styles.leaveButtonText}>Leave Group</Text>
-              </TouchableOpacity>
-            </View>
             <View style={styles.deleteButtonBox}>
               <TouchableOpacity 
                 style={styles.deleteButton}
@@ -200,7 +214,7 @@ export const GroupInfo = ({ route, navigation }) => {
             >
               <Image
                 style={styles.groupThumbnail}
-                source={thumbnailSource.thumbnailSource}
+                source={thumbnailSource}
               />
             </TouchableOpacity>
 
@@ -210,16 +224,17 @@ export const GroupInfo = ({ route, navigation }) => {
                 setRenameVisible(true);
               }}
             >
-                <Text style={styles.groupName} numberOfLines={1}>{name.name}</Text>
+                <Text style={styles.groupName} numberOfLines={1}>{name}</Text>
             </TouchableOpacity>
 
             <TouchableOpacity 
               style={styles.groupTextBox}
               onPress={() => {
+                setDescribeVisible(true);
                 setEditDescriptionVisible(true);
               }}
             >
-              <Text style={styles.groupText} numberOfLines={2}>{text.text}</Text>
+              <Text style={styles.groupText} numberOfLines={2}>{description}</Text>
             </TouchableOpacity>
           </View>
           
@@ -230,16 +245,16 @@ export const GroupInfo = ({ route, navigation }) => {
           <View style={styles.groupThumbnailBox}>
             <Image
               style={styles.groupThumbnail}
-              source={thumbnailSource.thumbnailSource}
+              source={thumbnailSource}
             />
           </View>
 
           <View style={styles.groupNameBox}>
-            <Text style={styles.groupName} numberOfLines={1}>{name.name}</Text>
+            <Text style={styles.groupName} numberOfLines={1}>{name}</Text>
           </View>
 
           <View style={styles.groupTextBox}>
-            <Text style={styles.groupText} numberOfLines={2}>{text.text}</Text>
+            <Text style={styles.groupText} numberOfLines={2}>{description}</Text>
           </View>
         </View>
         
@@ -274,7 +289,9 @@ export const GroupInfo = ({ route, navigation }) => {
             <Icon color="#667084ff" name="search" size={24} />
           </View>
         </View>
-
+            {
+              //We can use map to generate the list of member tiles based on the users array in the group
+            }
         <ScrollView style={styles.groupMembersBox}>
             <MemberTile
                 key={'1'}
@@ -317,7 +334,7 @@ export const GroupInfo = ({ route, navigation }) => {
         <View style={styles.actionModalInner}>
           <TextInput
             style={styles.actionModalTextInput}
-            defaultValue={name.name}
+            defaultValue={name}
             onChangeText={(text) => {
               setNewName(text);
             }}
@@ -326,7 +343,7 @@ export const GroupInfo = ({ route, navigation }) => {
             style={[styles.actionButton, { backgroundColor: colourState }]}
             state={null}
             onPress={() => {
-              console.log('renaming the pdf to ' + newName);
+              console.log('renaming the group to ' + newName);
               renameGroup();
               setRenameVisible(false);
             }}
@@ -334,6 +351,40 @@ export const GroupInfo = ({ route, navigation }) => {
             <View style={styles.actionModalButtonContent}>
               <View style={styles.actionModalButtonText_box}>
                 <Text style={styles.actionModalButtonText}>{'Rename'}</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </Modal>
+      
+      <Modal
+        style={styles.modal}
+        isVisible={describeVisible}
+        hasBackdrop={true}
+        backdropColor="white"
+        onBackdropPress={() => setDescribeVisible(false)}
+        //onModalHide={() => setFileSelected(false)}
+      >
+        <View style={styles.actionModalInner}>
+          <TextInput
+            style={styles.actionModalTextInput}
+            defaultValue={description}
+            onChangeText={(text) => {
+              setNewDesc(text);
+            }}
+          />
+          <TouchableOpacity
+            style={[styles.actionFileButton, { backgroundColor: colourState }]}
+            state={null}
+            onPress={() => {
+              console.log('Change the description to' + description);
+              updateDescription();
+              setDescribeVisible(false);
+            }}
+          >
+            <View style={styles.actionModalButtonContent}>
+              <View style={styles.actionModalButtonText_box}>
+                <Text style={styles.actionModalButtonText}>{'Change Description'}</Text>
               </View>
             </View>
           </TouchableOpacity>
@@ -351,7 +402,7 @@ export const GroupInfo = ({ route, navigation }) => {
         <View style={styles.actionModalInner}>
           <TextInput
             style={styles.actionModalLargeTextInput}
-            defaultValue={name.name}
+            defaultValue={name}
             onChangeText={(text) => {
               //setNewDescription(text);
             }}
@@ -386,7 +437,7 @@ export const GroupInfo = ({ route, navigation }) => {
       >
         <View style={styles.actionModalInner}>
           <Text style={styles.modalTitle}>
-            {'Are you sure you want to delete ' + name.name + '?'}
+            {'Are you sure you want to delete ' + name + '?'}
           </Text>
           <TouchableOpacity
             style={[styles.actionButton, { backgroundColor: colourState }]}
@@ -405,7 +456,6 @@ export const GroupInfo = ({ route, navigation }) => {
             style={[styles.actionButton, { backgroundColor: colourState }]}
             state={null}
             onPress={() => {
-              // Delete the pdf
               deleteGroup();
               setDeleteConfirmVisible(false);
               navigation.goBack();
@@ -430,7 +480,7 @@ export const GroupInfo = ({ route, navigation }) => {
       >
         <View style={styles.actionModalInner}>
           <Text style={styles.modalTitle}>
-            {'Are you sure you want to leave ' + name.name + '?'}
+            {'Are you sure you want to leave ' + name + '?'}
           </Text>
           <TouchableOpacity
             style={[styles.actionButton, { backgroundColor: colourState }]}
@@ -449,10 +499,8 @@ export const GroupInfo = ({ route, navigation }) => {
             style={[styles.actionButton, { backgroundColor: colourState }]}
             state={null}
             onPress={() => {
-              // Delete the pdf
-              leaveGroup();
+              removeUser(userName).then(navigation.navigate('Groups')).catch(e=>console.log(e));
               setLeaveConfirmVisible(false);
-              navigation.goBack();
               NativeAppEventEmitter.emit('updatePage');
             }}
           >
@@ -597,10 +645,12 @@ const styles = StyleSheet.create({
     flex: 1,
     
   },
-  groupPageHeaderGroup: {
-    flexShrink: 1,
-    padding: 10,
+  groupPageHeaderGroup: {//Make this smaller
+    //flexShrink: 1,
+    flex: 3,
+    padding: 0,
     alignItems: 'center',
+    //backgroundColor: '#667084ff',
   },
   groupThumbnailBox: {
     borderRadius: 180,
@@ -631,6 +681,8 @@ const styles = StyleSheet.create({
   groupTextBox: {
     width: '80%',
     flexShrink: 1,
+    //backgroundColor: '#667084ff',
+    numberOfLines: 2,
   },
   groupText: {
     color: '#667084ff',
@@ -643,10 +695,13 @@ const styles = StyleSheet.create({
     fontFamily: 'System' /* Inter */,
   },
   buttonsGroup: {
-    flexShrink: 1,
+    //flexShrink: 1,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    //paddingBottom: 15,
+    //backgroundColor: '#667084ff',
+    flex: 1
   },
   leaveButtonBox: {
     flexShrink: 1,
@@ -686,6 +741,8 @@ const styles = StyleSheet.create({
   membersSection: {
     //alignItems: 'center',
     justifyContent: 'center',
+    //backgroundColor: '#667084ff',
+    flex: 8
   },
   membersSectionHeader: {
     flexDirection: 'row',

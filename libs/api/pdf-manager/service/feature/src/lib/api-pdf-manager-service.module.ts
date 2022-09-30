@@ -21,6 +21,7 @@ import { HttpModule } from '@nestjs/axios';
     CommandHandlers.SetSummarisedHandler,
     CommandHandlers.SetEmbeddingsHandler,
     QueryHandlers.GetPdfByIdHandler,
+    QueryHandlers.GetPdfsByArrHandler,
     QueryHandlers.GetPdfsHandler,
     QueryHandlers.SemanticSearchHandler,
   ],
