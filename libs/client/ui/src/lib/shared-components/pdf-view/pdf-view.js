@@ -493,6 +493,7 @@ const styles = StyleSheet.create({
     padding: 15,
     flexGrow: 1,
     minHeight: 28,
+    width: "60%",
   },
   summarisedSwitchGroup: {
     flexDirection: 'row',
@@ -501,6 +502,7 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     alignItems: 'center',
     justifyContent: 'flex-end',
+    width: "40%",
   },
   summarisedLabel: {
     color: '#344053ff',
