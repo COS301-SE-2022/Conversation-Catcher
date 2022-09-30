@@ -26,7 +26,7 @@ import {
 } from '../../../../../../../apps/client/src/app/slices/pdf.slice';
 import { useSelector, useDispatch } from 'react-redux';
 
-export function PdfDisplay({ navigation, selectMode }, ref) {
+export function PdfDisplay({ navigation, selectMode, group}, ref) {
   // const [selectMode, setSelectMode] = useState(false);
   const [didReload, setDidReload] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -99,8 +99,22 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
       embed(id: $id, name: $name, text: $text)
     }
   `;
+  const GET_PDFS = gql`
+    query getArrPdfs($ids: [String!]!) {
+      getPDFByArr(ids: $ids) {
+        id
+        name
+        creationDate
+        downloaded
+        text
+        summarised
+        embeddings
+      }
+    }
+  `;
   const [setUser] = useMutation(SET_USER);
   const [setEmbedding] = useMutation(SET_EMBEDDINGS);
+  const [getPdfs] = useLazyQuery(GET_PDFS);
   const { data, loading, error } = useQuery(GET_USER_PDFS, {
     variables: { email: emailState },
   });
@@ -157,20 +171,20 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
       );
   };
 
-  const getEmbedding = async (document) => {
-    if (document.embedding === null) {
-      return await setEmbedding({
-        variables: {
-          id: document.id,
-          name: document.id.name,
-          text: document.text,
-        },
-      }).catch((e) => {
-        console.log(e);
-        return null;
-      });
-    }
-  };
+  // const getEmbedding = async (document) => {
+  //   if (document.embedding === null) {
+  //     return await setEmbedding({
+  //       variables: {
+  //         id: document.id,
+  //         name: document.id.name,
+  //         text: document.text,
+  //       },
+  //     }).catch((e) => {
+  //       console.log(e);
+  //       return null;
+  //     });
+  //   }
+  // };
 
   const setData = async (d) => {
     // console.log(d)
@@ -184,30 +198,32 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
         summarised: d.getPDFs[i].summarised,
         embeddings: d.getPDFs[i].embeddings,
       });
-      if (d.getPDFs[i].embeddings === null) {
-        setEmbedding({
-          variables: {
-            id: d.getPDFs[i].id,
-            name: d.getPDFs[i].name,
-            text: d.getPDFs[i].text,
-          },
-        })
-          .then((res) => console.log(res))
-          .catch((e) => console.log(e));
-      }
+      // if (d.getPDFs[i].embeddings === null) {
+      //   setEmbedding({
+      //     variables: {
+      //       id: d.getPDFs[i].id,
+      //       name: d.getPDFs[i].name,
+      //       text: d.getPDFs[i].text,
+      //     },
+      //   })
+      //     .then((res) => console.log(res))
+      //     .catch((e) => console.log(e));
+      // }
     }
     pdfLocalAccess.sortPdfs('Name');
   };
 
   const ReloadData = () => {
-    NativeAppEventEmitter.emit('clearSearch');
-    setRefreshing(true);
-    fetchDocs({
-      variables: {
-        email: emailState,
-      },
-      fetchPolicy: 'no-cache',
-    })
+    //console.log(group);
+    if (group === '' || group === undefined || group === null){
+      NativeAppEventEmitter.emit('clearSearch');
+      setRefreshing(true);
+      fetchDocs({
+        variables: {
+          email: emailState,
+        },
+        fetchPolicy: 'no-cache',
+      })
       .then((d) => {
         pdfLocalAccess.clearPdfs();
         setData(d.data);
@@ -220,6 +236,36 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
         //setDidReload(!didReload);
         setRefreshing(false);
       });
+    } else {
+      NativeAppEventEmitter.emit('clearSearch');
+      setRefreshing(true);
+      getPdfs({variables: {
+        ids: group.pdfs
+      }})
+      .then((d) => {
+        //console.log(d.data);
+        pdfLocalAccess.clearDisplay();
+        for (let i = 0; i < d.data.getPDFByArr.length; i++) {
+          pdfLocalAccess.addDisplayPdf({
+            name: d.data.getPDFByArr[i].name,
+            creationDate: d.data.getPDFByArr[i].creationDate,
+            downloaded: d.data.getPDFByArr[i].downloaded,
+            text: d.data.getPDFByArr[i].text,
+            id: d.data.getPDFByArr[i].id,
+            summarised: d.data.getPDFByArr[i].summarised,
+            embeddings: d.data.getPDFByArr[i].embeddings,
+          });
+        }
+        setRefreshing(false);
+        // setDidReload(!didReload);
+      })
+      .catch((e) => {
+        console.log(e);
+        pdfLocalAccess.clearDisplay();
+        //setDidReload(!didReload);
+        setRefreshing(false);
+      });
+    }
   };
   if (loading)
     return (

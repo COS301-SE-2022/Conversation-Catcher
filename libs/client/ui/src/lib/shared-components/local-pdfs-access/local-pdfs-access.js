@@ -32,6 +32,10 @@ class LocalPdfsAccess {
     this.allPdfs.push(newPdf);
   }
 
+  addDisplayPdf(newPdf){
+    this.displayPdfs.push(newPdf);
+  }
+
   //Return pdfs to be displayed by the component
   getPdfs() {
     return this.displayPdfs;

@@ -287,6 +287,7 @@ export const ViewAll = ({ navigation, route }) => {
       <PdfDisplay
         navigation={navigation}
         selectMode={selectMode}
+        group={groupObject}
         ref={pdfRef}
       />
 
