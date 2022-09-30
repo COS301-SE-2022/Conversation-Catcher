@@ -508,7 +508,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     top: 0,
     zIndex: 999,
-    //minHeight: 112,
+    minHeight: 90,
   },
   big_title: {
     color: '#344053ff',
@@ -542,7 +542,7 @@ const styles = StyleSheet.create({
     Vertical: 10,
     flexDirection: 'row',
     alignItems: 'center',
-    //minHeight: 38,
+    minHeight: 35,
     marginVertical: 15,
     backgroundColor: '#ffffffff',
     borderRadius: 8,
@@ -571,11 +571,13 @@ const styles = StyleSheet.create({
     fontFamily: 'System' /* Inter */,
     padding: 5,
     flexGrow: 1,
+    //minHeight: 30,
   },
   searchIconFrame: {
     resizeMode: 'contain',
     paddingHorizontal: 10,
     paddingVertical: 5,
+    //minHeight: 30,
   },
   recentPdfTiles: {
     height: '70%',
