@@ -115,6 +115,7 @@ export const ViewAll = ({ navigation, route }) => {
   function DetermineTitle(){
     if (groupObject == null){
       if (pdfLocalAccess.isSet.length !== 0){
+        pdfLocalAccess.clearDisplay();
         pdfLocalAccess.allPdfs.forEach((pdf) => { pdfLocalAccess.displayPdfs.push(pdf); });
         NativeAppEventEmitter.emit('updatePage');
         pdfLocalAccess.isSet.length = 0;

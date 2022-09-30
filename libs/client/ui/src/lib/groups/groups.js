@@ -257,6 +257,7 @@ export const Groups = ({ navigation }) => {
           style={styles.backButton}
           onPress={() => {
             if (pdfLocalAccess.isSet.length !== 0){
+              pdfLocalAccess.clearDisplay();
               pdfLocalAccess.allPdfs.forEach((pdf) => { pdfLocalAccess.displayPdfs.push(pdf); });
               NativeAppEventEmitter.emit('updatePage');
               pdfLocalAccess.isSet.length = 0;
@@ -297,14 +298,13 @@ export const Groups = ({ navigation }) => {
                   groupName: newName,
                 }
               }).then((result)=>{
-                setMoreVisible(false);
                 DeviceEventEmitter.emit("updateGroups");
                 setNewName("");
               }).catch((e)=>{
                 console.log(e);
-                setMoreVisible(false);
                 setNewName("");
               });
+              setMoreVisible(false);
             }}
           >
             <View style={styles.moreModalButtonContent}>
