@@ -318,22 +318,22 @@ export const Home = ({ navigation }) => {
   const summarise = (id, text) => {
     summariseText({ variables: { text: text } })
       .then((res) => {
-        console.log("AAAAAA: " , res);
+        console.log(": " , res);
         setSummarisedText({
           variables: { id: id, summary: res.data.Summarise },
         }).catch((e) => {
-          console.log("BBBBBB", e);
+          console.log("", e);
           pdfLocalAccess.addSummary(id, 'error');
           return;
         });
         pdfLocalAccess.addSummary(id, 'loading');
       })
       .catch((e) => {
-        console.log("CCCCCCCC", e);
+        console.log("", e);
         setSummarisedText({
           variables: { id: id, summary: 'error' },
         }).catch((e) => {
-          console.log("DDDDDDD", e);
+          console.log("", e);
         });
         pdfLocalAccess.addSummary(id, 'error');
       });
