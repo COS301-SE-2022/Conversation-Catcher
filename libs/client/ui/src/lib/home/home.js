@@ -353,7 +353,7 @@ export const Home = ({ navigation }) => {
           {'Recents'}
         </Text>
       </View>
-      <PdfDisplay navigation={navigation} selectMode={false} ref={pdfRef} />
+      <PdfDisplay navigation={navigation} selectMode={false} group={''} ref={pdfRef} />
       <View style={styles.viewPdfsTouchableOpacityFrame}>
         <TouchableOpacity
           style={[
