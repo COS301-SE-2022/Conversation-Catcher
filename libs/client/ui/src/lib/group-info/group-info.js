@@ -234,7 +234,6 @@ export const GroupInfo = ({ route, navigation }) => {
             <TouchableOpacity 
               style={styles.groupTextBox}
               onPress={() => {
-                setDescribeVisible(true);
                 setEditDescriptionVisible(true);
               }}
             >
@@ -404,7 +403,7 @@ export const GroupInfo = ({ route, navigation }) => {
             multiline={true}
           />
           <TouchableOpacity
-            style={[styles.actionButton, { backgroundColor: colourState }]}
+            style={[styles.actionFileButton, { backgroundColor: colourState }]}
             state={null}
             onPress={() => {
               //console.log('renaming the pdf to ' + newName);
@@ -656,8 +655,8 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   groupNameBox: {
-    flexShrink: 1,
-    height: '15%',
+    //flexShrink: 1,
+    height: '20%',
   },
   groupName: {
     color: '#344053ff',
@@ -747,7 +746,14 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   membersTitle: {
-
+    color: '#344053ff',
+    textAlign: 'center',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 18,
+    fontWeight: '700',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Jaldi */,
   },
   membersButtonsGroup: {
     flexShrink: 1,
@@ -842,15 +848,17 @@ const styles = StyleSheet.create({
   },
   modal: {
     alignSelf: 'center',
+    width: '70%',
   },
   actionModalInner: {
-    width: '90%',
+    //width: '90%',
     flexShrink: 1,
     backgroundColor: '#d0d5ddff',
     borderRadius: 7,
     flexDirection: 'column',
     borderWidth: 1,
     borderColor: '#667084ff',
+    alignItems: 'center',
   },
   actionModalButton: {
     flexGrow: 1,
@@ -982,12 +990,11 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     marginTop: 10,
     height: 40,
-    width: '80%',
+    width: '90%',
   },
   actionModalLargeTextInput: {
     flexShrink: 1,
     textAlign: 'center',
-    textAlignVertical: "top",
     letterSpacing: 0,
     lineHeight: 20,
     fontSize: 15,
@@ -999,8 +1006,8 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginHorizontal: 10,
     marginTop: 10,
-    height: '50%',
-    flexWrap: 'wrap',
+    height: 40,
+    width: '90%',
   },
   modalTitle: {
     color: '#344053ff',

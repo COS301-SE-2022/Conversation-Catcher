@@ -195,7 +195,6 @@ const styles = StyleSheet.create({
     letterSpacing: 0,
     lineHeight: 5,
     fontSize: 2,
-    fontStyle: 'normal',
     fontFamily: 'Thumbnail2',
     padding: 5,
   },
