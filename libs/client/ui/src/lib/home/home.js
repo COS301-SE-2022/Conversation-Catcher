@@ -369,7 +369,7 @@ export const Home = ({ navigation }) => {
               style={styles.viewPdfsTouchableOpacityLabel}
               ellipsizeMode={'clip'}
             >
-              {'My PDFs'}
+              {'Conversations'}
             </Text>
           </View>
         </TouchableOpacity>

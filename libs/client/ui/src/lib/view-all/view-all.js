@@ -122,7 +122,7 @@ export const ViewAll = ({ navigation, route }) => {
       }
       return (
         <View style={styles.big_title_box}>
-          <Text style={styles.big_title}>{'PDFs'}</Text>
+          <Text style={styles.big_title}>{'Conversations'}</Text>
         </View>
       )
     }
@@ -507,7 +507,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     top: 0,
     zIndex: 999,
-    minHeight: 112,
+    //minHeight: 112,
   },
   big_title: {
     color: '#344053ff',
@@ -529,7 +529,7 @@ const styles = StyleSheet.create({
     paddingTop: 5,
   },
   group_title_button : {
-    flex: 1,
+    flexShrink: 1,
     flexDirection: 'row',
     alignItems: 'center',
     width: '85%',
@@ -537,11 +537,12 @@ const styles = StyleSheet.create({
   },
   searchBarGroup: {
     width: '85%',
-    flex: 1,
-    marginVertical: 10,
+    flexShrink: 1,
+    Vertical: 10,
     flexDirection: 'row',
     alignItems: 'center',
     //minHeight: 38,
+    marginVertical: 15,
     backgroundColor: '#ffffffff',
     borderRadius: 8,
     borderStyle: 'solid',
@@ -846,7 +847,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#667084ff',
     aspectRatio: 1,
     width: '12%',
-    margin: 10,
+    marginHorizontal: 5,
   },
   groupThumbnail: {
     flexGrow: 1,
