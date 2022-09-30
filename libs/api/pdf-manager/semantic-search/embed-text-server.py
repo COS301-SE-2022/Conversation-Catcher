@@ -51,7 +51,7 @@ def semanticsearch():
     for match in response.json():
         temp.append({"id":docs[count]['id'],"match":match})
         count += 1
-    temp.sort(key=lambda x:x['match'])
+    temp.sort(key=lambda x:x['match'], reverse=True)
     res = []
     for doc in temp:
         res.append(doc['id'])
