@@ -20,6 +20,7 @@ import groupLocalAccess from '../shared-components/local-groups-access/local-gro
 import { useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { selectColour, selectEmail } from '../../../../../../apps/client/src/app/slices/user.slice';
+import Loading from '../shared-components/loading/loading.js';
 
 export const GroupSelection = ({ navigation, route }) => {
   const {id} = route.params;
@@ -51,23 +52,28 @@ export const GroupSelection = ({ navigation, route }) => {
   //variables for object sorting
   const [objArr, setObjArr] = useState([]);
   const [addToGroup] = useMutation(ADD_TO_GROUP);
+  const [load, setLoad] = useState(false);
   const AddNew = async (g) => {
     console.log(g);
     console.log(id);
     addToGroup({variables:{pdfId: id, groupName: g}}).then((e)=>{
       console.log(e);
       groupLocalAccess.addPdf(id,g);
+      navigation.navigate("Home");
+      setLoad(false);
     }).catch((e)=>{
       console.log(e);
+      setLoad(false);
+      navigation.navigate("Home");
     })
   }
-  if (groupLocalAccess.addEvent.length !== 0) {
+  if (groupLocalAccess.addEvent1.length !== 0) {
     //If statement to ensure that only one listener is created for the summarise command
     DeviceEventEmitter.addListener("AddPdf",(group)=>{
+      setLoad(true);
       AddNew(group);
-      navigation.navigate("Home");
     });
-    groupLocalAccess.addEvent.length = 0;
+    groupLocalAccess.addEvent1.length = 0;
   }
 
   return (
@@ -99,6 +105,12 @@ export const GroupSelection = ({ navigation, route }) => {
       /> */
       //List of groups
       }
+      <Loading
+        width={100}
+        height={100}
+        load={load}
+        text={'Adding your document to the group'}
+      />
       <GroupDisplay
         navigation={navigation}
         selectMode={selectMode}

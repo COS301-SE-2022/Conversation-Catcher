@@ -205,7 +205,7 @@ export const PdfView = ({ route, navigation }) => {
             style={styles.moreButton}
             onPress={() => {
               setMoreVisible(true);
-              console.log(text);
+              //console.log(text);
             }}
           >
             <Icon name="ellipsis-h" color="#344053ff" size={30} />
