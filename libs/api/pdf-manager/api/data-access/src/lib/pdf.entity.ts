@@ -38,8 +38,8 @@ export class PdfEntityInput {
   @Field({ nullable: true })
   summarised?: string;
 
-  @Field({ nullable: true })
-  text?: string;
+  @Field()
+  text: string;
 
   @Field(() => [Number], { nullable: 'itemsAndList' })
   embeddings: number[];
