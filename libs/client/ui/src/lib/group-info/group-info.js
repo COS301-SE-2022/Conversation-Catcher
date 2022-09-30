@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import {
   View,
   StyleSheet,
@@ -29,7 +29,7 @@ export const GroupInfo = ({ route, navigation }) => {
     const colourState = useSelector(selectColour);
     const userName = useSelector(selectEmail);
     const [bottomModalVisible, setBottomModalVisible] = useState(false);
-    const [adminState, setAdminState] = useState(true);
+    const [adminState, setAdminState] = useState(false);
     const [renameVisible, setRenameVisible] = useState(false);
     const [describeVisible,setDescribeVisible] = useState(false);
     const [inviteVisible, setInviteVisible] = useState(false);
@@ -38,11 +38,16 @@ export const GroupInfo = ({ route, navigation }) => {
     const [removeConfirmVisible, setRemoveConfirmVisible] = useState(false);
     const [leaveConfirmVisible, setLeaveConfirmVisible] = useState(false);
     const [fileResponse, setFileResponse] = useState([]);
+    const [newUser, setNewUser] = useState('');
     const [newName, setNewName] = useState('');
     const [newDesc,setNewDesc] = useState('');
     const dispatch = useDispatch();
 
     const { groupObject } = route.params;
+    useEffect(()=>{
+      if (groupObject.admin === userName) setAdminState(true);
+      else setAdminState(false);
+    })
     //console.log(thumbnailSource);
     const RENAME = gql`
       mutation setName(
@@ -80,7 +85,12 @@ export const GroupInfo = ({ route, navigation }) => {
       $user: String!
       $groupName: String!
     ) {
-      addUserTo(user: $user, groupName: $groupName)
+      addUserTo(user: $user, groupName: $groupName) {
+        name,
+        admin,
+        users,
+        pdfs
+      }
     }
   `;
 
@@ -110,15 +120,24 @@ export const GroupInfo = ({ route, navigation }) => {
     //dispatch(removeGroup({ id: id.id }));
   }
   
-  async function removeUser(userID){//define all this in respective files
-    groupsLocalAccess.removeUser(userID, groupObject.name)
-    await remove({variables:{user:userID, groupName: groupObject.name}});
-    //dispatch(removeUser({id:id.id, user: userID}));
+  async function removeUser(userID){
+    await remove({variables:{user:userID, groupName: groupObject.name}}).then(()=>{
+      groupsLocalAccess.removeUser(userID, groupObject.name);
+    }).catch((e)=>{
+      console.log(e);
+    });
   }
 
-  async function addUser(userID){//define all this in respective files
-    groupsLocalAccess.addUser(userID, groupObject.name)
-    await add({variables:{user:userID, groupName: groupObject.name}});
+  async function addUser(userID){
+    console.log(userID);
+    console.log(groupObject.name);
+    await add({variables:{user:userID, groupName: groupObject.name}}).then(()=>{
+      groupsLocalAccess.addUser(userID, groupObject.name);
+      setNewUser("");
+    }).catch((e)=>{
+      console.log(e);
+      setNewUser("");
+    });
   }
 
     function AdminGroupButtons(){
@@ -542,14 +561,16 @@ export const GroupInfo = ({ route, navigation }) => {
             </View>
             <TextInput
               style={styles.inviteTextInput}
+              onChangeText={setNewUser}
+              value={newUser}
+              placeholder="johnsmith@gmail.com"
             />
           </View>
           <TouchableOpacity
             style={[styles.actionButton, { backgroundColor: colourState }]}
             state={null}
             onPress={() => {
-              //console.log('iinviting ' + newName);
-              //invite();
+              addUser(newUser);
               setInviteVisible(false);
             }}
           >
