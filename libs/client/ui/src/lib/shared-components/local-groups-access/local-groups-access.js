@@ -3,6 +3,8 @@ class LocalGroupsAccess {
   allGroups; //All the groups loaded from the api call
   addEvent = ['false'];
   addEvent1 = ['false'];
+  addEvent2 = ['false'];
+  addEvent3 = ['false'];
 
   constructor() {
     this.displayGroups = [];
@@ -80,7 +82,6 @@ class LocalGroupsAccess {
       if (this.allGroups[i].name === name) this.allGroups[i].description = desc;
     }
   }
-
   //Remove group with certain id from the list
   deleteGroup(name) {
     var temp = [];

@@ -105,6 +105,7 @@ export const GroupInfo = ({ route, navigation }) => {
   async function renameGroup() {
     // console.log(groupObject.name);
     groupsLocalAccess.renameGroup(groupObject.name, newName);
+    NativeAppEventEmitter.emit('reloadGroup');
     await rename({ variables: { groupName: groupObject.name, newName: newName } });
     //dispatch(changeName({ id: id.id, name: newName }));
   }
@@ -118,6 +119,7 @@ export const GroupInfo = ({ route, navigation }) => {
 
   async function deleteGroup() {
     groupsLocalAccess.deleteGroup(groupObject.name);
+
     await delete_group({ variables: { groupName:groupObject.name } });
     //dispatch(removeGroup({ id: id.id }));
   }
@@ -127,6 +129,7 @@ export const GroupInfo = ({ route, navigation }) => {
       groupsLocalAccess.removeUser(userID, groupObject.name);
     }).catch((e)=>{
       console.log(e);
+      
     });
   }
 
@@ -458,7 +461,6 @@ export const GroupInfo = ({ route, navigation }) => {
               }).catch(e=>console.log(e));
               setDeleteConfirmVisible(false);
               NativeAppEventEmitter.emit('updatePage');
-              NativeAppEventEmitter.emit('reloadGroup');
             }}
           >
             <View style={styles.actionModalButtonContent}>

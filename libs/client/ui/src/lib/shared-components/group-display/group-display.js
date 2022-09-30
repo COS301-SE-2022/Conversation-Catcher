@@ -22,14 +22,22 @@ export function GroupDisplay({ navigation, selectMode, add}, ref) {
   //const dispatch = useDispatch();
   //Expose refresh function to parent(View-all page)
   //Listen to when to update page
-  DeviceEventEmitter.addListener('updateGroups', () => setRefreshFlag(!refreshFlag));
-  if (groupLocalAccess.addEvent.length !== 0) {
+  if (groupLocalAccess.addEvent3.length !== 0) {
+    //If statement to ensure that only one listener is created for the summarise command
+    DeviceEventEmitter.addListener('updateGroups', () => {
+      console.log("Hi");
+      setRefreshFlag(!refreshFlag);
+    });
+    groupLocalAccess.addEvent3.length = 0;
+  }
+  if (groupLocalAccess.addEvent2.length !== 0) {
     //If statement to ensure that only one listener is created for the summarise command
     NativeAppEventEmitter.addListener("reloadGroup",()=>{
+      
       //setRefreshFlag(true);
       ReloadData();
     });
-    groupLocalAccess.addEvent.length = 0;
+    groupLocalAccess.addEvent2.length = 0;
   }
   //graphql syntax trees
   const GET_USER_GROUPS = gql`
@@ -74,6 +82,7 @@ export function GroupDisplay({ navigation, selectMode, add}, ref) {
   }
 
   const ReloadData = () => {
+    groupLocalAccess.deleteGroup()
     setRefreshing(true);
     //setRefreshFlag(false);
     fetchGroups({
