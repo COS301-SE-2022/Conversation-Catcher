@@ -23,6 +23,7 @@ import { useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { selectColour } from '../../../../../../apps/client/src/app/slices/user.slice';
 import groupLocalAccess from '../shared-components/local-groups-access/local-groups-access.js';
+import Loading from '../shared-components/loading/loading.js';
 
 export const ViewAll = ({ navigation, route }) => {
   const pdfRef = useRef();
@@ -34,6 +35,7 @@ export const ViewAll = ({ navigation, route }) => {
   const [renameModalVisible, setRenameModalVisible] = useState(false);
   const [currOrderValue, setCurrOrderValue] = useState('Date');
   const [renameVisible, setRenameVisible] = useState(false);
+  const [searchLoad, setSearchLoad] = useState(false);
   // const [refreshPage, setRefreshPage] = useState('');
 
   const { groupObject } = route.params;
@@ -254,6 +256,7 @@ export const ViewAll = ({ navigation, route }) => {
             value={searchInput}
             placeholder="Search"
             onSubmitEditing={(text) => {
+              setSearchLoad(true);
               console.log(text.nativeEvent.text);
               pdfLocalAccess.filterPdfs(text.nativeEvent.text);
               semanticSearch({
@@ -267,11 +270,13 @@ export const ViewAll = ({ navigation, route }) => {
                     pdfLocalAccess.sortByIds(res.data.semanticSearch);
                   }
                   NativeAppEventEmitter.emit('updatePage');
+                  setSearchLoad(false);
                 })
                 .catch((error) => {
                   console.log(error);
                   pdfLocalAccess.filterPdfs(text);
                   NativeAppEventEmitter.emit('updatePage');
+                  setSearchLoad(false);
                 });
             }}
             onChangeText={(text) => {
@@ -283,7 +288,12 @@ export const ViewAll = ({ navigation, route }) => {
           </View>
         </View>
       </View>
-
+      <Loading 
+        width={100}
+        height={100}
+        load={searchLoad}
+        text={'Searching'}
+      />
       <PdfDisplay
         navigation={navigation}
         selectMode={selectMode}
