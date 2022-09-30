@@ -20,6 +20,7 @@ import auth from '@react-native-firebase/auth';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { clearPDFs } from '../../../../../../apps/client/src/app/slices/pdf.slice';
 import pdfLocalAccess from '../shared-components/local-pdfs-access/local-pdfs-access';
+import groupLocalAccess from '../shared-components/local-groups-access/local-groups-access';
 
 export const SettingsPage = ({ navigation }) => {
   const [user, setUser] = useState({});
@@ -97,6 +98,7 @@ export const SettingsPage = ({ navigation }) => {
                 dispatch(clearUser());
                 dispatch(clearPDFs());
                 pdfLocalAccess.clearPdfs();
+                groupLocalAccess.clearGroups();
                 NativeAppEventEmitter.emit('logout');
                 navigation.navigate('Login');
               }).catch((e)=>{
@@ -106,6 +108,7 @@ export const SettingsPage = ({ navigation }) => {
                 dispatch(clearPDFs());
                 NativeAppEventEmitter.emit('logout');
                 pdfLocalAccess.clearPdfs();
+                groupLocalAccess.clearGroups();
                 navigation.navigate('Login');
               })
           }

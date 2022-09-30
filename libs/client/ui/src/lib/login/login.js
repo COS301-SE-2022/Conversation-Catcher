@@ -62,7 +62,7 @@ export const Login = ({ navigation }) => {
     if (showMailHint) {
       return (
         <Text style={styles.hintText}>
-          {'This is an email hint text to help the user.'}
+          {'Please enter a valid email.'}
         </Text>
       );
     } else {
@@ -74,7 +74,7 @@ export const Login = ({ navigation }) => {
     if (showPasswordHint) {
       return (
         <Text style={styles.hintText}>
-          {'This is a password hint text to help the user.'}
+          {'Enter a strong password.'}
         </Text>
       );
     } else {
@@ -215,6 +215,7 @@ export const Login = ({ navigation }) => {
             .catch((error) => {
               setFailedLogin(true);
               setErrorMessage('Invalid login details');
+              console.log(error);
               setPassword('');
               setLoad(false);
             });

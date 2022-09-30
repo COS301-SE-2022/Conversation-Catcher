@@ -1,7 +1,0 @@
-numpy
-pandas
-bs4
-nltk
-sklearn
-tensorflow-datasets
-Jinja2

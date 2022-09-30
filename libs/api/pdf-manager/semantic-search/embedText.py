@@ -1,5 +1,6 @@
 from sentence_transformers import SentenceTransformer, util
 import requests
+import torch
 
 class embedText:
 
@@ -18,17 +19,24 @@ class embedText:
         embedder = SentenceTransformer('all-MiniLM-L6-v2')
         top_k = 10
 
-        corpus_embeddings = df['id','embeddings']
+        # corpus_embeddings = df['id','embeddings']
+        corpus_embeddings = []
+        for pdf in df:
+            corpus_embeddings.append(torch.as_tensor(pdf['embeddings']))
+        
+        print(corpus_embeddings)
 
         query_embedding = embedder.encode(query, convert_to_tensor=True)
         hits = util.semantic_search(query_embedding, corpus_embeddings, top_k=top_k)
         hits = hits[0] # Get the hits for the first query
 
+        ids = []
         for hit in hits:
-            hit_id = hit['id']
-            pdf_data = df.iloc[hit_id]
-            name = df["name"]
+            # hit_id = hit['id']
+            # pdf_data = df.iloc[hit_id]
+            name = df[hit["corpus_id"]]["name"]
+            ids.append(df[hit["corpus_id"]]["id"])
             print("-", name, "(Score: {:.4f})".format(hit['score']))
 
-        return hits
+        return ids
         

@@ -6,11 +6,13 @@ import re
 from bs4 import BeautifulSoup
 from keras.preprocessing.text import Tokenizer
 from keras_preprocessing.sequence import pad_sequences
+import nltk
+nltk.download('stopwords')
 
 # from keras.utils.data_utils import pad_sequences
 from nltk.corpus import stopwords
 import ast
-from keras.preprocessing.text import Tokenizer 
+from keras.preprocessing.text import Tokenizer
 
 from tensorflow import keras
 import warnings
@@ -44,7 +46,7 @@ class nameGenerator:
                             "you'd": "you would", "you'd've": "you would have", "you'll": "you will", "you'll've": "you will have",
                             "you're": "you are", "you've": "you have"}
     global stop_words
-    stop_words = set(stopwords.words('english')) 
+    stop_words = set(stopwords.words('english'))
 
     global model
     model = None
@@ -59,17 +61,17 @@ class nameGenerator:
 
         # Convert to lower case
 
-        newString = text.lower() 
+        newString = text.lower()
 
         # Remove html tags
 
-        newString = BeautifulSoup(newString, "html.parser").text 
-        newString = re.sub(r'\([^)]*\)', '', newString) 
+        newString = BeautifulSoup(newString, "html.parser").text
+        newString = re.sub(r'\([^)]*\)', '', newString)
         newString = re.sub('"','', newString)
 
         # Expanding contractions
 
-        newString = ' '.join([contraction_mapping[t] if t in contraction_mapping else t for t in newString.split(" ")])  
+        newString = ' '.join([contraction_mapping[t] if t in contraction_mapping else t for t in newString.split(" ")])
 
         # Remove 's
 
@@ -77,7 +79,7 @@ class nameGenerator:
 
         # Remove text inside parentheses
 
-        newString = re.sub("[^a-zA-Z]", " ", newString) 
+        newString = re.sub("[^a-zA-Z]", " ", newString)
         newString = re.sub('[m]{2,}', 'mm', newString)
 
         # Remove stopwords
@@ -92,7 +94,7 @@ class nameGenerator:
         long_words=[]
         for i in tokens:
             if len(i)>1:                                                 #removing short word
-                long_words.append(i)   
+                long_words.append(i)
         return (" ".join(long_words)).strip()
 
     # Calling cleaned text and cleaned summary functions
@@ -112,7 +114,7 @@ class nameGenerator:
         f = open("target_word_index", "rb")
         target_word_index = pickle.load(f)
 
-        model = keras.models.load_model("conversationcatcher")
+        # model = keras.models.load_model("conversationcatcher")
         encoder_model = keras.models.load_model('encoder')
         decoder_model = keras.models.load_model('decoder')
 
@@ -120,10 +122,10 @@ class nameGenerator:
 
         # Encode the input as state vectors.
         e_out, e_h, e_c = encoder_model.predict(input_seq)
-        
+
         # Generate empty target sequence of length 1.
         target_seq = np.zeros((1,1))
-        
+
         # Populate the first word of target sequence with the start word.
         target_seq[0, 0] = target_word_index['sostok']
 
@@ -131,7 +133,7 @@ class nameGenerator:
         decoded_sentence = ''
         prevToken = ''
         while not stop_condition:
-        
+
             output_tokens, h, c = decoder_model.predict([target_seq] + [e_out, e_h, e_c])
 
             #print("output_tokens: ", output_tokens)
@@ -139,11 +141,11 @@ class nameGenerator:
 
             # Sample a token
             sampled_token_index = np.argmax(output_tokens[0, -1, :])
-            sampled_token = reverse_target_word_index[sampled_token_index] 
+            sampled_token = reverse_target_word_index[sampled_token_index]
 
             #print("sampled_token_index: ", sampled_token_index)
             #print("sampled token: ", sampled_token)
-            
+
             if(sampled_token!='eostok' and sampled_token!=prevToken):
                 decoded_sentence += ' '+sampled_token
 
@@ -164,14 +166,14 @@ class nameGenerator:
 
     def generateName(self, text):
         cleaned_text = []
-        cleaned_text.append(text_cleaner(self,text,0)) 
+        cleaned_text.append(text_cleaner(self,text,0))
 
         # Storing cleanead text and cleaned summary
 
         # Set max text length and max summary length based on length distributions
 
         max_text_len=40
-        
+
 
         # Select text and summaries whose lengths fall within the above boundaries and
 
@@ -182,7 +184,7 @@ class nameGenerator:
         # Split dataset into training and validation set (90:10)
         # -------------------------- Text tokanizer ------------------------------
 
-        
+
 
         #f = open("reverse_source_word_index.txt", "r")
         #reverse_source_word_index = ast.literal_eval(f.read())
@@ -196,17 +198,17 @@ class nameGenerator:
         f = open("source_word_index", "rb")
         source_word_index = pickle.load(f)
 
-        
+
         #from keras.preprocessing.sequence import pad_sequences
 
         # Prepare a tokenizer for reviews on training data
 
-        x_tokenizer = Tokenizer() 
+        x_tokenizer = Tokenizer()
         #x_tokenizer.fit_on_texts(list(cleaned_text))
         x_tokenizer.word_index = source_word_index
         x_tokenizer.index_word = reverse_source_word_index
 
-        
+
 
         #reverse_target_word_index=y_tokenizer.index_word
         #target_word_index=y_tokenizer.word_index
@@ -214,7 +216,7 @@ class nameGenerator:
 
         # Convert text sequences into integer sequences
         print(cleaned_text)
-        x_tr_seq = x_tokenizer.texts_to_sequences(cleaned_text) 
+        x_tr_seq = x_tokenizer.texts_to_sequences(cleaned_text)
 
         # Padding zero upto maximum length
 

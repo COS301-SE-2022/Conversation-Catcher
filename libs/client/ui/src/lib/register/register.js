@@ -47,7 +47,7 @@ export const Register = ({ navigation }) => {
     if (showMailHint) {
       return (
         <Text style={styles.hintText}>
-          {'This is an email hint text to help the user.'}
+          {'Please enter a valid email address'}
         </Text>
       );
     } else {
@@ -59,7 +59,7 @@ export const Register = ({ navigation }) => {
     if (showPasswordHint) {
       return (
         <Text style={styles.hintText}>
-          {'This is a password hint text to help the user.'}
+          {'Enter a strong password.'}
         </Text>
       );
     } else {
@@ -75,22 +75,13 @@ export const Register = ({ navigation }) => {
       </View>
     );
   }
-
-  function ShowLoading(){
-    if (!loadingIcon) return null;
-    return (
-      <View>
-        <Loading width={50} height={50}/>
-      </View>
-    );
-  }
   
   return (
     <SafeAreaView style={styles.registerPage}>
       <View style={styles.big_title_box}>
         <Text style={styles.big_title}>{'Create new account'}</Text>
       </View>
-      <ShowLoading/>
+      <Loading width={100} height={100} load={loadingIcon} text={"Creating your account"}/>
       <View style={styles.inputsGroup}>
         <InvalidDetails />
         <View style={styles.inputsItem}>
@@ -146,6 +137,7 @@ export const Register = ({ navigation }) => {
                 onChangeText={(text) => {
                   setPassword(text);
                 }}
+                secureTextEntry={true}
               />
               <TouchableOpacity
                 style={styles.helpIcon}

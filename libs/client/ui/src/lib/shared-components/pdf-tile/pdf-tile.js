@@ -6,6 +6,7 @@ import {
   ImageBackground,
   TouchableOpacity,
   Alert,
+  DeviceEventEmitter,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
@@ -13,85 +14,10 @@ import { useDispatch, useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { selectColour } from '../../../../../../../apps/client/src/app/slices/user.slice';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { toggleDown } from '../../../../../../../apps/client/src/app/slices/pdf.slice';
+import { removePDF, toggleDown } from '../../../../../../../apps/client/src/app/slices/pdf.slice';
 import { gql, useLazyQuery, useMutation } from '@apollo/client';
 //import FileViewer from "react-native-file-viewer";
 import pdfLocalAccess from '../local-pdfs-access/local-pdfs-access';
-
-function DownloadButtonState(props) {
-  const colourState = useSelector(selectColour);
-  const [downloadState, setDownloadState] = React.useState(props.d);
-  const dispatch = useDispatch();
-  //graphql syntax trees
-  const CHANGE_DOWNLOADED = gql`
-    mutation toggleDownload($id: String!) {
-      downloadedPDF(id: $id) {
-        id
-      }
-    }
-  `;
-  const [changeDownloaded] = useMutation(CHANGE_DOWNLOADED);
-  if (downloadState) {
-    return (
-      <Icon
-        onPress={
-          async () => {
-            setDownloadState(!downloadState);
-            dispatch(toggleDown(props.a));
-            pdfLocalAccess.toggleDownloaded(props.a.id);
-            var res = await changeDownloaded({ variables: { id: props.a.id }});
-            console.log(res);
-          }
-        }
-        color={colourState}
-        name="save"
-        size={20}
-        container={TouchableOpacity}
-      />
-    );
-  }
-  return (
-    <Icon
-      onPress={
-        async () => {
-          setDownloadState(!downloadState);
-          dispatch(toggleDown(props.a));
-          pdfLocalAccess.toggleDownloaded(props.a.id);
-          var res = await changeDownloaded({ variables: { id: props.a.id }});
-          console.log(res);
-        }
-      }
-      color={colourState}
-      name="cloud"
-      size={20}
-      container={TouchableOpacity}
-    />
-  );
-}
-
-function DetermineTileCorner(props) {
-  const colourState = useSelector(selectColour);
-  const [checkboxState, setCheckboxState] = React.useState(false);
-  const c = props.c;
-  if (c) {
-    return (
-      <BouncyCheckbox
-        size={20}
-        fillColor={colourState}
-        unfillColor="#FFFFFF"
-        iconStyle={{ borderColor: colourState }}
-        isChecked={checkboxState}
-        onPress={() => setCheckboxState(!checkboxState)}
-      />
-    );
-  }
-  return <DownloadButtonState d={props.d} a={props.a}/>;
-}
-
-const pdfthumbnailSource = {
-  uri: 'http://samples.leanpub.com/thereactnativebook-sample.pdf',
-  cache: true,
-};
 
 const PdfTile = ({
   id,
@@ -104,16 +30,112 @@ const PdfTile = ({
   summarised,
   nav,
 }) => {
+  const dispatch = useDispatch();
   const colourState = useSelector(selectColour);
+  const [checkboxState, setCheckboxState] = React.useState(false);
   const buildPDF = () => {
     return { id: id, text: text , name: name , downloaded: downloaded, date: date }
   }
+  const DELETE = gql`
+    mutation delete($id: String!) {
+      deletePDF(id: $id) {
+        id
+        name
+        text
+      }
+    }
+  `;
+  const [delete_pdf] = useMutation(DELETE);
+  async function deletePdf() {
+    pdfLocalAccess.deletePdf(id.id);
+    delete_pdf({ variables: { id: id.id } }).catch((error) => {
+      console.log(error);
+    });
+    dispatch(removePDF({ id: id.id }));
+  }
+
+  DeviceEventEmitter.addListener("DeleteAll",() => {
+    if (checkboxState){
+      //deletePdf();
+      console.log(name);
+    }
+  })
+  function DownloadButtonState(props) {
+    const colourState = useSelector(selectColour);
+    const [downloadState, setDownloadState] = React.useState(props.d);
+    const dispatch = useDispatch();
+    //graphql syntax trees
+    const CHANGE_DOWNLOADED = gql`
+      mutation toggleDownload($id: String!) {
+        downloadedPDF(id: $id) {
+          id
+        }
+      }
+    `;
+    const [changeDownloaded] = useMutation(CHANGE_DOWNLOADED);
+    if (downloadState) {
+      return (
+        <Icon
+          onPress={
+            async () => {
+              setDownloadState(!downloadState);
+              dispatch(toggleDown(props.a));
+              pdfLocalAccess.toggleDownloaded(props.a.id);
+              var res = await changeDownloaded({ variables: { id: props.a.id }});
+              console.log(res);
+            }
+          }
+          color={colourState}
+          name="save"
+          size={20}
+          container={TouchableOpacity}
+        />
+      );
+    }
+    return (
+      <Icon
+        onPress={
+          async () => {
+            setDownloadState(!downloadState);
+            dispatch(toggleDown(props.a));
+            pdfLocalAccess.toggleDownloaded(props.a.id);
+            var res = await changeDownloaded({ variables: { id: props.a.id }});
+            console.log(res);
+          }
+        }
+        color={colourState}
+        name="cloud"
+        size={18}
+        container={TouchableOpacity}
+      />
+    );
+  }
+  
+  function DetermineTileCorner(props) {
+    const colourState = useSelector(selectColour);
+    //const [checkboxState, setCheckboxState] = React.useState(false);
+    const c = props.c;
+    if (c) {
+      return (
+        <BouncyCheckbox
+          size={20}
+          fillColor={colourState}
+          unfillColor="#FFFFFF"
+          iconStyle={{ borderColor: colourState }}
+          isChecked={checkboxState}
+          onPress={() => setCheckboxState(!checkboxState)}
+        />
+      );
+    }
+    return <DownloadButtonState d={props.d} a={props.a}/>;
+  }
+
   return (
     <TouchableOpacity
       style={styles.pdfTile}
-      onPress={() =>
+      onPress={() =>{
         nav.navigate('PdfView', { id: { id }, text: { text }, name: { name }, summarised: { summarised } })
-      }
+      }}
     >
       <View style={[styles.thumbnail_containter, { borderColor: colourState }]}>
         <ImageBackground
@@ -168,15 +190,13 @@ const styles = StyleSheet.create({
     aspectRatio: 1 / 1.4142,
   },
   thumbnailContent: {
-    color: '#344053ff',
+    color: '#c4c4c4ff',
     textAlign: 'left',
     letterSpacing: 0,
     lineHeight: 5,
-    fontSize: 6,
-    fontWeight: '300',
-    fontStyle: 'normal',
-    fontFamily: 'System',
-    paddingHorizontal: 5,
+    fontSize: 2,
+    fontFamily: 'Thumbnail2',
+    padding: 5,
   },
   pdfThumbnail: {
     resizeMode: 'contain',

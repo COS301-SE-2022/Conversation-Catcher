@@ -20,6 +20,7 @@ import Home from '../../../../libs/client/ui/src/lib/home/home.js';
 import ViewAll from '../../../../libs/client/ui/src/lib/view-all/view-all.js';
 import Groups from '../../../../libs/client/ui/src/lib/groups/groups.js';
 import GroupInfo from '../../../../libs/client/ui/src/lib/group-info/group-info.js';
+import GroupSelection from '../../../../libs/client/ui/src/lib/group-selection/group-selection.js';
 import Settings from '../../../../libs/client/ui/src/lib/settings/settings.js';
 import ChangeColour from '../../../../libs/client/ui/src/lib/colour-page/colour-page.js';
 import Login from '../../../../libs/client/ui/src/lib/login/login.js';
@@ -37,7 +38,7 @@ import { persistStore, persistReducer } from 'redux-persist';
 //import storage from 'redux-persist/lib/storage';
 import { PersistGate } from 'redux-persist/integration/react';
 
-//console.disableYellowBox = true;//Uncomment to hide warnings
+console.disableYellowBox = true;//Uncomment to hide warnings
 //console.reportErrorsAsExceptions = false;//Uncomment to hide errors, not tested
 
 //configure local storage
@@ -66,7 +67,7 @@ const Stack = createNativeStackNavigator();
 
 export const App = () => {
     const client = new ApolloClient({
-    uri: 'http://10.0.2.2:3333/graphql',
+    uri: 'https://ccmain.azurewebsites.net/graphql',//"http://10.0.2.2:3333/graphql",
     // headers: {
     //   // Header(if any)
     //   // authorization: 'a1b2c3d4-a1b2-a1b2c3d4e5f6',
@@ -88,6 +89,7 @@ export const App = () => {
               <Stack.Screen name="ViewAll" component={ViewAll} options={{ headerShown: false }}/>
               <Stack.Screen name="Groups" component={Groups} options={{ headerShown: false }}/>
               <Stack.Screen name="GroupInfo" component={GroupInfo} options={{ headerShown: false }}/>
+              <Stack.Screen name="GroupSelection" component={GroupSelection} options={{ headerShown: false }}/>
               <Stack.Screen name="Settings" component={Settings} options={{ headerShown: false }}/>
               <Stack.Screen name="Colour" component={ChangeColour} options={{ headerShown: false }}/>
               <Stack.Screen name="Register" component={Register} options={{ headerShown: false }}/>

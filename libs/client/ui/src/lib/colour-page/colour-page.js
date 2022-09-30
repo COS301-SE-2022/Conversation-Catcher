@@ -74,20 +74,20 @@ export const ColourPage = ({ navigation}) => {
         </View>
       </View>
 
-      <View style={styles.darkSwitchGroup}>
+      {/* <View style={styles.darkSwitchGroup}>
         <View style={styles.darkLabelBox}>
           <Text style={styles.darkLabel}>Dark Mode</Text>
         </View>
         <View style={styles.darkSwitchBox}>
-        <Switch
-          trackColor={{ false: "#f5f5f5ff", true: "#f5f5f5ff" }}
-          thumbColor={isEnabled ? "#3e3e3e" : "#3e3e3e"}
-          ios_backgroundColor="#3e3e3e"
-          onValueChange={toggleSwitch}
-          value={isEnabled}
-        />
+          <Switch
+            trackColor={{ false: "#f5f5f5ff", true: "#f5f5f5ff" }}
+            thumbColor={isEnabled ? "#3e3e3e" : "#3e3e3e"}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={toggleSwitch}
+            value={isEnabled}
+          />
         </View>
-      </View>
+      </View> */}
 
       <TouchableOpacity  
         style={styles.backButton} 

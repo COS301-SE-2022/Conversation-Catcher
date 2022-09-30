@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import {
   View,
   StyleSheet,
@@ -21,6 +21,7 @@ import { selectColour, selectEmail } from '../../../../../../apps/client/src/app
 import { changeName, removeGroup, changeDesc} from '../../../../../../apps/client/src/app/slices/group.slice';
 import MemberTile from '../shared-components/member-tile/member-tile.js';
 import groupsLocalAccess from '../shared-components/local-groups-access/local-groups-access';
+import Loading from '../shared-components/loading/loading';
 
 
 export const GroupInfo = ({ route, navigation }) => {
@@ -29,7 +30,7 @@ export const GroupInfo = ({ route, navigation }) => {
     const colourState = useSelector(selectColour);
     const userName = useSelector(selectEmail);
     const [bottomModalVisible, setBottomModalVisible] = useState(false);
-    const [adminState, setAdminState] = useState(true);
+    const [adminState, setAdminState] = useState(false);
     const [renameVisible, setRenameVisible] = useState(false);
     const [describeVisible,setDescribeVisible] = useState(false);
     const [inviteVisible, setInviteVisible] = useState(false);
@@ -38,12 +39,18 @@ export const GroupInfo = ({ route, navigation }) => {
     const [removeConfirmVisible, setRemoveConfirmVisible] = useState(false);
     const [leaveConfirmVisible, setLeaveConfirmVisible] = useState(false);
     const [fileResponse, setFileResponse] = useState([]);
+    const [newUser, setNewUser] = useState('');
     const [newName, setNewName] = useState('');
     const [newDesc,setNewDesc] = useState('');
+    const [load,setLoad] = useState(false);
     const dispatch = useDispatch();
 
-    const {name, thumbnailSource, admin, users, description, pdfs } = route.params;
-    console.log(thumbnailSource);
+    const { groupObject } = route.params;
+    useEffect(()=>{
+      if (groupObject.admin === userName) setAdminState(true);
+      else setAdminState(false);
+    })
+    //console.log(thumbnailSource);
     const RENAME = gql`
       mutation setName(
         $groupName: String!
@@ -80,7 +87,12 @@ export const GroupInfo = ({ route, navigation }) => {
       $user: String!
       $groupName: String!
     ) {
-      addUserTo(user: $user, groupName: $groupName)
+      addUserTo(user: $user, groupName: $groupName) {
+        name,
+        admin,
+        users,
+        pdfs
+      }
     }
   `;
 
@@ -91,47 +103,46 @@ export const GroupInfo = ({ route, navigation }) => {
   const [add] = useMutation(ADD_USER);
 
   async function renameGroup() {
-    console.log(name);
-    groupsLocalAccess.renameGroup(name, newName);
-    await rename({ variables: { groupName:name, newName: newName } });
+    // console.log(groupObject.name);
+    groupsLocalAccess.renameGroup(groupObject.name, newName);
+    NativeAppEventEmitter.emit('reloadGroup');
+    await rename({ variables: { groupName: groupObject.name, newName: newName } });
     //dispatch(changeName({ id: id.id, name: newName }));
   }
 
   async function updateDescription() {
-    description.description = newDesc;
-    groupsLocalAccess.chngDesc(name, newDesc);
-    await chngDesc({variables: {groupName:name, description: newDesc}});
+    groupObject.description = newDesc;
+    groupsLocalAccess.chngDesc(groupObject.name, newDesc);
+    await chngDesc({variables: {groupName: groupObject.name, description: newDesc}});
     //dispatch(changeDesc({id:id.id, desc: newDesc}));
   }
 
   async function deleteGroup() {
-    groupsLocalAccess.deleteGroup(name);
-    await delete_group({ variables: { groupName:name } });
+    groupsLocalAccess.deleteGroup(groupObject.name);
+    NativeAppEventEmitter.emit("updateGroups");
+    await delete_group({ variables: { groupName:groupObject.name } });
     //dispatch(removeGroup({ id: id.id }));
   }
   
-  async function removeUser(userID){//define all this in respective files
-    groupsLocalAccess.removeUser(userID, name)
-    await remove({variables:{user:userID, groupName:name}});
-    //dispatch(removeUser({id:id.id, user: userID}));
+  async function removeUser(userID){
+    groupsLocalAccess.removeUser(userID, groupObject.name);
+    NativeAppEventEmitter.emit("updateGroups");
+    await remove({variables:{user:userID, groupName: groupObject.name}}).catch((e)=>{
+      console.log(e);
+    });
   }
 
-  async function addUser(userID){//define all this in respective files
-    groupsLocalAccess.addUser(userID, name)
-    await add({variables:{user:userID, groupName:name}});
+  async function addUser(userID){
+    // console.log(userID);
+    // console.log(groupObject.name);
+    await add({variables:{user:userID, groupName: groupObject.name}}).then(()=>{
+      groupsLocalAccess.addUser(userID, groupObject.name);
+      setNewUser("");
+    }).catch((e)=>{
+      console.log(e);
+      setNewUser("");
+    });
   }
-
-  const handleDocumentSelection = useCallback(async () => {
-    try {
-      const response = await DocumentPicker.pick({
-        presentationStyle: 'fullScreen',
-        type: [types.audio],
-      });
-      setFileResponse(response);
-    } catch (err) {
-      console.warn(err);
-    }
-  }, []);
 
     function AdminGroupButtons(){
       if(adminState){
@@ -206,17 +217,14 @@ export const GroupInfo = ({ route, navigation }) => {
       if(adminState){
         return (
           <View style={styles.groupPageHeaderGroup}>
-            <TouchableOpacity 
-              style={styles.groupThumbnailBox}
-              onPress={() => {
-                handleDocumentSelection();
-              }}
-            >
-              <Image
+            <View style={styles.groupThumbnailBox}>
+              <View
                 style={styles.groupThumbnail}
-                source={thumbnailSource}
-              />
-            </TouchableOpacity>
+                backgroundColor={colourState}
+              >
+                <Text style={styles.groupThumbnailText}>{groupObject.name.charAt(0)}</Text>
+              </View>
+            </View>
 
             <TouchableOpacity 
               style={styles.groupNameBox}
@@ -224,17 +232,16 @@ export const GroupInfo = ({ route, navigation }) => {
                 setRenameVisible(true);
               }}
             >
-                <Text style={styles.groupName} numberOfLines={1}>{name}</Text>
+                <Text style={styles.groupName} numberOfLines={1}>{groupObject.name}</Text>
             </TouchableOpacity>
 
             <TouchableOpacity 
               style={styles.groupTextBox}
               onPress={() => {
-                setDescribeVisible(true);
                 setEditDescriptionVisible(true);
               }}
             >
-              <Text style={styles.groupText} numberOfLines={2}>{description}</Text>
+              <Text style={styles.groupText} numberOfLines={2}>{groupObject.description}</Text>
             </TouchableOpacity>
           </View>
           
@@ -243,24 +250,25 @@ export const GroupInfo = ({ route, navigation }) => {
       return (
         <View style={styles.groupPageHeaderGroup}>
           <View style={styles.groupThumbnailBox}>
-            <Image
+            <View
               style={styles.groupThumbnail}
-              source={thumbnailSource}
-            />
+              backgroundColor={colourState}
+            >
+              <Text style={styles.groupThumbnailText}>{groupObject.name.charAt(0)}</Text>
+            </View>
           </View>
 
           <View style={styles.groupNameBox}>
-            <Text style={styles.groupName} numberOfLines={1}>{name}</Text>
+            <Text style={styles.groupName} numberOfLines={1}>{groupObject.name}</Text>
           </View>
 
           <View style={styles.groupTextBox}>
-            <Text style={styles.groupText} numberOfLines={2}>{description}</Text>
+            <Text style={styles.groupText} numberOfLines={2}>{groupObject.description}</Text>
           </View>
         </View>
         
       )
     }
-
   return (
     <SafeAreaView style={styles.groupPage}>
       
@@ -293,31 +301,20 @@ export const GroupInfo = ({ route, navigation }) => {
               //We can use map to generate the list of member tiles based on the users array in the group
             }
         <ScrollView style={styles.groupMembersBox}>
+          {groupObject.users.map((item, key) => (
             <MemberTile
-                key={'1'}
-                id={'1'}
-                name={'member1@gmail.com'}
-                showCheck={selectMode}
+              key={key}
+              name={item}
+              showCheck={selectMode}
             />
-            <MemberTile
-                key={'2'}
-                id={'2'}
-                name={'member2@gmail.com'}
-                showCheck={selectMode}
-            />
-            <MemberTile
-                key={'3'}
-                id={'3'}
-                name={'member3@gmail.com'}
-                showCheck={selectMode}
-            />
+          ))}
         </ScrollView>
       </View>
 
       <View style={styles.groupPageFooter}>
         <TouchableOpacity
           style={styles.backButton}
-          onPress={() => navigation.navigate('Groups')}
+          onPress={() => navigation.goBack()}
         >
           <Icon name="angle-left" color={colourState} size={30}/>
         </TouchableOpacity>
@@ -334,7 +331,7 @@ export const GroupInfo = ({ route, navigation }) => {
         <View style={styles.actionModalInner}>
           <TextInput
             style={styles.actionModalTextInput}
-            defaultValue={name}
+            defaultValue={groupObject.name}
             onChangeText={(text) => {
               setNewName(text);
             }}
@@ -368,7 +365,7 @@ export const GroupInfo = ({ route, navigation }) => {
         <View style={styles.actionModalInner}>
           <TextInput
             style={styles.actionModalTextInput}
-            defaultValue={description}
+            defaultValue={groupObject.description}
             onChangeText={(text) => {
               setNewDesc(text);
             }}
@@ -377,7 +374,7 @@ export const GroupInfo = ({ route, navigation }) => {
             style={[styles.actionFileButton, { backgroundColor: colourState }]}
             state={null}
             onPress={() => {
-              console.log('Change the description to' + description);
+              console.log('Change the description to' + groupObject.description);
               updateDescription();
               setDescribeVisible(false);
             }}
@@ -402,7 +399,7 @@ export const GroupInfo = ({ route, navigation }) => {
         <View style={styles.actionModalInner}>
           <TextInput
             style={styles.actionModalLargeTextInput}
-            defaultValue={name}
+            defaultValue={groupObject.name}
             onChangeText={(text) => {
               //setNewDescription(text);
             }}
@@ -410,7 +407,7 @@ export const GroupInfo = ({ route, navigation }) => {
             multiline={true}
           />
           <TouchableOpacity
-            style={[styles.actionButton, { backgroundColor: colourState }]}
+            style={[styles.actionFileButton, { backgroundColor: colourState }]}
             state={null}
             onPress={() => {
               //console.log('renaming the pdf to ' + newName);
@@ -437,7 +434,7 @@ export const GroupInfo = ({ route, navigation }) => {
       >
         <View style={styles.actionModalInner}>
           <Text style={styles.modalTitle}>
-            {'Are you sure you want to delete ' + name + '?'}
+            {'Are you sure you want to delete ' + groupObject.name + '?'}
           </Text>
           <TouchableOpacity
             style={[styles.actionButton, { backgroundColor: colourState }]}
@@ -456,9 +453,12 @@ export const GroupInfo = ({ route, navigation }) => {
             style={[styles.actionButton, { backgroundColor: colourState }]}
             state={null}
             onPress={() => {
-              deleteGroup();
+              setLoad(true);
+              deleteGroup().then(()=>{
+                navigation.navigate('Groups');
+                setLoad(false);
+              }).catch(e=>console.log(e));
               setDeleteConfirmVisible(false);
-              navigation.goBack();
               NativeAppEventEmitter.emit('updatePage');
             }}
           >
@@ -480,7 +480,7 @@ export const GroupInfo = ({ route, navigation }) => {
       >
         <View style={styles.actionModalInner}>
           <Text style={styles.modalTitle}>
-            {'Are you sure you want to leave ' + name + '?'}
+            {'Are you sure you want to leave ' + groupObject.name + '?'}
           </Text>
           <TouchableOpacity
             style={[styles.actionButton, { backgroundColor: colourState }]}
@@ -499,9 +499,14 @@ export const GroupInfo = ({ route, navigation }) => {
             style={[styles.actionButton, { backgroundColor: colourState }]}
             state={null}
             onPress={() => {
-              removeUser(userName).then(navigation.navigate('Groups')).catch(e=>console.log(e));
+              setLoad(true);
+              removeUser(userName).then(()=>{
+                navigation.navigate('Groups');
+                setLoad(false);
+              }).catch(e=>console.log(e));
               setLeaveConfirmVisible(false);
               NativeAppEventEmitter.emit('updatePage');
+              // NativeAppEventEmitter.emit('reloadGroup');
             }}
           >
             <View style={styles.actionModalButtonContent}>
@@ -567,14 +572,16 @@ export const GroupInfo = ({ route, navigation }) => {
             </View>
             <TextInput
               style={styles.inviteTextInput}
+              onChangeText={setNewUser}
+              value={newUser}
+              placeholder="johnsmith@gmail.com"
             />
           </View>
           <TouchableOpacity
             style={[styles.actionButton, { backgroundColor: colourState }]}
             state={null}
             onPress={() => {
-              //console.log('iinviting ' + newName);
-              //invite();
+              addUser(newUser);
               setInviteVisible(false);
             }}
           >
@@ -631,6 +638,22 @@ export const GroupInfo = ({ route, navigation }) => {
           </TouchableOpacity>
         </View>
       </Modal>
+
+      <Modal
+        style={styles.modal}
+        isVisible={load}
+        backdropColor=""
+        hasBackdrop={true}
+      >
+        <View style={styles.loadModal}>
+          <Loading 
+            width={100}
+            height={100}
+            load={true}
+            text={''}
+          />
+        </View>
+      </Modal>
       
     </SafeAreaView>
   );
@@ -647,7 +670,7 @@ const styles = StyleSheet.create({
   },
   groupPageHeaderGroup: {//Make this smaller
     //flexShrink: 1,
-    flex: 3,
+    flex: 4,
     padding: 0,
     alignItems: 'center',
     //backgroundColor: '#667084ff',
@@ -659,14 +682,9 @@ const styles = StyleSheet.create({
     width: '25%',
     margin: 10,
   },
-  groupThumbnail: {
-    flexGrow: 1,
-    resizeMode: 'center',
-    borderRadius: 180,
-  },
   groupNameBox: {
-    flexShrink: 1,
-    height: '15%',
+    //flexShrink: 1,
+    height: '20%',
   },
   groupName: {
     color: '#344053ff',
@@ -756,7 +774,14 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   membersTitle: {
-
+    color: '#344053ff',
+    textAlign: 'center',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 18,
+    fontWeight: '700',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Jaldi */,
   },
   membersButtonsGroup: {
     flexShrink: 1,
@@ -851,15 +876,20 @@ const styles = StyleSheet.create({
   },
   modal: {
     alignSelf: 'center',
+    width: '70%',
+  },
+  loadModal:{
+
   },
   actionModalInner: {
-    width: '90%',
+    //width: '90%',
     flexShrink: 1,
     backgroundColor: '#d0d5ddff',
     borderRadius: 7,
     flexDirection: 'column',
     borderWidth: 1,
     borderColor: '#667084ff',
+    alignItems: 'center',
   },
   actionModalButton: {
     flexGrow: 1,
@@ -908,8 +938,27 @@ const styles = StyleSheet.create({
       height: 1,
     },
   },
+  actionFileButton: {
+    flexGrow: 1,
+    height: 40,
+    alignItems: 'center',
+    flexDirection: 'row',
+    margin: 10,
+    justifyContent: 'center',
+    alignContent: 'center',
+    borderRadius: 8,
+    elevation: 2,
+    shadowColor: '#000000',
+    shadowRadius: 2.621621621621622,
+    shadowOpacity: 0.2173913043478261,
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+  },
   actionModalButtonContent: {
-    flexShrink: 1,
+    flexGrow: 1,
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     //padding: 5
@@ -925,9 +974,6 @@ const styles = StyleSheet.create({
     fontFamily: 'System' /* Inter */,
   },
   actionModalButtonText_box: {
-    flexShrink: 1,
-  },
-  fileactionIconContainer: {
     flexShrink: 1,
   },
   mailIconContainer: {
@@ -950,7 +996,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0,
     lineHeight: 20,
     fontSize: 15,
-    color: 'black',
+    color: '#344053ff',
     fontWeight: '400',
     fontStyle: 'normal',
     fontFamily: 'System' /* Inter */,
@@ -966,7 +1012,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0,
     lineHeight: 20,
     fontSize: 15,
-    color: 'black',
+    color: '#344053ff',
     fontWeight: '400',
     fontStyle: 'normal',
     fontFamily: 'System' /* Inter */,
@@ -975,16 +1021,15 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     marginTop: 10,
     height: 40,
-    width: '80%',
+    width: '90%',
   },
   actionModalLargeTextInput: {
     flexShrink: 1,
     textAlign: 'center',
-    textAlignVertical: "top",
     letterSpacing: 0,
     lineHeight: 20,
     fontSize: 15,
-    color: 'black',
+    color: '#344053ff',
     fontWeight: '400',
     fontStyle: 'normal',
     fontFamily: 'System' /* Inter */,
@@ -992,8 +1037,8 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginHorizontal: 10,
     marginTop: 10,
-    height: '50%',
-    flexWrap: 'wrap',
+    height: 40,
+    width: '90%',
   },
   modalTitle: {
     color: '#344053ff',
@@ -1013,5 +1058,17 @@ const styles = StyleSheet.create({
     //flexShrink: 1,
     justifyContent: 'center',
     //alignSelf: 'flex-end'
+  },
+  groupThumbnail: {
+    flexGrow: 1,
+    resizeMode: 'center',
+    borderRadius: 180,
+    justifyContent: "center",
+  },
+  groupThumbnailText: {
+    textAlign: "center",
+    color: "#ffffff",
+    fontSize: 50,
+    fontWeight: "bold",
   },
 });
