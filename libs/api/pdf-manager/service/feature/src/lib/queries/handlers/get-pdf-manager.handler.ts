@@ -65,7 +65,7 @@ export class SemanticSearchHandler
       );
       return res.data.results;
     } catch (error) {
-      // console.log(error)
+      console.log(error)
       return [''];
     }
   }
