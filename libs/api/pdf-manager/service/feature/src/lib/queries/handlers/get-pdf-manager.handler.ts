@@ -61,7 +61,7 @@ export class SemanticSearchHandler
 
     try {
       const res = await lastValueFrom(
-        this.httpService.post('http://localhost:5555/semanticsearch', data, config)
+        this.httpService.post('https://ccidea.azurewebsites.net/semanticsearch', data, config)
       );
       return res.data.results;
     } catch (error) {
