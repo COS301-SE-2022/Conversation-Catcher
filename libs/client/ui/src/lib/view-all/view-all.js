@@ -557,6 +557,7 @@ const styles = StyleSheet.create({
       width: 0,
       height: 1,
     },
+    //overflow: 'hidden',
   },
   searchInput: {
     backgroundColor: '#ffffffff',
@@ -578,6 +579,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 5,
     //minHeight: 30,
+    //position: 'absolute',
+    //ustifySelf: 'flex-end',
+    //position: 'absolute',
+    //bottom: 0,
+    
   },
   recentPdfTiles: {
     height: '70%',
