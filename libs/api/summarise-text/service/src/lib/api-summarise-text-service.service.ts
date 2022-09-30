@@ -8,9 +8,9 @@ export class ApiSummariseTextServiceService {
 
     //commands
     async Summarise(text: string) {
-        return await this.commandBus.execute(new SummariseCommand(text));
+        return await this.commandBus.execute(new SummariseCommand(text, "id"));
     }
-  
+
     //queries
     /*async getPdfById(id: string) {
         return await this.queryBus.execute(new GetPdfByIdQuery(id));

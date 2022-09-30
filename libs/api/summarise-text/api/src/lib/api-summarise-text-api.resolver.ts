@@ -1,11 +1,11 @@
 import { Resolver, Args, Mutation } from '@nestjs/graphql';
 // import { /*Query,*/  } from '@nestjs/graphql';
-import { ApiSummariseTextServiceService } from "@conversation-catcher/api/summarise-text/service";
+import { ApiSummariseTextServiceService } from '@conversation-catcher/api/summarise-text/service';
 
 @Resolver()
 export class ApiSummariseTextApiResolver {
-    constructor(private service: ApiSummariseTextServiceService){};
-    /*{
+  constructor(private service: ApiSummariseTextServiceService) {}
+  /*{
         this.errorObj = new PdfEntity();
         this.errorObj.id = 'error';
         this.errorObj.name = 'error';
@@ -14,9 +14,10 @@ export class ApiSummariseTextApiResolver {
     }
     private errorObj;*/
 
-    @Mutation(()=>String)
-    async Summarise(@Args('text') text: string) {
-      console.log('Service called')
-        return await this.service.Summarise(text);
-    }
+  @Mutation(() => String)
+  async Summarise(@Args('text') text: string) {
+    const res = await this.service.Summarise(text);
+    if (res !== null) return res[0].summary_text
+    return 'error';
+  }
 }
