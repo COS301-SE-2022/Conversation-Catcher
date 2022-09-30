@@ -4,13 +4,13 @@ import Settings from './settings';
 import { create } from 'react-test-renderer';
 import { configureStore } from '@reduxjs/toolkit';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import reducer from 'apps/client/src/app/slices/colour.slice';
+import reducer from '../../../../../../apps/client/src/app/slices/user.slice';
 import { Provider } from 'react-redux';
 
 describe('Setup of settings', () => {
   const store = configureStore({
     reducer: {
-        colour:reducer
+      user:reducer
     }
   })
   const TestComponent = () => (

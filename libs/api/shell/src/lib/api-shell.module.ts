@@ -1,10 +1,12 @@
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { ApiDatabaseManagerApiFeatureModule as DatabaseManager } from '@conversation-catcher/api/database-manager/api/feature';
 import { ApiStudentExploreApiFeatureModule as PdfManager } from '@conversation-catcher/api/pdf-manager/api/feature';
 import { ApiSummariseTextApiModule as Summariser} from '@conversation-catcher/api/summarise-text/api'
 import { ApiSpeechToTextApiModule as SpeechToText } from '@conversation-catcher/api/speech-to-text/api';
+import { UserManagementApiFeatureModule as UserManagement } from '@conversation-catcher/api/user-management/api/feature'
+import { ApiGenerateNamesApiFeatureModule as NameGeneration } from '@conversation-catcher/api/generate-names/api/feature'
+
 
 @Module({
   controllers: [],
@@ -16,10 +18,11 @@ import { ApiSpeechToTextApiModule as SpeechToText } from '@conversation-catcher/
       driver: ApolloDriver,
       playground: true,
     }),
-    DatabaseManager,
     PdfManager,
     Summariser,
-    SpeechToText
+    SpeechToText,
+    UserManagement,
+    NameGeneration,
   ],
 })
 export class ApiShellModule {}

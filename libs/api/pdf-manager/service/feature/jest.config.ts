@@ -1,5 +1,6 @@
+/* eslint-disable */
 export default {
-  displayName: 'api-pdf-manager-service-feature',
+  displayName: 'api-pdf-manager-service',
   preset: '../../../../../jest.preset.js',
   globals: {
     'ts-jest': {
@@ -11,6 +12,5 @@ export default {
     '^.+\\.[tj]s$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageDirectory:
-    '../../../../../coverage/libs/api/pdf-manager/service/feature',
+  coverageDirectory: '../../../../coverage/libs/api/pdf-manager/service/feature',
 };

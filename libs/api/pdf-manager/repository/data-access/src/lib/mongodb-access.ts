@@ -22,31 +22,13 @@ export class MongoDBAccess {
   private cluster = 'Cluster0';
   private userCollection = 'Users';
   private pdfCollection = 'PDF';
-  private db = 'PDF';
+  private db = 'Conversation-Catcher';
 
-  //Functions
-  async addPdf(mail: string, name: string, text: string) {
-    console.log('reached repository');
-    mail = mail + '';
-    name = name + '';
-    text = text + '';
-    this.action = 'insertOne';
-    let data = JSON.stringify({
-      collection: this.pdfCollection,
-      database: this.db,
-      dataSource: this.cluster,
-      document: { id: name, name: name, text: text, pdf: null },
-    });
-
-    const result = await lastValueFrom(
-      this.httpService
-        .post(this.url + this.action, data, this.config)
-        .pipe(map((res) => res.data.document))
-    );
-
-    //First fetch the user
+  //Create a new pdf and add it to the user with email specified in mail
+  async addPdf(mail: string, name: string, text: string, date: Date) {
+    //First fetch the user that added the pdf
     this.action = 'findOne';
-    data = JSON.stringify({
+    let data = JSON.stringify({
       collection: this.userCollection,
       database: this.db,
       dataSource: this.cluster,
@@ -59,31 +41,67 @@ export class MongoDBAccess {
         .pipe(map((res) => res.data))
     );
 
+    //Check that the user exists
     if (r.document == null) return null;
-    const arr = r.document.pdfs;
-    arr.push(name);
 
-    //Add elements to the correct user
+    //Add the pdf to the database
+    this.action = 'insertOne';
+    data = JSON.stringify({
+      collection: this.pdfCollection,
+      database: this.db,
+      dataSource: this.cluster,
+      document: {
+        name: name,
+        creationDate: date,
+        text: text,
+        summarised: 'loading',
+        downloaded: false,
+        embeddings: null,
+        tags: [],
+      },
+    });
+
+    const result = await lastValueFrom(
+      this.httpService
+        .post(this.url + this.action, data, this.config)
+        .pipe(map((res) => res.data))
+    );
+
+    //Add the id of the newly generated pdf to the user
+    const newId = result.insertedId;
+    const newPdf = {
+      name: name,
+      _id: newId,
+      creationDate: date,
+      text: text,
+      pdf: null,
+      downloaded: false,
+    };
+
+    const arr = r.document.pdfs;
+    arr.push(newId);
+
+    //Update the user with the new pdf array
     this.action = 'updateOne';
     data = JSON.stringify({
       collection: this.userCollection,
       database: this.db,
       dataSource: this.cluster,
       filter: { email: mail },
-      update: {},
+      update: {
+        $set: { pdfs: arr },
+      },
     });
     const result2 = await lastValueFrom(
       this.httpService
         .post(this.url + this.action, data, this.config)
         .pipe(map((res) => res.data))
     );
-    return result;
+    return newPdf;
   }
 
+  //Retrieve all the pdfs for a certain user
   async getUserPdfs(userid: string) {
-    //Add empty string to variable to force variable to be interpreted as a string in stead of an array of strings. The
-    //same logic applies to all other similiar cases
-    userid = userid + '';
     //First fetch the user
     this.action = 'findOne';
     let data = JSON.stringify({
@@ -99,10 +117,12 @@ export class MongoDBAccess {
         .pipe(map((res) => res.data))
     );
 
+    //check if user exists
     const object = [];
     if (result.document == null) return null;
     const arr = result.document.pdfs;
-    // Then go through all the users pdf's and adds them to object
+
+    // Then go through all the users pdf's and add them to object
     for (let i = 0; i < arr.length; i++) {
       const pdfID = arr[i];
       this.action = 'findOne';
@@ -110,27 +130,27 @@ export class MongoDBAccess {
         collection: this.pdfCollection,
         database: this.db,
         dataSource: this.cluster,
-        filter: { id: pdfID },
+        filter: { _id: { $oid: pdfID } },
       });
       const temp = await lastValueFrom(
         this.httpService
           .post(this.url + this.action, data, this.config)
           .pipe(map((res) => res.data.document))
       );
-      console.log(temp);
+      // check that added pdfs still exist
       if (temp != undefined) object.push(temp);
     }
     return object;
   }
 
+  // get a single pdf based on the pdf_id
   async getPDF(id: string) {
-    id = id + '';
     this.action = 'findOne';
     const data = JSON.stringify({
       collection: this.pdfCollection,
       database: this.db,
       dataSource: this.cluster,
-      filter: { id: id },
+      filter: { _id: { $oid: id } },
     });
 
     return await lastValueFrom(
@@ -140,14 +160,14 @@ export class MongoDBAccess {
     );
   }
 
+  //Remove a pdf from the database
   async deletePDF(id: string) {
-    id = id + '';
     this.action = 'deleteOne';
     const data = JSON.stringify({
       collection: this.pdfCollection,
       database: this.db,
       dataSource: this.cluster,
-      filter: { id: id },
+      filter: { _id: { $oid: id } },
     });
 
     return await lastValueFrom(
@@ -156,15 +176,15 @@ export class MongoDBAccess {
         .pipe(map((res) => res.data.document))
     );
   }
-  //Jon
+
+  //Change if the pdf is stored locally or only available online
   async changeDownloaded(id: string) {
-    id = id + '';
     this.action = 'findOne';
     let data = JSON.stringify({
       collection: this.pdfCollection,
       database: this.db,
       dataSource: this.cluster,
-      filter: { id: id },
+      filter: { _id: { $oid: id } },
     });
 
     const res = await lastValueFrom(
@@ -181,67 +201,101 @@ export class MongoDBAccess {
       collection: this.pdfCollection,
       database: this.db,
       dataSource: this.cluster,
-      filter: { id: id },
+      filter: { _id: { $oid: id } },
       update: {
         $set: { downloaded: !res.document.downloaded },
       },
     });
 
     //Updates the downloaded field of a pdf
-    const temp = await lastValueFrom(
+    return await lastValueFrom(
       this.httpService
         .post(this.url + this.action, data, this.config)
         .pipe(map((res) => res.data))
     );
-
-    //return updated record
-    this.action = 'findOne';
-    data = JSON.stringify({
-      collection: this.pdfCollection,
-      database: this.db,
-      dataSource: this.cluster,
-      filter: { id: id },
-    });
-    return await lastValueFrom(
-      this.httpService
-        .post(this.url + this.action, data, this.config)
-        .pipe(map((res) => res.data.document))
-    );
   }
 
+  // Rename a pdf
   async setPDFName(id: string, name: string) {
-    id = id + '';
-    name = name + '';
     this.action = 'updateOne';
-    let data = JSON.stringify({
+    const data = JSON.stringify({
       collection: this.pdfCollection,
       database: this.db,
       dataSource: this.cluster,
-      filter: { id: id },
+      filter: { _id: { $oid: id } },
       update: {
         $set: { name: name },
       },
     });
 
     //Updates the name
-    const temp = await lastValueFrom(
+    return await lastValueFrom(
       this.httpService
         .post(this.url + this.action, data, this.config)
         .pipe(map((res) => res.data))
     );
+  }
 
-    //return updated record
-    this.action = 'findOne';
-    data = JSON.stringify({
+  // Update tags of a pdf
+  async updateTags(id: string, tags: string[]) {
+    this.action = 'updateOne';
+    const data = JSON.stringify({
       collection: this.pdfCollection,
       database: this.db,
       dataSource: this.cluster,
-      filter: { id: id },
+      filter: { _id: { $oid: id } },
+      update: {
+        $set: { tags: tags },
+      },
     });
+
+    //Updates the tags
     return await lastValueFrom(
       this.httpService
         .post(this.url + this.action, data, this.config)
-        .pipe(map((res) => res.data.document))
+        .pipe(map((res) => res.data))
+    );
+  }
+
+  // Update the embeddings for a pdf
+  async updateEmbeddings(id: string, embeddings: any) {
+    this.action = 'updateOne';
+    const data = JSON.stringify({
+      collection: this.pdfCollection,
+      database: this.db,
+      dataSource: this.cluster,
+      filter: { _id: { $oid: id } },
+      update: {
+        $set: { embeddings: embeddings },
+      },
+    });
+
+    //Updates the embeddings
+    return await lastValueFrom(
+      this.httpService
+        .post(this.url + this.action, data, this.config)
+        .pipe(map((res) => res.data))
+    );
+  }
+
+  // Update summarized text of a pdf after it has been summarized
+  async updateSummarised(id: string, summarised: string) {
+    this.action = 'updateOne';
+    const data = JSON.stringify({
+      collection: this.pdfCollection,
+      database: this.db,
+      dataSource: this.cluster,
+      filter: { _id: { $oid: id } },
+      update: {
+        $set: { summarised: summarised },
+      },
+    });
+
+    //Updates the tags
+    return await lastValueFrom(
+      this.httpService
+        .post(this.url + this.action, data, this.config)
+        .pipe(map((res) => res.data))
     );
   }
 }

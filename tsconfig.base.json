@@ -15,23 +15,14 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@conversation-catcher/api/authentication/api/feature": [
-        "libs/api/authentication/api/feature/src/index.ts"
+      "@conversation-catcher/api/generate-names/api/data-access": [
+        "libs/api/generate-names/api/data-access/src/index.ts"
       ],
-      "@conversation-catcher/api/authentication/repository/data-access": [
-        "libs/api/authentication/repository/data-access/src/index.ts"
+      "@conversation-catcher/api/generate-names/api/feature": [
+        "libs/api/generate-names/api/feature/src/index.ts"
       ],
-      "@conversation-catcher/api/authentication/service": [
-        "libs/api/authentication/service/src/index.ts"
-      ],
-      "@conversation-catcher/api/database-manager/api/feature": [
-        "libs/api/database-manager/api/feature/src/index.ts"
-      ],
-      "@conversation-catcher/api/database-manager/api/interface": [
-        "libs/api/database-manager/api/interface/src/index.ts"
-      ],
-      "@conversation-catcher/api/database-manager/service/feature": [
-        "libs/api/database-manager/service/feature/src/index.ts"
+      "@conversation-catcher/api/generate-names/service": [
+        "libs/api/generate-names/service/src/index.ts"
       ],
       "@conversation-catcher/api/pdf-manager/api": [
         "libs/api/pdf-manager/api/src/index.ts"
@@ -44,9 +35,6 @@
       ],
       "@conversation-catcher/api/pdf-manager/repository/data-access": [
         "libs/api/pdf-manager/repository/data-access/src/index.ts"
-      ],
-      "@conversation-catcher/api/pdf-manager/service": [
-        "libs/api/pdf-manager/service/src/index.ts"
       ],
       "@conversation-catcher/api/pdf-manager/service/feature": [
         "libs/api/pdf-manager/service/feature/src/index.ts"
@@ -71,6 +59,18 @@
       ],
       "@conversation-catcher/api/summarise-text/service": [
         "libs/api/summarise-text/service/src/index.ts"
+      ],
+      "@conversation-catcher/api/user-management/api/data-access": [
+        "libs/api/user-management/api/data-access/src/index.ts"
+      ],
+      "@conversation-catcher/api/user-management/api/feature": [
+        "libs/api/user-management/api/feature/src/index.ts"
+      ],
+      "@conversation-catcher/api/user-management/repository/data-access": [
+        "libs/api/user-management/repository/data-access/src/index.ts"
+      ],
+      "@conversation-catcher/api/user-management/service": [
+        "libs/api/user-management/service/src/index.ts"
       ],
       "@conversation-catcher/client/ui": ["libs/client/ui/src/index.ts"],
       "@conversation-catcher/client/ui/src/lib/shared-components": [

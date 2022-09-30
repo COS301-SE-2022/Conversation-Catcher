@@ -1,1 +1,1 @@
-export * from './get-pdf-manager.handlers';
+export * from './get-pdf-manager.handler'

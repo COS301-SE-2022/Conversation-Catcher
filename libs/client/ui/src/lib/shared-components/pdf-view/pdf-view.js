@@ -6,52 +6,87 @@ import {
   Image,
   ImageBackground,
   TouchableOpacity,
-  Alert,
+  SafeAreaView,
   ScrollView,
   TextInput,
   Share,
+  DeviceEventEmitter,
+  NativeAppEventEmitter,
+  Switch,
 } from 'react-native';
 import { gql, useQuery, useMutation } from '@apollo/client';
-import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
-import ModalDropdown from 'react-native-modal-dropdown';
+import Loading from '../loading/loading';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
-import { useSelector } from 'react-redux';
-import { selectColour } from '../../../../../../apps/client/src/app/slices/colour.slice';
+import pdfLocalAccess from '../local-pdfs-access/local-pdfs-access.js';
+import { useSelector, useDispatch } from 'react-redux';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { selectColour } from '../../../../../../apps/client/src/app/slices/user.slice';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import {
+  changeName,
+  removePDF,
+} from '../../../../../../../apps/client/src/app/slices/pdf.slice';
 //import Share from 'react-native-share';
+import RNHTMLtoPDF from 'react-native-html-to-pdf';
 
 export const PdfView = ({ route, navigation }) => {
-  const colourState = useSelector(selectColour).colour;
+  const colourState = useSelector(selectColour);
+  const dispatch = useDispatch();
   const [moreVisible, setMoreVisible] = useState(false);
   const [renameVisible, setRenameVisible] = useState(false);
   const [deleteConfirmVisible, setDeleteConfirmVisible] = useState(false);
+  const [newName, setNewName] = useState('');
+  const [notifyUser, setNotifyUser] = useState(false);
 
-  const { text, name, id } = route.params;
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => {
+    setIsEnabled((previousState) => !previousState);
+    //change
+  };
 
-  const onShare = async () => {
+  const { text, name, id, summarised } = route.params;
+
+  const onPdfShare = async () => {
     try {
-      const result = await Share.share({
-        message: text.text,
-        title: name.name,
-      });
+      const htmlPDF = '<h1>'+name.name+'</h1>'+text.text;//Add check to output summerized text when toggled
+      console.log("Export");
+      let options = {
+        html: htmlPDF,
+        fileName: name.name,
+        directory: ''//'Documents'//may be broken on IOS, may need to use Project.OS to set different destinations
+      };
+      let file = await RNHTMLtoPDF.convert(options);
+      console.log(file.filePath);
     } catch (error) {
       alert(error.message);
     }
   };
 
+  const onTextShare = async () => {
+    try {
+      const result = await Share.share({
+        message:
+          text.text,
+        title:
+          name.name,
+        url:
+          name.name,
+      });
+    } catch (error) {
+      //alert(error.message);
+    }
+  };
+
   const RENAME = gql`
     mutation setName($id: String!, $name: String!) {
-      renamePDF(id: $id, name: $name) {
-        id
-        name
-        downloaded
-      }
+      renamePDF(id: $id, name: $name)
     }
   `;
 
   const DELETE = gql`
     mutation delete($id: String!) {
-      deletePDF(id: "PDF-2986") {
+      deletePDF(id: $id) {
         id
         name
         text
@@ -61,35 +96,121 @@ export const PdfView = ({ route, navigation }) => {
 
   const [rename] = useMutation(RENAME);
   const [delete_pdf] = useMutation(DELETE);
+  const [load, setLoad] = useState(true);
+
+  async function renamePdf() {
+    console.log(id);
+    name.name = newName;
+    pdfLocalAccess.renamePdf(id.id, newName);
+    rename({ variables: { id: id.id, name: newName } }).catch((error) => {
+      console.log(error);
+    });
+    dispatch(changeName({ id: id.id, name: newName }));
+  }
+
+  async function deletePdf() {
+    pdfLocalAccess.deletePdf(id.id);
+    delete_pdf({ variables: { id: id.id } }).catch((error) => {
+      console.log(error);
+    });
+    dispatch(removePDF({ id: id.id }));
+  }
+
+  const TextArea = () => {
+    //isEnabled == false => unsummarised version
+    // console.log(summarised);
+    if (!isEnabled)
+      return (
+        <View style={styles.pdfTextContainer}>
+          <Text style={styles.pdfText}>{text.text}</Text>
+        </View>
+      );
+    if (
+      summarised.summarised === 'loading' ||
+      summarised.summarised === undefined
+    )
+      return (
+        <View style={styles.pdfTextContainer}>
+          <Loading width={100} height={100} load={true} />
+          <Text style={styles.modalTitle}>Summarising in progress...it will take approximately 5 minutes</Text>
+        </View>
+      );
+    if (summarised.summarised === 'error')
+      return (
+        <View style={styles.pdfTextContainer}>
+          <Text style={styles.modalTitle}>An error has occured</Text>
+          <TouchableOpacity
+            style={[
+              styles.retrySummaryContainer,
+              { backgroundColor: colourState },
+            ]}
+            onPress={() => {
+              console.log('Retry');
+              pdfLocalAccess.addSummary(id, 'loading');
+              summarised.summarised = 'loading';
+              setLoad(!load);
+              NativeAppEventEmitter.emit('summarise', id.id, text.text);
+            }}
+          >
+            <Text style={styles.retrySummaryText}>Retry</Text>
+          </TouchableOpacity>
+        </View>
+      );
+    return (
+      <View style={styles.pdfTextContainer}>
+        <Text style={styles.pdfText}>{summarised.summarised}</Text>
+      </View>
+    );
+  };
 
   return (
-    <View style={styles.viewAllPage}>
+    <SafeAreaView style={styles.viewAllPage}>
       <View style={styles.viewAllTopBar}>
         <View style={styles.big_title_box}>
-          <Text style={styles.big_title}>{name.name}</Text>
+          <Text style={styles.big_title} numberOfLines={1}>
+            {name.name}
+          </Text>
         </View>
-        <TouchableOpacity
-          style={styles.moreButton}
-          onPress={() => {
-            setMoreVisible(true);
-            console.log(text);
-          }}
-        >
-          <Icon name="ellipsis-h" color="#344053ff" size={30} />
-        </TouchableOpacity>
+        <View style={styles.summarisedSwitchGroup}>
+          <View style={styles.summarisedLabelBox}>
+            <Text style={styles.summarisedLabel}>Summarised</Text>
+          </View>
+          <View style={styles.summarisedSwitchBox}>
+            <Switch
+              trackColor={{ false: '#ffffff', true: colourState }}
+              thumbColor={isEnabled ? '#ffffff' : colourState}
+              ios_backgroundColor="#3e3e3e"
+              onValueChange={toggleSwitch}
+              value={isEnabled}
+            />
+          </View>
+        </View>
       </View>
 
-      <View style={styles.pdfTextContainer}>
-        <Text style={styles.pdfText}>{text.text}</Text>
-      </View>
+      <TextArea />
 
-      <View style={styles.viewAllBottomBar}>
+      <View style={styles.bottomBar}>
+        <View style={styles.bottomBarSideSpacing} />
         <TouchableOpacity
           style={styles.backButton}
-          onPress={() => navigation.goBack()}
+          onPress={() => {
+            navigation.goBack();
+            NativeAppEventEmitter.emit('updatePage');
+          }}
         >
           <Icon name="angle-left" color="#344053ff" size={30} />
         </TouchableOpacity>
+        <View style={styles.bottomBarSideSpacing}>
+          <TouchableOpacity
+            style={styles.moreButton}
+            onPress={() => {
+              setMoreVisible(true);
+              //console.log(text);
+            }}
+          >
+            <Icon name="ellipsis-h" color="#344053ff" size={30} />
+          </TouchableOpacity>
+        </View>
       </View>
 
       <Modal
@@ -105,7 +226,56 @@ export const PdfView = ({ route, navigation }) => {
             style={styles.moreModalButton}
             onPress={() => {
               setMoreVisible(false);
-              onShare();
+              onTextShare();
+            }}
+          >
+            <View style={styles.moreModalButtonContent}>
+              <View style={styles.iconContainer}>
+                <Icon
+                  style={{ color: colourState }}
+                  name="file-text-o"
+                  size={18}
+                />
+              </View>
+              <View style={styles.moreModalButtonText_box}>
+                <Text style={styles.moreModalButtonText} ellipsizeMode={'clip'}>
+                  {'Export text'}
+                </Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.moreModalButton}
+            onPress={() => {
+              setMoreVisible(false);
+              onPdfShare();
+              setNotifyUser(true);
+            }}
+          >
+            <View style={styles.moreModalButtonContent}>
+              <View style={styles.iconContainer}>
+                <Icon
+                  style={{ color: colourState }}
+                  name="file-pdf-o"
+                  size={18}
+                />
+              </View>
+              <View style={styles.moreModalButtonText_box}>
+                <Text style={styles.moreModalButtonText} ellipsizeMode={'clip'}>
+                  {'Download PDF'}
+                </Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.moreModalButton}
+            onPress={() => {
+              setMoreVisible(false);
+              //onShare();
+              console.log(id.id);
+              navigation.navigate('GroupSelection',id);
             }}
           >
             <View style={styles.moreModalButtonContent}>
@@ -118,7 +288,7 @@ export const PdfView = ({ route, navigation }) => {
               </View>
               <View style={styles.moreModalButtonText_box}>
                 <Text style={styles.moreModalButtonText} ellipsizeMode={'clip'}>
-                  {'Share'}
+                  {'Share with group'}
                 </Text>
               </View>
             </View>
@@ -128,11 +298,8 @@ export const PdfView = ({ route, navigation }) => {
 
           <TouchableOpacity
             style={styles.moreModalButton}
-            onPress={async () => {
+            onPress={() => {
               setMoreVisible(false);
-              console.log(id);
-              name.name = 'otherName';
-              await rename({ variables: { id: id.id, name: 'otherName' } });
               setRenameVisible(true);
             }}
           >
@@ -156,8 +323,6 @@ export const PdfView = ({ route, navigation }) => {
             style={styles.moreModalButton}
             onPress={async () => {
               setMoreVisible(false);
-              console.log('delete');
-              await delete({ variables: { id: id.id} });
               setDeleteConfirmVisible(true);
             }}
           >
@@ -181,12 +346,19 @@ export const PdfView = ({ route, navigation }) => {
         //onModalHide={() => setFileSelected(false)}
       >
         <View style={styles.renameModalInner}>
-          
-          <TextInput style={styles.renameModalTextInput} defaultValue={name.name} />
+          <TextInput
+            style={styles.renameModalTextInput}
+            defaultValue={name.name}
+            onChangeText={(text) => {
+              setNewName(text);
+            }}
+          />
           <TouchableOpacity
             style={[styles.renameFileButton, { backgroundColor: colourState }]}
             state={null}
             onPress={() => {
+              console.log('renaming the pdf to ' + newName);
+              renamePdf();
               setRenameVisible(false);
             }}
           >
@@ -207,7 +379,6 @@ export const PdfView = ({ route, navigation }) => {
         //onModalHide={() => setFileSelected(false)}
       >
         <View style={styles.renameModalInner}>
-          
           <Text style={styles.modalTitle}>
             {'Are you sure you want to delete ' + name.name + '?'}
           </Text>
@@ -228,8 +399,11 @@ export const PdfView = ({ route, navigation }) => {
             style={[styles.renameFileButton, { backgroundColor: colourState }]}
             state={null}
             onPress={() => {
+              // Delete the pdf
+              deletePdf();
               setDeleteConfirmVisible(false);
               navigation.goBack();
+              NativeAppEventEmitter.emit('updatePage');
             }}
           >
             <View style={styles.renameModalButtonContent}>
@@ -240,19 +414,67 @@ export const PdfView = ({ route, navigation }) => {
           </TouchableOpacity>
         </View>
       </Modal>
-
-    </View>
+      <Modal
+        style={styles.modalNotify}
+        isVisible={notifyUser}
+        hasBackdrop={true}
+        backdropColor=""
+        onBackdropPress={() => {
+          setNotifyUser(false);
+        }}
+      >
+        <View style={styles.modalNotifyInner}>
+          <Text style={styles.modalTitle}>
+            {'The PDF has been downloaded to your documents folder'}
+          </Text>
+          {/* <Text style={styles.modalTitle}>{'Your document will be ready in 2 minutes'}</Text> */}
+        </View>
+      </Modal>
+    </SafeAreaView>
   );
 };
 export default PdfView;
 
 const styles = StyleSheet.create({
+  retrySummaryContainer: {
+    // flexGrow: 1,
+    marginTop: 10,
+    // marginBottom: 5,
+    marginLeft: 100,
+    marginRight: 100,
+    height: 50,
+    justifyContent: 'center',
+    alignContent: 'center',
+    borderRadius: 8,
+    elevation: 2,
+    shadowColor: '#000000',
+    shadowRadius: 2.621621621621622,
+    shadowOpacity: 0.2173913043478261,
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+  },
+  retrySummaryText: {
+    // borderWidth: 1,
+    // padding: 25,
+    // borderColor: 'black',
+    color: '#ffffffff',
+    textAlign: 'center',
+    letterSpacing: 0,
+    lineHeight: 22,
+    fontSize: 18,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Jaldi */,
+    // padding: 10
+  },
   viewAllPage: {
     backgroundColor: '#ffffffff',
     marginTop: 0,
     marginBottom: 0,
     marginLeft: 0,
-    flexGrow: 1,
+    flex: 1,
     marginRight: 0,
   },
   viewAllTopBar: {
@@ -289,7 +511,31 @@ const styles = StyleSheet.create({
     padding: 15,
     flexGrow: 1,
     minHeight: 28,
+    width: "60%",
   },
+  summarisedSwitchGroup: {
+    flexDirection: 'row',
+    paddingHorizontal: 15,
+    flexGrow: 1,
+    alignContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    width: "40%",
+  },
+  summarisedLabel: {
+    color: '#344053ff',
+    textAlign: 'left',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 14,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+    paddingHorizontal: 0,
+    paddingVertical: 0,
+  },
+  summarisedLabelBox: {},
+  summarisedSwitchBox: {},
   pdfTextContainer: {
     height: '70%',
     padding: 15,
@@ -306,7 +552,7 @@ const styles = StyleSheet.create({
     fontFamily: 'System' /* Inter */,
     paddingHorizontal: 0,
   },
-  viewAllBottomBar: {
+  bottomBar: {
     width: '100%',
     flexDirection: 'row',
     flexShrink: 1,
@@ -329,6 +575,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
   },
+  bottomBarSideSpacing: {
+    width: '30%',
+    alignContent: 'center',
+  },
   backButton: {
     flexGrow: 1,
     alignItems: 'center',
@@ -345,7 +595,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   moreModalInner: {
-    width: '45%',
+    width: '70%',
     flexShrink: 1,
     backgroundColor: '#f5f5f5ff',
     borderRadius: 7,
@@ -368,7 +618,7 @@ const styles = StyleSheet.create({
     //padding: 5
   },
   iconContainer: {
-    width: '40%',
+    width: '25%',
     height: '100%',
     alignItems: 'center',
   },
@@ -384,6 +634,7 @@ const styles = StyleSheet.create({
   },
   moreModalButtonText_box: {
     flexShrink: 1,
+
   },
   moreModalButtonDivider: {
     backgroundColor: '#d0d5ddff',
@@ -483,7 +734,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     letterSpacing: 0,
     lineHeight: 20,
-    fontSize: 18,
+    fontSize: 15,
+    color: 'black',
     fontWeight: '400',
     fontStyle: 'normal',
     fontFamily: 'System' /* Inter */,
@@ -491,7 +743,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginHorizontal: 10,
     marginTop: 10,
-    height: 40
+    height: 40,
   },
   modalTitle: {
     color: '#344053ff',
@@ -503,5 +755,20 @@ const styles = StyleSheet.create({
     fontStyle: 'normal',
     fontFamily: 'System' /* Inter */,
     padding: 15,
+  },
+  modalNotify: {
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  modalNotifyInner: {
+    width: '100%',
+    flexShrink: 1,
+    backgroundColor: '#d0d5ddff',
+    borderRadius: 7,
+    flexDirection: 'column',
+    borderWidth: 1,
+    borderColor: '#667084ff',
+    opacity: 1,
+    //alignSelf: 'flex-end',
   },
 });

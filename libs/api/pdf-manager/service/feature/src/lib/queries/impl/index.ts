@@ -1,1 +1,1 @@
-export * from './get-pdf-manager.query';
+export * from './get-pdf-manager.query'

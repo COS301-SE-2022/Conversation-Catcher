@@ -15,8 +15,12 @@ import {
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 //import { ViewAll, Home} from '@conversation-catcher/client/ui';
+import Splash from '../../../../libs/client/ui/src/lib/shared-components/splash/splash.js'
 import Home from '../../../../libs/client/ui/src/lib/home/home.js';
 import ViewAll from '../../../../libs/client/ui/src/lib/view-all/view-all.js';
+import Groups from '../../../../libs/client/ui/src/lib/groups/groups.js';
+import GroupInfo from '../../../../libs/client/ui/src/lib/group-info/group-info.js';
+import GroupSelection from '../../../../libs/client/ui/src/lib/group-selection/group-selection.js';
 import Settings from '../../../../libs/client/ui/src/lib/settings/settings.js';
 import ChangeColour from '../../../../libs/client/ui/src/lib/colour-page/colour-page.js';
 import Login from '../../../../libs/client/ui/src/lib/login/login.js';
@@ -26,25 +30,44 @@ import ForgotPassword from '../../../../libs/client/ui/src/lib/forgot-password/f
 import ChangePassword from '../../../../libs/client/ui/src/lib/change-password/change-password.js';
 import ChangeEmail from '../../../../libs/client/ui/src/lib/change-email/change-email.js';
 import { Provider } from 'react-redux';
-import {reducer as colourReducer} from './slices/colour.slice';
-import {reducer as emailReducer} from './slices/email.slice';
+import {reducer as userReducer} from './slices/user.slice';
 import {reducer as pdfReducer} from './slices/pdf.slice';
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { persistStore, persistReducer } from 'redux-persist';
+//import storage from 'redux-persist/lib/storage';
+import { PersistGate } from 'redux-persist/integration/react';
 
+console.disableYellowBox = true;//Uncomment to hide warnings
+//console.reportErrorsAsExceptions = false;//Uncomment to hide errors, not tested
+
+//configure local storage
+const persistConfig = {
+  key: 'root',
+  storage: AsyncStorage,
+};
+//Combine reducers
+const rootReducer = combineReducers({
+  pdf:pdfReducer,
+  user:userReducer
+});
+//Add reducer to persist
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 //configure the store
 const store = configureStore({
-    reducer: {
-        colour:colourReducer,
-        email:emailReducer,
-        pdf:pdfReducer
-    }
-})
-
+    reducer: persistedReducer,
+    middleware: getDefaultMiddleware => getDefaultMiddleware({
+      serializableCheck: false
+    })
+});
+//Initialize persistor with store
+export const persistor = persistStore(store);
+//Create stack navigator
 const Stack = createNativeStackNavigator();
 
 export const App = () => {
     const client = new ApolloClient({
-    uri: 'http://10.0.2.2:3333/graphql',
+    uri: 'https://ccmain.azurewebsites.net/graphql',//"http://10.0.2.2:3333/graphql",
     // headers: {
     //   // Header(if any)
     //   // authorization: 'a1b2c3d4-a1b2-a1b2c3d4e5f6',
@@ -53,28 +76,32 @@ export const App = () => {
     // link WebSocketLink subscription
     // link: wsLink,
   });
-  
+  //Returns the complete project including wrappers for persistence, redux, navigation and API requests
   return (
     <Provider store = { store }>
-      <ApolloProvider client={client}>
-        <NavigationContainer>
-          <Stack.Navigator>
-            <Stack.Screen
-              name="Home"
-              component={Home}/>
-            <Stack.Screen name="ViewAll" component={ViewAll}/>
-            <Stack.Screen name="Settings" component={Settings}/>
-            <Stack.Screen name="Colour" component={ChangeColour}/>
-            <Stack.Screen name="Login" component={Login}/>
-            <Stack.Screen name="Register" component={Register}/>
-            <Stack.Screen name="PdfView" component={PdfView}/>
-            <Stack.Screen name="ForgotPassword" component={ForgotPassword}/>
-            <Stack.Screen name="ChangePassword" component={ChangePassword}/>
-            <Stack.Screen name="ChangeEmail" component={ChangeEmail}/>
-          </Stack.Navigator>
-        </NavigationContainer>
-      </ApolloProvider>
+      <PersistGate loading={null} persistor={persistor}>
+        <ApolloProvider client={client}>
+          <NavigationContainer>
+            <Stack.Navigator>
+              <Stack.Screen name="Splash" component={Splash} options={{ headerShown: false }}/>
+              <Stack.Screen name="Login" component={Login} options={{ headerShown: false }}/>
+              <Stack.Screen name="Home" component={Home} options={{ headerShown: false }}/>
+              <Stack.Screen name="ViewAll" component={ViewAll} options={{ headerShown: false }}/>
+              <Stack.Screen name="Groups" component={Groups} options={{ headerShown: false }}/>
+              <Stack.Screen name="GroupInfo" component={GroupInfo} options={{ headerShown: false }}/>
+              <Stack.Screen name="GroupSelection" component={GroupSelection} options={{ headerShown: false }}/>
+              <Stack.Screen name="Settings" component={Settings} options={{ headerShown: false }}/>
+              <Stack.Screen name="Colour" component={ChangeColour} options={{ headerShown: false }}/>
+              <Stack.Screen name="Register" component={Register} options={{ headerShown: false }}/>
+              <Stack.Screen name="PdfView" component={PdfView} options={{ headerShown: false }}/>
+              <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{ headerShown: false }}/>
+              <Stack.Screen name="ChangePassword" component={ChangePassword} options={{ headerShown: false }}/>
+              <Stack.Screen name="ChangeEmail" component={ChangeEmail} options={{ headerShown: false }}/>
+            </Stack.Navigator>
+          </NavigationContainer>
+        </ApolloProvider>
+      </PersistGate>
     </Provider>
   )
-  }
+  };
 export default App;

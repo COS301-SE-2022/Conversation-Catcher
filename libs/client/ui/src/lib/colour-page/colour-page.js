@@ -1,18 +1,38 @@
 import { render } from '@testing-library/react-native';
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, Image, ImageBackground, Button, Alert, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, Switch, SafeAreaView } from 'react-native';
 import BouncyCheckboxGroup, {ICheckboxButton,} from "react-native-bouncy-checkbox-group";
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { setColour} from 'apps/client/src/app/slices/colour.slice'
-import RNRestart from 'react-native-restart';
-
+import { setColour, selectUser} from '../../../../../../apps/client/src/app/slices/user.slice'
+//import RNRestart from 'react-native-restart';
+import { gql, useMutation } from '@apollo/client';
 
 export const ColourPage = ({ navigation}) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+  const SET_USER = gql`
+    mutation setUser(
+      $oldEmail: String!
+      $email: String!
+      $colour: String!
+      $pdfs: [String!]!
+    ) {
+      setUser(oldEmail: $oldEmail, email: $email, colour: $colour, pdfs: $pdfs)
+    }
+  `;
+
+  const [setUser] = useMutation(SET_USER);
+
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => {
+    setIsEnabled(previousState => !previousState);
+    //change text shown
+  };
+
   return (
-    <View style={styles.colourPage}>
+    <SafeAreaView style={styles.colourPage}>
       <View style={styles.big_title_box}>
         <Text style={styles.big_title}>
           {'Change colour'}
@@ -31,27 +51,56 @@ export const ColourPage = ({ navigation}) => {
           <BouncyCheckboxGroup
             data={verticalStaticData}
             style={{ flexDirection: "column" }}
-            onChange={(selectedItem) => {//colourSlice.caseReducers.setColour(selectedItem.fillColor)
-              //{type:'colour/setColour',payload:selectedItem.fillColor}
-              dispatch(setColour(selectedItem.fillColor));//dispatches the setColour action with colour payload
-              //RNRestart.Restart();
+            onChange={async (selectedItem) => {
+              //Add call to update colour and remove null values in pdf array
+              user.pdfs.forEach((element,index) => {
+                if (element === null) user.pdfs.splice(index,1);
+              });
+              setUser({
+                variables: {
+                  oldEmail: user.email,
+                  email: user.email,
+                  colour: selectedItem.fillColor,
+                  pdfs: user.pdfs,
+                },
+              }).then(()=>
+              //dispatches the setColour action with colour payload
+              dispatch(setColour(selectedItem.fillColor))
+              ).catch((error) => {
+                console.log(error);
+              });
             }}
           />
         </View>
       </View>
 
+      {/* <View style={styles.darkSwitchGroup}>
+        <View style={styles.darkLabelBox}>
+          <Text style={styles.darkLabel}>Dark Mode</Text>
+        </View>
+        <View style={styles.darkSwitchBox}>
+          <Switch
+            trackColor={{ false: "#f5f5f5ff", true: "#f5f5f5ff" }}
+            thumbColor={isEnabled ? "#3e3e3e" : "#3e3e3e"}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={toggleSwitch}
+            value={isEnabled}
+          />
+        </View>
+      </View> */}
+
       <TouchableOpacity  
         style={styles.backButton} 
         onPress={() => navigation.goBack()}>
-          <Icon 
+          <Icon
             name="angle-left"
             color="#344053ff"
             size={28}
           />
       </TouchableOpacity >
-    </View>
+    </SafeAreaView>
 
-    
+
   );
 };
 export default ColourPage;
@@ -86,6 +135,32 @@ const styles = StyleSheet.create({
     height: '10%',
     width: '100%',
     minHeight: 28
+  },
+  darkSwitchGroup: {
+    flexDirection: 'row',
+    paddingHorizontal: 15,
+    flexGrow: 1,
+    alignContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+  },
+  darkLabel: {
+    color: '#344053ff',
+    textAlign: 'left',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 14,
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Inter */,
+    paddingHorizontal: 0,
+    paddingVertical: 0,
+  },
+  darkLabelBox: {
+
+  },
+  darkSwitchBox: {
+    
   },
   colourOptionsBackground: {
     width: '80%',
@@ -122,8 +197,8 @@ const styles = StyleSheet.create({
   verticalStyle: { margin: 10 },
   textStyle: { textDecorationLine: "none" },
   iconImageStyle: { height: 15, width: 15 },
-  
-  
+
+
 });
 
 const _iconStyle = (borderColor) => ({

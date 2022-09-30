@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import {
   View,
   StyleSheet,
@@ -6,31 +6,46 @@ import {
   Image,
   ImageBackground,
   TouchableOpacity,
-  Alert,
+  SafeAreaView,
   PermissionsAndroid,
+  NativeAppEventEmitter,
+  DeviceEventEmitter,
 } from 'react-native';
-import { gql, useQuery, useMutation } from '@apollo/client';
+import { gql, useMutation, useLazyQuery, useQuery } from '@apollo/client';
 import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
 import Loading from '../shared-components/loading/loading.js';
+import PdfDisplay from '../shared-components/pdf-display/pdf-display.js';
+import pdfLocalAccess from '../shared-components/local-pdfs-access/local-pdfs-access';
 import { Buffer } from 'buffer';
 //import Permissions from 'react-native-permissions';
 //import Sound from 'react-native-sound';
 import AudioRecord from 'react-native-audio-record';
 import DocumentPicker, { types } from 'react-native-document-picker';
-import { connect, useSelector } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectColour } from 'apps/client/src/app/slices/colour.slice';
+import {
+  selectColour,
+  selectEmail,
+  addPDF,
+  selectUser,
+} from '../../../../../../apps/client/src/app/slices/user.slice';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 
 export const Home = ({ navigation }) => {
-  const colourState = useSelector(selectColour).colour;
+  const dispatch = useDispatch();
+  const pdfRef = useRef();
+  const colourState = useSelector(selectColour);
+  const emailState = useSelector(selectEmail);
+  const userState = useSelector(selectUser);
   const [recordingStopVisible, setRecordingStopVisible] = useState(false);
   const [recordAudioState, setRecordAudioState] = useState(false);
   const [uploadVisible, setUploadVisible] = useState(false);
   const [fileSelected, setFileSelected] = useState(false);
+  const [notifyUser, setNotifyUser] = useState(false);
   const [state, setState] = useState({
-    audioFile: '',
+    chunks: [],
     recording: false,
     loaded: false,
     paused: true,
@@ -38,17 +53,18 @@ export const Home = ({ navigation }) => {
 
   const [fileResponse, setFileResponse] = useState([]);
 
-  //Graphql syntax trees
-  const GET_USER_PDFS = gql`
-    query getForUser($email: String!) {
-      getPDFs(id: $email) {
-        id
-        name
-        creationDate
-        downloaded
-        #pdf
-        text
-      }
+  if (pdfLocalAccess.summariseListener.length !== 0) {
+    //If statement to ensure that only one listener is created for the summarise command
+    DeviceEventEmitter.addListener('summarise', (id, text) => {
+      summarise(id, text);
+    });
+    pdfLocalAccess.summariseListener.length = 0;
+  }
+
+  //Graphql syntax trees for the queries and mutations
+  const SET_SUMMARISED = gql`
+    mutation setSummarized($id: String!, $summary: String!) {
+      setSummarized(id: $id, summary: $summary)
     }
   `;
 
@@ -58,15 +74,36 @@ export const Home = ({ navigation }) => {
     }
   `;
 
-  const CONVERT_SPEECH = gql`
-    mutation speechToText {
-      ConvertSpeech
+  const ADD_PDF = gql`
+    mutation addPdf($email: String!, $name: String!, $text: String!) {
+      addPDF(email: $email, name: $name, text: $text) {
+        name
+        id
+        text
+        downloaded
+        creationDate
+      }
+    }
+  `;
+
+  const GENERATE_NAME = gql`
+    mutation generateName($text: String!) {
+      generateName(text: $text)
+    }
+  `;
+
+  const SET_EMBEDDINGS = gql`
+    mutation setEmbeddings($id: String!, $name: String!, $text: String!) {
+      embed(id: $id, name: $name, text: $text)
     }
   `;
 
   //Mutations to be used in the creation of new PDFs
-  const [summariseText, { data, loading, error }] = useMutation(SUMMARISE_TEXT);
-  const [speechToText, { d, l, e }] = useMutation(CONVERT_SPEECH);
+  const [summariseText] = useMutation(SUMMARISE_TEXT);
+  const [setSummarisedText] = useMutation(SET_SUMMARISED);
+  const [addPdf] = useMutation(ADD_PDF);
+  const [generateName] = useMutation(GENERATE_NAME);
+  const [setEmbedding] = useMutation(SET_EMBEDDINGS);
 
   const handleDocumentSelection = useCallback(async () => {
     try {
@@ -89,6 +126,7 @@ export const Home = ({ navigation }) => {
             { backgroundColor: colourState },
           ]}
           onPress={() => {
+            stop()
             setRecordingStopVisible(true);
           }}
         >
@@ -118,20 +156,24 @@ export const Home = ({ navigation }) => {
 
   function UploadAudioCenter(props) {
     if (fileSelected) {
-      return <TouchableOpacity
-              style={styles.changeUploadModalButton}
-              onPress={() => handleDocumentSelection()}>
-              <Icon
-                style={{color : colourState}}
-                name="file-sound-o"
-                size={16}
-              />
-              {fileResponse.map((file, index) => (
-              <Text style={[styles.changeUploadModalButtonText, {color : colourState}]}>
-                {file?.name}
-              </Text>
-              ))}
-            </TouchableOpacity>
+      return (
+        <TouchableOpacity
+          style={styles.changeUploadModalButton}
+          onPress={() => handleDocumentSelection()}
+        >
+          <Icon style={{ color: colourState }} name="file-sound-o" size={16} />
+          {fileResponse.map((file, index) => (
+            <Text
+              style={[
+                styles.changeUploadModalButtonText,
+                { color: colourState },
+              ]}
+            >
+              {file?.name}
+            </Text>
+          ))}
+        </TouchableOpacity>
+      );
     }
     return (
       <TouchableOpacity
@@ -156,6 +198,7 @@ export const Home = ({ navigation }) => {
 
   const componentDidMount = async () => {
     await checkPermission();
+    await checkPermissionWrite();
 
     const options = {
       sampleRate: 16000,
@@ -167,15 +210,21 @@ export const Home = ({ navigation }) => {
     AudioRecord.init(options);
 
     AudioRecord.on('data', (data) => {
-      const chunk = Buffer.from(data, 'base64');
-      console.log('chunk size', chunk.byteLength);
-      // do something with audio chunk
+      state.chunks.push(data);
     });
   };
 
   const checkPermission = async () => {
     const p = await PermissionsAndroid.check(
       PermissionsAndroid.PERMISSIONS.RECORD_AUDIO
+    );
+    // console.log('permission check', p);
+    if (p === 'authorized') return;
+    return requestPermission();
+  };
+  const checkPermissionWrite = async () => {
+    const p = await PermissionsAndroid.check(
+      PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
     );
     // console.log('permission check', p);
     if (p === 'authorized') return;
@@ -188,127 +237,181 @@ export const Home = ({ navigation }) => {
     );
     // console.log('permission request', p);
   };
-
-  //var sound = null;
-
-  const start = () => {
-    console.log('start record');
-    state.audioFile = '';
-    state.recording = true;
-    state.loaded = false;
-    console.log(state.recording);
-    AudioRecord.start();
+  const requestPermissionWrite = async () => {
+    const p = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
+    );
+    // console.log('permission request', p);
   };
 
+  //Start the audio recording and initialise the event to create an array of chunks
+  const start = () => {
+    state.chunks.length = 0;
+    componentDidMount()
+      .then(() => {
+        state.audioFile = '';
+        state.recording = true;
+        state.loaded = false;
+        AudioRecord.start();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  //Stop the audio recording if it is busy recording
   const stop = async () => {
-    console.log(state.recording);
     if (!state.recording) return;
-    console.log('stop record');
-    state.audioFile = await AudioRecord.stop();
-    //file containing audiofile
-    console.log(await summariseText({variables:{ text: (await speechToText()).data.ConvertSpeech}}));
-    console.log('audioFile', state.audioFile);
-    componentDidMount();
     state.audioFile = false;
     state.recording = false;
+    AudioRecord.stop();
   };
 
-  function Pdfs() {
-    // use redux to het email
-    const { data, loading, error } = useQuery(GET_USER_PDFS, {variables: {email: 'John@test'}});
-    // console.log(data);
-    // console.log(loading);
-    // console.log(error);
-    const newArr = [];
+  // Send the audio stream to the server and receive the converted text
+  const convertSpeech = () => {
+    setNotifyUser(true);
+    fetch('https://ccstt.azurewebsites.net/stt', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      },
+      body: JSON.stringify({
+        audio_path: 'audio_path',
+        audio_chunks: state.chunks,
+      }),
+    })
+      .then(async (res) => {
+        if (res.ok) {
+          const result = await res.json();
+          console.log(result);
+          const newPdf = await addPdf({
+            variables: {
+              email: emailState,
+              name: (
+                await generateName({
+                  variables: { text: result.converted_text },
+                }).catch((e) => console.log(e))
+              ).data.generateName,
+              text: result.converted_text,
+            },
+          });
+          pdfLocalAccess.addPdf({
+            name: newPdf.data.addPDF.name,
+            creationDate: newPdf.data.addPDF.creationDate,
+            downloaded: newPdf.data.addPDF.downloaded,
+            text: newPdf.data.addPDF.text,
+            id: newPdf.data.addPDF.id,
+            summarised: newPdf.data.addPDF.summarised,
+            embeddings: null,
+          });
+          NativeAppEventEmitter.emit('updatePage');
+          dispatch(addPDF(newPdf.data.addPDF.id));
+          summarise(newPdf.data.addPDF.id, newPdf.data.addPDF.text);
+        } else console.log('Connection error: internet connection is required');
+      })
+      .catch((e) => console.log(e));
+  };
 
-    if (loading)
-      return (
-        <View style={styles.recentPdfTiles}>
-          <Loading />
-        </View>
-      );
+  //summarise the text and populate the required fields
+  const summarise = (id, text) => {
+    summariseText({ variables: { text: text } })
+      .then((res) => {
+        console.log(": " , res);
+        setSummarisedText({
+          variables: { id: id, summary: res.data.Summarise },
+        }).catch((e) => {
+          console.log("", e);
+          pdfLocalAccess.addSummary(id, 'error');
+          return;
+        });
+        pdfLocalAccess.addSummary(id, 'loading');
+      })
+      .catch((e) => {
+        console.log("", e);
+        setSummarisedText({
+          variables: { id: id, summary: 'error' },
+        }).catch((e) => {
+          console.log("", e);
+        });
+        pdfLocalAccess.addSummary(id, 'error');
+      });
+  };
 
-    if (error)
-      return (
-        <View style={styles.recentPdfTiles}>
-          <Text>An error occured...</Text>
-        </View>
-      );
-
-    for (let i = 0; i < 3; i++) {
-      if (data.getPDFs[i] !== undefined) newArr.push(data.getPDFs[i]);
-    }
-
-    return (
-      <View style={styles.recentPdfTiles}>
-        {newArr.map((item, key) => (
-          <PdfTile
-            // id= {key + 1}
-            key={key}
-            name={item.name}
-            date={item.creationDate}
-            thumbnailSource={''}
-            text={item.text}
-            downloaded={item.downloaded}
-            pdfSource=""
-            nav={navigation}
-          />
-        ))}
-      </View>
-    );
-  }
-
-  componentDidMount();
   return (
-    <View style={styles.home}>
+    <SafeAreaView style={styles.home}>
       <View style={styles.big_title_box}>
         <Text style={styles.big_title} ellipsizeMode={'clip'}>
           {'Recents'}
         </Text>
       </View>
-      <Pdfs />
-      <View style={styles.viewAllTouchableOpacityFrame}>
+      <PdfDisplay navigation={navigation} selectMode={false} group={''} ref={pdfRef} />
+      <View style={styles.viewPdfsTouchableOpacityFrame}>
         <TouchableOpacity
           style={[
-            styles.viewAllTouchableOpacity,
+            styles.viewPdfsTouchableOpacity,
             { backgroundColor: colourState },
           ]}
           onPress={() => {
-            navigation.navigate('ViewAll');
+            navigation.navigate('ViewAll', { groupName: '' });
           }}
         >
-          <View style={styles.viewAllTouchableOpacityLabel_box}>
+          <View style={styles.viewPdfsTouchableOpacityLabel_box}>
             <Text
-              style={styles.viewAllTouchableOpacityLabel}
+              style={styles.viewPdfsTouchableOpacityLabel}
               ellipsizeMode={'clip'}
             >
-              {'View all PDFs'}
+              {'Conversations'}
             </Text>
           </View>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity
-        style={styles.settingsTouchableOpacityFrame}
-        onPress={() => navigation.navigate('Settings')}
-      >
-        <View style={styles.settingTouchableOpacity}>
-          <View style={styles.settingsText_box}>
-            <Text style={styles.settingsText} ellipsizeMode={'clip'}>
-              {'Settings'}
+      <View style={styles.viewPdfsTouchableOpacityFrame}>
+        <TouchableOpacity
+          style={[
+            styles.viewPdfsTouchableOpacity,
+            { backgroundColor: colourState },
+          ]}
+          onPress={() => {
+            navigation.navigate('Groups', { groupObject: null });
+          }}
+        >
+          <View style={styles.viewPdfsTouchableOpacityLabel_box}>
+            <Text
+              style={styles.viewPdfsTouchableOpacityLabel}
+              ellipsizeMode={'clip'}
+            >
+              {'Groups'}
             </Text>
           </View>
-        </View>
-      </TouchableOpacity>
-      <View style={styles.audioTouchableOpacityGroup}>
-        <RecordAudioButtonState />
-        <TouchableOpacity
-          style={styles.uploadAudioTouchableOpacity}
-          onPress={() => setUploadVisible(true)}
-        >
-          <View style={styles.uploadAudioIcon}>
-            <Icon color="#667084ff" name="upload" size={40} />
-          </View>
         </TouchableOpacity>
+      </View>
+      <View style={styles.bottomGroup}>
+        <View style={styles.bottomGroupSideSpacing}></View>
+        <View style={styles.audioTouchableOpacityGroup}>
+          <RecordAudioButtonState />
+          {/* <TouchableOpacity
+            style={styles.uploadAudioTouchableOpacity}
+            onPress={() => setUploadVisible(true)}
+          >
+            <View style={styles.uploadAudioIcon}>
+              <Icon color="#667084ff" name="upload" size={40} />
+            </View>
+          </TouchableOpacity> */}
+        </View>
+        <View style={styles.bottomGroupSideSpacing}>
+          <TouchableOpacity
+            style={styles.settingsTouchableOpacityFrame}
+            onPress={() => navigation.navigate('Settings')}
+          >
+            <View style={styles.settingsIconBox}>
+              <Icon style={styles.settingsIcon}>
+                <Icon name="cog" size={25} color="#667084ff" />
+              </Icon>
+            </View>
+          </TouchableOpacity>
+        </View>
       </View>
 
       <Modal
@@ -328,19 +431,16 @@ export const Home = ({ navigation }) => {
           <TouchableOpacity
             style={styles.recordingStopModalButton}
             onPress={async () => {
-              console.log('pressed');
-              stop();
+              // Convert speech to text
+              // stop();
+              convertSpeech();
               setRecordAudioState(false);
               setRecordingStopVisible(false);
             }}
           >
             <View style={styles.recordingStopModalButtonContent}>
               <View style={styles.iconContainer}>
-                <Icon
-                  style={{color : colourState}}
-                  name="refresh"
-                  size={18}
-                />
+                <Icon style={{ color: colourState }} name="refresh" size={18} />
               </View>
               <View style={styles.recordingStopModalButtonText_box}>
                 <Text
@@ -353,7 +453,7 @@ export const Home = ({ navigation }) => {
             </View>
           </TouchableOpacity>
 
-          <View style={styles.recordingStopModalButtonDivider} />
+          {/* <View style={styles.recordingStopModalButtonDivider} />
 
           <TouchableOpacity
             style={styles.recordingStopModalButton}
@@ -364,7 +464,7 @@ export const Home = ({ navigation }) => {
             <View style={styles.recordingStopModalButtonContent}>
               <View style={styles.iconContainer}>
                 <Icon
-                  style={{color : colourState}}
+                  style={{ color: colourState }}
                   name="microphone"
                   size={20}
                 />
@@ -375,25 +475,22 @@ export const Home = ({ navigation }) => {
                 </Text>
               </View>
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
           <View style={styles.recordingStopModalButtonDivider} />
 
           <TouchableOpacity
             style={styles.recordingStopModalButton}
             onPress={() => {
-              stop();
+              // Discard recording
+              // stop();
               setRecordAudioState(false);
               setRecordingStopVisible(false);
             }}
           >
             <View style={styles.recordingStopModalButtonContent}>
               <View style={styles.iconContainer}>
-                <Icon
-                  style={{color : colourState}}
-                  name="trash-o"
-                  size={20}
-                />
+                <Icon style={{ color: colourState }} name="trash-o" size={20} />
               </View>
               <View style={styles.recordingStopModalButtonText_box}>
                 <Text style={styles.recordingStopModalButtonText}>
@@ -419,7 +516,7 @@ export const Home = ({ navigation }) => {
           <UploadAudioCenter />
 
           <TouchableOpacity
-            style={[styles.uploadFileButton, {backgroundColor : colourState}]}
+            style={[styles.uploadFileButton, { backgroundColor: colourState }]}
             state={null}
             onPress={() => {
               setUploadVisible(false);
@@ -433,7 +530,23 @@ export const Home = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </Modal>
-    </View>
+      <Modal
+        style={styles.modalNotify}
+        isVisible={notifyUser}
+        hasBackdrop={true}
+        backdropColor=""
+        onBackdropPress={() => {
+          setNotifyUser(false);
+        }}
+      >
+        <View style={styles.modalNotifyInner}>
+          <Text style={styles.modalTitle}>
+            {'Document generation has started and will take about 2 minutes'}
+          </Text>
+          {/* <Text style={styles.modalTitle}>{'Your document will be ready in 2 minutes'}</Text> */}
+        </View>
+      </Modal>
+    </SafeAreaView>
   );
 };
 export default Home;
@@ -447,7 +560,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffffff',
     overflow: 'hidden',
     //flexShrink: 1,
-    //flex: 1,
+    flex: 1,
     //flexShrink: 0,
     flexDirection: 'column',
     width: '100%',
@@ -470,7 +583,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'center',
     paddingLeft: 15,
-    height: '5%',
+    height: '7%',
     //width: '100%',
     minHeight: 28,
   },
@@ -481,13 +594,13 @@ const styles = StyleSheet.create({
     paddingRight: 15,
     justifyContent: 'space-between',
   },
-  viewAllTouchableOpacityFrame: {
-    //height: '10%'
+  viewPdfsTouchableOpacityFrame: {
+    height: '10%',
     flexGrow: 1,
     justifyContent: 'center',
-    marginTop: 20,
+    marginVertical: 5,
   },
-  viewAllTouchableOpacity: {
+  viewPdfsTouchableOpacity: {
     flexGrow: 1,
     marginTop: 5,
     marginBottom: 5,
@@ -505,7 +618,7 @@ const styles = StyleSheet.create({
       height: 1,
     },
   },
-  viewAllTouchableOpacityLabel: {
+  viewPdfsTouchableOpacityLabel: {
     color: '#ffffffff',
     textAlign: 'center',
     letterSpacing: 0,
@@ -516,80 +629,34 @@ const styles = StyleSheet.create({
     fontFamily: 'System' /* Jaldi */,
     padding: 10,
   },
-  viewAllTouchableOpacityLabel_box: {
+  viewPdfsTouchableOpacityLabel_box: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  homeDiv: {
-    backgroundColor: '#d0d5ddff',
-    borderRadius: 0.5,
-    overflow: 'hidden' /* for borderRadius */,
-    elevation: 2,
-    shadowColor: '#000000',
-    shadowRadius: 2.621621621621622,
-    shadowOpacity: 0.2173913043478261,
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    height: 1,
-    flexShrink: 1,
+  bottomGroup: {
+    height: '15%',
+    flexDirection: 'row',
+    alignContent: 'center',
+    alignItems: 'center',
+  },
+  bottomGroupSideSpacing: {
+    width: '30%',
+    alignItems: 'center',
   },
   settingsTouchableOpacityFrame: {
-    height: '10%',
+    flexShrink: 1,
     marginVertical: 5,
   },
-  settingTouchableOpacity: {
-    marginTop: 5,
-    marginBottom: 5,
-    marginLeft: 30,
-    marginRight: 30,
-    backgroundColor: '#d0d5ddff',
-    borderRadius: 8,
-    justifyContent: 'center',
-    alignContent: 'center',
-    flexDirection: 'row',
-    flexGrow: 1,
-    overflow: 'hidden',
-    borderStyle: 'solid',
-    borderColor: '#d0d5ddff',
-    borderWidth: 1,
-    elevation: 2,
-    shadowColor: '#000000',
-    shadowRadius: 2.621621621621622,
-    shadowOpacity: 0.2173913043478261,
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-  },
-  settingsIcon_frame: {
+  settingsIconBox: {
     justifyContent: 'center',
     alignContent: 'flex-start',
-    paddingHorizontal: 7,
-  },
-  settingsText: {
-    color: '#344053ff',
-    textAlign: 'center',
-    letterSpacing: 0,
-    lineHeight: 22,
-    fontSize: 18,
-    fontWeight: '400',
-    fontStyle: 'normal',
-    fontFamily: 'System' /* Jaldi */,
-    paddingHorizontal: 0,
-    paddingVertical: 0,
-  },
-  settingsText_box: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexShrink: 1,
+    margin: 10,
   },
   audioTouchableOpacityGroup: {
     borderRadius: 8,
     flexDirection: 'row',
-    height: '17%',
+    height: '70%',
     width: '40%',
     justifyContent: 'center',
     alignItems: 'center',
@@ -606,22 +673,22 @@ const styles = StyleSheet.create({
   },
   recordAudioTouchableOpacity: {
     width: '50%',
-    flexGrow: 1,
-    borderTopLeftRadius: 8,
-    borderBottomLeftRadius: 8,
+    flexShrink: 1,
+    //borderTopLeftRadius: 8,
+    //borderBottomLeftRadius: 8,
+    borderRadius: 8,
     overflow: 'hidden',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRightColor: '#667084ff',
-    borderRightWidth: 1,
+    //borderRightColor: '#667084ff',
+    //borderRightWidth: 1,
   },
   recordAudioIcon: {
-    resizeMode: 'contain',
     padding: 10,
   },
   uploadAudioTouchableOpacity: {
     width: '50%',
-    flexGrow: 1,
+    flexShrink: 1,
     backgroundColor: '#d0d5ddff',
     borderTopRightRadius: 8,
     borderBottomRightRadius: 8,
@@ -632,12 +699,26 @@ const styles = StyleSheet.create({
     borderLeftWidth: 1,
   },
   uploadAudioIcon: {
-    resizeMode: 'contain',
     padding: 10,
   },
   modal: {
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  modalNotify: {
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  modalNotifyInner: {
+    width: '100%',
+    flexShrink: 1,
+    backgroundColor: '#d0d5ddff',
+    borderRadius: 7,
+    flexDirection: 'column',
+    borderWidth: 1,
+    borderColor: '#667084ff',
+    opacity: 1,
+    //alignSelf: 'flex-end',
   },
   modalTitle: {
     color: '#344053ff',

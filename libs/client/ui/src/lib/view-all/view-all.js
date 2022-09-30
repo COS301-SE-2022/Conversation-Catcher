@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   View,
   StyleSheet,
@@ -6,25 +6,28 @@ import {
   Image,
   ImageBackground,
   TouchableOpacity,
-  Alert,
+  SafeAreaView,
   ScrollView,
   TextInput,
+  NativeAppEventEmitter,
+  DeviceEventEmitter,
 } from 'react-native';
-import { gql, useQuery, useMutation } from '@apollo/client';
-import PdfTile from '../shared-components/pdf-tile/pdf-tile.js';
+import { gql, useQuery, useMutation, useLazyQuery } from '@apollo/client';
 import ModalDropdown from 'react-native-modal-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
 import Share from 'react-native-share';
+import PdfDisplay from '../shared-components/pdf-display/pdf-display.js';
+import pdfLocalAccess from '../shared-components/local-pdfs-access/local-pdfs-access';
 import { useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectColour } from 'apps/client/src/app/slices/colour.slice';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectEmail } from 'apps/client/src/app/slices/email.slice';
+import { selectColour } from '../../../../../../apps/client/src/app/slices/user.slice';
+import groupLocalAccess from '../shared-components/local-groups-access/local-groups-access.js';
 import Loading from '../shared-components/loading/loading.js';
 
-export const ViewAll = ({ navigation }) => {
-  const colourState = useSelector(selectColour).colour;
+export const ViewAll = ({ navigation, route }) => {
+  const pdfRef = useRef();
+  const colourState = useSelector(selectColour);
   const [moreVisible, setMoreVisible] = useState(false);
   const [selectMode, setSelectMode] = useState(false);
   const [bottomModalVisible, setBottomModalVisible] = useState(false);
@@ -32,42 +35,144 @@ export const ViewAll = ({ navigation }) => {
   const [renameModalVisible, setRenameModalVisible] = useState(false);
   const [currOrderValue, setCurrOrderValue] = useState('Date');
   const [renameVisible, setRenameVisible] = useState(false);
+  const [searchLoad, setSearchLoad] = useState(false);
   // const [refreshPage, setRefreshPage] = useState('');
+
+  const { groupObject } = route.params;
 
   const url = 'https://awesome.contents.com/';
   const title = 'Awesome Contents';
   const message = 'Please check this out.';
 
-  //graphql syntax trees
-  const GET_USER_PDFS = gql`
-    query getForUser($email: String!) {
-      getPDFs(id: $email) {
-        id
-        name
-        creationDate
-        downloaded
-        #pdf
-        text
-      }
+  const ADD_PDF = gql`
+    mutation addPdfTo($pdfId: String!, $groupName: String!) {
+      addPdfTo(pdfId: $pdf, groupName: $groupName)
     }
   `;
-
-  const RELOAD = gql`
-    mutation reload {
-      reload
+  const REMOVE_PDF = gql`
+    mutation removePdfFrom($pdfId: String!, $groupName: String!) {
+      removePdfFrom(pdfId: $pdf, groupName: $groupName)
     }
   `;
+  const [addPdf] = useMutation(ADD_PDF);
+  const [removePdf] = useMutation(REMOVE_PDF);
 
-  const [refresh, { d, l, e }] = useMutation(RELOAD);
-  //variables for object sorting
+  async function addPDF() {
+    //call this after selectedPdf is set to add pdf to group
+    if (selectedPdf === null || selectedGroup === null) return;
+    groupLocalAccess.addPdf(selectedPdf, selectedGroup);
+    await addPdf({
+      variables: { pdfId: selectedPdf, groupName: selectedGroup },
+    }).then(() => {
+      setSelectedPdf(null);
+      setSelectedGroup(null);
+    });
+  }
+  async function removePDF() {
+    //call this after selectedPdf is set to remove pdf to group
+    if (selectedPdf === null || groupObject.name === null) return;
+    groupLocalAccess.removePdf(selectedPdf, groupObject.name);
+    await removePdf({
+      variables: { pdfId: selectedPdf, groupName: groupObject.name },
+    }).then(() => {
+      setSelectedPdf(null);
+    });
+  }
+
+  //variables for object sorting and management
   const [objArr, setObjArr] = useState([]);
-  const [initialArr, setInitialArr] = useState([]);
+  const [searchInput, setSearchInput] = useState('');
+  const [selectedPdf, setSelectedPdf] = useState(null);
+  const [selectedGroup, setSelectedGroup] = useState(null);
 
   const options = {
     title,
     url,
     message,
   };
+
+  const SEARCH_IDEA = gql`
+    query searchIdea($query: String!, $docs: [PdfEntityInput!]!) {
+      semanticSearch(query: $query, docs: $docs)
+    }
+  `;
+
+  const GET_PDFS = gql`
+    query getArrPdfs($ids: [String!]!) {
+      getPDFByArr(ids: $ids) {
+        id
+        name
+        creationDate
+        downloaded
+        text
+        summarised
+        embeddings
+      }
+    }
+  `;
+
+  const [semanticSearch] = useLazyQuery(SEARCH_IDEA);
+  const [getPdfs] = useLazyQuery(GET_PDFS);
+
+  function DetermineTitle(){
+    if (groupObject == null){
+      if (pdfLocalAccess.isSet.length !== 0){
+        pdfLocalAccess.clearDisplay();
+        pdfLocalAccess.allPdfs.forEach((pdf) => { pdfLocalAccess.displayPdfs.push(pdf); });
+        NativeAppEventEmitter.emit('updatePage');
+        pdfLocalAccess.isSet.length = 0;
+      }
+      return (
+        <View style={styles.big_title_box}>
+          <Text style={styles.big_title}>{'Conversations'}</Text>
+        </View>
+      )
+    }
+    if (pdfLocalAccess.displayPdfs.length !== 0){
+      pdfLocalAccess.isSet.push('false');
+      pdfLocalAccess.displayPdfs.length = 0;
+      NativeAppEventEmitter.emit('updatePage');
+      getPdfs({variables: {
+        ids: groupObject.pdfs
+      }}).then((result) => {
+        console.log(result.data)
+        result.data.getPDFByArr.forEach((pdf) => {
+          pdfLocalAccess.displayPdfs.push(pdf);
+        });
+        NativeAppEventEmitter.emit('updatePage');
+
+      }).catch((error) => { console.log(error)});
+    }
+    return (
+      <TouchableOpacity
+        style={styles.group_title_button}
+        onPress={() => {
+          navigation.navigate('GroupInfo', { groupObject: groupObject });
+        }}
+      >
+        <View style={[styles.groupThumbnailBox, { borderColor: colourState }]}>
+          <View style={[styles.groupThumbnail, {backgroundColor: colourState}]}>
+            <Text style={styles.groupIcon}>{groupObject.name.toUpperCase()[0]}</Text>
+          </View>
+        </View>
+        <View style={styles.groupTile_contents_not_thumbnail}>
+          <View style={styles.groupNameBox}>
+            <Text style={styles.groupName} numberOfLines={1}>{groupObject.name}</Text>
+          </View>
+      </View>
+      </TouchableOpacity>
+    )
+  }
+
+
+
+  if (pdfLocalAccess.clearSearchInput.length !== 0) {
+    //If statement to ensure that only one listener is created for the summarise command
+    DeviceEventEmitter.addListener('clearSearch', () => {
+      setSearchInput('');
+    });
+    pdfLocalAccess.clearSearchInput.length = 0;
+  }
 
   const share = async (customOptions = options) => {
     try {
@@ -112,6 +217,7 @@ export const ViewAll = ({ navigation }) => {
         onPress={() => {
           setSelectMode(false);
           setBottomModalVisible(false);
+          DeviceEventEmitter.emit("DeleteAll");
         }}
       >
         <Icon name="trash-o" color="#ffffffff" size={22} />
@@ -139,126 +245,61 @@ export const ViewAll = ({ navigation }) => {
     }
   };
 
-  function changeArray(index, itemValue) {
-    if (currOrderValue !== itemValue) {
-      setCurrOrderValue(itemValue);
-      // Sort PDFs array according to currOrderValue
-      switch (itemValue) {
-        case 'Name':
-          var temp2 = objArr;
-          temp2.sort((a, b) => {
-            if (a.name < b.name) return -1;
-            return 1;
-          });
-          setObjArr(temp2);
-          console.log(objArr);
-          break;
-        case 'Date':
-          var temp = objArr;
-          temp.sort((a, b) => {
-            if (new Date(a.creationDate) > new Date(b.creationDate)) return -1;
-            return 1;
-          });
-          setObjArr(temp);
-          console.log(objArr);
-          break;
-      }
-    }
-    refresh();
-    console.log(itemValue);
-  }
-
-  function filterPdf(text) {
-    const temp = [];
-    for (let i = 0; i < initialArr.length; i++) objArr[i] = initialArr[i];
-    for (let i = 0; i < objArr.length; i++) {
-      if (objArr[i].name.indexOf(text) != -1) temp.push(objArr[i]);
-    }
-    setObjArr(temp);
-    refresh();
-  }
-
-  function Pdfs() {
-    // use redux to het email
-    // const email = useSelector(selectEmail()).email;
-    const { data, loading, error } = useQuery(GET_USER_PDFS, {
-      variables: { email: 'John@test' },
-    });
-    console.log('GetPdfs');
-    // console.log(data);
-    // console.log(loading);
-    // console.log(error);
-    if (loading)
-      return (
-        <ScrollView style={styles.recentPdfTiles}>
-          <Loading />
-        </ScrollView>
-      );
-
-    if (error)
-      return (
-        <ScrollView style={styles.recentPdfTiles}>
-          <Text>An error occured...</Text>
-          <Text>{error[0]}</Text>
-        </ScrollView>
-      );
-    if (initialArr[0] === undefined) {
-      console.log('objArr');
-      // console.log(data.getPDFs);
-      for (let i = 0; i < data.getPDFs.length; i++) {
-        //create deep copy
-        initialArr.push({
-          name: data.getPDFs[i].name,
-          creationDate: data.getPDFs[i].creationDate,
-          downloaded: data.getPDFs[i].downloaded,
-          pdf: data.getPDFs[i].pdf,
-          text: data.getPDFs[i].text,
-          id: data.getPDFs[i].id,
-        });
-      }
-      for (let i = 0; i < initialArr.length; i++) objArr[i] = initialArr[i];
-    }
-    return (
-      <ScrollView style={styles.recentPdfTiles}>
-        {objArr.map((item, key) => (
-          <PdfTile
-            key={key}
-            id={item.id}
-            name={item.name}
-            date={item.creationDate}
-            source={''}
-            text={item.text}
-            downloaded={item.downloaded}
-            showCheck={selectMode}
-            pdfSource=""
-            nav={navigation}
-          />
-        ))}
-      </ScrollView>
-    );
-  }
-
   return (
-    <View style={styles.viewAllPage}>
+    <SafeAreaView style={styles.viewAllPage}>
       <View style={styles.viewAllTopBar}>
-        <View style={styles.big_title_box}>
-          <Text style={styles.big_title}>{'PDFs'}</Text>
-        </View>
+        <DetermineTitle/>
 
         <View style={styles.searchBarGroup}>
+          <TextInput
+            style={styles.searchInput}
+            value={searchInput}
+            placeholder="Search"
+            onSubmitEditing={(text) => {
+              setSearchLoad(true);
+              console.log(text.nativeEvent.text);
+              pdfLocalAccess.filterPdfs(text.nativeEvent.text);
+              semanticSearch({
+                variables: {
+                  query: text.nativeEvent.text,
+                  docs: pdfLocalAccess.allPdfs,
+                },
+              })
+                .then((res) => {
+                  if (res.data.semanticSearch[0] !== ''){
+                    pdfLocalAccess.sortByIds(res.data.semanticSearch);
+                  }
+                  NativeAppEventEmitter.emit('updatePage');
+                  setSearchLoad(false);
+                })
+                .catch((error) => {
+                  console.log(error);
+                  pdfLocalAccess.filterPdfs(text);
+                  NativeAppEventEmitter.emit('updatePage');
+                  setSearchLoad(false);
+                });
+            }}
+            onChangeText={(text) => {
+              setSearchInput(text);
+            }}
+          />
           <View style={styles.searchIconFrame}>
             <Icon color="#667084ff" name="search" size={24} />
           </View>
-
-          <TextInput
-            style={styles.searchInput}
-            placeholder="Search"
-            onChangeText={(text) => filterPdf(text)}
-          />
         </View>
       </View>
-
-      <Pdfs />
+      <Loading 
+        width={100}
+        height={100}
+        load={searchLoad}
+        text={'Searching'}
+      />
+      <PdfDisplay
+        navigation={navigation}
+        selectMode={selectMode}
+        group={groupObject}
+        ref={pdfRef}
+      />
 
       <View style={styles.viewAllBottomBar}>
         <TouchableOpacity
@@ -270,7 +311,7 @@ export const ViewAll = ({ navigation }) => {
 
         <TouchableOpacity
           style={styles.backButton}
-          onPress={() => navigation.navigate('Home')}
+          onPress={() => navigation.goBack()}
         >
           <Icon name="angle-left" color="#344053ff" size={30} />
         </TouchableOpacity>
@@ -280,8 +321,12 @@ export const ViewAll = ({ navigation }) => {
           <ModalDropdown
             options={['Date', 'Name']}
             defaultIndex={0}
-            defaultValue={'Date'}
-            onSelect={(index, itemValue) => changeArray(index, itemValue)}
+            defaultValue={'Name'}
+            onSelect={(index, itemValue) => {
+              pdfLocalAccess.sortPdfs(itemValue);
+              // pdfRef.current.refreshPfds();
+              NativeAppEventEmitter.emit('updatePage');
+            }}
             style={styles.orderByDropdown}
             textStyle={styles.orderByDropdownText}
             dropdownStyle={styles.orderByDropdownStyle}
@@ -300,7 +345,7 @@ export const ViewAll = ({ navigation }) => {
         onBackdropPress={() => setMoreVisible(false)}
       >
         <View style={styles.moreModalInner}>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={styles.moreModalButton}
             onPress={() => {
               setBottomModalType('share');
@@ -325,7 +370,7 @@ export const ViewAll = ({ navigation }) => {
             </View>
           </TouchableOpacity>
 
-          <View style={styles.moreModalButtonDivider} />
+          <View style={styles.moreModalButtonDivider} /> */}
 
           <TouchableOpacity
             style={styles.moreModalButton}
@@ -427,8 +472,10 @@ export const ViewAll = ({ navigation }) => {
         //onModalHide={() => setFileSelected(false)}
       >
         <View style={styles.renameModalInner}>
-          
-          <TextInput style={styles.renameModalTextInput} defaultValue={"temp"} />
+          <TextInput
+            style={styles.renameModalTextInput}
+            defaultValue={'temp'}
+          />
           <TouchableOpacity
             style={[styles.renameFileButton, { backgroundColor: colourState }]}
             state={null}
@@ -444,7 +491,7 @@ export const ViewAll = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </Modal>
-    </View>
+    </SafeAreaView>
   );
 };
 export default ViewAll;
@@ -452,15 +499,12 @@ export default ViewAll;
 const styles = StyleSheet.create({
   viewAllPage: {
     backgroundColor: '#ffffffff',
-    marginTop: 0,
-    marginBottom: 0,
-    marginLeft: 0,
-    flexGrow: 1,
-    marginRight: 0,
+    flex: 1,
   },
   viewAllTopBar: {
     width: '100%',
     flexShrink: 1,
+    resizeMode: 'contain',
     backgroundColor: '#c4c4c4ff',
     elevation: 2,
     shadowColor: '#000000',
@@ -474,7 +518,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     top: 0,
     zIndex: 999,
-    minHeight: 88,
+    minHeight: 90,
   },
   big_title: {
     color: '#344053ff',
@@ -490,20 +534,26 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'center',
     paddingLeft: 15,
-    paddingTop: 5,
     height: '5%',
     width: '100%',
     minHeight: 28,
+    paddingTop: 5,
+  },
+  group_title_button : {
+    flexShrink: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '85%',
+    paddingTop: 10,
   },
   searchBarGroup: {
     width: '85%',
     flexShrink: 1,
-    margin: 10,
+    Vertical: 10,
     flexDirection: 'row',
     alignItems: 'center',
-    minHeight: 38,
-  },
-  searchInput: {
+    minHeight: 35,
+    marginVertical: 15,
     backgroundColor: '#ffffffff',
     borderRadius: 8,
     borderStyle: 'solid',
@@ -511,12 +561,17 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     elevation: 2,
     shadowColor: '#000000',
-    shadowRadius: 2.621621621621622,
-    shadowOpacity: 0.2173913043478261,
+    shadowRadius: 2.5,
+    shadowOpacity: 0.2,
     shadowOffset: {
       width: 0,
       height: 1,
     },
+    //overflow: 'hidden',
+  },
+  searchInput: {
+    backgroundColor: '#ffffffff',
+    borderRadius: 8,
     color: '#667084ff',
     textAlign: 'left',
     letterSpacing: 0,
@@ -527,10 +582,18 @@ const styles = StyleSheet.create({
     fontFamily: 'System' /* Inter */,
     padding: 5,
     flexGrow: 1,
+    //minHeight: 30,
   },
   searchIconFrame: {
     resizeMode: 'contain',
-    marginHorizontal: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    //minHeight: 30,
+    //position: 'absolute',
+    //ustifySelf: 'flex-end',
+    //position: 'absolute',
+    //bottom: 0,
+    
   },
   recentPdfTiles: {
     height: '70%',
@@ -564,17 +627,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   moreButton: {
-    flexGrow: 1,
+    flexShrink: 1,
+    width: '40%',
     alignItems: 'center',
     justifyContent: 'center',
   },
   orderByGroup: {
-    flexGrow: 1,
+    flexShrink: 1,
+    width: '40%',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     alignSelf: 'flex-end',
     marginVertical: 5,
+    paddingHorizontal: 7,
   },
   orderByLabel: {
     color: '#344053ff',
@@ -591,6 +657,7 @@ const styles = StyleSheet.create({
   },
   orderByDropdown: {
     flexShrink: 1,
+    justifyContent: 'center',
     backgroundColor: '#ffffffff',
     borderRadius: 8,
     borderStyle: 'solid',
@@ -694,7 +761,7 @@ const styles = StyleSheet.create({
   },
   modalBottomBar: {
     width: '100%',
-    height: '13%',
+    height: '10%',
     flexDirection: 'row',
     //flexShrink: 1,
     justifyContent: 'center',
@@ -792,6 +859,45 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginHorizontal: 10,
     marginTop: 10,
-    height: 40
-  }
+    height: 40,
+  },
+  groupThumbnailBox: {
+    borderRadius: 180,
+    backgroundColor: '#667084ff',
+    aspectRatio: 1,
+    width: '12%',
+    marginHorizontal: 5,
+  },
+  groupThumbnail: {
+    flexGrow: 1,
+    resizeMode: 'center',
+    borderRadius: 180,
+    justifyContent: "center",
+  },
+  groupTile_contents_not_thumbnail: {
+    flexGrow: 1,
+    justifyContent: 'center',
+  },
+  groupName: {
+    color: '#344053ff',
+    letterSpacing: 0,
+    lineHeight: 20,
+    fontSize: 20,
+    fontWeight: '700',
+    fontStyle: 'normal',
+    fontFamily: 'System' /* Jaldi */,
+  },
+  groupNameBox: {
+    flexShrink: 1,
+    width: '80%',
+    resizeMode: 'contain',
+    justifyContent: 'center',
+    //paddingVertical: 5,
+  },
+  groupIcon: {
+    textAlign: "center",
+    color: "#ffffff",
+    fontSize: 22,
+    fontWeight: "bold",
+  },
 });
