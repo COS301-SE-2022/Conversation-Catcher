@@ -126,6 +126,7 @@ export const Home = ({ navigation }) => {
             { backgroundColor: colourState },
           ]}
           onPress={() => {
+            stop()
             setRecordingStopVisible(true);
           }}
         >
@@ -296,14 +297,6 @@ export const Home = ({ navigation }) => {
               text: result.converted_text,
             },
           });
-          const embeddings = await setEmbedding({
-            variables: {
-              id: newPdf.data.addPDF.id,
-              name: newPdf.data.addPDF.name,
-              text: newPdf.data.addPDF.text,
-            },
-          }).catch((e) => console.log(e));
-          console.log(embeddings);
           pdfLocalAccess.addPdf({
             name: newPdf.data.addPDF.name,
             creationDate: newPdf.data.addPDF.creationDate,
@@ -311,7 +304,7 @@ export const Home = ({ navigation }) => {
             text: newPdf.data.addPDF.text,
             id: newPdf.data.addPDF.id,
             summarised: newPdf.data.addPDF.summarised,
-            embeddings: embeddings,
+            embeddings: null,
           });
           NativeAppEventEmitter.emit('updatePage');
           dispatch(addPDF(newPdf.data.addPDF.id));
@@ -325,22 +318,22 @@ export const Home = ({ navigation }) => {
   const summarise = (id, text) => {
     summariseText({ variables: { text: text } })
       .then((res) => {
-        console.log(res);
+        console.log("AAAAAA: " , res);
         setSummarisedText({
           variables: { id: id, summary: res.data.Summarise },
         }).catch((e) => {
-          console.log(e);
+          console.log("BBBBBB", e);
           pdfLocalAccess.addSummary(id, 'error');
           return;
         });
         pdfLocalAccess.addSummary(id, 'loading');
       })
       .catch((e) => {
-        console.log(e);
+        console.log("CCCCCCCC", e);
         setSummarisedText({
           variables: { id: id, summary: 'error' },
         }).catch((e) => {
-          console.log(e);
+          console.log("DDDDDDD", e);
         });
         pdfLocalAccess.addSummary(id, 'error');
       });
@@ -439,7 +432,7 @@ export const Home = ({ navigation }) => {
             style={styles.recordingStopModalButton}
             onPress={async () => {
               // Convert speech to text
-              stop();
+              // stop();
               convertSpeech();
               setRecordAudioState(false);
               setRecordingStopVisible(false);
@@ -490,7 +483,7 @@ export const Home = ({ navigation }) => {
             style={styles.recordingStopModalButton}
             onPress={() => {
               // Discard recording
-              stop();
+              // stop();
               setRecordAudioState(false);
               setRecordingStopVisible(false);
             }}

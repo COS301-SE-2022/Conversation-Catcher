@@ -23,16 +23,16 @@ def test():
 def summarise():
     input_text = request.get_json()['text']
     # pdf_id = request.get_json()['id']
-    
+    textlength = len(input_text)
     # summarised_text = summariser.summarise(input_text)
     # Thread(target = summarise, args=(input_text,pdf_id,)).start()
     API_URL = "https://api-inference.huggingface.co/models/facebook/bart-large-cnn"
     headers = {"Authorization": f"Bearer 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"}
-
-    response = requests.post(API_URL, headers=headers, json={"inputs": input_text})
+    params = {"min_length": int(textlength/10), "max_length": int(textlength/2)}
+    response = requests.post(API_URL, headers=headers, json={"inputs": input_text,"parameters": params})
     return response.json()
     # return jsonify('Your text is being summarised. It will take approximately 5 minutes.')
-    
+
 
 # def return_status(input_text, pdf_id):
 #     summarised_text = summariser.summarise(input_text)
@@ -45,7 +45,7 @@ def summarise():
 #     }
 #     """
 #     variables = {"id" : pdf_id, "summary": summarised_text}
-  
+
 #     response = requests.post(url=url, json={"query": query, "variables": variables})
 #     # print("response status code: ", response.status_code)
 #     if response.status_code == 200:
