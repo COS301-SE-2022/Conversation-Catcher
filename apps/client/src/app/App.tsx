@@ -38,7 +38,7 @@ import { persistStore, persistReducer } from 'redux-persist';
 //import storage from 'redux-persist/lib/storage';
 import { PersistGate } from 'redux-persist/integration/react';
 
-//console.disableYellowBox = true;//Uncomment to hide warnings
+console.disableYellowBox = true;//Uncomment to hide warnings
 //console.reportErrorsAsExceptions = false;//Uncomment to hide errors, not tested
 
 //configure local storage
@@ -67,7 +67,7 @@ const Stack = createNativeStackNavigator();
 
 export const App = () => {
     const client = new ApolloClient({
-    uri: 'https://ccmain.azurewebsites.net/graphql',
+    uri: 'https://ccmain.azurewebsites.net/graphql',//"http://10.0.2.2:3333/graphql",
     // headers: {
     //   // Header(if any)
     //   // authorization: 'a1b2c3d4-a1b2-a1b2c3d4e5f6',
