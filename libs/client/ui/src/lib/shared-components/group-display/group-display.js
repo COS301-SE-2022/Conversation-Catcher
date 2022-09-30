@@ -26,7 +26,8 @@ export function GroupDisplay({ navigation, selectMode, add}, ref) {
   if (groupLocalAccess.addEvent.length !== 0) {
     //If statement to ensure that only one listener is created for the summarise command
     NativeAppEventEmitter.addListener("reloadGroup",()=>{
-      setRefreshFlag(!refreshFlag);
+      //setRefreshFlag(true);
+      ReloadData();
     });
     groupLocalAccess.addEvent.length = 0;
   }
@@ -74,7 +75,7 @@ export function GroupDisplay({ navigation, selectMode, add}, ref) {
 
   const ReloadData = () => {
     setRefreshing(true);
-    //setRefreshFlag(!refreshFlag);
+    //setRefreshFlag(false);
     fetchGroups({
       variables: {
         email: emailState,
@@ -94,14 +95,6 @@ export function GroupDisplay({ navigation, selectMode, add}, ref) {
         setRefreshing(false);
       });
   };
-
-  if (groupLocalAccess.addEvent.length !== 0) {
-    //If statement to ensure that only one listener is created for the summarise command
-    NativeAppEventEmitter.addListener("reloadGroup",(group)=>{
-      ReloadData();
-    });
-    groupLocalAccess.addEvent.length = 0;
-  }
   
   const ScrollDisplay = (props) => {
     if (props.arr.length !== 0)

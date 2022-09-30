@@ -298,7 +298,7 @@ export const Groups = ({ navigation }) => {
                   groupName: newName,
                 }
               }).then((result)=>{
-                DeviceEventEmitter.emit("updateGroups");
+                NativeAppEventEmitter.emit("reloadGroup");
                 setNewName("");
               }).catch((e)=>{
                 console.log(e);
