@@ -42,11 +42,13 @@ export class getGroupsForHandler implements IQueryHandler<getGroupsForQuery> {
     const user = await this.repository.getUser(email);
     const groups = await this.repository.getGroups();
     const result = [];
-    if (user !== null)
+    if (user !== null){
+      if (user.groups === undefined) user.groups = [];
       for (const group of user.groups) {
         if (groups[group] !== undefined)
           result.push(groups[group]);
       }
+    }
     return result;
   }
 }

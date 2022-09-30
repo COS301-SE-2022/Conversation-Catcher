@@ -104,7 +104,7 @@ export const ChangeEmail = ({ navigation }) => {
     if (showMailHint) {
       return (
         <Text style={styles.hintText}>
-          {'This is an email hint text to help the user.'}
+          {'Enter a valid email address.'}
         </Text>
       );
     } else {
