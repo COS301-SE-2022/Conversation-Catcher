@@ -64,8 +64,12 @@ jobs:
         run: |
           nx affected --target=test --coverage
           nx affected --target=lint
-          nx affected --target=build
+          nx affected --target=build --coverage
           nx affected --target=e2e --coverage
+          
+        name: Run-many tests
+        run: |
+          nx run-many --target=test --all  --coverage
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2
