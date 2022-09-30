@@ -99,7 +99,6 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
       embed(id: $id, name: $name, text: $text)
     }
   `;
-
   const [setUser] = useMutation(SET_USER);
   const [setEmbedding] = useMutation(SET_EMBEDDINGS);
   const { data, loading, error } = useQuery(GET_USER_PDFS, {
@@ -231,6 +230,7 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
       />
     );
   if (error) {
+    console.log(error);
     return (
       <ScrollDisplay
         arr={localPDFs}
