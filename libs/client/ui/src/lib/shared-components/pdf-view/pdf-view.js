@@ -37,6 +37,7 @@ export const PdfView = ({ route, navigation }) => {
   const [renameVisible, setRenameVisible] = useState(false);
   const [deleteConfirmVisible, setDeleteConfirmVisible] = useState(false);
   const [newName, setNewName] = useState('');
+  const [notifyUser, setNotifyUser] = useState(false);
 
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => {
@@ -249,6 +250,7 @@ export const PdfView = ({ route, navigation }) => {
             onPress={() => {
               setMoreVisible(false);
               onPdfShare();
+              setNotifyUser(true);
             }}
           >
             <View style={styles.moreModalButtonContent}>
@@ -410,6 +412,22 @@ export const PdfView = ({ route, navigation }) => {
               </View>
             </View>
           </TouchableOpacity>
+        </View>
+      </Modal>
+      <Modal
+        style={styles.modalNotify}
+        isVisible={notifyUser}
+        hasBackdrop={true}
+        backdropColor=""
+        onBackdropPress={() => {
+          setNotifyUser(false);
+        }}
+      >
+        <View style={styles.modalNotifyInner}>
+          <Text style={styles.modalTitle}>
+            {'The PDF has been downloaded to your documents folder'}
+          </Text>
+          {/* <Text style={styles.modalTitle}>{'Your document will be ready in 2 minutes'}</Text> */}
         </View>
       </Modal>
     </SafeAreaView>
@@ -737,5 +755,20 @@ const styles = StyleSheet.create({
     fontStyle: 'normal',
     fontFamily: 'System' /* Inter */,
     padding: 15,
+  },
+  modalNotify: {
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  modalNotifyInner: {
+    width: '100%',
+    flexShrink: 1,
+    backgroundColor: '#d0d5ddff',
+    borderRadius: 7,
+    flexDirection: 'column',
+    borderWidth: 1,
+    borderColor: '#667084ff',
+    opacity: 1,
+    //alignSelf: 'flex-end',
   },
 });
