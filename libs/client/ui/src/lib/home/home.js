@@ -296,14 +296,6 @@ export const Home = ({ navigation }) => {
               text: result.converted_text,
             },
           });
-          const embeddings = await setEmbedding({
-            variables: {
-              id: newPdf.data.addPDF.id,
-              name: newPdf.data.addPDF.name,
-              text: newPdf.data.addPDF.text,
-            },
-          }).catch((e) => console.log(e));
-          console.log(embeddings);
           pdfLocalAccess.addPdf({
             name: newPdf.data.addPDF.name,
             creationDate: newPdf.data.addPDF.creationDate,
@@ -311,7 +303,7 @@ export const Home = ({ navigation }) => {
             text: newPdf.data.addPDF.text,
             id: newPdf.data.addPDF.id,
             summarised: newPdf.data.addPDF.summarised,
-            embeddings: embeddings,
+            embeddings: null,
           });
           NativeAppEventEmitter.emit('updatePage');
           dispatch(addPDF(newPdf.data.addPDF.id));
