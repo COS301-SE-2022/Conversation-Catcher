@@ -28,7 +28,7 @@ def summarise():
     # Thread(target = summarise, args=(input_text,pdf_id,)).start()
     API_URL = "https://api-inference.huggingface.co/models/facebook/bart-large-cnn"
     headers = {"Authorization": f"Bearer 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"}
-    params = {"min_length": int(textlength/5), "max_length": int(textlength/2)}
+    params = {"min_length": int(textlength/10), "max_length": int(textlength/2)}
     response = requests.post(API_URL, headers=headers, json={"inputs": input_text,"parameters": params})
     return response.json()
     # return jsonify('Your text is being summarised. It will take approximately 5 minutes.')
