@@ -73,7 +73,7 @@ export const ChangePassword = ({ navigation }) => {
     if (showMailHint) {
       return (
         <Text style={styles.hintText}>
-          {'This is an password hint text to help the user.'}
+          {'Enter a strong password.'}
         </Text>
       );
     } else {

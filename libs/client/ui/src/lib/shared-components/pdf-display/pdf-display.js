@@ -1,29 +1,70 @@
 import { gql, useMutation, useQuery, useLazyQuery } from '@apollo/client';
-import React, { useImperativeHandle, forwardRef, useState } from 'react';
+import React, {
+  useImperativeHandle,
+  forwardRef,
+  useState,
+  useEffect,
+} from 'react';
 import {
   Text,
   ScrollView,
   StyleSheet,
   DeviceEventEmitter,
   RefreshControl,
+  NativeAppEventEmitter,
 } from 'react-native';
 import Loading from '../loading/loading';
 // import LocalPdfsAccess from '../local-pdfs-access/local-pdfs-access';
 import PdfTile from '../pdf-tile/pdf-tile';
 import pdfLocalAccess from '../local-pdfs-access/local-pdfs-access';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectEmail} from '../../../../../../../apps/client/src/app/slices/user.slice';
+import { selectEmail } from '../../../../../../../apps/client/src/app/slices/user.slice';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectPDFS, refillPDFs } from '../../../../../../../apps/client/src/app/slices/pdf.slice';
+import {
+  selectPDFS,
+  refillPDFs,
+} from '../../../../../../../apps/client/src/app/slices/pdf.slice';
 import { useSelector, useDispatch } from 'react-redux';
 
-export function PdfDisplay({ navigation, selectMode }, ref) {
+export function PdfDisplay({ navigation, selectMode, group}, ref) {
   // const [selectMode, setSelectMode] = useState(false);
   const [didReload, setDidReload] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const emailState = useSelector(selectEmail);
   const localPDFs = useSelector(selectPDFS);
   const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   var counter = 0;
+
+  // //   var oneSecInterval = setInterval(() => {
+  // //     console.log('fetching')
+  // //     fetchDocs({
+  // //       variables: {
+  // //         email: emailState,
+  // //       },
+  // //       fetchPolicy: 'no-cache',
+  // //     })
+  // //       .then((d) => {
+  // //         console.log('received')
+  // //         pdfLocalAccess.clearPdfs();
+  // //         setData(d.data);
+  // //         // setRefreshing(false);
+  // //         setDidReload(!didReload);
+  // //       })
+  // //       .catch((e) => {
+  // //         console.log(e);
+  // //         // pdfLocalAccess.clearPdfs();
+  // //         // setDidReload(!didReload);
+  // //         // setRefreshing(false);
+  // //       });
+  // //     counter++;
+
+  // //     if (counter === 5) {
+  // //       clearInterval(oneSecInterval);
+  // //     }
+  // //   }, 120000);
+  // }, []);
 
   //Listen to when to update page
   DeviceEventEmitter.addListener('updatePage', () => setDidReload(!didReload));
@@ -53,7 +94,27 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
     }
   `;
 
+  const SET_EMBEDDINGS = gql`
+    mutation setEmbeddings($id: String!, $name: String!, $text: String!) {
+      embed(id: $id, name: $name, text: $text)
+    }
+  `;
+  const GET_PDFS = gql`
+    query getArrPdfs($ids: [String!]!) {
+      getPDFByArr(ids: $ids) {
+        id
+        name
+        creationDate
+        downloaded
+        text
+        summarised
+        embeddings
+      }
+    }
+  `;
   const [setUser] = useMutation(SET_USER);
+  const [setEmbedding] = useMutation(SET_EMBEDDINGS);
+  const [getPdfs] = useLazyQuery(GET_PDFS);
   const { data, loading, error } = useQuery(GET_USER_PDFS, {
     variables: { email: emailState },
   });
@@ -68,7 +129,12 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
             <RefreshControl refreshing={refreshing} onRefresh={ReloadData} />
           }
         >
-          <Loading width={100} height={100} load={props.load} text={"Fetching your pdfs"}/>
+          <Loading
+            width={100}
+            height={100}
+            load={props.load}
+            text={'Fetching your pdfs'}
+          />
           {props.arr.map((item, key) => (
             <PdfTile
               key={key}
@@ -94,13 +160,34 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
             <RefreshControl refreshing={refreshing} onRefresh={ReloadData} />
           }
         >
-          <Loading width={100} height={100} load={props.load}  text={"Fetching your pdfs"}/>
+          <Loading
+            width={100}
+            height={100}
+            load={props.load}
+            text={'Fetching your pdfs'}
+          />
           <Text style={{ textAlign: 'center' }}>{props.text}</Text>
         </ScrollView>
       );
   };
 
-  const setData = (d) => {
+  // const getEmbedding = async (document) => {
+  //   if (document.embedding === null) {
+  //     return await setEmbedding({
+  //       variables: {
+  //         id: document.id,
+  //         name: document.id.name,
+  //         text: document.text,
+  //       },
+  //     }).catch((e) => {
+  //       console.log(e);
+  //       return null;
+  //     });
+  //   }
+  // };
+
+  const setData = async (d) => {
+    // console.log(d)
     for (let i = 0; i < d.getPDFs.length; i++) {
       pdfLocalAccess.addPdf({
         name: d.getPDFs[i].name,
@@ -111,20 +198,35 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
         summarised: d.getPDFs[i].summarised,
         embeddings: d.getPDFs[i].embeddings,
       });
+      // if (d.getPDFs[i].embeddings === null) {
+      //   setEmbedding({
+      //     variables: {
+      //       id: d.getPDFs[i].id,
+      //       name: d.getPDFs[i].name,
+      //       text: d.getPDFs[i].text,
+      //     },
+      //   })
+      //     .then((res) => console.log(res))
+      //     .catch((e) => console.log(e));
+      // }
     }
-  }
+    pdfLocalAccess.sortPdfs('Name');
+  };
 
   const ReloadData = () => {
-    setRefreshing(true);
-    fetchDocs({
-      variables: {
-        email: emailState,
-      },
-      fetchPolicy: 'no-cache',
-    })
+    //console.log(group);
+    if (group === '' || group === undefined || group === null){
+      NativeAppEventEmitter.emit('clearSearch');
+      setRefreshing(true);
+      fetchDocs({
+        variables: {
+          email: emailState,
+        },
+        fetchPolicy: 'no-cache',
+      })
       .then((d) => {
         pdfLocalAccess.clearPdfs();
-        setData(d.data)
+        setData(d.data);
         setRefreshing(false);
         // setDidReload(!didReload);
       })
@@ -134,8 +236,37 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
         //setDidReload(!didReload);
         setRefreshing(false);
       });
+    } else {
+      NativeAppEventEmitter.emit('clearSearch');
+      setRefreshing(true);
+      getPdfs({variables: {
+        ids: group.pdfs
+      }})
+      .then((d) => {
+        //console.log(d.data);
+        pdfLocalAccess.clearDisplay();
+        for (let i = 0; i < d.data.getPDFByArr.length; i++) {
+          pdfLocalAccess.addDisplayPdf({
+            name: d.data.getPDFByArr[i].name,
+            creationDate: d.data.getPDFByArr[i].creationDate,
+            downloaded: d.data.getPDFByArr[i].downloaded,
+            text: d.data.getPDFByArr[i].text,
+            id: d.data.getPDFByArr[i].id,
+            summarised: d.data.getPDFByArr[i].summarised,
+            embeddings: d.data.getPDFByArr[i].embeddings,
+          });
+        }
+        setRefreshing(false);
+        // setDidReload(!didReload);
+      })
+      .catch((e) => {
+        console.log(e);
+        pdfLocalAccess.clearDisplay();
+        //setDidReload(!didReload);
+        setRefreshing(false);
+      });
+    }
   };
-
   if (loading)
     return (
       <ScrollDisplay
@@ -145,6 +276,7 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
       />
     );
   if (error) {
+    console.log(error);
     return (
       <ScrollDisplay
         arr={localPDFs}
@@ -179,7 +311,8 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
 
     //Update local pdf storage
     //array of pdfs stored locally, selected from data to overwrite the slice
-    if (data.getPDFs[0] !== undefined && data.getPDFs[0].name !== 'error') {//remove as under a check already
+    if (data.getPDFs[0] !== undefined && data.getPDFs[0].name !== 'error') {
+      //remove as under a check already
       let tempArray = [];
       var p;
       for (p in pdfLocalAccess.getPdfs()) {
@@ -193,7 +326,7 @@ export function PdfDisplay({ navigation, selectMode }, ref) {
   return (
     <ScrollDisplay
       arr={pdfLocalAccess.getPdfs()}
-      text={'You have no documents yet!'}
+      text={'No documents found'}
       load={false}
     />
   );

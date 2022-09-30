@@ -9,7 +9,7 @@ import { lastValueFrom, map, tap } from 'rxjs';
 export class SummariesHandler implements ICommandHandler<SummariseCommand> {
   constructor(private httpService: HttpService) {}
 
-  async execute({ text }: SummariseCommand) {
+  async execute({ text, id }: SummariseCommand) {
     const config = {
       method: 'post',
       headers: {
@@ -24,7 +24,7 @@ export class SummariesHandler implements ICommandHandler<SummariseCommand> {
     try {
       return await lastValueFrom(
         this.httpService
-          .post('http://localhost:5000/summarise', data, config)
+          .post('https://ccsummariser.azurewebsites.net/summarise', data, config)
           .pipe(map((res) => res.data))
       );
     } catch (error) {

@@ -43,6 +43,7 @@ export const Home = ({ navigation }) => {
   const [recordAudioState, setRecordAudioState] = useState(false);
   const [uploadVisible, setUploadVisible] = useState(false);
   const [fileSelected, setFileSelected] = useState(false);
+  const [notifyUser, setNotifyUser] = useState(false);
   const [state, setState] = useState({
     chunks: [],
     recording: false,
@@ -91,11 +92,18 @@ export const Home = ({ navigation }) => {
     }
   `;
 
+  const SET_EMBEDDINGS = gql`
+    mutation setEmbeddings($id: String!, $name: String!, $text: String!) {
+      embed(id: $id, name: $name, text: $text)
+    }
+  `;
+
   //Mutations to be used in the creation of new PDFs
   const [summariseText] = useMutation(SUMMARISE_TEXT);
   const [setSummarisedText] = useMutation(SET_SUMMARISED);
   const [addPdf] = useMutation(ADD_PDF);
   const [generateName] = useMutation(GENERATE_NAME);
+  const [setEmbedding] = useMutation(SET_EMBEDDINGS);
 
   const handleDocumentSelection = useCallback(async () => {
     try {
@@ -118,6 +126,7 @@ export const Home = ({ navigation }) => {
             { backgroundColor: colourState },
           ]}
           onPress={() => {
+            stop()
             setRecordingStopVisible(true);
           }}
         >
@@ -260,7 +269,8 @@ export const Home = ({ navigation }) => {
 
   // Send the audio stream to the server and receive the converted text
   const convertSpeech = () => {
-    fetch('http://localhost:5050/stt', {
+    setNotifyUser(true);
+    fetch('https://ccstt.azurewebsites.net/stt', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -279,9 +289,11 @@ export const Home = ({ navigation }) => {
           const newPdf = await addPdf({
             variables: {
               email: emailState,
-              name: await generateName({
-                variables: { text: result.converted_text },
-              }),
+              name: (
+                await generateName({
+                  variables: { text: result.converted_text },
+                }).catch((e) => console.log(e))
+              ).data.generateName,
               text: result.converted_text,
             },
           });
@@ -292,7 +304,7 @@ export const Home = ({ navigation }) => {
             text: newPdf.data.addPDF.text,
             id: newPdf.data.addPDF.id,
             summarised: newPdf.data.addPDF.summarised,
-            embeddings: newPdf.data.addPDF.embeddings,
+            embeddings: null,
           });
           NativeAppEventEmitter.emit('updatePage');
           dispatch(addPDF(newPdf.data.addPDF.id));
@@ -304,24 +316,29 @@ export const Home = ({ navigation }) => {
 
   //summarise the text and populate the required fields
   const summarise = (id, text) => {
-    console.log('starting summarisation');
     summariseText({ variables: { text: text } })
       .then((res) => {
-        console.log(res);
+        console.log(": " , res);
         setSummarisedText({
           variables: { id: id, summary: res.data.Summarise },
         }).catch((e) => {
-          console.log(e);
+          console.log("", e);
           pdfLocalAccess.addSummary(id, 'error');
           return;
         });
-        pdfLocalAccess.addSummary(id, res.data.Summarise);
-        console.log('summary added');
+        pdfLocalAccess.addSummary(id, 'loading');
       })
-      .catch((e) => console.log(e));
+      .catch((e) => {
+        console.log("", e);
+        setSummarisedText({
+          variables: { id: id, summary: 'error' },
+        }).catch((e) => {
+          console.log("", e);
+        });
+        pdfLocalAccess.addSummary(id, 'error');
+      });
   };
 
-  // componentDidMount();
   return (
     <SafeAreaView style={styles.home}>
       <View style={styles.big_title_box}>
@@ -329,7 +346,7 @@ export const Home = ({ navigation }) => {
           {'Recents'}
         </Text>
       </View>
-      <PdfDisplay navigation={navigation} selectMode={false} ref={pdfRef} />
+      <PdfDisplay navigation={navigation} selectMode={false} group={''} ref={pdfRef} />
       <View style={styles.viewPdfsTouchableOpacityFrame}>
         <TouchableOpacity
           style={[
@@ -337,7 +354,7 @@ export const Home = ({ navigation }) => {
             { backgroundColor: colourState },
           ]}
           onPress={() => {
-            navigation.navigate('ViewAll');
+            navigation.navigate('ViewAll', { groupName: '' });
           }}
         >
           <View style={styles.viewPdfsTouchableOpacityLabel_box}>
@@ -345,7 +362,7 @@ export const Home = ({ navigation }) => {
               style={styles.viewPdfsTouchableOpacityLabel}
               ellipsizeMode={'clip'}
             >
-              {'My PDFs'}
+              {'Conversations'}
             </Text>
           </View>
         </TouchableOpacity>
@@ -357,7 +374,7 @@ export const Home = ({ navigation }) => {
             { backgroundColor: colourState },
           ]}
           onPress={() => {
-            navigation.navigate('Groups');
+            navigation.navigate('Groups', { groupObject: null });
           }}
         >
           <View style={styles.viewPdfsTouchableOpacityLabel_box}>
@@ -374,14 +391,14 @@ export const Home = ({ navigation }) => {
         <View style={styles.bottomGroupSideSpacing}></View>
         <View style={styles.audioTouchableOpacityGroup}>
           <RecordAudioButtonState />
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={styles.uploadAudioTouchableOpacity}
             onPress={() => setUploadVisible(true)}
           >
             <View style={styles.uploadAudioIcon}>
               <Icon color="#667084ff" name="upload" size={40} />
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
         <View style={styles.bottomGroupSideSpacing}>
           <TouchableOpacity
@@ -415,7 +432,7 @@ export const Home = ({ navigation }) => {
             style={styles.recordingStopModalButton}
             onPress={async () => {
               // Convert speech to text
-              stop();
+              // stop();
               convertSpeech();
               setRecordAudioState(false);
               setRecordingStopVisible(false);
@@ -436,7 +453,7 @@ export const Home = ({ navigation }) => {
             </View>
           </TouchableOpacity>
 
-          <View style={styles.recordingStopModalButtonDivider} />
+          {/* <View style={styles.recordingStopModalButtonDivider} />
 
           <TouchableOpacity
             style={styles.recordingStopModalButton}
@@ -458,7 +475,7 @@ export const Home = ({ navigation }) => {
                 </Text>
               </View>
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
           <View style={styles.recordingStopModalButtonDivider} />
 
@@ -466,7 +483,7 @@ export const Home = ({ navigation }) => {
             style={styles.recordingStopModalButton}
             onPress={() => {
               // Discard recording
-              stop();
+              // stop();
               setRecordAudioState(false);
               setRecordingStopVisible(false);
             }}
@@ -511,6 +528,22 @@ export const Home = ({ navigation }) => {
               </View>
             </View>
           </TouchableOpacity>
+        </View>
+      </Modal>
+      <Modal
+        style={styles.modalNotify}
+        isVisible={notifyUser}
+        hasBackdrop={true}
+        backdropColor=""
+        onBackdropPress={() => {
+          setNotifyUser(false);
+        }}
+      >
+        <View style={styles.modalNotifyInner}>
+          <Text style={styles.modalTitle}>
+            {'Document generation has started and will take about 2 minutes'}
+          </Text>
+          {/* <Text style={styles.modalTitle}>{'Your document will be ready in 2 minutes'}</Text> */}
         </View>
       </Modal>
     </SafeAreaView>
@@ -641,13 +674,14 @@ const styles = StyleSheet.create({
   recordAudioTouchableOpacity: {
     width: '50%',
     flexShrink: 1,
-    borderTopLeftRadius: 8,
-    borderBottomLeftRadius: 8,
+    //borderTopLeftRadius: 8,
+    //borderBottomLeftRadius: 8,
+    borderRadius: 8,
     overflow: 'hidden',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRightColor: '#667084ff',
-    borderRightWidth: 1,
+    //borderRightColor: '#667084ff',
+    //borderRightWidth: 1,
   },
   recordAudioIcon: {
     padding: 10,
@@ -670,6 +704,21 @@ const styles = StyleSheet.create({
   modal: {
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  modalNotify: {
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  modalNotifyInner: {
+    width: '100%',
+    flexShrink: 1,
+    backgroundColor: '#d0d5ddff',
+    borderRadius: 7,
+    flexDirection: 'column',
+    borderWidth: 1,
+    borderColor: '#667084ff',
+    opacity: 1,
+    //alignSelf: 'flex-end',
   },
   modalTitle: {
     color: '#344053ff',

@@ -8,6 +8,7 @@ import {
   ScrollView,
   TextInput,
   DeviceEventEmitter,
+  NativeAppEventEmitter,
 } from 'react-native';
 import { gql, useLazyQuery, useMutation } from '@apollo/client';
 import GroupTile from '../shared-components/group-tile/group-tile.js';
@@ -20,6 +21,7 @@ import groupLocalAccess from '../shared-components/local-groups-access/local-gro
 import { useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { selectColour, selectEmail } from '../../../../../../apps/client/src/app/slices/user.slice';
+import pdfLocalAccess from '../shared-components/local-pdfs-access/local-pdfs-access'
 
 export const Groups = ({ navigation }) => {
   const groupRef = useRef();
@@ -45,10 +47,16 @@ export const Groups = ({ navigation }) => {
       $email: String!
       $groupName: String!
     ) {
-      createGroup(email: $email, groupName: $groupName)
+      createGroup(email: $email, groupName: $groupName) {
+        name
+        admin
+        users
+        description
+        pdfs
+      }
     }
   `;
-    const [createGroup] = useMutation(CREATE_GROUP);
+  const [createGroup] = useMutation(CREATE_GROUP);
   //variables for object sorting
   const [objArr, setObjArr] = useState([]);
 
@@ -189,7 +197,7 @@ export const Groups = ({ navigation }) => {
           </View>
         </View>
       </View>
-{/* 
+{/*
       <GroupDisplay
         navigation={navigation}
         selectMode={selectMode}
@@ -201,6 +209,7 @@ export const Groups = ({ navigation }) => {
         navigation={navigation}
         selectMode={selectMode}
         ref={groupRef}
+        add={false}
       />
       {
       //   <View style={styles.groupTiles}>
@@ -246,7 +255,15 @@ export const Groups = ({ navigation }) => {
 
         <TouchableOpacity
           style={styles.backButton}
-          onPress={() => navigation.navigate('Home')}
+          onPress={() => {
+            if (pdfLocalAccess.isSet.length !== 0){
+              pdfLocalAccess.clearDisplay();
+              pdfLocalAccess.allPdfs.forEach((pdf) => { pdfLocalAccess.displayPdfs.push(pdf); });
+              NativeAppEventEmitter.emit('updatePage');
+              pdfLocalAccess.isSet.length = 0;
+            }
+            navigation.navigate('Home')
+          }}
         >
           <Icon name="angle-left" color="#344053ff" size={30} />
         </TouchableOpacity>
@@ -262,6 +279,7 @@ export const Groups = ({ navigation }) => {
       >
         <View style={styles.moreModalInner}>
           <TextInput
+            style={styles.groupNameInput}
             onChangeText={setNewName}
             value={newName}
             placeholder="Name your group"
@@ -270,19 +288,23 @@ export const Groups = ({ navigation }) => {
           <View style={styles.moreModalButtonDivider} />
 
           <TouchableOpacity
-            style={styles.moreModalButton}
+            style={[styles.moreModalButton, { backgroundColor: colourState }]}
             onPress={() => {
+              // console.log(userEmail);
+              // console.log(newName);
               createGroup({
                 variables: {
                   email: userEmail,
                   groupName: newName,
                 }
               }).then((result)=>{
-                setMoreVisible(false);
-                DeviceEventEmitter.emit("updateGroups");
+                NativeAppEventEmitter.emit("reloadGroup");
+                setNewName("");
               }).catch((e)=>{
                 console.log(e);
+                setNewName("");
               });
+              setMoreVisible(false);
             }}
           >
             <View style={styles.moreModalButtonContent}>
@@ -576,30 +598,42 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   moreModalInner: {
-    width: '45%',
+    width: '70%',
     flexShrink: 1,
     backgroundColor: '#f5f5f5ff',
-    borderRadius: 7,
+    borderRadius: 8,
     flexDirection: 'column',
     borderWidth: 1,
     borderColor: '#667084ff',
     opacity: 1,
   },
+  groupNameInput:{
+    backgroundColor: '#ffffff',
+    margin: 10,
+    padding: 5,
+    //height: '20%',
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    flexShrink: 1,
+  },
   moreModalButton: {
     flexGrow: 1,
-    height: '8%',
+    //height: '8%',
+    width: '80%',
     alignItems: 'center',
     flexDirection: 'row',
+    borderRadius: 8,
+    margin: 10,
   },
   moreModalButtonContent: {
     flexGrow: 1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    //padding: 5
+
   },
   moreModalButtonText: {
-    color: '#344053ff',
+    color: '#ffffff',
     textAlign: 'center',
     letterSpacing: 0,
     lineHeight: 20,
@@ -607,6 +641,7 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     fontStyle: 'normal',
     fontFamily: 'System' /* Inter */,
+    margin: 10,
   },
   moreModalButtonText_box: {
     flexShrink: 1,

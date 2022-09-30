@@ -37,6 +37,7 @@ export const PdfView = ({ route, navigation }) => {
   const [renameVisible, setRenameVisible] = useState(false);
   const [deleteConfirmVisible, setDeleteConfirmVisible] = useState(false);
   const [newName, setNewName] = useState('');
+  const [notifyUser, setNotifyUser] = useState(false);
 
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => {
@@ -46,7 +47,7 @@ export const PdfView = ({ route, navigation }) => {
 
   const { text, name, id, summarised } = route.params;
 
-  const onShare = async () => {
+  const onPdfShare = async () => {
     try {
       const htmlPDF = '<h1>'+name.name+'</h1>'+text.text;//Add check to output summerized text when toggled
       console.log("Export");
@@ -59,6 +60,21 @@ export const PdfView = ({ route, navigation }) => {
       console.log(file.filePath);
     } catch (error) {
       alert(error.message);
+    }
+  };
+
+  const onTextShare = async () => {
+    try {
+      const result = await Share.share({
+        message:
+          text.text,
+        title:
+          name.name,
+        url:
+          name.name,
+      });
+    } catch (error) {
+      //alert(error.message);
     }
   };
 
@@ -116,7 +132,7 @@ export const PdfView = ({ route, navigation }) => {
       return (
         <View style={styles.pdfTextContainer}>
           <Loading width={100} height={100} load={true} />
-          <Text style={styles.modalTitle}>Summarising in progress</Text>
+          <Text style={styles.modalTitle}>Summarising in progress...it will take approximately 5 minutes</Text>
         </View>
       );
     if (summarised.summarised === 'error')
@@ -189,7 +205,7 @@ export const PdfView = ({ route, navigation }) => {
             style={styles.moreButton}
             onPress={() => {
               setMoreVisible(true);
-              console.log(text);
+              //console.log(text);
             }}
           >
             <Icon name="ellipsis-h" color="#344053ff" size={30} />
@@ -210,7 +226,56 @@ export const PdfView = ({ route, navigation }) => {
             style={styles.moreModalButton}
             onPress={() => {
               setMoreVisible(false);
-              onShare();
+              onTextShare();
+            }}
+          >
+            <View style={styles.moreModalButtonContent}>
+              <View style={styles.iconContainer}>
+                <Icon
+                  style={{ color: colourState }}
+                  name="file-text-o"
+                  size={18}
+                />
+              </View>
+              <View style={styles.moreModalButtonText_box}>
+                <Text style={styles.moreModalButtonText} ellipsizeMode={'clip'}>
+                  {'Export text'}
+                </Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.moreModalButton}
+            onPress={() => {
+              setMoreVisible(false);
+              onPdfShare();
+              setNotifyUser(true);
+            }}
+          >
+            <View style={styles.moreModalButtonContent}>
+              <View style={styles.iconContainer}>
+                <Icon
+                  style={{ color: colourState }}
+                  name="file-pdf-o"
+                  size={18}
+                />
+              </View>
+              <View style={styles.moreModalButtonText_box}>
+                <Text style={styles.moreModalButtonText} ellipsizeMode={'clip'}>
+                  {'Download PDF'}
+                </Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.moreModalButton}
+            onPress={() => {
+              setMoreVisible(false);
+              //onShare();
+              console.log(id.id);
+              navigation.navigate('GroupSelection',id);
             }}
           >
             <View style={styles.moreModalButtonContent}>
@@ -223,7 +288,7 @@ export const PdfView = ({ route, navigation }) => {
               </View>
               <View style={styles.moreModalButtonText_box}>
                 <Text style={styles.moreModalButtonText} ellipsizeMode={'clip'}>
-                  {'Export'}
+                  {'Share with group'}
                 </Text>
               </View>
             </View>
@@ -349,6 +414,22 @@ export const PdfView = ({ route, navigation }) => {
           </TouchableOpacity>
         </View>
       </Modal>
+      <Modal
+        style={styles.modalNotify}
+        isVisible={notifyUser}
+        hasBackdrop={true}
+        backdropColor=""
+        onBackdropPress={() => {
+          setNotifyUser(false);
+        }}
+      >
+        <View style={styles.modalNotifyInner}>
+          <Text style={styles.modalTitle}>
+            {'The PDF has been downloaded to your documents folder'}
+          </Text>
+          {/* <Text style={styles.modalTitle}>{'Your document will be ready in 2 minutes'}</Text> */}
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 };
@@ -430,6 +511,7 @@ const styles = StyleSheet.create({
     padding: 15,
     flexGrow: 1,
     minHeight: 28,
+    width: "60%",
   },
   summarisedSwitchGroup: {
     flexDirection: 'row',
@@ -438,6 +520,7 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     alignItems: 'center',
     justifyContent: 'flex-end',
+    width: "40%",
   },
   summarisedLabel: {
     color: '#344053ff',
@@ -512,7 +595,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   moreModalInner: {
-    width: '45%',
+    width: '70%',
     flexShrink: 1,
     backgroundColor: '#f5f5f5ff',
     borderRadius: 7,
@@ -535,7 +618,7 @@ const styles = StyleSheet.create({
     //padding: 5
   },
   iconContainer: {
-    width: '40%',
+    width: '25%',
     height: '100%',
     alignItems: 'center',
   },
@@ -551,6 +634,7 @@ const styles = StyleSheet.create({
   },
   moreModalButtonText_box: {
     flexShrink: 1,
+
   },
   moreModalButtonDivider: {
     backgroundColor: '#d0d5ddff',
@@ -671,5 +755,20 @@ const styles = StyleSheet.create({
     fontStyle: 'normal',
     fontFamily: 'System' /* Inter */,
     padding: 15,
+  },
+  modalNotify: {
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  modalNotifyInner: {
+    width: '100%',
+    flexShrink: 1,
+    backgroundColor: '#d0d5ddff',
+    borderRadius: 7,
+    flexDirection: 'column',
+    borderWidth: 1,
+    borderColor: '#667084ff',
+    opacity: 1,
+    //alignSelf: 'flex-end',
   },
 });

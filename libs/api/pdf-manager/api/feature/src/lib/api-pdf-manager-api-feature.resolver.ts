@@ -93,7 +93,7 @@ export class ApiPdfManagerApiFeatureResolver {
     return [this.errorObj];
   }
 
-  @Query(() => String)
+  @Query(() => [String])
   async semanticSearch(
     @Args('query') query: string,
     @Args('docs', { type: () => [PdfEntityInput] }) docs: PdfEntityInput[]
@@ -130,7 +130,7 @@ export class ApiPdfManagerApiFeatureResolver {
   }
 
   //Add embeddings for the search by idea
-  @Mutation(() => String)
+  @Mutation(() => [Number])
   async embed(
     @Args('id') id: string,
     @Args('name') name: string,

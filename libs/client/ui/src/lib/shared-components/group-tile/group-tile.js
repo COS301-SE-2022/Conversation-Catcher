@@ -5,6 +5,7 @@ import {
   Text,
   Image,
   TouchableOpacity,
+  DeviceEventEmitter,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
@@ -16,32 +17,39 @@ import { toggleDown } from '../../../../../../../apps/client/src/app/slices/grou
 import { gql, useLazyQuery, useMutation } from '@apollo/client';
 //import FileViewer from "react-native-file-viewer";
 
+//const [addPdf] = useMutation(ADD_PDF);
+
 const GroupTile = ({
   name,
   admin,
   users,
-  thumbnailSource,
+  thumbnail,
   description,
   pdfs,
   nav,
+  add,
 }) => {
   const colourState = useSelector(selectColour);
+  //console.log(props);
   const buildGroup = () => {
-    return { name: name, }
+    return { name:name, thumbnail:thumbnail, admin:admin, users:users, description:description, pdfs:pdfs }
   }
-  console.log(name);
   return (
     <TouchableOpacity
       style={styles.groupTile}
-      onPress={() =>
-        nav.navigate('GroupInfo', { name:name, thumbnailSource:thumbnailSource, admin:admin, users:users, description:description, pdfs:pdfs  })
-      }
+      onPress={() =>{
+        if (add){
+          DeviceEventEmitter.emit("AddPdf",name);
+        } else {
+          nav.navigate('ViewAll', { groupObject: buildGroup() })
+        }
+      }}
     >
       <View style={[styles.groupThumbnailBox, { borderColor: colourState }]}>
-        <Image
-          style={styles.groupThumbnail}
-          source={thumbnailSource}
-        />
+        {/* </View><View style={[styles.groupThumbnail, {backgroundColor: thumbnail}]}> */}
+        <View style={[styles.groupThumbnail, {backgroundColor: colourState}]}>
+          <Text style={styles.groupIcon}>{name.toUpperCase()[0]}</Text>
+        </View>
       </View>
       <View style={styles.groupTile_contents_not_thumbnail}>
         <View style={styles.groupNameBox}>
@@ -86,6 +94,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     resizeMode: 'center',
     borderRadius: 180,
+    justifyContent: "center",
   },
   groupTile_contents_not_thumbnail: {
     flexGrow: 1,
@@ -122,5 +131,11 @@ const styles = StyleSheet.create({
     flexShrink: 1,
     width: '80%',
     paddingHorizontal: 5,
+  },
+  groupIcon: {
+    textAlign: "center",
+    color: "#ffffff",
+    fontSize: 25,
+    fontWeight: "bold",
   },
 });

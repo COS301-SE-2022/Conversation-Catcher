@@ -406,22 +406,22 @@ source_word_index=x_tokenizer.word_index
 target_word_index=y_tokenizer.word_index
 
 save_path = os.path.join("gs://", gcp_bucket, "reverse_target_word_index")
-f = open("reverse_target_word_index", "wb")
+f = open(save_path, "wb")
 pickle.dump(reverse_target_word_index, f)
 f.close()
 
 save_path = os.path.join("gs://", gcp_bucket, "reverse_source_word_index")
-f = open("reverse_source_word_index", "wb")
+f = open(save_path, "wb")
 pickle.dump(reverse_source_word_index, f)
 f.close()
 
 save_path = os.path.join("gs://", gcp_bucket, "target_word_index")
-f = open("target_word_index", "wb")
+f = open(save_path, "wb")
 pickle.dump(target_word_index, f)
 f.close()
 
 save_path = os.path.join("gs://", gcp_bucket, "source_word_index")
-f = open("source_word_index", "wb")
+f = open(save_path, "wb")
 pickle.dump(source_word_index, f)
 f.close()
 

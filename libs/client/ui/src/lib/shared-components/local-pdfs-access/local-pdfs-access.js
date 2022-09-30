@@ -2,6 +2,8 @@ class LocalPdfsAccess {
   displayPdfs; //The pdfs that get displayed
   allPdfs; //All the pdfs loaded from the api call
   summariseListener = ['false']; //Checks if the summarise listener has been defined
+  clearSearchInput = ['false']; //Checks that only one clear search listener is created
+  isSet = ['false']; //Checks wether group or user pdfs is loaded
 
   constructor() {
     this.displayPdfs = [];
@@ -10,6 +12,10 @@ class LocalPdfsAccess {
 
   isLoaded(){
     return this.allPdfs[0] !== undefined && this.allPdfs[0].name !== 'error'
+  }
+
+  clearDisplay(){
+    this.displayPdfs.length = 0;
   }
 
   //Add shallow copy of an array of pdfs into both arrays
@@ -24,6 +30,10 @@ class LocalPdfsAccess {
   addPdf(newPdf) {
     this.displayPdfs.push(newPdf);
     this.allPdfs.push(newPdf);
+  }
+
+  addDisplayPdf(newPdf){
+    this.displayPdfs.push(newPdf);
   }
 
   //Return pdfs to be displayed by the component
@@ -62,6 +72,15 @@ class LocalPdfsAccess {
   clearPdfs() {
     this.displayPdfs.length = 0;
     this.allPdfs.length = 0;
+  }
+
+  sortByIds(ids){
+    this.displayPdfs.length = 0;
+    for (let j=0; j<ids.length; j++){
+      for (let i = 0; i < this.allPdfs.length; i++) {
+        if (this.allPdfs[i].id === ids[j]) this.displayPdfs.push(this.allPdfs[i]);
+      }
+    }
   }
 
   //Filter the displayPdfs on name to display pdfs based on given search criteria
