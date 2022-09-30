@@ -92,10 +92,10 @@ export const Home = ({ navigation }) => {
     }
   `;
 
-  const SET_EMBEDDINGS = gql`
-    mutation setEmbeddings($id: String!, $name: String!, $text: String!) {
-      embed(id: $id, name: $name, text: $text)
-    }
+  const RENAME_PDF = gql`
+  mutation renamePdf($id:String!,$name:String!){
+    renamePDF(id:"",name:"")
+  }
   `;
 
   //Mutations to be used in the creation of new PDFs
@@ -103,7 +103,7 @@ export const Home = ({ navigation }) => {
   const [setSummarisedText] = useMutation(SET_SUMMARISED);
   const [addPdf] = useMutation(ADD_PDF);
   const [generateName] = useMutation(GENERATE_NAME);
-  const [setEmbedding] = useMutation(SET_EMBEDDINGS);
+  const [renamePdf] = useMutation(RENAME_PDF);
 
   const handleDocumentSelection = useCallback(async () => {
     try {
@@ -289,11 +289,7 @@ export const Home = ({ navigation }) => {
           const newPdf = await addPdf({
             variables: {
               email: emailState,
-              name: (
-                await generateName({
-                  variables: { text: result.converted_text },
-                }).catch((e) => console.log(e))
-              ).data.generateName,
+              name: '',
               text: result.converted_text,
             },
           });
@@ -307,6 +303,14 @@ export const Home = ({ navigation }) => {
             embeddings: null,
           });
           NativeAppEventEmitter.emit('updatePage');
+          const newName = (
+            await generateName({
+              variables: { text: result.converted_text },
+            }).catch((e) => console.log(e))
+          ).data.generateName
+          pdfLocalAccess.renamePdf(newPdf.data.addPDF.id,newName);
+          NativeAppEventEmitter.emit('updatePage');
+          renamePdf({variables: {id:newPdf.data.addPDF.id, name:newName}})
           dispatch(addPDF(newPdf.data.addPDF.id));
           summarise(newPdf.data.addPDF.id, newPdf.data.addPDF.text);
         } else console.log('Connection error: internet connection is required');
