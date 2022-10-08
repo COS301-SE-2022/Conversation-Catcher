@@ -6,8 +6,7 @@ export const USER = 'user';
 
 const initState = {
   email:"",
-  colour:"#3f89beff",
-  dark: false,
+  colour:{},
   pdfs: []
 };
 
@@ -29,16 +28,12 @@ export const userSlice = createSlice({
       state = initState;
       return state;
     },                                                                         //reset the store back to its default
-    toggleDark: (state,action) => {
-      state.dark = !state.dark;
-      return state;
-    },
   },
 });
 
 export const {actions, reducer} = userSlice;
 
-export const {setUser,setEmail,setColour,addPDF,removePDF,clearUser,toggleDark} = actions;
+export const {setUser,setEmail,setColour,addPDF,removePDF,clearUser} = actions;
 
 //export default reducer
 
@@ -46,4 +41,3 @@ export const selectUser = (state) => state.user;
 export const selectColour = (state) => state.user.colour;
 export const selectEmail = (state) => state.user.email;
 export const selectPDFs = (state) => state.user.pdfs;
-export const selectDark = (state) => state.user.dark;
