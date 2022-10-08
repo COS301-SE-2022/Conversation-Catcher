@@ -74,7 +74,7 @@ export const ColourPage = ({ navigation}) => {
         </View>
       </View>
 
-      {/* <View style={styles.darkSwitchGroup}>
+      <View style={styles.darkSwitchGroup}>
         <View style={styles.darkLabelBox}>
           <Text style={styles.darkLabel}>Dark Mode</Text>
         </View>
@@ -87,7 +87,7 @@ export const ColourPage = ({ navigation}) => {
             value={isEnabled}
           />
         </View>
-      </View> */}
+      </View>
 
       <TouchableOpacity  
         style={styles.backButton} 
