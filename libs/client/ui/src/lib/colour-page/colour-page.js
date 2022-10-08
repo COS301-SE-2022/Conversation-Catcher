@@ -31,7 +31,14 @@ export const ColourPage = ({ navigation}) => {
         return {};
     
       default://lightmode blue
-        return {};
+        return {
+          accent:"",
+          mode:"",
+          bottom:"",
+          low:"",
+          high:"",
+          top:"",
+        };
     }
   }
   const [isEnabled, setIsEnabled] = useState(false);
