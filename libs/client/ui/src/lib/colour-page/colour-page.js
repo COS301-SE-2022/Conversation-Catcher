@@ -24,7 +24,18 @@ export const ColourPage = ({ navigation}) => {
   `;
 
   const [setUser] = useMutation(SET_USER);
-
+  const getColour = (accent) => {
+    let key = {a:accent,m:isEnabled};
+    switch (key) {
+      case {a:,m:}:
+        return {};
+        break;
+    
+      default://lightmode blue
+        return {};
+        break;
+    }
+  }
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => {
     setIsEnabled(previousState => !previousState);
@@ -56,16 +67,17 @@ export const ColourPage = ({ navigation}) => {
               user.pdfs.forEach((element,index) => {
                 if (element === null) user.pdfs.splice(index,1);
               });
+              let colourObj = getColour(selectedItem.fillColor);
               setUser({
                 variables: {
                   oldEmail: user.email,
                   email: user.email,
-                  colour: selectedItem.fillColor,
+                  colour: colourObj,
                   pdfs: user.pdfs,
                 },
               }).then(()=>
               //dispatches the setColour action with colour payload
-              dispatch(setColour(selectedItem.fillColor))
+              dispatch(setColour(colourObj))
               ).catch((error) => {
                 console.log(error);
               });
