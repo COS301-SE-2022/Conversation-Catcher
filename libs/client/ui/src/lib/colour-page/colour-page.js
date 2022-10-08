@@ -27,13 +27,11 @@ export const ColourPage = ({ navigation}) => {
   const getColour = (accent) => {
     let key = {a:accent,m:isEnabled};
     switch (key) {
-      case {a:,m:}:
+      case {a:"",m:false}:
         return {};
-        break;
     
       default://lightmode blue
         return {};
-        break;
     }
   }
   const [isEnabled, setIsEnabled] = useState(false);
