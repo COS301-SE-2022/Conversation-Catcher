@@ -4,6 +4,7 @@ import { UserManagementServiceService } from '@conversation-catcher/api/user-man
 import {
   UserEntity,
   GroupEntity,
+  ColourObj,
 } from '@conversation-catcher/api/user-management/api/data-access';
 // import { PdfEntity } from '@conversation-catcher/api/pdf-manager/api/data-access';
 
@@ -49,7 +50,7 @@ export class UserManagementApiFeatureResolver {
     if (res.deletedCount != 0) {
       return 'User succesfully deleted';
     }
-    return res;
+    return 'Failed to delete user';
   }
 
   @Mutation(() => UserEntity)
@@ -62,7 +63,14 @@ export class UserManagementApiFeatureResolver {
       user.pdfs = [];
       user.groups = [];
       user.invites = [];
-      user.colour = '#3f89beff';
+      user.colour = {
+        accent: '',
+        mode: '',
+        bottom: '',
+        low: '',
+        high: '',
+        top: '',
+      };
       return user;
     }
     return this.errorObj;
@@ -72,7 +80,7 @@ export class UserManagementApiFeatureResolver {
   async setUser(
     @Args('oldEmail') oldEmail: string,
     @Args('email') email: string,
-    @Args('colour') colour: string,
+    @Args('colour') colour: ColourObj,
     @Args('pdfs', { type: () => [String] }) pdfs: string[]
   ) {
     const res = await this.userService.setUser(oldEmail, email, colour, pdfs);
@@ -204,11 +212,11 @@ export class UserManagementApiFeatureResolver {
     return await this.userService.removeGroupPdf(pdfId, groupName);
   }
 
-  @Mutation(()=> String)
+  @Mutation(() => String)
   async updateDescription(
     @Args('groupName') groupName: string,
     @Args('description') description: string
-  ){
+  ) {
     return await this.userService.updateDescription(groupName, description);
   }
 }

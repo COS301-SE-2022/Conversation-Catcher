@@ -24,7 +24,14 @@ describe('UserManagementFeatureResolver', () => {
 
   const userObj = new UserEntity();
   userObj.email = 'testEmail';
-  userObj.colour = '#3f89beff';
+  userObj.colour = {
+    accent: '',
+    mode: '',
+    bottom: '',
+    low: '',
+    high: '',
+    top: '',
+  };
   userObj.pdfs = [];
   userObj.groups = [];
   userObj.invites = [];
@@ -32,7 +39,14 @@ describe('UserManagementFeatureResolver', () => {
   const errorObj = new UserEntity();
   errorObj.email = 'error: The provided user does not exist';
   errorObj.pdfs = [];
-  errorObj.colour = '#ff0000';
+  errorObj.colour = {
+    accent: '',
+    mode: '',
+    bottom: '',
+    low: '',
+    high: '',
+    top: '',
+  };
   errorObj.groups = [];
   errorObj.invites = [];
 

@@ -6,7 +6,7 @@ export class setUserCommand {
   constructor(
     public readonly oldEmail?: string,
     public readonly email?: string,
-    public readonly colour?: string,
+    public readonly colour?: any,
     public readonly pdfs?: string[]
   ) {}
 }
