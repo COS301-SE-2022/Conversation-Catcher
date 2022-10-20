@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
   TextInput,
-  DeviceEventEmitter
+  DeviceEventEmitter,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Loading from '../shared-components/loading/loading';
@@ -33,7 +33,7 @@ export const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('Invalid login details');
-  const [loadingIcon,setLoad] = useState(false);
+  const [loadingIcon, setLoad] = useState(false);
 
   DeviceEventEmitter.addListener('logout', () => {
     setEmail('');
@@ -51,7 +51,14 @@ export const Login = ({ navigation }) => {
       getUser(email: $email) {
         email
         pdfs
-        colour
+        colour {
+          accent
+          mode
+          bottom
+          low
+          high
+          top
+        }
       }
     }
   `;
@@ -61,9 +68,7 @@ export const Login = ({ navigation }) => {
   function MailHint() {
     if (showMailHint) {
       return (
-        <Text style={styles.hintText}>
-          {'Please enter a valid email.'}
-        </Text>
+        <Text style={styles.hintText}>{'Please enter a valid email.'}</Text>
       );
     } else {
       return null;
@@ -72,11 +77,7 @@ export const Login = ({ navigation }) => {
 
   function PasswordHint() {
     if (showPasswordHint) {
-      return (
-        <Text style={styles.hintText}>
-          {'Enter a strong password.'}
-        </Text>
-      );
+      return <Text style={styles.hintText}>{'Enter a strong password.'}</Text>;
     } else {
       return null;
     }
@@ -91,13 +92,17 @@ export const Login = ({ navigation }) => {
     );
   }
 
-
   return (
     <SafeAreaView style={styles.logInPage}>
       <View style={styles.big_title_box}>
         <Text style={styles.big_title}>{'Log in to your account'}</Text>
       </View>
-      <Loading width={100} height={100} load={loadingIcon} text={"Logging you in"}/>
+      <Loading
+        width={100}
+        height={100}
+        load={loadingIcon}
+        text={'Logging you in'}
+      />
       <View style={styles.inputsGroup}>
         <InvalidDetails />
         <View style={styles.inputsItem}>
@@ -145,7 +150,11 @@ export const Login = ({ navigation }) => {
           <View style={styles.inputField}>
             <View style={styles.inputText_box}>
               <View style={styles.inputIcon}>
-                <Icon style={{ color: colourState.accent }} name="lock" size={21} />
+                <Icon
+                  style={{ color: colourState.accent }}
+                  name="lock"
+                  size={21}
+                />
               </View>
               <TextInput
                 style={styles.inputText}

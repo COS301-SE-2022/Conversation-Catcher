@@ -28,14 +28,21 @@ export const Register = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('Invalid login details');
-  const [loadingIcon,setLoad] = useState(false);
+  const [loadingIcon, setLoad] = useState(false);
 
   //graphql query tree
   const ADDUSER = gql`
     mutation addUser($email: String!) {
       addUser(email: $email) {
         email
-        colour
+        colour {
+          accent
+          mode
+          bottom
+          low
+          high
+          top
+        }
         pdfs
       }
     }
@@ -57,11 +64,7 @@ export const Register = ({ navigation }) => {
 
   function PasswordHint() {
     if (showPasswordHint) {
-      return (
-        <Text style={styles.hintText}>
-          {'Enter a strong password.'}
-        </Text>
-      );
+      return <Text style={styles.hintText}>{'Enter a strong password.'}</Text>;
     } else {
       return null;
     }
@@ -75,13 +78,18 @@ export const Register = ({ navigation }) => {
       </View>
     );
   }
-  
+
   return (
     <SafeAreaView style={styles.registerPage}>
       <View style={styles.big_title_box}>
         <Text style={styles.big_title}>{'Create new account'}</Text>
       </View>
-      <Loading width={100} height={100} load={loadingIcon} text={"Creating your account"}/>
+      <Loading
+        width={100}
+        height={100}
+        load={loadingIcon}
+        text={'Creating your account'}
+      />
       <View style={styles.inputsGroup}>
         <InvalidDetails />
         <View style={styles.inputsItem}>
@@ -128,7 +136,11 @@ export const Register = ({ navigation }) => {
           <View style={styles.inputField}>
             <View style={styles.inputText_box}>
               <View style={styles.inputIcon}>
-                <Icon style={{ color: colourState.accent }} name="lock" size={21} />
+                <Icon
+                  style={{ color: colourState.accent }}
+                  name="lock"
+                  size={21}
+                />
               </View>
               <TextInput
                 style={styles.inputText}
