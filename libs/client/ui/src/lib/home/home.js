@@ -123,7 +123,7 @@ export const Home = ({ navigation }) => {
         <TouchableOpacity
           style={[
             styles.recordAudioTouchableOpacity,
-            { backgroundColor: colourState },
+            { backgroundColor: colourState.accent },
           ]}
           onPress={() => {
             stop()
@@ -136,6 +136,7 @@ export const Home = ({ navigation }) => {
         </TouchableOpacity>
       );
     }
+
     return (
       <TouchableOpacity
         style={[
@@ -161,12 +162,12 @@ export const Home = ({ navigation }) => {
           style={styles.changeUploadModalButton}
           onPress={() => handleDocumentSelection()}
         >
-          <Icon style={{ color: colourState }} name="file-sound-o" size={16} />
+          <Icon style={{ color: colourState.accent }} name="file-sound-o" size={16} />
           {fileResponse.map((file, index) => (
             <Text
               style={[
                 styles.changeUploadModalButtonText,
-                { color: colourState },
+                { color: colourState.accent },
               ]}
             >
               {file?.name}
@@ -407,7 +408,10 @@ export const Home = ({ navigation }) => {
         <View style={styles.bottomGroupSideSpacing}>
           <TouchableOpacity
             style={styles.settingsTouchableOpacityFrame}
-            onPress={() => navigation.navigate('Settings')}
+            onPress={() => {
+              navigation.navigate('Settings');
+              console.log(colourState);
+            }}
           >
             <View style={styles.settingsIconBox}>
               <Icon style={styles.settingsIcon}>
