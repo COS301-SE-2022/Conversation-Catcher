@@ -93,9 +93,9 @@ export const Home = ({ navigation }) => {
   `;
 
   const RENAME_PDF = gql`
-  mutation renamePdf($id:String!,$name:String!){
-    renamePDF(id:"",name:"")
-  }
+    mutation renamePdf($id: String!, $name: String!) {
+      renamePDF(id: "", name: "")
+    }
   `;
 
   //Mutations to be used in the creation of new PDFs
@@ -126,7 +126,7 @@ export const Home = ({ navigation }) => {
             { backgroundColor: colourState.accent },
           ]}
           onPress={() => {
-            stop()
+            stop();
             setRecordingStopVisible(true);
           }}
         >
@@ -162,7 +162,11 @@ export const Home = ({ navigation }) => {
           style={styles.changeUploadModalButton}
           onPress={() => handleDocumentSelection()}
         >
-          <Icon style={{ color: colourState.accent }} name="file-sound-o" size={16} />
+          <Icon
+            style={{ color: colourState.accent }}
+            name="file-sound-o"
+            size={16}
+          />
           {fileResponse.map((file, index) => (
             <Text
               style={[
@@ -304,15 +308,20 @@ export const Home = ({ navigation }) => {
             embeddings: null,
           });
           NativeAppEventEmitter.emit('updatePage');
-          const newName = (
-            await generateName({
-              variables: { text: result.converted_text },
-            }).catch((e) => console.log(e))
-          ).data.generateName
-          pdfLocalAccess.renamePdf(newPdf.data.addPDF.id,newName);
-          NativeAppEventEmitter.emit('updatePage');
-          renamePdf({variables: {id:newPdf.data.addPDF.id, name:newName}})
           dispatch(addPDF(newPdf.data.addPDF.id));
+          generateName({
+            variables: { text: result.converted_text },
+          })
+            .then((result) => {
+              const newName = result.data.generateName;
+              console.log(newName);
+              pdfLocalAccess.renamePdf(newPdf.data.addPDF.id, newName);
+              NativeAppEventEmitter.emit('updatePage');
+              renamePdf({
+                variables: { id: newPdf.data.addPDF.id, name: newName },
+              });
+            })
+            .catch((e) => console.log(e));
           summarise(newPdf.data.addPDF.id, newPdf.data.addPDF.text);
         } else console.log('Connection error: internet connection is required');
       })
@@ -323,22 +332,22 @@ export const Home = ({ navigation }) => {
   const summarise = (id, text) => {
     summariseText({ variables: { text: text } })
       .then((res) => {
-        console.log(": " , res);
+        console.log(': ', res);
         setSummarisedText({
           variables: { id: id, summary: res.data.Summarise },
         }).catch((e) => {
-          console.log("", e);
+          console.log('', e);
           pdfLocalAccess.addSummary(id, 'error');
           return;
         });
         pdfLocalAccess.addSummary(id, 'loading');
       })
       .catch((e) => {
-        console.log("", e);
+        console.log('', e);
         setSummarisedText({
           variables: { id: id, summary: 'error' },
         }).catch((e) => {
-          console.log("", e);
+          console.log('', e);
         });
         pdfLocalAccess.addSummary(id, 'error');
       });
@@ -351,7 +360,12 @@ export const Home = ({ navigation }) => {
           {'Recents'}
         </Text>
       </View>
-      <PdfDisplay navigation={navigation} selectMode={false} group={''} ref={pdfRef} />
+      <PdfDisplay
+        navigation={navigation}
+        selectMode={false}
+        group={''}
+        ref={pdfRef}
+      />
       <View style={styles.viewPdfsTouchableOpacityFrame}>
         <TouchableOpacity
           style={[
@@ -448,7 +462,11 @@ export const Home = ({ navigation }) => {
           >
             <View style={styles.recordingStopModalButtonContent}>
               <View style={styles.iconContainer}>
-                <Icon style={{ color: colourState.accent }} name="refresh" size={18} />
+                <Icon
+                  style={{ color: colourState.accent }}
+                  name="refresh"
+                  size={18}
+                />
               </View>
               <View style={styles.recordingStopModalButtonText_box}>
                 <Text
@@ -498,7 +516,11 @@ export const Home = ({ navigation }) => {
           >
             <View style={styles.recordingStopModalButtonContent}>
               <View style={styles.iconContainer}>
-                <Icon style={{ color: colourState.accent }} name="trash-o" size={20} />
+                <Icon
+                  style={{ color: colourState.accent }}
+                  name="trash-o"
+                  size={20}
+                />
               </View>
               <View style={styles.recordingStopModalButtonText_box}>
                 <Text style={styles.recordingStopModalButtonText}>
@@ -524,7 +546,10 @@ export const Home = ({ navigation }) => {
           <UploadAudioCenter />
 
           <TouchableOpacity
-            style={[styles.uploadFileButton, { backgroundColor: colourState.accent }]}
+            style={[
+              styles.uploadFileButton,
+              { backgroundColor: colourState.accent },
+            ]}
             state={null}
             onPress={() => {
               setUploadVisible(false);
