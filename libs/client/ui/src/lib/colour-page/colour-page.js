@@ -27,18 +27,103 @@ export const ColourPage = ({ navigation}) => {
   const getColour = (accent) => {
     let key = {a:accent,m:isEnabled};
     switch (key) {
-      case {a:"",m:false}:
-        return {};
-    
-      default://lightmode blue
+      case {a:"#3F89BE",m:false}:
         return {
-          accent:"",
-          mode:"",
-          bottom:"",
-          low:"",
-          high:"",
-          top:"",
+          accent: "#3F89BE",
+          mode:"#FFFFFF",
+          bottom:"#E6ECF0",
+          low:"#B6BFC6",
+          high:"#667685",
+          top:"#344554",
         };
+      case {a:"#3F89BE",m:true}:
+        return {
+          accent: "#9DCEF6",
+          mode:"#344554",
+          bottom:"#8D99A3",
+          low:"#AAB5BE",
+          high:"#E6ECF0",
+          top:"#FFFFFF",
+        };
+      case {a:"#A776B1",m:false}:
+        return {
+          accent: "#A776B1",
+          mode:"#FFFFFF",
+          bottom:"#EEE9EF",
+          low:"#C6BCC8",
+          high:"#826685",
+          top:"#4E3B51",
+        };
+      case {a:"#A776B1",m:true}:
+        return {
+          accent: "#E5C9F7",
+          mode:"#4E3B51",
+          bottom:"#826685",
+          low:"#C1B5C1",
+          high:"#EEE9EF",
+          top:"#FFFFFF",
+        };
+      case {a:"#B06F7F",m:false}:
+        return {
+          accent: "#B06F7F",
+          mode:"#FFFFFF",
+          bottom:"#EFE9EA",
+          low:"#C8BCBE",
+          high:"#85666C",
+          top:"#513B40",
+        };
+      case {a:"#B06F7F",m:true}:
+        return {
+          accent: "#ECBDC8",
+          mode:"#513B40",
+          bottom:"#85666C",
+          low:"#B29DA1",
+          high:"#EFE9EA",
+          top:"#FFFFFF",
+        };
+      case {a:"#679E5E",m:false}:
+        return {
+          accent: "#679E5E",
+          mode:"#FFFFFF",
+          bottom:"#E9EFE9",
+          low:"#BCC8BD",
+          high:"#4A6749",
+          top:"#2D4731",
+        };
+      case {a:"#679E5E",m:true}:
+        return {
+          accent: "#B5DDAF",
+          mode:"#2D4731",
+          bottom:"#4A6749",
+          low:"#97AD99",
+          high:"#E9EFE9",
+          top:"#FFFFFF",
+        };
+      case {a:"#D17B3C",m:false}:
+        return {
+          accent: "#D17B3C",
+          mode:"#FFFFFF",
+          bottom:"#F5EEE8",
+          low:"#D2C0B5",
+          high:"#857166",
+          top:"#51433B",
+        };
+      case {a:"#D17B3C",m:true}:
+        return {
+          accent: "#F4B688",
+          mode:"#51433B",
+          bottom:"#857166",
+          low:"#BFA798",
+          high:"#F5EEE8",
+          top:"#FFFFFF",
+        };
+      default://lightmode blue
+        return {accent: accent,
+          mode:"#FFFFFF",
+          bottom:"#E6ECF0",
+          low:"#B6BFC6",
+          high:"#667685",
+          top:"#344554",};
     }
   }
   const [isEnabled, setIsEnabled] = useState(false);
@@ -228,18 +313,8 @@ const _iconStyle = (borderColor) => ({
 const verticalStaticData = [
   {
     id: 0,
-    text: "Salmon",
-    fillColor: "#ea7456",
-    unfillColor: "#ff987e",
-    iconStyle: _iconStyle("#ff987e"),
-    textStyle: styles.colourName,
-    style: styles.verticalStyle,
-    iconImageStyle: styles.iconImageStyle,
-  },
-  {
-    id: 1,
     text: "Blue",
-    fillColor: "#3f89beff",
+    fillColor: "#3F89BE",
     unfillColor: "#66a8d6",
     iconStyle: _iconStyle("#66a8d6"),
     textStyle: styles.colourName,
@@ -247,31 +322,41 @@ const verticalStaticData = [
     iconImageStyle: styles.iconImageStyle,
   },
   {
+    id: 1,
+    text: "Purple",
+    fillColor: "#A776B1",
+    unfillColor: "#c597cf",
+    iconStyle: _iconStyle("#c597cf"),
+    textStyle: styles.colourName,
+    style: styles.verticalStyle,
+    iconImageStyle: styles.iconImageStyle,
+  },
+  {
     id: 2,
-    text: "Soft Purple",
-    fillColor: "#a98ae7",
-    unfillColor: "#cab6f4",
-    iconStyle: _iconStyle("#cab6f4"),
+    text: "Pink",
+    fillColor: "#B06F7F",
+    unfillColor: "#db9cac",
+    iconStyle: _iconStyle("#db9cac"),
     textStyle: styles.colourName,
     style: styles.verticalStyle,
     iconImageStyle: styles.iconImageStyle,
   },
   {
     id: 3,
-    text: "Pale yellow",
-    fillColor: "#fcb779",
-    unfillColor: "#ffd1a7",
-    iconStyle: _iconStyle("#ffd1a7"),
+    text: "Green",
+    fillColor: "#679E5E",
+    unfillColor: "#8cbd84",
+    iconStyle: _iconStyle("#8cbd84"),
     textStyle: styles.colourName,
     style: styles.verticalStyle,
     iconImageStyle: styles.iconImageStyle,
   },
   {
     id: 4,
-    text: "Green",
-    fillColor: "#369a32",
-    unfillColor: "#71d86d",
-    iconStyle: _iconStyle("#71d86d"),
+    text: "Orange",
+    fillColor: "#D17B3C",
+    unfillColor: "#db9e72",
+    iconStyle: _iconStyle("#db9e72"),
     textStyle: styles.colourName,
     style: styles.verticalStyle,
     iconImageStyle: styles.iconImageStyle,

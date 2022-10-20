@@ -148,7 +148,7 @@ export const ChangeEmail = ({ navigation }) => {
             <View style={styles.inputText_box}>
               <View style={styles.inputIcon}>
                 <Icon
-                  style={{ color: colourState }}
+                  style={{ color: colourState.accent }}
                   name="envelope"
                   size={15}
                 />
@@ -185,7 +185,7 @@ export const ChangeEmail = ({ navigation }) => {
             <View style={styles.inputText_box}>
               <View style={styles.inputIcon}>
                 <Icon
-                  style={{ color: colourState }}
+                  style={{ color: colourState.accent }}
                   name="envelope"
                   size={15}
                 />
@@ -209,7 +209,7 @@ export const ChangeEmail = ({ navigation }) => {
             <View style={styles.inputText_box}>
               <View style={styles.inputIcon}>
                 <Icon
-                  style={{ color: colourState }}
+                  style={{ color: colourState.accent }}
                   name="envelope"
                   size={15}
                 />
@@ -229,8 +229,8 @@ export const ChangeEmail = ({ navigation }) => {
       <TouchableOpacity
         style={[
           styles.logInButton,
-          { backgroundColor: colourState },
-          { borderColor: colourState },
+          { backgroundColor: colourState.accent },
+          { borderColor: colourState.accent },
         ]}
         onPress={() => changeEmail()}
       >
@@ -243,7 +243,7 @@ export const ChangeEmail = ({ navigation }) => {
         style={styles.backButton}
         onPress={() => navigation.goBack()}
       >
-        <Icon name="angle-left" color={colourState} size={28} />
+        <Icon name="angle-left" color={colourState.accent} size={28} />
       </TouchableOpacity>
     </SafeAreaView>
   );

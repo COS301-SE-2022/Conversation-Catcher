@@ -116,7 +116,7 @@ export const ChangePassword = ({ navigation }) => {
           <View style={styles.inputField}>
             <View style={styles.inputText_box}>
               <View style={styles.inputIcon}>
-                <Icon style={{ color: colourState }} name="lock" size={21} />
+                <Icon style={{ color: colourState.accent }} name="lock" size={21} />
               </View>
               <TextInput
                 style={styles.inputText}
@@ -149,7 +149,7 @@ export const ChangePassword = ({ navigation }) => {
           <View style={styles.inputField}>
             <View style={styles.inputText_box}>
               <View style={styles.inputIcon}>
-                <Icon style={{ color: colourState }} name="lock" size={21} />
+                <Icon style={{ color: colourState.accent }} name="lock" size={21} />
               </View>
               <TextInput
                 style={styles.inputText}
@@ -169,7 +169,7 @@ export const ChangePassword = ({ navigation }) => {
           <View style={styles.inputField}>
             <View style={styles.inputText_box}>
               <View style={styles.inputIcon}>
-                <Icon style={{ color: colourState }} name="lock" size={21} />
+                <Icon style={{ color: colourState.accent }} name="lock" size={21} />
               </View>
               <TextInput
                 style={styles.inputText}
@@ -186,8 +186,8 @@ export const ChangePassword = ({ navigation }) => {
       <TouchableOpacity
         style={[
           styles.logInButton,
-          { backgroundColor: colourState },
-          { borderColor: colourState },
+          { backgroundColor: colourState.accent },
+          { borderColor: colourState.accent },
         ]}
         onPress={() => changePassword()}
       >
@@ -200,7 +200,7 @@ export const ChangePassword = ({ navigation }) => {
         style={styles.backButton}
         onPress={() => navigation.goBack()}
       >
-        <Icon name="angle-left" color={colourState} size={28} />
+        <Icon name="angle-left" color={colourState.accent} size={28} />
       </TouchableOpacity>
     </SafeAreaView>
   );

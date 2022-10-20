@@ -355,7 +355,7 @@ export const Home = ({ navigation }) => {
         <TouchableOpacity
           style={[
             styles.viewPdfsTouchableOpacity,
-            { backgroundColor: colourState },
+            { backgroundColor: colourState.accent },
           ]}
           onPress={() => {
             navigation.navigate('ViewAll', { groupName: '' });
@@ -375,7 +375,7 @@ export const Home = ({ navigation }) => {
         <TouchableOpacity
           style={[
             styles.viewPdfsTouchableOpacity,
-            { backgroundColor: colourState },
+            { backgroundColor: colourState.accent },
           ]}
           onPress={() => {
             navigation.navigate('Groups', { groupObject: null });
@@ -444,7 +444,7 @@ export const Home = ({ navigation }) => {
           >
             <View style={styles.recordingStopModalButtonContent}>
               <View style={styles.iconContainer}>
-                <Icon style={{ color: colourState }} name="refresh" size={18} />
+                <Icon style={{ color: colourState.accent }} name="refresh" size={18} />
               </View>
               <View style={styles.recordingStopModalButtonText_box}>
                 <Text
@@ -468,7 +468,7 @@ export const Home = ({ navigation }) => {
             <View style={styles.recordingStopModalButtonContent}>
               <View style={styles.iconContainer}>
                 <Icon
-                  style={{ color: colourState }}
+                  style={{ color: colourState.accent }}
                   name="microphone"
                   size={20}
                 />
@@ -494,7 +494,7 @@ export const Home = ({ navigation }) => {
           >
             <View style={styles.recordingStopModalButtonContent}>
               <View style={styles.iconContainer}>
-                <Icon style={{ color: colourState }} name="trash-o" size={20} />
+                <Icon style={{ color: colourState.accent }} name="trash-o" size={20} />
               </View>
               <View style={styles.recordingStopModalButtonText_box}>
                 <Text style={styles.recordingStopModalButtonText}>
@@ -520,7 +520,7 @@ export const Home = ({ navigation }) => {
           <UploadAudioCenter />
 
           <TouchableOpacity
-            style={[styles.uploadFileButton, { backgroundColor: colourState }]}
+            style={[styles.uploadFileButton, { backgroundColor: colourState.accent }]}
             state={null}
             onPress={() => {
               setUploadVisible(false);

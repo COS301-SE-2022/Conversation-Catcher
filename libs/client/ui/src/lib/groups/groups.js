@@ -250,7 +250,7 @@ export const Groups = ({ navigation }) => {
             setMoreVisible(true)
           }}
         >
-          <Icon name="plus" color={colourState} size={30} />
+          <Icon name="plus" color={colourState.accent} size={30} />
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -288,7 +288,7 @@ export const Groups = ({ navigation }) => {
           <View style={styles.moreModalButtonDivider} />
 
           <TouchableOpacity
-            style={[styles.moreModalButton, { backgroundColor: colourState }]}
+            style={[styles.moreModalButton, { backgroundColor: colourState.accent }]}
             onPress={() => {
               // console.log(userEmail);
               // console.log(newName);
@@ -326,7 +326,7 @@ export const Groups = ({ navigation }) => {
           justifyContent: 'flex-end',
         }}
       >
-        <View style={[styles.modalBottomBar, { backgroundColor: colourState }]}>
+        <View style={[styles.modalBottomBar, { backgroundColor: colourState.accent }]}>
           <TouchableOpacity
             style={styles.backButton}
             onPress={() => {
@@ -349,7 +349,7 @@ export const Groups = ({ navigation }) => {
         <View style={styles.moreModalInner}>
           <TextInput editable />
           <TouchableOpacity
-            style={[styles.backButton, { backgroundColor: colourState }]}
+            style={[styles.backButton, { backgroundColor: colourState.accent }]}
             onPress={() => {
               setBottomModalVisible(false);
               setSelectMode(false);
@@ -376,7 +376,7 @@ export const Groups = ({ navigation }) => {
             defaultValue={'temp'}
           />
           <TouchableOpacity
-            style={[styles.renameFileButton, { backgroundColor: colourState }]}
+            style={[styles.renameFileButton, { backgroundColor: colourState.accent }]}
             state={null}
             onPress={() => {
               setRenameVisible(false);

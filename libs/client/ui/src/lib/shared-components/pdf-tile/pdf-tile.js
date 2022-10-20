@@ -85,7 +85,7 @@ const PdfTile = ({
               console.log(res);
             }
           }
-          color={colourState}
+          color={colourState.accent}
           name="save"
           size={20}
           container={TouchableOpacity}
@@ -103,7 +103,7 @@ const PdfTile = ({
             console.log(res);
           }
         }
-        color={colourState}
+        color={colourState.accent}
         name="cloud"
         size={18}
         container={TouchableOpacity}
@@ -119,9 +119,9 @@ const PdfTile = ({
       return (
         <BouncyCheckbox
           size={20}
-          fillColor={colourState}
+          fillColor={colourState.accent}
           unfillColor="#FFFFFF"
-          iconStyle={{ borderColor: colourState }}
+          iconStyle={{ borderColor: colourState.accent }}
           isChecked={checkboxState}
           onPress={() => setCheckboxState(!checkboxState)}
         />
@@ -137,7 +137,7 @@ const PdfTile = ({
         nav.navigate('PdfView', { id: { id }, text: { text }, name: { name }, summarised: { summarised } })
       }}
     >
-      <View style={[styles.thumbnail_containter, { borderColor: colourState }]}>
+      <View style={[styles.thumbnail_containter, { borderColor: colourState.accent }]}>
         <ImageBackground
           style={styles.pdfThumbnail}
           //thumbnailSource={thumbnailSource}

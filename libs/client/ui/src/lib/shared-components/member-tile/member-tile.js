@@ -22,9 +22,9 @@ function DetermineTileCorner(props) {
     return (
       <BouncyCheckbox
         size={20}
-        fillColor={colourState}
+        fillColor={colourState.accent}
         unfillColor="#FFFFFF"
-        iconStyle={{ borderColor: colourState }}
+        iconStyle={{ borderColor: colourState.accent }}
         isChecked={checkboxState}
         onPress={() => setCheckboxState(!checkboxState)}
       />

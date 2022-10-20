@@ -150,8 +150,8 @@ export const ViewAll = ({ navigation, route }) => {
           navigation.navigate('GroupInfo', { groupObject: groupObject });
         }}
       >
-        <View style={[styles.groupThumbnailBox, { borderColor: colourState }]}>
-          <View style={[styles.groupThumbnail, {backgroundColor: colourState}]}>
+        <View style={[styles.groupThumbnailBox, { borderColor: colourState.accent }]}>
+          <View style={[styles.groupThumbnail, {backgroundColor: colourState.accent}]}>
             <Text style={styles.groupIcon}>{groupObject.name.toUpperCase()[0]}</Text>
           </View>
         </View>
@@ -331,7 +331,7 @@ export const ViewAll = ({ navigation, route }) => {
             textStyle={styles.orderByDropdownText}
             dropdownStyle={styles.orderByDropdownStyle}
             dropdownTextStyle={styles.orderByDropdownTextStyle}
-            dropdownTextSelectHighlightStyle={{ color: colourState }}
+            dropdownTextSelectHighlightStyle={{ color: colourState.accent }}
           />
         </View>
       </View>
@@ -357,7 +357,7 @@ export const ViewAll = ({ navigation, route }) => {
             <View style={styles.moreModalButtonContent}>
               <View style={styles.iconContainer}>
                 <Icon
-                  style={{ color: colourState }}
+                  style={{ color: colourState.accent }}
                   name="paper-plane-o"
                   size={18}
                 />
@@ -383,7 +383,7 @@ export const ViewAll = ({ navigation, route }) => {
             <View style={styles.moreModalButtonContent}>
               <View style={styles.iconContainer}>
                 <Icon
-                  style={{ color: colourState }}
+                  style={{ color: colourState.accent }}
                   name="pencil-square-o"
                   size={20}
                 />
@@ -407,7 +407,7 @@ export const ViewAll = ({ navigation, route }) => {
           >
             <View style={styles.moreModalButtonContent}>
               <View style={styles.iconContainer}>
-                <Icon style={{ color: colourState }} name="trash-o" size={20} />
+                <Icon style={{ color: colourState.accent }} name="trash-o" size={20} />
               </View>
               <View style={styles.moreModalButtonText_box}>
                 <Text style={styles.moreModalButtonText}>{'Delete'}</Text>
@@ -427,7 +427,7 @@ export const ViewAll = ({ navigation, route }) => {
           justifyContent: 'flex-end',
         }}
       >
-        <View style={[styles.modalBottomBar, { backgroundColor: colourState }]}>
+        <View style={[styles.modalBottomBar, { backgroundColor: colourState.accent }]}>
           <TouchableOpacity
             style={styles.backButton}
             onPress={() => {
@@ -450,7 +450,7 @@ export const ViewAll = ({ navigation, route }) => {
         <View style={styles.moreModalInner}>
           <TextInput editable />
           <TouchableOpacity
-            style={[styles.backButton, { backgroundColor: colourState }]}
+            style={[styles.backButton, { backgroundColor: colourState.accent }]}
             onPress={() => {
               setBottomModalVisible(false);
               setSelectMode(false);
@@ -477,7 +477,7 @@ export const ViewAll = ({ navigation, route }) => {
             defaultValue={'temp'}
           />
           <TouchableOpacity
-            style={[styles.renameFileButton, { backgroundColor: colourState }]}
+            style={[styles.renameFileButton, { backgroundColor: colourState.accent }]}
             state={null}
             onPress={() => {
               setRenameVisible(false);

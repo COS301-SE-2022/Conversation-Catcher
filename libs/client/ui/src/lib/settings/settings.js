@@ -40,7 +40,7 @@ export const SettingsPage = ({ navigation }) => {
           <View style={styles.settingsButtonContent}>
             <View style={styles.iconContainer}>
               <Icon
-                style={[styles.settingsButtonIcon, { color: colourState }]}
+                style={[styles.settingsButtonIcon, { color: colourState.accent }]}
                 name="envelope"
                 size={18}
               />
@@ -63,7 +63,7 @@ export const SettingsPage = ({ navigation }) => {
         >
           <View style={styles.settingsButtonContent}>
             <View style={styles.iconContainer}>
-              <Icon style={{ color: colourState }} name="lock" size={20} />
+              <Icon style={{ color: colourState.accent }} name="lock" size={20} />
             </View>
             <View style={styles.settingsButtonText_box}>
               <Text style={styles.settingsButtonText}>{'Change password'}</Text>
@@ -79,7 +79,7 @@ export const SettingsPage = ({ navigation }) => {
         >
           <View style={styles.settingsButtonContent}>
             <View style={styles.iconContainer}>
-              <Icon style={{ color: colourState }} name="sliders" size={20} />
+              <Icon style={{ color: colourState.accent }} name="sliders" size={20} />
             </View>
             <View style={styles.settingsButtonText_box}>
               <Text style={styles.settingsButtonText}>{'Change colour'}</Text>
@@ -116,7 +116,7 @@ export const SettingsPage = ({ navigation }) => {
           <View style={styles.settingsButtonContent}>
             <View style={styles.iconContainer}>
               <Icon
-                style={[styles.settingsButtonIcon, { color: colourState }]}
+                style={[styles.settingsButtonIcon, { color: colourState.accent }]}
                 name="sign-out"
                 size={20}
               />
@@ -132,7 +132,7 @@ export const SettingsPage = ({ navigation }) => {
         style={styles.backButton}
         onPress={() => navigation.navigate('Home')}
       >
-        <Icon name="angle-left" color={colourState} size={28} />
+        <Icon name="angle-left" color={colourState.accent} size={28} />
       </TouchableOpacity>
     </SafeAreaView>
   );
