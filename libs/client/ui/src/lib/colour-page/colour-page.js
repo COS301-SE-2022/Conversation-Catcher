@@ -16,7 +16,7 @@ export const ColourPage = ({ navigation}) => {
     mutation setUser(
       $oldEmail: String!
       $email: String!
-      $colour: String!
+      $colour: ColourObj!
       $pdfs: [String!]!
     ) {
       setUser(oldEmail: $oldEmail, email: $email, colour: $colour, pdfs: $pdfs)
@@ -191,8 +191,8 @@ export const ColourPage = ({ navigation}) => {
         </View>
       </View>
 
-      <TouchableOpacity  
-        style={styles.backButton} 
+      <TouchableOpacity
+        style={styles.backButton}
         onPress={() => navigation.goBack()}>
           <Icon
             name="angle-left"
@@ -262,7 +262,7 @@ const styles = StyleSheet.create({
 
   },
   darkSwitchBox: {
-    
+
   },
   colourOptionsBackground: {
     width: '80%',

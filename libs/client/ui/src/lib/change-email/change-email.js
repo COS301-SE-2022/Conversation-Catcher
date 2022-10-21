@@ -34,7 +34,7 @@ export const ChangeEmail = ({ navigation }) => {
     mutation setUser(
       $oldEmail: String!
       $email: String!
-      $colour: String!
+      $colour: ColourObj!
       $pdfs: [String!]!
     ) {
       setUser(oldEmail: $oldEmail, email: $email, colour: $colour, pdfs: $pdfs)
@@ -103,9 +103,7 @@ export const ChangeEmail = ({ navigation }) => {
   function MailHint() {
     if (showMailHint) {
       return (
-        <Text style={styles.hintText}>
-          {'Enter a valid email address.'}
-        </Text>
+        <Text style={styles.hintText}>{'Enter a valid email address.'}</Text>
       );
     } else {
       return null;
