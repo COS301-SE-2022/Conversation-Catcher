@@ -107,14 +107,12 @@ export const GroupInfo = ({ route, navigation }) => {
     groupsLocalAccess.renameGroup(groupObject.name, newName);
     NativeAppEventEmitter.emit('reloadGroup');
     await rename({ variables: { groupName: groupObject.name, newName: newName } });
-    //dispatch(changeName({ id: id.id, name: newName }));
   }
 
   async function updateDescription() {
     groupObject.description = newDesc;
     groupsLocalAccess.chngDesc(groupObject.name, newDesc);
     await chngDesc({variables: {groupName: groupObject.name, description: newDesc}});
-    //dispatch(changeDesc({id:id.id, desc: newDesc}));
   }
 
   async function deleteGroup() {
@@ -144,109 +142,77 @@ export const GroupInfo = ({ route, navigation }) => {
     });
   }
 
-    function AdminGroupButtons(){
-      if(adminState){
-        return (
-          <View style={styles.buttonsGroup}>
-            <View style={styles.deleteButtonBox}>
-              <TouchableOpacity 
-                style={styles.deleteButton}
-                onPress={() => {
-                  setDeleteConfirmVisible(true);
-                }} 
-              >
-                <Text style={styles.deleteButtonText}>Delete Group</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        )
-      }
+  function AdminGroupButtons(){
+    if(adminState){
       return (
         <View style={styles.buttonsGroup}>
-          <View style={styles.leaveButtonBox}>
+          <View style={styles.deleteButtonBox}>
             <TouchableOpacity 
-              style={styles.leaveButton}
+              style={styles.deleteButton}
               onPress={() => {
-                setLeaveConfirmVisible(true);
+                setDeleteConfirmVisible(true);
               }} 
             >
-              <Text style={styles.leaveButtonText}>Leave Group</Text>
+              <Text style={styles.deleteButtonText}>Delete Group</Text>
             </TouchableOpacity>
           </View>
         </View>
       )
     }
+    return (
+      <View style={styles.buttonsGroup}>
+        <View style={styles.leaveButtonBox}>
+          <TouchableOpacity 
+            style={styles.leaveButton}
+            onPress={() => {
+              setLeaveConfirmVisible(true);
+            }} 
+          >
+            <Text style={styles.leaveButtonText}>Leave Group</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    )
+  }
 
-    function AdminMemberButtons(){
-      if(adminState){
-        return (
-          <View style={styles.membersButtonsGroup}> 
-            <View style={styles.inviteButtonBox}>
-              <TouchableOpacity 
-                style={styles.invitebutton}
-                onPress={() => {
-                  setInviteVisible(true);
-                }}
-              >
-                <Icon name="plus" size={30} color={colourState.accent} />
-              </TouchableOpacity>
-            </View>
-            <View style={styles.removeButtonBox}>
-              <TouchableOpacity 
-                style={styles.removeButton}
-                onPress={() => {
-                  if (selectMode) {
-                    setSelectMode(false);
-                    setBottomModalVisible(false);
-                  } else {
-                    setSelectMode(true);
-                    setBottomModalVisible(true);
-                  }
-                }}
-              >
-                <Icon name="minus" size={30} color={colourState.accent} />
-              </TouchableOpacity>
-            </View>
+  function AdminMemberButtons(){
+    if(adminState){
+      return (
+        <View style={styles.membersButtonsGroup}> 
+          <View style={styles.inviteButtonBox}>
+            <TouchableOpacity 
+              style={styles.invitebutton}
+              onPress={() => {
+                setInviteVisible(true);
+              }}
+            >
+              <Icon name="plus" size={30} color={colourState.accent} />
+            </TouchableOpacity>
           </View>
-        )
-      }
-      return null;
+          <View style={styles.removeButtonBox}>
+            <TouchableOpacity 
+              style={styles.removeButton}
+              onPress={() => {
+                if (selectMode) {
+                  setSelectMode(false);
+                  setBottomModalVisible(false);
+                } else {
+                  setSelectMode(true);
+                  setBottomModalVisible(true);
+                }
+              }}
+            >
+              <Icon name="minus" size={30} color={colourState.accent} />
+            </TouchableOpacity>
+          </View>
+        </View>
+      )
     }
+    return null;
+  }
 
-    function ConditionalGroupHeader(){
-      if(adminState){
-        return (
-          <View style={styles.groupPageHeaderGroup}>
-            <View style={styles.groupThumbnailBox}>
-              <View
-                style={styles.groupThumbnail}
-                backgroundColor={colourState.accent}
-              >
-                <Text style={styles.groupThumbnailText}>{groupObject.name.charAt(0)}</Text>
-              </View>
-            </View>
-
-            <TouchableOpacity 
-              style={styles.groupNameBox}
-              onPress={() => {
-                setRenameVisible(true);
-              }}
-            >
-                <Text style={styles.groupName} numberOfLines={1}>{groupObject.name}</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity 
-              style={styles.groupTextBox}
-              onPress={() => {
-                setEditDescriptionVisible(true);
-              }}
-            >
-              <Text style={styles.groupText} numberOfLines={2}>{groupObject.description}</Text>
-            </TouchableOpacity>
-          </View>
-          
-        )
-      }
+  function ConditionalGroupHeader(){
+    if(adminState){
       return (
         <View style={styles.groupPageHeaderGroup}>
           <View style={styles.groupThumbnailBox}>
@@ -257,18 +223,49 @@ export const GroupInfo = ({ route, navigation }) => {
               <Text style={styles.groupThumbnailText}>{groupObject.name.charAt(0)}</Text>
             </View>
           </View>
+          <TouchableOpacity 
+            style={styles.groupNameBox}
+            onPress={() => {
+              setRenameVisible(true);
+            }}
+          >
+              <Text style={styles.groupName} numberOfLines={1}>{groupObject.name}</Text>
+          </TouchableOpacity>
 
-          <View style={styles.groupNameBox}>
-            <Text style={styles.groupName} numberOfLines={1}>{groupObject.name}</Text>
-          </View>
-
-          <View style={styles.groupTextBox}>
+          <TouchableOpacity 
+            style={styles.groupTextBox}
+            onPress={() => {
+              setEditDescriptionVisible(true);
+            }}
+          >
             <Text style={styles.groupText} numberOfLines={2}>{groupObject.description}</Text>
-          </View>
+          </TouchableOpacity>
         </View>
-        
       )
     }
+
+    return (
+      <View style={styles.groupPageHeaderGroup}>
+        <View style={styles.groupThumbnailBox}>
+          <View
+            style={styles.groupThumbnail}
+            backgroundColor={colourState.accent}
+          >
+            <Text style={styles.groupThumbnailText}>{groupObject.name.charAt(0)}</Text>
+          </View>
+        </View>
+
+        <View style={styles.groupNameBox}>
+          <Text style={styles.groupName} numberOfLines={1}>{groupObject.name}</Text>
+        </View>
+
+        <View style={styles.groupTextBox}>
+          <Text style={styles.groupText} numberOfLines={2}>{groupObject.description}</Text>
+        </View>
+      </View>
+      
+    )
+  }
   return (
     <SafeAreaView style={styles.groupPage}>
       
@@ -326,7 +323,6 @@ export const GroupInfo = ({ route, navigation }) => {
         hasBackdrop={true}
         backdropColor="white"
         onBackdropPress={() => setRenameVisible(false)}
-        //onModalHide={() => setFileSelected(false)}
       >
         <View style={styles.actionModalInner}>
           <TextInput
@@ -354,7 +350,7 @@ export const GroupInfo = ({ route, navigation }) => {
         </View>
       </Modal>
       
-      <Modal
+      {/* <Modal
         style={styles.modal}
         isVisible={describeVisible}
         hasBackdrop={true}
@@ -374,7 +370,7 @@ export const GroupInfo = ({ route, navigation }) => {
             style={[styles.actionFileButton, { backgroundColor: colourState.accent }]}
             state={null}
             onPress={() => {
-              console.log('Change the description to' + groupObject.description);
+              console.log('Change the description to ' + groupObject.description);
               updateDescription();
               setDescribeVisible(false);
             }}
@@ -386,7 +382,7 @@ export const GroupInfo = ({ route, navigation }) => {
             </View>
           </TouchableOpacity>
         </View>
-      </Modal>
+      </Modal> */}
 
       <Modal
         style={styles.modal}
@@ -398,26 +394,24 @@ export const GroupInfo = ({ route, navigation }) => {
       >
         <View style={styles.actionModalInner}>
           <TextInput
-            style={styles.actionModalLargeTextInput}
-            defaultValue={groupObject.name}
+            style={styles.actionModalTextInput}
+            defaultValue={groupObject.description}
             onChangeText={(text) => {
-              //setNewDescription(text);
+              setNewDesc(text);
             }}
-            numberOfLines={4}
-            multiline={true}
           />
           <TouchableOpacity
             style={[styles.actionFileButton, { backgroundColor: colourState.accent }]}
             state={null}
             onPress={() => {
-              //console.log('renaming the pdf to ' + newName);
-              //editDescription();
+              console.log('Change the description to ' + groupObject.description);
+              updateDescription();
               setEditDescriptionVisible(false);
             }}
           >
             <View style={styles.actionModalButtonContent}>
               <View style={styles.actionModalButtonText_box}>
-                <Text style={styles.actionModalButtonText}>{'Save'}</Text>
+                <Text style={styles.actionModalButtonText}>{'Change Description'}</Text>
               </View>
             </View>
           </TouchableOpacity>
@@ -518,7 +512,7 @@ export const GroupInfo = ({ route, navigation }) => {
         </View>
       </Modal>
 
-      <Modal
+      {/* <Modal
         isVisible={bottomModalVisible}
         coverScreen={false}
         hasBackdrop={false}
@@ -551,7 +545,7 @@ export const GroupInfo = ({ route, navigation }) => {
             <Icon name="trash-o" color="#ffffffff" size={25} />
           </TouchableOpacity>
         </View>
-      </Modal>
+      </Modal> */}
 
       <Modal
         style={styles.modal}
