@@ -31,7 +31,7 @@ import {
   addPDF,
   selectUser,
 } from '../../../../../../apps/client/src/app/slices/user.slice';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+// import {STT_SUBSCRIPTION, STT_URL} from 'react-native-dotenv'
 
 export const Home = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -275,7 +275,8 @@ export const Home = ({ navigation }) => {
   // Send the audio stream to the server and receive the converted text
   const convertSpeech = () => {
     setNotifyUser(true);
-    fetch('https://ccstt.azurewebsites.net/stt', {
+    console.log('stt','add url')
+    fetch(STT_URL, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -285,6 +286,7 @@ export const Home = ({ navigation }) => {
       body: JSON.stringify({
         audio_path: 'audio_path',
         audio_chunks: state.chunks,
+        subscription: '10ea50633a724339a33810ab17329c37',
       }),
     })
       .then(async (res) => {
@@ -354,12 +356,12 @@ export const Home = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView 
+    <SafeAreaView
       style={[styles.home, {backgroundColor: colourState.mode}]}
     >
       <View style={styles.big_title_box}>
-        <Text 
-          style={[styles.big_title, {color: colourState.top}]} 
+        <Text
+          style={[styles.big_title, {color: colourState.top}]}
           ellipsizeMode={'clip'}
         >
           {'Recents'}
