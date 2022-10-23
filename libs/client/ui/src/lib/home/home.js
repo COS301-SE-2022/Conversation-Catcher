@@ -131,7 +131,7 @@ export const Home = ({ navigation }) => {
           }}
         >
           <View style={styles.recordAudioIcon}>
-            <Icon color="#ffffffff" name="stop" size={40} />
+            <Icon color={colourState.mode} name="stop" size={40} />
           </View>
         </TouchableOpacity>
       );
@@ -141,7 +141,7 @@ export const Home = ({ navigation }) => {
       <TouchableOpacity
         style={[
           styles.recordAudioTouchableOpacity,
-          { backgroundColor: '#d0d5ddff' },
+          { backgroundColor: colourState.low },
         ]}
         onPress={() => {
           setRecordAudioState(true);
@@ -149,7 +149,7 @@ export const Home = ({ navigation }) => {
         }}
       >
         <View style={styles.recordAudioIcon}>
-          <Icon color="#667084ff" name="microphone" size={40} />
+          <Icon color={colourState.top} name="microphone" size={40} />
         </View>
       </TouchableOpacity>
     );
@@ -354,9 +354,14 @@ export const Home = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={styles.home}>
+    <SafeAreaView 
+      style={[styles.home, {backgroundColor: colourState.mode}]}
+    >
       <View style={styles.big_title_box}>
-        <Text style={styles.big_title} ellipsizeMode={'clip'}>
+        <Text 
+          style={[styles.big_title, {color: colourState.top}]} 
+          ellipsizeMode={'clip'}
+        >
           {'Recents'}
         </Text>
       </View>
@@ -378,7 +383,7 @@ export const Home = ({ navigation }) => {
         >
           <View style={styles.viewPdfsTouchableOpacityLabel_box}>
             <Text
-              style={styles.viewPdfsTouchableOpacityLabel}
+              style={[styles.viewPdfsTouchableOpacityLabel , {color: colourState.mode}]}
               ellipsizeMode={'clip'}
             >
               {'Conversations'}
@@ -398,7 +403,7 @@ export const Home = ({ navigation }) => {
         >
           <View style={styles.viewPdfsTouchableOpacityLabel_box}>
             <Text
-              style={styles.viewPdfsTouchableOpacityLabel}
+              style={[styles.viewPdfsTouchableOpacityLabel, {color: colourState.mode}]}
               ellipsizeMode={'clip'}
             >
               {'Groups'}
@@ -415,7 +420,7 @@ export const Home = ({ navigation }) => {
             onPress={() => setUploadVisible(true)}
           >
             <View style={styles.uploadAudioIcon}>
-              <Icon color="#667084ff" name="upload" size={40} />
+              <Icon color={colourState.high} name="upload" size={40} />
             </View>
           </TouchableOpacity> */}
         </View>
@@ -429,7 +434,7 @@ export const Home = ({ navigation }) => {
           >
             <View style={styles.settingsIconBox}>
               <Icon style={styles.settingsIcon}>
-                <Icon name="cog" size={25} color="#667084ff" />
+                <Icon name="cog" size={25} color={colourState.high} />
               </Icon>
             </View>
           </TouchableOpacity>
@@ -440,15 +445,15 @@ export const Home = ({ navigation }) => {
         style={styles.modal}
         isVisible={recordingStopVisible}
         hasBackdrop={true}
-        backdropColor="white"
+        backdropColor={colourState.mode}
         onBackdropPress={() => {
           setRecordingStopVisible(false);
         }}
       >
-        <View style={styles.recordingStopModalInner}>
-          <Text style={styles.modalTitle}>{'Recording has been stopped'}</Text>
+        <View style={[styles.recordingStopModalInner, {backgroundColor: colourState.bottom}, {borderColor: colourState.low}]}>
+          <Text style={[styles.modalTitle, {color: colourState.top}]}>{'Recording has been stopped'}</Text>
 
-          <View style={styles.recordingStopModalButtonDivider} />
+          <View style={[styles.recordingStopModalButtonDivider, {backgroundColor: colourState.low}]} />
 
           <TouchableOpacity
             style={styles.recordingStopModalButton}
@@ -470,7 +475,7 @@ export const Home = ({ navigation }) => {
               </View>
               <View style={styles.recordingStopModalButtonText_box}>
                 <Text
-                  style={styles.recordingStopModalButtonText}
+                  style={[styles.recordingStopModalButtonText, {color: colourState.top }]}
                   ellipsizeMode={'clip'}
                 >
                   {'Convert recording'}
@@ -503,7 +508,7 @@ export const Home = ({ navigation }) => {
             </View>
           </TouchableOpacity> */}
 
-          <View style={styles.recordingStopModalButtonDivider} />
+          <View style={[styles.recordingStopModalButtonDivider, {backgroundColor: colourState.low}]} />
 
           <TouchableOpacity
             style={styles.recordingStopModalButton}
@@ -523,7 +528,7 @@ export const Home = ({ navigation }) => {
                 />
               </View>
               <View style={styles.recordingStopModalButtonText_box}>
-                <Text style={styles.recordingStopModalButtonText}>
+                <Text style={[styles.recordingStopModalButtonText, {color: colourState.top }]}>
                   {'Discard recording'}
                 </Text>
               </View>
@@ -573,7 +578,7 @@ export const Home = ({ navigation }) => {
         }}
       >
         <View style={styles.modalNotifyInner}>
-          <Text style={styles.modalTitle}>
+          <Text style={[styles.modalTitle, {backgroundColor: colourState.low}, {borderColor: colourState.high}]}>
             {'Document generation has started and will take about 2 minutes'}
           </Text>
           {/* <Text style={styles.modalTitle}>{'Your document will be ready in 2 minutes'}</Text> */}
@@ -590,7 +595,6 @@ Home.scrollHeight = 844;
 
 const styles = StyleSheet.create({
   home: {
-    backgroundColor: '#ffffffff',
     overflow: 'hidden',
     //flexShrink: 1,
     flex: 1,
@@ -601,7 +605,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   big_title: {
-    color: '#344053ff',
     textAlign: 'center',
     letterSpacing: 0,
     lineHeight: 28,
@@ -652,7 +655,6 @@ const styles = StyleSheet.create({
     },
   },
   viewPdfsTouchableOpacityLabel: {
-    color: '#ffffffff',
     textAlign: 'center',
     letterSpacing: 0,
     lineHeight: 22,
@@ -745,16 +747,13 @@ const styles = StyleSheet.create({
   modalNotifyInner: {
     width: '100%',
     flexShrink: 1,
-    backgroundColor: '#d0d5ddff',
     borderRadius: 7,
     flexDirection: 'column',
     borderWidth: 1,
-    borderColor: '#667084ff',
     opacity: 1,
     //alignSelf: 'flex-end',
   },
   modalTitle: {
-    color: '#344053ff',
     textAlign: 'center',
     letterSpacing: 0,
     lineHeight: 20,
@@ -767,11 +766,9 @@ const styles = StyleSheet.create({
   recordingStopModalInner: {
     width: '70%',
     flexShrink: 1,
-    backgroundColor: '#f5f5f5ff',
     borderRadius: 7,
     flexDirection: 'column',
     borderWidth: 1,
-    borderColor: '#667084ff',
     opacity: 1,
   },
   recordingStopModalButton: {
@@ -793,7 +790,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   recordingStopModalButtonText: {
-    color: '#344053ff',
     textAlign: 'center',
     letterSpacing: 0,
     lineHeight: 20,
@@ -806,7 +802,6 @@ const styles = StyleSheet.create({
     flexShrink: 1,
   },
   recordingStopModalButtonDivider: {
-    backgroundColor: '#d0d5ddff',
     height: 1,
     width: '87%',
     alignSelf: 'center',

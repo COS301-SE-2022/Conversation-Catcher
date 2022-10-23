@@ -188,7 +188,7 @@ export const GroupInfo = ({ route, navigation }) => {
                   setInviteVisible(true);
                 }}
               >
-                <Icon name="plus" size={30} color={colourState} />
+                <Icon name="plus" size={30} color={colourState.accent} />
               </TouchableOpacity>
             </View>
             <View style={styles.removeButtonBox}>
@@ -204,7 +204,7 @@ export const GroupInfo = ({ route, navigation }) => {
                   }
                 }}
               >
-                <Icon name="minus" size={30} color={colourState} />
+                <Icon name="minus" size={30} color={colourState.accent} />
               </TouchableOpacity>
             </View>
           </View>
@@ -220,7 +220,7 @@ export const GroupInfo = ({ route, navigation }) => {
             <View style={styles.groupThumbnailBox}>
               <View
                 style={styles.groupThumbnail}
-                backgroundColor={colourState}
+                backgroundColor={colourState.accent}
               >
                 <Text style={styles.groupThumbnailText}>{groupObject.name.charAt(0)}</Text>
               </View>
@@ -252,7 +252,7 @@ export const GroupInfo = ({ route, navigation }) => {
           <View style={styles.groupThumbnailBox}>
             <View
               style={styles.groupThumbnail}
-              backgroundColor={colourState}
+              backgroundColor={colourState.accent}
             >
               <Text style={styles.groupThumbnailText}>{groupObject.name.charAt(0)}</Text>
             </View>
@@ -316,7 +316,7 @@ export const GroupInfo = ({ route, navigation }) => {
           style={styles.backButton}
           onPress={() => navigation.goBack()}
         >
-          <Icon name="angle-left" color={colourState} size={30}/>
+          <Icon name="angle-left" color={colourState.accent} size={30}/>
         </TouchableOpacity>
       </View>
 
@@ -337,7 +337,7 @@ export const GroupInfo = ({ route, navigation }) => {
             }}
           />
           <TouchableOpacity
-            style={[styles.actionButton, { backgroundColor: colourState }]}
+            style={[styles.actionButton, { backgroundColor: colourState.accent }]}
             state={null}
             onPress={() => {
               console.log('renaming the group to ' + newName);
@@ -371,7 +371,7 @@ export const GroupInfo = ({ route, navigation }) => {
             }}
           />
           <TouchableOpacity
-            style={[styles.actionFileButton, { backgroundColor: colourState }]}
+            style={[styles.actionFileButton, { backgroundColor: colourState.accent }]}
             state={null}
             onPress={() => {
               console.log('Change the description to' + groupObject.description);
@@ -407,7 +407,7 @@ export const GroupInfo = ({ route, navigation }) => {
             multiline={true}
           />
           <TouchableOpacity
-            style={[styles.actionFileButton, { backgroundColor: colourState }]}
+            style={[styles.actionFileButton, { backgroundColor: colourState.accent }]}
             state={null}
             onPress={() => {
               //console.log('renaming the pdf to ' + newName);
@@ -437,7 +437,7 @@ export const GroupInfo = ({ route, navigation }) => {
             {'Are you sure you want to delete ' + groupObject.name + '?'}
           </Text>
           <TouchableOpacity
-            style={[styles.actionButton, { backgroundColor: colourState }]}
+            style={[styles.actionButton, { backgroundColor: colourState.accent }]}
             state={null}
             onPress={() => {
               setDeleteConfirmVisible(false);
@@ -450,7 +450,7 @@ export const GroupInfo = ({ route, navigation }) => {
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.actionButton, { backgroundColor: colourState }]}
+            style={[styles.actionButton, { backgroundColor: colourState.accent }]}
             state={null}
             onPress={() => {
               setLoad(true);
@@ -483,7 +483,7 @@ export const GroupInfo = ({ route, navigation }) => {
             {'Are you sure you want to leave ' + groupObject.name + '?'}
           </Text>
           <TouchableOpacity
-            style={[styles.actionButton, { backgroundColor: colourState }]}
+            style={[styles.actionButton, { backgroundColor: colourState.accent }]}
             state={null}
             onPress={() => {
               setLeaveConfirmVisible(false);
@@ -496,7 +496,7 @@ export const GroupInfo = ({ route, navigation }) => {
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.actionButton, { backgroundColor: colourState }]}
+            style={[styles.actionButton, { backgroundColor: colourState.accent }]}
             state={null}
             onPress={() => {
               setLoad(true);
@@ -529,7 +529,7 @@ export const GroupInfo = ({ route, navigation }) => {
           justifyContent: 'flex-end',
         }}
       >
-        <View style={[styles.modalBottomBar, { backgroundColor: colourState }]}>
+        <View style={[styles.modalBottomBar, { backgroundColor: colourState.accent }]}>
           <TouchableOpacity
             style={styles.backButton}
             onPress={() => {
@@ -565,7 +565,7 @@ export const GroupInfo = ({ route, navigation }) => {
           <View style={styles.actionModalTextInputGroup}>
             <View style={styles.mailIconContainer}>
               <Icon
-                style={{ color: colourState }}
+                style={{ color: colourState.accent }}
                 name="envelope"
                 size={20}
               />
@@ -578,7 +578,7 @@ export const GroupInfo = ({ route, navigation }) => {
             />
           </View>
           <TouchableOpacity
-            style={[styles.actionButton, { backgroundColor: colourState }]}
+            style={[styles.actionButton, { backgroundColor: colourState.accent }]}
             state={null}
             onPress={() => {
               addUser(newUser);
@@ -607,7 +607,7 @@ export const GroupInfo = ({ route, navigation }) => {
             {'Are you sure you want to remove * members?'}
           </Text>
           <TouchableOpacity
-            style={[styles.actionButton, { backgroundColor: colourState }]}
+            style={[styles.actionButton, { backgroundColor: colourState.accent }]}
             state={null}
             onPress={() => {
               setRemoveConfirmVisible(false);
@@ -621,7 +621,7 @@ export const GroupInfo = ({ route, navigation }) => {
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.actionButton, { backgroundColor: colourState }]}
+            style={[styles.actionButton, { backgroundColor: colourState.accent }]}
             state={null}
             onPress={() => {
               // Delete the pdf

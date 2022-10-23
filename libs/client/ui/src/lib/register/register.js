@@ -100,7 +100,7 @@ export const Register = ({ navigation }) => {
             <View style={styles.inputText_box}>
               <View style={styles.inputIcon}>
                 <Icon
-                  style={{ color: colourState.accent }}
+                  style={{ color: '#3F89BE' }}
                   name="envelope"
                   size={15}
                 />
@@ -137,7 +137,7 @@ export const Register = ({ navigation }) => {
             <View style={styles.inputText_box}>
               <View style={styles.inputIcon}>
                 <Icon
-                  style={{ color: colourState.accent }}
+                  style={{ color: '#3F89BE' }}
                   name="lock"
                   size={21}
                 />
@@ -173,8 +173,8 @@ export const Register = ({ navigation }) => {
       <TouchableOpacity
         style={[
           styles.registerButton,
-          { backgroundColor: colourState.accent },
-          { borderColor: colourState.accent },
+          { backgroundColor: '#3F89BE' },
+          { borderColor: '#3F89BE' },
         ]}
         onPress={() => {
           if (email === '') {
