@@ -55,7 +55,7 @@ export const Groups = ({ navigation }) => {
   `;
   const [createGroup] = useMutation(CREATE_GROUP);
   //variables for object sorting
-  const [objArr, setObjArr] = useState([]);
+  // const [objArr, setObjArr] = useState([]);
 
   const options = {
     title,
@@ -238,7 +238,7 @@ export const Groups = ({ navigation }) => {
                 admin: userEmail,
                 pdfs:[],
                 users:[userEmail],
-                description:"",
+                description:"Click to edit description...",
               });
               createGroup({
                 variables: {

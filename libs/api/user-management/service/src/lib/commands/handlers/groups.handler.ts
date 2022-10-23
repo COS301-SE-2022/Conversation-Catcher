@@ -167,6 +167,7 @@ export class createGroupHandler implements ICommandHandler<createGroupCommand> {
       users: [admin],
       pdfs: [],
       requests: [],
+      description:"Click to edit description...",
     };
     if (user.groups === undefined) user.groups = [];
     user.groups.push(groupName);

@@ -20,7 +20,6 @@ export function GroupDisplay({ navigation, selectMode, add}, ref) {
   if (groupLocalAccess.addEvent3.length !== 0) {
     //If statement to ensure that only one listener is created for the summarise command
     NativeAppEventEmitter.addListener('updateGroups', () => {
-      // console.log("Hi");
       setRefreshFlag(!refreshFlag);
     });
     groupLocalAccess.addEvent3.length = 0;

@@ -48,7 +48,6 @@ export const GroupInfo = ({ route, navigation }) => {
       if (groupObject.admin === userName) setAdminState(true);
       else setAdminState(false);
     })
-    //console.log(thumbnailSource);
     const RENAME = gql`
       mutation setName(
         $groupName: String!
@@ -101,16 +100,16 @@ export const GroupInfo = ({ route, navigation }) => {
   const [add] = useMutation(ADD_USER);
 
   async function renameGroup() {
-    // console.log(groupObject.name);
     groupsLocalAccess.renameGroup(groupObject.name, newName);
     NativeAppEventEmitter.emit('reloadGroup');
-    await rename({ variables: { groupName: groupObject.name, newName: newName } });
+    await rename({ variables: { groupName: groupObject.name, newName: newName }}).catch(e=>console.log(e));
   }
 
   async function updateDescription() {
     groupObject.description = newDesc;
     groupsLocalAccess.chngDesc(groupObject.name, newDesc);
-    await chngDesc({variables: {groupName: groupObject.name, description: newDesc}});
+    NativeAppEventEmitter.emit('reloadGroup');
+    await chngDesc({variables: {groupName: groupObject.name, description: newDesc}}).catch(e=>console.log(e));
   }
 
   async function deleteGroup() {
@@ -126,8 +125,6 @@ export const GroupInfo = ({ route, navigation }) => {
   }
 
   async function addUser(userID){
-    // console.log(userID);
-    // console.log(groupObject.name);
     await add({variables:{user:userID, groupName: groupObject.name}}).then(()=>{
       groupsLocalAccess.addUser(userID, groupObject.name);
       setNewUser("");
@@ -334,6 +331,7 @@ export const GroupInfo = ({ route, navigation }) => {
               console.log('renaming the group to ' + newName);
               renameGroup();
               setRenameVisible(false);
+              NativeAppEventEmitter.emit('reloadGroup');
             }}
           >
             <View style={styles.actionModalButtonContent}>
@@ -399,9 +397,10 @@ export const GroupInfo = ({ route, navigation }) => {
             style={[styles.actionFileButton, { backgroundColor: colourState.accent }]}
             state={null}
             onPress={() => {
-              console.log('Change the description to ' + groupObject.description);
+              console.log('Change the description to ' + newDesc);
               updateDescription();
               setEditDescriptionVisible(false);
+              NativeAppEventEmitter.emit('reloadGroup');
             }}
           >
             <View style={styles.actionModalButtonContent}>
@@ -569,7 +568,8 @@ export const GroupInfo = ({ route, navigation }) => {
             style={[styles.actionButton, { backgroundColor: colourState.accent }]}
             state={null}
             onPress={() => {
-              addUser(newUser);
+              setLoad(true);
+              addUser(newUser).then(()=>{setLoad(false)});
               setInviteVisible(false);
             }}
           >
@@ -592,7 +592,7 @@ export const GroupInfo = ({ route, navigation }) => {
       >
         <View style={styles.actionModalInner}>
           <Text style={styles.modalTitle}>
-            {'Are you sure you want to remove * members?'}
+            {'Are you sure you want to remove these members?'}
           </Text>
           <TouchableOpacity
             style={[styles.actionButton, { backgroundColor: colourState.accent }]}
