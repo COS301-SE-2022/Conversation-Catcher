@@ -66,8 +66,8 @@ export const ForgotPassword = ({ navigation }) => {
         <TouchableOpacity
           style={[
             styles.changeMailButton,
-            { backgroundColor: colourState },
-            { borderColor: colourState },
+            { backgroundColor: '#3F89BE' },
+            { borderColor: '#3F89BE' },
           ]}
           onPress={() => {
             if (email === '') {
@@ -126,7 +126,7 @@ export const ForgotPassword = ({ navigation }) => {
             <View style={styles.inputText_box}>
               <View style={styles.inputIcon}>
                 <Icon
-                  style={{ color: colourState }}
+                  style={{ color: '#3F89BE' }}
                   name="envelope"
                   size={15}
                 />
@@ -147,7 +147,7 @@ export const ForgotPassword = ({ navigation }) => {
         style={styles.backButton}
         onPress={() => navigation.goBack()}
       >
-        <Icon name="angle-left" color={colourState} size={28} />
+        <Icon name="angle-left" color={'#3F89BE'} size={28} />
       </TouchableOpacity>
     </SafeAreaView>
   );

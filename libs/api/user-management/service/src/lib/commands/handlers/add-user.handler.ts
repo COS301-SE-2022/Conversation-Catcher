@@ -34,7 +34,7 @@ export class setUserHandler implements ICommandHandler<setUserCommand> {
     }
     delete user._id;
     user.email = email;
-    if (colour !== '') user.colour = colour;
+    if (colour !== '' || colour !== null) user.colour = colour;
     user.pdfs = pdfs;
     return await this.repository.setUser(oldEmail, user);
   }

@@ -36,7 +36,7 @@ const GroupTile = ({
   }
   return (
     <TouchableOpacity
-      style={styles.groupTile}
+      style={[styles.groupTile, {borderColor: colourState.low}, {shadowColor: colourState.low}]}
       onPress={() =>{
         if (add){
           DeviceEventEmitter.emit("AddPdf",name);
@@ -45,18 +45,18 @@ const GroupTile = ({
         }
       }}
     >
-      <View style={[styles.groupThumbnailBox, { borderColor: colourState }]}>
+      <View style={[styles.groupThumbnailBox, { borderColor: colourState.accent }, {backgroundColor: colourState.high}]}>
         {/* </View><View style={[styles.groupThumbnail, {backgroundColor: thumbnail}]}> */}
-        <View style={[styles.groupThumbnail, {backgroundColor: colourState}]}>
-          <Text style={styles.groupIcon}>{name.toUpperCase()[0]}</Text>
+        <View style={[styles.groupThumbnail, {backgroundColor: colourState.accent}]}>
+          <Text style={[styles.groupIcon, {color: colourState.mode}]}>{name.toUpperCase()[0]}</Text>
         </View>
       </View>
       <View style={styles.groupTile_contents_not_thumbnail}>
         <View style={styles.groupNameBox}>
-          <Text style={styles.groupName} numberOfLines={1}>{name}</Text>
+          <Text style={[styles.groupName, {color: colourState.top}]} numberOfLines={1}>{name}</Text>
         </View>
         <View style={styles.groupDescriptionBox}>
-          <Text style={styles.groupDescription} numberOfLines={1}>{description}</Text>
+          <Text style={[styles.groupDescription, {color: colourState.top}]} numberOfLines={1}>{description}</Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -70,10 +70,8 @@ const styles = StyleSheet.create({
     flexShrink: 1,
     borderRadius: 5,
     borderStyle: 'solid',
-    borderColor: '#c4c4c4ff',
     borderWidth: 1,
     elevation: 1,
-    shadowColor: '#c4c4c4ff',
     shadowRadius: 5,
     shadowOpacity: 0.1,
     shadowOffset: {
@@ -85,7 +83,6 @@ const styles = StyleSheet.create({
   },
   groupThumbnailBox: {
     borderRadius: 180,
-    backgroundColor: '#667084ff',
     aspectRatio: 1,
     width: '15%',
     margin: 10,
@@ -101,7 +98,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   groupName: {
-    color: '#344053ff',
     letterSpacing: 0,
     lineHeight: 20,
     fontSize: 20,
@@ -117,7 +113,6 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
   },
   groupDescription: {
-    color: '#344053ff',
     textAlign: 'left',
     letterSpacing: 0,
     lineHeight: 20,
@@ -134,7 +129,6 @@ const styles = StyleSheet.create({
   },
   groupIcon: {
     textAlign: "center",
-    color: "#ffffff",
     fontSize: 25,
     fontWeight: "bold",
   },

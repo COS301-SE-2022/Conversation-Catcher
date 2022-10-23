@@ -142,7 +142,7 @@ export const PdfView = ({ route, navigation }) => {
           <TouchableOpacity
             style={[
               styles.retrySummaryContainer,
-              { backgroundColor: colourState },
+              { backgroundColor: colourState.accent },
             ]}
             onPress={() => {
               console.log('Retry');
@@ -177,8 +177,8 @@ export const PdfView = ({ route, navigation }) => {
           </View>
           <View style={styles.summarisedSwitchBox}>
             <Switch
-              trackColor={{ false: '#ffffff', true: colourState }}
-              thumbColor={isEnabled ? '#ffffff' : colourState}
+              trackColor={{ false: '#ffffff', true: colourState.accent }}
+              thumbColor={isEnabled ? '#ffffff' : colourState.accent}
               ios_backgroundColor="#3e3e3e"
               onValueChange={toggleSwitch}
               value={isEnabled}
@@ -232,7 +232,7 @@ export const PdfView = ({ route, navigation }) => {
             <View style={styles.moreModalButtonContent}>
               <View style={styles.iconContainer}>
                 <Icon
-                  style={{ color: colourState }}
+                  style={{ color: colourState.accent }}
                   name="file-text-o"
                   size={18}
                 />
@@ -256,7 +256,7 @@ export const PdfView = ({ route, navigation }) => {
             <View style={styles.moreModalButtonContent}>
               <View style={styles.iconContainer}>
                 <Icon
-                  style={{ color: colourState }}
+                  style={{ color: colourState.accent }}
                   name="file-pdf-o"
                   size={18}
                 />
@@ -281,7 +281,7 @@ export const PdfView = ({ route, navigation }) => {
             <View style={styles.moreModalButtonContent}>
               <View style={styles.iconContainer}>
                 <Icon
-                  style={{ color: colourState }}
+                  style={{ color: colourState.accent }}
                   name="paper-plane-o"
                   size={18}
                 />
@@ -306,7 +306,7 @@ export const PdfView = ({ route, navigation }) => {
             <View style={styles.moreModalButtonContent}>
               <View style={styles.iconContainer}>
                 <Icon
-                  style={{ color: colourState }}
+                  style={{ color: colourState.accent }}
                   name="pencil-square-o"
                   size={20}
                 />
@@ -328,7 +328,7 @@ export const PdfView = ({ route, navigation }) => {
           >
             <View style={styles.moreModalButtonContent}>
               <View style={styles.iconContainer}>
-                <Icon style={{ color: colourState }} name="trash-o" size={20} />
+                <Icon style={{ color: colourState.accent }} name="trash-o" size={20} />
               </View>
               <View style={styles.moreModalButtonText_box}>
                 <Text style={styles.moreModalButtonText}>{'Delete'}</Text>
@@ -354,7 +354,7 @@ export const PdfView = ({ route, navigation }) => {
             }}
           />
           <TouchableOpacity
-            style={[styles.renameFileButton, { backgroundColor: colourState }]}
+            style={[styles.renameFileButton, { backgroundColor: colourState.accent }]}
             state={null}
             onPress={() => {
               console.log('renaming the pdf to ' + newName);
@@ -383,7 +383,7 @@ export const PdfView = ({ route, navigation }) => {
             {'Are you sure you want to delete ' + name.name + '?'}
           </Text>
           <TouchableOpacity
-            style={[styles.renameFileButton, { backgroundColor: colourState }]}
+            style={[styles.renameFileButton, { backgroundColor: colourState.accent }]}
             state={null}
             onPress={() => {
               setDeleteConfirmVisible(false);
@@ -396,7 +396,7 @@ export const PdfView = ({ route, navigation }) => {
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.renameFileButton, { backgroundColor: colourState }]}
+            style={[styles.renameFileButton, { backgroundColor: colourState.accent }]}
             state={null}
             onPress={() => {
               // Delete the pdf

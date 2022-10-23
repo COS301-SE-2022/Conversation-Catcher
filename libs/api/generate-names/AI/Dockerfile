@@ -15,5 +15,6 @@ RUN pip install pandas
 RUN pip install bs4
 RUN pip install tensorflow
 RUN pip install nltk
+RUN [ "python", "-c", "import nltk;nltk.download('stopwords')" ]
 EXPOSE 5550
 CMD ["python","./generate-names-server.py"]

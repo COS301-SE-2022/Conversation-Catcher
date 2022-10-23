@@ -31,7 +31,7 @@ import {
   addPDF,
   selectUser,
 } from '../../../../../../apps/client/src/app/slices/user.slice';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+// import {STT_SUBSCRIPTION, STT_URL} from 'react-native-dotenv'
 
 export const Home = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -92,9 +92,9 @@ export const Home = ({ navigation }) => {
     }
   `;
 
-  const SET_EMBEDDINGS = gql`
-    mutation setEmbeddings($id: String!, $name: String!, $text: String!) {
-      embed(id: $id, name: $name, text: $text)
+  const RENAME_PDF = gql`
+    mutation renamePdf($id: String!, $name: String!) {
+      renamePDF(id: "", name: "")
     }
   `;
 
@@ -103,7 +103,7 @@ export const Home = ({ navigation }) => {
   const [setSummarisedText] = useMutation(SET_SUMMARISED);
   const [addPdf] = useMutation(ADD_PDF);
   const [generateName] = useMutation(GENERATE_NAME);
-  const [setEmbedding] = useMutation(SET_EMBEDDINGS);
+  const [renamePdf] = useMutation(RENAME_PDF);
 
   const handleDocumentSelection = useCallback(async () => {
     try {
@@ -123,24 +123,25 @@ export const Home = ({ navigation }) => {
         <TouchableOpacity
           style={[
             styles.recordAudioTouchableOpacity,
-            { backgroundColor: colourState },
+            { backgroundColor: colourState.accent },
           ]}
           onPress={() => {
-            stop()
+            stop();
             setRecordingStopVisible(true);
           }}
         >
           <View style={styles.recordAudioIcon}>
-            <Icon color="#ffffffff" name="stop" size={40} />
+            <Icon color={colourState.mode} name="stop" size={40} />
           </View>
         </TouchableOpacity>
       );
     }
+
     return (
       <TouchableOpacity
         style={[
           styles.recordAudioTouchableOpacity,
-          { backgroundColor: '#d0d5ddff' },
+          { backgroundColor: colourState.low },
         ]}
         onPress={() => {
           setRecordAudioState(true);
@@ -148,7 +149,7 @@ export const Home = ({ navigation }) => {
         }}
       >
         <View style={styles.recordAudioIcon}>
-          <Icon color="#667084ff" name="microphone" size={40} />
+          <Icon color={colourState.top} name="microphone" size={40} />
         </View>
       </TouchableOpacity>
     );
@@ -161,12 +162,16 @@ export const Home = ({ navigation }) => {
           style={styles.changeUploadModalButton}
           onPress={() => handleDocumentSelection()}
         >
-          <Icon style={{ color: colourState }} name="file-sound-o" size={16} />
+          <Icon
+            style={{ color: colourState.accent }}
+            name="file-sound-o"
+            size={16}
+          />
           {fileResponse.map((file, index) => (
             <Text
               style={[
                 styles.changeUploadModalButtonText,
-                { color: colourState },
+                { color: colourState.accent },
               ]}
             >
               {file?.name}
@@ -270,7 +275,8 @@ export const Home = ({ navigation }) => {
   // Send the audio stream to the server and receive the converted text
   const convertSpeech = () => {
     setNotifyUser(true);
-    fetch('https://ccstt.azurewebsites.net/stt', {
+    console.log('stt','add url')
+    fetch('http://172.19.132.191:5050/stt', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -280,6 +286,7 @@ export const Home = ({ navigation }) => {
       body: JSON.stringify({
         audio_path: 'audio_path',
         audio_chunks: state.chunks,
+        subscription: '10ea50633a724339a33810ab17329c37',
       }),
     })
       .then(async (res) => {
@@ -289,11 +296,7 @@ export const Home = ({ navigation }) => {
           const newPdf = await addPdf({
             variables: {
               email: emailState,
-              name: (
-                await generateName({
-                  variables: { text: result.converted_text },
-                }).catch((e) => console.log(e))
-              ).data.generateName,
+              name: '',
               text: result.converted_text,
             },
           });
@@ -308,6 +311,19 @@ export const Home = ({ navigation }) => {
           });
           NativeAppEventEmitter.emit('updatePage');
           dispatch(addPDF(newPdf.data.addPDF.id));
+          generateName({
+            variables: { text: result.converted_text },
+          })
+            .then((result) => {
+              const newName = result.data.generateName;
+              console.log(newName);
+              pdfLocalAccess.renamePdf(newPdf.data.addPDF.id, newName);
+              NativeAppEventEmitter.emit('updatePage');
+              renamePdf({
+                variables: { id: newPdf.data.addPDF.id, name: newName },
+              });
+            })
+            .catch((e) => console.log(e));
           summarise(newPdf.data.addPDF.id, newPdf.data.addPDF.text);
         } else console.log('Connection error: internet connection is required');
       })
@@ -318,40 +334,50 @@ export const Home = ({ navigation }) => {
   const summarise = (id, text) => {
     summariseText({ variables: { text: text } })
       .then((res) => {
-        console.log(": " , res);
+        console.log(': ', res);
         setSummarisedText({
           variables: { id: id, summary: res.data.Summarise },
         }).catch((e) => {
-          console.log("", e);
+          console.log('', e);
           pdfLocalAccess.addSummary(id, 'error');
           return;
         });
         pdfLocalAccess.addSummary(id, 'loading');
       })
       .catch((e) => {
-        console.log("", e);
+        console.log('', e);
         setSummarisedText({
           variables: { id: id, summary: 'error' },
         }).catch((e) => {
-          console.log("", e);
+          console.log('', e);
         });
         pdfLocalAccess.addSummary(id, 'error');
       });
   };
 
   return (
-    <SafeAreaView style={styles.home}>
+    <SafeAreaView
+      style={[styles.home, {backgroundColor: colourState.mode}]}
+    >
       <View style={styles.big_title_box}>
-        <Text style={styles.big_title} ellipsizeMode={'clip'}>
+        <Text
+          style={[styles.big_title, {color: colourState.top}]}
+          ellipsizeMode={'clip'}
+        >
           {'Recents'}
         </Text>
       </View>
-      <PdfDisplay navigation={navigation} selectMode={false} group={''} ref={pdfRef} />
+      <PdfDisplay
+        navigation={navigation}
+        selectMode={false}
+        group={''}
+        ref={pdfRef}
+      />
       <View style={styles.viewPdfsTouchableOpacityFrame}>
         <TouchableOpacity
           style={[
             styles.viewPdfsTouchableOpacity,
-            { backgroundColor: colourState },
+            { backgroundColor: colourState.accent },
           ]}
           onPress={() => {
             navigation.navigate('ViewAll', { groupName: '' });
@@ -359,7 +385,7 @@ export const Home = ({ navigation }) => {
         >
           <View style={styles.viewPdfsTouchableOpacityLabel_box}>
             <Text
-              style={styles.viewPdfsTouchableOpacityLabel}
+              style={[styles.viewPdfsTouchableOpacityLabel , {color: colourState.mode}]}
               ellipsizeMode={'clip'}
             >
               {'Conversations'}
@@ -371,7 +397,7 @@ export const Home = ({ navigation }) => {
         <TouchableOpacity
           style={[
             styles.viewPdfsTouchableOpacity,
-            { backgroundColor: colourState },
+            { backgroundColor: colourState.accent },
           ]}
           onPress={() => {
             navigation.navigate('Groups', { groupObject: null });
@@ -379,7 +405,7 @@ export const Home = ({ navigation }) => {
         >
           <View style={styles.viewPdfsTouchableOpacityLabel_box}>
             <Text
-              style={styles.viewPdfsTouchableOpacityLabel}
+              style={[styles.viewPdfsTouchableOpacityLabel, {color: colourState.mode}]}
               ellipsizeMode={'clip'}
             >
               {'Groups'}
@@ -396,18 +422,20 @@ export const Home = ({ navigation }) => {
             onPress={() => setUploadVisible(true)}
           >
             <View style={styles.uploadAudioIcon}>
-              <Icon color="#667084ff" name="upload" size={40} />
+              <Icon color={colourState.high} name="upload" size={40} />
             </View>
           </TouchableOpacity> */}
         </View>
         <View style={styles.bottomGroupSideSpacing}>
           <TouchableOpacity
             style={styles.settingsTouchableOpacityFrame}
-            onPress={() => navigation.navigate('Settings')}
+            onPress={() => {
+              navigation.navigate('Settings');
+            }}
           >
             <View style={styles.settingsIconBox}>
               <Icon style={styles.settingsIcon}>
-                <Icon name="cog" size={25} color="#667084ff" />
+                <Icon name="cog" size={25} color={colourState.high} />
               </Icon>
             </View>
           </TouchableOpacity>
@@ -418,15 +446,15 @@ export const Home = ({ navigation }) => {
         style={styles.modal}
         isVisible={recordingStopVisible}
         hasBackdrop={true}
-        backdropColor="white"
+        backdropColor={colourState.mode}
         onBackdropPress={() => {
           setRecordingStopVisible(false);
         }}
       >
-        <View style={styles.recordingStopModalInner}>
-          <Text style={styles.modalTitle}>{'Recording has been stopped'}</Text>
+        <View style={[styles.recordingStopModalInner, {backgroundColor: colourState.bottom}, {borderColor: colourState.low}]}>
+          <Text style={[styles.modalTitle, {color: colourState.top}]}>{'Recording has been stopped'}</Text>
 
-          <View style={styles.recordingStopModalButtonDivider} />
+          <View style={[styles.recordingStopModalButtonDivider, {backgroundColor: colourState.low}]} />
 
           <TouchableOpacity
             style={styles.recordingStopModalButton}
@@ -440,11 +468,15 @@ export const Home = ({ navigation }) => {
           >
             <View style={styles.recordingStopModalButtonContent}>
               <View style={styles.iconContainer}>
-                <Icon style={{ color: colourState }} name="refresh" size={18} />
+                <Icon
+                  style={{ color: colourState.accent }}
+                  name="refresh"
+                  size={18}
+                />
               </View>
               <View style={styles.recordingStopModalButtonText_box}>
                 <Text
-                  style={styles.recordingStopModalButtonText}
+                  style={[styles.recordingStopModalButtonText, {color: colourState.top }]}
                   ellipsizeMode={'clip'}
                 >
                   {'Convert recording'}
@@ -464,7 +496,7 @@ export const Home = ({ navigation }) => {
             <View style={styles.recordingStopModalButtonContent}>
               <View style={styles.iconContainer}>
                 <Icon
-                  style={{ color: colourState }}
+                  style={{ color: colourState.accent }}
                   name="microphone"
                   size={20}
                 />
@@ -477,7 +509,7 @@ export const Home = ({ navigation }) => {
             </View>
           </TouchableOpacity> */}
 
-          <View style={styles.recordingStopModalButtonDivider} />
+          <View style={[styles.recordingStopModalButtonDivider, {backgroundColor: colourState.low}]} />
 
           <TouchableOpacity
             style={styles.recordingStopModalButton}
@@ -490,10 +522,14 @@ export const Home = ({ navigation }) => {
           >
             <View style={styles.recordingStopModalButtonContent}>
               <View style={styles.iconContainer}>
-                <Icon style={{ color: colourState }} name="trash-o" size={20} />
+                <Icon
+                  style={{ color: colourState.accent }}
+                  name="trash-o"
+                  size={20}
+                />
               </View>
               <View style={styles.recordingStopModalButtonText_box}>
-                <Text style={styles.recordingStopModalButtonText}>
+                <Text style={[styles.recordingStopModalButtonText, {color: colourState.top }]}>
                   {'Discard recording'}
                 </Text>
               </View>
@@ -516,7 +552,10 @@ export const Home = ({ navigation }) => {
           <UploadAudioCenter />
 
           <TouchableOpacity
-            style={[styles.uploadFileButton, { backgroundColor: colourState }]}
+            style={[
+              styles.uploadFileButton,
+              { backgroundColor: colourState.accent },
+            ]}
             state={null}
             onPress={() => {
               setUploadVisible(false);
@@ -540,7 +579,7 @@ export const Home = ({ navigation }) => {
         }}
       >
         <View style={styles.modalNotifyInner}>
-          <Text style={styles.modalTitle}>
+          <Text style={[styles.modalTitle, {backgroundColor: colourState.low}, {borderColor: colourState.high}]}>
             {'Document generation has started and will take about 2 minutes'}
           </Text>
           {/* <Text style={styles.modalTitle}>{'Your document will be ready in 2 minutes'}</Text> */}
@@ -557,7 +596,6 @@ Home.scrollHeight = 844;
 
 const styles = StyleSheet.create({
   home: {
-    backgroundColor: '#ffffffff',
     overflow: 'hidden',
     //flexShrink: 1,
     flex: 1,
@@ -568,7 +606,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   big_title: {
-    color: '#344053ff',
     textAlign: 'center',
     letterSpacing: 0,
     lineHeight: 28,
@@ -619,7 +656,6 @@ const styles = StyleSheet.create({
     },
   },
   viewPdfsTouchableOpacityLabel: {
-    color: '#ffffffff',
     textAlign: 'center',
     letterSpacing: 0,
     lineHeight: 22,
@@ -712,16 +748,13 @@ const styles = StyleSheet.create({
   modalNotifyInner: {
     width: '100%',
     flexShrink: 1,
-    backgroundColor: '#d0d5ddff',
     borderRadius: 7,
     flexDirection: 'column',
     borderWidth: 1,
-    borderColor: '#667084ff',
     opacity: 1,
     //alignSelf: 'flex-end',
   },
   modalTitle: {
-    color: '#344053ff',
     textAlign: 'center',
     letterSpacing: 0,
     lineHeight: 20,
@@ -734,11 +767,9 @@ const styles = StyleSheet.create({
   recordingStopModalInner: {
     width: '70%',
     flexShrink: 1,
-    backgroundColor: '#f5f5f5ff',
     borderRadius: 7,
     flexDirection: 'column',
     borderWidth: 1,
-    borderColor: '#667084ff',
     opacity: 1,
   },
   recordingStopModalButton: {
@@ -760,7 +791,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   recordingStopModalButtonText: {
-    color: '#344053ff',
     textAlign: 'center',
     letterSpacing: 0,
     lineHeight: 20,
@@ -773,7 +803,6 @@ const styles = StyleSheet.create({
     flexShrink: 1,
   },
   recordingStopModalButtonDivider: {
-    backgroundColor: '#d0d5ddff',
     height: 1,
     width: '87%',
     alignSelf: 'center',

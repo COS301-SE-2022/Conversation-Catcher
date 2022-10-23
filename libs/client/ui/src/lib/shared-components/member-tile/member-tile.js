@@ -22,9 +22,9 @@ function DetermineTileCorner(props) {
     return (
       <BouncyCheckbox
         size={20}
-        fillColor={colourState}
-        unfillColor="#FFFFFF"
-        iconStyle={{ borderColor: colourState }}
+        fillColor={colourState.accent}
+        unfillColor={colourState.mode}
+        iconStyle={{ borderColor: colourState.accent }}
         isChecked={checkboxState}
         onPress={() => setCheckboxState(!checkboxState)}
       />
@@ -44,12 +44,12 @@ const MemberTile = ({
   }
   return (
     <TouchableOpacity
-      style={styles.memberTile}
+      style={[styles.memberTile, {borderColor: colourState.low}]}
     >
       <View style={styles.memberTile_contents_not_thumbnail}>
         <View style={styles.memberTile_contents_not_thumbnail_inner}>
           <View style={styles.memberName_box}>
-            <Text style={styles.memberName}>{name}</Text>
+            <Text style={[styles.memberName, {color: colourState.top}]}>{name}</Text>
           </View>
         </View>
         <View style={styles.corner_button}>
@@ -66,7 +66,6 @@ const styles = StyleSheet.create({
   memberTile: {
     flexGrow: 1,
     borderStyle: 'solid',
-    borderColor: '#c4c4c4ff',
     borderWidth: 1,
     flexDirection: 'row',
   },
@@ -86,7 +85,6 @@ const styles = StyleSheet.create({
     flexShrink: 1,
   },
   memberName: {
-    color: '#344053ff',
     textAlign: 'left',
     letterSpacing: 0,
     lineHeight: 20,
