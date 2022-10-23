@@ -103,7 +103,7 @@ export const ChangeEmail = ({ navigation }) => {
   function MailHint() {
     if (showMailHint) {
       return (
-        <Text style={styles.hintText}>{'Enter a valid email address.'}</Text>
+        <Text style={[styles.hintText, {color: colourState.high}]}>{'Enter a valid email address.'}</Text>
       );
     } else {
       return null;
@@ -154,6 +154,7 @@ export const ChangeEmail = ({ navigation }) => {
               <TextInput
                 style={[styles.inputText, {color: colourState.high}]}
                 placeholder="johnsmith@gmail.com"
+                placeholderTextColor={colourState.bottom}
                 underlineColorAndroid="transparent"
                 onChangeText={(text) => {
                   setNewEmail(text);
@@ -177,7 +178,7 @@ export const ChangeEmail = ({ navigation }) => {
         </View>
         <View style={styles.inputsItem}>
           <View style={styles.inputLabel_box}>
-            <Text style={styles.inputLabel}>{'Re-enter new email'}</Text>
+            <Text style={[styles.inputLabel, {color: colourState.top}]}>{'Re-enter new email'}</Text>
           </View>
           <View style={[styles.inputField, {backgroundColor: colourState.mode}, {borderColor: colourState.low}, {shadowColor: colourState.low}]}>
             <View style={styles.inputText_box}>
@@ -191,6 +192,7 @@ export const ChangeEmail = ({ navigation }) => {
               <TextInput
                 style={[styles.inputText, {color: colourState.high}]}
                 placeholder="johnsmith@gmail.com"
+                placeholderTextColor={colourState.bottom}
                 underlineColorAndroid="transparent"
                 onChangeText={(text) => {
                   setCheckEmail(text);
@@ -201,7 +203,7 @@ export const ChangeEmail = ({ navigation }) => {
         </View>
         <View style={styles.inputsItem}>
           <View style={styles.inputLabel_box}>
-            <Text style={styles.inputLabel}>{'Password'}</Text>
+            <Text style={[styles.inputLabel, {color: colourState.top}]}>{'Password'}</Text>
           </View>
           <View style={[styles.inputField, {backgroundColor: colourState.mode}, {borderColor: colourState.low}, {shadowColor: colourState.low}]}>
             <View style={styles.inputText_box}>
@@ -215,6 +217,7 @@ export const ChangeEmail = ({ navigation }) => {
               <TextInput
                 style={[styles.inputText, {color: colourState.high}]}
                 placeholder="*********"
+                placeholderTextColor={colourState.bottom}
                 underlineColorAndroid="transparent"
                 onChangeText={(text) => {
                   setPassword(text);

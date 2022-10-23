@@ -51,7 +51,7 @@ def stt():
 
     #Speech to text
     #Setup connection with Azure speech-to-text
-    speech_config = speechsdk.SpeechConfig(subscription="10ea50633a724339a33810ab17329c37", region="southafricanorth")
+    speech_config = speechsdk.SpeechConfig(subscription=request.get_json()['subscription'], region="southafricanorth")
     speech_config.speech_recognition_language="en-ZA"
 
     #Get the audio file that was created
