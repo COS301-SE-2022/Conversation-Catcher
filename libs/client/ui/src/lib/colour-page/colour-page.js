@@ -158,6 +158,7 @@ export const ColourPage = ({ navigation}) => {
                 if (element === null) user.pdfs.splice(index,1);
               });
               let colourObj = getColour(selectedItem.fillColor);
+              dispatch(setColour(colourObj));
               setUser({
                 variables: {
                   oldEmail: user.email,
@@ -167,9 +168,9 @@ export const ColourPage = ({ navigation}) => {
                 },
               }).then(()=>
               //dispatches the setColour action with colour payload
-              dispatch(setColour(colourObj))
+                console.log('Successfully updated colour')
               ).catch((error) => {
-                console.log(error);
+                console.log('Failed to update colour', error);
               });
             }}
           />
