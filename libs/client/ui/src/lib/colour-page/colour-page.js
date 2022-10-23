@@ -27,102 +27,137 @@ export const ColourPage = ({ navigation}) => {
     }
   `;
 
+  function DetermineMode(){
+    if (colourState.mode === '#FFFFFF')
+    {
+      return false;
+    }
+    return true;
+  }
+
+  var isEnabled = DetermineMode();
+
   const [setUser] = useMutation(SET_USER);
   const getColour = (accent) => {
-    let key = {a:accent,m:isEnabled};
-    switch (key) {
-      case {a:"#3F89BE",m:false}:
-        return {
-          accent: "#3F89BE",
-          mode:"#FFFFFF",
-          bottom:"#E6ECF0",
-          low:"#B6BFC6",
-          high:"#667685",
-          top:"#344554",
-        };
-      case {a:"#3F89BE",m:true}:
-        return {
-          accent: "#9DCEF6",
+    console.log("Accent: ", accent, "   Toggle: ", isEnabled);
+    switch (accent) {
+      case "#3F89BE": {
+        if (!isEnabled) {
+          return {
+            accent: "#3F89BE",
+            mode:"#FFFFFF",
+            bottom:"#E6ECF0",
+            low:"#B6BFC6",
+            high:"#667685",
+            top:"#344554",
+          };
+        }
+        else{
+          return {
+            accent: "#9DCEF6",
           mode:"#344554",
           bottom:"#8D99A3",
           low:"#AAB5BE",
           high:"#E6ECF0",
           top:"#FFFFFF",
-        };
-      case {a:"#A776B1",m:false}:
-        return {
-          accent: "#A776B1",
-          mode:"#FFFFFF",
-          bottom:"#EEE9EF",
-          low:"#C6BCC8",
-          high:"#826685",
-          top:"#4E3B51",
-        };
-      case {a:"#A776B1",m:true}:
-        return {
-          accent: "#E5C9F7",
-          mode:"#4E3B51",
-          bottom:"#826685",
-          low:"#C1B5C1",
-          high:"#EEE9EF",
-          top:"#FFFFFF",
-        };
-      case {a:"#B06F7F",m:false}:
-        return {
-          accent: "#B06F7F",
-          mode:"#FFFFFF",
-          bottom:"#EFE9EA",
-          low:"#C8BCBE",
-          high:"#85666C",
-          top:"#513B40",
-        };
-      case {a:"#B06F7F",m:true}:
-        return {
-          accent: "#ECBDC8",
-          mode:"#513B40",
-          bottom:"#85666C",
-          low:"#B29DA1",
-          high:"#EFE9EA",
-          top:"#FFFFFF",
-        };
-      case {a:"#679E5E",m:false}:
-        return {
-          accent: "#679E5E",
-          mode:"#FFFFFF",
-          bottom:"#E9EFE9",
-          low:"#BCC8BD",
-          high:"#4A6749",
-          top:"#2D4731",
-        };
-      case {a:"#679E5E",m:true}:
-        return {
-          accent: "#B5DDAF",
-          mode:"#2D4731",
-          bottom:"#4A6749",
-          low:"#97AD99",
-          high:"#E9EFE9",
-          top:"#FFFFFF",
-        };
-      case {a:"#D17B3C",m:false}:
-        return {
-          accent: "#D17B3C",
-          mode:"#FFFFFF",
-          bottom:"#F5EEE8",
-          low:"#D2C0B5",
-          high:"#857166",
-          top:"#51433B",
-        };
-      case {a:"#D17B3C",m:true}:
-        return {
-          accent: "#F4B688",
-          mode:"#51433B",
-          bottom:"#857166",
-          low:"#BFA798",
-          high:"#F5EEE8",
-          top:"#FFFFFF",
-        };
+          };
+        }
+      }
+        
+      case "#A776B1": {
+        if (!isEnabled) {
+          return {
+            accent: "#A776B1",
+            mode:"#FFFFFF",
+            bottom:"#EEE9EF",
+            low:"#C6BCC8",
+            high:"#826685",
+            top:"#4E3B51",
+          };
+        }
+        else {
+          return {
+            accent: "#E5C9F7",
+            mode:"#4E3B51",
+            bottom:"#826685",
+            low:"#C1B5C1",
+            high:"#EEE9EF",
+            top:"#FFFFFF",
+          };
+        }
+      }
+        
+      case "#B06F7F": {
+        if(!isEnabled) {
+          return {
+            accent: "#B06F7F",
+            mode:"#FFFFFF",
+            bottom:"#EFE9EA",
+            low:"#C8BCBE",
+            high:"#85666C",
+            top:"#513B40",
+          };
+        }
+        else {
+          return {
+            accent: "#ECBDC8",
+            mode:"#513B40",
+            bottom:"#85666C",
+            low:"#B29DA1",
+            high:"#EFE9EA",
+            top:"#FFFFFF",
+          };
+        }
+      }
+        
+      case "#679E5E": {
+        if (!isEnabled) {
+          return {
+            accent: "#679E5E",
+            mode:"#FFFFFF",
+            bottom:"#E9EFE9",
+            low:"#BCC8BD",
+            high:"#4A6749",
+            top:"#2D4731",
+          };
+        }
+        else {
+          return {
+            accent: "#B5DDAF",
+            mode:"#2D4731",
+            bottom:"#4A6749",
+            low:"#97AD99",
+            high:"#E9EFE9",
+            top:"#FFFFFF",
+          };
+        }
+      }
+        
+      case "#D17B3C": {
+        if (!isEnabled) {
+          return {
+            accent: "#D17B3C",
+            mode:"#FFFFFF",
+            bottom:"#F5EEE8",
+            low:"#D2C0B5",
+            high:"#857166",
+            top:"#51433B",
+          };
+        }
+        else {
+          return {
+            accent: "#F4B688",
+            mode:"#51433B",
+            bottom:"#857166",
+            low:"#BFA798",
+            high:"#F5EEE8",
+            top:"#FFFFFF",
+          };
+        }
+      }
+        
       default://lightmode blue
-        return {accent: accent,
+        return {accent: "#3F89BE",
           mode:"#FFFFFF",
           bottom:"#E6ECF0",
           low:"#B6BFC6",
@@ -130,9 +165,11 @@ export const ColourPage = ({ navigation}) => {
           top:"#344554",};
     }
   }
-  const [isEnabled, setIsEnabled] = useState(false);
+
   const toggleSwitch = () => {
-    setIsEnabled(previousState => !previousState);
+    console.log("aaaaaaaaaaa: ", isEnabled);
+    isEnabled = !isEnabled;
+    console.log("isEnabled: ", isEnabled);
     user.pdfs.forEach((element,index) => {
       if (element === null) user.pdfs.splice(index,1);
     });
