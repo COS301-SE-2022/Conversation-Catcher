@@ -55,11 +55,11 @@ export const ColourPage = ({ navigation}) => {
         else{
           return {
             accent: "#9DCEF6",
-          mode:"#344554",
-          bottom:"#8D99A3",
-          low:"#AAB5BE",
-          high:"#E6ECF0",
-          top:"#FFFFFF",
+            mode:"#344554",
+            bottom:"#8D99A3",
+            low:"#AAB5BE",
+            high:"#E6ECF0",
+            top:"#FFFFFF",
           };
         }
       }

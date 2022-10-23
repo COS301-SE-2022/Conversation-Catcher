@@ -177,7 +177,7 @@ export const ChangeEmail = ({ navigation }) => {
         </View>
         <View style={styles.inputsItem}>
           <View style={styles.inputLabel_box}>
-            <Text style={styles.inputLabel}>{'Re-enter new email'}</Text>
+            <Text style={[styles.inputLabel, {color: colourState.top}]}>{'Re-enter new email'}</Text>
           </View>
           <View style={[styles.inputField, {backgroundColor: colourState.mode}, {borderColor: colourState.low}, {shadowColor: colourState.low}]}>
             <View style={styles.inputText_box}>
@@ -201,7 +201,7 @@ export const ChangeEmail = ({ navigation }) => {
         </View>
         <View style={styles.inputsItem}>
           <View style={styles.inputLabel_box}>
-            <Text style={styles.inputLabel}>{'Password'}</Text>
+            <Text style={[styles.inputLabel, {color: colourState.top}]}>{'Password'}</Text>
           </View>
           <View style={[styles.inputField, {backgroundColor: colourState.mode}, {borderColor: colourState.low}, {shadowColor: colourState.low}]}>
             <View style={styles.inputText_box}>
