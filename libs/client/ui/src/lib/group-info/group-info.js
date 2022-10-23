@@ -18,7 +18,6 @@ import { useSelector, useDispatch } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { selectColour, selectEmail } from '../../../../../../apps/client/src/app/slices/user.slice';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { changeName, removeGroup, changeDesc} from '../../../../../../apps/client/src/app/slices/group.slice';
 import MemberTile from '../shared-components/member-tile/member-tile.js';
 import groupsLocalAccess from '../shared-components/local-groups-access/local-groups-access';
 import Loading from '../shared-components/loading/loading';
