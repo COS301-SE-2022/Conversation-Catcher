@@ -431,7 +431,6 @@ export const Home = ({ navigation }) => {
             style={styles.settingsTouchableOpacityFrame}
             onPress={() => {
               navigation.navigate('Settings');
-              console.log(colourState);
             }}
           >
             <View style={styles.settingsIconBox}>
