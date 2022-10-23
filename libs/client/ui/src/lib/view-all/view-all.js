@@ -44,41 +44,6 @@ export const ViewAll = ({ navigation, route }) => {
   const title = 'Awesome Contents';
   const message = 'Please check this out.';
 
-  const ADD_PDF = gql`
-    mutation addPdfTo($pdfId: String!, $groupName: String!) {
-      addPdfTo(pdfId: $pdf, groupName: $groupName)
-    }
-  `;
-  const REMOVE_PDF = gql`
-    mutation removePdfFrom($pdfId: String!, $groupName: String!) {
-      removePdfFrom(pdfId: $pdf, groupName: $groupName)
-    }
-  `;
-  const [addPdf] = useMutation(ADD_PDF);
-  const [removePdf] = useMutation(REMOVE_PDF);
-
-  async function addPDF() {
-    //call this after selectedPdf is set to add pdf to group
-    if (selectedPdf === null || selectedGroup === null) return;
-    groupLocalAccess.addPdf(selectedPdf, selectedGroup);
-    await addPdf({
-      variables: { pdfId: selectedPdf, groupName: selectedGroup },
-    }).then(() => {
-      setSelectedPdf(null);
-      setSelectedGroup(null);
-    });
-  }
-  async function removePDF() {
-    //call this after selectedPdf is set to remove pdf to group
-    if (selectedPdf === null || groupObject.name === null) return;
-    groupLocalAccess.removePdf(selectedPdf, groupObject.name);
-    await removePdf({
-      variables: { pdfId: selectedPdf, groupName: groupObject.name },
-    }).then(() => {
-      setSelectedPdf(null);
-    });
-  }
-
   //variables for object sorting and management
   const [objArr, setObjArr] = useState([]);
   const [searchInput, setSearchInput] = useState('');

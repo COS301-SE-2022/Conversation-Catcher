@@ -11,7 +11,6 @@ import {
   NativeAppEventEmitter,
 } from 'react-native';
 import { gql, useLazyQuery, useMutation } from '@apollo/client';
-import GroupTile from '../shared-components/group-tile/group-tile.js';
 import ModalDropdown from 'react-native-modal-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
@@ -182,7 +181,6 @@ export const Groups = ({ navigation }) => {
         <View style={styles.big_title_box}>
           <Text style={styles.big_title}>{'Groups'}</Text>
         </View>
-
         <View style={styles.searchBarGroup}>
           <TextInput
             style={styles.searchInput}
@@ -197,12 +195,7 @@ export const Groups = ({ navigation }) => {
           </View>
         </View>
       </View>
-{/*
-      <GroupDisplay
-        navigation={navigation}
-        selectMode={selectMode}
-        ref={groupRef}
-      /> */
+      {
       //List of groups
       }
       <GroupDisplay
@@ -212,37 +205,8 @@ export const Groups = ({ navigation }) => {
         add={false}
       />
       {
-      //   <View style={styles.groupTiles}>
-      //   <GroupTile
-      //     key={'1'}
-      //     id={'1'}
-      //     name={'Group1'}
-      //     thumbnailSource={{
-      //       uri:
-      //       'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg',
-      //     }}
-      //     description={'test'}
-      //     groupSource={'groupRefresh'}
-      //     nav={navigation}
-      //   />
-      //   <GroupTile
-      //     key={'2'}
-      //     id={'2'}
-      //     name={'Group2'}
-      //     thumbnailSource={{
-      //       uri:
-      //       'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg',
-      //     }}
-      //     text={'blah'}
-      //     groupSource={'groupRefresh'}
-      //     nav={navigation}
-      //   />
-      // </View>
-      }
-      {
         //Bottom Bar
       }
-
       <View style={styles.viewAllBottomBar}>
         <TouchableOpacity
           style={styles.moreButton}

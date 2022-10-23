@@ -97,12 +97,7 @@ export const GroupSelection = ({ navigation, route }) => {
           </View>
         </View>
       </View>
-{/* 
-      <GroupDisplay
-        navigation={navigation}
-        selectMode={selectMode}
-        ref={groupRef}
-      /> */
+      {
       //List of groups
       }
       <Loading
