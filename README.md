@@ -15,8 +15,9 @@ The following links are to our demo videos<br>
 [Multiprocessing moguls - Demo 2 - link](https://drive.google.com/file/d/14bQFBt5VnbDpeEGc2W5Pa0BSND2wmY-c/view?usp=sharing) <br>
 [Multiprocessing moguls - Demo 3 - link](https://drive.google.com/file/d/1cOZXT2Sw5fW1BTVizLg0-Slsb8PGW3jr/view?usp=sharing) <br>
 [Multiprocessing moguls - Demo 4 - link](https://drive.google.com/file/d/1Ev9KSlhCMbwWrQ7VuA0sJQERt8j58pQq/view?usp=sharing) <br>
+[Multiprocessing moguls - Project Day - link]() <br>
 Links to documentation<br>
-[Slideshow of our project](https://docs.google.com/presentation/d/1dDRjodSr2vGlGDbDdaRO_anSgYNMljj3/edit?usp=sharing&ouid=103864978666312634322&rtpof=true&sd=true) <br>
+[Slideshow of our project](https://docs.google.com/presentation/d/1EtNjc2_pwxEH_X9XI9680QCnuy6ryEiJ/edit?usp=sharing&ouid=103864978666312634322&rtpof=true&sd=true)<br>
 [User manual](https://docs.google.com/document/d/1S0jIYr55iHkuNmRatYYHicl2Fv5SuQmJIr7w2tlFhZ8/edit#heading=h.52o998qf6h7n) <br>
 [Coding standards document](https://docs.google.com/document/d/1ldcNnkpUx-dX3XYgYARz3ydb_r1uxhDfNxVyNXOUcBw/edit#heading=h.186zini1wvx4) <br>
 [Testing policy](https://docs.google.com/document/d/1GDkJa9m_CCDya0Eao0iKNwIsTTHjD_oVqclKSSnYMNA/edit#heading=h.yuae9x1vg2gc) <br>
