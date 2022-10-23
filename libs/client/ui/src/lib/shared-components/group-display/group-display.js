@@ -18,9 +18,6 @@ export function GroupDisplay({ navigation, selectMode, add}, ref) {
   const [refreshing, setRefreshing] = useState(false);
   const [refreshFlag,setRefreshFlag] = useState(false);
   const emailState = useSelector(selectEmail);
-  //const localGroups = useSelector(selectGroups);
-  //const dispatch = useDispatch();
-  //Expose refresh function to parent(View-all page)
   //Listen to when to update page
   if (groupLocalAccess.addEvent3.length !== 0) {
     //If statement to ensure that only one listener is created for the summarise command
@@ -33,8 +30,7 @@ export function GroupDisplay({ navigation, selectMode, add}, ref) {
   if (groupLocalAccess.addEvent2.length !== 0) {
     //If statement to ensure that only one listener is created for the summarise command
     NativeAppEventEmitter.addListener("reloadGroup",()=>{
-      
-      //setRefreshFlag(true);
+      console.log("refreshing groups");
       ReloadData();
     });
     groupLocalAccess.addEvent2.length = 0;

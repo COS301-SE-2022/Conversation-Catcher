@@ -116,19 +116,14 @@ export const GroupInfo = ({ route, navigation }) => {
 
   async function deleteGroup() {
     groupsLocalAccess.deleteGroup(groupObject.name);
-    NativeAppEventEmitter.emit("updateGroups");
-    await delete_group({ variables: { groupName:groupObject.name } });
-    //dispatch(removeGroup({ id: id.id }));
+    NativeAppEventEmitter.emit("reloadGroup");
+    await delete_group({ variables: { groupName:groupObject.name } }).catch(e=>console.log(e));
   }
   
   async function removeUser(userID){
-    groupsLocalAccess.removeUser(userID, groupObject.name);
-    NativeAppEventEmitter.emit("updateGroups");
-    await remove({variables:{user:userID, groupName: groupObject.name}}).then(()=>{
-      groupsLocalAccess.removeUser(userID,groupObject.name);
-    }).catch((e)=>{
-      console.log(e);
-    });
+    groupsLocalAccess.removeUser(userID,groupObject.name);
+    NativeAppEventEmitter.emit("reloadGroup");
+    await remove({variables:{user:userID, groupName: groupObject.name}}).catch(e=>console.log(e));
   }
 
   async function addUser(userID){
@@ -450,11 +445,11 @@ export const GroupInfo = ({ route, navigation }) => {
             onPress={() => {
               setLoad(true);
               deleteGroup().then(()=>{
-                navigation.navigate('Groups');
                 setLoad(false);
               }).catch(e=>console.log(e));
               setDeleteConfirmVisible(false);
-              NativeAppEventEmitter.emit('updatePage');
+              NativeAppEventEmitter.emit('reloadGroup');
+              navigation.navigate('Groups');
             }}
           >
             <View style={styles.actionModalButtonContent}>
@@ -496,12 +491,11 @@ export const GroupInfo = ({ route, navigation }) => {
             onPress={() => {
               setLoad(true);
               removeUser(userName).then(()=>{
-                navigation.navigate('Groups');
                 setLoad(false);
               }).catch(e=>console.log(e));
               setLeaveConfirmVisible(false);
-              NativeAppEventEmitter.emit('updatePage');
-              // NativeAppEventEmitter.emit('reloadGroup');
+              NativeAppEventEmitter.emit('reloadGroup');
+              navigation.navigate('Groups');
             }}
           >
             <View style={styles.actionModalButtonContent}>
