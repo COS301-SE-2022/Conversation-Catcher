@@ -103,7 +103,7 @@ export const ChangeEmail = ({ navigation }) => {
   function MailHint() {
     if (showMailHint) {
       return (
-        <Text style={styles.hintText}>{'Enter a valid email address.'}</Text>
+        <Text style={[styles.hintText, {color: colourState.high}]}>{'Enter a valid email address.'}</Text>
       );
     } else {
       return null;
@@ -154,6 +154,7 @@ export const ChangeEmail = ({ navigation }) => {
               <TextInput
                 style={[styles.inputText, {color: colourState.high}]}
                 placeholder="johnsmith@gmail.com"
+                placeholderTextColor={colourState.bottom}
                 underlineColorAndroid="transparent"
                 onChangeText={(text) => {
                   setNewEmail(text);
@@ -191,6 +192,7 @@ export const ChangeEmail = ({ navigation }) => {
               <TextInput
                 style={[styles.inputText, {color: colourState.high}]}
                 placeholder="johnsmith@gmail.com"
+                placeholderTextColor={colourState.bottom}
                 underlineColorAndroid="transparent"
                 onChangeText={(text) => {
                   setCheckEmail(text);
@@ -215,6 +217,7 @@ export const ChangeEmail = ({ navigation }) => {
               <TextInput
                 style={[styles.inputText, {color: colourState.high}]}
                 placeholder="*********"
+                placeholderTextColor={colourState.bottom}
                 underlineColorAndroid="transparent"
                 onChangeText={(text) => {
                   setPassword(text);

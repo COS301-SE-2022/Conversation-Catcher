@@ -222,7 +222,7 @@ export const GroupInfo = ({ route, navigation }) => {
                 style={styles.groupThumbnail}
                 backgroundColor={colourState.accent}
               >
-                <Text style={styles.groupThumbnailText}>{groupObject.name.charAt(0)}</Text>
+                <Text style={[styles.groupThumbnailText, {color: colourState.mode}]}>{groupObject.name.charAt(0)}</Text>
               </View>
             </View>
 
@@ -232,7 +232,7 @@ export const GroupInfo = ({ route, navigation }) => {
                 setRenameVisible(true);
               }}
             >
-                <Text style={styles.groupName} numberOfLines={1}>{groupObject.name}</Text>
+                <Text style={[styles.groupName, {color: colourState.top}]} numberOfLines={1}>{groupObject.name}</Text>
             </TouchableOpacity>
 
             <TouchableOpacity 
@@ -241,7 +241,7 @@ export const GroupInfo = ({ route, navigation }) => {
                 setEditDescriptionVisible(true);
               }}
             >
-              <Text style={styles.groupText} numberOfLines={2}>{groupObject.description}</Text>
+              <Text style={[styles.groupText, {color: colourState.high}]} numberOfLines={2}>{groupObject.description}</Text>
             </TouchableOpacity>
           </View>
           
@@ -254,23 +254,23 @@ export const GroupInfo = ({ route, navigation }) => {
               style={styles.groupThumbnail}
               backgroundColor={colourState.accent}
             >
-              <Text style={styles.groupThumbnailText}>{groupObject.name.charAt(0)}</Text>
+              <Text style={[styles.groupThumbnailText, {color: colourState.mode}]}>{groupObject.name.charAt(0)}</Text>
             </View>
           </View>
 
           <View style={styles.groupNameBox}>
-            <Text style={styles.groupName} numberOfLines={1}>{groupObject.name}</Text>
+            <Text style={[styles.groupName, {color: colourState.top}]} numberOfLines={1}>{groupObject.name}</Text>
           </View>
 
           <View style={styles.groupTextBox}>
-            <Text style={styles.groupText} numberOfLines={2}>{groupObject.description}</Text>
+            <Text style={[styles.groupText, {color: colourState.high}]} numberOfLines={2}>{groupObject.description}</Text>
           </View>
         </View>
         
       )
     }
   return (
-    <SafeAreaView style={styles.groupPage}>
+    <SafeAreaView style={[styles.groupPage, {backgroundColor: colourState.mode}]}>
       
       <ConditionalGroupHeader/>
 
@@ -279,22 +279,23 @@ export const GroupInfo = ({ route, navigation }) => {
       <View style={styles.membersSection}>
         <View style={styles.membersSectionHeader}>
           <View style={styles.membersTitleBox}>
-            <Text style={styles.membersTitle}>{'Members'}</Text>
+            <Text style={[styles.membersTitle, {color: colourState.high}]}>{'Members'}</Text>
           </View>
           <AdminMemberButtons/>
         </View>
 
-        <View style={styles.searchBarGroup}>
+        <View style={[styles.searchBarGroup, {backgroundColor: colourState.mode}, {borderColor: colourState.low}, {shadowColor: colourState.mode}]}>
           <TextInput
-            style={styles.searchInput}
+            style={[styles.searchInput, {backgroundColor: colourState.mode}, {color: colourState.high}]}
             placeholder="Search"
+            placeholderTextColor={colourState.bottom}
             onChangeText={(text) => {
             //groupLocalAccess.filterGroups(text);
             //groupRef.current.refreshPfds();
             }}
           />
           <View style={styles.searchIconFrame}>
-            <Icon color="#667084ff" name="search" size={24} />
+            <Icon color={colourState.low} name="search" size={24} />
           </View>
         </View>
             {
@@ -311,12 +312,12 @@ export const GroupInfo = ({ route, navigation }) => {
         </ScrollView>
       </View>
 
-      <View style={styles.groupPageFooter}>
+      <View style={[styles.groupPageFooter, {backgroundColor: colourState.bottom}, {borderColor: colourState.mode}, {shadowColor: colourState.mode}]}>
         <TouchableOpacity
           style={styles.backButton}
           onPress={() => navigation.goBack()}
         >
-          <Icon name="angle-left" color={colourState.accent} size={30}/>
+          <Icon name="angle-left" color={colourState.top} size={30}/>
         </TouchableOpacity>
       </View>
 
@@ -324,7 +325,7 @@ export const GroupInfo = ({ route, navigation }) => {
         style={styles.modal}
         isVisible={renameVisible}
         hasBackdrop={true}
-        backdropColor="white"
+        backdropColor={colourState.mode}
         onBackdropPress={() => setRenameVisible(false)}
         //onModalHide={() => setFileSelected(false)}
       >
@@ -358,7 +359,7 @@ export const GroupInfo = ({ route, navigation }) => {
         style={styles.modal}
         isVisible={describeVisible}
         hasBackdrop={true}
-        backdropColor="white"
+        backdropColor={colourState.mode}
         onBackdropPress={() => setDescribeVisible(false)}
         //onModalHide={() => setFileSelected(false)}
       >
@@ -392,7 +393,7 @@ export const GroupInfo = ({ route, navigation }) => {
         style={styles.modal}
         isVisible={editDescriptionVisible}
         hasBackdrop={true}
-        backdropColor="white"
+        backdropColor={colourState.mode}
         onBackdropPress={() => setEditDescriptionVisible(false)}
         //onModalHide={() => setFileSelected(false)}
       >
@@ -428,7 +429,7 @@ export const GroupInfo = ({ route, navigation }) => {
         style={styles.modal}
         isVisible={deleteConfirmVisible}
         hasBackdrop={true}
-        backdropColor="white"
+        backdropColor={colourState.mode}
         onBackdropPress={() => setDeleteConfirmVisible(false)}
         //onModalHide={() => setFileSelected(false)}
       >
@@ -475,7 +476,7 @@ export const GroupInfo = ({ route, navigation }) => {
         style={styles.modal}
         isVisible={leaveConfirmVisible}
         hasBackdrop={true}
-        backdropColor="white"
+        backdropColor={colourState.mode}
         onBackdropPress={() => setLeaveConfirmVisible(false)}
       >
         <View style={styles.actionModalInner}>
@@ -537,7 +538,7 @@ export const GroupInfo = ({ route, navigation }) => {
               setSelectMode(false);
             }}
           >
-            <Icon name="angle-left" color="#ffffffff" size={30} />
+            <Icon name="angle-left" color={colourState.mode} size={30} />
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -548,7 +549,7 @@ export const GroupInfo = ({ route, navigation }) => {
               setRemoveConfirmVisible(true)
             }}
           >
-            <Icon name="trash-o" color="#ffffffff" size={25} />
+            <Icon name="trash-o" color={colourState.mode} size={25} />
           </TouchableOpacity>
         </View>
       </Modal>
@@ -557,7 +558,7 @@ export const GroupInfo = ({ route, navigation }) => {
         style={styles.modal}
         isVisible={inviteVisible}
         hasBackdrop={true}
-        backdropColor="white"
+        backdropColor={colourState.mode}
         onBackdropPress={() => setInviteVisible(false)}
         //onModalHide={() => setFileSelected(false)}
       >
@@ -662,7 +663,6 @@ export default GroupInfo;
 
 const styles = StyleSheet.create({
   groupPage: {
-    backgroundColor: '#ffffffff',
     justifyContent: 'space-between',
     flexDirection: 'column',
     flex: 1,
@@ -673,11 +673,9 @@ const styles = StyleSheet.create({
     flex: 4,
     padding: 0,
     alignItems: 'center',
-    //backgroundColor: '#667084ff',
   },
   groupThumbnailBox: {
     borderRadius: 180,
-    backgroundColor: '#667084ff',
     aspectRatio: 1,
     width: '25%',
     margin: 10,
@@ -687,7 +685,6 @@ const styles = StyleSheet.create({
     height: '20%',
   },
   groupName: {
-    color: '#344053ff',
     textAlign: 'center',
     letterSpacing: 0,
     lineHeight: 24,
@@ -699,11 +696,9 @@ const styles = StyleSheet.create({
   groupTextBox: {
     width: '80%',
     flexShrink: 1,
-    //backgroundColor: '#667084ff',
     numberOfLines: 2,
   },
   groupText: {
-    color: '#667084ff',
     textAlign: 'center',
     letterSpacing: 0,
     lineHeight: 18,
@@ -718,7 +713,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     //paddingBottom: 15,
-    //backgroundColor: '#667084ff',
     flex: 1
   },
   leaveButtonBox: {
@@ -759,7 +753,6 @@ const styles = StyleSheet.create({
   membersSection: {
     //alignItems: 'center',
     justifyContent: 'center',
-    //backgroundColor: '#667084ff',
     flex: 8
   },
   membersSectionHeader: {
@@ -774,7 +767,6 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   membersTitle: {
-    color: '#344053ff',
     textAlign: 'center',
     letterSpacing: 0,
     lineHeight: 20,
@@ -807,13 +799,10 @@ const styles = StyleSheet.create({
     marginVertical: 15,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#ffffffff',
     borderRadius: 8,
     borderStyle: 'solid',
-    borderColor: '#d0d5ddff',
     borderWidth: 1,
     elevation: 2,
-    shadowColor: '#000000',
     shadowRadius: 2.5,
     shadowOpacity: 0.2,
     shadowOffset: {
@@ -823,9 +812,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   searchInput: {
-    backgroundColor: '#ffffffff',
     borderRadius: 8,
-    color: '#667084ff',
     textAlign: 'left',
     letterSpacing: 0,
     lineHeight: 24,
@@ -850,14 +837,11 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     flexShrink: 1,
-    backgroundColor: '#c4c4c4ff',
     //shadowColor: 'transparent' /* cannot find mapping from CSS: 0px -4px 4px 0px rgba(0,0,0,0.09803921568627451), https://ethercreative.github.io/react-native-shadow-generator/ */
     borderRadius: 5,
     borderStyle: 'solid',
-    borderColor: '#d0d5ddff',
     borderWidth: 1,
     elevation: 2,
-    shadowColor: '#000000',
     shadowRadius: 2.621621621621622,
     shadowOpacity: 0.2173913043478261,
     shadowOffset: {

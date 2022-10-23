@@ -189,15 +189,76 @@ export const ColourPage = ({ navigation}) => {
     });
   };
 
+  const _iconStyle = (borderColor) => ({
+    height: 30,
+    width: 30,
+    borderRadius: 25,
+    borderColor: borderColor,
+  });
+  
+  const verticalStaticData = [
+    {
+      id: 0,
+      text: "Blue",
+      fillColor: "#3F89BE",
+      unfillColor: "#9DCEF6",
+      iconStyle: _iconStyle("#9DCEF6"),
+      textStyle: [styles.colourName, {color: colourState.top}],
+      style: styles.verticalStyle,
+      iconImageStyle: styles.iconImageStyle,
+    },
+    {
+      id: 1,
+      text: "Purple",
+      fillColor: "#A776B1",
+      unfillColor: "#E5C9F7",
+      iconStyle: _iconStyle("#E5C9F7"),
+      textStyle: [styles.colourName, {color: colourState.top}],
+      style: styles.verticalStyle,
+      iconImageStyle: styles.iconImageStyle,
+    },
+    {
+      id: 2,
+      text: "Pink",
+      fillColor: "#B06F7F",
+      unfillColor: "#db9cac",
+      iconStyle: _iconStyle("#db9cac"),
+      textStyle: [styles.colourName, {color: colourState.top}],
+      style: styles.verticalStyle,
+      iconImageStyle: styles.iconImageStyle,
+    },
+    {
+      id: 3,
+      text: "Green",
+      fillColor: "#679E5E",
+      unfillColor: "#B5DDAF",
+      iconStyle: _iconStyle("#B5DDAF"),
+      textStyle: [styles.colourName, {color: colourState.top}],
+      style: styles.verticalStyle,
+      iconImageStyle: styles.iconImageStyle,
+    },
+    {
+      id: 4,
+      text: "Orange",
+      fillColor: "#D17B3C",
+      unfillColor: "#F4B688",
+      iconStyle: _iconStyle("#F4B688"),
+      textStyle: [styles.colourName, {color: colourState.top}],
+      style: styles.verticalStyle,
+      iconImageStyle: styles.iconImageStyle,
+    },
+  ];
+  
+
   return (
-    <SafeAreaView style={styles.colourPage}>
+    <SafeAreaView style={[styles.colourPage, {backgroundColor: colourState.mode}]}>
       <View style={styles.big_title_box}>
-        <Text style={styles.big_title}>
+        <Text style={[styles.big_title, {color: colourState.top}]}>
           {'Change colour'}
         </Text>
       </View>
 
-      <View style={[styles.container, styles.colourOptionsBackground]}>
+      <View style={[styles.container, styles.colourOptionsBackground, {backgroundColor: colourState.bottom}]}>
         <View
           style={{
             //marginTop: 16,
@@ -235,13 +296,13 @@ export const ColourPage = ({ navigation}) => {
 
       <View style={styles.darkSwitchGroup}>
         <View style={styles.darkLabelBox}>
-          <Text style={styles.darkLabel}>Dark Mode</Text>
+          <Text style={[styles.darkLabel, {color: colourState.top}]}>Dark Mode</Text>
         </View>
         <View style={styles.darkSwitchBox}>
           <Switch
-            trackColor={{ false: "#f5f5f5ff", true: "#f5f5f5ff" }}
-            thumbColor={isEnabled ? "#3e3e3e" : "#3e3e3e"}
-            ios_backgroundColor="#3e3e3e"
+            trackColor={{ false: colourState.low, true: colourState.accent }}
+            thumbColor={isEnabled ? colourState.low : colourState.accent}
+            ios_backgroundColor={colourState.high}
             onValueChange={toggleSwitch}
             value={isEnabled}
           />
@@ -253,7 +314,7 @@ export const ColourPage = ({ navigation}) => {
         onPress={() => navigation.goBack()}>
           <Icon
             name="angle-left"
-            color="#344053ff"
+            color={colourState.high}
             size={28}
           />
       </TouchableOpacity >
@@ -270,13 +331,11 @@ ColourPage.scrollHeight = 844;
 
 const styles = StyleSheet.create({
   colourPage: {
-    backgroundColor: '#ffffffff',
     overflow: 'hidden',
     flex: 1,
     alignItems: 'center'
   },
   big_title: {
-    color: '#344053ff',
     textAlign: 'center',
     letterSpacing: 0,
     lineHeight: 28,
@@ -304,7 +363,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   darkLabel: {
-    color: '#344053ff',
     textAlign: 'left',
     letterSpacing: 0,
     lineHeight: 20,
@@ -323,13 +381,11 @@ const styles = StyleSheet.create({
   },
   colourOptionsBackground: {
     width: '80%',
-    backgroundColor: '#f5f5f5ff',
     borderRadius: 7,
     flexDirection: 'column',
     flexShrink: 1
   },
   colourName: {
-    color: '#344053ff',
     textAlign: 'center',
     letterSpacing: 0,
     lineHeight: 20,
@@ -360,62 +416,3 @@ const styles = StyleSheet.create({
 
 });
 
-const _iconStyle = (borderColor) => ({
-  height: 30,
-  width: 30,
-  borderRadius: 25,
-  borderColor: borderColor,
-});
-
-const verticalStaticData = [
-  {
-    id: 0,
-    text: "Blue",
-    fillColor: "#3F89BE",
-    unfillColor: "#66a8d6",
-    iconStyle: _iconStyle("#66a8d6"),
-    textStyle: styles.colourName,
-    style: styles.verticalStyle,
-    iconImageStyle: styles.iconImageStyle,
-  },
-  {
-    id: 1,
-    text: "Purple",
-    fillColor: "#A776B1",
-    unfillColor: "#c597cf",
-    iconStyle: _iconStyle("#c597cf"),
-    textStyle: styles.colourName,
-    style: styles.verticalStyle,
-    iconImageStyle: styles.iconImageStyle,
-  },
-  {
-    id: 2,
-    text: "Pink",
-    fillColor: "#B06F7F",
-    unfillColor: "#db9cac",
-    iconStyle: _iconStyle("#db9cac"),
-    textStyle: styles.colourName,
-    style: styles.verticalStyle,
-    iconImageStyle: styles.iconImageStyle,
-  },
-  {
-    id: 3,
-    text: "Green",
-    fillColor: "#679E5E",
-    unfillColor: "#8cbd84",
-    iconStyle: _iconStyle("#8cbd84"),
-    textStyle: styles.colourName,
-    style: styles.verticalStyle,
-    iconImageStyle: styles.iconImageStyle,
-  },
-  {
-    id: 4,
-    text: "Orange",
-    fillColor: "#D17B3C",
-    unfillColor: "#db9e72",
-    iconStyle: _iconStyle("#db9e72"),
-    textStyle: styles.colourName,
-    style: styles.verticalStyle,
-    iconImageStyle: styles.iconImageStyle,
-  },
-];
