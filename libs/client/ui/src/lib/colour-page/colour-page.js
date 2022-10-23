@@ -63,7 +63,7 @@ export const ColourPage = ({ navigation}) => {
           };
         }
       }
-        
+
       case "#A776B1": {
         if (!isEnabled) {
           return {
@@ -86,7 +86,7 @@ export const ColourPage = ({ navigation}) => {
           };
         }
       }
-        
+
       case "#B06F7F": {
         if(!isEnabled) {
           return {
@@ -109,7 +109,7 @@ export const ColourPage = ({ navigation}) => {
           };
         }
       }
-        
+
       case "#679E5E": {
         if (!isEnabled) {
           return {
@@ -132,7 +132,7 @@ export const ColourPage = ({ navigation}) => {
           };
         }
       }
-        
+
       case "#D17B3C": {
         if (!isEnabled) {
           return {
@@ -155,7 +155,7 @@ export const ColourPage = ({ navigation}) => {
           };
         }
       }
-        
+
       default://lightmode blue
         return {accent: "#3F89BE",
           mode:"#FFFFFF",
@@ -174,6 +174,7 @@ export const ColourPage = ({ navigation}) => {
       if (element === null) user.pdfs.splice(index,1);
     });
     let colourObj = getColour(colourState.accent);
+    dispatch(setColour(colourObj))
     setUser({
       variables: {
         oldEmail: user.email,
@@ -182,10 +183,9 @@ export const ColourPage = ({ navigation}) => {
         pdfs: user.pdfs,
       },
     }).then(()=>
-    //dispatches the setColour action with colour payload
-    dispatch(setColour(colourObj))
+      console.log('Successfully updated colour')
     ).catch((error) => {
-      console.log(error);
+      console.log('Darkmode error', error);
     });
   };
 
@@ -224,7 +224,6 @@ export const ColourPage = ({ navigation}) => {
                   pdfs: user.pdfs,
                 },
               }).then(()=>
-              //dispatches the setColour action with colour payload
                 console.log('Successfully updated colour')
               ).catch((error) => {
                 console.log('Failed to update colour', error);
