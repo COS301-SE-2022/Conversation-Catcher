@@ -131,7 +131,7 @@ export const ChangePassword = ({ navigation }) => {
                 onPress={() => setShowMailHint(!showMailHint)}
               >
                 <Icon
-                  style={{ color: '#d0d5ddff' }}
+                  style={{ color: colourState.low }}
                   name="question-circle-o"
                   size={17}
                 />

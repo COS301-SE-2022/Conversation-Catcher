@@ -120,7 +120,7 @@ const PdfTile = ({
         <BouncyCheckbox
           size={20}
           fillColor={colourState.accent}
-          unfillColor="#FFFFFF"
+          unfillColor={colourState.mode}
           iconStyle={{ borderColor: colourState.accent }}
           isChecked={checkboxState}
           onPress={() => setCheckboxState(!checkboxState)}
@@ -132,7 +132,7 @@ const PdfTile = ({
 
   return (
     <TouchableOpacity
-      style={styles.pdfTile}
+      style={[styles.pdfTile, {borderColor: colourState.low}, {shadowColor: colourState.low}]}
       onPress={() =>{
         nav.navigate('PdfView', { id: { id }, text: { text }, name: { name }, summarised: { summarised } })
       }}
@@ -142,16 +142,16 @@ const PdfTile = ({
           style={styles.pdfThumbnail}
           //thumbnailSource={thumbnailSource}
           >
-            <Text style={styles.thumbnailContent}>{text}</Text>
+            <Text style={[styles.thumbnailContent, {color: colourState.low}]}>{text}</Text>
         </ImageBackground>
       </View>
       <View style={styles.pdfTile_contents_not_thumbnail}>
         <View style={styles.pdfTile_contents_not_thumbnail_inner}>
           <View style={styles.pdfName_box}>
-            <Text style={styles.pdfName} numberOfLines={2}>{name}</Text>
+            <Text style={[styles.pdfName, {color: colourState.top}]} numberOfLines={2}>{name}</Text>
           </View>
           <View style={styles.pdfDate_box}>
-            <Text style={styles.pdfDate}>{date}</Text>
+            <Text style={[styles.pdfDate, {color: colourState.high}]}>{date}</Text>
           </View>
         </View>
         <View style={styles.download_button}>
@@ -169,10 +169,8 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     borderRadius: 5,
     borderStyle: 'solid',
-    borderColor: '#c4c4c4ff',
     borderWidth: 1,
     elevation: 1,
-    shadowColor: '#c4c4c4ff',
     shadowRadius: 5,
     shadowOpacity: 0.1,
     shadowOffset: {
@@ -190,7 +188,6 @@ const styles = StyleSheet.create({
     aspectRatio: 1 / 1.4142,
   },
   thumbnailContent: {
-    color: '#c4c4c4ff',
     textAlign: 'left',
     letterSpacing: 0,
     lineHeight: 5,
@@ -218,7 +215,6 @@ const styles = StyleSheet.create({
     flexShrink: 1,
   },
   pdfName: {
-    color: '#344053ff',
     textAlign: 'left',
     letterSpacing: 0,
     lineHeight: 20,
@@ -235,7 +231,6 @@ const styles = StyleSheet.create({
     paddingTop: 15,
   },
   pdfDate: {
-    color: '#667084ff',
     textAlign: 'left',
     letterSpacing: 0,
     lineHeight: 20,

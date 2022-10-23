@@ -113,7 +113,7 @@ export const ChangeEmail = ({ navigation }) => {
   function SuccessMessage() {
     if (showSuccessMessage) {
       return (
-        <Text style={styles.hintText}>
+        <Text style={[styles.hintText, {color: colourState.high}]}>
           {'Email has been changed successfully.'}
         </Text>
       );
@@ -132,17 +132,17 @@ export const ChangeEmail = ({ navigation }) => {
   }
 
   return (
-    <SafeAreaView style={styles.logInPage}>
+    <SafeAreaView style={[styles.logInPage, {backgroundColor: colourState.mode}]}>
       <View style={styles.big_title_box}>
-        <Text style={styles.big_title}>{'Change your email'}</Text>
+        <Text style={[styles.big_title, {color: colourState.top}]}>{'Change your email'}</Text>
       </View>
       <View style={styles.inputsGroup}>
         <ErrorMessage />
         <View style={styles.inputsItem}>
           <View style={styles.inputLabel_box}>
-            <Text style={styles.inputLabel}>{'New email'}</Text>
+            <Text style={[styles.inputLabel, {color: colourState.top}]}>{'New email'}</Text>
           </View>
-          <View style={styles.inputField}>
+          <View style={[styles.inputField, {backgroundColor: colourState.mode}, {borderColor: colourState.low}, {shadowColor: colourState.low}]}>
             <View style={styles.inputText_box}>
               <View style={styles.inputIcon}>
                 <Icon
@@ -152,7 +152,7 @@ export const ChangeEmail = ({ navigation }) => {
                 />
               </View>
               <TextInput
-                style={styles.inputText}
+                style={[styles.inputText, {color: colourState.high}]}
                 placeholder="johnsmith@gmail.com"
                 underlineColorAndroid="transparent"
                 onChangeText={(text) => {
@@ -164,7 +164,7 @@ export const ChangeEmail = ({ navigation }) => {
                 onPress={() => setShowMailHint(!showMailHint)}
               >
                 <Icon
-                  style={{ color: '#d0d5ddff' }}
+                  style={{ color: colourState.low }}
                   name="question-circle-o"
                   size={17}
                 />
@@ -179,7 +179,7 @@ export const ChangeEmail = ({ navigation }) => {
           <View style={styles.inputLabel_box}>
             <Text style={styles.inputLabel}>{'Re-enter new email'}</Text>
           </View>
-          <View style={styles.inputField}>
+          <View style={[styles.inputField, {backgroundColor: colourState.mode}, {borderColor: colourState.low}, {shadowColor: colourState.low}]}>
             <View style={styles.inputText_box}>
               <View style={styles.inputIcon}>
                 <Icon
@@ -189,7 +189,7 @@ export const ChangeEmail = ({ navigation }) => {
                 />
               </View>
               <TextInput
-                style={styles.inputText}
+                style={[styles.inputText, {color: colourState.high}]}
                 placeholder="johnsmith@gmail.com"
                 underlineColorAndroid="transparent"
                 onChangeText={(text) => {
@@ -203,7 +203,7 @@ export const ChangeEmail = ({ navigation }) => {
           <View style={styles.inputLabel_box}>
             <Text style={styles.inputLabel}>{'Password'}</Text>
           </View>
-          <View style={styles.inputField}>
+          <View style={[styles.inputField, {backgroundColor: colourState.mode}, {borderColor: colourState.low}, {shadowColor: colourState.low}]}>
             <View style={styles.inputText_box}>
               <View style={styles.inputIcon}>
                 <Icon
@@ -213,7 +213,7 @@ export const ChangeEmail = ({ navigation }) => {
                 />
               </View>
               <TextInput
-                style={styles.inputText}
+                style={[styles.inputText, {color: colourState.high}]}
                 placeholder="*********"
                 underlineColorAndroid="transparent"
                 onChangeText={(text) => {
@@ -233,7 +233,7 @@ export const ChangeEmail = ({ navigation }) => {
         onPress={() => changeEmail()}
       >
         <View style={styles.logInButtonLabel_box}>
-          <Text style={styles.logInButtonLabel}>{'Change email'}</Text>
+          <Text style={[styles.logInButtonLabel, {color: colourState.mode}]}>{'Change email'}</Text>
         </View>
       </TouchableOpacity>
       <SuccessMessage />
@@ -255,14 +255,12 @@ ChangeEmail.fitScreen = false;
 
 const styles = StyleSheet.create({
   logInPage: {
-    backgroundColor: '#ffffffff',
     overflow: 'hidden',
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
   },
   big_title: {
-    color: '#344053ff',
     textAlign: 'center',
     letterSpacing: 0,
     lineHeight: 28,
@@ -289,7 +287,6 @@ const styles = StyleSheet.create({
     padding: 7,
   },
   inputLabel: {
-    color: '#344053ff',
     textAlign: 'left',
     letterSpacing: 0,
     lineHeight: 20,
@@ -308,14 +305,11 @@ const styles = StyleSheet.create({
   },
   inputField: {
     //flexGrow: 1,
-    backgroundColor: '#ffffffff',
     borderRadius: 8,
     overflow: 'hidden',
     borderStyle: 'solid',
-    borderColor: '#d0d5ddff',
     borderWidth: 1,
     elevation: 2,
-    shadowColor: '#000000',
     shadowRadius: 2.621621621621622,
     shadowOpacity: 0.2173913043478261,
     shadowOffset: {
@@ -335,7 +329,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   inputText: {
-    color: '#344053ff',
     textAlign: 'left',
     letterSpacing: 0,
     lineHeight: 20,
@@ -365,7 +358,6 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   hintText: {
-    color: '#667084ff',
     textAlign: 'left',
     letterSpacing: 0,
     lineHeight: 20,
@@ -385,22 +377,11 @@ const styles = StyleSheet.create({
     width: '80%',
     height: '10%',
     margin: 20,
-    //backgroundColor: '#3f89beff',
     borderRadius: 8,
     borderStyle: 'solid',
-    //borderColor: '#3f89beff',
     borderWidth: 1,
-    elevation: 2,
-    shadowColor: '#000000',
-    shadowRadius: 2.621621621621622,
-    shadowOpacity: 0.2173913043478261,
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
   },
   logInButtonLabel: {
-    color: '#ffffffff',
     textAlign: 'left',
     letterSpacing: 0,
     lineHeight: 24,
@@ -416,27 +397,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  smallGreyButton: {
-    backgroundColor: '#ffffffff',
-  },
-  smallGreyText: {
-    color: '#667084ff',
-    textAlign: 'left',
-    textDecorationLine: 'underline',
-    letterSpacing: 0,
-    lineHeight: 16,
-    fontSize: 14,
-    fontWeight: '400',
-    fontStyle: 'normal',
-    fontFamily: 'System' /* Inter */,
-  },
-  smallGreyText_box: {
-    flexShrink: 1,
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
-    margin: 5,
   },
   backButton: {
     width: '15%',
