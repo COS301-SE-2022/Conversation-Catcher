@@ -3,11 +3,8 @@ import {
   View,
   StyleSheet,
   Text,
-  Image,
-  ImageBackground,
   TouchableOpacity,
   SafeAreaView,
-  ScrollView,
   TextInput,
   NativeAppEventEmitter,
 } from 'react-native';
@@ -21,7 +18,6 @@ import pdfLocalAccess from '../shared-components/local-pdfs-access/local-pdfs-ac
 import { useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { selectColour } from '../../../../../../apps/client/src/app/slices/user.slice';
-import groupLocalAccess from '../shared-components/local-groups-access/local-groups-access.js';
 import Loading from '../shared-components/loading/loading.js';
 
 export const ViewAll = ({ navigation, route }) => {
@@ -32,7 +28,7 @@ export const ViewAll = ({ navigation, route }) => {
   const [bottomModalVisible, setBottomModalVisible] = useState(false);
   const [bottomModalType, setBottomModalType] = useState('none');
   const [renameModalVisible, setRenameModalVisible] = useState(false);
-  const [currOrderValue, setCurrOrderValue] = useState('Date');
+  // const [currOrderValue, setCurrOrderValue] = useState('Date');
   const [renameVisible, setRenameVisible] = useState(false);
   const [searchLoad, setSearchLoad] = useState(false);
   // const [refreshPage, setRefreshPage] = useState('');
@@ -44,10 +40,10 @@ export const ViewAll = ({ navigation, route }) => {
   const message = 'Please check this out.';
 
   //variables for object sorting and management
-  const [objArr, setObjArr] = useState([]);
+  // const [objArr, setObjArr] = useState([]);
   const [searchInput, setSearchInput] = useState('');
-  const [selectedPdf, setSelectedPdf] = useState(null);
-  const [selectedGroup, setSelectedGroup] = useState(null);
+  // const [selectedPdf, setSelectedPdf] = useState(null);
+  // const [selectedGroup, setSelectedGroup] = useState(null);
 
   const options = {
     title,

@@ -5,12 +5,11 @@ import {
   Text,
   SafeAreaView,
   TouchableOpacity,
-  ScrollView,
   TextInput,
   NativeAppEventEmitter,
 } from 'react-native';
 import { gql, useLazyQuery, useMutation } from '@apollo/client';
-import ModalDropdown from 'react-native-modal-dropdown';
+// import ModalDropdown from 'react-native-modal-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
 import Share from 'react-native-share';
@@ -30,7 +29,7 @@ export const Groups = ({ navigation }) => {
   const [bottomModalVisible, setBottomModalVisible] = useState(false);
   const [bottomModalType, setBottomModalType] = useState('none');
   const [renameModalVisible, setRenameModalVisible] = useState(false);
-  const [currOrderValue, setCurrOrderValue] = useState('Date');
+  // const [currOrderValue, setCurrOrderValue] = useState('Date');
   const [renameVisible, setRenameVisible] = useState(false);
   const [newName, setNewName] = useState(null);
   // const [refreshPage, setRefreshPage] = useState('');

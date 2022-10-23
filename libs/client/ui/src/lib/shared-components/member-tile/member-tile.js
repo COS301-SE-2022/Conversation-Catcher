@@ -3,16 +3,14 @@ import {
   View,
   StyleSheet,
   Text,
-  ImageBackground,
   TouchableOpacity,
-  NativeAppEventEmitter,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+// import Icon from 'react-native-vector-icons/FontAwesome';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import { useDispatch, useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { selectColour } from '../../../../../../../apps/client/src/app/slices/user.slice';
-import { gql, useLazyQuery, useMutation } from '@apollo/client';
+// import { gql, useLazyQuery, useMutation } from '@apollo/client';
 //import FileViewer from "react-native-file-viewer";
 
 function DetermineTileCorner(props) {

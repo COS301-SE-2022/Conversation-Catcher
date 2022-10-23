@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+// import React, { Component } from 'react';
 import {
   View,
   StyleSheet,
@@ -6,14 +6,14 @@ import {
   TouchableOpacity,
   DeviceEventEmitter,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import BouncyCheckbox from 'react-native-bouncy-checkbox';
-import { useDispatch, useSelector } from 'react-redux';
+// import Icon from 'react-native-vector-icons/FontAwesome';
+// import BouncyCheckbox from 'react-native-bouncy-checkbox';
+import {useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { selectColour } from '../../../../../../../apps/client/src/app/slices/user.slice';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { toggleDown } from '../../../../../../../apps/client/src/app/slices/group.slice';
-import { gql, useLazyQuery, useMutation } from '@apollo/client';
+// import { toggleDown } from '../../../../../../../apps/client/src/app/slices/group.slice';
+// import { gql, useLazyQuery, useMutation } from '@apollo/client';
 //import FileViewer from "react-native-file-viewer";
 
 //const [addPdf] = useMutation(ADD_PDF);

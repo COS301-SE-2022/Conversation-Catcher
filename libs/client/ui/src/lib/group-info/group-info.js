@@ -3,7 +3,6 @@ import {
   View,
   StyleSheet,
   Text,
-  Image,
   TouchableOpacity,
   ScrollView,
   TextInput,
@@ -13,7 +12,7 @@ import {
 import { gql, useQuery, useMutation } from '@apollo/client';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
-import DocumentPicker, { types } from 'react-native-document-picker';
+// import DocumentPicker, { types } from 'react-native-document-picker';
 import { useSelector, useDispatch } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { selectColour, selectEmail } from '../../../../../../apps/client/src/app/slices/user.slice';
@@ -31,18 +30,18 @@ export const GroupInfo = ({ route, navigation }) => {
     const [bottomModalVisible, setBottomModalVisible] = useState(false);
     const [adminState, setAdminState] = useState(false);
     const [renameVisible, setRenameVisible] = useState(false);
-    const [describeVisible,setDescribeVisible] = useState(false);
+    // const [describeVisible,setDescribeVisible] = useState(false);
     const [inviteVisible, setInviteVisible] = useState(false);
     const [editDescriptionVisible, setEditDescriptionVisible] = useState(false);
     const [deleteConfirmVisible, setDeleteConfirmVisible] = useState(false);
     const [removeConfirmVisible, setRemoveConfirmVisible] = useState(false);
     const [leaveConfirmVisible, setLeaveConfirmVisible] = useState(false);
-    const [fileResponse, setFileResponse] = useState([]);
+    // const [fileResponse, setFileResponse] = useState([]);
     const [newUser, setNewUser] = useState('');
     const [newName, setNewName] = useState('');
     const [newDesc,setNewDesc] = useState('');
     const [load,setLoad] = useState(false);
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
 
     const { groupObject } = route.params;
     useEffect(()=>{
