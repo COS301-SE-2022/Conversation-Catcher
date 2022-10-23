@@ -8,8 +8,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setColour, selectUser} from '../../../../../../apps/client/src/app/slices/user.slice'
 //import RNRestart from 'react-native-restart';
 import { gql, useMutation } from '@apollo/client';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { selectColour } from '../../../../../../apps/client/src/app/slices/user.slice';
+
 
 export const ColourPage = ({ navigation}) => {
+  const colourState = useSelector(selectColour);
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const SET_USER = gql`
@@ -129,7 +133,23 @@ export const ColourPage = ({ navigation}) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => {
     setIsEnabled(previousState => !previousState);
-    //change text shown
+    user.pdfs.forEach((element,index) => {
+      if (element === null) user.pdfs.splice(index,1);
+    });
+    let colourObj = getColour(colourState.accent);
+    setUser({
+      variables: {
+        oldEmail: user.email,
+        email: user.email,
+        colour: colourObj,
+        pdfs: user.pdfs,
+      },
+    }).then(()=>
+    //dispatches the setColour action with colour payload
+    dispatch(setColour(colourObj))
+    ).catch((error) => {
+      console.log(error);
+    });
   };
 
   return (
