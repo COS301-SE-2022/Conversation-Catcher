@@ -17,15 +17,20 @@ The following links are to our demo videos<br>
 [Multiprocessing moguls - Demo 4 - link](https://drive.google.com/file/d/1Ev9KSlhCMbwWrQ7VuA0sJQERt8j58pQq/view?usp=sharing) <br>
 [Multiprocessing moguls - Project Day - link]() <br>
 Links to documentation<br>
-[Slideshow of our project](https://docs.google.com/presentation/d/1EtNjc2_pwxEH_X9XI9680QCnuy6ryEiJ/edit?usp=sharing&ouid=103864978666312634322&rtpof=true&sd=true)<br>
-[User manual](https://docs.google.com/document/d/1S0jIYr55iHkuNmRatYYHicl2Fv5SuQmJIr7w2tlFhZ8/edit#heading=h.52o998qf6h7n) <br>
+[SRS Documentation](https://docs.google.com/document/d/1cqF3RJu4W-wtqzAW2lQ43BdboS8xyZ0Ruu5oth4nWcU/edit#heading=h.js2t3xtgxcqd) <br>
 [Coding standards document](https://docs.google.com/document/d/1ldcNnkpUx-dX3XYgYARz3ydb_r1uxhDfNxVyNXOUcBw/edit#heading=h.186zini1wvx4) <br>
 [Testing policy](https://docs.google.com/document/d/1GDkJa9m_CCDya0Eao0iKNwIsTTHjD_oVqclKSSnYMNA/edit#heading=h.yuae9x1vg2gc) <br>
-[SRS Documentation](https://docs.google.com/document/d/1cqF3RJu4W-wtqzAW2lQ43BdboS8xyZ0Ruu5oth4nWcU/edit#heading=h.js2t3xtgxcqd) <br>
-[Technical installation manual](https://docs.google.com/document/d/1EGm0Z91afRrLTXs03KXWhGs1kwQVMGslEpZlJxbs8AQ/edit#heading=h.tlj8gi87963i) <br>
 [Project Management](https://github.com/COS301-SE-2022/Conversation-Catcher/projects?type=classic) <br>
-[Roles of Team Members Summary](https://docs.google.com/document/d/12PeVn3BTVhIt0WFEk7qgkSHZ0IyTUVM-FNmvgjjVc54/edit#heading=h.4tn96r73cok5) <br>
+[User manual](https://docs.google.com/document/d/1S0jIYr55iHkuNmRatYYHicl2Fv5SuQmJIr7w2tlFhZ8/edit#heading=h.52o998qf6h7n) <br>
 [Team Members](https://github.com/COS301-SE-2022/Conversation-Catcher/wiki/Team-Members) <br>
+[Roles of Team Members Summary](https://docs.google.com/document/d/12PeVn3BTVhIt0WFEk7qgkSHZ0IyTUVM-FNmvgjjVc54/edit#heading=h.4tn96r73cok5) <br>
+[Slideshow of our project](https://docs.google.com/presentation/d/1EtNjc2_pwxEH_X9XI9680QCnuy6ryEiJ/edit?usp=sharing&ouid=103864978666312634322&rtpof=true&sd=true)<br>
+[Video advertising our project]()<br>
+[Additional information regarding the research]()<br>
+[Deployment of our system](https://drive.google.com/file/d/1H-3xudr1Ea5LHomKyGzIbvB893GCVHVx/view?usp=sharing)<br>
+[Tutorial]()<br>
+[Technical installation manual](https://docs.google.com/document/d/1EGm0Z91afRrLTXs03KXWhGs1kwQVMGslEpZlJxbs8AQ/edit#heading=h.tlj8gi87963i) <br>
+[Instructions on how to participate in the development of your project]()<br>
 Extra links<br>
 [Google drive used for this project](https://drive.google.com/drive/folders/1grxlzpaH5o_8EKc6KlxfjJSWD2MJ9Yw3?usp=sharing)<br>
 [GitHub Project Board](https://github.com/COS301-SE-2022/Conversation-Catcher/projects/1) <br>
