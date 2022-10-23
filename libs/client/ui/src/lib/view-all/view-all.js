@@ -3,14 +3,10 @@ import {
   View,
   StyleSheet,
   Text,
-  Image,
-  ImageBackground,
   TouchableOpacity,
   SafeAreaView,
-  ScrollView,
   TextInput,
   NativeAppEventEmitter,
-  DeviceEventEmitter,
 } from 'react-native';
 import { gql, useQuery, useMutation, useLazyQuery } from '@apollo/client';
 import ModalDropdown from 'react-native-modal-dropdown';
@@ -22,7 +18,6 @@ import pdfLocalAccess from '../shared-components/local-pdfs-access/local-pdfs-ac
 import { useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { selectColour } from '../../../../../../apps/client/src/app/slices/user.slice';
-import groupLocalAccess from '../shared-components/local-groups-access/local-groups-access.js';
 import Loading from '../shared-components/loading/loading.js';
 
 export const ViewAll = ({ navigation, route }) => {
@@ -33,7 +28,7 @@ export const ViewAll = ({ navigation, route }) => {
   const [bottomModalVisible, setBottomModalVisible] = useState(false);
   const [bottomModalType, setBottomModalType] = useState('none');
   const [renameModalVisible, setRenameModalVisible] = useState(false);
-  const [currOrderValue, setCurrOrderValue] = useState('Date');
+  // const [currOrderValue, setCurrOrderValue] = useState('Date');
   const [renameVisible, setRenameVisible] = useState(false);
   const [searchLoad, setSearchLoad] = useState(false);
   // const [refreshPage, setRefreshPage] = useState('');
@@ -44,46 +39,11 @@ export const ViewAll = ({ navigation, route }) => {
   const title = 'Awesome Contents';
   const message = 'Please check this out.';
 
-  const ADD_PDF = gql`
-    mutation addPdfTo($pdfId: String!, $groupName: String!) {
-      addPdfTo(pdfId: $pdf, groupName: $groupName)
-    }
-  `;
-  const REMOVE_PDF = gql`
-    mutation removePdfFrom($pdfId: String!, $groupName: String!) {
-      removePdfFrom(pdfId: $pdf, groupName: $groupName)
-    }
-  `;
-  const [addPdf] = useMutation(ADD_PDF);
-  const [removePdf] = useMutation(REMOVE_PDF);
-
-  async function addPDF() {
-    //call this after selectedPdf is set to add pdf to group
-    if (selectedPdf === null || selectedGroup === null) return;
-    groupLocalAccess.addPdf(selectedPdf, selectedGroup);
-    await addPdf({
-      variables: { pdfId: selectedPdf, groupName: selectedGroup },
-    }).then(() => {
-      setSelectedPdf(null);
-      setSelectedGroup(null);
-    });
-  }
-  async function removePDF() {
-    //call this after selectedPdf is set to remove pdf to group
-    if (selectedPdf === null || groupObject.name === null) return;
-    groupLocalAccess.removePdf(selectedPdf, groupObject.name);
-    await removePdf({
-      variables: { pdfId: selectedPdf, groupName: groupObject.name },
-    }).then(() => {
-      setSelectedPdf(null);
-    });
-  }
-
   //variables for object sorting and management
-  const [objArr, setObjArr] = useState([]);
+  // const [objArr, setObjArr] = useState([]);
   const [searchInput, setSearchInput] = useState('');
-  const [selectedPdf, setSelectedPdf] = useState(null);
-  const [selectedGroup, setSelectedGroup] = useState(null);
+  // const [selectedPdf, setSelectedPdf] = useState(null);
+  // const [selectedGroup, setSelectedGroup] = useState(null);
 
   const options = {
     title,
@@ -168,7 +128,7 @@ export const ViewAll = ({ navigation, route }) => {
 
   if (pdfLocalAccess.clearSearchInput.length !== 0) {
     //If statement to ensure that only one listener is created for the summarise command
-    DeviceEventEmitter.addListener('clearSearch', () => {
+    NativeAppEventEmitter.addListener('clearSearch', () => {
       setSearchInput('');
     });
     pdfLocalAccess.clearSearchInput.length = 0;
@@ -217,7 +177,7 @@ export const ViewAll = ({ navigation, route }) => {
         onPress={() => {
           setSelectMode(false);
           setBottomModalVisible(false);
-          DeviceEventEmitter.emit("DeleteAll");
+          NativeAppEventEmitter.emit("DeleteAll");
         }}
       >
         <Icon name="trash-o" color="#ffffffff" size={22} />
@@ -225,25 +185,25 @@ export const ViewAll = ({ navigation, route }) => {
     );
   }
 
-  const onShare = async () => {
-    try {
-      const result = await Share.share({
-        message:
-          'React Native | A framework for building native apps using React',
-      });
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          // shared with activity type of result.activityType
-        } else {
-          // shared
-        }
-      } else if (result.action === Share.dismissedAction) {
-        // dismissed
-      }
-    } catch (error) {
-      alert(error.message);
-    }
-  };
+  // const onShare = async () => {
+  //   try {
+  //     const result = await Share.share({
+  //       message:
+  //         'React Native | A framework for building native apps using React',
+  //     });
+  //     if (result.action === Share.sharedAction) {
+  //       if (result.activityType) {
+  //         // shared with activity type of result.activityType
+  //       } else {
+  //         // shared
+  //       }
+  //     } else if (result.action === Share.dismissedAction) {
+  //       // dismissed
+  //     }
+  //   } catch (error) {
+  //     alert(error.message);
+  //   }
+  // };
 
   return (
     <SafeAreaView style={styles.viewAllPage}>

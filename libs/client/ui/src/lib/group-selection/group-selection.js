@@ -5,40 +5,38 @@ import {
   Text,
   SafeAreaView,
   TouchableOpacity,
-  ScrollView,
   TextInput,
-  DeviceEventEmitter,
+  NativeAppEventEmitter
 } from 'react-native';
 import { gql, useLazyQuery, useMutation } from '@apollo/client';
-import GroupTile from '../shared-components/group-tile/group-tile.js';
-import ModalDropdown from 'react-native-modal-dropdown';
+// import ModalDropdown from 'react-native-modal-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import Modal from 'react-native-modal';
-import Share from 'react-native-share';
+// import Modal from 'react-native-modal';
+// import Share from 'react-native-share';
 import GroupDisplay from '../shared-components/group-display/group-display.js';
 import groupLocalAccess from '../shared-components/local-groups-access/local-groups-access';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectColour, selectEmail } from '../../../../../../apps/client/src/app/slices/user.slice';
+// import { selectColour, selectEmail } from '../../../../../../apps/client/src/app/slices/user.slice';
 import Loading from '../shared-components/loading/loading.js';
 
 export const GroupSelection = ({ navigation, route }) => {
   const {id} = route.params;
   const groupRef = useRef();
-  const colourState = useSelector(selectColour);
-  const userEmail = useSelector(selectEmail);
-  const [moreVisible, setMoreVisible] = useState(false);
+  // const colourState = useSelector(selectColour);
+  // const userEmail = useSelector(selectEmail);
+  // const [moreVisible, setMoreVisible] = useState(false);
   const [selectMode, setSelectMode] = useState(false);
-  const [bottomModalVisible, setBottomModalVisible] = useState(false);
-  const [bottomModalType, setBottomModalType] = useState('none');
-  const [renameModalVisible, setRenameModalVisible] = useState(false);
-  const [currOrderValue, setCurrOrderValue] = useState('Date');
-  const [renameVisible, setRenameVisible] = useState(false);
-  const [newName, setNewName] = useState(null);
+  // const [bottomModalVisible, setBottomModalVisible] = useState(false);
+  // const [bottomModalType, setBottomModalType] = useState('none');
+  // const [renameModalVisible, setRenameModalVisible] = useState(false);
+  // const [currOrderValue, setCurrOrderValue] = useState('Date');
+  // const [renameVisible, setRenameVisible] = useState(false);
+  // const [newName, setNewName] = useState(null);
   // const [refreshPage, setRefreshPage] = useState('');
-  const url = 'https://awesome.contents.com/';
-  const title = 'Awesome Contents';
-  const message = 'Please check this out.';
+  // const url = 'https://awesome.contents.com/';
+  // const title = 'Awesome Contents';
+  // const message = 'Please check this out.';
 
   //Queries and mutations
   const ADD_TO_GROUP = gql`
@@ -50,7 +48,7 @@ export const GroupSelection = ({ navigation, route }) => {
     }
   `;
   //variables for object sorting
-  const [objArr, setObjArr] = useState([]);
+  // const [objArr, setObjArr] = useState([]);
   const [addToGroup] = useMutation(ADD_TO_GROUP);
   const [load, setLoad] = useState(false);
   const AddNew = async (g) => {
@@ -69,7 +67,7 @@ export const GroupSelection = ({ navigation, route }) => {
   }
   if (groupLocalAccess.addEvent1.length !== 0) {
     //If statement to ensure that only one listener is created for the summarise command
-    DeviceEventEmitter.addListener("AddPdf",(group)=>{
+    NativeAppEventEmitter.addListener("AddPdf",(group)=>{
       setLoad(true);
       AddNew(group);
     });
@@ -97,12 +95,7 @@ export const GroupSelection = ({ navigation, route }) => {
           </View>
         </View>
       </View>
-{/* 
-      <GroupDisplay
-        navigation={navigation}
-        selectMode={selectMode}
-        ref={groupRef}
-      /> */
+      {
       //List of groups
       }
       <Loading

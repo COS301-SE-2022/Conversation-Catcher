@@ -1,31 +1,25 @@
 import { gql, useMutation, useQuery, useLazyQuery} from '@apollo/client';
 import React, { useImperativeHandle, forwardRef, useState } from 'react';
-import { Text, ScrollView, StyleSheet, DeviceEventEmitter, RefreshControl, NativeAppEventEmitter } from 'react-native';
+import { Text, ScrollView, StyleSheet, RefreshControl, NativeAppEventEmitter } from 'react-native';
 import Loading from '../loading/loading';
-// import LocalGroupsAccess from '../local-groups-access/local-groups-access';
 import GroupTile from '../group-tile/group-tile';
 import groupLocalAccess from '../local-groups-access/local-groups-access';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { selectEmail} from '../../../../../../../apps/client/src/app/slices/user.slice';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectGroups, refillGroups } from '../../../../../../../apps/client/src/app/slices/group.slice';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector} from 'react-redux';
 
 export function GroupDisplay({ navigation, selectMode, add}, ref) {
   // const [selectMode, setSelectMode] = useState(false);
   const [didReload, setDidReload] = useState(true);
-  const [isLoaded, setIsLoaded] = useState(false);
+  // const [isLoaded, setIsLoaded] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [refreshFlag,setRefreshFlag] = useState(false);
   const emailState = useSelector(selectEmail);
-  //const localGroups = useSelector(selectGroups);
-  //const dispatch = useDispatch();
-  //Expose refresh function to parent(View-all page)
   //Listen to when to update page
   if (groupLocalAccess.addEvent3.length !== 0) {
     //If statement to ensure that only one listener is created for the summarise command
-    DeviceEventEmitter.addListener('updateGroups', () => {
-      // console.log("Hi");
+    NativeAppEventEmitter.addListener('updateGroups', () => {
       setRefreshFlag(!refreshFlag);
     });
     groupLocalAccess.addEvent3.length = 0;
@@ -33,8 +27,6 @@ export function GroupDisplay({ navigation, selectMode, add}, ref) {
   if (groupLocalAccess.addEvent2.length !== 0) {
     //If statement to ensure that only one listener is created for the summarise command
     NativeAppEventEmitter.addListener("reloadGroup",()=>{
-      
-      //setRefreshFlag(true);
       ReloadData();
     });
     groupLocalAccess.addEvent2.length = 0;

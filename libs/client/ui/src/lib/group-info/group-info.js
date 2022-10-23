@@ -3,7 +3,6 @@ import {
   View,
   StyleSheet,
   Text,
-  Image,
   TouchableOpacity,
   ScrollView,
   TextInput,
@@ -13,12 +12,11 @@ import {
 import { gql, useQuery, useMutation } from '@apollo/client';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
-import DocumentPicker, { types } from 'react-native-document-picker';
+// import DocumentPicker, { types } from 'react-native-document-picker';
 import { useSelector, useDispatch } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { selectColour, selectEmail } from '../../../../../../apps/client/src/app/slices/user.slice';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { changeName, removeGroup, changeDesc} from '../../../../../../apps/client/src/app/slices/group.slice';
 import MemberTile from '../shared-components/member-tile/member-tile.js';
 import groupsLocalAccess from '../shared-components/local-groups-access/local-groups-access';
 import Loading from '../shared-components/loading/loading';
@@ -32,25 +30,24 @@ export const GroupInfo = ({ route, navigation }) => {
     const [bottomModalVisible, setBottomModalVisible] = useState(false);
     const [adminState, setAdminState] = useState(false);
     const [renameVisible, setRenameVisible] = useState(false);
-    const [describeVisible,setDescribeVisible] = useState(false);
+    // const [describeVisible,setDescribeVisible] = useState(false);
     const [inviteVisible, setInviteVisible] = useState(false);
     const [editDescriptionVisible, setEditDescriptionVisible] = useState(false);
     const [deleteConfirmVisible, setDeleteConfirmVisible] = useState(false);
     const [removeConfirmVisible, setRemoveConfirmVisible] = useState(false);
     const [leaveConfirmVisible, setLeaveConfirmVisible] = useState(false);
-    const [fileResponse, setFileResponse] = useState([]);
+    // const [fileResponse, setFileResponse] = useState([]);
     const [newUser, setNewUser] = useState('');
     const [newName, setNewName] = useState('');
     const [newDesc,setNewDesc] = useState('');
     const [load,setLoad] = useState(false);
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
 
     const { groupObject } = route.params;
     useEffect(()=>{
       if (groupObject.admin === userName) setAdminState(true);
       else setAdminState(false);
     })
-    //console.log(thumbnailSource);
     const RENAME = gql`
       mutation setName(
         $groupName: String!
@@ -103,38 +100,31 @@ export const GroupInfo = ({ route, navigation }) => {
   const [add] = useMutation(ADD_USER);
 
   async function renameGroup() {
-    // console.log(groupObject.name);
     groupsLocalAccess.renameGroup(groupObject.name, newName);
     NativeAppEventEmitter.emit('reloadGroup');
-    await rename({ variables: { groupName: groupObject.name, newName: newName } });
-    //dispatch(changeName({ id: id.id, name: newName }));
+    await rename({ variables: { groupName: groupObject.name, newName: newName }}).catch(e=>console.log(e));
   }
 
   async function updateDescription() {
     groupObject.description = newDesc;
     groupsLocalAccess.chngDesc(groupObject.name, newDesc);
-    await chngDesc({variables: {groupName: groupObject.name, description: newDesc}});
-    //dispatch(changeDesc({id:id.id, desc: newDesc}));
+    NativeAppEventEmitter.emit('reloadGroup');
+    await chngDesc({variables: {groupName: groupObject.name, description: newDesc}}).catch(e=>console.log(e));
   }
 
   async function deleteGroup() {
     groupsLocalAccess.deleteGroup(groupObject.name);
-    NativeAppEventEmitter.emit("updateGroups");
-    await delete_group({ variables: { groupName:groupObject.name } });
-    //dispatch(removeGroup({ id: id.id }));
+    NativeAppEventEmitter.emit("reloadGroup");
+    await delete_group({ variables: { groupName:groupObject.name } }).catch(e=>console.log(e));
   }
   
   async function removeUser(userID){
-    groupsLocalAccess.removeUser(userID, groupObject.name);
-    NativeAppEventEmitter.emit("updateGroups");
-    await remove({variables:{user:userID, groupName: groupObject.name}}).catch((e)=>{
-      console.log(e);
-    });
+    groupsLocalAccess.removeUser(userID,groupObject.name);
+    NativeAppEventEmitter.emit("reloadGroup");
+    await remove({variables:{user:userID, groupName: groupObject.name}}).catch(e=>console.log(e));
   }
 
   async function addUser(userID){
-    // console.log(userID);
-    // console.log(groupObject.name);
     await add({variables:{user:userID, groupName: groupObject.name}}).then(()=>{
       groupsLocalAccess.addUser(userID, groupObject.name);
       setNewUser("");
@@ -144,74 +134,74 @@ export const GroupInfo = ({ route, navigation }) => {
     });
   }
 
-    function AdminGroupButtons(){
-      if(adminState){
-        return (
-          <View style={styles.buttonsGroup}>
-            <View style={styles.deleteButtonBox}>
-              <TouchableOpacity 
-                style={styles.deleteButton}
-                onPress={() => {
-                  setDeleteConfirmVisible(true);
-                }} 
-              >
-                <Text style={styles.deleteButtonText}>Delete Group</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        )
-      }
+  function AdminGroupButtons(){
+    if(adminState){
       return (
         <View style={styles.buttonsGroup}>
-          <View style={styles.leaveButtonBox}>
+          <View style={styles.deleteButtonBox}>
             <TouchableOpacity 
-              style={styles.leaveButton}
+              style={styles.deleteButton}
               onPress={() => {
-                setLeaveConfirmVisible(true);
+                setDeleteConfirmVisible(true);
               }} 
             >
-              <Text style={styles.leaveButtonText}>Leave Group</Text>
+              <Text style={styles.deleteButtonText}>Delete Group</Text>
             </TouchableOpacity>
           </View>
         </View>
       )
     }
+    return (
+      <View style={styles.buttonsGroup}>
+        <View style={styles.leaveButtonBox}>
+          <TouchableOpacity 
+            style={styles.leaveButton}
+            onPress={() => {
+              setLeaveConfirmVisible(true);
+            }} 
+          >
+            <Text style={styles.leaveButtonText}>Leave Group</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    )
+  }
 
-    function AdminMemberButtons(){
-      if(adminState){
-        return (
-          <View style={styles.membersButtonsGroup}> 
-            <View style={styles.inviteButtonBox}>
-              <TouchableOpacity 
-                style={styles.invitebutton}
-                onPress={() => {
-                  setInviteVisible(true);
-                }}
-              >
-                <Icon name="plus" size={30} color={colourState.accent} />
-              </TouchableOpacity>
-            </View>
-            <View style={styles.removeButtonBox}>
-              <TouchableOpacity 
-                style={styles.removeButton}
-                onPress={() => {
-                  if (selectMode) {
-                    setSelectMode(false);
-                    setBottomModalVisible(false);
-                  } else {
-                    setSelectMode(true);
-                    setBottomModalVisible(true);
-                  }
-                }}
-              >
-                <Icon name="minus" size={30} color={colourState.accent} />
-              </TouchableOpacity>
-            </View>
+  function AdminMemberButtons(){
+    if(adminState){
+      return (
+        <View style={styles.membersButtonsGroup}> 
+          <View style={styles.inviteButtonBox}>
+            <TouchableOpacity 
+              style={styles.invitebutton}
+              onPress={() => {
+                setInviteVisible(true);
+              }}
+            >
+              <Icon name="plus" size={30} color={colourState.accent} />
+            </TouchableOpacity>
           </View>
-        )
-      }
-      return null;
+          <View style={styles.removeButtonBox}>
+            <TouchableOpacity 
+              style={styles.removeButton}
+              onPress={() => {
+                if (selectMode) {
+                  setSelectMode(false);
+                  setBottomModalVisible(false);
+                } else {
+                  setSelectMode(true);
+                  setBottomModalVisible(true);
+                }
+              }}
+            >
+              <Icon name="minus" size={30} color={colourState.accent} />
+            </TouchableOpacity>
+          </View>
+        </View>
+      )
     }
+    return null;
+  }
 
     function ConditionalGroupHeader(){
       if(adminState){
@@ -327,7 +317,6 @@ export const GroupInfo = ({ route, navigation }) => {
         hasBackdrop={true}
         backdropColor={colourState.mode}
         onBackdropPress={() => setRenameVisible(false)}
-        //onModalHide={() => setFileSelected(false)}
       >
         <View style={[styles.actionModalInner, {backgroundColor: colourState.bottom}, {borderColor: colourState.low}]}>
           <TextInput
@@ -344,6 +333,7 @@ export const GroupInfo = ({ route, navigation }) => {
               console.log('renaming the group to ' + newName);
               renameGroup();
               setRenameVisible(false);
+              NativeAppEventEmitter.emit('reloadGroup');
             }}
           >
             <View style={styles.actionModalButtonContent}>
@@ -355,7 +345,7 @@ export const GroupInfo = ({ route, navigation }) => {
         </View>
       </Modal>
       
-      <Modal
+      {/* <Modal
         style={styles.modal}
         isVisible={describeVisible}
         hasBackdrop={true}
@@ -375,7 +365,7 @@ export const GroupInfo = ({ route, navigation }) => {
             style={[styles.actionFileButton, { backgroundColor: colourState.accent }, {shadowColor: colourState.mode}]}
             state={null}
             onPress={() => {
-              console.log('Change the description to' + groupObject.description);
+              console.log('Change the description to ' + groupObject.description);
               updateDescription();
               setDescribeVisible(false);
             }}
@@ -387,7 +377,7 @@ export const GroupInfo = ({ route, navigation }) => {
             </View>
           </TouchableOpacity>
         </View>
-      </Modal>
+      </Modal> */}
 
       <Modal
         style={styles.modal}
@@ -402,18 +392,17 @@ export const GroupInfo = ({ route, navigation }) => {
             style={[styles.actionModalLargeTextInput, {backgroundColor: colourState.mode}, {color: colourState.top}]}
             defaultValue={groupObject.name}
             onChangeText={(text) => {
-              //setNewDescription(text);
+              setNewDesc(text);
             }}
-            numberOfLines={4}
-            multiline={true}
           />
           <TouchableOpacity
             style={[styles.actionFileButton, { backgroundColor: colourState.accent }, {shadowColor: colourState.mode}]}
             state={null}
             onPress={() => {
-              //console.log('renaming the pdf to ' + newName);
-              //editDescription();
+              console.log('Change the description to ' + newDesc);
+              updateDescription();
               setEditDescriptionVisible(false);
+              NativeAppEventEmitter.emit('reloadGroup');
             }}
           >
             <View style={styles.actionModalButtonContent}>
@@ -456,11 +445,11 @@ export const GroupInfo = ({ route, navigation }) => {
             onPress={() => {
               setLoad(true);
               deleteGroup().then(()=>{
-                navigation.navigate('Groups');
                 setLoad(false);
               }).catch(e=>console.log(e));
               setDeleteConfirmVisible(false);
-              NativeAppEventEmitter.emit('updatePage');
+              NativeAppEventEmitter.emit('reloadGroup');
+              navigation.navigate('Groups');
             }}
           >
             <View style={styles.actionModalButtonContent}>
@@ -502,12 +491,11 @@ export const GroupInfo = ({ route, navigation }) => {
             onPress={() => {
               setLoad(true);
               removeUser(userName).then(()=>{
-                navigation.navigate('Groups');
                 setLoad(false);
               }).catch(e=>console.log(e));
               setLeaveConfirmVisible(false);
-              NativeAppEventEmitter.emit('updatePage');
-              // NativeAppEventEmitter.emit('reloadGroup');
+              NativeAppEventEmitter.emit('reloadGroup');
+              navigation.navigate('Groups');
             }}
           >
             <View style={styles.actionModalButtonContent}>
@@ -583,7 +571,8 @@ export const GroupInfo = ({ route, navigation }) => {
             style={[styles.actionButton, { backgroundColor: colourState.accent }, {shadowColor: colourState.mode}]}
             state={null}
             onPress={() => {
-              addUser(newUser);
+              setLoad(true);
+              addUser(newUser).then(()=>{setLoad(false)});
               setInviteVisible(false);
             }}
           >
@@ -606,7 +595,7 @@ export const GroupInfo = ({ route, navigation }) => {
       >
         <View style={[styles.actionModalInner, {backgroundColor: colourState.bottom}, {borderColor: colourState.low}]}>
           <Text style={styles.modalTitle}>
-            {'Are you sure you want to remove * members?'}
+            {'Are you sure you want to remove these members?'}
           </Text>
           <TouchableOpacity
             style={[styles.actionButton, { backgroundColor: colourState.accent }, {shadowColor: colourState.mode}]}
@@ -627,7 +616,7 @@ export const GroupInfo = ({ route, navigation }) => {
             state={null}
             onPress={() => {
               // Delete the pdf
-              //deletePdf();
+              removeUser();
               setRemoveConfirmVisible(false);
               setSelectMode(false);
             }}

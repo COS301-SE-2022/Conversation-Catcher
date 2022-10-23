@@ -5,14 +5,11 @@ import {
   Text,
   SafeAreaView,
   TouchableOpacity,
-  ScrollView,
   TextInput,
-  DeviceEventEmitter,
   NativeAppEventEmitter,
 } from 'react-native';
 import { gql, useLazyQuery, useMutation } from '@apollo/client';
-import GroupTile from '../shared-components/group-tile/group-tile.js';
-import ModalDropdown from 'react-native-modal-dropdown';
+// import ModalDropdown from 'react-native-modal-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
 import Share from 'react-native-share';
@@ -32,7 +29,7 @@ export const Groups = ({ navigation }) => {
   const [bottomModalVisible, setBottomModalVisible] = useState(false);
   const [bottomModalType, setBottomModalType] = useState('none');
   const [renameModalVisible, setRenameModalVisible] = useState(false);
-  const [currOrderValue, setCurrOrderValue] = useState('Date');
+  // const [currOrderValue, setCurrOrderValue] = useState('Date');
   const [renameVisible, setRenameVisible] = useState(false);
   const [newName, setNewName] = useState(null);
   // const [refreshPage, setRefreshPage] = useState('');
@@ -58,7 +55,7 @@ export const Groups = ({ navigation }) => {
   `;
   const [createGroup] = useMutation(CREATE_GROUP);
   //variables for object sorting
-  const [objArr, setObjArr] = useState([]);
+  // const [objArr, setObjArr] = useState([]);
 
   const options = {
     title,
@@ -115,27 +112,6 @@ export const Groups = ({ navigation }) => {
       </TouchableOpacity>
     );
   }
-
-  // const onShare = async () => {
-  //   try {
-  //     const result = await Share.share({
-  //       message:
-  //         'React Native | A framework for building native apps using React',
-  //     });
-  //     if (result.action === Share.sharedAction) {
-  //       if (result.activityType) {
-  //         // shared with activity type of result.activityType
-  //       } else {
-  //         // shared
-  //       }
-  //     } else if (result.action === Share.dismissedAction) {
-  //       // dismissed
-  //     }
-  //   } catch (error) {
-  //     alert(error.message);
-  //   }
-  // };
-
   // function changeArray(index, itemValue) {
   //   if (currOrderValue !== itemValue) {
   //     setCurrOrderValue(itemValue);
@@ -182,7 +158,6 @@ export const Groups = ({ navigation }) => {
         <View style={styles.big_title_box}>
           <Text style={styles.big_title}>{'Groups'}</Text>
         </View>
-
         <View style={styles.searchBarGroup}>
           <TextInput
             style={styles.searchInput}
@@ -197,12 +172,7 @@ export const Groups = ({ navigation }) => {
           </View>
         </View>
       </View>
-{/*
-      <GroupDisplay
-        navigation={navigation}
-        selectMode={selectMode}
-        ref={groupRef}
-      /> */
+      {
       //List of groups
       }
       <GroupDisplay
@@ -212,37 +182,8 @@ export const Groups = ({ navigation }) => {
         add={false}
       />
       {
-      //   <View style={styles.groupTiles}>
-      //   <GroupTile
-      //     key={'1'}
-      //     id={'1'}
-      //     name={'Group1'}
-      //     thumbnailSource={{
-      //       uri:
-      //       'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg',
-      //     }}
-      //     description={'test'}
-      //     groupSource={'groupRefresh'}
-      //     nav={navigation}
-      //   />
-      //   <GroupTile
-      //     key={'2'}
-      //     id={'2'}
-      //     name={'Group2'}
-      //     thumbnailSource={{
-      //       uri:
-      //       'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg',
-      //     }}
-      //     text={'blah'}
-      //     groupSource={'groupRefresh'}
-      //     nav={navigation}
-      //   />
-      // </View>
-      }
-      {
         //Bottom Bar
       }
-
       <View style={styles.viewAllBottomBar}>
         <TouchableOpacity
           style={styles.moreButton}
@@ -292,6 +233,13 @@ export const Groups = ({ navigation }) => {
             onPress={() => {
               // console.log(userEmail);
               // console.log(newName);
+              groupLocalAccess.addGroup({
+                name: newName,
+                admin: userEmail,
+                pdfs:[],
+                users:[userEmail],
+                description:"Click to edit description...",
+              });
               createGroup({
                 variables: {
                   email: userEmail,
