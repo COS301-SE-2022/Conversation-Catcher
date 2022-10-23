@@ -7,10 +7,9 @@ import {
   TouchableOpacity,
   ScrollView,
   TextInput,
-  DeviceEventEmitter,
+  NativeAppEventEmitter
 } from 'react-native';
 import { gql, useLazyQuery, useMutation } from '@apollo/client';
-import GroupTile from '../shared-components/group-tile/group-tile.js';
 import ModalDropdown from 'react-native-modal-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
@@ -69,7 +68,7 @@ export const GroupSelection = ({ navigation, route }) => {
   }
   if (groupLocalAccess.addEvent1.length !== 0) {
     //If statement to ensure that only one listener is created for the summarise command
-    DeviceEventEmitter.addListener("AddPdf",(group)=>{
+    NativeAppEventEmitter.addListener("AddPdf",(group)=>{
       setLoad(true);
       AddNew(group);
     });

@@ -10,7 +10,6 @@ import {
   ScrollView,
   TextInput,
   NativeAppEventEmitter,
-  DeviceEventEmitter,
 } from 'react-native';
 import { gql, useQuery, useMutation, useLazyQuery } from '@apollo/client';
 import ModalDropdown from 'react-native-modal-dropdown';
@@ -133,7 +132,7 @@ export const ViewAll = ({ navigation, route }) => {
 
   if (pdfLocalAccess.clearSearchInput.length !== 0) {
     //If statement to ensure that only one listener is created for the summarise command
-    DeviceEventEmitter.addListener('clearSearch', () => {
+    NativeAppEventEmitter.addListener('clearSearch', () => {
       setSearchInput('');
     });
     pdfLocalAccess.clearSearchInput.length = 0;
@@ -182,7 +181,7 @@ export const ViewAll = ({ navigation, route }) => {
         onPress={() => {
           setSelectMode(false);
           setBottomModalVisible(false);
-          DeviceEventEmitter.emit("DeleteAll");
+          NativeAppEventEmitter.emit("DeleteAll");
         }}
       >
         <Icon name="trash-o" color="#ffffffff" size={22} />

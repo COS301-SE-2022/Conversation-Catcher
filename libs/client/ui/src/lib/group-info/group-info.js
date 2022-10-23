@@ -125,7 +125,9 @@ export const GroupInfo = ({ route, navigation }) => {
   async function removeUser(userID){
     groupsLocalAccess.removeUser(userID, groupObject.name);
     NativeAppEventEmitter.emit("updateGroups");
-    await remove({variables:{user:userID, groupName: groupObject.name}}).catch((e)=>{
+    await remove({variables:{user:userID, groupName: groupObject.name}}).then(()=>{
+      groupsLocalAccess.removeUser(userID,groupObject.name);
+    }).catch((e)=>{
       console.log(e);
     });
   }
@@ -512,7 +514,7 @@ export const GroupInfo = ({ route, navigation }) => {
         </View>
       </Modal>
 
-      {/* <Modal
+      <Modal
         isVisible={bottomModalVisible}
         coverScreen={false}
         hasBackdrop={false}
@@ -545,7 +547,7 @@ export const GroupInfo = ({ route, navigation }) => {
             <Icon name="trash-o" color="#ffffffff" size={25} />
           </TouchableOpacity>
         </View>
-      </Modal> */}
+      </Modal>
 
       <Modal
         style={styles.modal}
@@ -619,7 +621,7 @@ export const GroupInfo = ({ route, navigation }) => {
             state={null}
             onPress={() => {
               // Delete the pdf
-              //deletePdf();
+              removeUser();
               setRemoveConfirmVisible(false);
               setSelectMode(false);
             }}

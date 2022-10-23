@@ -1,6 +1,6 @@
 import { gql, useMutation, useQuery, useLazyQuery} from '@apollo/client';
 import React, { useImperativeHandle, forwardRef, useState } from 'react';
-import { Text, ScrollView, StyleSheet, DeviceEventEmitter, RefreshControl, NativeAppEventEmitter } from 'react-native';
+import { Text, ScrollView, StyleSheet, RefreshControl, NativeAppEventEmitter } from 'react-native';
 import Loading from '../loading/loading';
 // import LocalGroupsAccess from '../local-groups-access/local-groups-access';
 import GroupTile from '../group-tile/group-tile';
@@ -24,7 +24,7 @@ export function GroupDisplay({ navigation, selectMode, add}, ref) {
   //Listen to when to update page
   if (groupLocalAccess.addEvent3.length !== 0) {
     //If statement to ensure that only one listener is created for the summarise command
-    DeviceEventEmitter.addListener('updateGroups', () => {
+    NativeAppEventEmitter.addListener('updateGroups', () => {
       // console.log("Hi");
       setRefreshFlag(!refreshFlag);
     });
