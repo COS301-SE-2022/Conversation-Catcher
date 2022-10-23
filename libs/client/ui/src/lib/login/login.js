@@ -395,7 +395,9 @@ const styles = StyleSheet.create({
   logInButton: {
     width: '80%',
     height: '10%',
-    margin: 20,
+    marginTop: 10,
+    marginHorizontal: 20,
+    marginBottom: 20,
     backgroundColor: '#3f89beff',
     borderRadius: 8,
     borderStyle: 'solid',

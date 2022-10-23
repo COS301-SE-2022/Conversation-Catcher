@@ -288,7 +288,7 @@ export const GroupInfo = ({ route, navigation }) => {
           <TextInput
             style={[styles.searchInput, {backgroundColor: colourState.mode}, {color: colourState.high}]}
             placeholder="Search"
-            placeholderTextColor={colourState.bottom}
+            placeholderTextColor={colourState.low}
             onChangeText={(text) => {
             //groupLocalAccess.filterGroups(text);
             //groupRef.current.refreshPfds();
@@ -312,7 +312,7 @@ export const GroupInfo = ({ route, navigation }) => {
         </ScrollView>
       </View>
 
-      <View style={[styles.groupPageFooter, {backgroundColor: colourState.bottom}, {borderColor: colourState.mode}, {shadowColor: colourState.mode}]}>
+      <View style={[styles.groupPageFooter, {backgroundColor: colourState.low}, {borderColor: colourState.mode}, {shadowColor: colourState.mode}]}>
         <TouchableOpacity
           style={styles.backButton}
           onPress={() => navigation.goBack()}
@@ -329,16 +329,16 @@ export const GroupInfo = ({ route, navigation }) => {
         onBackdropPress={() => setRenameVisible(false)}
         //onModalHide={() => setFileSelected(false)}
       >
-        <View style={styles.actionModalInner}>
+        <View style={[styles.actionModalInner, {backgroundColor: colourState.bottom}, {borderColor: colourState.low}]}>
           <TextInput
-            style={styles.actionModalTextInput}
+            style={[styles.actionModalTextInput, {backgroundColor: colourState.mode}, {color: colourState.top}]}
             defaultValue={groupObject.name}
             onChangeText={(text) => {
               setNewName(text);
             }}
           />
           <TouchableOpacity
-            style={[styles.actionButton, { backgroundColor: colourState.accent }]}
+            style={[styles.actionButton, { backgroundColor: colourState.accent }, {shadowColor: colourState.mode}]}
             state={null}
             onPress={() => {
               console.log('renaming the group to ' + newName);
@@ -348,7 +348,7 @@ export const GroupInfo = ({ route, navigation }) => {
           >
             <View style={styles.actionModalButtonContent}>
               <View style={styles.actionModalButtonText_box}>
-                <Text style={styles.actionModalButtonText}>{'Rename'}</Text>
+                <Text style={[styles.actionModalButtonText, {color: colourState.mode}]}>{'Rename'}</Text>
               </View>
             </View>
           </TouchableOpacity>
@@ -363,16 +363,16 @@ export const GroupInfo = ({ route, navigation }) => {
         onBackdropPress={() => setDescribeVisible(false)}
         //onModalHide={() => setFileSelected(false)}
       >
-        <View style={styles.actionModalInner}>
+        <View style={[styles.actionModalInner, {backgroundColor: colourState.bottom}, {borderColor: colourState.low}]}>
           <TextInput
-            style={styles.actionModalTextInput}
+            style={[styles.actionModalTextInput, {backgroundColor: colourState.mode}, {color: colourState.top}]}
             defaultValue={groupObject.description}
             onChangeText={(text) => {
               setNewDesc(text);
             }}
           />
           <TouchableOpacity
-            style={[styles.actionFileButton, { backgroundColor: colourState.accent }]}
+            style={[styles.actionFileButton, { backgroundColor: colourState.accent }, {shadowColor: colourState.mode}]}
             state={null}
             onPress={() => {
               console.log('Change the description to' + groupObject.description);
@@ -382,7 +382,7 @@ export const GroupInfo = ({ route, navigation }) => {
           >
             <View style={styles.actionModalButtonContent}>
               <View style={styles.actionModalButtonText_box}>
-                <Text style={styles.actionModalButtonText}>{'Change Description'}</Text>
+                <Text style={[styles.actionModalButtonText, {color: colourState.mode}]}>{'Change Description'}</Text>
               </View>
             </View>
           </TouchableOpacity>
@@ -397,9 +397,9 @@ export const GroupInfo = ({ route, navigation }) => {
         onBackdropPress={() => setEditDescriptionVisible(false)}
         //onModalHide={() => setFileSelected(false)}
       >
-        <View style={styles.actionModalInner}>
+        <View style={[styles.actionModalInner, {backgroundColor: colourState.bottom}, {borderColor: colourState.low}]}>
           <TextInput
-            style={styles.actionModalLargeTextInput}
+            style={[styles.actionModalLargeTextInput, {backgroundColor: colourState.mode}, {color: colourState.top}]}
             defaultValue={groupObject.name}
             onChangeText={(text) => {
               //setNewDescription(text);
@@ -408,7 +408,7 @@ export const GroupInfo = ({ route, navigation }) => {
             multiline={true}
           />
           <TouchableOpacity
-            style={[styles.actionFileButton, { backgroundColor: colourState.accent }]}
+            style={[styles.actionFileButton, { backgroundColor: colourState.accent }, {shadowColor: colourState.mode}]}
             state={null}
             onPress={() => {
               //console.log('renaming the pdf to ' + newName);
@@ -418,7 +418,7 @@ export const GroupInfo = ({ route, navigation }) => {
           >
             <View style={styles.actionModalButtonContent}>
               <View style={styles.actionModalButtonText_box}>
-                <Text style={styles.actionModalButtonText}>{'Save'}</Text>
+                <Text style={[styles.actionModalButtonText, {color: colourState.mode}]}>{'Save'}</Text>
               </View>
             </View>
           </TouchableOpacity>
@@ -433,12 +433,12 @@ export const GroupInfo = ({ route, navigation }) => {
         onBackdropPress={() => setDeleteConfirmVisible(false)}
         //onModalHide={() => setFileSelected(false)}
       >
-        <View style={styles.actionModalInner}>
-          <Text style={styles.modalTitle}>
+        <View style={[styles.actionModalInner, {backgroundColor: colourState.bottom}, {borderColor: colourState.low}]}>
+          <Text style={[styles.modalTitle, {color: colourState.top}]}>
             {'Are you sure you want to delete ' + groupObject.name + '?'}
           </Text>
           <TouchableOpacity
-            style={[styles.actionButton, { backgroundColor: colourState.accent }]}
+            style={[styles.actionButton, { backgroundColor: colourState.accent }, {shadowColor: colourState.mode}]}
             state={null}
             onPress={() => {
               setDeleteConfirmVisible(false);
@@ -446,12 +446,12 @@ export const GroupInfo = ({ route, navigation }) => {
           >
             <View style={styles.actionModalButtonContent}>
               <View style={styles.actionModalButtonText_box}>
-                <Text style={styles.actionModalButtonText}>{'Cancel'}</Text>
+                <Text style={[styles.actionModalButtonText, {color: colourState.mode}]}>{'Cancel'}</Text>
               </View>
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.actionButton, { backgroundColor: colourState.accent }]}
+            style={[styles.actionButton, { backgroundColor: colourState.accent }, {shadowColor: colourState.mode}]}
             state={null}
             onPress={() => {
               setLoad(true);
@@ -465,7 +465,7 @@ export const GroupInfo = ({ route, navigation }) => {
           >
             <View style={styles.actionModalButtonContent}>
               <View style={styles.actionModalButtonText_box}>
-                <Text style={styles.actionModalButtonText}>{'Delete Group'}</Text>
+                <Text style={[styles.actionModalButtonText, {color: colourState.mode}]}>{'Delete Group'}</Text>
               </View>
             </View>
           </TouchableOpacity>
@@ -479,12 +479,12 @@ export const GroupInfo = ({ route, navigation }) => {
         backdropColor={colourState.mode}
         onBackdropPress={() => setLeaveConfirmVisible(false)}
       >
-        <View style={styles.actionModalInner}>
+        <View style={[styles.actionModalInner, {backgroundColor: colourState.bottom}, {borderColor: colourState.low}]}>
           <Text style={styles.modalTitle}>
             {'Are you sure you want to leave ' + groupObject.name + '?'}
           </Text>
           <TouchableOpacity
-            style={[styles.actionButton, { backgroundColor: colourState.accent }]}
+            style={[styles.actionButton, { backgroundColor: colourState.accent }, {shadowColor: colourState.mode}]}
             state={null}
             onPress={() => {
               setLeaveConfirmVisible(false);
@@ -492,12 +492,12 @@ export const GroupInfo = ({ route, navigation }) => {
           >
             <View style={styles.actionModalButtonContent}>
               <View style={styles.actionModalButtonText_box}>
-                <Text style={styles.actionModalButtonText}>{'Cancel'}</Text>
+                <Text style={[styles.actionModalButtonText, {color: colourState.mode}]}>{'Cancel'}</Text>
               </View>
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.actionButton, { backgroundColor: colourState.accent }]}
+            style={[styles.actionButton, { backgroundColor: colourState.accent }, {shadowColor: colourState.mode}]}
             state={null}
             onPress={() => {
               setLoad(true);
@@ -512,7 +512,7 @@ export const GroupInfo = ({ route, navigation }) => {
           >
             <View style={styles.actionModalButtonContent}>
               <View style={styles.actionModalButtonText_box}>
-                <Text style={styles.actionModalButtonText}>{'Leave Group'}</Text>
+                <Text style={[styles.actionModalButtonText, {color: colourState.mode}]}>{'Leave Group'}</Text>
               </View>
             </View>
           </TouchableOpacity>
@@ -562,8 +562,8 @@ export const GroupInfo = ({ route, navigation }) => {
         onBackdropPress={() => setInviteVisible(false)}
         //onModalHide={() => setFileSelected(false)}
       >
-        <View style={styles.actionModalInner}>
-          <View style={styles.actionModalTextInputGroup}>
+        <View style={[styles.actionModalInner, {backgroundColor: colourState.bottom}, {borderColor: colourState.low}]}>
+          <View style={[styles.actionModalTextInputGroup, {backgroundColor: colourState.mode}]}>
             <View style={styles.mailIconContainer}>
               <Icon
                 style={{ color: colourState.accent }}
@@ -572,14 +572,15 @@ export const GroupInfo = ({ route, navigation }) => {
               />
             </View>
             <TextInput
-              style={styles.inviteTextInput}
+              style={[styles.inviteTextInput, {backgroundColor: colourState.mode}, {color: colourState.top}]}
               onChangeText={setNewUser}
               value={newUser}
               placeholder="johnsmith@gmail.com"
+              placeholderTextColor={colourState.low}
             />
           </View>
           <TouchableOpacity
-            style={[styles.actionButton, { backgroundColor: colourState.accent }]}
+            style={[styles.actionButton, { backgroundColor: colourState.accent }, {shadowColor: colourState.mode}]}
             state={null}
             onPress={() => {
               addUser(newUser);
@@ -588,7 +589,7 @@ export const GroupInfo = ({ route, navigation }) => {
           >
             <View style={styles.actionModalButtonContent}>
               <View style={styles.actionModalButtonText_box}>
-                <Text style={styles.actionModalButtonText}>{'Invite'}</Text>
+                <Text style={[styles.actionModalButtonText, {color: colourState.mode}]}>{'Invite'}</Text>
               </View>
             </View>
           </TouchableOpacity>
@@ -599,16 +600,16 @@ export const GroupInfo = ({ route, navigation }) => {
         style={styles.modal}
         isVisible={removeConfirmVisible}
         hasBackdrop={true}
-        backdropColor="white"
+        backdropColor={colourState.mode}
         onBackdropPress={() => setRemoveConfirmVisible(false)}
         //onModalHide={() => setFileSelected(false)}
       >
-        <View style={styles.actionModalInner}>
+        <View style={[styles.actionModalInner, {backgroundColor: colourState.bottom}, {borderColor: colourState.low}]}>
           <Text style={styles.modalTitle}>
             {'Are you sure you want to remove * members?'}
           </Text>
           <TouchableOpacity
-            style={[styles.actionButton, { backgroundColor: colourState.accent }]}
+            style={[styles.actionButton, { backgroundColor: colourState.accent }, {shadowColor: colourState.mode}]}
             state={null}
             onPress={() => {
               setRemoveConfirmVisible(false);
@@ -617,12 +618,12 @@ export const GroupInfo = ({ route, navigation }) => {
           >
             <View style={styles.actionModalButtonContent}>
               <View style={styles.actionModalButtonText_box}>
-                <Text style={styles.actionModalButtonText}>{'Cancel'}</Text>
+                <Text style={[styles.actionModalButtonText, {color: colourState.mode}]}>{'Cancel'}</Text>
               </View>
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.actionButton, { backgroundColor: colourState.accent }]}
+            style={[styles.actionButton, { backgroundColor: colourState.accent }, {shadowColor: colourState.mode}]}
             state={null}
             onPress={() => {
               // Delete the pdf
@@ -633,7 +634,7 @@ export const GroupInfo = ({ route, navigation }) => {
           >
             <View style={styles.actionModalButtonContent}>
               <View style={styles.actionModalButtonText_box}>
-                <Text style={styles.actionModalButtonText}>{'Remove'}</Text>
+                <Text style={[styles.actionModalButtonText, {color: colourState.mode}]}>{'Remove'}</Text>
               </View>
             </View>
           </TouchableOpacity>
@@ -868,11 +869,9 @@ const styles = StyleSheet.create({
   actionModalInner: {
     //width: '90%',
     flexShrink: 1,
-    backgroundColor: '#d0d5ddff',
     borderRadius: 7,
     flexDirection: 'column',
     borderWidth: 1,
-    borderColor: '#667084ff',
     alignItems: 'center',
   },
   actionModalButton: {
@@ -880,29 +879,6 @@ const styles = StyleSheet.create({
     height: '8%',
     alignItems: 'center',
     flexDirection: 'row',
-  },
-  changeactionModalButton: {
-    flexGrow: 1,
-    height: '5%',
-    alignItems: 'center',
-    flexDirection: 'row',
-    marginHorizontal: 10,
-    justifyContent: 'center',
-    alignContent: 'center',
-    flexShrink: 1,
-    backgroundColor: '#ffffffff',
-    borderRadius: 7,
-    borderWidth: 1,
-    borderColor: '#667084ff',
-  },
-  changeactionModalButtonText: {
-    textAlign: 'center',
-    letterSpacing: 0,
-    lineHeight: 20,
-    fontSize: 18,
-    fontWeight: '400',
-    fontStyle: 'normal',
-    fontFamily: 'System' /* Inter */,
   },
   actionButton: {
     flexGrow: 1,
@@ -914,7 +890,6 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     borderRadius: 8,
     elevation: 2,
-    shadowColor: '#000000',
     shadowRadius: 2.621621621621622,
     shadowOpacity: 0.2173913043478261,
     shadowOffset: {
@@ -932,7 +907,6 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     borderRadius: 8,
     elevation: 2,
-    shadowColor: '#000000',
     shadowRadius: 2.621621621621622,
     shadowOpacity: 0.2173913043478261,
     shadowOffset: {
@@ -948,7 +922,6 @@ const styles = StyleSheet.create({
     //padding: 5
   },
   actionModalButtonText: {
-    color: '#ffffffff',
     textAlign: 'center',
     letterSpacing: 0,
     lineHeight: 20,
@@ -969,7 +942,6 @@ const styles = StyleSheet.create({
   },
   actionModalTextInputGroup: {
     flexShrink: 1,
-    backgroundColor: '#ffffffff',
     borderRadius: 8,
     marginHorizontal: 10,
     marginTop: 10,
@@ -980,11 +952,9 @@ const styles = StyleSheet.create({
     letterSpacing: 0,
     lineHeight: 20,
     fontSize: 15,
-    color: '#344053ff',
     fontWeight: '400',
     fontStyle: 'normal',
     fontFamily: 'System' /* Inter */,
-    backgroundColor: '#ffffffff',
     borderRadius: 8,
     marginHorizontal: 10,
     height: 40,
@@ -996,11 +966,9 @@ const styles = StyleSheet.create({
     letterSpacing: 0,
     lineHeight: 20,
     fontSize: 15,
-    color: '#344053ff',
     fontWeight: '400',
     fontStyle: 'normal',
     fontFamily: 'System' /* Inter */,
-    backgroundColor: '#ffffffff',
     borderRadius: 8,
     marginHorizontal: 10,
     marginTop: 10,
@@ -1013,11 +981,9 @@ const styles = StyleSheet.create({
     letterSpacing: 0,
     lineHeight: 20,
     fontSize: 15,
-    color: '#344053ff',
     fontWeight: '400',
     fontStyle: 'normal',
     fontFamily: 'System' /* Inter */,
-    backgroundColor: '#ffffffff',
     borderRadius: 8,
     marginHorizontal: 10,
     marginTop: 10,
@@ -1025,7 +991,6 @@ const styles = StyleSheet.create({
     width: '90%',
   },
   modalTitle: {
-    color: '#344053ff',
     textAlign: 'center',
     letterSpacing: 0,
     lineHeight: 20,
@@ -1051,7 +1016,6 @@ const styles = StyleSheet.create({
   },
   groupThumbnailText: {
     textAlign: "center",
-    color: "#ffffff",
     fontSize: 50,
     fontWeight: "bold",
   },

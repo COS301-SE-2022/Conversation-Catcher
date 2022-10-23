@@ -359,8 +359,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     flexGrow: 1,
     alignContent: 'center',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
+    padding: 20,
   },
   darkLabel: {
     textAlign: 'left',
