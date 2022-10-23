@@ -276,7 +276,7 @@ export const Home = ({ navigation }) => {
   const convertSpeech = () => {
     setNotifyUser(true);
     console.log('stt','add url')
-    fetch(STT_URL, {
+    fetch('http://172.19.132.191:5050/stt', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
