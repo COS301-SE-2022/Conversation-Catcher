@@ -16,6 +16,7 @@ The following links are to our demo videos<br>
 [Multiprocessing moguls - Demo 3 - link](https://drive.google.com/file/d/1cOZXT2Sw5fW1BTVizLg0-Slsb8PGW3jr/view?usp=sharing) <br>
 [Multiprocessing moguls - Demo 4 - link](https://drive.google.com/file/d/1Ev9KSlhCMbwWrQ7VuA0sJQERt8j58pQq/view?usp=sharing) <br>
 [Multiprocessing moguls - Project Day - link](https://drive.google.com/file/d/1JHHyYEjk_vkA7TvwkQBTJQbJJ6aYy-qF/view?usp=sharing) <br>
+[Multiprocessing moguls - App Tutorial - link](https://drive.google.com/file/d/1UlUtXHvbQd4EHAQ6HJui_7CeVaMKcrg_/view?usp=sharing) <br>
 Links to documentation<br>
 [SRS Documentation](https://docs.google.com/document/d/1cqF3RJu4W-wtqzAW2lQ43BdboS8xyZ0Ruu5oth4nWcU/edit#heading=h.js2t3xtgxcqd) <br>
 [Coding standards document](https://docs.google.com/document/d/1ldcNnkpUx-dX3XYgYARz3ydb_r1uxhDfNxVyNXOUcBw/edit#heading=h.186zini1wvx4) <br>
