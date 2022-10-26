@@ -716,7 +716,6 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     justifyContent: 'center',
     alignItems: 'center',
-    //borderRightColor: '#667084ff',
     //borderRightWidth: 1,
   },
   recordAudioIcon: {

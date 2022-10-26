@@ -80,7 +80,7 @@ export const ColourPage = ({ navigation}) => {
             accent: "#E5C9F7",
             mode:"#4E3B51",
             bottom:"#826685",
-            low:"#C1B5C1",
+            low:"#ab9aab",
             high:"#EEE9EF",
             top:"#FFFFFF",
           };
