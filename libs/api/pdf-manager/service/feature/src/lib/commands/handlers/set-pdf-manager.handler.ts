@@ -111,6 +111,7 @@ export class SetEmbeddingsHandler
     const data = JSON.stringify({
       name: name,
       text: text,
+      key: process.env.IDEA_KEY
     });
     
     try {

@@ -32,6 +32,7 @@ def embed():
 def semanticsearch():
     query = request.get_json()['query']
     docs = request.get_json()['docs']
+    key = request.get_json()['key']
     # results = embedder.search(query, docs)
     # results_object = { "results": results }
     all_text = []
@@ -39,7 +40,7 @@ def semanticsearch():
         all_text.append(doc['text'])
     
     API_URL = "https://api-inference.huggingface.co/models/sentence-transformers/all-MiniLM-L6-v2"
-    headers = {"Authorization": "Bearer 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"}
+    headers = {"Authorization": "Bearer " + key}
     payload = {
         "source_sentence": query,
             "sentences": all_text

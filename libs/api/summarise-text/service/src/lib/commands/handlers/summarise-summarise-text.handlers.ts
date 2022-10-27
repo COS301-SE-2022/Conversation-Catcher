@@ -19,6 +19,7 @@ export class SummariesHandler implements ICommandHandler<SummariseCommand> {
 
     const data = JSON.stringify({
       text: text,
+      key: process.env.SUMMARISER_KEY,
     });
     console.log('Summariser', process.env.SUMMARISER_URL)
     try {
