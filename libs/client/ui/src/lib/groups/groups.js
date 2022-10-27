@@ -21,7 +21,7 @@ import { selectColour, selectEmail } from '../../../../../../apps/client/src/app
 import pdfLocalAccess from '../shared-components/local-pdfs-access/local-pdfs-access'
 
 export const Groups = ({ navigation }) => {
-  const groupRef = useRef();
+  // const groupRef = useRef();
   const colourState = useSelector(selectColour);
   const userEmail = useSelector(selectEmail);
   const [moreVisible, setMoreVisible] = useState(false);
@@ -112,7 +112,7 @@ export const Groups = ({ navigation }) => {
             placeholderTextColor={colourState.low}
             onChangeText={(text) => {
               groupLocalAccess.filterGroups(text);
-              groupRef.current.refreshPfds();//TypeError: undefined is not an object (evaluating 'groupRef.current.refreshPfds')
+              NativeAppEventEmitter.emit('reloadGroup');
             }}
           />
           <View style={styles.searchIconFrame}>
