@@ -102,6 +102,7 @@ export const GroupInfo = ({ route, navigation }) => {
 
   async function renameGroup() {
     groupsLocalAccess.renameGroup(groupObject.name, newName);
+    console.log(groupObject);
     groupObject.name = newName;
     NativeAppEventEmitter.emit('reloadGroup');
     await rename({ variables: { groupName: groupObject.name, newName: newName }}).catch(e=>console.log(e));
@@ -125,7 +126,11 @@ export const GroupInfo = ({ route, navigation }) => {
     NativeAppEventEmitter.emit("reloadGroup");
     await remove({variables:{user:userID, groupName: groupObject.name}}).catch(e=>console.log(e));
   }
-
+  function removeUsers(){
+    groupsLocalAccess.clearDeleteList().forEach(element => {
+      removeUser(element);
+    });
+  }
   async function addUser(userID){
     groupsLocalAccess.addUser(userID, groupObject.name);
     setNewUser("");
@@ -630,7 +635,7 @@ export const GroupInfo = ({ route, navigation }) => {
             state={null}
             onPress={() => {
               // Delete the pdf
-              removeUser();
+              removeUsers();
               setRemoveConfirmVisible(false);
               setSelectMode(false);
             }}

@@ -1,6 +1,7 @@
 class LocalGroupsAccess {
   displayGroups; //The groups that get displayed
   allGroups; //All the groups loaded from the api call
+  deleteList;
   addEvent = ['false'];
   addEvent1 = ['false'];
   addEvent2 = ['false'];
@@ -9,6 +10,7 @@ class LocalGroupsAccess {
   constructor() {
     this.displayGroups = [];
     this.allGroups = [];
+    this.deleteList = []
   }
 
   isLoaded(){
@@ -126,6 +128,21 @@ class LocalGroupsAccess {
         this.allGroups[i].users = temp;
       }
     }
+  }
+  addToDeleteList(user){
+    this.deleteList.push(user);
+  }
+  removeFromDeleteList(user){
+    var temp = [];
+    for (let i = 0;i < this.deleteList.length;i++){
+      if (this.deleteList[i] !== user) temp.push(this.deleteList[i]);
+    }
+    this.deleteList = temp;
+  }
+  clearDeleteList(){
+    var temp = this.deleteList;
+    this.deleteList.length = 0;
+    return temp;
   }
 }
 
