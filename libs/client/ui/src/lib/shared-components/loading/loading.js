@@ -4,6 +4,7 @@ import LottieView from "lottie-react-native";
 import { useSelector } from 'react-redux';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { selectColour } from '../../../../../../../apps/client/src/app/slices/user.slice';
+
 export function Loading(props) {
   const colourState = useSelector(selectColour);
   if (props.load)
