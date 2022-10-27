@@ -28,9 +28,13 @@ function DetermineTileCorner(props) {
         isChecked={checkboxState}
         onPress={() => {
           setCheckboxState(!checkboxState);
-          if (checkboxState)
+          //console.log("Check");
+          if (!checkboxState) {
             groupsLocalAccess.addToDeleteList(props.name);
-          else groupsLocalAccess.removeFromDeleteList(props.name);
+          }
+          else {
+            groupsLocalAccess.removeFromDeleteList(props.name);
+          }
         }}
       />
     );

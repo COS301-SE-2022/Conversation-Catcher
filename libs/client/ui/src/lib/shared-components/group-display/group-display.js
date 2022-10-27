@@ -27,9 +27,8 @@ export function GroupDisplay({ navigation, selectMode, add}, ref) {
   if (groupLocalAccess.addEvent2.length !== 0) {
     //If statement to ensure that only one listener is created for the summarise command
     NativeAppEventEmitter.addListener("reloadGroup",()=>{
-      console.log("reload");
+      console.log("reload Triggers");
       ReloadData();
-      console.log("reload");
     });
     groupLocalAccess.addEvent2.length = 0;
   }

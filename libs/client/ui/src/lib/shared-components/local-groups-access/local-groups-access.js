@@ -137,10 +137,17 @@ class LocalGroupsAccess {
     for (let i = 0;i < this.deleteList.length;i++){
       if (this.deleteList[i] !== user) temp.push(this.deleteList[i]);
     }
-    this.deleteList = temp;
+    this.deleteList.length = 0;
+    temp.forEach((e)=>{
+      this.deleteList.push(e);
+    })
   }
-  clearDeleteList(){
-    var temp = this.deleteList;
+  clearDeleteList(group){
+    var temp = [];
+    this.deleteList.forEach(element=>{
+      temp.push(element);
+      this.removeUser(element,group)
+    })
     this.deleteList.length = 0;
     return temp;
   }

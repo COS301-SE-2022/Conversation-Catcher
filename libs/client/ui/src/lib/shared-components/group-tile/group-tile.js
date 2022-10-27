@@ -33,6 +33,7 @@ const GroupTile = ({
   const buildGroup = () => {
     return { name:name, thumbnail:thumbnail, admin:admin, users:users, description:description, pdfs:pdfs }
   }
+  
   return (
     <TouchableOpacity
       style={[styles.groupTile, {borderColor: colourState.low}, {shadowColor: colourState.low}]}

@@ -127,9 +127,10 @@ export const GroupInfo = ({ route, navigation }) => {
     await remove({variables:{user:userID, groupName: groupObject.name}}).catch(e=>console.log(e));
   }
   function removeUsers(){
-    groupsLocalAccess.clearDeleteList().forEach(element => {
+    groupsLocalAccess.clearDeleteList(groupObject.name).forEach(element => {
       removeUser(element);
     });
+    
   }
   async function addUser(userID){
     groupsLocalAccess.addUser(userID, groupObject.name);
