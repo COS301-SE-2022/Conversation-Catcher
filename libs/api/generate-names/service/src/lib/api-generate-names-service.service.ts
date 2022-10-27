@@ -24,10 +24,11 @@ export class ApiGenerateNamesServiceService {
           .post(process.env.NAMEGEN_URL, data, config)
           .pipe(map((res) => res.data.generated_name))
       ).catch((e) => {
-        // console.log(e);
+        console.log(e);
         return '';
       });
     } catch (error) {
+      console.log(error);
       return '';
     }
     return '';

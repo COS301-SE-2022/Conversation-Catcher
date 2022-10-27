@@ -156,6 +156,7 @@ export class ApiPdfManagerApiFeatureResolver {
   // rename the pdf with this id
   @Mutation(() => String)
   async renamePDF(@Args('id') id: string, @Args('name') name: string) {
+    console.log(id,name);
     const pdfArr = await this.pdfService.setNamePdf(id, name);
     if (pdfArr.modifiedCount === 1) {
       return 'success';
