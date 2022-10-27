@@ -14,7 +14,7 @@ def home():
 
 @app.route('/test', methods=['POST'])
 def test():
-  return jsonify({"result": "success"})
+  return jsonify({"result": "nameGen"})
 
 @app.route('/gennames', methods=['POST'])
 def gennames():

@@ -16,7 +16,7 @@ def home():
 
 @app.route('/test', methods=['POST'])
 def test():
-    return jsonify({"result":"success"})
+    return jsonify({"result":"Semantic"})
 
 @app.route('/embed', methods=['POST'])
 def embed():

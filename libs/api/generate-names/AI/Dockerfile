@@ -8,6 +8,7 @@ COPY reverse_source_word_index /
 COPY reverse_target_word_index /
 COPY source_word_index /
 COPY target_word_index /
+COPY templates /templates
 RUN pip install flask
 RUN pip install flask-cors
 RUN pip install requests
