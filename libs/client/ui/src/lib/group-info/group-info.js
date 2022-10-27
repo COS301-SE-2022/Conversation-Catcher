@@ -41,6 +41,7 @@ export const GroupInfo = ({ route, navigation }) => {
     const [newName, setNewName] = useState('');
     const [newDesc,setNewDesc] = useState('');
     const [load,setLoad] = useState(false);
+    const [reload,setReload] = useState(true);
     // const dispatch = useDispatch();
 
     const { groupObject } = route.params;
@@ -101,6 +102,7 @@ export const GroupInfo = ({ route, navigation }) => {
 
   async function renameGroup() {
     groupsLocalAccess.renameGroup(groupObject.name, newName);
+    groupObject.name = newName;
     NativeAppEventEmitter.emit('reloadGroup');
     await rename({ variables: { groupName: groupObject.name, newName: newName }}).catch(e=>console.log(e));
   }
@@ -125,13 +127,32 @@ export const GroupInfo = ({ route, navigation }) => {
   }
 
   async function addUser(userID){
-    await add({variables:{user:userID, groupName: groupObject.name}}).then(()=>{
-      groupsLocalAccess.addUser(userID, groupObject.name);
-      setNewUser("");
-    }).catch((e)=>{
+    groupsLocalAccess.addUser(userID, groupObject.name);
+    setNewUser("");
+    // console.log(groupsLocalAccess);
+    // console.log(groupObject);
+    NativeAppEventEmitter.emit("reloadGroup");
+    await add({variables:{user:userID, groupName: groupObject.name}})
+    // .then(()=>{
+    //   setReload(!reload);
+    // })
+    .catch((e)=>{
       console.log(e);
-      setNewUser("");
     });
+  }
+
+  function MemberList () {
+    return (
+      <ScrollView style={styles.groupMembersBox}>
+          {groupObject.users.map((item, key) => (
+            <MemberTile
+              key={key}
+              name={item}
+              showCheck={selectMode}
+            />
+          ))}
+        </ScrollView>
+    );
   }
 
   function AdminGroupButtons(){
@@ -291,15 +312,7 @@ export const GroupInfo = ({ route, navigation }) => {
             {
               //We can use map to generate the list of member tiles based on the users array in the group
             }
-        <ScrollView style={styles.groupMembersBox}>
-          {groupObject.users.map((item, key) => (
-            <MemberTile
-              key={key}
-              name={item}
-              showCheck={selectMode}
-            />
-          ))}
-        </ScrollView>
+        <MemberList/>
       </View>
 
       <View style={[styles.groupPageFooter, {backgroundColor: colourState.low}, {borderColor: colourState.mode}, {shadowColor: colourState.mode}]}>
@@ -390,7 +403,7 @@ export const GroupInfo = ({ route, navigation }) => {
         <View style={[styles.actionModalInner, {backgroundColor: colourState.bottom}, {borderColor: colourState.low}]}>
           <TextInput
             style={[styles.actionModalLargeTextInput, {backgroundColor: colourState.mode}, {color: colourState.top}]}
-            defaultValue={groupObject.name}
+            defaultValue={groupObject.description}
             onChangeText={(text) => {
               setNewDesc(text);
             }}
@@ -402,7 +415,7 @@ export const GroupInfo = ({ route, navigation }) => {
               console.log('Change the description to ' + newDesc);
               updateDescription();
               setEditDescriptionVisible(false);
-              NativeAppEventEmitter.emit('reloadGroup');
+              //NativeAppEventEmitter.emit('reloadGroup');
             }}
           >
             <View style={styles.actionModalButtonContent}>
@@ -571,8 +584,9 @@ export const GroupInfo = ({ route, navigation }) => {
             style={[styles.actionButton, { backgroundColor: colourState.accent }, {shadowColor: colourState.mode}]}
             state={null}
             onPress={() => {
-              setLoad(true);
-              addUser(newUser).then(()=>{setLoad(false)});
+              ///setLoad(true);
+              addUser(newUser)
+              //.then(()=>{setLoad(false)});
               setInviteVisible(false);
             }}
           >

@@ -4,7 +4,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  DeviceEventEmitter,
+  NativeAppEventEmitter,
 } from 'react-native';
 // import Icon from 'react-native-vector-icons/FontAwesome';
 // import BouncyCheckbox from 'react-native-bouncy-checkbox';
@@ -38,7 +38,7 @@ const GroupTile = ({
       style={[styles.groupTile, {borderColor: colourState.low}, {shadowColor: colourState.low}]}
       onPress={() =>{
         if (add){
-          DeviceEventEmitter.emit("AddPdf",name);
+          NativeAppEventEmitter.emit("AddPdf",name);
         } else {
           nav.navigate('ViewAll', { groupObject: buildGroup() })
         }
