@@ -179,6 +179,7 @@ const styles = StyleSheet.create({
       width: 0,
       height: 1,
     },
+    overflow: 'hidden',
   },
   searchInput: {
     borderRadius: 8,

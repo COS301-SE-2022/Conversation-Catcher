@@ -800,6 +800,7 @@ const styles = StyleSheet.create({
       height: 1,
     },
     alignSelf: 'center',
+    overflow: 'hidden',
   },
   searchInput: {
     borderRadius: 8,

@@ -522,7 +522,7 @@ const styles = StyleSheet.create({
       width: 0,
       height: 1,
     },
-    //overflow: 'hidden',
+    overflow: 'hidden',
   },
   searchInput: {
     borderRadius: 8,
@@ -541,7 +541,6 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     paddingHorizontal: 10,
     paddingVertical: 5,
-    
   },
   recentPdfTiles: {
     height: '70%',
