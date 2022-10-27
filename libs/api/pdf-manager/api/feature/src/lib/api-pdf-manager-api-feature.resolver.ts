@@ -30,7 +30,7 @@ export class ApiPdfManagerApiFeatureResolver {
     const pdfObj = new PdfEntity();
     pdfObj.id = result._id;
     pdfObj.name = result.name;
-    pdfObj.creationDate = date.toUTCString();
+    pdfObj.creationDate = date.getHours() + ":" + date.getMinutes() + " " + date.toLocaleDateString();
     if (result.downloaded != null) pdfObj.downloaded = result.downloaded;
     else pdfObj.downloaded = false;
     pdfObj.text = result.text;
