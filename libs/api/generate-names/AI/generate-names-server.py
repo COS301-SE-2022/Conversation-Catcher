@@ -20,7 +20,7 @@ def test():
 def gennames():
     input_text = request.get_json()['text']
     generated_name = generator.generateName(input_text)
-    generated_name_object = { "generated_name": generated_name }
+    generated_name_object = { "generated_name": generated_name.capitalize() }
     return jsonify(generated_name_object)
 
 if __name__ == "__main__":

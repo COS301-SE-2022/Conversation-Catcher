@@ -1,5 +1,3 @@
-from pyexpat import model
-from attention import AttentionLayer
 import numpy as np
 import pandas as pd
 import re
@@ -7,7 +5,7 @@ from bs4 import BeautifulSoup
 from keras.preprocessing.text import Tokenizer
 from keras_preprocessing.sequence import pad_sequences
 import nltk
-nltk.download('stopwords')
+#nltk.download('stopwords')
 
 # from keras.utils.data_utils import pad_sequences
 from nltk.corpus import stopwords
