@@ -7,10 +7,13 @@ import groupLocalAccess from '../local-groups-access/local-groups-access';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { selectEmail} from '../../../../../../../apps/client/src/app/slices/user.slice';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { selectColour } from '../../../../../../../apps/client/src/app/slices/user.slice';
 
 export function GroupDisplay({ navigation, selectMode, add}, ref) {
   // const [selectMode, setSelectMode] = useState(false);
+  const colourState = useSelector(selectColour);
   const [didReload, setDidReload] = useState(true);
   // const [isLoaded, setIsLoaded] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
@@ -132,7 +135,7 @@ export function GroupDisplay({ navigation, selectMode, add}, ref) {
           }
         >
           <Loading width={100} height={100} load={props.load} text={"Fetching your groups"}/>
-          <Text style={{ textAlign: 'center' }}>{props.text}</Text>
+          <Text style={[{ textAlign: 'center' }, {color: colourState.top}]}>{props.text}</Text>
         </ScrollView>
       );
   };

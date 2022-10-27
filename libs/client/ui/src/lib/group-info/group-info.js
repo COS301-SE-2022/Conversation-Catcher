@@ -274,7 +274,7 @@ export const GroupInfo = ({ route, navigation }) => {
           <AdminMemberButtons/>
         </View>
 
-        <View style={[styles.searchBarGroup, {backgroundColor: colourState.mode}, {borderColor: colourState.low}, {shadowColor: colourState.mode}]}>
+        {/* <View style={[styles.searchBarGroup, {backgroundColor: colourState.mode}, {borderColor: colourState.low}, {shadowColor: colourState.mode}]}>
           <TextInput
             style={[styles.searchInput, {backgroundColor: colourState.mode}, {color: colourState.high}]}
             placeholder="Search"
@@ -287,7 +287,7 @@ export const GroupInfo = ({ route, navigation }) => {
           <View style={styles.searchIconFrame}>
             <Icon color={colourState.low} name="search" size={24} />
           </View>
-        </View>
+        </View> */}
             {
               //We can use map to generate the list of member tiles based on the users array in the group
             }
@@ -800,6 +800,7 @@ const styles = StyleSheet.create({
       height: 1,
     },
     alignSelf: 'center',
+    overflow: 'hidden',
   },
   searchInput: {
     borderRadius: 8,
