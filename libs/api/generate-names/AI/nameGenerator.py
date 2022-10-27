@@ -18,6 +18,8 @@ import datetime
 import os
 import pickle
 
+os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
+
 class nameGenerator:
     global contraction_mapping
     contraction_mapping = {"ain't": "is not", "aren't": "are not","can't": "cannot", "'cause": "because", "could've": "could have", "couldn't": "could not",
