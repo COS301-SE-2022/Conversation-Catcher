@@ -57,7 +57,7 @@ export const ColourPage = ({ navigation}) => {
             accent: "#9DCEF6",
             mode:"#344554",
             bottom:"#8D99A3",
-            low:"#AAB5BE",
+            low:"#838e96",
             high:"#E6ECF0",
             top:"#FFFFFF",
           };
@@ -80,7 +80,7 @@ export const ColourPage = ({ navigation}) => {
             accent: "#E5C9F7",
             mode:"#4E3B51",
             bottom:"#826685",
-            low:"#C1B5C1",
+            low:"#938396",
             high:"#EEE9EF",
             top:"#FFFFFF",
           };
@@ -103,7 +103,7 @@ export const ColourPage = ({ navigation}) => {
             accent: "#ECBDC8",
             mode:"#513B40",
             bottom:"#85666C",
-            low:"#B29DA1",
+            low:"#91797d",
             high:"#EFE9EA",
             top:"#FFFFFF",
           };
@@ -126,7 +126,7 @@ export const ColourPage = ({ navigation}) => {
             accent: "#B5DDAF",
             mode:"#2D4731",
             bottom:"#4A6749",
-            low:"#97AD99",
+            low:"#67856a",
             high:"#E9EFE9",
             top:"#FFFFFF",
           };
@@ -149,7 +149,7 @@ export const ColourPage = ({ navigation}) => {
             accent: "#F4B688",
             mode:"#51433B",
             bottom:"#857166",
-            low:"#BFA798",
+            low:"#a18c7f",
             high:"#F5EEE8",
             top:"#FFFFFF",
           };

@@ -25,9 +25,12 @@ import {
   refillPDFs,
 } from '../../../../../../../apps/client/src/app/slices/pdf.slice';
 import { useSelector, useDispatch } from 'react-redux';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { selectColour } from '../../../../../../../apps/client/src/app/slices/user.slice';
 
 export function PdfDisplay({ navigation, selectMode, group}, ref) {
   // const [selectMode, setSelectMode] = useState(false);
+  const colourState = useSelector(selectColour);
   const [didReload, setDidReload] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const emailState = useSelector(selectEmail);
@@ -167,7 +170,7 @@ export function PdfDisplay({ navigation, selectMode, group}, ref) {
             load={props.load}
             text={'Fetching your pdfs'}
           />
-          <Text style={{ textAlign: 'center' }}>{props.text}</Text>
+          <Text style={[{ textAlign: 'center' }, {color: colourState.top}]}>{props.text}</Text>
         </ScrollView>
       );
   };
