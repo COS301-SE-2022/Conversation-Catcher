@@ -14,6 +14,10 @@ class LocalPdfsAccess {
     return this.allPdfs[0] !== undefined && this.allPdfs[0].name !== 'error'
   }
 
+  clearDisplay(){
+    this.displayPdfs.length = 0;
+  }
+
   //Add shallow copy of an array of pdfs into both arrays
   addPdfs(newPdfs) {
     for (let i = 0; i < newPdfs.length; i++) {
@@ -26,6 +30,10 @@ class LocalPdfsAccess {
   addPdf(newPdf) {
     this.displayPdfs.push(newPdf);
     this.allPdfs.push(newPdf);
+  }
+
+  addDisplayPdf(newPdf){
+    this.displayPdfs.push(newPdf);
   }
 
   //Return pdfs to be displayed by the component

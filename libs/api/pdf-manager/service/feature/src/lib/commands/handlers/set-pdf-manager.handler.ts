@@ -112,10 +112,10 @@ export class SetEmbeddingsHandler
       name: name,
       text: text,
     });
-
+    
     try {
       const embeddings = await lastValueFrom(
-        this.httpService.post('https://ccidea.azurewebsites.net/embed', data, config)
+        this.httpService.post(process.env.IDEA_URL + '/embed', data, config)
       );
       // console.log(embeddings)
       const res = await this.repository.updateEmbeddings(id, embeddings.data.embeddings);

@@ -56,7 +56,7 @@ export class UserManagementServiceService {
   async setUser(
     oldEmail: string,
     email: string,
-    colour: string,
+    colour: any,
     pdfs: string[]
   ) {
     return await this.commandBus.execute(

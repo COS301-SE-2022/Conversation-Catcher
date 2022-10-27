@@ -20,6 +20,7 @@ import auth from '@react-native-firebase/auth';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { clearPDFs } from '../../../../../../apps/client/src/app/slices/pdf.slice';
 import pdfLocalAccess from '../shared-components/local-pdfs-access/local-pdfs-access';
+import groupLocalAccess from '../shared-components/local-groups-access/local-groups-access';
 
 export const SettingsPage = ({ navigation }) => {
   const [user, setUser] = useState({});
@@ -27,11 +28,11 @@ export const SettingsPage = ({ navigation }) => {
   const colourState = useSelector(selectColour);
 
   return (
-    <SafeAreaView style={styles.settings}>
+    <SafeAreaView style={[styles.settings, {backgroundColor: colourState.mode}]}>
       <View style={styles.big_title_box}>
-        <Text style={styles.big_title}>{'Settings'}</Text>
+        <Text style={[styles.big_title, {color: colourState.top}]}>{'Settings'}</Text>
       </View>
-      <View style={styles.settingsBody}>
+      <View style={[styles.settingsBody, {backgroundColor: colourState.bottom}]}>
         <TouchableOpacity
           style={styles.settingsButton}
           onPress={() => navigation.navigate('ChangeEmail')}
@@ -39,20 +40,20 @@ export const SettingsPage = ({ navigation }) => {
           <View style={styles.settingsButtonContent}>
             <View style={styles.iconContainer}>
               <Icon
-                style={[styles.settingsButtonIcon, { color: colourState }]}
+                style={[styles.settingsButtonIcon, { color: colourState.accent }]}
                 name="envelope"
                 size={18}
               />
             </View>
             <View style={styles.settingsButtonText_box}>
-              <Text style={styles.settingsButtonText} ellipsizeMode={'clip'}>
+              <Text style={[styles.settingsButtonText, {color: colourState.top}]} ellipsizeMode={'clip'}>
                 {'Change email'}
               </Text>
             </View>
           </View>
         </TouchableOpacity>
 
-        <View style={styles.settingsButtonDivider} />
+        <View style={[styles.settingsButtonDivider, {color: colourState.low}]} />
 
         <TouchableOpacity
           style={styles.settingsButton}
@@ -62,10 +63,10 @@ export const SettingsPage = ({ navigation }) => {
         >
           <View style={styles.settingsButtonContent}>
             <View style={styles.iconContainer}>
-              <Icon style={{ color: colourState }} name="lock" size={20} />
+              <Icon style={{ color: colourState.accent }} name="lock" size={20} />
             </View>
             <View style={styles.settingsButtonText_box}>
-              <Text style={styles.settingsButtonText}>{'Change password'}</Text>
+              <Text style={[styles.settingsButtonText, {color: colourState.top}]}>{'Change password'}</Text>
             </View>
           </View>
         </TouchableOpacity>
@@ -78,10 +79,10 @@ export const SettingsPage = ({ navigation }) => {
         >
           <View style={styles.settingsButtonContent}>
             <View style={styles.iconContainer}>
-              <Icon style={{ color: colourState }} name="sliders" size={20} />
+              <Icon style={{ color: colourState.accent }} name="sliders" size={20} />
             </View>
             <View style={styles.settingsButtonText_box}>
-              <Text style={styles.settingsButtonText}>{'Change colour'}</Text>
+              <Text style={[styles.settingsButtonText, {color: colourState.top}]}>{'Change colour'}</Text>
             </View>
           </View>
         </TouchableOpacity>
@@ -97,6 +98,7 @@ export const SettingsPage = ({ navigation }) => {
                 dispatch(clearUser());
                 dispatch(clearPDFs());
                 pdfLocalAccess.clearPdfs();
+                groupLocalAccess.clearGroups();
                 NativeAppEventEmitter.emit('logout');
                 navigation.navigate('Login');
               }).catch((e)=>{
@@ -106,6 +108,7 @@ export const SettingsPage = ({ navigation }) => {
                 dispatch(clearPDFs());
                 NativeAppEventEmitter.emit('logout');
                 pdfLocalAccess.clearPdfs();
+                groupLocalAccess.clearGroups();
                 navigation.navigate('Login');
               })
           }
@@ -113,13 +116,13 @@ export const SettingsPage = ({ navigation }) => {
           <View style={styles.settingsButtonContent}>
             <View style={styles.iconContainer}>
               <Icon
-                style={[styles.settingsButtonIcon, { color: colourState }]}
+                style={[styles.settingsButtonIcon, { color: colourState.accent }]}
                 name="sign-out"
                 size={20}
               />
             </View>
             <View style={styles.settingsButtonText_box}>
-              <Text style={styles.settingsButtonText}>{'Log out'}</Text>
+              <Text style={[styles.settingsButtonText, {color: colourState.top}]}>{'Log out'}</Text>
             </View>
           </View>
         </TouchableOpacity>
@@ -129,7 +132,7 @@ export const SettingsPage = ({ navigation }) => {
         style={styles.backButton}
         onPress={() => navigation.navigate('Home')}
       >
-        <Icon name="angle-left" color={colourState} size={28} />
+        <Icon name="angle-left" color={colourState.accent} size={28} />
       </TouchableOpacity>
     </SafeAreaView>
   );
@@ -143,7 +146,6 @@ SettingsPage.scrollHeight = 844;
 
 const styles = StyleSheet.create({
   settings: {
-    backgroundColor: '#ffffffff',
     overflow: 'hidden',
     flexShrink: 0,
     flexGrow: 1,
@@ -151,7 +153,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   big_title: {
-    color: '#344053ff',
     textAlign: 'center',
     letterSpacing: 0,
     lineHeight: 28,
@@ -172,7 +173,6 @@ const styles = StyleSheet.create({
   },
   settingsBody: {
     width: '85%',
-    backgroundColor: '#f5f5f5ff',
     borderRadius: 7,
     flexDirection: 'column',
   },
@@ -195,7 +195,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   settingsButtonText: {
-    color: '#344053ff',
     textAlign: 'center',
     letterSpacing: 0,
     lineHeight: 20,
@@ -208,7 +207,6 @@ const styles = StyleSheet.create({
     flexShrink: 1,
   },
   settingsButtonDivider: {
-    backgroundColor: '#d0d5ddff',
     height: 1,
     width: '87%',
     alignSelf: 'center',

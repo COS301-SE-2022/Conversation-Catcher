@@ -64,6 +64,8 @@
 		<string>Octicons.ttf</string>
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
+		<string>Thumbnail2.ttf</string>
+		<string>Thubnail.ttf</string>
 	</array>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>YOUR TEXT</string>

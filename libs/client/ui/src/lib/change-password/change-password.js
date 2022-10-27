@@ -72,8 +72,8 @@ export const ChangePassword = ({ navigation }) => {
   function MailHint() {
     if (showMailHint) {
       return (
-        <Text style={styles.hintText}>
-          {'This is an password hint text to help the user.'}
+        <Text style={[styles.hintText, {color: colourState.high}]}>
+          {'Enter a strong password.'}
         </Text>
       );
     } else {
@@ -84,7 +84,7 @@ export const ChangePassword = ({ navigation }) => {
   function SuccessMessage() {
     if (showSuccessMessage) {
       return (
-        <Text style={styles.hintText}>
+        <Text style={[styles.hintText, {color: colourState.high}]}>
           {'Password has been changed successfully.'}
         </Text>
       );
@@ -103,24 +103,25 @@ export const ChangePassword = ({ navigation }) => {
   }
 
   return (
-    <SafeAreaView style={styles.logInPage}>
+    <SafeAreaView style={[styles.logInPage, {backgroundColor: colourState.mode}]}>
       <View style={styles.big_title_box}>
-        <Text style={styles.big_title}>{'Change your password'}</Text>
+        <Text style={[styles.big_title, {color: colourState.top}]}>{'Change your password'}</Text>
       </View>
       <View style={styles.inputsGroup}>
         <ErrorMessage />
         <View style={styles.inputsItem}>
           <View style={styles.inputLabel_box}>
-            <Text style={styles.inputLabel}>{'New password'}</Text>
+            <Text style={[styles.inputLabel, {color: colourState.top}]}>{'New password'}</Text>
           </View>
-          <View style={styles.inputField}>
+          <View style={[styles.inputField, {backgroundColor: colourState.mode}, {borderColor: colourState.low}, {shadowColor: colourState.low}]}>
             <View style={styles.inputText_box}>
               <View style={styles.inputIcon}>
-                <Icon style={{ color: colourState }} name="lock" size={21} />
+                <Icon style={{ color: colourState.accent }} name="lock" size={21} />
               </View>
               <TextInput
-                style={styles.inputText}
+                style={[styles.inputText, {color: colourState.high}]}
                 placeholder="*****************"
+                placeholderTextColor={colourState.bottom}
                 underlineColorAndroid="transparent"
                 onChangeText={(text) => {
                   setPassword(text);
@@ -131,7 +132,7 @@ export const ChangePassword = ({ navigation }) => {
                 onPress={() => setShowMailHint(!showMailHint)}
               >
                 <Icon
-                  style={{ color: '#d0d5ddff' }}
+                  style={{ color: colourState.low }}
                   name="question-circle-o"
                   size={17}
                 />
@@ -144,16 +145,17 @@ export const ChangePassword = ({ navigation }) => {
         </View>
         <View style={styles.inputsItem}>
           <View style={styles.inputLabel_box}>
-            <Text style={styles.inputLabel}>{'Re-enter new password'}</Text>
+            <Text style={[styles.inputLabel, {color: colourState.top}]}>{'Re-enter new password'}</Text>
           </View>
-          <View style={styles.inputField}>
+          <View style={[styles.inputField, {backgroundColor: colourState.mode}, {borderColor: colourState.low}, {shadowColor: colourState.low}]}>
             <View style={styles.inputText_box}>
               <View style={styles.inputIcon}>
-                <Icon style={{ color: colourState }} name="lock" size={21} />
+                <Icon style={{ color: colourState.accent }} name="lock" size={21} />
               </View>
               <TextInput
-                style={styles.inputText}
+                style={[styles.inputText, {color: colourState.high}]}
                 placeholder="*****************"
+                placeholderTextColor={colourState.bottom}
                 underlineColorAndroid="transparent"
                 onChangeText={(text) => {
                   setCheckPassword(text);
@@ -164,16 +166,17 @@ export const ChangePassword = ({ navigation }) => {
         </View>
         <View style={styles.inputsItem}>
           <View style={styles.inputLabel_box}>
-            <Text style={styles.inputLabel}>{'Current password'}</Text>
+            <Text style={[styles.inputLabel, {color: colourState.top}]}>{'Current password'}</Text>
           </View>
-          <View style={styles.inputField}>
+          <View style={[styles.inputField, {backgroundColor: colourState.mode}, {borderColor: colourState.low}, {shadowColor: colourState.low}]}>
             <View style={styles.inputText_box}>
               <View style={styles.inputIcon}>
-                <Icon style={{ color: colourState }} name="lock" size={21} />
+                <Icon style={{ color: colourState.accent }} name="lock" size={21} />
               </View>
               <TextInput
-                style={styles.inputText}
+                style={[styles.inputText, {color: colourState.high}]}
                 placeholder="*****************"
+                placeholderTextColor={colourState.bottom}
                 underlineColorAndroid="transparent"
                 onChangeText={(text) => {
                   setOldPassword(text);
@@ -186,13 +189,13 @@ export const ChangePassword = ({ navigation }) => {
       <TouchableOpacity
         style={[
           styles.logInButton,
-          { backgroundColor: colourState },
-          { borderColor: colourState },
+          { backgroundColor: colourState.accent },
+          { borderColor: colourState.accent },
         ]}
         onPress={() => changePassword()}
       >
         <View style={styles.logInButtonLabel_box}>
-          <Text style={styles.logInButtonLabel}>{'Change password'}</Text>
+          <Text style={[styles.logInButtonLabel, {color: colourState.mode}]}>{'Change password'}</Text>
         </View>
       </TouchableOpacity>
       <SuccessMessage />
@@ -200,7 +203,7 @@ export const ChangePassword = ({ navigation }) => {
         style={styles.backButton}
         onPress={() => navigation.goBack()}
       >
-        <Icon name="angle-left" color={colourState} size={28} />
+        <Icon name="angle-left" color={colourState.accent} size={28} />
       </TouchableOpacity>
     </SafeAreaView>
   );
@@ -214,14 +217,12 @@ ChangePassword.fitScreen = false;
 
 const styles = StyleSheet.create({
   logInPage: {
-    backgroundColor: '#ffffffff',
     overflow: 'hidden',
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
   },
   big_title: {
-    color: '#344053ff',
     textAlign: 'center',
     letterSpacing: 0,
     lineHeight: 28,
@@ -248,7 +249,6 @@ const styles = StyleSheet.create({
     padding: 7,
   },
   inputLabel: {
-    color: '#344053ff',
     textAlign: 'left',
     letterSpacing: 0,
     lineHeight: 20,
@@ -267,14 +267,11 @@ const styles = StyleSheet.create({
   },
   inputField: {
     //flexGrow: 1,
-    backgroundColor: '#ffffffff',
     borderRadius: 8,
     overflow: 'hidden',
     borderStyle: 'solid',
-    borderColor: '#d0d5ddff',
     borderWidth: 1,
     elevation: 2,
-    shadowColor: '#000000',
     shadowRadius: 2.621621621621622,
     shadowOpacity: 0.2173913043478261,
     shadowOffset: {
@@ -294,7 +291,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   inputText: {
-    color: '#344053ff',
     textAlign: 'left',
     letterSpacing: 0,
     lineHeight: 20,
@@ -324,7 +320,6 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   hintText: {
-    color: '#667084ff',
     textAlign: 'left',
     letterSpacing: 0,
     lineHeight: 20,
@@ -359,7 +354,6 @@ const styles = StyleSheet.create({
     },
   },
   logInButtonLabel: {
-    color: '#ffffffff',
     textAlign: 'left',
     letterSpacing: 0,
     lineHeight: 24,

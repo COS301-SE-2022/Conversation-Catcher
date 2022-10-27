@@ -55,7 +55,14 @@ export class MongoDBAccess {
       document: {
         email: email,
         pdfs: [],
-        colour: '#3f89beff',
+        colour: {
+          accent: '#3F89BE',
+          mode: '#FFFFFF',
+          bottom: '#E6ECF0',
+          low: '#B6BFC6',
+          high: '#667685',
+          top: '#344554',
+        },
       },
     });
 

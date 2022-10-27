@@ -17,10 +17,11 @@ export class ApiGenerateNamesServiceService {
       text: text,
     });
 
+    console.log('namegen', process.env.NAMEGEN_URL);
     try {
       return await lastValueFrom(
         this.httpService
-          .post('http://192.168.0.129:5550/gennames', data, config)
+          .post(process.env.NAMEGEN_URL, data, config)
           .pipe(map((res) => res.data.generated_name))
       ).catch((e) => {
         // console.log(e);

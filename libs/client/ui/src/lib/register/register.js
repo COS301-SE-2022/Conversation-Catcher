@@ -28,14 +28,21 @@ export const Register = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('Invalid login details');
-  const [loadingIcon,setLoad] = useState(false);
+  const [loadingIcon, setLoad] = useState(false);
 
   //graphql query tree
   const ADDUSER = gql`
     mutation addUser($email: String!) {
       addUser(email: $email) {
         email
-        colour
+        colour {
+          accent
+          mode
+          bottom
+          low
+          high
+          top
+        }
         pdfs
       }
     }
@@ -47,7 +54,7 @@ export const Register = ({ navigation }) => {
     if (showMailHint) {
       return (
         <Text style={styles.hintText}>
-          {'This is an email hint text to help the user.'}
+          {'Please enter a valid email address'}
         </Text>
       );
     } else {
@@ -57,11 +64,7 @@ export const Register = ({ navigation }) => {
 
   function PasswordHint() {
     if (showPasswordHint) {
-      return (
-        <Text style={styles.hintText}>
-          {'This is a password hint text to help the user.'}
-        </Text>
-      );
+      return <Text style={styles.hintText}>{'Enter a strong password.'}</Text>;
     } else {
       return null;
     }
@@ -76,21 +79,17 @@ export const Register = ({ navigation }) => {
     );
   }
 
-  function ShowLoading(){
-    if (!loadingIcon) return null;
-    return (
-      <View>
-        <Loading width={50} height={50}/>
-      </View>
-    );
-  }
-  
   return (
     <SafeAreaView style={styles.registerPage}>
       <View style={styles.big_title_box}>
         <Text style={styles.big_title}>{'Create new account'}</Text>
       </View>
-      <ShowLoading/>
+      <Loading
+        width={100}
+        height={100}
+        load={loadingIcon}
+        text={'Creating your account'}
+      />
       <View style={styles.inputsGroup}>
         <InvalidDetails />
         <View style={styles.inputsItem}>
@@ -101,7 +100,7 @@ export const Register = ({ navigation }) => {
             <View style={styles.inputText_box}>
               <View style={styles.inputIcon}>
                 <Icon
-                  style={{ color: colourState }}
+                  style={{ color: '#3F89BE' }}
                   name="envelope"
                   size={15}
                 />
@@ -137,7 +136,11 @@ export const Register = ({ navigation }) => {
           <View style={styles.inputField}>
             <View style={styles.inputText_box}>
               <View style={styles.inputIcon}>
-                <Icon style={{ color: colourState }} name="lock" size={21} />
+                <Icon
+                  style={{ color: '#3F89BE' }}
+                  name="lock"
+                  size={21}
+                />
               </View>
               <TextInput
                 style={styles.inputText}
@@ -146,6 +149,7 @@ export const Register = ({ navigation }) => {
                 onChangeText={(text) => {
                   setPassword(text);
                 }}
+                secureTextEntry={true}
               />
               <TouchableOpacity
                 style={styles.helpIcon}
@@ -169,8 +173,8 @@ export const Register = ({ navigation }) => {
       <TouchableOpacity
         style={[
           styles.registerButton,
-          { backgroundColor: colourState },
-          { borderColor: colourState },
+          { backgroundColor: '#3F89BE' },
+          { borderColor: '#3F89BE' },
         ]}
         onPress={() => {
           if (email === '') {
@@ -371,7 +375,9 @@ const styles = StyleSheet.create({
   registerButton: {
     width: '80%',
     height: '10%',
-    margin: 20,
+    marginTop: 10,
+    marginHorizontal: 20,
+    marginBottom: 20,
     backgroundColor: '#3f89beff',
     borderRadius: 8,
     borderStyle: 'solid',

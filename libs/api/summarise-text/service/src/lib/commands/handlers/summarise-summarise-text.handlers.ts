@@ -19,13 +19,12 @@ export class SummariesHandler implements ICommandHandler<SummariseCommand> {
 
     const data = JSON.stringify({
       text: text,
-      id: id,
     });
-
+    console.log('Summariser', process.env.SUMMARISER_URL)
     try {
       return await lastValueFrom(
         this.httpService
-          .post('https://ccsummariser.azurewebsites.net/summarise', data, config)
+          .post(process.env.SUMMARISER_URL, data, config)
           .pipe(map((res) => res.data))
       );
     } catch (error) {

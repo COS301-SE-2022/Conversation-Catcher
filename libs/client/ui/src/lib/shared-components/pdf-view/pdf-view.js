@@ -37,6 +37,7 @@ export const PdfView = ({ route, navigation }) => {
   const [renameVisible, setRenameVisible] = useState(false);
   const [deleteConfirmVisible, setDeleteConfirmVisible] = useState(false);
   const [newName, setNewName] = useState('');
+  const [notifyUser, setNotifyUser] = useState(false);
 
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => {
@@ -141,7 +142,7 @@ export const PdfView = ({ route, navigation }) => {
           <TouchableOpacity
             style={[
               styles.retrySummaryContainer,
-              { backgroundColor: colourState },
+              { backgroundColor: colourState.accent },
             ]}
             onPress={() => {
               console.log('Retry');
@@ -176,8 +177,8 @@ export const PdfView = ({ route, navigation }) => {
           </View>
           <View style={styles.summarisedSwitchBox}>
             <Switch
-              trackColor={{ false: '#ffffff', true: colourState }}
-              thumbColor={isEnabled ? '#ffffff' : colourState}
+              trackColor={{ false: '#ffffff', true: colourState.accent }}
+              thumbColor={isEnabled ? '#ffffff' : colourState.accent}
               ios_backgroundColor="#3e3e3e"
               onValueChange={toggleSwitch}
               value={isEnabled}
@@ -204,7 +205,7 @@ export const PdfView = ({ route, navigation }) => {
             style={styles.moreButton}
             onPress={() => {
               setMoreVisible(true);
-              console.log(text);
+              //console.log(text);
             }}
           >
             <Icon name="ellipsis-h" color="#344053ff" size={30} />
@@ -231,7 +232,7 @@ export const PdfView = ({ route, navigation }) => {
             <View style={styles.moreModalButtonContent}>
               <View style={styles.iconContainer}>
                 <Icon
-                  style={{ color: colourState }}
+                  style={{ color: colourState.accent }}
                   name="file-text-o"
                   size={18}
                 />
@@ -249,12 +250,13 @@ export const PdfView = ({ route, navigation }) => {
             onPress={() => {
               setMoreVisible(false);
               onPdfShare();
+              setNotifyUser(true);
             }}
           >
             <View style={styles.moreModalButtonContent}>
               <View style={styles.iconContainer}>
                 <Icon
-                  style={{ color: colourState }}
+                  style={{ color: colourState.accent }}
                   name="file-pdf-o"
                   size={18}
                 />
@@ -279,7 +281,7 @@ export const PdfView = ({ route, navigation }) => {
             <View style={styles.moreModalButtonContent}>
               <View style={styles.iconContainer}>
                 <Icon
-                  style={{ color: colourState }}
+                  style={{ color: colourState.accent }}
                   name="paper-plane-o"
                   size={18}
                 />
@@ -304,7 +306,7 @@ export const PdfView = ({ route, navigation }) => {
             <View style={styles.moreModalButtonContent}>
               <View style={styles.iconContainer}>
                 <Icon
-                  style={{ color: colourState }}
+                  style={{ color: colourState.accent }}
                   name="pencil-square-o"
                   size={20}
                 />
@@ -326,7 +328,7 @@ export const PdfView = ({ route, navigation }) => {
           >
             <View style={styles.moreModalButtonContent}>
               <View style={styles.iconContainer}>
-                <Icon style={{ color: colourState }} name="trash-o" size={20} />
+                <Icon style={{ color: colourState.accent }} name="trash-o" size={20} />
               </View>
               <View style={styles.moreModalButtonText_box}>
                 <Text style={styles.moreModalButtonText}>{'Delete'}</Text>
@@ -352,7 +354,7 @@ export const PdfView = ({ route, navigation }) => {
             }}
           />
           <TouchableOpacity
-            style={[styles.renameFileButton, { backgroundColor: colourState }]}
+            style={[styles.renameFileButton, { backgroundColor: colourState.accent }]}
             state={null}
             onPress={() => {
               console.log('renaming the pdf to ' + newName);
@@ -381,7 +383,7 @@ export const PdfView = ({ route, navigation }) => {
             {'Are you sure you want to delete ' + name.name + '?'}
           </Text>
           <TouchableOpacity
-            style={[styles.renameFileButton, { backgroundColor: colourState }]}
+            style={[styles.renameFileButton, { backgroundColor: colourState.accent }]}
             state={null}
             onPress={() => {
               setDeleteConfirmVisible(false);
@@ -394,7 +396,7 @@ export const PdfView = ({ route, navigation }) => {
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.renameFileButton, { backgroundColor: colourState }]}
+            style={[styles.renameFileButton, { backgroundColor: colourState.accent }]}
             state={null}
             onPress={() => {
               // Delete the pdf
@@ -410,6 +412,22 @@ export const PdfView = ({ route, navigation }) => {
               </View>
             </View>
           </TouchableOpacity>
+        </View>
+      </Modal>
+      <Modal
+        style={styles.modalNotify}
+        isVisible={notifyUser}
+        hasBackdrop={true}
+        backdropColor=""
+        onBackdropPress={() => {
+          setNotifyUser(false);
+        }}
+      >
+        <View style={styles.modalNotifyInner}>
+          <Text style={styles.modalTitle}>
+            {'The PDF has been downloaded to your documents folder'}
+          </Text>
+          {/* <Text style={styles.modalTitle}>{'Your document will be ready in 2 minutes'}</Text> */}
         </View>
       </Modal>
     </SafeAreaView>
@@ -493,6 +511,7 @@ const styles = StyleSheet.create({
     padding: 15,
     flexGrow: 1,
     minHeight: 28,
+    width: "60%",
   },
   summarisedSwitchGroup: {
     flexDirection: 'row',
@@ -501,6 +520,7 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     alignItems: 'center',
     justifyContent: 'flex-end',
+    width: "40%",
   },
   summarisedLabel: {
     color: '#344053ff',
@@ -735,5 +755,20 @@ const styles = StyleSheet.create({
     fontStyle: 'normal',
     fontFamily: 'System' /* Inter */,
     padding: 15,
+  },
+  modalNotify: {
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  modalNotifyInner: {
+    width: '100%',
+    flexShrink: 1,
+    backgroundColor: '#d0d5ddff',
+    borderRadius: 7,
+    flexDirection: 'column',
+    borderWidth: 1,
+    borderColor: '#667084ff',
+    opacity: 1,
+    //alignSelf: 'flex-end',
   },
 });

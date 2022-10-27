@@ -80,9 +80,16 @@ export class addUserToHandler implements ICommandHandler<addUserToCommand> {
   //User will be added to the specified group and the group will be added to an array of groups in the user
   //Remove the invite/request from user/group
   async execute({ groupName, user }: addUserToCommand) {
+    const errGroup = {
+      admin: '',
+      name: 'Error: User does not exist',
+      pdfs: [],
+      requests: [],
+      users: [],
+    } as Group;
     const groups = await this.repository.getGroups(); //Fetch all groups
     const usr = await this.repository.getUser(user);
-    if (groups[groupName] === undefined || usr === null) return null;
+    if (groups[groupName] === undefined || usr === null) return errGroup;
 
     // let validated = false;
     //Case 1: By request : User email is request on group
@@ -98,13 +105,6 @@ export class addUserToHandler implements ICommandHandler<addUserToCommand> {
     //     validated = true;
     //   }
     // });
-    const errGroup = {
-      admin: '',
-      name: 'Error: User to be added did not have an invite or request',
-      pdfs: [],
-      requests: [],
-      users: [],
-    } as Group;
     // if (!validated) return errGroup; //If the user did not have a join request or an invite don't add them to the group
 
     //set the user and the group
@@ -167,6 +167,7 @@ export class createGroupHandler implements ICommandHandler<createGroupCommand> {
       users: [admin],
       pdfs: [],
       requests: [],
+      description:"Click to edit description...",
     };
     if (user.groups === undefined) user.groups = [];
     user.groups.push(groupName);
