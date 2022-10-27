@@ -126,7 +126,7 @@ export const Groups = ({ navigation }) => {
       <GroupDisplay
         navigation={navigation}
         selectMode={selectMode}
-        ref={groupRef}
+        //ref={groupRef}
         add={false}
       />
       {
