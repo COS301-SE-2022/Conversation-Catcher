@@ -96,10 +96,7 @@ export const PdfView = ({ route, navigation }) => {
   `;
   const DELETE_FROM = gql`
     mutation removeFrom($id: String!, $group:String!){
-      removePdfFrom(pdfId: $id, groupName: $group) {
-        pdfId
-        groupName
-      }
+      removePdfFrom(pdfId: $id, groupName: $group)
     }
   `;
 
@@ -127,9 +124,11 @@ export const PdfView = ({ route, navigation }) => {
       dispatch(removePDF({ id: id.id }));
     } else {
       pdfLocalAccess.removeFromDisplay(id.id);
-      groupLocalAccess.removePdf(id.id,group.name);
-      removeFrom({variables: {pdfId:id.id, groupName:group.name}}).catch((error)=>{
-        console.log(error);
+      groupLocalAccess.removePdf(id.id,group.group.name);
+      console.log(id.id);
+      console.log(group);
+      removeFrom({variables: {id:id.id, group:group.group.name}}).catch((error)=>{
+        console.log("removeFrom:",error);
       });
     }
   }
