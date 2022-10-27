@@ -263,12 +263,15 @@ export const ViewAll = ({ navigation, route }) => {
       />
 
       <View style={[styles.viewAllBottomBar, {backgroundColor: colourState.low}, {borderColor: colourState.low}, {shadowColor: colourState.high}]}>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={styles.moreButton}
           onPress={() => setMoreVisible(true)}
         >
           <Icon name="ellipsis-h" color={colourState.top} size={30} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
+
+        {/* if uncommenting above, comment the line below*/}
+        <View style={styles.moreButton}/>  
 
         <TouchableOpacity
           style={styles.backButton}
