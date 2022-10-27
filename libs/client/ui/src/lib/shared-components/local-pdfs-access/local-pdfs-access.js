@@ -135,6 +135,16 @@ class LocalPdfsAccess {
     this.clearPdfs();
     this.addPdfs(temp);
   }
+  removeFromDisplay(id){
+    var temp = [];
+    this.displayPdfs.forEach((element)=>{
+      if (element.id !== id) temp.push(element); 
+    })
+    this.clearDisplay();
+    temp.forEach((element)=>{
+      this.addDisplayPdf(element);
+    })
+  }
 }
 
 const pdfLocalAccess = new LocalPdfsAccess();

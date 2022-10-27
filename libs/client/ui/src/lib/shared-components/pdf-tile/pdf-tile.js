@@ -29,6 +29,7 @@ const PdfTile = ({
   showCheck,
   summarised,
   nav,
+  group,
 }) => {
   const dispatch = useDispatch();
   const colourState = useSelector(selectColour);
@@ -134,7 +135,7 @@ const PdfTile = ({
     <TouchableOpacity
       style={[styles.pdfTile, {borderColor: colourState.low}, {shadowColor: colourState.low}]}
       onPress={() =>{
-        nav.navigate('PdfView', { id: { id }, text: { text }, name: { name }, summarised: { summarised } })
+        nav.navigate('PdfView', { id: { id }, text: { text }, name: { name }, summarised: { summarised }, group:{group}})
       }}
     >
       <View style={[styles.thumbnail_containter, { borderColor: colourState.accent }]}>

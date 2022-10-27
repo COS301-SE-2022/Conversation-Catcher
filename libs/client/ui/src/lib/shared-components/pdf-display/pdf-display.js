@@ -147,6 +147,7 @@ export function PdfDisplay({ navigation, selectMode, group}, ref) {
               showCheck={selectMode}
               summarised={item.summarised}
               nav={navigation}
+              group={group}
               //refresh={setDidReload}
             />
           ))}
