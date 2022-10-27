@@ -156,6 +156,7 @@ export const Groups = ({ navigation }) => {
         >
           <Icon name="angle-left" color={colourState.top} size={30} />
         </TouchableOpacity>
+        <View style={styles.bottomBarRightSpacing}/>
       </View>
 
       <Modal
@@ -319,10 +320,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   moreButton: {
-    flexShrink: 1,
-    width: '40%',
+    flexGrow: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  bottomBarRightSpacing: {
+    flexGrow: 1,
   },
   orderByGroup: {
     flexShrink: 1,
