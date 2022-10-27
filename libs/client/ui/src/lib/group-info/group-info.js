@@ -128,11 +128,17 @@ export const GroupInfo = ({ route, navigation }) => {
   }
   function removeUsers(){
     groupsLocalAccess.clearDeleteList(groupObject.name).forEach(element => {
+      var temp = [];
+      for (let i = 0;i < groupObject.users.length;i++){
+        if (groupObject.users[i] !== element) temp.push(groupObject.users[i]);
+      }
+      groupObject.users = temp;
       removeUser(element);
     });
     
   }
   async function addUser(userID){
+    groupObject.users.push(userID);
     groupsLocalAccess.addUser(userID, groupObject.name);
     setNewUser("");
     // console.log(groupsLocalAccess);
