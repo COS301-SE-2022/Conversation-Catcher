@@ -112,7 +112,8 @@ export const Groups = ({ navigation }) => {
             placeholderTextColor={colourState.low}
             onChangeText={(text) => {
               groupLocalAccess.filterGroups(text);
-              NativeAppEventEmitter.emit('reloadGroup');
+              // console.log("Search:",groupLocalAccess.getGroups());
+              NativeAppEventEmitter.emit('updateGroups');
             }}
           />
           <View style={styles.searchIconFrame}>
