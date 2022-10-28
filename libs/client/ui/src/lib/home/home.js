@@ -284,8 +284,7 @@ export const Home = ({ navigation }) => {
   const convertSpeech = () => {
     setNotifyUser(true);
     console.log('stt','add url')
-    fetch('https://immense-bastion-37906.herokuapp.com/stt', {
-
+    fetch(' https://immense-bastion-37906.herokuapp.com/stt', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -296,6 +295,7 @@ export const Home = ({ navigation }) => {
         audio_path: 'audio_path',
         audio_chunks: state.chunks,
         subscription: 'a43069cef2d04b189505fbd6664077ff',
+        //subscription: '10ea50633a724339a33810ab17329c37',
       }),
     })
       .then(async (res) => {
@@ -554,7 +554,7 @@ export const Home = ({ navigation }) => {
         style={styles.modal}
         isVisible={uploadVisible}
         hasBackdrop={true}
-        backdropColor="white"
+        backdropColor={colourState.mode}
         onBackdropPress={() => setUploadVisible(false)}
         onModalHide={() => setFileSelected(false)}
       >
@@ -582,7 +582,7 @@ export const Home = ({ navigation }) => {
         </View>
       </Modal>
       <Modal
-        style={styles.modalNotify}
+        style={[styles.modalNotify]}
         isVisible={notifyUser}
         hasBackdrop={true}
         backdropColor=""
@@ -591,7 +591,7 @@ export const Home = ({ navigation }) => {
         }}
       >
         <View style={styles.modalNotifyInner}>
-          <Text style={[styles.modalTitle, {backgroundColor: colourState.low}, {borderColor: colourState.high}]}>
+          <Text style={[styles.modalTitle, {color: colourState.top}, {backgroundColor: colourState.low}, {borderColor: colourState.high}]}>
             {'Document generation has started and will take about 2 minutes'}
           </Text>
           {/* <Text style={styles.modalTitle}>{'Your document will be ready in 2 minutes'}</Text> */}
