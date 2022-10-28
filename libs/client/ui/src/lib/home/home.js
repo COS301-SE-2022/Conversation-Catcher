@@ -276,7 +276,7 @@ export const Home = ({ navigation }) => {
   const convertSpeech = () => {
     setNotifyUser(true);
     console.log('stt','add url')
-    fetch('http://172.19.132.191:5050/stt', {
+    fetch('https://immense-bastion-37906.herokuapp.com/stt', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
