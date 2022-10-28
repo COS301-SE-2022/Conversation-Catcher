@@ -553,7 +553,7 @@ export const Home = ({ navigation }) => {
         style={styles.modal}
         isVisible={uploadVisible}
         hasBackdrop={true}
-        backdropColor="white"
+        backdropColor={colourState.mode}
         onBackdropPress={() => setUploadVisible(false)}
         onModalHide={() => setFileSelected(false)}
       >
@@ -581,7 +581,7 @@ export const Home = ({ navigation }) => {
         </View>
       </Modal>
       <Modal
-        style={styles.modalNotify}
+        style={[styles.modalNotify, {backgroundColor: colourState.low}, {borderColor: colourState.high}]}
         isVisible={notifyUser}
         hasBackdrop={true}
         backdropColor=""
@@ -590,7 +590,7 @@ export const Home = ({ navigation }) => {
         }}
       >
         <View style={styles.modalNotifyInner}>
-          <Text style={[styles.modalTitle, {backgroundColor: colourState.low}, {borderColor: colourState.high}]}>
+          <Text style={[styles.modalTitle, {color: colourState.top}]}>
             {'Document generation has started and will take about 2 minutes'}
           </Text>
           {/* <Text style={styles.modalTitle}>{'Your document will be ready in 2 minutes'}</Text> */}
