@@ -29,6 +29,7 @@ import {
 } from '../../../../../../../apps/client/src/app/slices/pdf.slice';
 //import Share from 'react-native-share';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
+import groupLocalAccess from '../local-groups-access/local-groups-access';
 
 export const PdfView = ({ route, navigation }) => {
   const colourState = useSelector(selectColour);
@@ -45,7 +46,7 @@ export const PdfView = ({ route, navigation }) => {
     //change
   };
 
-  const { text, name, id, summarised } = route.params;
+  const { text, name, id, summarised, group } = route.params;
 
   const onPdfShare = async () => {
     try {
@@ -93,9 +94,15 @@ export const PdfView = ({ route, navigation }) => {
       }
     }
   `;
+  const DELETE_FROM = gql`
+    mutation removeFrom($id: String!, $group:String!){
+      removePdfFrom(pdfId: $id, groupName: $group)
+    }
+  `;
 
   const [rename] = useMutation(RENAME);
   const [delete_pdf] = useMutation(DELETE);
+  const [removeFrom] = useMutation(DELETE_FROM);
   const [load, setLoad] = useState(true);
 
   async function renamePdf() {
@@ -109,11 +116,21 @@ export const PdfView = ({ route, navigation }) => {
   }
 
   async function deletePdf() {
-    pdfLocalAccess.deletePdf(id.id);
-    delete_pdf({ variables: { id: id.id } }).catch((error) => {
-      console.log(error);
-    });
-    dispatch(removePDF({ id: id.id }));
+    if (group === ""){
+      pdfLocalAccess.deletePdf(id.id);
+      delete_pdf({ variables: { id: id.id } }).catch((error) => {
+        console.log(error);
+      });
+      dispatch(removePDF({ id: id.id }));
+    } else {
+      pdfLocalAccess.removeFromDisplay(id.id);
+      groupLocalAccess.removePdf(id.id,group.group.name);
+      console.log(id.id);
+      console.log(group);
+      removeFrom({variables: {id:id.id, group:group.group.name}}).catch((error)=>{
+        console.log("removeFrom:",error);
+      });
+    }
   }
 
   const TextArea = () => {

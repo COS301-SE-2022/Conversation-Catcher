@@ -95,7 +95,7 @@ export const ViewAll = ({ navigation, route }) => {
       getPdfs({variables: {
         ids: groupObject.pdfs
       }}).then((result) => {
-        console.log(result.data)
+        console.log("getPdfs:",result.data)
         result.data.getPDFByArr.forEach((pdf) => {
           pdfLocalAccess.displayPdfs.push(pdf);
         });
