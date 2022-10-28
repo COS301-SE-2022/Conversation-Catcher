@@ -1,16 +1,14 @@
-from pyexpat import model
-from attention import AttentionLayer
 import numpy as np
 import pandas as pd
 import re
 from bs4 import BeautifulSoup
 from keras.preprocessing.text import Tokenizer
 from keras_preprocessing.sequence import pad_sequences
-import nltk
-nltk.download('stopwords')
+# import nltk
+# nltk.download('stopwords')
 
 # from keras.utils.data_utils import pad_sequences
-from nltk.corpus import stopwords
+stopwords = {'does', "it's", 'having', 've', "hadn't", "isn't", 'this', 'him', 'ours', "mustn't", 'are', 'if', 'we', 'myself', 'these', 'a', 'not', 'what', 'weren', 'down', 'have', "couldn't", 'after', 'again', 'most', 'at', 'such', 'by', 'just', 'd', 'i', "you'll", 'should', "haven't", 'as', 'do', 'from', 'other', 'than', 'which', 'were', 'mustn', 'yours', "aren't", 'now', 'didn', "won't", 'be', 'itself', 'in', 'all', 'once', 'few', 'through', 'its', "didn't", 'needn', 'being', 'them', "you'd", 'or', 'it', 'to', 'your', "shan't", 'too', 'our', 'ourselves', 'his', 'am', 'below', 'isn', 'ma', 'further', 'yourself', 'out', 'up', "don't", 'with', 'but', 'where', 'then', 'whom', 'each', 'hasn', 'very', 'more', 'he', 'won', 't', 'doing', 'until', 'doesn', 'herself', 'who', 'own', "wasn't", 'those', 'nor', "you're", 'shan', 'himself', 'll', 'that', 'both', 'shouldn', "you've", 'over', 'an', 'when', 'because', 'ain', 'had', 'haven', 'themselves', 'same', 'under', 'no', "mightn't", 'couldn', 'you', 'while', 'and', 'during', 'yourselves', 'my', "shouldn't", "wouldn't", 'off', 'she', 'me', 'wasn', 'above', 'y', 'will', 'been', 'mightn', 'was', 'before', "needn't", 'so', 'on', 's', 'some', 'their', 'can', 'how', 'is', 'hadn', 'wouldn', 'here', 'why', 'her', 'only', 'the', 'o', "should've", 'hers', "doesn't", 'don', 'against', "weren't", 'about', 'm', "she's", 'of', 'into', 're', 'they', "that'll", 'aren', "hasn't", 'theirs', 'between', 'there', 'did', 'has', 'for', 'any'}
 import ast
 from keras.preprocessing.text import Tokenizer
 
@@ -19,6 +17,8 @@ import warnings
 import datetime
 import os
 import pickle
+
+os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 
 class nameGenerator:
     global contraction_mapping
@@ -46,7 +46,7 @@ class nameGenerator:
                             "you'd": "you would", "you'd've": "you would have", "you'll": "you will", "you'll've": "you will have",
                             "you're": "you are", "you've": "you have"}
     global stop_words
-    stop_words = set(stopwords.words('english'))
+    stop_words = set(stopwords)
 
     global model
     model = None

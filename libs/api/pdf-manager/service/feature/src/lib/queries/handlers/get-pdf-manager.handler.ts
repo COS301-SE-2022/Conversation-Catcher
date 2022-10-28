@@ -57,6 +57,7 @@ export class SemanticSearchHandler
     const data = JSON.stringify({
       query: query,
       docs: docs,
+      key: process.env.IDEA_KEY,
     });
 
     try {

@@ -22,12 +22,13 @@ def test():
 @app.route('/summarise', methods=['POST'])
 def summarise():
     input_text = request.get_json()['text']
+    key = request.get_json()['key']
     # pdf_id = request.get_json()['id']
     textlength = len(input_text)
     # summarised_text = summariser.summarise(input_text)
     # Thread(target = summarise, args=(input_text,pdf_id,)).start()
     API_URL = "https://api-inference.huggingface.co/models/facebook/bart-large-cnn"
-    headers = {"Authorization": f"Bearer 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"}
+    headers = {"Authorization": f"Bearer " + key}
     params = {"min_length": int(textlength/10), "max_length": int(textlength/2)}
     response = requests.post(API_URL, headers=headers, json={"inputs": input_text,"parameters": params})
     return response.json()

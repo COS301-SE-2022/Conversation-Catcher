@@ -1,5 +1,6 @@
 FROM python:3
 ADD summarise-text-server.py /
+COPY templates /templates
 # ADD summariseText.py /
 # ADD torch-1.12.1-cp310-cp310-manylinux1_x86_64.whl /
 RUN pip install flask
