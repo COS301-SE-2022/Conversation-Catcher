@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectColour } from '../../../../../../../apps/client/src/app/slices/user.slice';
 // import { gql, useLazyQuery, useMutation } from '@apollo/client';
 //import FileViewer from "react-native-file-viewer";
+import groupsLocalAccess from '../local-groups-access/local-groups-access';
 
 function DetermineTileCorner(props) {
   const colourState = useSelector(selectColour);
@@ -25,7 +26,16 @@ function DetermineTileCorner(props) {
         unfillColor={colourState.mode}
         iconStyle={{ borderColor: colourState.accent }}
         isChecked={checkboxState}
-        onPress={() => setCheckboxState(!checkboxState)}
+        onPress={() => {
+          setCheckboxState(!checkboxState);
+          //console.log("Check");
+          if (!checkboxState) {
+            groupsLocalAccess.addToDeleteList(props.name);
+          }
+          else {
+            groupsLocalAccess.removeFromDeleteList(props.name);
+          }
+        }}
       />
     );
   }
@@ -38,9 +48,6 @@ const MemberTile = ({
   nav,
 }) => {
   const colourState = useSelector(selectColour);
-  const buildMember = () => {
-    return { name: name }
-  }
   return (
     <TouchableOpacity
       style={[styles.memberTile, {borderColor: colourState.low}]}
@@ -52,7 +59,7 @@ const MemberTile = ({
           </View>
         </View>
         <View style={styles.corner_button}>
-          <DetermineTileCorner c={showCheck} a={buildMember()}/>
+          <DetermineTileCorner c={showCheck} name={name}/>
         </View>
       </View>
     </TouchableOpacity>

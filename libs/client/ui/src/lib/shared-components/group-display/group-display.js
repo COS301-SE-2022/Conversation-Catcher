@@ -7,26 +7,30 @@ import groupLocalAccess from '../local-groups-access/local-groups-access';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { selectEmail} from '../../../../../../../apps/client/src/app/slices/user.slice';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { selectColour } from '../../../../../../../apps/client/src/app/slices/user.slice';
 
 export function GroupDisplay({ navigation, selectMode, add}, ref) {
   // const [selectMode, setSelectMode] = useState(false);
+  const colourState = useSelector(selectColour);
   const [didReload, setDidReload] = useState(true);
   // const [isLoaded, setIsLoaded] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [refreshFlag,setRefreshFlag] = useState(false);
   const emailState = useSelector(selectEmail);
   //Listen to when to update page
-  if (groupLocalAccess.addEvent3.length !== 0) {
+  // if (groupLocalAccess.addEvent3.length !== 0) {
     //If statement to ensure that only one listener is created for the summarise command
     NativeAppEventEmitter.addListener('updateGroups', () => {
       setRefreshFlag(!refreshFlag);
     });
-    groupLocalAccess.addEvent3.length = 0;
-  }
+  //   groupLocalAccess.addEvent3.length = 0;
+  // }
   if (groupLocalAccess.addEvent2.length !== 0) {
     //If statement to ensure that only one listener is created for the summarise command
     NativeAppEventEmitter.addListener("reloadGroup",()=>{
+      //console.log("reload Triggers");
       ReloadData();
     });
     groupLocalAccess.addEvent2.length = 0;
@@ -74,7 +78,7 @@ export function GroupDisplay({ navigation, selectMode, add}, ref) {
   }
 
   const ReloadData = () => {
-    groupLocalAccess.deleteGroup()
+    // groupLocalAccess.deleteGroup()
     setRefreshing(true);
     //setRefreshFlag(false);
     fetchGroups({
@@ -132,7 +136,7 @@ export function GroupDisplay({ navigation, selectMode, add}, ref) {
           }
         >
           <Loading width={100} height={100} load={props.load} text={"Fetching your groups"}/>
-          <Text style={{ textAlign: 'center' }}>{props.text}</Text>
+          <Text style={[{ textAlign: 'center' }, {color: colourState.top}]}>{props.text}</Text>
         </ScrollView>
       );
   };
@@ -141,7 +145,7 @@ export function GroupDisplay({ navigation, selectMode, add}, ref) {
   // console.log(data);
   // console.log(loading);
   // console.log(error);
-  if (refreshFlag) ReloadData();
+  //if (refreshFlag) ReloadData();
   if (loading)
     return (
       //loading animation

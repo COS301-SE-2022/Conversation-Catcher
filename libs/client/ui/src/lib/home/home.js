@@ -30,6 +30,7 @@ import {
   selectEmail,
   addPDF,
   selectUser,
+  setColour,
 } from '../../../../../../apps/client/src/app/slices/user.slice';
 // import {STT_SUBSCRIPTION, STT_URL} from 'react-native-dotenv'
 
@@ -52,7 +53,14 @@ export const Home = ({ navigation }) => {
   });
 
   const [fileResponse, setFileResponse] = useState([]);
-
+  // dispatch(setColour({
+  //   accent: '#3F89BE',
+  //   mode: '#FFFFFF',
+  //   bottom: '#E6ECF0',
+  //   low: '#B6BFC6',
+  //   high: '#667685',
+  //   top: '#344554',
+  // }))
   if (pdfLocalAccess.summariseListener.length !== 0) {
     //If statement to ensure that only one listener is created for the summarise command
     DeviceEventEmitter.addListener('summarise', (id, text) => {
@@ -94,7 +102,7 @@ export const Home = ({ navigation }) => {
 
   const RENAME_PDF = gql`
     mutation renamePdf($id: String!, $name: String!) {
-      renamePDF(id: "", name: "")
+      renamePDF(id: $id, name: $name)
     }
   `;
 
@@ -277,6 +285,7 @@ export const Home = ({ navigation }) => {
     setNotifyUser(true);
     console.log('stt','add url')
     fetch('https://immense-bastion-37906.herokuapp.com/stt', {
+
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -286,7 +295,7 @@ export const Home = ({ navigation }) => {
       body: JSON.stringify({
         audio_path: 'audio_path',
         audio_chunks: state.chunks,
-        subscription: '10ea50633a724339a33810ab17329c37',
+        subscription: 'a43069cef2d04b189505fbd6664077ff',
       }),
     })
       .then(async (res) => {
@@ -299,7 +308,8 @@ export const Home = ({ navigation }) => {
               name: '',
               text: result.converted_text,
             },
-          });
+          }).catch(e => console.log('addpdfErr', e));
+          console.log('addResult', newPdf.data.addPDF.name);
           pdfLocalAccess.addPdf({
             name: newPdf.data.addPDF.name,
             creationDate: newPdf.data.addPDF.creationDate,
@@ -316,18 +326,20 @@ export const Home = ({ navigation }) => {
           })
             .then((result) => {
               const newName = result.data.generateName;
-              console.log(newName);
-              pdfLocalAccess.renamePdf(newPdf.data.addPDF.id, newName);
-              NativeAppEventEmitter.emit('updatePage');
-              renamePdf({
-                variables: { id: newPdf.data.addPDF.id, name: newName },
-              });
+              console.log(result);
+              if (newName !== ''){
+                pdfLocalAccess.renamePdf(newPdf.data.addPDF.id, newName);
+                NativeAppEventEmitter.emit('updatePage');
+                renamePdf({
+                  variables: { id: newPdf.data.addPDF.id, name: newName },
+                }).catch(e => console.log('renamerErr', e));
+              }
             })
-            .catch((e) => console.log(e));
+            .catch((e) => console.log('nameGen',e));
           summarise(newPdf.data.addPDF.id, newPdf.data.addPDF.text);
         } else console.log('Connection error: internet connection is required');
       })
-      .catch((e) => console.log(e));
+      .catch((e) => console.log('error',e));
   };
 
   //summarise the text and populate the required fields
@@ -338,14 +350,14 @@ export const Home = ({ navigation }) => {
         setSummarisedText({
           variables: { id: id, summary: res.data.Summarise },
         }).catch((e) => {
-          console.log('', e);
+          console.log('setting summary error', e);
           pdfLocalAccess.addSummary(id, 'error');
           return;
         });
-        pdfLocalAccess.addSummary(id, 'loading');
+        pdfLocalAccess.addSummary(id, res.data.Summarise);
       })
       .catch((e) => {
-        console.log('', e);
+        console.log('summary Error', e);
         setSummarisedText({
           variables: { id: id, summary: 'error' },
         }).catch((e) => {

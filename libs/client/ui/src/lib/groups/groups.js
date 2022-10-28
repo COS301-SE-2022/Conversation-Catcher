@@ -21,7 +21,7 @@ import { selectColour, selectEmail } from '../../../../../../apps/client/src/app
 import pdfLocalAccess from '../shared-components/local-pdfs-access/local-pdfs-access'
 
 export const Groups = ({ navigation }) => {
-  const groupRef = useRef();
+  // const groupRef = useRef();
   const colourState = useSelector(selectColour);
   const userEmail = useSelector(selectEmail);
   const [moreVisible, setMoreVisible] = useState(false);
@@ -112,7 +112,8 @@ export const Groups = ({ navigation }) => {
             placeholderTextColor={colourState.low}
             onChangeText={(text) => {
               groupLocalAccess.filterGroups(text);
-              groupRef.current.refreshPfds();//TypeError: undefined is not an object (evaluating 'groupRef.current.refreshPfds')
+              // console.log("Search:",groupLocalAccess.getGroups());
+              NativeAppEventEmitter.emit('updateGroups');
             }}
           />
           <View style={styles.searchIconFrame}>
@@ -126,7 +127,7 @@ export const Groups = ({ navigation }) => {
       <GroupDisplay
         navigation={navigation}
         selectMode={selectMode}
-        ref={groupRef}
+        //ref={groupRef}
         add={false}
       />
       {
@@ -156,6 +157,7 @@ export const Groups = ({ navigation }) => {
         >
           <Icon name="angle-left" color={colourState.top} size={30} />
         </TouchableOpacity>
+        <View style={styles.bottomBarRightSpacing}/>
       </View>
 
       <Modal
@@ -319,10 +321,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   moreButton: {
-    flexShrink: 1,
-    width: '40%',
+    flexGrow: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  bottomBarRightSpacing: {
+    flexGrow: 1,
   },
   orderByGroup: {
     flexShrink: 1,

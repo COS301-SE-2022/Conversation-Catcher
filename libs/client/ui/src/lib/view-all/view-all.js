@@ -95,7 +95,7 @@ export const ViewAll = ({ navigation, route }) => {
       getPdfs({variables: {
         ids: groupObject.pdfs
       }}).then((result) => {
-        console.log(result.data)
+        console.log("getPdfs:",result.data)
         result.data.getPDFByArr.forEach((pdf) => {
           pdfLocalAccess.displayPdfs.push(pdf);
         });
@@ -263,12 +263,15 @@ export const ViewAll = ({ navigation, route }) => {
       />
 
       <View style={[styles.viewAllBottomBar, {backgroundColor: colourState.low}, {borderColor: colourState.low}, {shadowColor: colourState.high}]}>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={styles.moreButton}
           onPress={() => setMoreVisible(true)}
         >
           <Icon name="ellipsis-h" color={colourState.top} size={30} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
+
+        {/* if uncommenting above, comment the line below*/}
+        <View style={styles.moreButton}/>  
 
         <TouchableOpacity
           style={styles.backButton}
@@ -522,7 +525,7 @@ const styles = StyleSheet.create({
       width: 0,
       height: 1,
     },
-    //overflow: 'hidden',
+    overflow: 'hidden',
   },
   searchInput: {
     borderRadius: 8,
@@ -541,7 +544,6 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     paddingHorizontal: 10,
     paddingVertical: 5,
-    
   },
   recentPdfTiles: {
     height: '70%',
